@@ -10,31 +10,33 @@ weight = 5
 # List your academic interests.
 [interests]
   interests = [
-    "Artificial Intelligence",
+    "Quantum Mechanics",
     "Computational Linguistics",
     "Information Retrieval"
   ]
 
 # List your qualifications (such as academic degrees).
 [[education.courses]]
-  course = "PhD in Artificial Intelligence"
-  institution = "Stanford University"
+  course = "PhD in computational Quantum Mechanics"
+  institution = "TU Delft"
+  year = 2020
+
+[[education.courses]]
+  course = "MSc in Applied Physics"
+  institution = "TU Delft"
+  year = 2015
+
+[[education.courses]]
+  course = "BSc in Applied Physics"
+  institution = "TU Delft"
   year = 2012
-
-[[education.courses]]
-  course = "MEng in Artificial Intelligence"
-  institution = "Massachusetts Institute of Technology"
-  year = 2009
-
-[[education.courses]]
-  course = "BSc in Artificial Intelligence"
-  institution = "Massachusetts Institute of Technology"
-  year = 2008
  
 +++
 
 # Biography
 
-Lena Smith is a professor of artificial intelligence at the Stanford AI Lab. Her research interests include distributed robotics, mobile computing and programmable matter. She leads the Robotic Neurobiology group, which develops self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate. 
+Hi, my name is Bas. I am a PhD student in theoretical quantum mechanics, Python and [open-source](https://github.com/basnijholt) enthusiast, and full-time nerd.
+
+Click [here](https://500px.com/basnijholt) are some pretty pictures that I took, [this](http://quantumtinkerer.tudelft.nl/) is where I work, and see my [LinkedIn](https://www.linkedin.com/in/basnijholt) for some technical details on my life.
+
