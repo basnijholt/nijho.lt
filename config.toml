@@ -14,15 +14,12 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 preserveTaxonomyNames = true
 paginate = 10
 
-# Enable comments by entering your Disqus shortname
 disqusShortname = ""
 
-# Enable analytics by entering your Google Analytics tracking ID
 googleAnalytics = ""
 
-# Default language to use (if you setup multilingual support)
 defaultContentLanguage = "en"
-hasCJKLanguage = false  # Set `true` for Chinese/Japanese/Korean languages.
+hasCJKLanguage = false
 defaultContentLanguageInSubdir = false
 
 # Get last modified date for content from Git?
@@ -131,7 +128,6 @@ enableGitInfo = true
     link = "https://www.linkedin.com/in/basnijholt"
 
   [params.menus]
-    # Align the main menu to the right of the page? (true/false)
     align_right = true
 
     [[menu.main]]
