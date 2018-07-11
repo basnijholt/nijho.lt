@@ -4,7 +4,7 @@ date = 2017-04-28T00:00:00
 
 authors = ["Jakob Kammhuber", "Maja C Cassidy", "Hao Zhang", "Önder Gül", "Fei Pei", "Michiel WA de Moor", "Bas Nijholt", "Kenji Watanabe", "Takashi Taniguchi", "Diana Car", "Sébastien R Plissard", "Erik PAM Bakkers", "Leo P Kouwenhoven"]
 
-publication_types = ["2"]
+publication_types = ["1"]
 
 publication = "In *Nano letters* (Nano Lett.)."
 publication_short = "In *Nano Lett.*"

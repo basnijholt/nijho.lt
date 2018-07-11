@@ -4,7 +4,7 @@ date = 2018-06-07T00:00:00
 
 authors = ["Adriaan Vuik", "Bas Nijholt", "Anton R. Akhmerov", "Michael Wimmer"]
 
-publication_types = ["2"]
+publication_types = ["0"]
 
 publication = "Preprint"
 #publication = "In *Physical Review X* (PRX)."

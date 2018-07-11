@@ -4,7 +4,7 @@ date = 2018-07-06T00:00:00
 
 authors = ["Jouri D. S. Bommer", "Hao Zhang", "Önder Gül", "Bas Nijholt", "Michael Wimmer", "Filipp N. Rybakov", "Julien Garaud", "Donjan Rodic", "Egor Babaev", "Matthias Troyer", "Diana Car", "Sébastien R. Plissard", "Erik P. A. M. Bakkers", "Kenji Watanabe", "Takashi Taniguchi", "Leo P. Kouwenhoven"]
 
-publication_types = ["2"]
+publication_types = ["0"]
 
 publication = "Preprint"
 #publication = "In *Nature Communications* (Nat. Commun.)."

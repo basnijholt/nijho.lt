@@ -4,7 +4,7 @@ date = 2017-03-17T00:00:00
 
 authors = ["Doru Sticlet", "Bas Nijholt", "Anton Akhmerov"]
 
-publication_types = ["2"]
+publication_types = ["1"]
 
 publication = "In *Physical Review B* (PRB)."
 publication_short = "In *PRB*"

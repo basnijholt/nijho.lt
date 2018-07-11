@@ -4,7 +4,7 @@ date = 2017-05-05T00:00:00
 
 authors = ["Daniel R Burnham", "Bas Nijholt", "Iwijn De Vlaminck", "Jinhua Quan", "Timur Yusufzai", "Cees Dekker"]
 
-publication_types = ["2"]
+publication_types = ["1"]
 
 publication = "In *Nucleic Acids Research* (NAR)."
 publication_short = "In *NAR.*"

@@ -4,7 +4,7 @@ date = 2017-11-03T00:00:00
 
 authors = ["Kun Zuo", "Vincent Mourik", "Daniel B. Szombati", "Bas Nijholt", "David J. van Woerkom", "Attila Geresdi", "Jun Chen", "Viacheslav P. Ostroukh", "Anton R. Akhmerov", "Sebastién R. Plissard", "Diana Car", "Erik P. A. M. Bakkers", "Dmitry I. Pikulin", "Leo P. Kouwenhoven", "Sergey M. Frolov"]
 
-publication_types = ["2"]
+publication_types = ["1"]
 
 publication = "In *Physical Review Letters* (PRL)."
 publication_short = "In *PRL*"
