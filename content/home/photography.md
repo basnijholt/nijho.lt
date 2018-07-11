@@ -7,7 +7,7 @@ subtitle = "The hobby"
 weight = 60
 +++
 
-I *really* enjoy taking nice photos and those I like to share with the world. The problem was that I didn't do that, so I wrote a program that will do that job for me: [`instacron` <em class="fa fa-github"> </em>](https://github.com/basnijholt/instacron). It takes a photo, adds a **random** quote, camera and location info, and related hastags.
+I enjoy traveling and photography. The best photos I would like to to share with the world, however, the problem is that I am to lazy to do so, therefore I wrote a program that will do that job for me: [`instacron` <em class="fa fa-github"> </em>](https://github.com/basnijholt/instacron). It takes a photo, adds a **random** quote, camera and location info, and related hastags.
 
 {{< instagram BjzFQpWHNP- >}}
 {{< instagram Bjd4lpTH9zb hidecaption >}}
