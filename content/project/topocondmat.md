@@ -6,7 +6,7 @@ date = 2018-06-06T00:00:00
 title = "Topology in condensed matter course"
 
 # Project summary to display on homepage.
-summary = "Topology in Condensed Matter: Tying Quantum Knots. An online course for which I wrote a lot of code. See the [course website](https://topocondmat.org/) which is generated using these [Jupyter notebooks](https://github.com/topocm/topocm_content)."
+summary = "_**Tying Quantum Knots.**_ An online course for which I wrote a lot of code. See the [course website](https://topocondmat.org/) which is generated using these [Jupyter notebooks](https://github.com/topocm/topocm_content)."
 
 # Optional image to display on homepage (relative to `static/img/` folder).
 image_preview = "topocondmat.gif"

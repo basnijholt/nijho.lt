@@ -6,7 +6,7 @@ date = 2018-06-06T00:00:00
 title = "Adaptive"
 
 # Project summary to display on homepage.
-summary = "[`python-adaptive`](https://github.com/python-adaptive/adaptive): tools for adaptive parallel sampling of mathematical functions."
+summary = "[`python-adaptive`](https://github.com/python-adaptive/adaptive): tools for adaptive parallel sampling of mathematical functions. A Python package that I wrote with my colleagues to run simulations more efficiently."
 
 # Optional image to display on homepage (relative to `static/img/` folder).
 image_preview = "adaptive.gif"
