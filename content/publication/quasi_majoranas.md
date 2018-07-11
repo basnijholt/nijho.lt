@@ -1,6 +1,6 @@
 +++
 title = "Reproducing topological properties with quasi-Majorana states"
-date = 2018-06-07T00:00:00
+date = 2018-07-07T00:00:00
 
 authors = ["Adriaan Vuik", "Bas Nijholt", "Anton R. Akhmerov", "Michael Wimmer"]
 

@@ -1,13 +1,9 @@
 +++
-# About/Biography widget.
 widget = "about"
 active = true
-date = 2016-04-20T00:00:00
-
-# Order that this section will appear in.
+date = 2018-07-11T00:00:00
 weight = 5
 
-# List your academic interests.
 [interests]
   interests = [
     "Quantum Mechanics",
@@ -15,7 +11,6 @@ weight = 5
     "Open-source software"
   ]
 
-# List your qualifications (such as academic degrees).
 [[education.courses]]
   course = "PhD in computational Quantum Mechanics"
   institution = "TU Delft"
@@ -30,13 +25,11 @@ weight = 5
   course = "BSc in Applied Physics"
   institution = "TU Delft"
   year = 2012
- 
 +++
 
 # Biography
 
-
-Hi, my name is Bas. I am a: PhD student in theoretical quantum mechanics, Python and [open-source <em class="fa fa-github"> </em>](https://github.com/basnijholt) enthusiast, and full-time nerd.
+Hi, my name is Bas. I am a: PhD student in theoretical quantum mechanics, Python and [open-source <em class="fa fa-github"> </em>](https://github.com/basnijholt) enthusiast, and full-time nerd. I currently live in the USA but normally reside in The Netherlands.
 
 [Here <em class="fa fa-instagram"> </em>](http://instagram.com/bnijholt) (or [here <em class="fa fa-500px"> </em>](https://500px.com/basnijholt)) are some pretty pictures that I took, [this <em class="fa fa-university"> </em>](http://quantumtinkerer.tudelft.nl/) is where I work, and see my [LinkedIn <em class="fa fa-linkedin"> </em>](https://www.linkedin.com/in/basnijholt) for some technical details on my daily activities.
 

@@ -1,7 +1,7 @@
 +++
 widget = "custom"
 active = true
-date = 2018-06-05T00:00:00
+date = 2018-07-11T00:00:00
 title = "Photography"
 subtitle = "The hobby"
 weight = 60

@@ -1,6 +1,6 @@
 +++
 # Date this page was created.
-date = 2018-06-06T00:00:00
+date = 2018-07-06T00:00:00
 
 # Project title.
 title = "Adaptive"
