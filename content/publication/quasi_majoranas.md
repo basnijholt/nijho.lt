@@ -16,7 +16,10 @@ selected = false
 
 url_pdf = "https://arxiv.org/pdf/1806.02801.pdf"
 url_preprint = "https://arxiv.org/abs/1806.02801"
+url_code = "https://zenodo.org/record/1285177"
+url_dataset = "https://zenodo.org/record/1285177"
 url_custom = [{name = "arXiv:1806.02801", url = "http://arxiv.org/abs/1806.02801"}]
+
 
 math = true
 
