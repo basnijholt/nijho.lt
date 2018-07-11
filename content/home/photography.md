@@ -15,7 +15,7 @@ weight = 60
 
 +++
 
-I *really* enjoy going out to take nice photos that I would like to share with the world. The problem was that I never did, so I combined by powers and wrote a program that will do the job for me: [`instacron` <em class="fa fa-github"> </em>](https://github.com/basnijholt/instacron). It takes a photo, adds a cheesy **random** :cheese: quote and some more info.
+I *really* enjoy taking nice photos and those I want like to share with the world. The problem was that I didn't do that, so I wrote a program that will do that job for me: [`instacron` <em class="fa fa-github"> </em>](https://github.com/basnijholt/instacron). It takes a photo, adds a cheesy **random** :cheese: quote and some more info related to the photo.
 
 {{< instagram BjzFQpWHNP- >}}
 {{< instagram Bjd4lpTH9zb >}}
