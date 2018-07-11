@@ -38,5 +38,5 @@ weight = 5
 
 Hi, my name is Bas. I am a: PhD student in theoretical quantum mechanics, Python and [open-source <em class="fa fa-github"> </em>](https://github.com/basnijholt) enthusiast, and full-time nerd.
 
-[Here <em class="fa fa-instagram"> </em>](https://500px.com/basnijholt) (or [here <em class="fa fa-500px"> </em>](https://500px.com/basnijholt)) are some pretty pictures that I took, [this <em class="fa fa-university"> </em>](http://quantumtinkerer.tudelft.nl/) is where I work, and see my [LinkedIn <em class="fa fa-linkedin"> </em>](https://www.linkedin.com/in/basnijholt) for some technical details on my daily activities.
+[Here <em class="fa fa-instagram"> </em>](http://instagram.com/bnijholt) (or [here <em class="fa fa-500px"> </em>](https://500px.com/basnijholt)) are some pretty pictures that I took, [this <em class="fa fa-university"> </em>](http://quantumtinkerer.tudelft.nl/) is where I work, and see my [LinkedIn <em class="fa fa-linkedin"> </em>](https://www.linkedin.com/in/basnijholt) for some technical details on my daily activities.
 
