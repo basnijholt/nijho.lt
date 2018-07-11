@@ -5,11 +5,7 @@ date = 2018-07-11T00:00:00
 weight = 5
 
 [interests]
-  interests = [
-    "Quantum Mechanics",
-    "Photography",
-    "Open-source software"
-  ]
+  interests = ["Quantum Mechanics", "Photography", "Open-source software"]
 
 [[education.courses]]
   course = "PhD in computational Quantum Mechanics"

@@ -5,8 +5,8 @@ widget = "publications"
 active = true
 date = 2018-07-11T00:00:00
 
-title = "Recent Publications"
-subtitle = ""
+title = "Publications"
+subtitle = "Citation metrics at [Google Scholar <em class='ai ai-google-scholar'> </em>](https://scholar.google.com/citations?user=nIO4EK4AAAAJ&hl)"
 
 # Order that this section will appear in.
 weight = 20
