@@ -21,7 +21,7 @@ abstract_short = "Andreev bound states in hybrid superconductor-semiconductor de
 selected = false
 
 # Links (optional).
-#url_pdf = ""
+url_pdf = "https://arxiv.org/pdf/1806.02801.pdf"
 url_preprint = "https://arxiv.org/abs/1806.02801"
 url_custom = [{name = "arXiv:1806.02801", url = "http://arxiv.org/abs/1806.02801"}]
 

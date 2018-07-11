@@ -18,10 +18,10 @@ weight = 60
 I *really* enjoy going out to take nice photos that I would like to share with the world. The problem was that I never did, so I combined by powers and wrote a program that will do the job for me: [`instacron` <em class="fa fa-github"> </em>](https://github.com/basnijholt/instacron). It takes a photo, adds a cheesy **random** :cheese: quote and some more info.
 
 {{< instagram BjzFQpWHNP- >}}
-{{< instagram Bjd4lpTH9zb hidecaption >}}
-{{< instagram BjEeCpdnoAZ hidecaption >}}
-{{< instagram Bi2VpGEnfad hidecaption >}}
-{{< instagram BikebQtniiz hidecaption >}}
-{{< instagram BioZvEDn41i hidecaption >}}
-{{< instagram BA3cqTlKL4c hidecaption >}}
-{{< instagram BjomQSqn1kS hidecaption >}}
+{{< instagram Bjd4lpTH9zb >}}
+{{< instagram BjEeCpdnoAZ >}}
+{{< instagram Bi2VpGEnfad >}}
+{{< instagram BikebQtniiz >}}
+{{< instagram BioZvEDn41i >}}
+{{< instagram BA3cqTlKL4c >}}
+{{< instagram BjomQSqn1kS >}}

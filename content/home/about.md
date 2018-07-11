@@ -11,8 +11,8 @@ weight = 5
 [interests]
   interests = [
     "Quantum Mechanics",
-    "Computational Linguistics",
-    "Information Retrieval"
+    "Photography",
+    "Open-source software"
   ]
 
 # List your qualifications (such as academic degrees).

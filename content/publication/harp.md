@@ -20,7 +20,8 @@ abstract_short = "We investigate the mechanistic nature of the Snf2 family prote
 selected = false
 
 # Links (optional).
-url_pdf = "https://academic.oup.com/nar/article/45/8/4687/3057348"
+url_pdf = "https://academic.oup.com/nar/article-pdf/45/8/4687/16608518/gkx147.pdf"
+url_custom = [{name = "10.1093/nar/gkx147", url = "https://academic.oup.com/nar/article/45/8/4687/3057348"}]
 
 # Does the content use math formatting?
 math = true

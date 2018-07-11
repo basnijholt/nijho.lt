@@ -21,7 +21,7 @@ abstract_short = "Spin-orbit interaction (SOI), a relativistic effect linking th
 selected = false
 
 # Links (optional).
-#url_pdf = ""
+url_pdf = "https://arxiv.org/pdf/1807.01940.pdf"
 url_preprint = "https://arxiv.org/abs/1807.01940"
 url_custom = [{name = "arXiv:1807.01940", url = "http://arxiv.org/abs/1807.01940"}]
 
