@@ -1,0 +1,11 @@
+# Redirect domain aliases to primary domain
+https://www.nijholt.org/* https://www.nijho.lt/:splat 301!
+https://nijholt.org/* https://www.nijho.lt/:splat 301!
+
+# These extra rules are required because HTTPS is not forced
+http://www.nijholt.org/* https://www.nijho.lt/:splat 301!
+http://nijholt.org/* https://www.nijho.lt/:splat 301!
+
+# Optional: Redirect default Netlify subdomain to primary domain
+https://nijholt.netlify.com/* https://www.nijho.lt/:splat 301!
+http://nijholt.netlify.com/* https://www.nijho.lt/:splat 301!
