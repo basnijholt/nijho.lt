@@ -4,9 +4,8 @@ date = 2018-07-06T00:00:00
 
 authors = ["Jouri D. S. Bommer", "Hao Zhang", "Önder Gül", "Bas Nijholt", "Michael Wimmer", "Filipp N. Rybakov", "Julien Garaud", "Donjan Rodic", "Egor Babaev", "Matthias Troyer", "Diana Car", "Sébastien R. Plissard", "Erik P. A. M. Bakkers", "Kenji Watanabe", "Takashi Taniguchi", "Leo P. Kouwenhoven"]
 
-publication_types = ["0"]
+publication_types = ["1"]
 
-publication = "Preprint"
 publication = "In *Physical Review Letters* (PRL)."
 publication_short = "In *PRL*"
 
@@ -16,7 +15,6 @@ abstract_short = "Spin-orbit interaction (SOI), a relativistic effect linking th
 selected = false
 
 url_pdf = "https://arxiv.org/pdf/1807.01940.pdf"
-url_preprint = "https://arxiv.org/abs/1807.01940"
 url_custom = [{name = "arXiv:1807.01940", url = "http://arxiv.org/abs/1807.01940"}, {name = "10.1103/PhysRevLett.122.187702", url = "https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.122.187702"}]
 
 math = true
