@@ -44,7 +44,7 @@ enableGitInfo = true
 
   organizations = [ { name = "TU Delft", url = "https://quantumtinkerer.tudelft.nl/" } ]
 
-  gravatar = true
+  gravatar = false
   avatar = "portrait.jpg"
   email = "bas@nijho.lt"
   address = "Building 22 Room F329, TU Delft, Lorentzweg 1, Delft, 2628 CJ, NLD"
