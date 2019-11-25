@@ -6,7 +6,7 @@ authors:
 - Bas Nijholt
 - Anton R. Akhmerov
 
-publication_types: ["1"]
+publication_types: ["2"]
 
 publication: "In *Physical Review B* (PRB)."
 publication_short: "In *PRB*"

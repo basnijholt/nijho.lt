@@ -10,7 +10,7 @@ authors:
 - Timur Yusufzai
 - Cees Dekker
 
-publication_types: ["1"]
+publication_types: ["2"]
 
 publication: "In *Nucleic Acids Research* (NAR)."
 publication_short: "In *NAR.*"

@@ -20,7 +20,7 @@ authors:
 - Takashi Taniguchi
 - Leo P. Kouwenhoven
 
-publication_types: ["1"]
+publication_types: ["2"]
 
 publication: "In *Physical Review Letters* (PRL)."
 publication_short: "In *PRL*"

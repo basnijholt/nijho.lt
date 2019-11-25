@@ -8,7 +8,7 @@ authors:
 - Anton R. Akhmerov
 - Michael Wimmer
 
-publication_types: ["1"]
+publication_types: ["2"]
 
 publication: "In *SciPost Physics* (SciPost Phys.)."
 publication_short: "In *SciPost Phys.*."

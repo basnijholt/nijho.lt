@@ -8,7 +8,7 @@ authors:
 - Michael Wimmer
 - Anton R. Akhmerov
 
-publication_types: ["0"]
+publication_types: ["3"]
 
 publication: "Preprint"
 #publication: "In *Physical Review X* (PRX)."
