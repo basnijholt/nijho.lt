@@ -20,6 +20,7 @@ featured: false
 
 url_pdf: "https://arxiv.org/pdf/1609.00637.pdf"
 url_code: "https://github.com/basnijholt/shortjunction"
+url_data: "http://doi.org/10.4121/uuid:274bdd06-14a5-45c3-bc86-87d400082e34"
 links: [{name: "arXiv:1509.02675", url: "http://arxiv.org/abs/1609.00637"}, {name: "10.1103/PhysRevB.95.115421", url: "https://journals.aps.org/prb/abstract/10.1103/PhysRevB.95.115421"}]
 
 ---

@@ -4,7 +4,7 @@ summary: "[`adaptive`](https://github.com/python-adaptive/adaptive): tools for a
 tags:
   - adaptive-sampling
   - Python
-  - machine-learning
+  - Machine learning
 date: "2018-07-06T00:00:00"
 external_link: "https://github.com/python-adaptive/adaptive"
 ---
