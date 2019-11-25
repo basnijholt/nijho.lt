@@ -19,7 +19,7 @@ authors:
 publication_types: ["2"]
 
 publication: "In *Nano letters* (Nano Lett.)."
-publication_short: "In *Nano Lett.*"
+publication_short: "In *Nano Lett*"
 
 abstract: "Ballistic electron transport is a key requirement for existence of a topological phase transition in proximitized InSb nanowires. However, measurements of quantized conductance as direct evidence of ballistic transport have so far been obscured due to the increased chance of backscattering in one-dimensional nanowires. We show that by improving the nanowire–metal interface as well as the dielectric environment we can consistently achieve conductance quantization at zero magnetic field. Additionally we study the contribution of orbital effects to the sub-band dispersion for different orientation of the magnetic field, observing a near-degeneracy between the second and third sub-bands."
 

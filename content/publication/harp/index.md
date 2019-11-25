@@ -13,7 +13,7 @@ authors:
 publication_types: ["2"]
 
 publication: "In *Nucleic Acids Research* (NAR)."
-publication_short: "In *NAR.*"
+publication_short: "In *NAR*"
 
 abstract: "We investigate the mechanistic nature of the Snf2 family protein HARP, mutations of which are responsible for Schimke immuno-osseous dysplasia. Using a single-molecule magnetic tweezers assay, we construct RPA-stabilized DNA bubbles within torsionally constrained DNA to investigate the annealing action of HARP on a physiologically relevant substrate. We find that HARP closes RPA-stabilized bubbles in a slow reaction, taking on the order of tens of minutes for ∼600 bp of DNA to be re-annealed. The data indicate that DNA re-anneals through the removal of RPA, which is observed as clear steps in the bubble-closing traces. The dependence of the closing rate on both ionic strength and HARP concentration indicates that removal of RPA occurs via an association-dissociation mechanism where HARP does not remain associated with the DNA. The enzyme exhibits classical Michaelis–Menten kinetics and acts cooperatively with a Hill coefficient of 3 ± 1. Our work also allows the determination of some important features of RPA-bubble structures at low supercoiling, including the existence of multiple bubbles and that RPA molecules are mis-registered on the two strands."
 
