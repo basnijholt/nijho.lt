@@ -30,8 +30,12 @@ subtitle = "Open-source"
     tag = "Python"
 
   [[content.filter_button]]
-    name = "Other"
-    tag = "Demo"
+    name = "Home automation"
+    tag = "Home automation"
+
+  [[content.filter_button]]
+    name = "Education"
+    tag = "Education"
 
 [design]
   # Choose how many columns the section has. Valid values: 1 or 2.
