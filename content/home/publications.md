@@ -1,30 +1,71 @@
 +++
-# Recent Publications widget.
-# This widget displays recent publications from `content/publication/`.
-widget = "publications"
-active = true
-date = 2018-07-11T00:00:00
+# A Recent Publications section created with the Pages widget.
+# This section displays recent blog posts from `content/publication/`.
+
+widget = "pages"  # See https://sourcethemes.com/academic/docs/page-builder/
+headless = true  # This file represents a page section.
+active = true  # Activate this widget? true/false
+weight = 20  # Order that this section will appear.
 
 title = "Publications"
 subtitle = "Citation metrics at [Google Scholar <em class='ai ai-google-scholar'> </em>](https://scholar.google.com/citations?user=nIO4EK4AAAAJ&hl)"
 
-# Order that this section will appear in.
-weight = 20
+[content]
+  # Page type to display. E.g. post, talk, or publication.
+  page_type = "publication"
 
-# Number of publications to list.
-count = 10
+  # Choose how much pages you would like to display (0 = all pages)
+  count = 0
 
-# List format.
-#   0 = Simple
-#   1 = Detailed
-#   2 = APA
-#   3 = MLA
-list_format = 3
+  # Choose how many pages you would like to offset by
+  offset = 0
 
-# Filter by publication type.
-# -1: Any
-publication_type = "-1"
+  # Page order. Descending (desc) or ascending (asc) date.
+  order = "desc"
 
-exclude_selected = false
+  # Filter posts by a taxonomy term.
+  [content.filters]
+    tag = ""
+    category = ""
+    publication_type = ""
+    exclude_featured = false
+
+[design]
+  # Toggle between the various page layout types.
+  #   1 = List
+  #   2 = Compact
+  #   3 = Card
+  #   4 = Citation (publication only)
+  view = 1
+
+[design.background]
+  # Apply a background color, gradient, or image.
+  #   Uncomment (by removing `#`) an option to apply it.
+  #   Choose a light or dark text color by setting `text_color_light`.
+  #   Any HTML color name or Hex value is valid.
+
+  # Background color.
+  # color = "navy"
+
+  # Background gradient.
+  # gradient_start = "DeepSkyBlue"
+  # gradient_end = "SkyBlue"
+
+  # Background image.
+  # image = "background.jpg"  # Name of image in `static/img/`.
+  # image_darken = 0.6  # Darken the image? Range 0-1 where 0 is transparent and 1 is opaque.
+
+  # Text color (true=light or false=dark).
+  # text_color_light = true
+
+[advanced]
+ # Custom CSS.
+ css_style = ""
+
+ # CSS class.
+ css_class = ""
 +++
 
+{{% alert note %}}
+Quickly discover relevant content by [filtering publications]({{< ref "/publication/_index.md" >}}).
+{{% /alert %}}
