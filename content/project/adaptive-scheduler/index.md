@@ -1,6 +1,6 @@
 ---
 title: "Adaptive-scheduler"
-summary: "[`adaptive-scheduler`](https://github.com/basnijholt/adaptive-scheduler): Run many functions on many cores (>10k) and easily manage starting and restarting using `mpi4py.futures`, `ipyparallel`, or `dask-mpi` :tada:"
+summary: "[`adaptive-scheduler`](https://github.com/basnijholt/adaptive-scheduler): Run simulations adaptively on many cores (>10k) and easily manage starting and restarting using `mpi4py.futures`, `ipyparallel`, or `dask-mpi` :tada:"
 tags:
   - adaptive-sampling
   - Python
