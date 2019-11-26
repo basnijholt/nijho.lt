@@ -37,6 +37,11 @@ subtitle = "Open-source"
     name = "Education"
     tag = "Education"
 
+  [[content.filter_button]]
+    name = "Parallel computing"
+    tag = "Parallel computing"
+
+
 [design]
   # Choose how many columns the section has. Valid values: 1 or 2.
   columns = "2"
