@@ -24,7 +24,7 @@ interests:
 - Quantum Mechanics
 - Photography
 - Open-source software
-- Hiking in the mountains ⛰
+- Hiking in the mountains <em class="fas fa-mountain fa-fw"> </em>
 - Home automation
 
 education:
