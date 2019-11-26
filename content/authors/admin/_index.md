@@ -74,6 +74,6 @@ user_groups:
 - Visitors
 ---
 
-Hi, my name is Bas. I am a: PhD student in theoretical quantum mechanics, Python and [open-source <em class="fab fa-github"> </em>](https://github.com/basnijholt) enthusiast, and full-time nerd. I live in Rotterdam, The Netherlands.
+Hi, my name is Bas. I am a: PhD student in theoretical quantum mechanics, Python and [open-source <em class="fab fa-github fa-fw"> </em>](https://github.com/basnijholt) enthusiast, and full-time nerd. I live in Rotterdam, The Netherlands.
 
-[Here <em class="fab fa-instagram"> </em>](http://instagram.com/bnijholt) (or [here <em class="fab fa-500px"> </em>](https://500px.com/basnijholt)) are some pretty pictures that I took, [this <em class="fa fa-university"> </em>](http://quantumtinkerer.tudelft.nl/) is where I work, and see my [LinkedIn <em class="fab fa-linkedin"> </em>](https://www.linkedin.com/in/basnijholt) for some technical details on my daily activities.
+[Here <em class="fab fa-instagram fa-fw"> </em>](http://instagram.com/bnijholt) (or [here <em class="fab fa-500px fa-fw"> </em>](https://500px.com/basnijholt)) are some pretty pictures that I took, [this <em class="fa fa-university fa-fw"> </em>](http://quantumtinkerer.tudelft.nl/) is where I work, and see my [LinkedIn <em class="fab fa-linkedin fa-fw"> </em>](https://www.linkedin.com/in/basnijholt) for some technical details on my daily activities.
