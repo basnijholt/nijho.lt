@@ -22,23 +22,23 @@ subtitle = "Open-source, see my [GitHub profile <em class='fab fa-github fa-fw'>
   filter_default = 0
 
   [[content.filter_button]]
-    name = "All"
+    name = "all"
     tag = "*"
 
   [[content.filter_button]]
-    name = "Python"
+    name = "python"
     tag = "Python"
 
   [[content.filter_button]]
-    name = "Home automation"
+    name = "home-automation"
     tag = "Home automation"
 
   [[content.filter_button]]
-    name = "Education"
+    name = "education"
     tag = "Education"
 
   [[content.filter_button]]
-    name = "Parallel computing"
+    name = "parallel-computing"
     tag = "Parallel computing"
 
 [design]
