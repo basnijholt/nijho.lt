@@ -6,7 +6,7 @@ active = true  # Activate this widget? true/false
 weight = 40  # Order that this section will appear.
 
 title = "Projects"
-subtitle = "Open-source, see my [GitHub profile <em class="fab fa-github fa-fw"> </em>](https://github.com/basnijholt)"
+subtitle = "Open-source, see my [GitHub profile <em class='fab fa-github fa-fw'> </em>](https://github.com/basnijholt)"
 
 [content]
   # Page type to display. E.g. project.
