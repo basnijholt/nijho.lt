@@ -94,7 +94,7 @@ address = {street = "Building 22 Room F329, TU Delft, Lorentzweg 1", city = "Del
 
 # Geographic coordinates
 # To get your coordinates, right-click on Google Maps and choose "What's here?". The coords will show up at the bottom.
-coordinates = {latitude = "52.00207715970123", longitude = "4.3745595638871775"}
+coordinates = {latitude = "52.001093", longitude = "4.375076"}
 
 # Directions for visitors to locate you.
 #directions = "Go to Building 22 Room F329, TU Delft"
