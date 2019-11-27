@@ -1,6 +1,6 @@
 ---
 title: "ipynb_git_filters"
-summary: "[`ipynb_git_filters`](https://github.com/basnijholt/ipynb_git_filters): remove `ipynb`'s output on each commit to keep a clean history. Not very impressive but very useful 🤖"
+summary: "[`ipynb_git_filters`](https://github.com/basnijholt/ipynb_git_filters): remove `ipynb`'s output on each commit to keep a clean history. Not very smart but **very useful** 🤖"
 tags:
   - Python
   - Git
