@@ -1,6 +1,6 @@
 ---
 title: "nijho.lt"
-summary: "[`nijho.lt`](https://github.com/basnijholt/nijho.lt): my website on Github that is automatically deloyed with Netlify 🦾"
+summary: "[`nijho.lt`](https://github.com/basnijholt/nijho.lt): my website made with [Hugo](https://gohugo.io/) on Github that is automatically deloyed with [Netlify](https://www.netlify.com/) 🦾"
 tags:
   - Website
   - Hugo
