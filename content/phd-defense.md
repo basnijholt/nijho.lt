@@ -1,5 +1,5 @@
 ---
-title: Ph.D. defense
+title: Ph.D. defense 🎓👨‍🎓
 date: "2020-05-06T00:00:00+01:00"
 draft: false
 share: false
@@ -22,3 +22,6 @@ The relevant links are:
 - Link to the live-stream: [live-stream](https://www.youtube.com/watch?v=oHg5SJYRHA0) (**STILL NEED TO ADD THIS!!!!**)
 
 Hope to see you there, at May 11, 2020 at 15:00!
+
+![](https://github.com/basnijholt/thesis-cover/raw/master/images/close-up.jpg)
+![](https://github.com/basnijholt/thesis-cover/raw/master/images/theses.jpg)
