@@ -7,7 +7,7 @@ commentable: false
 editable: false
 ---
 
-*(in het Nederlands onderaan!)*
+*(in het Nederlands onderaan)*
 
 Hi all,
 
@@ -27,7 +27,6 @@ Hope to see you there, at May 11, 2020 at 15:00!
 
 ![](https://github.com/basnijholt/thesis-cover/raw/master/images/close-up.jpg)
 ![](https://github.com/basnijholt/thesis-cover/raw/master/images/theses.jpg)
-
 
 Lieve allemaal,
 
