@@ -21,7 +21,7 @@ The relevant links are:
 
 - My thesis: [`thesis.pdf`](http://files.nijho.lt/thesis.pdf)
 - My propositions/stellingen: [`propositions.pdf`](http://files.nijho.lt/propositions.pdf)
-- Link to the live-stream: [live-stream](https://www.youtube.com/watch?v=oHg5SJYRHA0) (**STILL NEED TO ADD THIS!!!!**)
+- Link to the live-stream: [live-stream](https://www.youtube.com/watch?v=oHg5SJYRHA0) (**STILL NEED TO ADD THIS, LINK COMING SOON!!!!**)
 
 Hope to see you there, at May 11, 2020 at 15:00!
 
