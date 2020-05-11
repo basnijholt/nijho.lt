@@ -13,7 +13,7 @@ Hi all,
 
 Due to [external circumstances](https://lmgtfy.com/?q=corona+crisis) my Ph.D. defense will be happening without a live audience.
 Only my professor ([Anton Akhmerov](https://antonakhmerov.org/)), the chairman, [Beadle](https://en.wikipedia.org/wiki/Bedel), Marcella, and I will be physically at the TU Delft.
-The other *7* other professors in my committee will be calling in using Skype.
+The other *7* professors in my committee will be calling in using Skype.
 
 I will organize a live-stream myself, which I will link on this page.
 
