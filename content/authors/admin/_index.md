@@ -10,12 +10,12 @@ authors:
 superuser: true
 
 # Role/position
-role: PhD candidate
+role: Quantum simulation engineer
 
 # Organizations/Affiliations
 organizations:
-- name: TU Delft
-  url: "https://quantumtinkerer.tudelft.nl/"
+- name: Microsoft
+  url: "https://www.microsoft.com/en-us/quantum"
 
 # Short bio (displayed in user profile at end of posts)
 bio: "Hi."
