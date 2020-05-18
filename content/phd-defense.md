@@ -9,6 +9,8 @@ editable: false
 
 *(in het Nederlands onderaan)*
 
+> Towards realistic numerical simulations of Majorana devices
+
 Hi all,
 
 Due to [external circumstances](https://lmgtfy.com/?q=corona+crisis) my Ph.D. defense will be happening without a live audience.
