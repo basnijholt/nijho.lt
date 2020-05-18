@@ -1,5 +1,5 @@
 ---
-title: "Supercurrent interference in few-mode nanowire Josephson junctions "
+title: "Supercurrent interference in few-mode nanowire Josephson junctions"
 date: "2017-11-03T00:00:00"
 
 authors:
