@@ -3,7 +3,7 @@ title: "Annealing helicase HARP closes RPA-stabilized DNA bubbles non-processive
 date: "2017-02-28T00:00:00"
 
 authors:
-- Daniel R Burnham
+- Daniel R. Burnham
 - Bas Nijholt
 - Iwijn De Vlaminck
 - Jinhua Quan
