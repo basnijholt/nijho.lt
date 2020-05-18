@@ -1,6 +1,6 @@
 ---
 title: "Orbital effect of magnetic field on the Majorana phase diagram"
-date: "2016-06-29T00:00:00"
+date: "2016-06-20T00:00:00"
 
 authors:
 - Bas Nijholt

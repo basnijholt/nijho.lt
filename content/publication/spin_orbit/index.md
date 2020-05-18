@@ -1,6 +1,6 @@
 ---
 title: "Spin-Orbit Protection of Induced Superconductivity in Majorana Nanowires"
-date: "2018-07-06T00:00:00"
+date: "2019-05-09T00:00:00"
 
 authors:
 - Jouri D. S. Bommer
