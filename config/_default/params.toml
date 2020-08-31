@@ -46,10 +46,6 @@ org_name = ""
 # Description for social sharing and search engines. If undefined, superuser role is used in place.
 description = ""
 
-# Display a logo in navigation bar rather than title (optional).
-#   To enable, place an image in `static/img/` and reference its filename below. To disable, set the value to "".
-logo = ""
-
 ############################
 ## Site Features
 ############################
@@ -140,9 +136,6 @@ address_format = "en-us"
 ## Advanced
 ############################
 
-# Get user avatars from Gravatar.com? (true/false)
-gravatar = false
-
 # Main menu alignment (l = left, c = center, r = right) and logo options.
 main_menu = {align = "c", show_logo = true}
 
@@ -159,15 +152,28 @@ sharing = true
 # Link authors to their profile page? (true/false)
 link_authors = true
 
+# Abstract length (characters) in the Compact and Portfolio Card list views. Also, see `summaryLength` in `config.toml`.
+abstract_length = 135
+
 # Load JS plugins
 #   E.g. To load `/assets/js/custom.js`, set `plugins_js = ["custom"]`.
 plugins_js  = []
+
+# Avatars.
+# An avatar is an image that appears next to a user's name.
+# An avatar can be uploaded as an image named `avatar` to each user's profile or fetched from Gravatar.com.
+[avatar]
+  # Get user avatars from Gravatar.com? (true/false)
+  gravatar = false
+
+  # Choose a shape for avatar images. Options: circle, square.
+  shape = "circle"
 
 # Available address formats.
 [address_formats]
   en-us = {order = ['street', 'city', 'region', 'postcode'], delimiters = [', ', ', ', ' ', '']}
   en-gb = {order = ['street', 'city', 'region', 'postcode'], delimiters = [', ', ', ', ', ', '']}
-  de = {order = ['street', 'postcode', 'city'], delimiters = [', ', ' ', '']}
+  de = {order = ['street', 'postcode', 'city'], delimiters = ['<br>', ' ', '']}
   fr-fr = {order = ['street', 'postcode', 'city'], delimiters = ['<br>', ' ', '']}
   zh = {order = ['postcode', 'region', 'city', 'street'], delimiters = [' ', ' ', ' ', '']}
 
@@ -208,6 +214,11 @@ plugins_js  = []
   [comments.disqus]
     shortname = ""  # Paste the shortname from your Disqus dashboard.
     show_count = true  # Show comment count in page header? (true/false)
+
+  # Configuration of Commento.
+  [comments.commento]
+    # If self-hosting Commento, enter its URL here (e.g. "https://commento.?.com"), otherwise leave empty.
+    url = ""
 
 ############################
 ## Search
