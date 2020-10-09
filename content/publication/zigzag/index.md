@@ -23,6 +23,6 @@ url_pdf: "https://arxiv.org/pdf/1903.06168.pdf"
 url_preprint: "https://arxiv.org/abs/1903.06168"
 url_code: "https://zenodo.org/record/2578027"
 url_dataset: "https://zenodo.org/record/2578027"
-links: [{name: "arXiv:1903.06168", url: "http://arxiv.org/abs/1903.06168"}, {"10.1103/PhysRevLett.125.086802": "https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.125.086802"}]
+links: [{name: "arXiv:1903.06168", url: "http://arxiv.org/abs/1903.06168"}, {name: "10.1103/PhysRevLett.125.086802", url: "https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.125.086802"}, {name: "GitHub", url: "https://github.com/basnijholt/zigzag-majoranas"}]
 
 ---
