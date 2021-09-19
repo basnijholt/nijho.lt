@@ -18,7 +18,7 @@ bio: "Hi."
 
 interests:
 - Quantum Mechanics <em class="fas fa-atom fa-fw"> </em>
-- Photography <em class="fas fa-camera-retro fa-fw"> </em>
+- Landscape photography <em class="fas fa-camera-retro fa-fw"> </em>
 - Open-source software <em class="fas fa-code fa-fw"> </em>
 - Hiking in the mountains <em class="fas fa-mountain fa-fw"> </em>
 - Home automation <em class="fas fa-home fa-fw"> </em>
