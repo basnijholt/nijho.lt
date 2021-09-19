@@ -2,10 +2,6 @@
 # Display name
 title: Bas Nijholt
 
-# Username (this should match the folder name)
-authors:
-- admin
-
 # Is this the primary user of the site?
 superuser: true
 
@@ -68,12 +64,6 @@ social:
 
 # Enter email to display Gravatar (if Gravatar enabled in Config)
 email: ""
-
-# Organizational groups that you belong to (for People widget)
-#   Set this to `[]` or comment out if you are not using People widget.
-user_groups:
-- Researchers
-- Visitors
 ---
 
 Hi, my name is Bas. I am a: Python and [open-source <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/basnijholt) enthusiast, [Ph.D. <em class="fa fa-graduation-cap fa-fw" style="margin-right: 0.2em;"> </em> in theoretical quantum mechanics](https://github.com/basnijholt/thesis), and full-time nerd. I live in Rotterdam, the Netherlands.
