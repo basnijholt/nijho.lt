@@ -24,7 +24,7 @@ summary: "Large scale computer simulations are time-consuming to run and often r
 
 featured: false
 
-url_pdf: "https://gitlab.kwant-project.org/qt/adaptive-paper/builds/artifacts/master/file/paper.pdf?job=make"
+url_pdf: "https://gitlab.kwant-project.org/qt/adaptive-paper/-/jobs/119119/artifacts/raw/paper.pdf?inline=false"
 url_preprint: "https://github.com/python-adaptive/paper"
 url_code: "https://github.com/python-adaptive/adaptive/"
 links: [{name: "Paper draft source code", url: "https://github.com/python-adaptive/paper"}, {name: "Documentation", url: "https://adaptive.readthedocs.io/en/latest/"}]
