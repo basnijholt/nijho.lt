@@ -14,7 +14,7 @@ authors:
 - Anton R. Akhmerov
 - Sebastién R. Plissard
 - Diana Car
-- Erik P. A. M. Bakkers
+- Erik P. A. M. Bakkers
 - Dmitry I. Pikulin
 - Leo P. Kouwenhoven
 - Sergey M. Frolov
