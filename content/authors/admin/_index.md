@@ -6,7 +6,7 @@ title: Bas Nijholt
 superuser: true
 
 # Role/position
-role: Quantum simulation engineer
+role: Quantum Software Development Engineer
 
 # Organizations/Affiliations
 organizations:
