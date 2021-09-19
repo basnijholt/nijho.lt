@@ -21,7 +21,7 @@ twitter: basnijholt
 # Contact (edit or remove options as required)
 
 email: bas@nijho.lt
-phone: +31613049138
+phone: "+31613049138"
 address:
   street: Building 22 Room F329, TU Delft, Lorentzweg 1
   city: Delft
@@ -131,7 +131,7 @@ search:
     index_name: ''
     show_logo: false
 map:
-  provider: 'OpenStreetMap'
+  provider: 'mapnik'
   api_key: ''
   zoom: 4
 marketing:
