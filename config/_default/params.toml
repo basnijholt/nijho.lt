@@ -266,3 +266,11 @@ plugins_js  = []
 [marketing]
   google_analytics = "UA-153521929-1"
   google_tag_manager = ""
+
+[cms]
+ # Enable the admin panel. See https://wowchemy.com/docs/install/
+ netlify_cms = false
+
+# Icon Pack Extensions
+[icon.pack]
+ ai = true  # Enable the Academicons icon pack https://jpswalsh.github.io/academicons/
