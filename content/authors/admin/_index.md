@@ -21,6 +21,7 @@ interests:
 - Landscape photography <em class="fas fa-camera-retro fa-fw"> </em>
 - Open-source software <em class="fas fa-code fa-fw"> </em>
 - Hiking in the mountains <em class="fas fa-mountain fa-fw"> </em>
+- Blockchain technology <em class="fab fa-btc fa-fw"> </em>
 - Home automation <em class="fas fa-home fa-fw"> </em>
 
 education:
