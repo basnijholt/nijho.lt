@@ -10,7 +10,7 @@ role: Quantum Software Development Engineer
 
 # Organizations/Affiliations
 organizations:
-- name: Microsoft
+- name: Microsoft Quantum
   url: "https://www.microsoft.com/en-us/quantum"
 
 # Short bio (displayed in user profile at end of posts)
