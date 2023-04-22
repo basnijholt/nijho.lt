@@ -70,7 +70,7 @@ features:
   repository:
     url: 'https://github.com/basnijholt/nijho.lt'
     content_dir: 'content'
-    branch: master
+    branch: main
   avatar:
     gravatar: false
     shape: circle
