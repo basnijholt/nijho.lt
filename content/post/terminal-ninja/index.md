@@ -40,6 +40,8 @@ When I show how awesome of an experience it can be, I often find myself repeatin
 So, I decided to write this guide to help others set up their terminal in a similar fashion.
 In this short post, we'll explore the wonders of `zsh`, `oh-my-zsh`, `keychain`, `starship`, `autoenv`, `z`, `zsh-autosuggestions`, several Oh My ZSH plugins, having a `dotfiles` repo, and more!
 
+![](https://camo.githubusercontent.com/18cdb04e93fe276412b588dbed23bc328614bf7a4d09ea4d8862d38f1c466c65/687474703a2f2f6d656469612e74756d626c722e636f6d2f74756d626c725f6c74757a6a766251364c31717a677078392e676966)
+
 ## Dotfiles: Version Control Your Configuration Files
 
 As a terminal ninja, you know the importance of your configuration files. They hold the keys to your productivity, personalizing your terminal experience and making it truly your own.
