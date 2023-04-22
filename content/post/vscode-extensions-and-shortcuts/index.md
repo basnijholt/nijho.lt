@@ -50,15 +50,9 @@ Here are ***my*** commonly used shortcuts when using the Sublime Keymap extensio
 
 ## My favorite extensions
 
-### GitLens
+I have ranked my top 8 extensions, which I would recommend to anyone who is looking to improve their productivity and efficiency in VSCode.
 
-GitLens supercharges the built-in Git support in VSCode, providing useful insights into your code history and changes, including advanced blame annotations, code lens, and more.
-
-Use `code --install-extension eamodio.gitlens` to install the GitLens extension
-
-![](https://raw.githubusercontent.com/gitkraken/vscode-gitlens/633fc030f6f6b372d6d487c2bd35a8346507f0b2/images/docs/revision-navigation.gif)
-
-### GitHub Copilot
+### 1. GitHub Copilot
 
 GitHub Copilot is an AI-powered code completion extension that provides seamless integration with the Copilot service, helping you write code faster and smarter.
 
@@ -66,15 +60,15 @@ Use `code --install-extension GitHub.copilot` to install the GitHub Copilot exte
 
 ![](https://user-images.githubusercontent.com/37570492/212964557-8d832278-61bb-4288-a8a7-47f35859e868.gif)
 
-### GitHub Copilot Labs
+### 2. GitLens
 
-GitHub Copilot Labs is an extension that allows users to access experimental features for GitHub Copilot, an AI-powered code completion tool.
+GitLens supercharges the built-in Git support in VSCode, providing useful insights into your code history and changes, including advanced blame annotations, code lens, and more.
 
-Use `code --install-extension GitHub.copilot-labs` to install the GitHub Copilot Labs extension
+Use `code --install-extension eamodio.gitlens` to install the GitLens extension
 
-![](https://user-images.githubusercontent.com/8978670/160909091-70c1d70c-2850-4483-91ed-4de87efe5285.gif)
+![](https://raw.githubusercontent.com/gitkraken/vscode-gitlens/633fc030f6f6b372d6d487c2bd35a8346507f0b2/images/docs/revision-navigation.gif)
 
-### Python and Pylance
+### 3. Python and Pylance
 
 These extensions offer comprehensive support for Python development, with features like IntelliSense, linting, debugging, and code navigation. Pylance enhances Python support with improved code completion, type checking, and language features.
 
@@ -84,7 +78,7 @@ Use `code --install-extension ms-python.vscode-pylance` to install the Pylance e
 ![](https://raw.githubusercontent.com/microsoft/vscode-python/d905cf0555e0032cfe10a2af2b925e686246e30e/images/InterpreterSelectionZoom.gif)
 ![](https://github.com/microsoft/pylance-release/raw/77c8d25c51376faa488e69b8fb670ddc64c5bb3e/images/all-features.gif)
 
-### Jupyter and Jupyter Keymap
+### 4. Jupyter and Jupyter Keymap
 
 The Jupyter extensions enable you to work with Jupyter Notebooks in VSCode, with support for running cells, debugging, and more. Jupyter Keymap adds customizable keyboard shortcuts for Jupyter commands.
 
@@ -92,6 +86,49 @@ Use `code --install-extension ms-toolsai.jupyter` to install the Jupyter extensi
 Use `code --install-extension ms-toolsai.jupyter-keymap` to install the Jupyter Keymap extension
 
 ![](https://github.com/Microsoft/vscode-jupyter/raw/e3eee370c97505ce390858a4645f73bc1b3912fc/images/Jupyter%20README/notebookui.png)
+
+### 5. Sublime Keybindings
+
+Sublime Keybindings adds keybindings from Sublime Text to VSCode, making it easier for developers familiar with Sublime Text to transition to VSCode.
+
+Use `code --install-extension ms-vscode.sublime-keybindings` to install the Sublime Keybindings extension
+
+### 6. Remote Containers, SSH, and Remote Extension Pack
+
+These extensions provide support for working with remote development environments in VSCode, such as developing inside a container or connecting to remote machines via SSH. The Extension Pack bundles all the remote development extensions for convenience.
+
+Use `code --install-extension ms-vscode-remote.remote-ssh-edit` to install the Remote SSH Edit extension
+Use `code --install-extension ms-vscode-remote.vscode-remote-extensionpack` to install the Remote Extension Pack
+Use `code --install-extension ms-vscode.remote-explorer` to install the Remote Explorer extension
+Use `code --install-extension ms-vscode.remote-repositories` to install the Remote Repositories extension
+
+![](https://microsoft.github.io/vscode-remote-release/images/remote-containers-readme.gif)
+
+### 7. Indent Rainbow
+
+Indent Rainbow is a VSCode extension that colorizes indentation levels in your code, making it easier to visualize and navigate complex code structures.
+
+Use `code --install-extension oderwat.indent-rainbow` to install the Indent Rainbow extension
+
+![](https://raw.githubusercontent.com/oderwat/vscode-indent-rainbow/913f5a704b54730a5cea5a4de97e245fcd8c8596/assets/example.png)
+
+
+### 8. Code Spell Checker
+
+Code Spell Checker is a helpful extension that checks your code and comments for spelling errors, helping you maintain clean and professional code.
+
+Use `code --install-extension streetsidesoftware.code-spell-checker` to install the Code Spell Checker extension
+
+![](https://raw.githubusercontent.com/streetsidesoftware/vscode-spell-checker/main/images/example.gif)
+
+
+### GitHub Copilot Labs
+
+GitHub Copilot Labs is an extension that allows users to access experimental features for GitHub Copilot, an AI-powered code completion tool.
+
+Use `code --install-extension GitHub.copilot-labs` to install the GitHub Copilot Labs extension
+
+![](https://user-images.githubusercontent.com/8978670/160909091-70c1d70c-2850-4483-91ed-4de87efe5285.gif)
 
 ### GitHub Codespaces, RemoteHub, and Pull Request
 
@@ -128,11 +165,6 @@ Use `code --install-extension aaron-bond.better-comments` to install the Better 
 
 ![](https://github.com/aaron-bond/better-comments/raw/084a906e73a3ca96d5319441714be8e3a2a8c385/images/better-comments.PNG)
 
-### Sublime Keybindings
-
-Sublime Keybindings adds keybindings from Sublime Text to VSCode, making it easier for developers familiar with Sublime Text to transition to VSCode.
-
-Use `code --install-extension ms-vscode.sublime-keybindings` to install the Sublime Keybindings extension
 
 ### Markdown Preview Enhanced
 
@@ -149,33 +181,6 @@ Markdown All in One is a comprehensive extension that provides a range of featur
 Use `code --install-extension yzhang.markdown-all-in-one` to install the Markdown All in One extension
 
 ![](https://raw.githubusercontent.com/yzhang-gh/vscode-markdown/78775f6caeb353bee905d7f72702364467b10ef1/images/gifs/toggle-bold.gif)
-
-### Remote Containers, SSH, and Remote Extension Pack
-
-These extensions provide support for working with remote development environments in VSCode, such as developing inside a container or connecting to remote machines via SSH. The Extension Pack bundles all the remote development extensions for convenience.
-
-Use `code --install-extension ms-vscode-remote.remote-ssh-edit` to install the Remote SSH Edit extension
-Use `code --install-extension ms-vscode-remote.vscode-remote-extensionpack` to install the Remote Extension Pack
-Use `code --install-extension ms-vscode.remote-explorer` to install the Remote Explorer extension
-Use `code --install-extension ms-vscode.remote-repositories` to install the Remote Repositories extension
-
-![](https://microsoft.github.io/vscode-remote-release/images/remote-containers-readme.gif)
-
-### Code Spell Checker
-
-Code Spell Checker is a helpful extension that checks your code and comments for spelling errors, helping you maintain clean and professional code.
-
-Use `code --install-extension streetsidesoftware.code-spell-checker` to install the Code Spell Checker extension
-
-![](https://raw.githubusercontent.com/streetsidesoftware/vscode-spell-checker/main/images/example.gif)
-
-### Indent Rainbow
-
-Indent Rainbow is a VSCode extension that colorizes indentation levels in your code, making it easier to visualize and navigate complex code structures.
-
-Use `code --install-extension oderwat.indent-rainbow` to install the Indent Rainbow extension
-
-![](https://raw.githubusercontent.com/oderwat/vscode-indent-rainbow/913f5a704b54730a5cea5a4de97e245fcd8c8596/assets/example.png)
 
 ### WakaTime
 
