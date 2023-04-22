@@ -66,6 +66,33 @@ Use `code --install-extension GitHub.copilot` to install the GitHub Copilot exte
 
 ![](https://user-images.githubusercontent.com/37570492/212964557-8d832278-61bb-4288-a8a7-47f35859e868.gif)
 
+### GitHub Copilot Labs
+
+GitHub Copilot Labs is an extension that allows users to access experimental features for GitHub Copilot, an AI-powered code completion tool.
+
+Use `code --install-extension GitHub.copilot-labs` to install the GitHub Copilot Labs extension
+
+![](https://user-images.githubusercontent.com/8978670/160909091-70c1d70c-2850-4483-91ed-4de87efe5285.gif)
+
+### Python and Pylance
+
+These extensions offer comprehensive support for Python development, with features like IntelliSense, linting, debugging, and code navigation. Pylance enhances Python support with improved code completion, type checking, and language features.
+
+Use `code --install-extension ms-python.python` to install the Python extension
+Use `code --install-extension ms-python.vscode-pylance` to install the Pylance extension
+
+![](https://raw.githubusercontent.com/microsoft/vscode-python/d905cf0555e0032cfe10a2af2b925e686246e30e/images/InterpreterSelectionZoom.gif)
+![](https://github.com/microsoft/pylance-release/raw/77c8d25c51376faa488e69b8fb670ddc64c5bb3e/images/all-features.gif)
+
+### Jupyter and Jupyter Keymap
+
+The Jupyter extensions enable you to work with Jupyter Notebooks in VSCode, with support for running cells, debugging, and more. Jupyter Keymap adds customizable keyboard shortcuts for Jupyter commands.
+
+Use `code --install-extension ms-toolsai.jupyter` to install the Jupyter extension
+Use `code --install-extension ms-toolsai.jupyter-keymap` to install the Jupyter Keymap extension
+
+![](https://github.com/Microsoft/vscode-jupyter/raw/e3eee370c97505ce390858a4645f73bc1b3912fc/images/Jupyter%20README/notebookui.png)
+
 ### GitHub Codespaces, RemoteHub, and Pull Request
 
 These GitHub extensions provide seamless integration with various GitHub services, including Codespaces (cloud-based development environments), RemoteHub (browse remote repositories), and Pull Request management.
@@ -158,32 +185,6 @@ Use `code --install-extension WakaTime.vscode-wakatime` to install the WakaTime 
 
 ![](https://wakatime.com/static/img/ScreenShots/Screen-Shot-2016-03-21.png)
 
-### GitHub Copilot Labs
-
-GitHub Copilot Labs is an extension that allows users to access experimental features for GitHub Copilot, an AI-powered code completion tool.
-
-Use `code --install-extension GitHub.copilot-labs` to install the GitHub Copilot Labs extension
-
-![](https://user-images.githubusercontent.com/8978670/160909091-70c1d70c-2850-4483-91ed-4de87efe5285.gif)
-
-### Python and Pylance
-
-These extensions offer comprehensive support for Python development, with features like IntelliSense, linting, debugging, and code navigation. Pylance enhances Python support with improved code completion, type checking, and language features.
-
-Use `code --install-extension ms-python.python` to install the Python extension
-Use `code --install-extension ms-python.vscode-pylance` to install the Pylance extension
-
-![](https://raw.githubusercontent.com/microsoft/vscode-python/d905cf0555e0032cfe10a2af2b925e686246e30e/images/InterpreterSelectionZoom.gif)
-![](https://github.com/microsoft/pylance-release/raw/77c8d25c51376faa488e69b8fb670ddc64c5bb3e/images/all-features.gif)
-
-### Jupyter and Jupyter Keymap
-
-The Jupyter extensions enable you to work with Jupyter Notebooks in VSCode, with support for running cells, debugging, and more. Jupyter Keymap adds customizable keyboard shortcuts for Jupyter commands.
-
-Use `code --install-extension ms-toolsai.jupyter` to install the Jupyter extension
-Use `code --install-extension ms-toolsai.jupyter-keymap` to install the Jupyter Keymap extension
-
-![](https://github.com/Microsoft/vscode-jupyter/raw/e3eee370c97505ce390858a4645f73bc1b3912fc/images/Jupyter%20README/notebookui.png)
 
 ## Other extensions I use
 
