@@ -165,6 +165,29 @@ Use `code --install-extension GitHub.copilot-labs` to install the GitHub Copilot
 
 ![](https://user-images.githubusercontent.com/8978670/160909091-70c1d70c-2850-4483-91ed-4de87efe5285.gif)
 
+### Python and Pylance
+
+These extensions offer comprehensive support for Python development, with features like IntelliSense, linting, debugging, and code navigation. Pylance enhances Python support with improved code completion, type checking, and language features.
+
+Use `code --install-extension ms-python.python` to install the Python extension
+Use `code --install-extension ms-python.vscode-pylance` to install the Pylance extension
+
+![](https://raw.githubusercontent.com/microsoft/vscode-python/d905cf0555e0032cfe10a2af2b925e686246e30e/images/InterpreterSelectionZoom.gif)
+![](https://github.com/microsoft/pylance-release/raw/77c8d25c51376faa488e69b8fb670ddc64c5bb3e/images/all-features.gif)
+
+### Jupyter and Jupyter Keymap
+
+The Jupyter extensions enable you to work with Jupyter Notebooks in VSCode, with support for running cells, debugging, and more. Jupyter Keymap adds customizable keyboard shortcuts for Jupyter commands.
+
+Use `code --install-extension ms-toolsai.jupyter` to install the Jupyter extension
+Use `code --install-extension ms-toolsai.jupyter-keymap` to install the Jupyter Keymap extension
+
+![](https://github.com/Microsoft/vscode-jupyter/raw/e3eee370c97505ce390858a4645f73bc1b3912fc/images/Jupyter%20README/notebookui.png)
+
+## Other extensions I use
+
+The following extensions are not as essential as the ones listed above, but I still find them useful for various tasks.
+
 ### LaTeX Workshop
 
 LaTeX Workshop is a comprehensive extension for working with LaTeX documents in VSCode, featuring syntax highlighting, building and previewing, IntelliSense, and more.
@@ -172,10 +195,6 @@ LaTeX Workshop is a comprehensive extension for working with LaTeX documents in 
 Use `code --install-extension James-Yu.latex-workshop` to install the LaTeX Workshop extension
 
 ![](https://github.com/James-Yu/LaTeX-Workshop/raw/master/demo_media/preview.gif)
-
-## Other extensions I use
-
-The following extensions are not as essential as the ones listed above, but I still find them useful for various tasks.
 
 ### Live Share
 
@@ -259,20 +278,6 @@ Use `code --install-extension ms-azuretools.vscode-azureterraform` to install th
 The Docker extension adds rich support for working with Docker containers and images in VSCode, including building, managing, and deploying containerized applications.
 
 Use `code --install-extension ms-azuretools.vscode-docker` to install the Docker extension
-
-### Python and Pylance
-
-These extensions offer comprehensive support for Python development, with features like IntelliSense, linting, debugging, and code navigation. Pylance enhances Python support with improved code completion, type checking, and language features.
-
-Use `code --install-extension ms-python.python` to install the Python extension
-Use `code --install-extension ms-python.vscode-pylance` to install the Pylance extension
-
-### Jupyter and Jupyter Keymap
-
-The Jupyter extensions enable you to work with Jupyter Notebooks in VSCode, with support for running cells, debugging, and more. Jupyter Keymap adds customizable keyboard shortcuts for Jupyter commands.
-
-Use `code --install-extension ms-toolsai.jupyter` to install the Jupyter extension
-Use `code --install-extension ms-toolsai.jupyter-keymap` to install the Jupyter Keymap extension
 
 ### AutoDocstring
 
