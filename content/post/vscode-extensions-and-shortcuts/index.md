@@ -56,7 +56,7 @@ I have ranked my top 8 extensions, which I would recommend to anyone who is look
 
 GitHub Copilot is an AI-powered code completion extension that provides seamless integration with the Copilot service, helping you write code faster and smarter.
 
-Use `code --install-extension GitHub.copilot` to install the GitHub Copilot extension
+Use `code --install-extension GitHub.copilot` to install the GitHub Copilot extension [(docs)](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot)
 
 ![](https://user-images.githubusercontent.com/37570492/212964557-8d832278-61bb-4288-a8a7-47f35859e868.gif)
 
@@ -64,7 +64,7 @@ Use `code --install-extension GitHub.copilot` to install the GitHub Copilot exte
 
 GitLens supercharges the built-in Git support in VSCode, providing useful insights into your code history and changes, including advanced blame annotations, code lens, and more.
 
-Use `code --install-extension eamodio.gitlens` to install the GitLens extension
+Use `code --install-extension eamodio.gitlens` to install the GitLens extension [(docs)](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
 
 ![](https://raw.githubusercontent.com/gitkraken/vscode-gitlens/633fc030f6f6b372d6d487c2bd35a8346507f0b2/images/docs/revision-navigation.gif)
 
@@ -72,8 +72,8 @@ Use `code --install-extension eamodio.gitlens` to install the GitLens extension
 
 These extensions offer comprehensive support for Python development, with features like IntelliSense, linting, debugging, and code navigation. Pylance enhances Python support with improved code completion, type checking, and language features.
 
-Use `code --install-extension ms-python.python` to install the Python extension
-Use `code --install-extension ms-python.vscode-pylance` to install the Pylance extension
+Use `code --install-extension ms-python.python` to install the Python extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
+Use `code --install-extension ms-python.vscode-pylance` to install the Pylance extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance)
 
 ![](https://raw.githubusercontent.com/microsoft/vscode-python/d905cf0555e0032cfe10a2af2b925e686246e30e/images/InterpreterSelectionZoom.gif)
 ![](https://github.com/microsoft/pylance-release/raw/77c8d25c51376faa488e69b8fb670ddc64c5bb3e/images/all-features.gif)
@@ -82,8 +82,8 @@ Use `code --install-extension ms-python.vscode-pylance` to install the Pylance e
 
 The Jupyter extensions enable you to work with Jupyter Notebooks in VSCode, with support for running cells, debugging, and more. Jupyter Keymap adds customizable keyboard shortcuts for Jupyter commands.
 
-Use `code --install-extension ms-toolsai.jupyter` to install the Jupyter extension
-Use `code --install-extension ms-toolsai.jupyter-keymap` to install the Jupyter Keymap extension
+Use `code --install-extension ms-toolsai.jupyter` to install the Jupyter extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter)
+Use `code --install-extension ms-toolsai.jupyter-keymap` to install the Jupyter Keymap extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter-keymap)
 
 ![](https://github.com/Microsoft/vscode-jupyter/raw/e3eee370c97505ce390858a4645f73bc1b3912fc/images/Jupyter%20README/notebookui.png)
 
@@ -91,16 +91,16 @@ Use `code --install-extension ms-toolsai.jupyter-keymap` to install the Jupyter 
 
 Sublime Keybindings adds keybindings from Sublime Text to VSCode, making it easier for developers familiar with Sublime Text to transition to VSCode.
 
-Use `code --install-extension ms-vscode.sublime-keybindings` to install the Sublime Keybindings extension
+Use `code --install-extension ms-vscode.sublime-keybindings` to install the Sublime Keybindings extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ms-vscode.sublime-keybindings)
 
 ### 6. Remote Containers, SSH, and Remote Extension Pack
 
 These extensions provide support for working with remote development environments in VSCode, such as developing inside a container or connecting to remote machines via SSH. The Extension Pack bundles all the remote development extensions for convenience.
 
-Use `code --install-extension ms-vscode-remote.remote-ssh-edit` to install the Remote SSH Edit extension
-Use `code --install-extension ms-vscode-remote.vscode-remote-extensionpack` to install the Remote Extension Pack
-Use `code --install-extension ms-vscode.remote-explorer` to install the Remote Explorer extension
-Use `code --install-extension ms-vscode.remote-repositories` to install the Remote Repositories extension
+Use `code --install-extension ms-vscode-remote.remote-ssh-edit` to install the Remote SSH Edit extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh-edit)
+Use `code --install-extension ms-vscode-remote.vscode-remote-extensionpack` to install the Remote Extension Pack [(docs)](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
+Use `code --install-extension ms-vscode.remote-explorer` to install the Remote Explorer extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ms-vscode.remote-explorer)
+Use `code --install-extension ms-vscode.remote-repositories` to install the Remote Repositories extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ms-vscode.remote-repositories)
 
 ![](https://microsoft.github.io/vscode-remote-release/images/remote-containers-readme.gif)
 
@@ -108,7 +108,7 @@ Use `code --install-extension ms-vscode.remote-repositories` to install the Remo
 
 Indent Rainbow is a VSCode extension that colorizes indentation levels in your code, making it easier to visualize and navigate complex code structures.
 
-Use `code --install-extension oderwat.indent-rainbow` to install the Indent Rainbow extension
+Use `code --install-extension oderwat.indent-rainbow` to install the Indent Rainbow extension [(docs)](https://marketplace.visualstudio.com/items?itemName=oderwat.indent-rainbow)
 
 ![](https://raw.githubusercontent.com/oderwat/vscode-indent-rainbow/913f5a704b54730a5cea5a4de97e245fcd8c8596/assets/example.png)
 
@@ -117,7 +117,7 @@ Use `code --install-extension oderwat.indent-rainbow` to install the Indent Rain
 
 Code Spell Checker is a helpful extension that checks your code and comments for spelling errors, helping you maintain clean and professional code.
 
-Use `code --install-extension streetsidesoftware.code-spell-checker` to install the Code Spell Checker extension
+Use `code --install-extension streetsidesoftware.code-spell-checker` to install the Code Spell Checker extension [(docs)](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker)
 
 ![](https://raw.githubusercontent.com/streetsidesoftware/vscode-spell-checker/main/images/example.gif)
 
@@ -126,7 +126,7 @@ Use `code --install-extension streetsidesoftware.code-spell-checker` to install 
 
 GitHub Copilot Labs is an extension that allows users to access experimental features for GitHub Copilot, an AI-powered code completion tool.
 
-Use `code --install-extension GitHub.copilot-labs` to install the GitHub Copilot Labs extension
+Use `code --install-extension GitHub.copilot-labs` to install the GitHub Copilot Labs extension [(docs)](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-labs)
 
 ![](https://user-images.githubusercontent.com/8978670/160909091-70c1d70c-2850-4483-91ed-4de87efe5285.gif)
 
@@ -134,9 +134,9 @@ Use `code --install-extension GitHub.copilot-labs` to install the GitHub Copilot
 
 These GitHub extensions provide seamless integration with various GitHub services, including Codespaces (cloud-based development environments), RemoteHub (browse remote repositories), and Pull Request management.
 
-Use `code --install-extension GitHub.codespaces` to install the GitHub Codespaces extension
-Use `code --install-extension GitHub.remotehub` to install the GitHub RemoteHub extension
-Use `code --install-extension GitHub.vscode-pull-request-github` to install the GitHub Pull Request extension
+Use `code --install-extension GitHub.codespaces` to install the GitHub Codespaces extension [(docs)](https://marketplace.visualstudio.com/items?itemName=GitHub.codespaces)
+Use `code --install-extension GitHub.remotehub` to install the GitHub RemoteHub extension [(docs)](https://marketplace.visualstudio.com/items?itemName=GitHub.remotehub)
+Use `code --install-extension GitHub.vscode-pull-request-github` to install the GitHub Pull Request extension [(docs)](https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-pull-request-github)
 
 ![](https://github.com/Microsoft/vscode-pull-request-github/raw/HEAD/.readme/demo.gif)
 
@@ -144,7 +144,7 @@ Use `code --install-extension GitHub.vscode-pull-request-github` to install the 
 
 Rainbow CSV adds syntax highlighting for CSV and TSV files in VSCode, making it easier to read and analyze data by color-coding columns.
 
-Use `code --install-extension mechatroner.rainbow-csv` to install the Rainbow CSV extension
+Use `code --install-extension mechatroner.rainbow-csv` to install the Rainbow CSV extension [(docs)](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv)
 
 ![](https://i.imgur.com/ryjBI1R.png)
 
@@ -152,7 +152,7 @@ Use `code --install-extension mechatroner.rainbow-csv` to install the Rainbow CS
 
 Ruff is a Visual Studio Code extension that provides support for the Ruff linter, an extremely fast Python linter written in Rust. It offers numerous features such as built-in caching, autofix support, and a comprehensive set of built-in rules. Ruff aims to replace multiple tools like Flake8, isort, pydocstyle, yesqa, eradicate, pyupgrade, and autoflake, while executing much faster than any individual tool.
 
-Use `code --install-extension charliermarsh.ruff` to install the Ruff extension
+Use `code --install-extension charliermarsh.ruff` to install the Ruff extension [(docs)](https://marketplace.visualstudio.com/items?itemName=charliermarsh.ruff)
 
 ![](https://user-images.githubusercontent.com/1309177/205176932-44cfc03a-120f-4bad-b710-612bdd7765d6.gif)
 ![](https://user-images.githubusercontent.com/1309177/205175987-82e23e21-14bb-467d-9ef0-027f24b75865.gif)
@@ -161,7 +161,7 @@ Use `code --install-extension charliermarsh.ruff` to install the Ruff extension
 
 Better Comments is a VSCode extension that helps improve the readability of your code comments by adding color and style to different types of comments, such as TODOs, highlights, questions, and alerts.
 
-Use `code --install-extension aaron-bond.better-comments` to install the Better Comments extension
+Use `code --install-extension aaron-bond.better-comments` to install the Better Comments extension [(docs)](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments)
 
 ![](https://github.com/aaron-bond/better-comments/raw/084a906e73a3ca96d5319441714be8e3a2a8c385/images/better-comments.PNG)
 
@@ -170,7 +170,7 @@ Use `code --install-extension aaron-bond.better-comments` to install the Better 
 
 Markdown Preview Enhanced is a feature-rich extension that provides a real-time preview of your Markdown files, supporting various Markdown flavors, interactive diagrams, and more.
 
-Use `code --install-extension shd101wyy.markdown-preview-enhanced` to install the Markdown Preview Enhanced extension
+Use `code --install-extension shd101wyy.markdown-preview-enhanced` to install the Markdown Preview Enhanced extension [(docs)](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced)
 
 ![](https://user-images.githubusercontent.com/1908863/28495106-30b3b15e-6f09-11e7-8eb6-ca4ca001ab15.png)
 
@@ -178,7 +178,7 @@ Use `code --install-extension shd101wyy.markdown-preview-enhanced` to install th
 
 Markdown All in One is a comprehensive extension that provides a range of features for working with Markdown files in VSCode, including syntax highlighting, auto-completion, table of contents, and more.
 
-Use `code --install-extension yzhang.markdown-all-in-one` to install the Markdown All in One extension
+Use `code --install-extension yzhang.markdown-all-in-one` to install the Markdown All in One extension [(docs)](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
 
 ![](https://raw.githubusercontent.com/yzhang-gh/vscode-markdown/78775f6caeb353bee905d7f72702364467b10ef1/images/gifs/toggle-bold.gif)
 
@@ -186,7 +186,7 @@ Use `code --install-extension yzhang.markdown-all-in-one` to install the Markdow
 
 WakaTime is an open source VS Code plugin for metrics, insights, and time tracking automatically generated from your programming activity. This service will keep a summary of how much time you spend in which project and which programming language.
 
-Use `code --install-extension WakaTime.vscode-wakatime` to install the WakaTime extension
+Use `code --install-extension WakaTime.vscode-wakatime` to install the WakaTime extension [(docs)](https://marketplace.visualstudio.com/items?itemName=WakaTime.vscode-wakatime)
 
 ![](https://wakatime.com/static/img/ScreenShots/Screen-Shot-2016-03-21.png)
 
@@ -199,7 +199,7 @@ The following extensions are not as essential as the ones listed above, but I st
 
 LaTeX Workshop is a comprehensive extension for working with LaTeX documents in VSCode, featuring syntax highlighting, building and previewing, IntelliSense, and more.
 
-Use `code --install-extension James-Yu.latex-workshop` to install the LaTeX Workshop extension
+Use `code --install-extension James-Yu.latex-workshop` to install the LaTeX Workshop extension [(docs)](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop)
 
 ![](https://github.com/James-Yu/LaTeX-Workshop/raw/2a843a258002f05807203c078715dd6836faeeb8/demo_media/preview.gif)
 
@@ -207,103 +207,105 @@ Use `code --install-extension James-Yu.latex-workshop` to install the LaTeX Work
 
 Visual Studio Live Share is a real-time collaboration extension that allows you to share your workspace with others, enabling pair programming, code reviews, and collaborative debugging.
 
-Use `code --install-extension ms-vsliveshare.vsliveshare` to install the Live Share extension
+Use `code --install-extension ms-vsliveshare.vsliveshare` to install the Live Share extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ms-vsliveshare.vsliveshare)
+
+![](https://aka.ms/vsls/quickstart/invite)
 
 ### Azure Account and Repos
 
 These extensions offer a range of Azure-related functionality, including managing your Azure account, working with Azure Repos, exploring remote resources, and browsing remote Git repositories.
 
-Use `code --install-extension ms-vscode.azure-account` to install the Azure Account extension
-Use `code --install-extension ms-vscode.azure-repos` to install the Azure Repos extension
+Use `code --install-extension ms-vscode.azure-account` to install the Azure Account extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-account)
+Use `code --install-extension ms-vscode.azure-repos` to install the Azure Repos extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-repos)
 
 
 ### CodeSnap
 
 CodeSnap is a handy extension for creating beautiful code screenshots directly from your editor, making it easier to share code snippets on social media, blog posts, or documentation.
 
-Use `code --install-extension adpyke.codesnap` to install the CodeSnap extension
+Use `code --install-extension adpyke.codesnap` to install the CodeSnap extension [(docs)](https://marketplace.visualstudio.com/items?itemName=adpyke.codesnap)
 
 ### Micromamba
 
 The Micromamba extension for VSCode integrates the Micromamba package manager, making it easier to manage Conda environments and packages within the editor.
 
-Use `code --install-extension corker.vscode-micromamba` to install the Micromamba extension
+Use `code --install-extension corker.vscode-micromamba` to install the Micromamba extension [(docs)](https://marketplace.visualstudio.com/items?itemName=corker.vscode-micromamba)
 
 ### Databricks
 
 The Databricks extension provides integration with Databricks, allowing you to manage your Databricks workspaces, clusters, jobs, and notebooks within VSCode.
 
-Use `code --install-extension databricks.databricks` to install the Databricks extension
+Use `code --install-extension databricks.databricks` to install the Databricks extension [(docs)](https://marketplace.visualstudio.com/items?itemName=databricks.databricks)
 
 ### Markdownlint
 
 Markdownlint is a VSCode extension that provides linting and style-checking for Markdown files, ensuring consistent and clean Markdown content.
 
-Use `code --install-extension DavidAnson.vscode-markdownlint` to install the Markdownlint extension
+Use `code --install-extension DavidAnson.vscode-markdownlint` to install the Markdownlint extension [(docs)](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
 
 ### Prettier
 
 Prettier is a powerful code formatter that supports multiple languages, including JavaScript, TypeScript, HTML, CSS, and more. It enforces a consistent code style across your project.
 
-Use `code --install-extension esbenp.prettier-vscode` to install the Prettier extension
+Use `code --install-extension esbenp.prettier-vscode` to install the Prettier extension [(docs)](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 
 ### MyST Highlight
 
 MyST Highlight adds syntax highlighting support for MyST (Markedly Structured Text) files in VSCode, which is an extended version of the Markdown syntax for scientific writing and publishing.
 
-Use `code --install-extension ExecutableBookProject.myst-highlight` to install the MyST Highlight extension
+Use `code --install-extension ExecutableBookProject.myst-highlight` to install the MyST Highlight extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ExecutableBookProject.myst-highlight)
 
 ### Code Runner
 
 Code Runner is a versatile extension that enables you to quickly run code snippets or whole files for multiple programming languages within VSCode, without the need to switch to an external terminal.
 
-Use `code --install-extension formulahendry.code-runner` to install the Code Runner extension
+Use `code --install-extension formulahendry.code-runner` to install the Code Runner extension [(docs)](https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner)
 
 ### Go
 
 The Go extension by the Go team provides rich language support for the Go programming language, with features like IntelliSense, debugging, linting, and code navigation.
 
-Use `code --install-extension golang.go` to install the Go extension
+Use `code --install-extension golang.go` to install the Go extension [(docs)](https://marketplace.visualstudio.com/items?itemName=golang.go)
 
 ### Home Assistant
 
 The Home Assistant extension for VSCode provides integration with Home Assistant configuration files, offering syntax highlighting, auto-completion, and validation.
 
-Use `code --install-extension keesschollaart.vscode-home-assistant` to install the Home Assistant extension
+Use `code --install-extension keesschollaart.vscode-home-assistant` to install the Home Assistant extension [(docs)](https://marketplace.visualstudio.com/items?itemName=keesschollaart.vscode-home-assistant)
 
 ### Azure Pipelines, Resource Groups, Storage, and Terraform
 
 These Microsoft Azure extensions provide powerful integrations with various Azure services, allowing you to manage pipelines, resource groups, storage, and Terraform configurations directly within VSCode.
 
-Use `code --install-extension ms-azure-devops.azure-pipelines` to install the Azure Pipelines extension
-Use `code --install-extension ms-azuretools.vscode-azureresourcegroups` to install the Azure Resource Groups extension
-Use `code --install-extension ms-azuretools.vscode-azurestorage` to install the Azure Storage extension
-Use `code --install-extension ms-azuretools.vscode-azureterraform` to install the Azure Terraform extension
+Use `code --install-extension ms-azure-devops.azure-pipelines` to install the Azure Pipelines extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ms-azure-devops.azure-pipelines)
+Use `code --install-extension ms-azuretools.vscode-azureresourcegroups` to install the Azure Resource Groups extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureresourcegroups)
+Use `code --install-extension ms-azuretools.vscode-azurestorage` to install the Azure Storage extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurestorage)
+Use `code --install-extension ms-azuretools.vscode-azureterraform` to install the Azure Terraform extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureterraform)
 
 ### Docker
 
 The Docker extension adds rich support for working with Docker containers and images in VSCode, including building, managing, and deploying containerized applications.
 
-Use `code --install-extension ms-azuretools.vscode-docker` to install the Docker extension
+Use `code --install-extension ms-azuretools.vscode-docker` to install the Docker extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
 
 ### AutoDocstring
 
 AutoDocstring is a helpful extension that automatically generates docstrings for Python functions and classes, following popular docstring formats like Google, NumPy, and reStructuredText.
 
-Use `code --install-extension njpwerner.autodocstring` to install the AutoDocstring extension
+Use `code --install-extension njpwerner.autodocstring` to install the AutoDocstring extension [(docs)](https://marketplace.visualstudio.com/items?itemName=njpwerner.autodocstring)
 
 ### XML and YAML
 
 These extensions by Red Hat provide rich language support for XML and YAML, including syntax highlighting, validation, code navigation, and more.
 
-Use `code --install-extension redhat.vscode-xml` to install the XML extension
-Use `code --install-extension redhat.vscode-yaml` to install the YAML extension
+Use `code --install-extension redhat.vscode-xml` to install the XML extension [(docs)](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-xml)
+Use `code --install-extension redhat.vscode-yaml` to install the YAML extension [(docs)](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)
 
 ### Rust Analyzer
 
 Rust Analyzer is a powerful language server for the Rust programming language, offering features like syntax highlighting, code navigation, and auto-completion.
 
-Use `code --install-extension rust-lang.rust-analyzer` to install the Rust Analyzer extension
+Use `code --install-extension rust-lang.rust-analyzer` to install the Rust Analyzer extension [(docs)](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
 
 ### Even Better TOML
 
@@ -313,47 +315,47 @@ Even Better TOML is a VSCode extension that provides syntax highlighting, valida
 
 Terrastruct is a VSCode extension that helps you visualize your Terraform dependency graphs as interactive diagrams, making it easier to understand complex infrastructure-as-code projects.
 
-Use `code --install-extension Terrastruct.d2` to install the Terrastruct extension
+Use `code --install-extension Terrastruct.d2` to install the Terrastruct extension [(docs)](https://marketplace.visualstudio.com/items?itemName=Terrastruct.d2)
 
 ### PDF
 
 The PDF extension allows you to view and manage PDF files directly within VSCode, with support for zooming, rotating, and searching text.
 
-Use `code --install-extension tomoki1207.pdf` to install the PDF extension
+Use `code --install-extension tomoki1207.pdf` to install the PDF extension [(docs)](https://marketplace.visualstudio.com/items?itemName=tomoki1207.pdf)
 
 ### LTeX
 
 LTeX is a grammar and spell checker extension for LaTeX, Markdown, and other markup languages, with support for multiple languages and customizable rules.
 
-Use `code --install-extension valentjn.vscode-ltex` to install the LTeX extension
+Use `code --install-extension valentjn.vscode-ltex` to install the LTeX extension [(docs)](https://marketplace.visualstudio.com/items?itemName=valentjn.vscode-ltex)
 
 ### IntelliCode API Usage Examples and IntelliCode
 
 These extensions by the Visual Studio Expt Team provide AI-powered code completion and code examples, helping you write code faster and with fewer errors.
 
-Use `code --install-extension VisualStudioExptTeam.intellicode-api-usage-examples` to install the IntelliCode API Usage Examples extension
-Use `code --install-extension VisualStudioExptTeam.vscodeintellicode` to install the IntelliCode extension
+Use `code --install-extension VisualStudioExptTeam.intellicode-api-usage-examples` to install the IntelliCode API Usage Examples extension [(docs)](https://marketplace.visualstudio.com/items?itemName=VisualStudioExptTeam.intellicode-api-usage-examples)
+Use `code --install-extension VisualStudioExptTeam.vscodeintellicode` to install the IntelliCode extension [(docs)](https://marketplace.visualstudio.com/items?itemName=VisualStudioExptTeam.vscodeintellicode)
 
 ### vscode-icons
 
 vscode-icons is a popular extension that adds file icons to VSCode, making it easier to identify file types in the file explorer.
 
-Use `code --install-extension vscode-icons-team.vscode-icons` to install the vscode-icons extension
+Use `code --install-extension vscode-icons-team.vscode-icons` to install the vscode-icons extension [(docs)](https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons)
 
 ### Jupyter Renderers
 
 Jupyter Renderers is an extension that provides additional output renderers for Jupyter notebooks in VSCode, enhancing the display of data visualizations and other rich media.
 
-Use `code --install-extension ms-toolsai.jupyter-renderers` to install the Jupyter Renderers extension
+Use `code --install-extension ms-toolsai.jupyter-renderers` to install the Jupyter Renderers extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter-renderers)
 
 ### Jupyter Cell Tags
 
 Jupyter Cell Tags is an extension that adds support for cell tags in Jupyter notebooks within VSCode, allowing you to organize and filter cells by custom tags.
 
-Use `code --install-extension ms-toolsai.vscode-jupyter-cell-tags` to install the Jupyter Cell Tags extension
+Use `code --install-extension ms-toolsai.vscode-jupyter-cell-tags` to install the Jupyter Cell Tags extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.vscode-jupyter-cell-tags)
 
 ### Jupyter Slideshow
 
 Jupyter Slideshow is an extension that enables creating and presenting slideshows directly from Jupyter notebooks in VSCode, turning your notebooks into dynamic presentations.
 
-Use `code --install-extension ms-toolsai.vscode-jupyter-slideshow` to install the Jupyter Slideshow extension
+Use `code --install-extension ms-toolsai.vscode-jupyter-slideshow` to install the Jupyter Slideshow extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.vscode-jupyter-slideshow)
