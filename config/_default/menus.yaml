@@ -13,6 +13,9 @@ main:
   - name: "Projects"
     url: "#projects"
     weight: 40
+  - name: "Blog"
+    url: "#blog-posts"
+    weight: 45
   - name: "Photography"
     url: "#photography"
     weight: 50
