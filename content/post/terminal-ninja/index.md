@@ -210,7 +210,7 @@ Autoenv comes to our rescue by automating the process of activating and deactiva
 It magically detects when we enter or leave a directory and takes the appropriate actions to set or unset environment variables.
 
 For example you can setup a `.env` file in your project directory to automatically activate a virtual environment when you enter the directory.
-I frequently do something like this to activate a Python environment:
+I frequently create a `.env` file in a repo and activate a Python environment:
 
 ```bash
 conda activate myenv
@@ -218,7 +218,7 @@ conda activate myenv
 
 To set up Autoenv, follow these steps:
 
-1.  Install Autoenv by cloning the repository:
+1.  Install Autoenv by cloning the repository (or add it to your `dotfiles`):
     
     ```bash
     git clone git://github.com/hyperupcall/autoenv.git ~/.autoenv
