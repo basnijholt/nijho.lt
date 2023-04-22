@@ -1,0 +1,29 @@
+<!-- Updated from https://github.com/wowchemy/wowchemy-hugo-themes/blob/859b57464242bd76227ac3db8cf2f08ce2147ee5/modules/wowchemy/layouts/partials/page_metadata_authors.html#L1 -->
+<!-- to only show 20 authors -->
+{{/* Display author list. */}}
+
+{{- $taxonomy := "authors" }}
+{{ if .Param $taxonomy }}
+  {{ $authors := .GetTerms $taxonomy }}
+  {{ range $index, $value := first 20 $authors }}
+    {{- /* Highlight the author's name? */ -}}
+    {{- $highlight_name := .Page.Params.highlight_name | default false -}}
+
+    {{- if gt $index 0 }}, {{ end -}}
+    <span {{ if $highlight_name }}class="author-highlighted"{{end}}>
+      {{/* Effectively check the page's `_build` option as `_build` is not exposed in Hugo's Page object. */}}
+      {{- if .RelPermalink -}}
+        <a href="{{.RelPermalink}}">{{.LinkTitle}}</a>
+      {{- else -}}
+        {{ .LinkTitle }}
+      {{- end -}}
+    </span>
+    {{- if isset $.Params "author_notes" -}}
+      {{- with (index $.Params.author_notes $index) -}}
+        <i class="author-notes fas fa-info-circle" data-toggle="tooltip" title="{{.}}"></i>
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $remainingAuthors := sub (len $authors) 20 }}
+  {{- if gt $remainingAuthors 0 }} <i>and {{ $remainingAuthors }} more{{ end }}</i>.
+{{- end -}}
