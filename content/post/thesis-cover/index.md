@@ -1,7 +1,7 @@
 ---
-title: How I designed the cover of my Ph.D. thesis
-subtitle: Using quantum device simulation data, adaptive sampling, neural networks, clustering, widgets, and more.
-summary: Using quantum device simulation data, adaptive sampling, neural networks, clustering, widgets, and more.
+title: Crafting Unique Ph.D. Thesis Covers with Python
+subtitle: Exploring Quantum Device Simulations, Adaptive Sampling, and Neural Networks to Create Visually Stunning Thesis Covers
+summary: Exploring Quantum Device Simulations, Adaptive Sampling, and Neural Networks to Create Visually Stunning Thesis Covers
 projects: []
 date: '2020-04-04T13:40:00Z'
 draft: false
@@ -36,7 +36,7 @@ Four years of work has gone into generating the content of the thesis, so I figu
 Unfortunately, I am by no means an expert on a graphical design or even competent enough to attempt to use any kind of graphic design software.
 But luckily for me, I do consider myself an expert in Python <i class="fab fa-python"></i>, and why not make the thesis design a fun process?
 
-## Initial design
+## Initial Design: Adaptive Sampling and Data Visualization
 
 My vague plan was to somehow incorporate a plot resulting from a simulation run with [Adaptive](https://adaptive.readthedocs.io/) [[source](https://github.com/python-adaptive/adaptive) <i class="fab fa-github"></i>], the software I wrote during my Ph.D. to adaptively sample functions in parallel and my proudest work.
 I even had a potential simulation result in mind that I would use for it, specifically, one that has been on the background of my good friend’s phone for some years and one that has earned me quite some internet points on [Reddit](https://www.reddit.com/r/dataisbeautiful/comments/eaap3p/python_quantum_research_art_saving_1000s_hours_of/).
@@ -66,7 +66,7 @@ When the files slowly started to appear on my computer (I have my local files sy
 There were simply so many cool looking alternatives.
 Too many to manually select now, to be honest---a problem for later I thought.
 
-## The selection process
+## Overcoming the Paradox of Choice: Clustering and Neural Networks
 
 Four months later, with the rest of my thesis completely done and about a day left on the deadline to submit my thesis, I found myself facing the selection problem I had successfully ignored for so long.
 There must be a smarter way to select the covers, I thought.
@@ -96,7 +96,7 @@ The selection process was done using [this Jupyter notebook](https://github.com/
 
 Finally, I copied the selected clusters into different folders and used the OS's file explorer to manually select a few covers from each cluster.
 
-## Final touches
+## Final Touches: Fine-Tuning Colors and Adding Edition Numbers
 
 Then I printed an initial version of my thesis, however, I wasn't really happy with the colors.
 
