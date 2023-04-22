@@ -3,7 +3,7 @@ title: Be a Ninja in the Terminal 🥷
 subtitle: A setup for maximal productivity and minimal keystrokes, with `zsh`, `oh-my-zsh`, `keychain`, `starship`, `autoenv`, `z`, `zsh-autosuggestions`, and more.
 summary: A setup for maximal productivity and minimal keystrokes, with `zsh`, `oh-my-zsh`, `keychain`, `starship`, `autoenv`, `z`, `zsh-autosuggestions`, and more.
 projects: []
-date: '2022-04-21T00:00:00Z'
+date: '2023-04-21T00:00:00Z'
 draft: false
 featured: false
 
@@ -151,8 +151,11 @@ Let's go through some of ***my*** most commonly used aliases (ranked by frequenc
 *   `g`: git - The git command itself.
 *   `gcb`: git checkout -b - Create a new branch and switch to it.
 *   `gc`: git commit --verbose - Create a new commit with a verbose message.
+*   `gc!`: git commit --verbose --amend - Amend the previous commit with a verbose message.
 *   `ga`: git add - Add file contents to the index.
 *   `gca`: git commit --verbose --all - Commit all changes with a verbose message.
+*   `gca!`: git commit --verbose --all --amend - Amend the previous commit with a verbose message.
+*   `gcp`: git cherry-pick - Apply the changes introduced by some existing commits.
 *   `gst`: git status - Show the working tree status.
 *   `gp`: git push - Update remote refs along with associated objects.
 *   `gmom`: git merge origin/$(git_main_branch) - Merge changes from the main branch.
