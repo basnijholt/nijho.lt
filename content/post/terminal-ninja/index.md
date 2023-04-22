@@ -35,7 +35,7 @@ categories:
 
 Welcome to the dojo, fellow terminal warriors!
 Today, I'll guide you through the mystic arts of terminal productivity, sharing with you the tools I use to maximize efficiency and minimize keystrokes.
-When helping others with problems on their computer, I often find myself in their terminal, and feel like walking through sand.
+When helping others with programming problems on their computer, I often find myself in their terminal, and feel like walking through sand.
 When I show how awesome of an experience it can be, I often find myself repeating the same suggestions over and over again.
 So, I decided to write this guide to help others set up their terminal in a similar fashion.
 In this short post, we'll explore the wonders of `zsh`, `oh-my-zsh`, `keychain`, `starship`, `autoenv`, `z`, `zsh-autosuggestions`, several Oh My ZSH plugins, having a `dotfiles` repo, and more!
