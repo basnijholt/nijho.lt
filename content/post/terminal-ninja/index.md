@@ -38,7 +38,7 @@ Today, I'll guide you through the mystic arts of terminal productivity, sharing 
 When helping others with programming problems on their computer, I often find myself in their terminal, and feel like walking through sand.
 When I show how awesome of an experience it can be, I often find myself repeating the same suggestions over and over again.
 So, I decided to write this guide to help others set up their terminal in a similar fashion.
-In this short post, we'll explore the wonders of `zsh`, `oh-my-zsh`, `keychain`, `starship`, `autoenv`, `z`, `zsh-autosuggestions`, several Oh My ZSH plugins, having a `dotfiles` repo, and more!
+In this short post, we'll explore the wonders of [`zsh`](https://www.zsh.org/), [`oh-my-zsh`](https://ohmyz.sh/), [`keychain`](https://wiki.gentoo.org/wiki/Keychain), [`starship`](https://starship.rs/), [`autoenv`](https://github.com/hyperupcall/autoenv), [`z`](https://github.com/agkozak/zsh-z), [`zsh-autosuggestions`](https://github.com/zsh-users/zsh-autosuggestions), several Oh My ZSH plugins, having a `dotfiles` repo, and more!
 
 ![](https://camo.githubusercontent.com/18cdb04e93fe276412b588dbed23bc328614bf7a4d09ea4d8862d38f1c466c65/687474703a2f2f6d656469612e74756d626c722e636f6d2f74756d626c725f6c74757a6a766251364c31717a677078392e676966)
 
