@@ -22,6 +22,9 @@ tags:
   - machine learning
   - programming
   - python
+  - matplotlib
+  - ipywidgets
+  - keras
 
 categories:
   - phd
