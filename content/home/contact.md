@@ -8,32 +8,32 @@ subtitle: ""
 content:
   autolink: true
 
-  # Contact (edit or remove options as required)
-
   email: bas@nijho.lt
-  phone: "+31613049138"
   address:
-    street: Building 22 Room F329, TU Delft, Lorentzweg 1
-    city: Delft
-    region: Zuid-Holland
-    postcode: '2628 CJ'
-    country: the Netherlands
-    country_code: NL
+    street: Building 41
+    city: Redmond
+    region: Washington
+    postcode: '98052'
+    country: the USA
+    country_code: US
   coordinates:
-    latitude: '52.001093'
-    longitude: '4.375076'
-  directions: Go to Building 22 Room F329, TU Delft
+    latitude: '47.6205422'
+    longitude: '-122.3499137'
+  directions: Find me online or in person at the Microsoft campus in Redmond, WA.
   office_hours: []
-  # appointment_url: ''
   contact_links:
     - icon: "telegram"
       icon_pack: "fab"
       name: "@basnijholt"
       link: "https://telegram.me/@basnijholt"
-    - icon: "skype"
+    - icon: "twitter"
       icon_pack: "fab"
       name: "basnijholt"
-      link: "skype:basnijholt?call"
+      link: "https://twitter.com/basnijholt"
+    - icon: "github"
+      icon_pack: "fab"
+      name: "basnijholt"
+      link: "https://github.com/basnijholt"
 
 
 design:
