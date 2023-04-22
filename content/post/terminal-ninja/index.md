@@ -42,23 +42,24 @@ By keeping your `.bashrc`, `.zshrc`, and other configuration files under version
 2.  Synchronize your settings across multiple machines, allowing you to recreate your terminal setup on any system.
 3.  Share your configurations with others, helping them improve their own terminal experience.
 
-As an example, these are the submodules I am tracking in my `.git/config`:
+As an example, these are the submodules (we will go over a few later in this post) I am tracking in my `.git/config`:
 
 ```bash
-[submodule "pub/keychain"]
+[submodule "keychain"]
 	url = git@github.com:funtoo/keychain.git
-[submodule "pub/zsh/k"]
+[submodule "zsh/k"]
 	url = git@github.com:supercrabtree/k.git
-[submodule "pub/zsh/oh-my-zsh"]
+[submodule "zsh/oh-my-zsh"]
 	url = git@github.com:robbyrussell/oh-my-zsh.git
-[submodule "pub/zsh/zsh-autosuggestions"]
+[submodule "zsh/zsh-autosuggestions"]
 	url = git@github.com:zsh-users/zsh-autosuggestions.git
-[submodule "pub/zsh/zsh-syntax-highlighting"]
+[submodule "zsh/zsh-syntax-highlighting"]
 	url = git@github.com:zsh-users/zsh-syntax-highlighting.git
-[submodule "pub/.tmux"]
+[submodule ".tmux"]
 	url = https://github.com/gpakosz/.tmux.git
-[submodule "pub/autoenv"]
+[submodule "autoenv"]
 	url = https://github.com/hyperupcall/autoenv
+# (... a couple more ...)
 ```
 
 In this example, you store not only your configuration files but also several of the plugins as git submodules.
@@ -162,13 +163,24 @@ This is particularly useful when cloning Git repositories or interacting with re
 
 With Keychain, you only need to ***enter your SSH password once*** after rebooting, and it will remember it for future sessions, saving you valuable time and effort.
 
-To set up Keychain in your `.bash_profile`, add the following lines:
+To set up Keychain clone the Keychain tool (to e.g., your `dotfiles` directory):
+```bash
+git clone git@github.com:funtoo/keychain.git ~/dotfiles/keychain
+```
+
+Then in your `.bash_profile`, add the following lines:
 
 ```bash
-if ps -p $SSH_AGENT_PID > /dev/null; then
-    echo "ssh-agent is already running"
-else
-    eval `keychain --eval --quiet id_ed25519`
+if [[ `hostname` == 'Linux' ]]; then
+    export PATH="$PATH:${HOME}/dotfiles/pub/keychain/"
+    if ps -p $SSH_AGENT_PID > /dev/null; then
+        echo "ssh-agent is already running"
+    else
+        eval `keychain --eval --quiet id_ed25519`
+    fi
+fi
+if [[ `uname` == 'Darwin' ]]; then
+    eval `keychain --eval --quiet --agents ssh --inherit any-once id_ed25519`
 fi
 ```
 
