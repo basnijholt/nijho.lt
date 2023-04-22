@@ -41,7 +41,7 @@ I even had a potential simulation result in mind that I would use for it, specif
 This plot (below) is one of the results of Chapter 4 of [my thesis](http://files.nijho.lt/thesis.pdf) [[source](https://github.com/basnijholt/thesis) <i class="fab fa-github"></i>] and [this paper](https://arxiv.org/abs/1807.01940￼).
 
 <video style="width: 100%;max-width: 500px;" controls>
-  <source src="/assets/videos/basnijholt-thesis-cover/reddit-post.mp4" type="video/mp4">
+  <source src="https://user-images.githubusercontent.com/6897215/233811442-ce9bc475-af15-4b89-9578-67925419b769.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
@@ -51,7 +51,7 @@ I hit the paradox of choice: I had a total of *3671* unique data sets (all for M
 
 This is an early attempt (and rather ugly in hindsight)
 
-![](/images/basnijholt-thesis-cover/early-attempt.jpeg)
+![early-attempt](https://user-images.githubusercontent.com/6897215/233811538-dc3b5b86-6f6f-4bd6-840c-e466918ce151.jpeg)
 
 I decided to postpone the choice of which data to use and just focus on how to plot the data first.
 I experimented with different colormaps, fading colormaps that gradually reveal the underlying triangulation better, and more.
@@ -82,13 +82,13 @@ I fed the feature arrays to a [K-Means clustering algorithm](https://en.wikipedi
 To procrastinate a little more, I created an interactive widget using [`ipywidgets`](https://ipywidgets.readthedocs.io/) (see video below) to facilitate the selection process.
 
 <video style="width: 100%;max-width: 800px;" controls>
-  <source src="/assets/videos/basnijholt-thesis-cover/cover-selection-widget.mp4" type="video/mp4">
+  <source src="https://user-images.githubusercontent.com/6897215/233811575-98ea0be2-33f4-47f4-b3ee-f8e7bdf3c475.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
 These are the clusters that I selected in a grid
 
-![](/images/basnijholt-thesis-cover/chosen-clusters-front-and-back.jpeg)
+![chosen-clusters-front-and-back](https://user-images.githubusercontent.com/6897215/233811546-36be2cec-eb8c-437a-88d1-595a8602a7ba.jpeg)
 
 The selection process was done using [this Jupyter notebook](https://github.com/basnijholt/thesis-cover/blob/master/thesis-cover-selection.ipynb).
 
@@ -102,7 +102,7 @@ To choose the right color scheme I got help from a non-tech savvy friend who wen
 Due to the COVID-19 crisis, we couldn't sit side by side, so I created [this Binder "app"](https://mybinder.org/v2/gh/basnijholt/thesis-cover/master?filepath=color-picker.ipynb) with sliders.
 
 <video style="width: 100%;max-width: 800px;" controls>
-  <source src="/assets/videos/basnijholt-thesis-cover/color-picker.mp4" type="video/mp4">
+  <source src="https://user-images.githubusercontent.com/6897215/233811609-8fa74955-0c51-443e-9a87-115921530b7d.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
@@ -118,12 +118,12 @@ These are a few examples of the final result (click on one of the images to open
 
 A few days later, this was delivered to my doorstep
 
-![](/images/basnijholt-thesis-cover/theses-everywhere.jpg)
-![](/images/basnijholt-thesis-cover/printed.jpg)
+![theses-everywhere](https://user-images.githubusercontent.com/6897215/233811518-bd5426d6-05bc-4c7a-854a-4c373aa21fcf.jpg)
+![printed](https://user-images.githubusercontent.com/6897215/233811525-645b67a4-a9ea-48ba-a391-4639ed92c19d.jpg)
 
 And finally I mailed them to my Ph.D. committee
 
-![](/images/basnijholt-thesis-cover/mail.jpg)
+![mail](https://user-images.githubusercontent.com/6897215/233811533-3b85ff8d-8359-453b-8aa1-ef653629a0f4.jpg)
 
 Now it's time to start preparing for my defense at May 11, 2020 at 15:00!
 
