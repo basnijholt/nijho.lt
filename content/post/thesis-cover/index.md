@@ -17,13 +17,15 @@ authors:
   - admin
 
 tags:
-  - vscode
-  - vscode-extension
-  - editor
-  - ide
+  - phd
+  - thesis
+  - machine learning
+  - programming
+  - python
 
 categories:
-  - editor
+  - phd
+  - education
 ---
 
 *Originally posted on [quantumtinkerer.tudelft.nl/blog/thesis-cover](https://quantumtinkerer.tudelft.nl/blog/thesis-cover/) on 2020-04-04 13:40.*
@@ -114,7 +116,7 @@ to the back.
 
 These are a few examples of the final result (click on one of the images to open gallery view)
 
-{{% gallery basnijholt-thesis-cover %}}
+{{< gallery album="basnijholt-thesis-cover" resize_options="350x250" >}}
 
 A few days later, this was delivered to my doorstep
 
