@@ -19,6 +19,15 @@ authors:
 tags:
   - terminal
   - productivity
+  - zsh
+  - oh-my-zsh
+  - dotfiles
+  - starship
+  - autoenv
+  - z
+  - autoenv
+  - zsh-autosuggestions
+  - git
 
 categories:
   - terminal
