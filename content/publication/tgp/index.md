@@ -84,7 +84,7 @@ authors:
 - Sebastian Pauka
 - Karl Petersson
 - Luca Petit
-- Dima Pikulin
+- Dmitry I. Pikulin
 - Frank Preiss
 - Marina Quintero Perez
 - Katrine Rasmussen
