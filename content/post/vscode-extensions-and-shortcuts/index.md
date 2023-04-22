@@ -3,7 +3,7 @@ title: VSCode setup and most used keystrokes for turbocharged (mostly Python) de
 subtitle: My personal setup for maximal productivity and minimal keystrokes.
 summary: My personal setup for maximal productivity and minimal keystrokes.
 projects: []
-date: '2022-04-21T00:00:00Z'
+date: '2023-04-21T00:00:00Z'
 draft: false
 featured: false
 

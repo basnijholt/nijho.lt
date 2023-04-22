@@ -3,7 +3,7 @@ title: Be a Ninja in the Terminal 🥷
 subtitle: A setup for maximal productivity and minimal keystrokes, with `zsh`, `oh-my-zsh`, `keychain`, `starship`, `autoenv`, `z`, `zsh-autosuggestions`, and more.
 summary: A setup for maximal productivity and minimal keystrokes, with `zsh`, `oh-my-zsh`, `keychain`, `starship`, `autoenv`, `z`, `zsh-autosuggestions`, and more.
 projects: []
-date: '2022-04-21T00:00:00Z'
+date: '2023-04-21T00:00:00Z'
 draft: false
 featured: false
 
