@@ -8,7 +8,7 @@ draft: false
 featured: false
 
 image:
-  caption: 'My favorite extensions'
+  caption: 'One of the covers I generated'
   focal_point: ''
   placement: 2
   preview_only: false
