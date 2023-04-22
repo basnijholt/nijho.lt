@@ -56,7 +56,7 @@ GitLens supercharges the built-in Git support in VSCode, providing useful insigh
 
 Use `code --install-extension eamodio.gitlens` to install the GitLens extension
 
-![](https://raw.githubusercontent.com/gitkraken/vscode-gitlens/main/images/docs/revision-navigation.gif)
+![](https://raw.githubusercontent.com/gitkraken/vscode-gitlens/633fc030f6f6b372d6d487c2bd35a8346507f0b2/images/docs/revision-navigation.gif)
 
 ### GitHub Copilot
 
@@ -132,7 +132,6 @@ Use `code --install-extension ms-vscode.remote-repositories` to install the Remo
 
 ![](https://microsoft.github.io/vscode-remote-release/images/remote-containers-readme.gif)
 
-
 ### Code Spell Checker
 
 Code Spell Checker is a helpful extension that checks your code and comments for spelling errors, helping you maintain clean and professional code.
@@ -194,7 +193,7 @@ LaTeX Workshop is a comprehensive extension for working with LaTeX documents in 
 
 Use `code --install-extension James-Yu.latex-workshop` to install the LaTeX Workshop extension
 
-![](https://github.com/James-Yu/LaTeX-Workshop/raw/master/demo_media/preview.gif)
+![](https://github.com/James-Yu/LaTeX-Workshop/raw/2a843a258002f05807203c078715dd6836faeeb8/demo_media/preview.gif)
 
 ### Live Share
 
