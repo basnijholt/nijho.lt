@@ -99,6 +99,8 @@ Better Comments is a VSCode extension that helps improve the readability of your
 
 Use `code --install-extension aaron-bond.better-comments` to install the Better Comments extension
 
+![](https://github.com/aaron-bond/better-comments/raw/084a906e73a3ca96d5319441714be8e3a2a8c385/images/better-comments.PNG)
+
 ### Sublime Keybindings
 
 Sublime Keybindings adds keybindings from Sublime Text to VSCode, making it easier for developers familiar with Sublime Text to transition to VSCode.
