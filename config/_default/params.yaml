@@ -75,12 +75,16 @@ features:
     gravatar: false
     shape: circle
   comment:
-    provider: ''
-    disqus:
-      shortname: ''
-      show_count: true
-    commento:
-      url: ''
+    provider: 'giscus'
+    giscus:
+      repo: 'basnijholt/nijho.lt'
+      repo_id: 'MDEwOlJlcG9zaXRvcnkxNDAwMjE0MDE='
+      category: 'General'
+      category_id: 'DIC_kwDOCFiOmc4CV-Q5'
+      theme: preferred_color_scheme
+      language_code: en
+      mapping: pathname
+
   search:
     provider: wowchemy
     algolia:
