@@ -72,7 +72,6 @@ brew install --cask \
   bartender \
   bettertouchtool \
   brave-browser \
-  bunqcommunity-bunq \
   cakebrew \
   calibre \
   chromedriver \
@@ -561,10 +560,6 @@ A multifunctional utility for macOS, offering maintenance, optimization, and per
 *   Install with `brew install --cask onyx`
 
 ### 11. Miscellaneous
-
-#### Bunq Community Bunq 🏦💻
-An unofficial, open-source desktop client for the Bunq banking platform, simplifying account management and transactions.
-*   Install with `brew install --cask bunqcommunity-bunq`
 
 #### Exodus 💰🔒
 A user-friendly cryptocurrency wallet, supporting a wide range of assets, exchange features, and portfolio management.
