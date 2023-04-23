@@ -169,7 +169,7 @@ source $ZSH/oh-my-zsh.sh
 With the `dirhistory` plugin, navigating through directories becomes a breeze.
 You'll be able to move up and down the directory hierarchy and traverse your directory history with just a few keystrokes, making your terminal experience even more efficient and enjoyable.
 
-## 🚀🔧 Oh-my-zsh Git Plugin: Turbocharge Your Git Workflow
+## 🔧 Oh-my-zsh Git Plugin: Turbocharge Your Git Workflow
 
 If you are a developer, you probably use Git *a lot*!
 I know I do.
