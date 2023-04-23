@@ -131,7 +131,7 @@ To set up Zsh and Oh-my-zsh, follow these steps:
 3.  Edit your `.zshrc` file and add the following lines to customize your plugins and theme:
     
     ```bash
-    ZSH_THEME="your-theme"
+    ZSH_THEME="robbyrussell" # or any other theme you like
     plugins=(git z dirhistory history sudo)
     ```
 

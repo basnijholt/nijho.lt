@@ -514,8 +514,8 @@ Next, configure your Sphinx project to use MyST-NB by adding the following lines
 extensions = [
     "myst_nb",
 ]
-
 ```
+
 Now, Sphinx will be able to parse and execute your Jupyter notebooks during the documentation build process, integrating them seamlessly with your existing documentation.
 
 In summary, using Read the Docs, Sphinx, MyST-NB, and Jupytext notebooks for your documentation enables you to create high-quality, interactive, and easily maintainable documentation that benefits your project's users and contributors. This combination of tools ensures that your documentation remains up-to-date, easily navigable, and engaging, ultimately enhancing the overall experience for your project's audience.
