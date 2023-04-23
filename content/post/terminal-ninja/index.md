@@ -137,7 +137,7 @@ To set up Zsh and Oh-my-zsh, follow these steps:
 
 ## 🚀 Oh-my-zsh Z Plugin: Jump Around!
 
-A true ninja can swiftly navigate through the file system, and Z is our secret weapon.
+A true ninja can swiftly navigate through the file system, and [Z](https://github.com/agkozak/zsh-z) is our secret weapon.
 Z is a fantastic utility that allows us to jump around our directories based on the frequency and recency of use.
 With the power of Z, we can leap to any folder in an instant, vanishing and reappearing like a shadow in the night.
 
@@ -173,7 +173,7 @@ You'll be able to move up and down the directory hierarchy and traverse your dir
 
 If you are a developer, you probably use Git *a lot*!
 I know I do.
-Writing out `git checkout` and `git commit` every time I want to switch branches or commit changes is a waste of time, therefore I use the `git` plugin in Oh-my-zsh which provides useful aliases to make my Git workflow more efficient.
+Writing out `git checkout` and `git commit` every time I want to switch branches or commit changes is a waste of time, therefore I use [the `git` plugin](https://github.com/ohmyzsh/ohmyzsh/tree/5d3e86e2a48adf7a308773f8f1b725d187c7c5ef/plugins/git#git-plugin) in Oh-my-zsh which provides useful aliases to make my Git workflow more efficient.
 Let's go through some of ***my*** most commonly used aliases (ranked by frequency of use):
 
 *   `gco`: `git checkout` - Switch branches or restore working tree files.
@@ -199,10 +199,12 @@ plugins=(... git ...)
 source $ZSH/oh-my-zsh.sh
 ```
 
+See this list of [Git aliases](https://github.com/ohmyzsh/ohmyzsh/tree/5d3e86e2a48adf7a308773f8f1b725d187c7c5ef/plugins/git#git-plugin) that the Git plugin provides for more useful aliases.
+
 ## 🔑 Keychain: The Keeper of Secrets
 
 As ninjas, we must keep our secrets safe.
-Keychain helps us do just that by managing our SSH keys, ensuring we have secure access to remote systems.
+[Keychain](https://wiki.gentoo.org/wiki/Keychain) helps us do just that by managing our SSH keys, ensuring we have secure access to remote systems.
 This is particularly useful when cloning Git repositories or interacting with remote servers using SSH.
 
 With Keychain, you only need to ***enter your SSH password once*** after rebooting, and it will remember it for future sessions, saving you valuable time and effort.
