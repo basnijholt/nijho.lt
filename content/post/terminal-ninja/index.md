@@ -22,6 +22,7 @@ tags:
   - zsh
   - oh-my-zsh
   - dotfiles
+  - dotbot
   - starship
   - autoenv
   - z
@@ -56,23 +57,41 @@ By keeping your `.bashrc`, `.zshrc`, and other configuration files under version
 2.  Synchronize your settings across multiple machines, allowing you to recreate your terminal setup on any system.
 3.  Share your configurations with others, helping them improve their own terminal experience.
 
-As an example, these are the submodules (we will go over a few later in this post) I am tracking in my `.git/config`:
+As an example, these are the submodules (we will go over a few later in this post) I am tracking in my `dotfiles` repository:
 
 ```bash
-[submodule "keychain"]
-	url = git@github.com:funtoo/keychain.git
-[submodule "zsh/k"]
-	url = git@github.com:supercrabtree/k.git
-[submodule "zsh/oh-my-zsh"]
+[submodule "configs/zsh/oh-my-zsh"]
+	path = submodules/oh-my-zsh
 	url = git@github.com:robbyrussell/oh-my-zsh.git
-[submodule "zsh/zsh-autosuggestions"]
-	url = git@github.com:zsh-users/zsh-autosuggestions.git
-[submodule "zsh/zsh-syntax-highlighting"]
+[submodule "configs/zsh/zsh-syntax-highlighting"]
+	path = submodules/zsh-syntax-highlighting
 	url = git@github.com:zsh-users/zsh-syntax-highlighting.git
-[submodule ".tmux"]
+[submodule "configs/zsh/zsh-autosuggestions"]
+	path = submodules/zsh-autosuggestions
+	url = git@github.com:zsh-users/zsh-autosuggestions.git
+[submodule "submodules/keychain"]
+	path = submodules/keychain
+	url = git@github.com:funtoo/keychain.git
+[submodule "syncthing-resolve-conflicts"]
+	path = submodules/syncthing-resolve-conflicts
+	url = git@github.com:dschrempf/syncthing-resolve-conflicts.git
+[submodule "configs/zsh/k"]
+	path = submodules/k
+	url = git@github.com:supercrabtree/k.git
+[submodule "submodules/.tmux"]
+	path = submodules/tmux
 	url = https://github.com/gpakosz/.tmux.git
-[submodule "autoenv"]
+[submodule "configs/zsh/autoenv"]
+	path = submodules/autoenv
 	url = https://github.com/hyperupcall/autoenv
+[submodule "submodules/bypass-paywalls-chrome"]
+	path = submodules/bypass-paywalls-chrome
+	url = git@github.com:iamadamdev/bypass-paywalls-chrome.git
+[submodule "submodules/dotbot"]
+	path = submodules/dotbot
+	url = https://github.com/anishathalye/dotbot
+[submodule "dotbot"]
+	ignore = dirty
 # (... a couple more ...)
 ```
 
@@ -81,6 +100,8 @@ This approach ensures that all your essential settings and tools are in one plac
 
 To get started with version controlling your dotfiles, create a new Git repository and add your configuration files and submodules.
 Then, commit your changes and push them to a remote repository (such as GitHub or GitLab) for safekeeping and easy access.
+
+I highly recommend using [Dotbot](https://github.com/anishathalye/dotbot) to automate the installation of your dotfiles.
 
 Embrace the power of version control and keep your dotfiles safe and secure, as any true terminal ninja would.
 
