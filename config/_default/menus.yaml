@@ -7,17 +7,17 @@ main:
   - name: "Home"
     url: "#about"
     weight: 10
-  - name: "Publications"
-    url: "#publications"
+  - name: "Blog"
+    url: "#blog-posts"
     weight: 20
   - name: "Projects"
     url: "#projects"
-    weight: 40
-  - name: "Blog"
-    url: "#blog-posts"
-    weight: 45
+    weight: 30
   - name: "Photography"
     url: "#photography"
+    weight: 40
+  - name: "Publications"
+    url: "#publications"
     weight: 50
   - name: "Contact"
     url: "#contact"

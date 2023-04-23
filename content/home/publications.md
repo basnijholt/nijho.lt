@@ -7,7 +7,7 @@ widget: pages
 headless: true
 
 # Order that this section appears on the page.
-weight: 20
+weight: 50
 
 title: Publications
 subtitle: "Citation metrics at [Google Scholar <em class='ai ai-google-scholar'> </em>](https://scholar.google.com/citations?user=nIO4EK4AAAAJ&hl)"

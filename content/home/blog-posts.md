@@ -2,7 +2,7 @@
 widget: pages
 headless: true
 active: true
-weight: 45
+weight: 20
 title: 'Blog Posts'
 subtitle: 'Sparse scribblings on a variety of topics'
 content:

@@ -3,7 +3,7 @@ widget: blank
 active: true
 title: Photography
 subtitle: The hobby
-weight: 50
+weight: 40
 ---
 
 I enjoy traveling and photography.

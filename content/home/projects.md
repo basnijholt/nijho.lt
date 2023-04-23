@@ -7,7 +7,7 @@ widget: portfolio
 headless: true
 
 # Order that this section appears on the page.
-weight: 40
+weight: 30
 
 title: Projects
 subtitle: "Open-source, see my [GitHub profile <em class='fab fa-github fa-fw'> </em>](https://github.com/basnijholt)"
