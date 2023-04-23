@@ -212,20 +212,24 @@ Otherwise, you can install the essential applications and tools one by one:
 #### Chrome 🌐💨
 A fast and user-friendly browser with seamless Google service integration and extensive extension library.
 * Install with `brew install --cask google-chrome`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://support.google.com/chrome/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/googlechrome/)
 
 #### Brave Browser 🛡️🦁
 A privacy-focused browser with built-in adblocker and support for Chrome extensions, rewarding content creators via BAT tokens.
 * Install with `brew install --cask brave-browser`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://support.brave.com/hc/en-us) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/brave/brave-browser)
 
 #### Firefox 🔓🦊
 An open-source browser prioritizing user privacy and security, offering a customizable experience with various add-ons.
 * Install with `brew install --cask firefox`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://support.mozilla.org/en-US/products/firefox) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/mozilla-mobile/firefox-ios)
 
 ### 2. 🛠️ Productivity Tools
 
 #### Alfred 🚀🔍
 A powerful application launcher and productivity tool for quick actions, searches, and workflow automation.
 * Install with `brew install --cask alfred`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://www.alfredapp.com/help/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/alfredapp)
 
 #### Bartender 🍸🖥️
 A utility to organize and manage your Mac's menu bar icons, improving aesthetics and accessibility.
@@ -234,10 +238,12 @@ A utility to organize and manage your Mac's menu bar icons, improving aesthetics
 #### BetterTouchTool 👆🛠️
 A customizable input device manager that enables advanced gesture control and shortcuts for your Mac.
 * Install with `brew install --cask bettertouchtool`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://docs.bettertouchtool.net/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/fifafu/BetterTouchTool)
 
 #### HiddenBar 📏🖥️
 A lightweight tool to hide menu bar icons and declutter your Mac's interface.
 * Install with `brew install --cask hiddenbar`
+* See the  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/dwarvesf/hidden)
 
 #### iStat Menus 📊🌡️
 A comprehensive system monitor providing detailed information about your Mac's performance through customizable menu bar icons.
@@ -246,44 +252,54 @@ A comprehensive system monitor providing detailed information about your Mac's p
 #### Karabiner-Elements ⌨️🔧
 A powerful keyboard customizer allowing you to remap keys, create shortcuts, and improve typing efficiency on your Mac.
 * Install with `brew install --cask karabiner-elements`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://karabiner-elements.pqrs.org/docs/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/pqrs-org/Karabiner-Elements)
 
 #### KeepingYouAwake ☕💻
 A utility to prevent your Mac from going to sleep or turning off the display when you need it to stay active.
 * Install with `brew install --cask keepingyouawake`
+* See the  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/newmarcel/KeepingYouAwake)
 
 #### Obsidian 📝🔗
 A powerful note-taking and knowledge management application that uses plain text files with Markdown support.
 * Install with `brew install --cask obsidian`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://help.obsidian.md/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/obsidianmd)
 
 #### Rectangle 🖼️⌨️
 A window management tool to easily resize and position windows on your Mac using keyboard shortcuts or snap-to-edge functionality.
 * Install with `brew install --cask rectangle`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/rxhanson/Rectangle/blob/master/README.md) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/rxhanson/Rectangle)
 
 #### Raycast ⚡🖱️
 A productivity tool that allows you to control your Mac using powerful and customizable command-based actions.
 * Install with `brew install --cask raycast`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://www.raycast.com/docs/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/raycast)
 
 ### 3. 📣 Communication
 
 #### Microsoft Teams 📞📈
 A collaboration and communication platform for businesses, integrating chat, meetings, file sharing, and more.
 * Install with `brew install --cask microsoft-teams`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://docs.microsoft.com/en-us/microsoftteams/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/microsoft)
 
 #### Signal 🔐💬
 A secure and private messaging app with end-to-end encryption, supporting voice and video calls.
 * Install with `brew install --cask signal`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://support.signal.org/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/signalapp)
 
 #### Skype 📱🌍
 A widely used communication tool for voice and video calls, instant messaging, and file sharing.
 * Install with `brew install --cask skype`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://support.skype.com/en/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/skype)
 
 #### Telegram 🚀🔒
 A cloud-based messaging platform with a focus on speed and security, supporting large groups and file sharing.
 * Install with `brew install --cask telegram`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://telegram.org/faq) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/telegramdesktop)
 
 #### Zoom 📹🔗
 A popular video conferencing tool for virtual meetings, webinars, and collaboration.
 * Install with `brew install --cask zoom`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://support.zoom.us/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/zoom)
 
 ### 4. 💻 Development
 
@@ -294,160 +310,198 @@ The ultimate way to watch your videos on Chromecast, Apple TV and AirPlay 2 enab
 #### Autossh 🔗🔐
 A tool for automatically starting and maintaining SSH connections.
 * Install with `brew install autossh`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://www.harding.motd.ca/autossh/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/autossh)
 
 #### Azure CLI ☁️🔧
 A command-line tool for managing Azure resources.
 * Install with `brew install azure-cli`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://docs.microsoft.com/en-us/cli/azure/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/Azure/azure-cli)
 
 #### Bat 🦇📄
 A `cat` command clone with syntax highlighting and Git integration.
 * Install with `brew install bat`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/sharkdp/bat/blob/master/README.md) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/sharkdp/bat)
 
 #### Chromedriver 🌐🚦
 A WebDriver for running web tests with Chrome.
 * Install with `brew install chromedriver`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://sites.google.com/a/chromium.org/chromedriver/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/SeleniumHQ)
 
 #### Docker 🐳📦
 A platform for developing, shipping, and running containerized applications.
 * Install with `brew install --cask docker`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://docs.docker.com/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/docker)
 
 #### Git 🧑‍💻🔄
 A widely used distributed version control system.
 * Install with `brew install git`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://git-scm.com/doc) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/git)
 
 #### Git Extras ➕🔧
 Extra utilities and scripts for Git.
 * Install with `brew install git-extras`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/tj/git-extras/blob/master/Commands.md) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/tj/git-extras)
 
 #### Git LFS 🗄️🔗
 A Git extension for versioning large files.
 * Install with `brew install git-lfs`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://git-lfs.github.com/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/git-lfs)
 
 #### Git Secret 🤫🔐
 A tool for storing sensitive data in Git repositories.
 * Install with `brew install git-secret`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://git-secret.io/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/sobolevn/git-secret)
 
 #### Go 🏃‍♂️🔤
 An open-source programming language designed for simplicity and concurrency.
 * Install with `brew install go`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://golang.org/doc/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/golang)
 
 #### Hugo 🌐🛠️
 A fast and flexible static site generator.
 * Install with `brew install hugo`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://gohugo.io/documentation/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/gohugoio/hugo)
 
 #### Java ☕💻
 A popular programming language and development platform.
 * Install with `brew install java`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://docs.oracle.com/en/java/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/openjdk)
 
 #### Micro ✍️🖥️
 A modern and intuitive terminal-based text editor.
 * Install with `brew install micro`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/zyedidia/micro/blob/master/runtime/help/help.md) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/zyedidia/micro)
 
 #### Nano 📝🔍
 A simple and easy-to-use terminal text editor.
 * Install with `brew install nano`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://www.nano-editor.org/dist/latest/nano.html) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/nanorc)
 
 #### Rbenv 💎🔧
 A Ruby version management tool.
 * Install with `brew install rbenv`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/rbenv/rbenv#readme) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/rbenv/rbenv)
 
 #### Ruby 💎💻
 A dynamic, open-source programming language focused on simplicity and productivity.
 * Install with `brew install ruby`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://www.ruby-lang.org/en/documentation/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/ruby)
 
 #### Rustup-Init 🦀🛠️
 A toolchain installer for the Rust programming language.
 * Install with `brew install rustup-init`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://rust-lang.github.io/rustup/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/rust-lang/rustup)
 
 #### Terraform 🌍🛠️
 An infrastructure as code software tool for managing cloud resources.
 * Install with `brew install terraform`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://www.terraform.io/docs/index.html) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/hashicorp/terraform)
 
 #### Visual Studio Code 💻✏️
 A powerful and extensible code editor with integrated Git and debugging support.
 * Install with `brew install --cask visual-studio-code`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://code.visualstudio.com/docs) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/microsoft/vscode)
 
 ### 5. 🖥️ Terminal and Shell
 
 #### iTerm2 🖥️🎛️
 A highly customizable and powerful terminal emulator for macOS.
 * Install with `brew install --cask iterm2`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://iterm2.com/documentation.html) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/gnachman/iTerm2)
 
 #### Zsh 🐚🚀
 An interactive and highly extensible Unix shell.
 * Install with `brew install zsh`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](http://zsh.sourceforge.net/Doc/Release/index.html) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/zsh-users)
 
 #### Starship 🚀⭐
 A minimal, fast, and customizable shell prompt for any shell.
 * Install with `brew install starship`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://starship.rs/guide/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/starship/starship)
 
 #### Tmux 📺🔀
 A terminal multiplexer for managing multiple terminal sessions within a single window.
 * Install with `brew install tmux`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/tmux/tmux/blob/master/README.md) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/tmux/tmux)
 
 ### 6. 🅰️ Fonts
 
 #### Font Fira Code 📝🔠
 A monospaced font with programming ligatures, designed for a modern coding experience. Enhances readability and aesthetics in code editors.
 * Install with `brew install --cask font-fira-code`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/tonsky/FiraCode/blob/master/README.md) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/tonsky/FiraCode)
 
 ### 7. 📂 File Management and Utilities
 
 #### BalenaEtcher 💾🚀
 A user-friendly tool for flashing OS images onto SD cards and USB drives, simplifying the creation of bootable media.
 * Install with `brew install --cask balenaetcher`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/balena-io/etcher/blob/master/docs/USER-DOCUMENTATION.md) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/balena-io/etcher)
 
 #### Cakebrew 🍰🍺
 A GUI for managing Homebrew packages, providing an easy way to search, install, and update software.
 * Install with `brew install --cask cakebrew`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/brunophilipe/Cakebrew/blob/master/README.md) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/brunophilipe/Cakebrew)
 
 #### Cryptomator 🔒☁️
 An open-source encryption solution for cloud storage services, offering transparent, client-side encryption for data security.
 * Install with `brew install --cask cryptomator`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://docs.cryptomator.org/en/latest/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/cryptomator/cryptomator)
 
 #### DB Browser for SQLite 🗃️🔍
 A high-quality, visual tool to create, design, and edit SQLite database files, streamlining database management.
 * Install with `brew install --cask db-browser-for-sqlite`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://sqlitebrowser.org/docs/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/sqlitebrowser/sqlitebrowser)
 
 #### Disk Inventory X 💽📊
 A disk usage utility for macOS that displays folder and file sizes in a visual treemap, enabling quick identification of large files.
 * Install with `brew install --cask disk-inventory-x`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](http://www.derlien.com/help/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/jerrod/disk-inventory-x)
 
 #### Dropbox ☁️📁
 A popular cloud storage service that seamlessly synchronizes files across devices, making file sharing and collaboration easy.
 * Install with `brew install --cask dropbox`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://www.dropbox.com/help) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/dropbox)
 
 #### Mounty 🗻💽
 A user-friendly tool for mounting and writing to NTFS drives on macOS, providing seamless read/write access.
 * Install with `brew install --cask mounty`
+* See the  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/sindresorhus/mounty)
 
 #### MPV 🎞️🎧
 A free, open-source, and cross-platform media player with minimalistic design, supporting a wide range of media formats.
 * Install with `brew install --cask mpv`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://mpv.io/manual/master/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/mpv-player/mpv)
 
 #### Rsync 🔄📁
 A powerful file transfer utility that uses delta encoding and compression to minimize data transfer, optimizing file synchronization.
 * Install with `brew install rsync`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://rsync.samba.org/documentation.html) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/rsync/rsync)
 
 #### SSH-Copy-ID 🔑🔗
 A utility to install your public key on a remote machine's authorized_keys, simplifying the setup of passwordless SSH connections.
 * Install with `brew install ssh-copy-id`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://www.ssh.com/academy/ssh/copy-id) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/beautifulcode/ssh-copy-id-for-OSX)
 
 #### Syncthing ⚙️☁️
 A decentralized, open-source file synchronization tool that securely shares and synchronizes files between devices without relying on cloud services.
 * Install with `brew install --cask syncthing`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://docs.syncthing.net/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/syncthing/syncthing)
 
 #### Universal Media Server 📺🌐
 A versatile media server that supports various devices and streaming protocols, allowing you to stream your media files across your home network.
 * Install with `brew install --cask universal-media-server`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://www.universalmediaserver.com/about/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/UniversalMediaServer/UniversalMediaServer)
 
 #### XQuartz 🎨🖥️
 An open-source X Window System implementation for macOS that allows running X11 applications, enabling compatibility with many Unix programs.
 * Install with `brew install --cask xquartz`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://www.xquartz.org/Documentation.html) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/XQuartz)
 
 #### Inkscape ✏️🖼️
 A professional vector graphics editor that supports various file formats, offering a powerful set of drawing tools for graphic design.
 * Install with `brew install --cask inkscape`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://inkscape.org/doc/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/inkscape/inkscape)
 
 ### 8. 🔒 Security and Privacy
 
@@ -458,196 +512,243 @@ A comprehensive antivirus and security suite, offering protection against variou
 #### LuLu 🚦🔥
 A lightweight, open-source firewall for macOS, offering control over outgoing connections and protecting against unauthorized access.
 * Install with `brew install --cask lulu`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://objective-see.com/products/lulu.html) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/objective-see/LuLu)
 
 #### NordVPN 🌐🔒
 A popular VPN service providing a secure and encrypted connection, allowing access to geo-restricted content and protecting your privacy.
 * Install with `brew install --cask nordvpn`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://support.nordvpn.com/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/nordvpn)
 
 #### ProtonMail Bridge 📧🔐
 A desktop application enabling the use of ProtonMail with your preferred email client, ensuring end-to-end encryption and privacy.
 * Install with `brew install --cask protonmail-bridge`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://protonmail.com/bridge/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/ProtonMail)
 
 #### Tor Browser 🕵️‍♀️🌐
 A privacy-focused browser that routes your traffic through the Tor network, ensuring anonymity and access to hidden services on the dark web.
 * Install with `brew install --cask tor-browser`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://tb-manual.torproject.org/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/TheTorProject)
 
 #### Tunnelblick 🚇🔗
 A free, open-source VPN client for macOS, providing an easy-to-use interface for connecting to OpenVPN servers.
 * Install with `brew install --cask tunnelblick`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://tunnelblick.net/cHelp.html) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/Tunnelblick/Tunnelblick)
 
 ### 9. 🎥 Multimedia
 
 #### HandBrake 🎞️🔧
 A versatile video converter and transcoder, supporting a wide range of formats and offering advanced customization options.
 * Install with `brew install --cask handbrake`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://handbrake.fr/docs/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/HandBrake/HandBrake)
 
 #### LICEcap 🖥️🎥
 A lightweight screen capture tool, allowing you to create animated GIFs directly from your desktop.
 * Install with `brew install --cask licecap`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](http://www.cockos.com/licecap/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/justinfrankel/licecap)
 
 #### eqMac 🎚️🎶
 An open-source audio equalizer for macOS, enhancing your listening experience with customizable presets and manual adjustments.
 * Install with `brew install --cask eqmac`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/bitgapp/eqMac/blob/master/README.md) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/bitgapp/eqMac)
 
 #### MusicBrainz Picard 🎵🔖
 An open-source music tagger, using the MusicBrainz database to automatically update and organize your audio files' metadata.
 * Install with `brew install --cask musicbrainz-picard`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://picard-docs.musicbrainz.org/en/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/metabrainz/picard)
 
 #### OBS (Open Broadcaster Software) 🎮🎥
 A powerful and customizable software for live streaming and screen recording, widely used by content creators and gamers.
 * Install with `brew install --cask obs`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://obsproject.com/wiki/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/obsproject/obs-studio)
 
 #### Spotify 🎧🎶
 A popular music streaming service, offering access to millions of songs, podcasts, and personalized playlists with a free or premium account.
 * Install with `brew install --cask spotify`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://support.spotify.com/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/spotify)
 
 #### Steam 🎮🌐
 A digital distribution platform for purchasing and managing video games, providing a vast library of titles and social features.
 * Install with `brew install --cask steam`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://help.steampowered.com/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/ValveSoftware)
 
 #### VLC 📺🔊
 A versatile and open-source media player, supporting a wide range of audio and video formats, as well as streaming and conversion capabilities.
 * Install with `brew install --cask vlc`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://www.videolan.org/doc/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/videolan/vlc)
 
 #### WebTorrent 🌐⚡
 A user-friendly torrent client that runs directly in your browser, enabling streaming of torrent files without the need for a separate application.
 * Install with `brew install --cask webtorrent`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://webtorrent.io/docs) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/webtorrent)
 
 ### 10. 📄 Office and Document Management
 
 #### Adobe Creative Cloud 🎨🖥️
 A suite of creative applications for graphic design, video editing, web development, and more, including Photoshop, Illustrator, and Premiere Pro.
 * Install with `brew install --cask adobe-creative-cloud`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://helpx.adobe.com/support/creative-cloud.html) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/adobe)
 
 #### Adobe Digital Editions 📚🔖
 An ebook reader and manager, supporting various formats and DRM-protected files, as well as syncing across devices.
 * Install with `brew install --cask adobe-digital-editions`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://helpx.adobe.com/digital-editions.html) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/adobe)
 
 #### Calibre 📚🔧
 An open-source ebook management tool, offering format conversion, syncing, and organization features, as well as a built-in reader.
 * Install with `brew install --cask calibre`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://manual.calibre-ebook.com/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/kovidgoyal/calibre)
 
 #### FileBot 📁🔍
 A media file organization tool, simplifying the renaming and sorting of TV shows, movies, and music files.
 * Install with `brew install --cask filebot`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://www.filebot.net/forums/viewforum.php?f=4) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/filebot/filebot)
 
 #### JabRef 📖🔗
 An open-source reference manager, enabling the organization and citation of scientific publications in BibTeX and other formats.
 * Install with `brew install --cask jabref`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://docs.jabref.org/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/JabRef/jabref)
 
 #### LyX 📄🎓
 A document processor that combines the power of LaTeX with a user-friendly graphical interface, simplifying the creation of professional-looking documents.
 * Install with `brew install --cask lyx`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://www.lyx.org/Documentation) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/lyx/lyx)
 
 #### MacTeX 📚🔣
 A comprehensive TeX distribution for macOS, including LaTeX, various utilities, and documentation.
 * Install with `brew install --cask mactex`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](http://www.tug.org/mactex/mactex-help.html) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/TeX-Live)
 
 #### Mactracker 🍎💾
 A comprehensive database of Apple hardware and software, providing detailed specifications, history, and support information.
 * Install with `brew install --cask mactracker`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://mactracker.ca/help.html) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/Mactracker)
 
 #### Mendeley 📚🔗
 A reference manager and academic social network, simplifying the organization, annotation, and citation of research papers.
 * Install with `brew install --cask mendeley`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://www.mendeley.com/guides) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/mendeley)
 
 #### Microsoft Office 📝💼
 A suite of productivity applications, including Word, Excel, PowerPoint, and Outlook, designed for creating, editing, and managing documents.
 * Install with `brew install --cask microsoft-office`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://support.microsoft.com/en-us/office) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/microsoft)
 
 #### OnyX ⚙️🖥️
 A multifunctional utility for macOS, offering maintenance, optimization, and personalization features, as well as advanced options for power users.
 * Install with `brew install --cask onyx`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://www.titanium-software.fr/en/onyx.html) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/titanium-software)
 
 ### 11. 🎲 Miscellaneous
 
 #### Exodus 💰🔒
 A user-friendly cryptocurrency wallet, supporting a wide range of assets, exchange features, and portfolio management.
 * Install with `brew install --cask exodus`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://support.exodus.io/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/exodusmovement)
 
 #### f.lux 🌞🌛
 A screen color temperature adjustment tool, reducing eye strain and promoting healthy sleep patterns by adapting your display to the time of day.
 * Install with `brew install --cask flux`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://justgetflux.com/faq.html) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/fluxtream)
 
 #### GitHub 🧑‍💻🔄
 The official GitHub desktop client, simplifying repository management, version control, and collaboration on macOS.
 * Install with `brew install --cask github`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://docs.github.com/en/desktop) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/desktop/desktop)
 
 #### Logitech Options ⚙️🖱️
 A configuration tool for Logitech devices, offering customization of buttons, tracking, and other settings to enhance productivity and comfort.
 * Install with `brew install --cask homebrew/cask-drivers/logitech-options`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://support.logi.com/hc/en-us/articles/360025298053-Logitech-Options) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/Logitech)
 
 #### MacFuse 💽🔗
 A macOS filesystem extension enabling the use of non-native filesystems, offering compatibility with a wide range of formats.
 * Install with `brew install --cask macfuse`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://osxfuse.github.io/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/osxfuse)
 
 #### Microsoft Azure Storage Explorer ☁️🗃️
 A graphical tool for managing Azure Blob Storage, offering convenient access, organization, and management of your cloud storage.
 * Install with `brew install --cask microsoft-azure-storage-explorer`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://docs.microsoft.com/en-us/azure/storage/common/storage-explorer-overview) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/microsoft/AzureStorageExplorer)
 
 #### MonitorControl 🖥️🎚️
 A utility for controlling your external monitor's settings, such as brightness and volume, directly from your macOS menu bar.
 * Install with `brew install --cask monitorcontrol`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/MonitorControl/MonitorControl/blob/master/README.md) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/MonitorControl/MonitorControl)
 
 #### pipx 🐍📦
 A package manager for installing and running Python applications in isolated environments, ensuring clean and conflict-free installations.
 * Install with `brew install pipx`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://pipxproject.github.io/pipx/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/pipxproject/pipx)
 
 #### qBittorrent ⚡📁
 A free and open-source torrent client, featuring a clean interface, powerful search capabilities, and minimal resource usage.
 * Install with `brew install --cask qbittorrent`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/qbittorrent/qBittorrent/wiki) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/qbittorrent/qBittorrent)
 
 #### QLVideo 🎥👀
 A QuickLook plugin for macOS, providing thumbnail previews and playback of various video formats directly in Finder.
 * Install with `brew install --cask qlvideo`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/Marginal/QLVideo/blob/master/README.md) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/Marginal/QLVideo)
 
 #### Rotki 💹🔐
 An open-source portfolio tracking and tax reporting tool for cryptocurrencies, offering extensive customization and privacy options.
 * Install with `brew install --cask rotki`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://rotki.readthedocs.io/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/rotki/rotki)
 
 #### SABnzbd 🌐🗞️
 A binary newsreader for Usenet, offering automation features, a web interface, and compatibility with popular download management tools.
 * Install with `brew install --cask sabnzbd`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://sabnzbd.org/wiki/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/sabnzbd/sabnzbd)
 
 #### SelfControl 🚫🕒
 A productivity tool for macOS, allowing you to block access to distracting websites and applications for a set period of time.
 * Install with `brew install --cask selfcontrol`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://selfcontrolapp.com/documentation/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/SelfControlApp/selfcontrol)
 
 #### Sloth 🐌💻
 A macOS utility for displaying open files and network connections, offering insights into system resource usage and potential bottlenecks.
 * Install with `brew install --cask sloth`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/sveinbjornt/Sloth/blob/master/README.md) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/sveinbjornt/Sloth)
 
 #### SwitchResX 🖥️🔍
 A display resolution management tool for macOS, enabling custom resolutions, aspect ratios, and refresh rates for your monitor.
 * Install with `brew install --cask switchresx`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://www.madrau.com/support/support/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/MonitorControl/MonitorControl)
 
 #### TeamViewer 🌐💻
 A remote desktop and collaboration tool, offering screen sharing, file transfer, and remote control capabilities for personal and professional use.
 * Install with `brew install --cask teamviewer`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://community.teamviewer.com/English/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/teamviewer)
 
 #### Unclack 🎤🔇
 A utility for macOS that automatically mutes your microphone while you type, preventing unwanted noise during conference calls and voice recordings.
 * Install with `brew install --cask unclack`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/will-stone/unclack/blob/main/README.md) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/will-stone/unclack)
 
 #### yq 📄🔧
 A command-line tool for parsing and manipulating YAML files, offering powerful filtering and editing capabilities.
 * Install with `brew install yq`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://mikefarah.gitbook.io/yq/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/mikefarah/yq)
 
 #### Ext4Fuse 🐧💽
 A macOS filesystem extension enabling read-only support for the ext4 file system, commonly used on Linux systems.
 * Install with `brew install gromgit/fuse/ext4fuse`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/gerard/ext4fuse/blob/master/README.md) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/gerard/ext4fuse)
 
 #### NTFS-3G 🖥️🔗
 A macOS filesystem extension providing read-write support for the NTFS file system, commonly used on Windows systems.
 * Install with `brew install gromgit/fuse/ntfs-3g`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://www.tuxera.com/community/ntfs-3g-manual/) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/tuxera/ntfs-3g)
 
 #### SSHFS 💻🔗
 A macOS filesystem extension enabling mounting of remote filesystems via SSH, providing secure and convenient access to remote files.
 * Install with `brew install gromgit/fuse/sshfs`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/libfuse/sshfs/blob/master/README.md) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/libfuse/sshfs)
 
 #### Git LaTeXdiff 📄🔍
 A command-line tool for generating diff files for LaTeX documents, simplifying the tracking of changes and collaboration on LaTeX projects.
 * Install with `brew install homebrew/tex/git-latexdiff`
+* See the  [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://gitlab.com/git-latexdiff/git-latexdiff/-/blob/master/README.md) and  [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/git-latexdiff)
 
 
 
