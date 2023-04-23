@@ -282,7 +282,7 @@ A popular video conferencing tool for virtual meetings, webinars, and collaborat
 ### 4. 💻 Development
 
 #### Airflow 🌬️📊
-A platform for programmatically authoring, scheduling, and monitoring workflows.
+The ultimate way to watch your videos on Chromecast, Apple TV and AirPlay 2 enabled TVs.
 * Install with `brew install airflow`
 
 #### Autossh 🔗🔐
