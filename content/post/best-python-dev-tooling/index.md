@@ -156,7 +156,7 @@ pip install ruff
 
 To use Ruff in your project, run the following command in the terminal:
 
-```
+```bash
 ruff your_file.py
 ```
 
