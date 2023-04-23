@@ -83,6 +83,10 @@ Then, commit your changes and push them to a remote repository (such as GitHub o
 
 Embrace the power of version control and keep your dotfiles safe and secure, as any true terminal ninja would.
 
+{{% callout note %}}
+Although I keep my dotfiles in a Git repository, I have not made it public. I might do so in the future, let me know if you're interested!
+{{% /callout %}}
+
 ## The Art of Shell: Zsh and Oh-my-zsh
 
 The first step in our journey is choosing the right shell.
