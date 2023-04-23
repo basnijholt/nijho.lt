@@ -185,7 +185,7 @@ brew install \
   tmux \
   wget \
   yq \
-  zsh \
+  zsh
   
 
 brew install rbenv ruby  # if/when needed
@@ -564,10 +564,6 @@ A multifunctional utility for macOS, offering maintenance, optimization, and per
 #### Exodus 💰🔒
 A user-friendly cryptocurrency wallet, supporting a wide range of assets, exchange features, and portfolio management.
 *   Install with `brew install --cask exodus`
-
-#### File Up 📁⬆️
-A lightweight and easy-to-use file uploader for macOS, enabling quick sharing of files via drag-and-drop functionality.
-*   Install with `brew install --cask file-up`
 
 #### f.lux 🌞🌛
 A screen color temperature adjustment tool, reducing eye strain and promoting healthy sleep patterns by adapting your display to the time of day.
