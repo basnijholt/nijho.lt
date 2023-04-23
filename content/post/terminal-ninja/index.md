@@ -181,7 +181,7 @@ Let's go through some of ***my*** most commonly used aliases (ranked by frequenc
 *   `g`: `git` - The git command itself.
 *   `gcb`: `git checkout -b` - Create a new branch and switch to it.
 *   `gc`: `git commit --verbose` - Create a new commit with a verbose message.
-*   `gc!`: `git commit --verbose` --amend - Amend the previous commit with a verbose message.
+*   `gc!`: `git commit --verbose --amend` - Amend the previous commit with a verbose message.
 *   `ga`: git add - Add file contents to the index.
 *   `gca`: `git commit --verbose --all` - Commit all changes with a verbose message.
 *   `gca!`: `git commit --verbose --all --amend` - Amend the previous commit with a verbose message.
