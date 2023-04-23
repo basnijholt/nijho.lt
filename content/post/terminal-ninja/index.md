@@ -42,6 +42,8 @@ In this short post, we'll explore the wonders of [`zsh`](https://www.zsh.org/), 
 
 ![](https://camo.githubusercontent.com/18cdb04e93fe276412b588dbed23bc328614bf7a4d09ea4d8862d38f1c466c65/687474703a2f2f6d656469612e74756d626c722e636f6d2f74756d626c725f6c74757a6a766251364c31717a677078392e676966)
 
+{{< toc >}}
+
 ## Dotfiles: Version Control Your Configuration Files
 
 As a terminal ninja, you know the importance of your configuration files. They hold the keys to your productivity, personalizing your terminal experience and making it truly your own.
