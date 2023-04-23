@@ -218,7 +218,7 @@ Then in your `.bash_profile`, add the following lines:
 
 ```bash
 if [[ `hostname` == 'Linux' ]]; then
-    export PATH="$PATH:${HOME}/dotfiles/pub/keychain/"
+    export PATH="$PATH:${HOME}/dotfiles/dotfiles/keychain/"
     if ps -p $SSH_AGENT_PID > /dev/null; then
         echo "ssh-agent is already running"
     else
