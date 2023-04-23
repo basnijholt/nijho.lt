@@ -8,7 +8,7 @@ draft: false
 featured: false
 
 image:
-  caption: 'My top 25 most used Terminal commands'
+  caption: 'My top 25 most used Terminal commands, as you can see, most commands are 1 or 2 characters long'
   focal_point: ''
   placement: 2
   preview_only: false
