@@ -46,7 +46,7 @@ In this short post, we'll explore the wonders of [`zsh`](https://www.zsh.org/), 
 
 {{< toc >}}
 
-## Dotfiles: Version Control Your Configuration Files
+## 💾 Dotfiles: Version Control Your Configuration Files
 
 As a terminal ninja, you know the importance of your configuration files. They hold the keys to your productivity, personalizing your terminal experience and making it truly your own.
 To ensure the safety and portability of your configurations, it's essential to keep a `dotfiles` folder, where you store and version control your configuration files and plugin repositories.
@@ -109,7 +109,7 @@ Embrace the power of version control and keep your dotfiles safe and secure, as 
 Although I keep my dotfiles in a Git repository, I have not made it public. I might do so in the future, let me know if you're interested!
 {{% /callout %}}
 
-## The Art of Shell: Zsh and Oh-my-zsh
+## 🐚 The Art of Shell: Zsh and Oh-my-zsh
 
 The first step in our journey is choosing the right shell.
 We want a shell that is powerful, versatile, and expressive.
@@ -135,7 +135,7 @@ To set up Zsh and Oh-my-zsh, follow these steps:
     plugins=(git z dirhistory history sudo)
     ```
 
-## Oh-my-zsh Z Plugin: Jump Around!
+## 🚀 Oh-my-zsh Z Plugin: Jump Around!
 
 A true ninja can swiftly navigate through the file system, and Z is our secret weapon.
 Z is a fantastic utility that allows us to jump around our directories based on the frequency and recency of use.
@@ -150,7 +150,7 @@ source $ZSH/oh-my-zsh.sh
 
 ![](https://github.com/agkozak/zsh-z/raw/da8dee3ccaf882d1bf653c34850041025616ceb5/img/demo.gif)
 
-## Oh-my-zsh Dirhistory Plugin: Time Travel Through Directories
+## ⏰ Oh-my-zsh Dirhistory Plugin: Time Travel Through Directories
 
 The `dirhistory` plugin in Oh-my-zsh allows you to navigate your directory history and hierarchy with ease, using simple keyboard shortcuts. Let's go through its functionalities:
 
@@ -169,7 +169,7 @@ source $ZSH/oh-my-zsh.sh
 With the `dirhistory` plugin, navigating through directories becomes a breeze.
 You'll be able to move up and down the directory hierarchy and traverse your directory history with just a few keystrokes, making your terminal experience even more efficient and enjoyable.
 
-## Oh-my-zsh Git Plugin: Turbocharge Your Git Workflow
+## 🚀🔧 Oh-my-zsh Git Plugin: Turbocharge Your Git Workflow
 
 If you are a developer, you probably use Git *a lot*!
 I know I do.
@@ -199,7 +199,7 @@ plugins=(... git ...)
 source $ZSH/oh-my-zsh.sh
 ```
 
-## Keychain: The Keeper of Secrets
+## 🔑 Keychain: The Keeper of Secrets
 
 As ninjas, we must keep our secrets safe.
 Keychain helps us do just that by managing our SSH keys, ensuring we have secure access to remote systems.
@@ -228,7 +228,7 @@ if [[ `uname` == 'Darwin' ]]; then
 fi
 ```
 
-## Starship: The Cosmic Shell Prompt
+## 🌌 Starship: The Cosmic Shell Prompt
 
 With our shell of choice and secrets secured, it's time to gaze upon the stars! Starship is a minimal, blazing-fast, and fully customizable shell prompt that provides us with essential information at a glance.
 It gives us valuable feedback about our current environment, such as the Git branch, Python virtual environment, and more.
@@ -252,7 +252,7 @@ To set up Starship, follow these steps:
   Your browser does not support the video tag.
 </video>
 
-## Autoenv: Automatic Environment Management
+## 🌍 Autoenv: Automatic Environment Management
 
 In the life of a terminal ninja, we frequently traverse different projects, each with its unique environment requirements.
 Autoenv comes to our rescue by automating the process of activating and deactivating project-specific settings.
@@ -279,7 +279,7 @@ To set up Autoenv, follow these steps:
     source ~/.autoenv/activate.sh
     ```
 
-## Zsh-autosuggestions: The Wisest of Mentors
+## 💡 Zsh-autosuggestions: The Wisest of Mentors
 
 As we hone our terminal skills, we often find ourselves repeating commands.
 Zsh-autosuggestions is our trusted mentor, always ready with sage advice.
@@ -301,7 +301,7 @@ To set up Zsh-autosuggestions, follow these steps:
 
 ![](https://user-images.githubusercontent.com/6897215/233818577-189256ff-b1e2-4790-984e-6fd191df5c00.gif)
 
-## Putting it All Together
+## 🧩 Putting it All Together
 
 Now that you know the secrets of our terminal ninja setup, it's time to embark on your own journey.
 Armed with these powerful tools, you'll conquer the terminal with grace and efficiency.
