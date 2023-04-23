@@ -120,6 +120,8 @@ plugins=(... z ...)
 source $ZSH/oh-my-zsh.sh
 ```
 
+![](https://github.com/agkozak/zsh-z/raw/da8dee3ccaf882d1bf653c34850041025616ceb5/img/demo.gif)
+
 ## Oh-my-zsh Dirhistory Plugin: Time Travel Through Directories
 
 The `dirhistory` plugin in Oh-my-zsh allows you to navigate your directory history and hierarchy with ease, using simple keyboard shortcuts. Let's go through its functionalities:
@@ -216,6 +218,11 @@ To set up Starship, follow these steps:
     ```bash
     eval "$(starship init zsh)"
     ```
+
+<video controls>
+  <source src="https://starship.rs/demo.webm" type="video/webm">
+  Your browser does not support the video tag.
+</video>
 
 ## Autoenv: Automatic Environment Management
 

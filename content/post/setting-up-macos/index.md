@@ -1,5 +1,5 @@
 ---
-title: 🍏 Setting Up Your Fresh MacOS Installation: A Comprehensive Guide
+title: "🍏 Setting Up Your Fresh MacOS Installation: A Comprehensive Guide"
 subtitle: 🚀 Streamline your MacOS setup with homebrew, essential apps, and customization tips
 summary: 🚀 Streamline your MacOS setup with homebrew, essential apps, and customization tips
 projects: []
@@ -31,16 +31,20 @@ Setting up a new MacOS installation can be a tedious process. This blog post wil
 
 > Note that this is just what I have been doing for the last years, and you might want to do things differently.
 
+{{% callout note %}}
+This post is based on a GitHub Gist I have been maintaining since 2015-03 with >160 revisions by now, see it at [`basnijholt/install-fresh-macOS.md`](https://gist.github.com/basnijholt/2df9845af97c69811b44)
+{{% /callout %}}
+
 * * *
 
 ## 1. Manual Installations
 
 First, let's manually install some essential tools and software:
 
-1.  [homebrew](https://brew.sh/)
-2.  [micromamba](https://mamba.readthedocs.io/en/latest/installation.html#micromamba)
+1.  [homebrew](https://brew.sh/), the essential package manager for MacOS
+2.  [micromamba](https://mamba.readthedocs.io/en/latest/installation.html#micromamba), my preferred conda package manager which is blazingly fast
 3.  [Chrome](https://www.google.com/chrome/) (manual install because the brew version doesn't work with 1Password)
-4.  [File-up](https://github.com/basnijholt/fileup)
+4.  [File-up](https://github.com/basnijholt/fileup), a simple tool I made to upload files to an FTP server and copy the URL to the clipboard
 
 Set a [`host`](https://github.com/StevenBlack/hosts) file to block unwanted websites and advertisements.
 
