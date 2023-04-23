@@ -118,13 +118,13 @@ One of the best aspects of Black is that you don't need to worry about writing p
 
 To install Black, run the following command:
 
-```
+```bash
 pip install black
 ```
 
 You can then format your code by running Black in the terminal:
 
-```
+```bash
 black your_file.py
 ```
 
@@ -150,7 +150,7 @@ One of the best aspects of Ruff is the native VS Code extension, which continuou
 
 To install Ruff, simply run the following command:
 
-```
+```bash
 pip install ruff
 ```
 
