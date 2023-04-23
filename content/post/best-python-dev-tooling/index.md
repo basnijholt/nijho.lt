@@ -160,9 +160,13 @@ To use Ruff in your project, run the following command in the terminal:
 ruff your_file.py
 ```
 
-For the best experience, we highly recommend using Ruff in conjunction with pre-commit, as mentioned earlier. This ensures that your code is always linted and formatted before committing, maintaining a consistent and high-quality codebase.
+For the best experience, I highly recommend using Ruff in conjunction with pre-commit, as mentioned earlier. This ensures that your code is always linted and formatted before committing, maintaining a consistent and high-quality codebase.
 
 In conclusion, Ruff is an incredibly fast and powerful Python linter that streamlines the development process by consolidating multiple tools into a single, efficient package. By adopting Ruff and integrating it with pre-commit, you can enjoy a more productive and enjoyable Python development experience.
+
+{{% callout note %}}
+Pro tip: Go extreme, and use `--select ALL` to enable all (>500) rules. This will ensure that your code is always in top shape.
+{{% /callout %}}
 
 ## 🔍 5. Mypy: static type checking for Python (find bugs before they happen)
 
