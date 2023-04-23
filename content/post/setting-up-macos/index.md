@@ -23,6 +23,7 @@ tags:
 
 categories:
   - setup
+  - level:beginner
 ---
 
 ## Introduction

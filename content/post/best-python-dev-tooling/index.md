@@ -44,6 +44,7 @@ tags:
 
 categories:
   - setup
+  - level:intermediate
 ---
 
 ## 🌟 1. Introduction

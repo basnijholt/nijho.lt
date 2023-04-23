@@ -29,6 +29,7 @@ tags:
 categories:
   - phd
   - education
+  - level:fun
 ---
 
 *Originally posted on [quantumtinkerer.tudelft.nl/blog/thesis-cover](https://quantumtinkerer.tudelft.nl/blog/thesis-cover/) on 2020-04-04 13:40.*

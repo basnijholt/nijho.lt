@@ -31,6 +31,7 @@ tags:
 
 categories:
   - terminal
+  - level:intermediate
 ---
 
 Welcome to the dojo, fellow terminal warriors!

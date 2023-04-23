@@ -24,6 +24,7 @@ tags:
 
 categories:
   - editor
+  - level:beginner
 ---
 
 Visual Studio Code, or VSCode, has rapidly become one of the most popular code editors available today, and for good reason. With a vast amount of development activity behind it, VSCode is a powerful and extensible platform that allows users to customize it to their needs through a wide variety of extensions. As a long-time Sublime Text user, I was initially skeptical about making the switch due to concerns about performance. However, as I spent more time using VSCode, I became convinced of its many benefits and have since made it my go-to editor for all my development needs, particularly for Python.
