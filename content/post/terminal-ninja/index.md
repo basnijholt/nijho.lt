@@ -271,6 +271,8 @@ To set up Zsh-autosuggestions, follow these steps:
     source $ZSH_CUSTOM/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
     ```
 
+![](https://user-images.githubusercontent.com/6897215/233818577-189256ff-b1e2-4790-984e-6fd191df5c00.gif)
+
 ## Putting it All Together
 
 Now that you know the secrets of our terminal ninja setup, it's time to embark on your own journey.
