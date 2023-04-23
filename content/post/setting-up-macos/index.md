@@ -48,7 +48,7 @@ First, let's manually install some essential tools and software:
 1.  [homebrew](https://brew.sh/), the essential package manager for MacOS
 2.  [micromamba](https://mamba.readthedocs.io/en/latest/installation.html#micromamba), my preferred conda package manager which is blazingly fast
 3.  [Chrome](https://www.google.com/chrome/) (manual install because the brew version doesn't work with 1Password)
-4.  [File-up](https://github.com/basnijholt/fileup), a simple tool I made to upload files to an FTP server and copy the URL to the clipboard
+4.  [File-up](https://github.com/basnijholt/fileup), a simple tool I made to upload files to an FTP server and copy the URL to the clipboard **(optional)**
 
 Set a [`host`](https://github.com/StevenBlack/hosts) file to block unwanted websites and advertisements.
 
@@ -201,7 +201,7 @@ brew install gromgit/fuse/sshfs-mac
 
 Otherwise, you can install the essential applications and tools one by one:
 
-### 1. Browsers
+### 1. 🌐 Browsers
 
 #### Chrome 🌐💨
 A fast and user-friendly browser with seamless Google service integration and extensive extension library.
@@ -215,7 +215,7 @@ A privacy-focused browser with built-in adblocker and support for Chrome extensi
 An open-source browser prioritizing user privacy and security, offering a customizable experience with various add-ons.
 *   Install with `brew install --cask firefox`
 
-### 2. Productivity Tools
+### 2. 🛠️ Productivity Tools
 
 #### Alfred 🚀🔍
 A powerful application launcher and productivity tool for quick actions, searches, and workflow automation.
@@ -257,7 +257,7 @@ A window management tool to easily resize and position windows on your Mac using
 A productivity tool that allows you to control your Mac using powerful and customizable command-based actions.
 * Install with `brew install --cask raycast`
 
-### 3. Communication
+### 3. 📣 Communication
 
 #### Microsoft Teams 📞📈
 A collaboration and communication platform for businesses, integrating chat, meetings, file sharing, and more.
@@ -285,7 +285,7 @@ A popular video conferencing tool for virtual meetings, webinars, and collaborat
 
 To increase the sudo password timeout, follow the instructions provided in this [StackExchange answer](https://apple.stackexchange.com/a/51763).
 
-### 4. Development
+### 4. 💻 Development
 
 #### Airflow 🌬️📊
 A platform for programmatically authoring, scheduling, and monitoring workflows.
@@ -367,7 +367,7 @@ An infrastructure as code software tool for managing cloud resources.
 A powerful and extensible code editor with integrated Git and debugging support.
 * Install with `brew install --cask visual-studio-code`
 
-### 5. Terminal and Shell
+### 5. 🖥️ Terminal and Shell
 
 #### iTerm2 🖥️🎛️
 A highly customizable and powerful terminal emulator for macOS.
@@ -385,13 +385,13 @@ A minimal, fast, and customizable shell prompt for any shell.
 A terminal multiplexer for managing multiple terminal sessions within a single window.
 * Install with `brew install tmux`
 
-### 6. Fonts
+### 6. 🅰️ Fonts
 
 #### Font Fira Code 📝🔠
 A monospaced font with programming ligatures, designed for a modern coding experience. Enhances readability and aesthetics in code editors.
 * Install with `brew install --cask font-fira-code`
 
-### 7. File Management and Utilities
+### 7. 📂 File Management and Utilities
 
 #### BalenaEtcher 💾🚀
 A user-friendly tool for flashing OS images onto SD cards and USB drives, simplifying the creation of bootable media.
@@ -449,15 +449,11 @@ An open-source X Window System implementation for macOS that allows running X11 
 A professional vector graphics editor that supports various file formats, offering a powerful set of drawing tools for graphic design.
 * Install with `brew install --cask inkscape`
 
-### 8. Security and Privacy
+### 8. 🔒 Security and Privacy
 
 #### Avast Security 🛡️🐜
 A comprehensive antivirus and security suite, offering protection against various threats, as well as VPN and cleanup features.
 *   Install with `brew install --cask avast-security`
-
-#### eqMac 🎚️🎶
-An open-source audio equalizer for macOS, enhancing your listening experience with customizable presets and manual adjustments.
-*   Install with `brew install --cask eqmac`
 
 #### LuLu 🚦🔥
 A lightweight, open-source firewall for macOS, offering control over outgoing connections and protecting against unauthorized access.
@@ -479,7 +475,7 @@ A privacy-focused browser that routes your traffic through the Tor network, ensu
 A free, open-source VPN client for macOS, providing an easy-to-use interface for connecting to OpenVPN servers.
 *   Install with `brew install --cask tunnelblick`
 
-### 9. Multimedia
+### 9. 🎥 Multimedia
 
 #### HandBrake 🎞️🔧
 A versatile video converter and transcoder, supporting a wide range of formats and offering advanced customization options.
@@ -488,6 +484,10 @@ A versatile video converter and transcoder, supporting a wide range of formats a
 #### LICEcap 🖥️🎥
 A lightweight screen capture tool, allowing you to create animated GIFs directly from your desktop.
 *   Install with `brew install --cask licecap`
+
+#### eqMac 🎚️🎶
+An open-source audio equalizer for macOS, enhancing your listening experience with customizable presets and manual adjustments.
+*   Install with `brew install --cask eqmac`
 
 #### MusicBrainz Picard 🎵🔖
 An open-source music tagger, using the MusicBrainz database to automatically update and organize your audio files' metadata.
@@ -513,7 +513,7 @@ A versatile and open-source media player, supporting a wide range of audio and v
 A user-friendly torrent client that runs directly in your browser, enabling streaming of torrent files without the need for a separate application.
 *   Install with `brew install --cask webtorrent`
 
-### 10. Office and Document Management
+### 10. 📄 Office and Document Management
 
 #### Adobe Creative Cloud 🎨🖥️
 A suite of creative applications for graphic design, video editing, web development, and more, including Photoshop, Illustrator, and Premiere Pro.
@@ -559,7 +559,7 @@ A suite of productivity applications, including Word, Excel, PowerPoint, and Out
 A multifunctional utility for macOS, offering maintenance, optimization, and personalization features, as well as advanced options for power users.
 *   Install with `brew install --cask onyx`
 
-### 11. Miscellaneous
+### 11. 🎲 Miscellaneous
 
 #### Exodus 💰🔒
 A user-friendly cryptocurrency wallet, supporting a wide range of assets, exchange features, and portfolio management.
@@ -644,8 +644,6 @@ A macOS filesystem extension providing read-write support for the NTFS file syst
 #### SSHFS 💻🔗
 A macOS filesystem extension enabling mounting of remote filesystems via SSH, providing secure and convenient access to remote files.
 *   Install with `brew install gromgit/fuse/sshfs`
-
-### 12. Optional
 
 #### Git LaTeXdiff 📄🔍
 A command-line tool for generating diff files for LaTeX documents, simplifying the tracking of changes and collaboration on LaTeX projects.
