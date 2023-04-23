@@ -90,8 +90,6 @@ These extensions offer comprehensive support for Python development, with featur
 The Jupyter extensions enable you to work with Jupyter Notebooks in VSCode, with support for running cells, debugging, and more. Jupyter Keymap adds customizable keyboard shortcuts for Jupyter commands.
 
 - Use `code --install-extension ms-toolsai.jupyter` to install the Jupyter extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter)
-- Use `code --install-extension ms-toolsai.jupyter-keymap` to install the Jupyter Keymap extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter-keymap)
-
 ![](https://github.com/Microsoft/vscode-jupyter/raw/e3eee370c97505ce390858a4645f73bc1b3912fc/images/Jupyter%20README/notebookui.png)
 
 ### 5. Sublime Keybindings
@@ -336,9 +334,3 @@ These extensions by the Visual Studio Expt Team provide AI-powered code completi
 vscode-icons is a popular extension that adds file icons to VSCode, making it easier to identify file types in the file explorer.
 
 - Use `code --install-extension vscode-icons-team.vscode-icons` to install the vscode-icons extension [(docs)](https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons)
-
-### Jupyter Renderers
-
-Jupyter Renderers is an extension that provides additional output renderers for Jupyter notebooks in VSCode, enhancing the display of data visualizations and other rich media.
-
-- Use `code --install-extension ms-toolsai.jupyter-renderers` to install the Jupyter Renderers extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter-renderers)
