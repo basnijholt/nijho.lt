@@ -1,5 +1,5 @@
 ---
-title: "Supercharging Your Python Development: A Guide to the Best Tools When Building a Package"
+title: "🚀 Supercharging Your Python Development: A Guide to the Best Tools When Building a Package 📦"
 subtitle: Explore the top developer tools for enhancing productivity and code quality in Python projects
 summary: Explore the top developer tools for enhancing productivity and code quality in Python projects
 projects: []
