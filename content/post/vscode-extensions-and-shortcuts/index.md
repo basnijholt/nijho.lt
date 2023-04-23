@@ -231,12 +231,6 @@ The Micromamba extension for VSCode integrates the Micromamba package manager, m
 
 - Use `code --install-extension corker.vscode-micromamba` to install the Micromamba extension [(docs)](https://marketplace.visualstudio.com/items?itemName=corker.vscode-micromamba)
 
-### Databricks
-
-The Databricks extension provides integration with Databricks, allowing you to manage your Databricks workspaces, clusters, jobs, and notebooks within VSCode.
-
-- Use `code --install-extension databricks.databricks` to install the Databricks extension [(docs)](https://marketplace.visualstudio.com/items?itemName=databricks.databricks)
-
 ### Markdownlint
 
 Markdownlint is a VSCode extension that provides linting and style-checking for Markdown files, ensuring consistent and clean Markdown content.
@@ -248,12 +242,6 @@ Markdownlint is a VSCode extension that provides linting and style-checking for 
 Prettier is a powerful code formatter that supports multiple languages, including JavaScript, TypeScript, HTML, CSS, and more. It enforces a consistent code style across your project.
 
 - Use `code --install-extension esbenp.prettier-vscode` to install the Prettier extension [(docs)](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-
-### MyST Highlight
-
-MyST Highlight adds syntax highlighting support for MyST (Markedly Structured Text) files in VSCode, which is an extended version of the Markdown syntax for scientific writing and publishing.
-
-- Use `code --install-extension ExecutableBookProject.myst-highlight` to install the MyST Highlight extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ExecutableBookProject.myst-highlight)
 
 ### Code Runner
 
@@ -347,15 +335,3 @@ vscode-icons is a popular extension that adds file icons to VSCode, making it ea
 Jupyter Renderers is an extension that provides additional output renderers for Jupyter notebooks in VSCode, enhancing the display of data visualizations and other rich media.
 
 - Use `code --install-extension ms-toolsai.jupyter-renderers` to install the Jupyter Renderers extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter-renderers)
-
-### Jupyter Cell Tags
-
-Jupyter Cell Tags is an extension that adds support for cell tags in Jupyter notebooks within VSCode, allowing you to organize and filter cells by custom tags.
-
-- Use `code --install-extension ms-toolsai.vscode-jupyter-cell-tags` to install the Jupyter Cell Tags extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.vscode-jupyter-cell-tags)
-
-### Jupyter Slideshow
-
-Jupyter Slideshow is an extension that enables creating and presenting slideshows directly from Jupyter notebooks in VSCode, turning your notebooks into dynamic presentations.
-
-- Use `code --install-extension ms-toolsai.vscode-jupyter-slideshow` to install the Jupyter Slideshow extension [(docs)](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.vscode-jupyter-slideshow)
