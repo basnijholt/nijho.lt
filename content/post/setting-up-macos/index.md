@@ -666,22 +666,13 @@ A command-line tool for generating diff files for LaTeX documents, simplifying t
 
 * * *
 
-## 4. iTerm and VS Code Font
-
-The Fira Code font is a popular choice for developers. To set it as the default font for iTerm and Visual Studio Code:
-
-*   iTerm should be set by [`Profiles.json`](https://github.com/basnijholt/dotfiles/blob/57c1b0d9b3a54f8beb93db42fd48c97eb0c67bec/pub/iterm/Profiles.json#L63)
-*   Follow the [VS Code instructions](https://github.com/tonsky/FiraCode/wiki/VS-Code-Instructions)
-
-* * *
-
-## 5. oh-my-zsh
+## 4. oh-my-zsh
 
 [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) is a popular framework for managing your Zsh configuration. Follow the download instructions provided in the link, or use the `dotfiles` folder if you have it.
 
 * * *
 
-## 6. Set Your Mac Host/Computer Name
+## 5. Set Your Mac Host/Computer Name
 
 To set a custom host or computer name for your Mac, open a terminal and run the following commands:
 
@@ -695,9 +686,18 @@ dscacheutil -flushcache
 
 * * *
 
-## 7. Quick Dock Hiding
+## 6. Quick Dock Hiding
 
 For a cleaner desktop experience, follow this [StackExchange answer](https://apple.stackexchange.com/a/34097) to enable quick dock hiding.
+
+* * *
+
+## 7. iTerm and VS Code Font
+
+The Fira Code font is a popular choice for developers. To set it as the default font for iTerm and Visual Studio Code:
+
+*   iTerm should be set by [`Profiles.json`](https://github.com/basnijholt/dotfiles/blob/57c1b0d9b3a54f8beb93db42fd48c97eb0c67bec/pub/iterm/Profiles.json#L63)
+*   Follow the [VS Code instructions](https://github.com/tonsky/FiraCode/wiki/VS-Code-Instructions)
 
 * * *
 
