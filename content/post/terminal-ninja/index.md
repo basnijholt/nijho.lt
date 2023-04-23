@@ -232,7 +232,7 @@ fi
 
 ## 🌌 Starship: The Cosmic Shell Prompt
 
-With our shell of choice and secrets secured, it's time to gaze upon the stars! Starship is a minimal, blazing-fast, and fully customizable shell prompt that provides us with essential information at a glance.
+With our shell of choice and secrets secured, it's time to gaze upon the stars! [Starship](https://starship.rs/) is a minimal, blazing-fast, and fully customizable shell prompt that provides us with essential information at a glance.
 It gives us valuable feedback about our current environment, such as the Git branch, Python virtual environment, and more.
 
 To set up Starship, follow these steps:
@@ -257,7 +257,7 @@ To set up Starship, follow these steps:
 ## 🌍 Autoenv: Automatic Environment Management
 
 In the life of a terminal ninja, we frequently traverse different projects, each with its unique environment requirements.
-Autoenv comes to our rescue by automating the process of activating and deactivating project-specific settings.
+[Autoenv](https://github.com/hyperupcall/autoenv) comes to our rescue by automating the process of activating and deactivating project-specific settings.
 It magically detects when we enter or leave a directory and takes the appropriate actions to set or unset environment variables.
 
 For example you can setup a `.env` file in your project directory to automatically activate a virtual environment when you enter the directory.
@@ -284,7 +284,7 @@ To set up Autoenv, follow these steps:
 ## 💡 Zsh-autosuggestions: The Wisest of Mentors
 
 As we hone our terminal skills, we often find ourselves repeating commands.
-Zsh-autosuggestions is our trusted mentor, always ready with sage advice.
+[Zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) is our trusted mentor, always ready with sage advice.
 It suggests commands based on our command history, saving us precious keystrokes and making our terminal life more enjoyable.
 
 To set up Zsh-autosuggestions, follow these steps:
