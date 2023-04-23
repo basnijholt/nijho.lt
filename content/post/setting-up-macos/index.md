@@ -649,7 +649,6 @@ A macOS filesystem extension enabling mounting of remote filesystems via SSH, pr
 A command-line tool for generating diff files for LaTeX documents, simplifying the tracking of changes and collaboration on LaTeX projects.
 *   Install with `brew install homebrew/tex/git-latexdiff`
 
-
 {{% callout note %}}
 [osxfuse (and thus sshfs) is deprecated from Homebrew](https://github.com/Homebrew/homebrew-core/issues/75656), there is this [tap](https://github.com/gromgit/homebrew-fuse) [[here](https://github.com/Homebrew/brew/blob/master/docs/Interesting-Taps-and-Forks.md#unsupported-interesting-taps)] that I can use to install osxfuse and sshfs.
 {{% /callout %}}
