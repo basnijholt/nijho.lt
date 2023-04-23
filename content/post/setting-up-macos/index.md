@@ -681,19 +681,7 @@ The Fira Code font is a popular choice for developers. To set it as the default 
 
 * * *
 
-## 6. Alfred Plugins
-
-Alfred is a productivity app for MacOS that allows you to search your Mac and the web efficiently. Enhance your Alfred experience by installing these useful plugins:
-
-*   Symbols Search
-*   Open with Sublime Text
-*   IMDB
-*   WiFi
-*   Synonyms
-
-* * *
-
-## 7. Set Your Mac Host/Computer Name
+## 6. Set Your Mac Host/Computer Name
 
 To set a custom host or computer name for your Mac, open a terminal and run the following commands:
 
@@ -707,7 +695,7 @@ dscacheutil -flushcache
 
 * * *
 
-## 8. Quick Dock Hiding
+## 7. Quick Dock Hiding
 
 For a cleaner desktop experience, follow this [StackExchange answer](https://apple.stackexchange.com/a/34097) to enable quick dock hiding.
 
