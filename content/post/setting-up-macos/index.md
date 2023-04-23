@@ -53,13 +53,7 @@ Set a [`host`](https://github.com/StevenBlack/hosts) file to block unwanted webs
 
 * * *
 
-## 2. Increase `sudo` Password Timeout
-
-To increase the sudo password timeout, follow the instructions provided in this [StackExchange answer](https://apple.stackexchange.com/a/51763).
-
-* * *
-
-## 3. Homebrew
+## 2. Homebrew
 
 Homebrew is a powerful package manager for MacOS. It allows you to quickly and easily install, update, and remove software.
 
@@ -284,6 +278,12 @@ A cloud-based messaging platform with a focus on speed and security, supporting 
 #### Zoom 📹🔗
 A popular video conferencing tool for virtual meetings, webinars, and collaboration.
 * Install with `brew install --cask zoom`
+
+* * *
+
+## 2. Increase `sudo` Password Timeout
+
+To increase the sudo password timeout, follow the instructions provided in this [StackExchange answer](https://apple.stackexchange.com/a/51763).
 
 ### 4. Development
 
