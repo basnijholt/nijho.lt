@@ -154,21 +154,21 @@ I know I do.
 Writing out `git checkout` and `git commit` every time I want to switch branches or commit changes is a waste of time, therefore I use the `git` plugin in Oh-my-zsh which provides useful aliases to make my Git workflow more efficient.
 Let's go through some of ***my*** most commonly used aliases (ranked by frequency of use):
 
-*   `gco`: git checkout - Switch branches or restore working tree files.
-*   `gd`: git diff - Show changes between the working tree and the index or a tree.
-*   `g`: git - The git command itself.
-*   `gcb`: git checkout -b - Create a new branch and switch to it.
-*   `gc`: git commit --verbose - Create a new commit with a verbose message.
-*   `gc!`: git commit --verbose --amend - Amend the previous commit with a verbose message.
+*   `gco`: `git checkout` - Switch branches or restore working tree files.
+*   `gd`: `git diff` - Show changes between the working tree and the index or a tree.
+*   `g`: `git` - The git command itself.
+*   `gcb`: `git checkout -b` - Create a new branch and switch to it.
+*   `gc`: `git commit --verbose` - Create a new commit with a verbose message.
+*   `gc!`: `git commit --verbose` --amend - Amend the previous commit with a verbose message.
 *   `ga`: git add - Add file contents to the index.
-*   `gca`: git commit --verbose --all - Commit all changes with a verbose message.
-*   `gca!`: git commit --verbose --all --amend - Amend the previous commit with a verbose message.
-*   `gcp`: git cherry-pick - Apply the changes introduced by some existing commits.
-*   `gst`: git status - Show the working tree status.
-*   `gp`: git push - Update remote refs along with associated objects.
-*   `gmom`: git merge origin/$(git_main_branch) - Merge changes from the main branch.
-*   `grbom`: git rebase origin/$(git_main_branch) - Rebase current branch onto the main branch.
-*   `gfa`: git fetch --all --prune --jobs=10 - Fetch all remote branches and remove any stale remote-tracking references, using 10 parallel jobs.
+*   `gca`: `git commit --verbose --all` - Commit all changes with a verbose message.
+*   `gca!`: `git commit --verbose --all --amend` - Amend the previous commit with a verbose message.
+*   `gcp`: `git cherry-pick` - Apply the changes introduced by some existing commits.
+*   `gst`: `git status` - Show the working tree status.
+*   `gp`: `git push` - Update remote refs along with associated objects.
+*   `gmom`: `git merge origin/$(git_main_branch)` - Merge changes from the main branch.
+*   `grbom`: `git rebase origin/$(git_main_branch)` - Rebase current branch onto the main branch.
+*   `gfa`: `git fetch --all --prune --jobs=10` - Fetch all remote branches and remove any stale remote-tracking references, using 10 parallel jobs.
 
 To set up the Oh-my-zsh `git` plugin, add the following lines to your `.zshrc`:
 
