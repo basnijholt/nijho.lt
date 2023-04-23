@@ -225,6 +225,8 @@ CodeSnap is a handy extension for creating beautiful code screenshots directly f
 
 - Use `code --install-extension adpyke.codesnap` to install the CodeSnap extension [(docs)](https://marketplace.visualstudio.com/items?itemName=adpyke.codesnap)
 
+![](https://user-images.githubusercontent.com/6897215/233820944-bfb1f980-4eb6-4bbd-8118-a960888b2d32.png)
+
 ### Micromamba
 
 The Micromamba extension for VSCode integrates the Micromamba package manager, making it easier to manage Conda environments and packages within the editor.

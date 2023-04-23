@@ -20,7 +20,7 @@ content:
     enable: false
 design:
   columns: '2'
-  view: card
+  view: compact
   flip_alt_rows: true
   background: {}
   spacing: {padding: [10, 0, 0, 0]}
