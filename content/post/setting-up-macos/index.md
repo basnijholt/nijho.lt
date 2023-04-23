@@ -279,12 +279,6 @@ A cloud-based messaging platform with a focus on speed and security, supporting 
 A popular video conferencing tool for virtual meetings, webinars, and collaboration.
 * Install with `brew install --cask zoom`
 
-* * *
-
-## 2. Increase `sudo` Password Timeout
-
-To increase the sudo password timeout, follow the instructions provided in this [StackExchange answer](https://apple.stackexchange.com/a/51763).
-
 ### 4. 💻 Development
 
 #### Airflow 🌬️📊
@@ -653,6 +647,11 @@ A command-line tool for generating diff files for LaTeX documents, simplifying t
 [osxfuse (and thus sshfs) is deprecated from Homebrew](https://github.com/Homebrew/homebrew-core/issues/75656), there is this [tap](https://github.com/gromgit/homebrew-fuse) [[here](https://github.com/Homebrew/brew/blob/master/docs/Interesting-Taps-and-Forks.md#unsupported-interesting-taps)] that I can use to install osxfuse and sshfs.
 {{% /callout %}}
 
+* * *
+
+## 3. Increase `sudo` Password Timeout
+
+To increase the sudo password timeout, follow the instructions provided in this [StackExchange answer](https://apple.stackexchange.com/a/51763).
 * * *
 
 ## 4. oh-my-zsh
