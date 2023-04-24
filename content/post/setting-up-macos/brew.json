@@ -167,20 +167,6 @@
             "cask": true
         },
         {
-            "name": "GitHub CLI (gh) 🐙💻",
-            "description": "A command-line tool for managing GitHub repositories, issues, pull requests, and more, directly from the terminal.",
-            "brew": "gh",
-            "cask": false,
-            "repo": "https://github.com/cli/cli",
-            "docs": "https://cli.github.com/manual/"
-        },
-        {
-            "name": "Brew-Cask-Completion 🍺📝",
-            "description": "Shell completion for the Homebrew-Cask command, providing helpful suggestions and autocompletion.",
-            "brew": "brew-cask-completion",
-            "cask": false
-        },
-        {
             "name": "Autossh 🔗🔐",
             "description": "A tool for automatically starting and maintaining SSH connections.",
             "brew": "autossh",
@@ -340,6 +326,40 @@
             "docs": "https://code.visualstudio.com/docs"
         }
     ],
+    "🎨 Graphics and Design": [
+        {
+            "name": "ImageMagick 🖼️🛠️",
+            "description": "A powerful command-line tool for creating, editing, and converting bitmap images, supporting a wide range of image formats.",
+            "brew": "imagemagick",
+            "cask": false,
+            "repo": "https://github.com/ImageMagick/ImageMagick",
+            "docs": "https://imagemagick.org/script/index.php"
+        },
+        {
+            "name": "Gifsicle 🎞️🛠️",
+            "description": "A command-line tool for creating, editing, and optimizing GIF animations and images.",
+            "brew": "gifsicle",
+            "cask": false,
+            "repo": "https://github.com/kohler/gifsicle",
+            "docs": "https://www.lcdf.org/gifsicle/man.html"
+        },
+        {
+            "name": "OBS (Open Broadcaster Software) 🎮🎥",
+            "description": "A powerful and customizable software for live streaming and screen recording, widely used by content creators and gamers.",
+            "brew": "obs",
+            "cask": true,
+            "repo": "https://github.com/obsproject/obs-studio",
+            "docs": "https://obsproject.com/wiki/"
+        },
+        {
+            "name": "Inkscape ✏️🖼️",
+            "description": "A professional vector graphics editor that supports various file formats, offering a powerful set of drawing tools for graphic design.",
+            "brew": "inkscape",
+            "cask": true,
+            "repo": "https://github.com/inkscape/inkscape",
+            "docs": "https://inkscape.org/doc/"
+        }
+    ],
     "🖥️ Terminal and Shell": [
         {
             "name": "iTerm2 🖥️🎛️",
@@ -348,6 +368,28 @@
             "cask": true,
             "repo": "https://github.com/gnachman/iTerm2",
             "docs": "https://iterm2.com/documentation.html"
+        },
+        {
+            "name": "XQuartz 🎨🖥️",
+            "description": "An open-source X Window System implementation for macOS that allows running X11 applications, enabling compatibility with many Unix programs.",
+            "brew": "xquartz",
+            "cask": true,
+            "repo": "https://github.com/XQuartz",
+            "docs": "https://www.xquartz.org/Documentation.html"
+        },
+        {
+            "name": "Brew-Cask-Completion 🍺📝",
+            "description": "Shell completion for the Homebrew-Cask command, providing helpful suggestions and autocompletion.",
+            "brew": "brew-cask-completion",
+            "cask": false
+        },
+        {
+            "name": "GitHub CLI (gh) 🐙💻",
+            "description": "A command-line tool for managing GitHub repositories, issues, pull requests, and more, directly from the terminal.",
+            "brew": "gh",
+            "cask": false,
+            "repo": "https://github.com/cli/cli",
+            "docs": "https://cli.github.com/manual/"
         },
         {
             "name": "Htop 📊🖥️",
@@ -503,22 +545,6 @@
             "cask": true,
             "repo": "https://github.com/UniversalMediaServer/UniversalMediaServer",
             "docs": "https://www.universalmediaserver.com/about/"
-        },
-        {
-            "name": "XQuartz 🎨🖥️",
-            "description": "An open-source X Window System implementation for macOS that allows running X11 applications, enabling compatibility with many Unix programs.",
-            "brew": "xquartz",
-            "cask": true,
-            "repo": "https://github.com/XQuartz",
-            "docs": "https://www.xquartz.org/Documentation.html"
-        },
-        {
-            "name": "Inkscape ✏️🖼️",
-            "description": "A professional vector graphics editor that supports various file formats, offering a powerful set of drawing tools for graphic design.",
-            "brew": "inkscape",
-            "cask": true,
-            "repo": "https://github.com/inkscape/inkscape",
-            "docs": "https://inkscape.org/doc/"
         }
     ],
     "🔒 Security and Privacy": [
@@ -595,22 +621,6 @@
             "docs": "https://handbrake.fr/docs/"
         },
         {
-            "name": "ImageMagick 🖼️🛠️",
-            "description": "A powerful command-line tool for creating, editing, and converting bitmap images, supporting a wide range of image formats.",
-            "brew": "imagemagick",
-            "cask": false,
-            "repo": "https://github.com/ImageMagick/ImageMagick",
-            "docs": "https://imagemagick.org/script/index.php"
-        },
-        {
-            "name": "Gifsicle 🎞️🛠️",
-            "description": "A command-line tool for creating, editing, and optimizing GIF animations and images.",
-            "brew": "gifsicle",
-            "cask": false,
-            "repo": "https://github.com/kohler/gifsicle",
-            "docs": "https://www.lcdf.org/gifsicle/man.html"
-        },
-        {
             "name": "LICEcap 🖥️🎥",
             "description": "A lightweight screen capture tool, allowing you to create animated GIFs directly from your desktop.",
             "brew": "licecap",
@@ -633,14 +643,6 @@
             "cask": true,
             "repo": "https://github.com/metabrainz/picard",
             "docs": "https://picard-docs.musicbrainz.org/en/"
-        },
-        {
-            "name": "OBS (Open Broadcaster Software) 🎮🎥",
-            "description": "A powerful and customizable software for live streaming and screen recording, widely used by content creators and gamers.",
-            "brew": "obs",
-            "cask": true,
-            "repo": "https://github.com/obsproject/obs-studio",
-            "docs": "https://obsproject.com/wiki/"
         },
         {
             "name": "Spotify 🎧🎶",
@@ -765,7 +767,7 @@
             "docs": "https://www.titanium-software.fr/en/onyx.html"
         }
     ],
-    "🎲 Miscellaneous": [
+    "📈 Finance and Cryptocurrency": [
         {
             "name": "Exodus 💰🔒",
             "description": "A user-friendly cryptocurrency wallet, supporting a wide range of assets, exchange features, and portfolio management.",
@@ -781,7 +783,9 @@
             "cask": false,
             "repo": "https://github.com/miguelmota/cointop",
             "docs": "https://github.com/miguelmota/cointop/blob/master/README.md"
-        },
+        }
+    ],
+    "🎲 Miscellaneous": [
         {
             "name": "f.lux 🌞🌛",
             "description": "A screen color temperature adjustment tool, reducing eye strain and promoting healthy sleep patterns by adapting your display to the time of day.",
