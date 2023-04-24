@@ -1,20 +1,20 @@
 {
     "🌐 Browsers": [
         {
-            "name": "Chrome 🌐💨",
-            "description": "A fast and user-friendly browser with seamless Google service integration and extensive extension library.",
-            "brew": "google-chrome",
-            "cask": true,
-            "repo": "https://github.com/googlechrome/",
-            "docs": "https://support.google.com/chrome/"
-        },
-        {
             "name": "Brave Browser 🛡️🦁",
             "description": "A privacy-focused browser with built-in adblocker and support for Chrome extensions, rewarding content creators via BAT tokens.",
             "brew": "brave-browser",
             "cask": true,
             "repo": "https://github.com/brave/brave-browser",
             "docs": "https://support.brave.com/hc/en-us"
+        },
+        {
+            "name": "Chrome 🌐💨",
+            "description": "A fast and user-friendly browser with seamless Google service integration and extensive extension library.",
+            "brew": "google-chrome",
+            "cask": true,
+            "repo": "https://github.com/googlechrome/",
+            "docs": "https://support.google.com/chrome/"
         },
         {
             "name": "Firefox 🔓🦊",
@@ -35,22 +35,6 @@
             "docs": "https://www.alfredapp.com/help/"
         },
         {
-            "name": "JQ 📄🔍",
-            "description": "A lightweight and flexible command-line JSON processor, enabling data extraction, transformation, and manipulation of JSON data.",
-            "brew": "jq",
-            "cask": false,
-            "repo": "https://github.com/stedolan/jq",
-            "docs": "https://stedolan.github.io/jq/manual/"
-        },
-        {
-            "name": "Graphviz 📊🖋️",
-            "description": "An open-source graph visualization software, capable of representing structural information as diagrams of abstract graphs and networks.",
-            "brew": "graphviz",
-            "cask": false,
-            "repo": "https://gitlab.com/graphviz/graphviz",
-            "docs": "https://graphviz.org/documentation/"
-        },
-        {
             "name": "Bartender 🍸🖥️",
             "description": "A utility to organize and manage your Mac's menu bar icons, improving aesthetics and accessibility.",
             "brew": "bartender",
@@ -65,6 +49,14 @@
             "docs": "https://docs.bettertouchtool.net/"
         },
         {
+            "name": "Graphviz 📊🖋️",
+            "description": "An open-source graph visualization software, capable of representing structural information as diagrams of abstract graphs and networks.",
+            "brew": "graphviz",
+            "cask": false,
+            "repo": "https://gitlab.com/graphviz/graphviz",
+            "docs": "https://graphviz.org/documentation/"
+        },
+        {
             "name": "HiddenBar 📏🖥️",
             "description": "A lightweight tool to hide menu bar icons and declutter your Mac's interface.",
             "brew": "hiddenbar",
@@ -72,10 +64,12 @@
             "repo": "https://github.com/dwarvesf/hidden"
         },
         {
-            "name": "iStat Menus 📊🌡️",
-            "description": "A comprehensive system monitor providing detailed information about your Mac's performance through customizable menu bar icons.",
-            "brew": "istat-menus",
-            "cask": true
+            "name": "JQ 📄🔍",
+            "description": "A lightweight and flexible command-line JSON processor, enabling data extraction, transformation, and manipulation of JSON data.",
+            "brew": "jq",
+            "cask": false,
+            "repo": "https://github.com/stedolan/jq",
+            "docs": "https://stedolan.github.io/jq/manual/"
         },
         {
             "name": "Karabiner-Elements ⌨️🔧",
@@ -101,6 +95,14 @@
             "docs": "https://help.obsidian.md/"
         },
         {
+            "name": "Raycast ⚡🖱️",
+            "description": "A productivity tool that allows you to control your Mac using powerful and customizable command-based actions.",
+            "brew": "raycast",
+            "cask": true,
+            "repo": "https://github.com/raycast",
+            "docs": "https://www.raycast.com/docs/"
+        },
+        {
             "name": "Rectangle 🖼️⌨️",
             "description": "A window management tool to easily resize and position windows on your Mac using keyboard shortcuts or snap-to-edge functionality.",
             "brew": "rectangle",
@@ -109,12 +111,10 @@
             "docs": "https://github.com/rxhanson/Rectangle/blob/master/README.md"
         },
         {
-            "name": "Raycast ⚡🖱️",
-            "description": "A productivity tool that allows you to control your Mac using powerful and customizable command-based actions.",
-            "brew": "raycast",
-            "cask": true,
-            "repo": "https://github.com/raycast",
-            "docs": "https://www.raycast.com/docs/"
+            "name": "iStat Menus 📊🌡️",
+            "description": "A comprehensive system monitor providing detailed information about your Mac's performance through customizable menu bar icons.",
+            "brew": "istat-menus",
+            "cask": true
         }
     ],
     "📣 Communication": [
@@ -207,14 +207,6 @@
             "docs": "https://docs.docker.com/"
         },
         {
-            "name": "Git 🧑‍💻🔄",
-            "description": "A widely used distributed version control system.",
-            "brew": "git",
-            "cask": false,
-            "repo": "https://github.com/git",
-            "docs": "https://git-scm.com/doc"
-        },
-        {
             "name": "Git Credential Manager Core 🧑‍💻🔑",
             "description": "A cross-platform credential helper for Git for HTTPS authentication.",
             "brew": "microsoft/git/git-credential-manager-core",
@@ -244,6 +236,14 @@
             "cask": false,
             "repo": "https://github.com/sobolevn/git-secret",
             "docs": "https://git-secret.io/"
+        },
+        {
+            "name": "Git 🧑‍💻🔄",
+            "description": "A widely used distributed version control system.",
+            "brew": "git",
+            "cask": false,
+            "repo": "https://github.com/git",
+            "docs": "https://git-scm.com/doc"
         },
         {
             "name": "Go 🏃‍♂️🔤",
@@ -328,14 +328,6 @@
     ],
     "🎨 Graphics and Design": [
         {
-            "name": "ImageMagick 🖼️🛠️",
-            "description": "A powerful command-line tool for creating, editing, and converting bitmap images, supporting a wide range of image formats.",
-            "brew": "imagemagick",
-            "cask": false,
-            "repo": "https://github.com/ImageMagick/ImageMagick",
-            "docs": "https://imagemagick.org/script/index.php"
-        },
-        {
             "name": "Gifsicle 🎞️🛠️",
             "description": "A command-line tool for creating, editing, and optimizing GIF animations and images.",
             "brew": "gifsicle",
@@ -344,12 +336,12 @@
             "docs": "https://www.lcdf.org/gifsicle/man.html"
         },
         {
-            "name": "OBS (Open Broadcaster Software) 🎮🎥",
-            "description": "A powerful and customizable software for live streaming and screen recording, widely used by content creators and gamers.",
-            "brew": "obs",
-            "cask": true,
-            "repo": "https://github.com/obsproject/obs-studio",
-            "docs": "https://obsproject.com/wiki/"
+            "name": "ImageMagick 🖼️🛠️",
+            "description": "A powerful command-line tool for creating, editing, and converting bitmap images, supporting a wide range of image formats.",
+            "brew": "imagemagick",
+            "cask": false,
+            "repo": "https://github.com/ImageMagick/ImageMagick",
+            "docs": "https://imagemagick.org/script/index.php"
         },
         {
             "name": "Inkscape ✏️🖼️",
@@ -358,25 +350,17 @@
             "cask": true,
             "repo": "https://github.com/inkscape/inkscape",
             "docs": "https://inkscape.org/doc/"
+        },
+        {
+            "name": "OBS (Open Broadcaster Software) 🎮🎥",
+            "description": "A powerful and customizable software for live streaming and screen recording, widely used by content creators and gamers.",
+            "brew": "obs",
+            "cask": true,
+            "repo": "https://github.com/obsproject/obs-studio",
+            "docs": "https://obsproject.com/wiki/"
         }
     ],
     "🖥️ Terminal and Shell": [
-        {
-            "name": "iTerm2 🖥️🎛️",
-            "description": "A highly customizable and powerful terminal emulator for macOS.",
-            "brew": "iterm2",
-            "cask": true,
-            "repo": "https://github.com/gnachman/iTerm2",
-            "docs": "https://iterm2.com/documentation.html"
-        },
-        {
-            "name": "XQuartz 🎨🖥️",
-            "description": "An open-source X Window System implementation for macOS that allows running X11 applications, enabling compatibility with many Unix programs.",
-            "brew": "xquartz",
-            "cask": true,
-            "repo": "https://github.com/XQuartz",
-            "docs": "https://www.xquartz.org/Documentation.html"
-        },
         {
             "name": "Brew-Cask-Completion 🍺📝",
             "description": "Shell completion for the Homebrew-Cask command, providing helpful suggestions and autocompletion.",
@@ -400,14 +384,6 @@
             "docs": "https://htop.dev/docs/"
         },
         {
-            "name": "Zsh 🐚🚀",
-            "description": "An interactive and highly extensible Unix shell.",
-            "brew": "zsh",
-            "cask": false,
-            "repo": "https://github.com/zsh-users",
-            "docs": "http://zsh.sourceforge.net/Doc/Release/index.html"
-        },
-        {
             "name": "Starship 🚀⭐",
             "description": "A minimal, fast, and customizable shell prompt for any shell.",
             "brew": "starship",
@@ -422,6 +398,30 @@
             "cask": false,
             "repo": "https://github.com/tmux/tmux",
             "docs": "https://github.com/tmux/tmux/blob/master/README.md"
+        },
+        {
+            "name": "XQuartz 🎨🖥️",
+            "description": "An open-source X Window System implementation for macOS that allows running X11 applications, enabling compatibility with many Unix programs.",
+            "brew": "xquartz",
+            "cask": true,
+            "repo": "https://github.com/XQuartz",
+            "docs": "https://www.xquartz.org/Documentation.html"
+        },
+        {
+            "name": "Zsh 🐚🚀",
+            "description": "An interactive and highly extensible Unix shell.",
+            "brew": "zsh",
+            "cask": false,
+            "repo": "https://github.com/zsh-users",
+            "docs": "http://zsh.sourceforge.net/Doc/Release/index.html"
+        },
+        {
+            "name": "iTerm2 🖥️🎛️",
+            "description": "A highly customizable and powerful terminal emulator for macOS.",
+            "brew": "iterm2",
+            "cask": true,
+            "repo": "https://github.com/gnachman/iTerm2",
+            "docs": "https://iterm2.com/documentation.html"
         }
     ],
     "🅰️ Fonts": [
@@ -484,13 +484,6 @@
             "docs": "https://www.dropbox.com/help"
         },
         {
-            "name": "Mounty 🗻💽",
-            "description": "A user-friendly tool for mounting and writing to NTFS drives on macOS, providing seamless read/write access.",
-            "brew": "mounty",
-            "cask": true,
-            "repo": "https://github.com/sindresorhus/mounty"
-        },
-        {
             "name": "MPV 🎞️🎧",
             "description": "A free, open-source, and cross-platform media player with minimalistic design, supporting a wide range of media formats.",
             "brew": "mpv",
@@ -499,12 +492,11 @@
             "docs": "https://mpv.io/manual/master/"
         },
         {
-            "name": "Wget 🌐⬇️",
-            "description": "A command-line utility for downloading files from the internet, supporting HTTP, HTTPS, and FTP protocols.",
-            "brew": "wget",
-            "cask": false,
-            "repo": "https://github.com/mirror/wget",
-            "docs": "https://www.gnu.org/software/wget/manual/"
+            "name": "Mounty 🗻💽",
+            "description": "A user-friendly tool for mounting and writing to NTFS drives on macOS, providing seamless read/write access.",
+            "brew": "mounty",
+            "cask": true,
+            "repo": "https://github.com/sindresorhus/mounty"
         },
         {
             "name": "Rclone 🔄☁️",
@@ -545,6 +537,14 @@
             "cask": true,
             "repo": "https://github.com/UniversalMediaServer/UniversalMediaServer",
             "docs": "https://www.universalmediaserver.com/about/"
+        },
+        {
+            "name": "Wget 🌐⬇️",
+            "description": "A command-line utility for downloading files from the internet, supporting HTTP, HTTPS, and FTP protocols.",
+            "brew": "wget",
+            "cask": false,
+            "repo": "https://github.com/mirror/wget",
+            "docs": "https://www.gnu.org/software/wget/manual/"
         }
     ],
     "🔒 Security and Privacy": [
@@ -555,20 +555,20 @@
             "cask": true
         },
         {
-            "name": "Keychain 🔑🔗",
-            "description": "A tool for managing ssh-agent and GnuPG agent, designed to make key management easier and more convenient.",
-            "brew": "keychain",
-            "cask": false,
-            "repo": "https://github.com/funtoo/keychain",
-            "docs": "https://www.funtoo.org/Keychain"
-        },
-        {
             "name": "GnuPG (GPG) 🔐🔑",
             "description": "A complete and free implementation of the OpenPGP standard, providing encryption, signing, and key management capabilities.",
             "brew": "gnupg",
             "cask": false,
             "repo": "https://github.com/gpg/gnupg",
             "docs": "https://gnupg.org/documentation/index.html"
+        },
+        {
+            "name": "Keychain 🔑🔗",
+            "description": "A tool for managing ssh-agent and GnuPG agent, designed to make key management easier and more convenient.",
+            "brew": "keychain",
+            "cask": false,
+            "repo": "https://github.com/funtoo/keychain",
+            "docs": "https://www.funtoo.org/Keychain"
         },
         {
             "name": "LuLu 🚦🔥",
@@ -629,14 +629,6 @@
             "docs": "http://www.cockos.com/licecap/"
         },
         {
-            "name": "eqMac 🎚️🎶",
-            "description": "An open-source audio equalizer for macOS, enhancing your listening experience with customizable presets and manual adjustments.",
-            "brew": "eqmac",
-            "cask": true,
-            "repo": "https://github.com/bitgapp/eqMac",
-            "docs": "https://github.com/bitgapp/eqMac/blob/master/README.md"
-        },
-        {
             "name": "MusicBrainz Picard 🎵🔖",
             "description": "An open-source music tagger, using the MusicBrainz database to automatically update and organize your audio files' metadata.",
             "brew": "musicbrainz-picard",
@@ -675,6 +667,14 @@
             "cask": true,
             "repo": "https://github.com/webtorrent",
             "docs": "https://webtorrent.io/docs"
+        },
+        {
+            "name": "eqMac 🎚️🎶",
+            "description": "An open-source audio equalizer for macOS, enhancing your listening experience with customizable presets and manual adjustments.",
+            "brew": "eqmac",
+            "cask": true,
+            "repo": "https://github.com/bitgapp/eqMac",
+            "docs": "https://github.com/bitgapp/eqMac/blob/master/README.md"
         }
     ],
     "📄 Office and Document Management": [
@@ -769,30 +769,38 @@
     ],
     "📈 Finance and Cryptocurrency": [
         {
-            "name": "Exodus 💰🔒",
-            "description": "A user-friendly cryptocurrency wallet, supporting a wide range of assets, exchange features, and portfolio management.",
-            "brew": "exodus",
-            "cask": true,
-            "repo": "https://github.com/exodusmovement",
-            "docs": "https://support.exodus.io/"
-        },
-        {
             "name": "Cointop 💹📈",
             "description": "A command-line interface for tracking cryptocurrency market data, with an interactive and customizable dashboard.",
             "brew": "cointop",
             "cask": false,
             "repo": "https://github.com/miguelmota/cointop",
             "docs": "https://github.com/miguelmota/cointop/blob/master/README.md"
+        },
+        {
+            "name": "Exodus 💰🔒",
+            "description": "A user-friendly cryptocurrency wallet, supporting a wide range of assets, exchange features, and portfolio management.",
+            "brew": "exodus",
+            "cask": true,
+            "repo": "https://github.com/exodusmovement",
+            "docs": "https://support.exodus.io/"
         }
     ],
     "🎲 Miscellaneous": [
         {
-            "name": "f.lux 🌞🌛",
-            "description": "A screen color temperature adjustment tool, reducing eye strain and promoting healthy sleep patterns by adapting your display to the time of day.",
-            "brew": "flux",
-            "cask": true,
-            "repo": "https://github.com/fluxtream",
-            "docs": "https://justgetflux.com/faq.html"
+            "name": "Ext4Fuse 🐧💽",
+            "description": "A macOS filesystem extension enabling read-only support for the ext4 file system, commonly used on Linux systems.",
+            "brew": "gromgit/fuse/ext4fuse",
+            "cask": false,
+            "repo": "https://github.com/gerard/ext4fuse",
+            "docs": "https://github.com/gerard/ext4fuse/blob/master/README.md"
+        },
+        {
+            "name": "Git LaTeXdiff 📄🔍",
+            "description": "A command-line tool for generating diff files for LaTeX documents, simplifying the tracking of changes and collaboration on LaTeX projects.",
+            "brew": "homebrew/tex/git-latexdiff",
+            "cask": false,
+            "repo": "https://github.com/git-latexdiff",
+            "docs": "https://gitlab.com/git-latexdiff/git-latexdiff/-/blob/master/README.md"
         },
         {
             "name": "GitHub 🧑‍💻🔄",
@@ -834,20 +842,12 @@
             "docs": "https://github.com/MonitorControl/MonitorControl/blob/master/README.md"
         },
         {
-            "name": "pipx 🐍📦",
-            "description": "A package manager for installing and running Python applications in isolated environments, ensuring clean and conflict-free installations.",
-            "brew": "pipx",
+            "name": "NTFS-3G 🖥️🔗",
+            "description": "A macOS filesystem extension providing read-write support for the NTFS file system, commonly used on Windows systems.",
+            "brew": "gromgit/fuse/ntfs-3g",
             "cask": false,
-            "repo": "https://github.com/pipxproject/pipx",
-            "docs": "https://pipxproject.github.io/pipx/"
-        },
-        {
-            "name": "qBittorrent ⚡📁",
-            "description": "A free and open-source torrent client, featuring a clean interface, powerful search capabilities, and minimal resource usage.",
-            "brew": "qbittorrent",
-            "cask": true,
-            "repo": "https://github.com/qbittorrent/qBittorrent",
-            "docs": "https://github.com/qbittorrent/qBittorrent/wiki"
+            "repo": "https://github.com/tuxera/ntfs-3g",
+            "docs": "https://www.tuxera.com/community/ntfs-3g-manual/"
         },
         {
             "name": "QLVideo 🎥👀",
@@ -872,6 +872,14 @@
             "cask": true,
             "repo": "https://github.com/sabnzbd/sabnzbd",
             "docs": "https://sabnzbd.org/wiki/"
+        },
+        {
+            "name": "SSHFS 💻🔗",
+            "description": "A macOS filesystem extension enabling mounting of remote filesystems via SSH, providing secure and convenient access to remote files.",
+            "brew": "gromgit/fuse/sshfs",
+            "cask": false,
+            "repo": "https://github.com/libfuse/sshfs",
+            "docs": "https://github.com/libfuse/sshfs/blob/master/README.md"
         },
         {
             "name": "SelfControl 🚫🕒",
@@ -914,44 +922,36 @@
             "docs": "https://github.com/will-stone/unclack/blob/main/README.md"
         },
         {
+            "name": "f.lux 🌞🌛",
+            "description": "A screen color temperature adjustment tool, reducing eye strain and promoting healthy sleep patterns by adapting your display to the time of day.",
+            "brew": "flux",
+            "cask": true,
+            "repo": "https://github.com/fluxtream",
+            "docs": "https://justgetflux.com/faq.html"
+        },
+        {
+            "name": "pipx 🐍📦",
+            "description": "A package manager for installing and running Python applications in isolated environments, ensuring clean and conflict-free installations.",
+            "brew": "pipx",
+            "cask": false,
+            "repo": "https://github.com/pipxproject/pipx",
+            "docs": "https://pipxproject.github.io/pipx/"
+        },
+        {
+            "name": "qBittorrent ⚡📁",
+            "description": "A free and open-source torrent client, featuring a clean interface, powerful search capabilities, and minimal resource usage.",
+            "brew": "qbittorrent",
+            "cask": true,
+            "repo": "https://github.com/qbittorrent/qBittorrent",
+            "docs": "https://github.com/qbittorrent/qBittorrent/wiki"
+        },
+        {
             "name": "yq 📄🔧",
             "description": "A command-line tool for parsing and manipulating YAML files, offering powerful filtering and editing capabilities.",
             "brew": "yq",
             "cask": false,
             "repo": "https://github.com/mikefarah/yq",
             "docs": "https://mikefarah.gitbook.io/yq/"
-        },
-        {
-            "name": "Ext4Fuse 🐧💽",
-            "description": "A macOS filesystem extension enabling read-only support for the ext4 file system, commonly used on Linux systems.",
-            "brew": "gromgit/fuse/ext4fuse",
-            "cask": false,
-            "repo": "https://github.com/gerard/ext4fuse",
-            "docs": "https://github.com/gerard/ext4fuse/blob/master/README.md"
-        },
-        {
-            "name": "NTFS-3G 🖥️🔗",
-            "description": "A macOS filesystem extension providing read-write support for the NTFS file system, commonly used on Windows systems.",
-            "brew": "gromgit/fuse/ntfs-3g",
-            "cask": false,
-            "repo": "https://github.com/tuxera/ntfs-3g",
-            "docs": "https://www.tuxera.com/community/ntfs-3g-manual/"
-        },
-        {
-            "name": "SSHFS 💻🔗",
-            "description": "A macOS filesystem extension enabling mounting of remote filesystems via SSH, providing secure and convenient access to remote files.",
-            "brew": "gromgit/fuse/sshfs",
-            "cask": false,
-            "repo": "https://github.com/libfuse/sshfs",
-            "docs": "https://github.com/libfuse/sshfs/blob/master/README.md"
-        },
-        {
-            "name": "Git LaTeXdiff 📄🔍",
-            "description": "A command-line tool for generating diff files for LaTeX documents, simplifying the tracking of changes and collaboration on LaTeX projects.",
-            "brew": "homebrew/tex/git-latexdiff",
-            "cask": false,
-            "repo": "https://github.com/git-latexdiff",
-            "docs": "https://gitlab.com/git-latexdiff/git-latexdiff/-/blob/master/README.md"
         }
     ]
 }
