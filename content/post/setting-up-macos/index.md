@@ -197,7 +197,11 @@ brew install \
 
 </details>
 
-Otherwise, you can install the essential applications and tools one by one:
+Otherwise, you can install the essential applications and tools one by one.
+
+{{% callout note %}}
+This content below is automatically generated from [this `json` file](https://github.com/basnijholt/nijho.lt/blob/main/content/post/setting-up-macos/brew.json) and [`markdown-code-runner`](https://github.com/basnijholt/markdown-code-runner/blob/main/markdown_code_runner.py)
+{{% /callout %}}
 
 <!-- CODE:BASH:START -->
 <!-- python brew-section.py -->
