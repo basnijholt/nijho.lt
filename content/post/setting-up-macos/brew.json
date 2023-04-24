@@ -35,6 +35,22 @@
             "docs": "https://www.alfredapp.com/help/"
         },
         {
+            "name": "JQ 📄🔍",
+            "description": "A lightweight and flexible command-line JSON processor, enabling data extraction, transformation, and manipulation of JSON data.",
+            "brew": "jq",
+            "cask": false,
+            "repo": "https://github.com/stedolan/jq",
+            "docs": "https://stedolan.github.io/jq/manual/"
+        },
+        {
+            "name": "Graphviz 📊🖋️",
+            "description": "An open-source graph visualization software, capable of representing structural information as diagrams of abstract graphs and networks.",
+            "brew": "graphviz",
+            "cask": false,
+            "repo": "https://gitlab.com/graphviz/graphviz",
+            "docs": "https://graphviz.org/documentation/"
+        },
+        {
             "name": "Bartender 🍸🖥️",
             "description": "A utility to organize and manage your Mac's menu bar icons, improving aesthetics and accessibility.",
             "brew": "bartender",
@@ -149,6 +165,20 @@
             "description": "The ultimate way to watch your videos on Chromecast, Apple TV and AirPlay 2 enabled TVs.",
             "brew": "airflow",
             "cask": true
+        },
+        {
+            "name": "GitHub CLI (gh) 🐙💻",
+            "description": "A command-line tool for managing GitHub repositories, issues, pull requests, and more, directly from the terminal.",
+            "brew": "gh",
+            "cask": false,
+            "repo": "https://github.com/cli/cli",
+            "docs": "https://cli.github.com/manual/"
+        },
+        {
+            "name": "Brew-Cask-Completion 🍺📝",
+            "description": "Shell completion for the Homebrew-Cask command, providing helpful suggestions and autocompletion.",
+            "brew": "brew-cask-completion",
+            "cask": false
         },
         {
             "name": "Autossh 🔗🔐",
@@ -320,6 +350,14 @@
             "docs": "https://iterm2.com/documentation.html"
         },
         {
+            "name": "Htop 📊🖥️",
+            "description": "An interactive process viewer for Unix systems, providing a real-time, color-coded view of system resources and processes.",
+            "brew": "htop",
+            "cask": false,
+            "repo": "https://github.com/htop-dev/htop",
+            "docs": "https://htop.dev/docs/"
+        },
+        {
             "name": "Zsh 🐚🚀",
             "description": "An interactive and highly extensible Unix shell.",
             "brew": "zsh",
@@ -419,6 +457,14 @@
             "docs": "https://mpv.io/manual/master/"
         },
         {
+            "name": "Wget 🌐⬇️",
+            "description": "A command-line utility for downloading files from the internet, supporting HTTP, HTTPS, and FTP protocols.",
+            "brew": "wget",
+            "cask": false,
+            "repo": "https://github.com/mirror/wget",
+            "docs": "https://www.gnu.org/software/wget/manual/"
+        },
+        {
             "name": "Rclone 🔄☁️",
             "description": "A command-line program to manage files on various cloud storage services, supporting synchronization, copying, and more.",
             "brew": "rclone",
@@ -483,6 +529,22 @@
             "cask": true
         },
         {
+            "name": "Keychain 🔑🔗",
+            "description": "A tool for managing ssh-agent and GnuPG agent, designed to make key management easier and more convenient.",
+            "brew": "keychain",
+            "cask": false,
+            "repo": "https://github.com/funtoo/keychain",
+            "docs": "https://www.funtoo.org/Keychain"
+        },
+        {
+            "name": "GnuPG (GPG) 🔐🔑",
+            "description": "A complete and free implementation of the OpenPGP standard, providing encryption, signing, and key management capabilities.",
+            "brew": "gnupg",
+            "cask": false,
+            "repo": "https://github.com/gpg/gnupg",
+            "docs": "https://gnupg.org/documentation/index.html"
+        },
+        {
             "name": "LuLu 🚦🔥",
             "description": "A lightweight, open-source firewall for macOS, offering control over outgoing connections and protecting against unauthorized access.",
             "brew": "lulu",
@@ -531,6 +593,22 @@
             "cask": true,
             "repo": "https://github.com/HandBrake/HandBrake",
             "docs": "https://handbrake.fr/docs/"
+        },
+        {
+            "name": "ImageMagick 🖼️🛠️",
+            "description": "A powerful command-line tool for creating, editing, and converting bitmap images, supporting a wide range of image formats.",
+            "brew": "imagemagick",
+            "cask": false,
+            "repo": "https://github.com/ImageMagick/ImageMagick",
+            "docs": "https://imagemagick.org/script/index.php"
+        },
+        {
+            "name": "Gifsicle 🎞️🛠️",
+            "description": "A command-line tool for creating, editing, and optimizing GIF animations and images.",
+            "brew": "gifsicle",
+            "cask": false,
+            "repo": "https://github.com/kohler/gifsicle",
+            "docs": "https://www.lcdf.org/gifsicle/man.html"
         },
         {
             "name": "LICEcap 🖥️🎥",
@@ -695,6 +773,14 @@
             "cask": true,
             "repo": "https://github.com/exodusmovement",
             "docs": "https://support.exodus.io/"
+        },
+        {
+            "name": "Cointop 💹📈",
+            "description": "A command-line interface for tracking cryptocurrency market data, with an interactive and customizable dashboard.",
+            "brew": "cointop",
+            "cask": false,
+            "repo": "https://github.com/miguelmota/cointop",
+            "docs": "https://github.com/miguelmota/cointop/blob/master/README.md"
         },
         {
             "name": "f.lux 🌞🌛",

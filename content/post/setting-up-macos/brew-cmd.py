@@ -10,6 +10,8 @@ for category, apps in json_data.items():
         else:
             packages.append(app["brew"])
 MULTILINE_BREAK = " \\\n  "
+print("```bash")
 print(MULTILINE_BREAK.join(("brew install --cask", *sorted(cask_packages))))
 print()
 print(MULTILINE_BREAK.join(("brew install", *sorted(packages))))
+print("```")
