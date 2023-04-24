@@ -702,7 +702,6 @@
             "description": "A configuration tool for Logitech devices, offering customization of buttons, tracking, and other settings to enhance productivity and comfort.",
             "brew": "homebrew/cask-drivers/logitech-options",
             "cask": true,
-            "repo": "https://github.com/Logitech",
             "docs": "https://support.logi.com/hc/en-us/articles/360025298053-Logitech-Options"
         },
         {
