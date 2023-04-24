@@ -148,7 +148,7 @@
             "name": "Airflow 🌬️📊",
             "description": "The ultimate way to watch your videos on Chromecast, Apple TV and AirPlay 2 enabled TVs.",
             "brew": "airflow",
-            "cask": false
+            "cask": true
         },
         {
             "name": "Autossh 🔗🔐",
@@ -178,7 +178,7 @@
             "name": "Chromedriver 🌐🚦",
             "description": "A WebDriver for running web tests with Chrome.",
             "brew": "chromedriver",
-            "cask": false,
+            "cask": true,
             "repo": "https://github.com/SeleniumHQ",
             "docs": "https://sites.google.com/chromium.org/driver/"
         },
@@ -197,6 +197,13 @@
             "cask": false,
             "repo": "https://github.com/git",
             "docs": "https://git-scm.com/doc"
+        },
+        {
+            "name": "Git Credential Manager Core 🧑‍💻🔑",
+            "description": "A cross-platform credential helper for Git for HTTPS authentication.",
+            "brew": "microsoft/git/git-credential-manager-core",
+            "cask": false,
+            "repo": "https://github.com/git-ecosystem/git-credential-manager"
         },
         {
             "name": "Git Extras ➕🔧",
@@ -242,7 +249,7 @@
             "name": "Java ☕💻",
             "description": "A popular programming language and development platform.",
             "brew": "java",
-            "cask": false,
+            "cask": true,
             "repo": "https://github.com/openjdk",
             "docs": "https://docs.oracle.com/en/java/"
         },
@@ -341,7 +348,7 @@
         {
             "name": "Font Fira Code 📝🔠",
             "description": "A monospaced font with programming ligatures, designed for a modern coding experience. Enhances readability and aesthetics in code editors.",
-            "brew": "font-fira-code",
+            "brew": "homebrew/cask-fonts/font-fira-code",
             "cask": true,
             "repo": "https://github.com/tonsky/FiraCode",
             "docs": "https://github.com/tonsky/FiraCode/blob/master/README.md"
@@ -410,6 +417,14 @@
             "cask": true,
             "repo": "https://github.com/mpv-player/mpv",
             "docs": "https://mpv.io/manual/master/"
+        },
+        {
+            "name": "Rclone 🔄☁️",
+            "description": "A command-line program to manage files on various cloud storage services, supporting synchronization, copying, and more.",
+            "brew": "rclone",
+            "cask": false,
+            "repo": "https://github.com/rclone/rclone",
+            "docs": "https://rclone.org/docs/"
         },
         {
             "name": "Rsync 🔄📁",
