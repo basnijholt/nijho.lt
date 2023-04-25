@@ -86,7 +86,7 @@ These extensions offer comprehensive support for Python development, with featur
 ![](https://raw.githubusercontent.com/microsoft/vscode-python/d905cf0555e0032cfe10a2af2b925e686246e30e/images/InterpreterSelectionZoom.gif)
 ![](https://github.com/microsoft/pylance-release/raw/77c8d25c51376faa488e69b8fb670ddc64c5bb3e/images/all-features.gif)
 
-### 4. Jupyter and Jupyter Keymap
+### 4. Jupyter
 
 The Jupyter extensions enable you to work with Jupyter Notebooks in VSCode, with support for running cells, debugging, and more. Jupyter Keymap adds customizable keyboard shortcuts for Jupyter commands.
 
