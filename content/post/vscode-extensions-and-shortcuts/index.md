@@ -42,19 +42,21 @@ This extension replicates Sublime Text's keyboard shortcuts in VSCode, allowing 
 
 Here are ***my*** commonly used shortcuts when using the Sublime Keymap extension:
 
-*   **Command + Shift + L (Mac) / Ctrl + Shift + L (Windows)**: Place a cursor at the end of all selected lines.
-*   **Command + D (Mac) / Ctrl + D (Windows)**: Select the next occurrence of the current word.
-*   **Command + U (Mac) / Ctrl + U (Windows)**: Undo the last "select next word" operation.
-*   **Alt + up/down arrow**: Move the selected lines up or down.
-*   **Alt + Shift + up/down arrows**: Duplicate the selected lines above or below.
-*   **Control + - (minus)**: Navigate to the previous location in the editor.
-*   **Command + Shift + P (Mac) / Ctrl + Shift + P (Windows)**: Open the command palette.
-*  **Command + R (Mac) / Ctrl + R (Windows)**: Open the command palette and search for definitions in the file (bonus, add a `:`, to get `@:` to group by functions, methods, variables, etc.).
-*  **Command + T (Mac) / Ctrl + T (Windows)**: Browse files in the workspace.
-*  **Command + B (Mac) / Ctrl + B (Windows)**: Toggle the visibility of the sidebar (explorer, search, etc.).
-*  **Command + Shift + F (Mac) / Ctrl + Shift + F (Windows)**: Search across all files in your workspace.
-*  **Control + Space**: Open the autocomplete menu.
-*  **Command + Mouse click**: Go to the definition of the selected word (when using the Python extension (see below)).
+| Keybinding                                                 | Description                                                                                                                                                             |
+| ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Command + Shift + L (Mac) / Ctrl + Shift + L (Windows)** | Place a cursor at the end of all selected lines                                                                                                                         |
+| **Command + D (Mac) / Ctrl + D (Windows)**                 | Select the next occurrence of the current word                                                                                                                          |
+| **Command + U (Mac) / Ctrl + U (Windows)**                 | Undo the last "select next word" operation                                                                                                                              |
+| **Alt + up/down arrow**                                    | Move the selected lines up or down                                                                                                                                      |
+| **Alt + Shift + up/down arrows**                           | Duplicate the selected lines above or below                                                                                                                             |
+| **Control + - (minus)**                                    | Navigate to the previous location in the editor                                                                                                                         |
+| **Command + Shift + P (Mac) / Ctrl + Shift + P (Windows)** | Open the command palette                                                                                                                                                |
+| *  **Command + R (Mac) / Ctrl + R (Windows)**              | Open the command palette and search for definitions in the file                         (bonus, add a `:`, to get `@:` to group by functions, methods, variables, etc.) |
+| **Command + T (Mac) / Ctrl + T (Windows)**                 | Browse files in the workspace                                                                                                                                           |
+| **Command + B (Mac) / Ctrl + B (Windows)**                 | Toggle the visibility of the sidebar (explorer, search, etc.)                                                                                                           |
+| **Command + Shift + F (Mac) / Ctrl + Shift + F (Windows)** | Search across all files in your workspace                                                                                                                               |
+| **Control + Space**                                        | Open the autocomplete menu                                                                                                                                              |
+| **Command + Mouse click**                                  | Go to the definition of the selected word (when using the Python extension (see below))                                                                                 |
 
 ## My favorite extensions
 
