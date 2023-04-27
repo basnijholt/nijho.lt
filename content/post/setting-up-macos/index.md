@@ -1,7 +1,7 @@
 ---
 title: "🍏 Setting Up Your Fresh MacOS Installation: A Comprehensive Guide ✅"
-subtitle: 🚀  Streamline your MacOS setup with Homebrew, over 100 essential apps, and customization tips
-summary: 🚀  Streamline your MacOS setup with Homebrew, over 100 essential apps, and customization tips
+subtitle: Streamline your MacOS setup with Homebrew, over 100 essential apps, and customization tips
+summary: Streamline your MacOS setup with Homebrew, over 100 essential apps, and customization tips
 projects: []
 date: '2023-04-21T00:00:00Z'
 draft: false
