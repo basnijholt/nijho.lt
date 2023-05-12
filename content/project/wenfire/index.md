@@ -1,6 +1,6 @@
 ---
 title: "WenFire ⁉️🔥"
-summary: "WenFire: Visualizing your path to financial independence, built with personalizable assumptions and interactive visualizations. Ignite your journey to early retirement! 💸"
+summary: "[WenFire](https://wenfire.azurewebsites.net/): WebApp visualizing your path to financial independence, built with personalizable assumptions and interactive visualizations. Ignite your journey to early retirement! 💸"
 tags:
   - Python
   - webapp
