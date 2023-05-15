@@ -1,6 +1,6 @@
 ---
 title: "Home Assistant Streamdeck YAML"
-summary: "🏠 [Home Assistant Streamdeck YAML](https://github.com/basnijholt/home-assistant-streamdeck-yaml): Control Home Assistant on Stream Deck across all OS with YAML configuration. 🎛️"
+summary: "🏠 [Home Assistant Streamdeck YAML](https://github.com/basnijholt/home-assistant-streamdeck-yaml): Control Home Assistant on Stream Deck across all OS with YAML configuration. 🎛️ [![GitHub Repo stars](https://img.shields.io/github/stars/basnijholt/home-assistant-streamdeck-yaml?label=%20&style=social)](https://github.com/basnijholt/home-assistant-streamdeck-yaml)"
 tags:
   - Home automation
   - Python

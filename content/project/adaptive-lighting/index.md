@@ -1,6 +1,6 @@
 ---
 title: "Adaptive Lighting"
-summary: "🌞 [Adaptive Lighting](https://github.com/basnijholt/adaptive-lighting): Home Assistant custom component for auto-adjusting color temperature and brightness of lights based on daylight. 🌙"
+summary: "🌞 [Adaptive Lighting](https://github.com/basnijholt/adaptive-lighting): Home Assistant custom component for auto-adjusting color temperature and brightness of lights based on daylight. 🌙 ![GitHub Repo stars](https://img.shields.io/github/stars/basnijholt/adaptive-lighting?label=%20&style=social)"
 tags:
   - Home automation
   - Python

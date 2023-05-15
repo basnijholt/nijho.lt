@@ -1,6 +1,6 @@
 ---
 title: "PhD thesis"
-summary: "[`thesis.pdf`](http://files.nijho.lt/thesis.pdf): *Towards realistic numerical simulations of Majorana devices* (2020)"
+summary: "[`thesis.pdf`](http://files.nijho.lt/thesis.pdf): *Towards realistic numerical simulations of Majorana devices* (2020). [![GitHub Repo stars](https://img.shields.io/github/stars/basnijholt/thesis?label=%20&style=social)](https://github.com/basnijholt/thesis)"
 tags:
   - latex
   - phd
