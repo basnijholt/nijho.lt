@@ -164,9 +164,9 @@ brew install \
   gnupg \
   go \
   graphviz \
-  gromgit/fuse/ext4fuse \
-  gromgit/fuse/ntfs-3g \
-  gromgit/fuse/sshfs \
+  gromgit/fuse/ext4fuse-mac \
+  gromgit/fuse/ntfs-3g-mac \
+  gromgit/fuse/sshfs-mac \
   homebrew/tex/git-latexdiff \
   htop \
   hugo \
@@ -734,7 +734,7 @@ A user-friendly cryptocurrency wallet, supporting a wide range of assets, exchan
 
 #### Ext4Fuse 🐧💽
 A macOS filesystem extension enabling read-only support for the ext4 file system, commonly used on Linux systems.
-* Install with `brew install gromgit/fuse/ext4fuse`
+* Install with `brew install gromgit/fuse/ext4fuse-mac`
 * See the [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/gerard/ext4fuse) and [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/gerard/ext4fuse/blob/master/README.md)
 
 #### Git LaTeXdiff 📄🔍
@@ -769,7 +769,7 @@ A utility for controlling your external monitor's settings, such as brightness a
 
 #### NTFS-3G 🖥️🔗
 A macOS filesystem extension providing read-write support for the NTFS file system, commonly used on Windows systems.
-* Install with `brew install gromgit/fuse/ntfs-3g`
+* Install with `brew install gromgit/fuse/ntfs-3g-mac`
 * See the [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/tuxera/ntfs-3g) and [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://www.tuxera.com/community/ntfs-3g-manual/)
 
 #### QLVideo 🎥👀
@@ -789,7 +789,7 @@ A binary newsreader for Usenet, offering automation features, a web interface, a
 
 #### SSHFS 💻🔗
 A macOS filesystem extension enabling mounting of remote filesystems via SSH, providing secure and convenient access to remote files.
-* Install with `brew install gromgit/fuse/sshfs`
+* Install with `brew install gromgit/fuse/sshfs-mac`
 * See the [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/libfuse/sshfs) and [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/libfuse/sshfs/blob/master/README.md)
 
 #### SelfControl 🚫🕒

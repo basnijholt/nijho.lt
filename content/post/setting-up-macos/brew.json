@@ -789,7 +789,7 @@
         {
             "name": "Ext4Fuse 🐧💽",
             "description": "A macOS filesystem extension enabling read-only support for the ext4 file system, commonly used on Linux systems.",
-            "brew": "gromgit/fuse/ext4fuse",
+            "brew": "gromgit/fuse/ext4fuse-mac",
             "cask": false,
             "repo": "https://github.com/gerard/ext4fuse",
             "docs": "https://github.com/gerard/ext4fuse/blob/master/README.md"
@@ -844,7 +844,7 @@
         {
             "name": "NTFS-3G 🖥️🔗",
             "description": "A macOS filesystem extension providing read-write support for the NTFS file system, commonly used on Windows systems.",
-            "brew": "gromgit/fuse/ntfs-3g",
+            "brew": "gromgit/fuse/ntfs-3g-mac",
             "cask": false,
             "repo": "https://github.com/tuxera/ntfs-3g",
             "docs": "https://www.tuxera.com/community/ntfs-3g-manual/"
@@ -876,7 +876,7 @@
         {
             "name": "SSHFS 💻🔗",
             "description": "A macOS filesystem extension enabling mounting of remote filesystems via SSH, providing secure and convenient access to remote files.",
-            "brew": "gromgit/fuse/sshfs",
+            "brew": "gromgit/fuse/sshfs-mac",
             "cask": false,
             "repo": "https://github.com/libfuse/sshfs",
             "docs": "https://github.com/libfuse/sshfs/blob/master/README.md"
