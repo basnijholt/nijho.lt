@@ -256,10 +256,10 @@
         {
             "name": "Java ☕💻",
             "description": "A popular programming language and development platform.",
-            "brew": "java",
-            "cask": true,
+            "brew": "openjdk",
+            "cask": false,
             "repo": "https://github.com/openjdk",
-            "docs": "https://docs.oracle.com/en/java/"
+            "docs": "https://openjdk.java.net"
         },
         {
             "name": "Micro ✍️🖥️",

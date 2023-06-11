@@ -99,7 +99,6 @@ brew install --cask \
   istat-menus \
   iterm2 \
   jabref \
-  java \
   karabiner-elements \
   keepingyouawake \
   licecap \
@@ -174,6 +173,7 @@ brew install \
   micro \
   microsoft/git/git-credential-manager-core \
   nano \
+  openjdk \
   pipx \
   rbenv \
   rclone \
@@ -380,8 +380,8 @@ A fast and flexible static site generator.
 
 #### Java ☕💻
 A popular programming language and development platform.
-* Install with `brew install --cask java`
-* See the [formula <em class="fas fa-flask fa-fw" style="margin-right: 0.2em;"> </em>](https://formulae.brew.sh/cask/java), [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/openjdk), and [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://docs.oracle.com/en/java/)
+* Install with `brew install openjdk`
+* See the [formula <em class="fas fa-flask fa-fw" style="margin-right: 0.2em;"> </em>](https://formulae.brew.sh/formula/openjdk), [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/openjdk), and [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://openjdk.java.net)
 
 #### Micro ✍️🖥️
 A modern and intuitive terminal-based text editor.
