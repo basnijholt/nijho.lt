@@ -27,14 +27,6 @@
     ],
     "🛠️ Productivity Tools": [
         {
-            "name": "Alfred 🚀🔍",
-            "description": "A powerful application launcher and productivity tool for quick actions, searches, and workflow automation.",
-            "brew": "alfred",
-            "cask": true,
-            "repo": "https://github.com/alfredapp",
-            "docs": "https://www.alfredapp.com/help/"
-        },
-        {
             "name": "Bartender 🍸🖥️",
             "description": "A utility to organize and manage your Mac's menu bar icons, improving aesthetics and accessibility.",
             "brew": "bartender",

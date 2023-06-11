@@ -72,7 +72,6 @@ brew install --cask \
   adobe-creative-cloud \
   adobe-digital-editions \
   airflow \
-  alfred \
   avast-security \
   balenaetcher \
   bartender \
@@ -228,11 +227,6 @@ An open-source browser prioritizing user privacy and security, offering a custom
 
 
 ### 2. 🛠️ Productivity Tools
-
-#### Alfred 🚀🔍
-A powerful application launcher and productivity tool for quick actions, searches, and workflow automation.
-* Install with `brew install --cask alfred`
-* See the [formula <em class="fas fa-flask fa-fw" style="margin-right: 0.2em;"> </em>](https://formulae.brew.sh/cask/alfred), [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/alfredapp), and [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://www.alfredapp.com/help/)
 
 #### Bartender 🍸🖥️
 A utility to organize and manage your Mac's menu bar icons, improving aesthetics and accessibility.
