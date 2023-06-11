@@ -803,13 +803,6 @@
             "docs": "https://docs.github.com/en/desktop"
         },
         {
-            "name": "Logitech Options ⚙️🖱️",
-            "description": "A configuration tool for Logitech devices, offering customization of buttons, tracking, and other settings to enhance productivity and comfort.",
-            "brew": "homebrew/cask-drivers/logitech-options",
-            "cask": true,
-            "docs": "https://support.logi.com/hc/en-us/articles/360025298053-Logitech-Options"
-        },
-        {
             "name": "MacFuse 💽🔗",
             "description": "A macOS filesystem extension enabling the use of non-native filesystems, offering compatibility with a wide range of formats.",
             "brew": "macfuse",

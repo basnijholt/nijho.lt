@@ -94,7 +94,6 @@ brew install --cask \
   google-chrome \
   handbrake \
   hiddenbar \
-  homebrew/cask-drivers/logitech-options \
   homebrew/cask-fonts/font-fira-code \
   inkscape \
   istat-menus \
@@ -740,11 +739,6 @@ A command-line tool for generating diff files for LaTeX documents, simplifying t
 The official GitHub desktop client, simplifying repository management, version control, and collaboration on macOS.
 * Install with `brew install --cask github`
 * See the [formula <em class="fas fa-flask fa-fw" style="margin-right: 0.2em;"> </em>](https://formulae.brew.sh/cask/github), [repo <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/desktop/desktop), and [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://docs.github.com/en/desktop)
-
-#### Logitech Options ⚙️🖱️
-A configuration tool for Logitech devices, offering customization of buttons, tracking, and other settings to enhance productivity and comfort.
-* Install with `brew install --cask homebrew/cask-drivers/logitech-options`
-* See the [docs <em class="fas fa-book fa-fw" style="margin-right: 0.2em;"> </em>](https://support.logi.com/hc/en-us/articles/360025298053-Logitech-Options)
 
 #### MacFuse 💽🔗
 A macOS filesystem extension enabling the use of non-native filesystems, offering compatibility with a wide range of formats.
