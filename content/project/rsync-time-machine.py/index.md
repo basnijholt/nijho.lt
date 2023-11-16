@@ -4,5 +4,5 @@ summary: "💻 [`rsync-time-machine.py`](https://github.com/basnijholt/rsync-tim
 tags:
   - Python
 date: "2023-05-11T00:00:00"
-external_link: "https://github.com/basnijholt/markdown-code-runner"
+external_link: "https://github.com/basnijholt/rsync-time-machine.py"
 ---
