@@ -59,6 +59,7 @@ Here are ***my*** commonly used shortcuts when using the Sublime Keymap extensio
 | **Command + Mouse click**                                  | Go to the definition of the selected word (when using the Python extension (see below))                                                                                 |
 | **Command + I**                                            | Open GitHub Copilot prompt                                                                                                                                              |
 | **Shift + Alt + F**                                        | Autoformat                                                                                                                                                              |
+| **Command + Control + G**                                  | Select all occurrences of current word                                                                                                                                  |
 
 ## My favorite extensions
 
