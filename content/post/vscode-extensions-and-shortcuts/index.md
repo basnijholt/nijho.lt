@@ -44,17 +44,17 @@ Here are ***my*** commonly used shortcuts when using the Sublime Keymap extensio
 
 | Keybinding (Sublime)                                       | Keybinding (VS Code)                                       | Description                                                                                                                                     |
 | ---------------------------------------------------------- | ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Command + Shift + P (Mac) / Ctrl + Shift + P (Windows)** | *same*                                                     | Open the command palette                                                                                                                        |
+| **Command + P (Mac) / Ctrl + P (Windows)**                 | *same*                                                     | Quick file navigation                                                                                                                           |
 | **Command + D (Mac) / Ctrl + D (Windows)**                 | *same*                                                     | Select the next occurrence of the current word                                                                                                  |
 | **Command + U (Mac) / Ctrl + U (Windows)**                 | *same*                                                     | Undo the last "select next word" operation                                                                                                      |
 | **Alt + up/down arrow**                                    | *same*                                                     | Move the selected lines up or down                                                                                                              |
 | **Alt + Shift + up/down arrows**                           | *same*                                                     | Duplicate the selected lines above or below                                                                                                     |
 | **Command + Shift + L (Mac) / Ctrl + Shift + L (Windows)** | **Shift + Alt + L**                                        | Place a cursor at the end of all selected lines                                                                                                 |
 | **Control + - (minus)**                                    | *same*                                                     | Navigate to the previous location in the editor                                                                                                 |
-| **Command + Shift + P (Mac) / Ctrl + Shift + P (Windows)** | *same*                                                     | Open the command palette                                                                                                                        |
-| **Command + R (Mac) / Ctrl + R (Windows)**                 | **Command + Shift + O (Mac) / Ctrl + Shift + O (Windows)** | Open the command palette and search for definitions in the file (bonus, add a `:`, to get `@:` to group by functions, methods, variables, etc.) |
-| **Command + P (Mac) / Ctrl + P (Windows)**                 | *same*                                                     | Quick file navigation                                                                                                                           |
-| **Command + B (Mac) / Ctrl + B (Windows)**                 | *same*                                                     | Toggle the visibility of the sidebar (explorer, search, etc.)                                                                                   |
 | **Command + T (Mac) / Ctrl + T (Windows)**                 | **Command + P (Mac) / Control + P (Windows)**              | Browse files in the workspace                                                                                                                   |
+| **Command + R (Mac) / Ctrl + R (Windows)**                 | **Command + Shift + O (Mac) / Ctrl + Shift + O (Windows)** | Open the command palette and search for definitions in the file (bonus, add a `:`, to get `@:` to group by functions, methods, variables, etc.) |
+| **Command + B (Mac) / Ctrl + B (Windows)**                 | *same*                                                     | Toggle the visibility of the sidebar (explorer, search, etc.)                                                                                   |
 | **Command + Shift + F (Mac) / Ctrl + Shift + F (Windows)** | *same*                                                     | Search across all files in your workspace                                                                                                       |
 | **Command + Shift + E (Mac) / Ctrl + Shift + E (Windows)** | *same*                                                     | Open the file explorer                                                                                                                          |
 | **Control + Space**                                        | *same*                                                     | Open the autocomplete menu                                                                                                                      |
@@ -146,14 +146,6 @@ Ruff is a Visual Studio Code extension that provides support for the Ruff linter
 
 ![](https://user-images.githubusercontent.com/1309177/205176932-44cfc03a-120f-4bad-b710-612bdd7765d6.gif)
 ![](https://user-images.githubusercontent.com/1309177/205175987-82e23e21-14bb-467d-9ef0-027f24b75865.gif)
-
-### GitHub Copilot Labs
-
-GitHub Copilot Labs is an extension that allows users to access experimental features for GitHub Copilot, an AI-powered code completion tool.
-
-- Use `code --install-extension GitHub.copilot-labs` to install the GitHub Copilot Labs extension [(docs)](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-labs)
-
-![](https://user-images.githubusercontent.com/8978670/160909091-70c1d70c-2850-4483-91ed-4de87efe5285.gif)
 
 ### GitHub Codespaces, RemoteHub, and Pull Request
 
