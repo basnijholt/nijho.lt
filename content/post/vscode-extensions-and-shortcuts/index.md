@@ -1,5 +1,5 @@
 ---
-title: ⚡ VSCode Setup and Most Used Keystrokes for Turbocharged (Mostly Python) Development 🐍
+title: "My VS Code setup: extensions and shortcuts ⚡"
 subtitle: My personal setup for maximal productivity and minimal keystrokes.
 summary: My personal setup for maximal productivity and minimal keystrokes.
 projects: []
