@@ -5,7 +5,7 @@ date: "2020-05-11T00:00:00"
 authors:
 - Bas Nijholt
 
-publication_types: ["7"]
+publication_types: ["thesis"]
 
 publication: "Ph.D. thesis"
 

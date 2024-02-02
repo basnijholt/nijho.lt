@@ -8,7 +8,7 @@ authors:
 - Michael Wimmer
 - Anton R. Akhmerov
 
-publication_types: ["2"]
+publication_types: ["article-journal"]  # Journal article
 
 publication: "In *Physical Review L* (PRL)."
 publication_short: "In *PRL*."

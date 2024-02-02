@@ -74,7 +74,7 @@ authors:
 - Bas Nijholt
 - Morten Hannibal Madsen
 - Signe Markussen
-- Esteban Martinez
+- Esteban A. Martinez
 - Robert McNeil
 - Andrew Mullally
 - Jens Nielsen
@@ -120,7 +120,7 @@ authors:
 - Steven Waddy
 - David Van Woerkom
 - Dominik Vogel
-- John Watson
+- John D. Watson
 - Joseph Weston
 - Georg W. Winkler
 - Chung Kai Yang
@@ -130,7 +130,7 @@ authors:
 - Alex Webster
 - Roland Zeisel
 - Ruichen Zhao
-publication_types: ["3"]
+publication_types: ["article-journal"]  # Journal article
 
 publication: "In *Physical Review B* (PRB)."
 publication_short: "In *PRB*"

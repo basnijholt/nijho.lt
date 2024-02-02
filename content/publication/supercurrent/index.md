@@ -19,7 +19,7 @@ authors:
 - Leo P. Kouwenhoven
 - Sergey M. Frolov
 
-publication_types: ["2"]
+publication_types: ["article-journal"]  # Journal article
 
 publication: "In *Physical Review Letters* (PRL)."
 publication_short: "In *PRL*"

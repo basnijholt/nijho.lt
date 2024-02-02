@@ -19,7 +19,7 @@ authors:
 - Gijs de Lange
 - Lucas Casparis
 - Chetan Nayak
-publication_types: ["3"]
+publication_types: ["paper"]  # Preprint / Working Paper
 
 publication: "Preprint"
 # publication_short: "In *...*"

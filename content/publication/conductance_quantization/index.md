@@ -16,7 +16,7 @@ authors:
 - Erik P. A. M. Bakkers
 - Leo P. Kouwenhoven
 
-publication_types: ["2"]
+publication_types: ["article-journal"]  # Journal article
 
 publication: "In *Nano letters* (Nano Lett.)."
 publication_short: "In *Nano Lett*"

@@ -6,7 +6,7 @@ authors:
 - Bas Nijholt
 - Joseph Weston
 - Anton R. Akhmerov
-publication_types: ["3"]
+publication_types: ["paper"]  # Preprint / Working Paper
 
 publication: "Preprint"
 # publication_short: "In *PRL*"
