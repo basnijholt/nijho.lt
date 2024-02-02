@@ -77,7 +77,7 @@ authors:
 - Esteban A. Martinez
 - Robert McNeil
 - Andrew Mullally
-- Jens Nielsen
+- Jens Hedegaard Nielsen
 - Anne Nurmohamed
 - Eoin O'Farrell
 - Keita Otani
@@ -91,7 +91,7 @@ authors:
 - Mohana Rajpalke
 - Davydas Razmadze
 - Outi Reentila
-- David Reilly
+- David J. Reilly
 - Richard Rouse
 - Ivan Sadovskyy
 - Lauri Sainiemi
@@ -115,7 +115,7 @@ authors:
 - Shivendra Upadhyay
 - Ivan Urban
 - Saulius Vaitiekėnas
-- Kevin Van Hoogdalem
+- Kevin van Hoogdalem
 - Dmitrii V. Viazmitinov
 - Steven Waddy
 - David J. van Woerkom
