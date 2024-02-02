@@ -141,7 +141,6 @@ summary: "We present measurements and simulations of semiconductor-superconducto
 featured: false
 
 url_pdf: "https://arxiv.org/pdf/2207.02472.pdf"
-url_preprint: "https://arxiv.org/abs/2207.02472"
 url_code: "https://github.com/microsoft/azure-quantum-tgp"
 url_dataset: "https://github.com/microsoft/azure-quantum-tgp"
 links: [{name: "arXiv:2207.02472", url: "http://arxiv.org/abs/2207.02472"}, {name: "10.1103/PhysRevB.107.245423", url: "https://journals.aps.org/prb/abstract/10.1103/PhysRevB.107.245423"}]
