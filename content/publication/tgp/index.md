@@ -132,8 +132,8 @@ authors:
 - Ruichen Zhao
 publication_types: ["3"]
 
-publication: "Preprint"
-# publication_short: "In *...*"
+publication: "In *Physical Review B* (PRB)."
+publication_short: "In *PRB*"
 abstract: "We present measurements and simulations of semiconductor-superconductor heterostructure devices that are consistent with the observation of topological superconductivity and Majorana zero modes. The devices are fabricated from high-mobility two-dimensional electron gases in which quasi-one-dimensional wires are defined by electrostatic gates. These devices enable measurements of local and non-local transport properties and have been optimized via extensive simulations to ensure robustness against non-uniformity and disorder. Our main result is that several devices, fabricated according to the design's engineering specifications, have passed the topological gap protocol defined in Pikulin *et al.* [[arXiv:2103.12217]](https://arxiv.org/abs/2103.12217). This protocol is a stringent test composed of a sequence of three-terminal local and non-local transport measurements performed while varying the magnetic field, semiconductor electron density, and junction transparencies. Passing the protocol indicates a high probability of detection of a topological phase hosting Majorana zero modes as determined by large-scale disorder simulations. Our experimental results are consistent with a quantum phase transition into a topological superconducting phase that extends over several hundred millitesla in magnetic field and several millivolts in gate voltage, corresponding to approximately one hundred micro-electron-volts in Zeeman energy and chemical potential in the semiconducting wire. These regions feature a closing and re-opening of the bulk gap, with simultaneous zero-bias conductance peaks at *both* ends of the devices that withstand changes in the junction transparencies. The extracted maximum topological gaps in our devices are 20-60μeV. This demonstration is a prerequisite for experiments involving fusion and braiding of Majorana zero modes."
 
 summary: "We present measurements and simulations of semiconductor-superconductor heterostructure devices that are consistent with the observation of topological superconductivity and Majorana zero modes."
@@ -144,5 +144,5 @@ url_pdf: "https://arxiv.org/pdf/2207.02472.pdf"
 url_preprint: "https://arxiv.org/abs/2207.02472"
 url_code: "https://github.com/microsoft/azure-quantum-tgp"
 url_dataset: "https://github.com/microsoft/azure-quantum-tgp"
-links: [{name: "arXiv:2207.02472", url: "http://arxiv.org/abs/2207.02472"}]
+links: [{name: "arXiv:2207.02472", url: "http://arxiv.org/abs/2207.02472"}, {name: "10.1103/PhysRevB.107.245423", url: "https://journals.aps.org/prb/abstract/10.1103/PhysRevB.107.245423"}]
 ---
