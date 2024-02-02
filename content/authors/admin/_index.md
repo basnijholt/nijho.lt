@@ -6,12 +6,12 @@ title: Bas Nijholt
 superuser: true
 
 # Role/position
-role: Quantum Software Development Engineer
+role: Staff Engineer
 
 # Organizations/Affiliations
 organizations:
-- name: Microsoft Quantum
-  url: "https://www.microsoft.com/en-us/quantum"
+- name: IonQ
+  url: "https://ionq.com"
 
 # Short bio (displayed in user profile at end of posts)
 bio: "Hi."
@@ -74,4 +74,4 @@ email: ""
 Hi, my name is Bas. I am a: Python and [open-source <em class="fab fa-github fa-fw" style="margin-right: 0.2em;"> </em>](https://github.com/basnijholt) enthusiast, [Ph.D. <em class="fa fa-graduation-cap fa-fw" style="margin-right: 0.2em;"> </em> in theoretical quantum mechanics](https://github.com/basnijholt/thesis), and full-time nerd.
 Originally I am from the Netherlands, but currently, I live in Redmond, Washington, USA.
 
-[Here <em class="fab fa-instagram fa-fw" style="margin-right: 0.2em;"> </em>](http://instagram.com/bnijholt) (or [here <em class="fab fa-500px fa-fw"> </em>](https://500px.com/basnijholt)) are some pretty pictures that I took, [this <em class="fa fa-university fa-fw" style="margin-right: 0.2em;"> </em>](http://quantumtinkerer.tudelft.nl/) is where I did my Ph.D., I work at [Microsoft Quantum <em class="fab fa-microsoft fa-fw"> </em>](https://www.microsoft.com/en-us/quantum), and see my [LinkedIn <em class="fab fa-linkedin fa-fw" style="margin-right: 0.2em;"> </em>](https://www.linkedin.com/in/basnijholt) for some technical details on my daily activities.
+[Here <em class="fab fa-instagram fa-fw" style="margin-right: 0.2em;"> </em>](http://instagram.com/bnijholt) (or [here <em class="fab fa-500px fa-fw"> </em>](https://500px.com/basnijholt)) are some pretty pictures that I took, [this <em class="fa fa-university fa-fw" style="margin-right: 0.2em;"> </em>](http://quantumtinkerer.tudelft.nl/) is where I did my Ph.D., I work at [IonQ](https://ionq.com) previously at [Microsoft Quantum <em class="fab fa-microsoft fa-fw"> </em>](https://www.microsoft.com/en-us/quantum), and see my [LinkedIn <em class="fab fa-linkedin fa-fw" style="margin-right: 0.2em;"> </em>](https://www.linkedin.com/in/basnijholt) for some technical details on my daily activities.
