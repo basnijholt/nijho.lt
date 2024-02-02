@@ -12,7 +12,7 @@ authors:
 - Georg W. Winkler
 - John D. Watson
 - Sebastian Heedt
-- Mine Temurhan
+- Mine Temürhan
 - Vicky Svidenko
 - Roman M. Lutchyn
 - Mason Thomas

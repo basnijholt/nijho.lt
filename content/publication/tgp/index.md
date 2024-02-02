@@ -9,30 +9,30 @@ authors:
 - Rizwan Ali
 - Alejandro Alcaraz Ramirez
 - Mariusz Andrzejczuk
-- Andrey E Antipov
+- Andrey E. Antipov
 - Pavel Aseev
 - Mikhail Astafev
 - Bela Bauer
 - Jonathan Becker
 - Srini Boddapati
 - Frenk Boekhout
-- Jouri Bommer
+- Jouri D. S. Bommer
 - Esben Bork Hansen
 - Tom Bosma
 - Leo Bourdet
 - Samuel Boutin
 - Philippe Caroff
 - Lucas Casparis
-- Maja Cassidy
+- Maja C. Cassidy
 - Anna Wulf Christensen
 - Noah Clay
-- William S Cole
+- William S. Cole
 - Fabiano Corsetti
 - Ajuan Cui
 - Paschalis Dalampiras
 - Anand Dokania
 - Gijs de Lange
-- Michiel de Moor
+- Michiel W. A. de Moor
 - Juan Carlos Estrada Saldaña
 - Saeed Fallahi
 - Zahra Heidarnia Fathabad
@@ -67,7 +67,7 @@ authors:
 - Kongyi Li
 - Tyler Lindemann
 - Julie Love
-- Roman Lutchyn
+- Roman M. Lutchyn
 - Michael Manfra
 - Elvedin Memisevic
 - Chetan Nayak
@@ -107,7 +107,7 @@ authors:
 - Judith Suter
 - Vicky Svidenko
 - Sam Teicher
-- Mine Temuerhan
+- Mine Temürhan
 - Nivetha Thiyagarajah
 - Raj Tholapi
 - Mason Thomas
@@ -118,7 +118,7 @@ authors:
 - Kevin Van Hoogdalem
 - Dmitrii V. Viazmitinov
 - Steven Waddy
-- David Van Woerkom
+- David J. van Woerkom
 - Dominik Vogel
 - John D. Watson
 - Joseph Weston
