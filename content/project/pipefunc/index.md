@@ -1,5 +1,5 @@
 ---
-title: "PipeFunc: Lightweight function pipeline creation 🐍"
+title: "PipeFunc"
 summary: "[`pipefunc`](https://github.com/basnijholt/pipefunc): Lightweight function pipeline creation 🐍"
 tags:
   - Python
