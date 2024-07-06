@@ -58,20 +58,20 @@ After running all services as LXC containers, I realized that updating them and 
 So, I started to look into migrating everything to Docker Compose.
 This transition turned out great because I could manage my config files in a git repo and keep the relevant data separate, streamlining updates and maintenance.
 
-To resolve these issues and because I was having a lot of fun, I decided to build a dedicated NAS, not that I *really* needed one, but mostly because I could.
+To resolve these issues and because I was having a lot of fun, I decided to build a dedicated NAS running TrueNAS Scale, not that I *really* needed one, but mostly because I could.
 This new setup included high-performance components, ensuring both stability and quiet operation.
-I used [Western Digital Ultrastar DC HC550 HDDs](https://www.westerndigital.com/products/internal-drives/data-center-drives/ultrastar-dc-hc550-hdd?sku=0F38356), known for their reliability and performance.
+I used "Manufacturer Recertified" [Western Digital Ultrastar DC HC550 HDDs](https://www.westerndigital.com/products/internal-drives/data-center-drives/ultrastar-dc-hc550-hdd?sku=0F38356), known for their reliability and performance.
 I have 6 x 16TB = 96TB now with the option to add 2 more 3.5" drives, 2 nvme M.2 drives, and 1 SATA 2.5" SDD.
-Now, I run all services that previously relied on NFS locally on TrueNAS via a Debian systemd-nspawn container managed with a new script called [Jailmaker](https://github.com/Jip-Hop/jailmaker), which leverages the systemd-nspawn program in TrueNAS Scale (not to be confused with FreeBSD jails).
+Now, I run all services that previously relied on NFS locally on TrueNAS via a Debian [systemd-nspawn container](https://wiki.debian.org/nspawn) managed with a new script called [Jailmaker](https://github.com/Jip-Hop/jailmaker), which leverages the systemd-nspawn program in TrueNAS Scale (not to be confused with FreeBSD jails).
 Inside this systemd-nspawn container, I run Debian with Docker.
-For managing Docker Compose files, I use Dockge, which provides a nice web UI for easy management.
+For managing Docker Compose files, I use [Dockge](https://github.com/louislam/dockge), which provides a nice web UI for easy management.
 
 Along the way, I got familiar with ZFS and grew to love it for its amazing snapshotting and data integrity features.
 ZFS has been a game-changer, providing robust data protection and ease of management.
 Initially, I used mirrored vdevs, but I recently switched to RAIDZ2 for the added storage capacity and [the promise of OpenZFS 2.3 supporting expansion of RAIDZ vdevs](https://github.com/openzfs/zfs/pull/15022#issuecomment-1802428899).
 I also use ZFS for my Proxmox VMs and LXC containers, who's backups I store on the NAS via rsync in a cronjob to another jail running plain Debian (no more NFS on the Proxmox host for me...)
 
-This journey from a simple NUC running Home Assistant to a sophisticated, dedicated NAS has been very time consuming but a lot of fun.
+This journey from a simple NUC running Home Assistant to a sophisticated, dedicated NAS has been very time-consuming but a lot of fun.
 The lessons learned and the improvements in stability and performance have made the effort worthwhile.
 If you're considering building your own homelab, investing in reliable hardware and being prepared for a bit of trial and error can make all the difference.
 
