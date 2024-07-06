@@ -1,6 +1,6 @@
 ---
 title: "🔧 My Homelab: from a single Raspberry Pi to a Proxmox cluster and a dedicated NAS"
-subtitle: Exploring the evolution of my homelab setup, from Home Assistant on a Raspberry Pi to a sophisticated Proxmox cluster and dedicated NAS
+subtitle: Exploring the evolution of my homelab setup, from Home Assistant on a Raspberry Pi to a Proxmox cluster and dedicated NAS
 summary: An overview of my journey from using a Raspberry Pi for Home Assistant to creating a Proxmox cluster and dedicated NAS for running various services efficiently.
 projects: []
 date: '2024-07-06T00:00:00Z'
@@ -71,7 +71,7 @@ ZFS has been a game-changer, providing robust data protection and ease of manage
 Initially, I used mirrored vdevs, but I recently switched to RAIDZ2 for the added storage capacity and [the promise of OpenZFS 2.3 supporting expansion of RAIDZ vdevs](https://github.com/openzfs/zfs/pull/15022#issuecomment-1802428899).
 I also use ZFS for my Proxmox VMs and LXC containers, who's backups I store on the NAS via rsync in a cronjob to another jail running plain Debian (no more NFS on the Proxmox host for me...)
 
-This journey from a simple NUC running Home Assistant to a sophisticated, dedicated NAS has been very time-consuming but a lot of fun.
+This journey from a simple NUC running Home Assistant to a Proxmox cluster and dedicated NAS has been very time-consuming but a lot of fun.
 The lessons learned and the improvements in stability and performance have made the effort worthwhile.
 If you're considering building your own homelab, investing in reliable hardware and being prepared for a bit of trial and error can make all the difference.
 
