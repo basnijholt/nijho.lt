@@ -68,7 +68,7 @@ For managing Docker Compose files, I use [Dockge](https://github.com/louislam/do
 
 Along the way, I got familiar with ZFS and grew to love it for its amazing snapshotting and data integrity features.
 ZFS has been a game-changer, providing robust data protection and ease of management.
-Initially, I used mirrored vdevs, but I recently switched to RAIDZ2 for the added storage capacity and [the promise of OpenZFS 2.3 supporting expansion of RAIDZ vdevs](https://github.com/openzfs/zfs/pull/15022#issuecomment-1802428899).
+Initially, [I used mirrored vdevs](https://jrs-s.net/2015/02/06/zfs-you-should-use-mirror-vdevs-not-raidz/), but I recently switched to RAIDZ2 for the added storage capacity and [the promise of OpenZFS 2.3 supporting expansion of RAIDZ vdevs](https://github.com/openzfs/zfs/pull/15022#issuecomment-1802428899).
 I also use ZFS for my Proxmox VMs and LXC containers, who's backups I store on the NAS via rsync in a cronjob to another jail running plain Debian (no more NFS on the Proxmox host for me...)
 
 This journey from a simple NUC running Home Assistant to a Proxmox cluster and dedicated NAS has been very time-consuming but a lot of fun.
