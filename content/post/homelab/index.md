@@ -24,7 +24,7 @@ categories:
   - level:intermediate
 ---
 
-In 2020, I began my homelab journey with a simple yet powerful setup: Home Assistant running on Proxmox on a NUC8i3BEH.
+In 2020, I began my homelab journey (*even though I never heard of the term "homelab" at that point*) with a simple yet powerful setup: Home Assistant running on Proxmox on a NUC8i3BEH.
 My Home Assistant instance, with over 100 automations and about 20 addons (docker containers), had outgrown the capabilities of my Raspberry Pi 4, leading me to upgrade to the NUC8i3BEH.
 You can check out my [Home Assistant configuration](https://github.com/basnijholt/home-assistant-config/).
 
@@ -108,6 +108,10 @@ For completeness, here are the components for each machine in my homelab:
 | 64 GB RAM               | TEAMGROUP 32GB DDR4 3200MHz | HP     | 57.99 | 2        | 115.98 | 2024-05-02 |
 | HP EliteDesk 800 G4 SFF | HP EliteDesk 800 G4 SFF     | HP     | 164   | 1        | 164    | 2024-04-27 |
 <!-- | SSD enclosure           | UGREEN SSD Enclosure        | HP     | 16.98 | 1        | 16.98  | 2024-04-27 | -->
+
+Notes on the HP components:
+
+- Initially, I planned to use this machine as a NAS because it has two 3.5" drive bays, 2 M.2 slots, and the disc drive bay can be converted to a 2.5" drive bay. However, the 2 x 16TB drives I bought quickly filled up because I used a mirrored vdev, so I decided to build a dedicated NAS instead.
 
 
 ### NAS Components
