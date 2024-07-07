@@ -34,12 +34,12 @@ For a long time, I ran Proxmox, mainly because the Home Assistant community reco
 
 In 2022, I stumbled upon the [Proxmox VE Helper-Scripts](https://github.com/tteck/Proxmox) by tteck, which got me interested in the whole homelabber/self-hosting community.
 These scripts opened a new world of possibilities.
-With them, I expanded my Proxmox environment to run 25 different VMs and LXC containers, each performing a variety of tasks, from DNS servers and reverse proxies to local dashboards and backup software.
+With them, I expanded my Proxmox environment to run 25 different VMs and [LXC containers](https://linuxcontainers.org/lxc/introduction/), each performing a variety of tasks, from DNS servers and reverse proxies to local dashboards and backup software.
 
 Initially, I used an external 2 TB drive for storage, but it quickly became insufficient as my data needs grew.
 After some research, I found the [HP EliteDesk 800 G4 SFF](https://support.hp.com/id-en/document/c06047207), a renewed enterprise-grade desktop with slots for two 3.5-inch drives.
-At approximately $160, it offered excellent specs for a budget-friendly price.
-I decided to create a TrueNAS VM on this machine and passed through two 16TB renewed enterprise-level HDDs, which I had purchased from serverpartdeals.com.
+At approximately $160 on Amazon, it offered excellent specs for a budget-friendly price.
+I decided to create a TrueNAS VM on this machine using Proxmox and passed through the two 16TB renewed enterprise-level HDDs (via the PCIe SATA controller), which I had purchased from serverpartdeals.com.
 I chose these drives based on their reliability as reported in the [BackBlaze drive stats](https://www.backblaze.com/blog/backblaze-drive-stats-for-2023/).
 
 When I got the HP, I created a Proxmox cluster and was very excited about how easy it was to migrate containers and VMs from one machine to the other.
@@ -61,7 +61,7 @@ This transition turned out great because I could manage my config files in a git
 To resolve these issues and because I was having a lot of fun, I decided to build a dedicated NAS running TrueNAS Scale, not that I *really* needed one, but mostly because I could.
 This new setup included high-performance components, ensuring both stability and quiet operation.
 I used "Manufacturer Recertified" [Western Digital Ultrastar DC HC550 HDDs](https://www.westerndigital.com/products/internal-drives/data-center-drives/ultrastar-dc-hc550-hdd?sku=0F38356), known for their reliability and performance.
-I have 6 x 16TB = 96TB now with the option to add 2 more 3.5" drives, 2 nvme M.2 drives, and 1 SATA 2.5" SDD.
+I have 6 x 16TB = 96TB now with the option to add 2 more 3.5" drives, 2 nvme M.2 drives, and 1 SATA 2.5" SSD.
 Now, I run all services that previously relied on NFS locally on TrueNAS via a Debian [systemd-nspawn container](https://wiki.debian.org/nspawn) managed with a new script called [Jailmaker](https://github.com/Jip-Hop/jailmaker), which leverages the systemd-nspawn program in TrueNAS Scale (not to be confused with FreeBSD jails).
 Inside this systemd-nspawn container, I run Debian with Docker.
 For managing Docker Compose files, I use [Dockge](https://github.com/louislam/dockge), which provides a nice web UI for easy management.
@@ -69,11 +69,25 @@ For managing Docker Compose files, I use [Dockge](https://github.com/louislam/do
 Along the way, I got familiar with ZFS and grew to love it for its amazing snapshotting and data integrity features.
 ZFS has been a game-changer, providing robust data protection and ease of management.
 Initially, [I used mirrored vdevs](https://jrs-s.net/2015/02/06/zfs-you-should-use-mirror-vdevs-not-raidz/), but I recently switched to RAIDZ2 for the added storage capacity and [the promise of OpenZFS 2.3 supporting expansion of RAIDZ vdevs](https://github.com/openzfs/zfs/pull/15022#issuecomment-1802428899).
-I also use ZFS for my Proxmox VMs and LXC containers, who's backups I store on the NAS via rsync in a cronjob to another jail running plain Debian (no more NFS on the Proxmox host for me...)
+I also use ZFS for my Proxmox VMs and LXC containers, whose backups I store on the NAS via rsync in a cronjob to another jail running plain Debian (no more NFS on the Proxmox host for me...)
 
 This journey from a simple NUC running Home Assistant to a Proxmox cluster and dedicated NAS has been very time-consuming but a lot of fun.
 The lessons learned and the improvements in stability and performance have made the effort worthwhile.
 If you're considering building your own homelab, investing in reliable hardware and being prepared for a bit of trial and error can make all the difference.
+
+## Lessons learned
+
+- Run your services in Docker containers, not LXC containers, for easier management and updates.
+- Do **not** have virtualized NAS (TrueNAS VM) on Proxmox, it's a bad idea if you are also sharing the drives with Proxmox via NFS. There are many folks on the internet who run their NAS in a VM on Proxmox, seemingly without issues, but I was not one of them.
+- Do **not** remove the physical drive that is passed through in a Proxmox VM, because Proxmox will *not* boot properly afterwards.
+- Do **not** use random 100 character passwords for your Proxmox, you have only 60 seconds to enter it during boot.
+- When making Proxmox backups, send them to a different physical machine, not only the same machine that is being backed up.
+- When building a NAS or home server, consider noise levels, especially if the equipment will be in a living area. Enterprise-grade drives can be surprisingly loud.
+- When using Intel I226-V 2.5GbE controllers, be prepared for potential issues.
+- When planning your NAS storage size needs, remember to account for the extra space needed for redundancy (e.g., in RAIDZ2). Additionally, keep in mind that ZFS performs optimally when drives aren't filled to capacity. It's wise to plan for more storage than you think you'll immediately need.
+- Buy as many used enterprise-grade hardware components as you can, they are often cheaper and more reliable than consumer-grade components.
+
+## Components
 
 For completeness, here are the components for each machine in my homelab:
 
@@ -93,7 +107,7 @@ For completeness, here are the components for each machine in my homelab:
 | ----------------------- | --------------------------- | ------ | ----- | -------- | ------ | ---------- |
 | 64 GB RAM               | TEAMGROUP 32GB DDR4 3200MHz | HP     | 57.99 | 2        | 115.98 | 2024-05-02 |
 | HP EliteDesk 800 G4 SFF | HP EliteDesk 800 G4 SFF     | HP     | 164   | 1        | 164    | 2024-04-27 |
-<!-- | SDD enclosure           | UGREEN SSD Enclosure        | HP     | 16.98 | 1        | 16.98  | 2024-04-27 | -->
+<!-- | SSD enclosure           | UGREEN SSD Enclosure        | HP     | 16.98 | 1        | 16.98  | 2024-04-27 | -->
 
 
 ### NAS Components
