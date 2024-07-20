@@ -79,6 +79,8 @@ If you're considering building your own homelab, investing in reliable hardware 
 
 - Run your services in Docker containers, not LXC containers, for easier management and updates.
 - Do **not** have virtualized NAS (TrueNAS VM) on Proxmox, it's a bad idea if you are also sharing the drives with Proxmox via NFS. There are many folks on the internet who run their NAS in a VM on Proxmox, seemingly without issues, but I was not one of them.
+- Do not encrypt the root ZFS dataset! Encrypt its children instead.
+- Use passphrase encryption instead of a generated key. It allows you to use the UI and rotating keys.
 - Do **not** remove the physical drive that is passed through in a Proxmox VM, because Proxmox will *not* boot properly afterwards.
 - Do **not** use random 100 character passwords for your Proxmox, you have only 60 seconds to enter it during boot.
 - When making Proxmox backups, send them to a different physical machine, not only the same machine that is being backed up.
