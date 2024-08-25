@@ -47,7 +47,7 @@ So, how can we set up remote ZFS replication with a friend, maintaining our de-c
 4. Maintain control over the allocated backup space
 5. Keep our data private and out of corporate clouds
 
-## The Solution: Hybrid VM with Local OS and iSCSI Backup Storage
+## The Solution: TrueNAS VM on hypervisor and iSCSI Backup Storage on TrueNAS
 
 After exploring various options, we've found a secure and efficient solution using a hybrid VM setup that keeps us firmly in control of our data. Here's the high-level overview:
 
