@@ -35,13 +35,13 @@ Personally, I use Rclone to back up my most essential data to Backblaze B2, but 
 Luckily, I have a friend who also uses TrueNAS and is looking for a similar solution.
 
 TrueNAS offers built-in replication tasks that allow us to efficiently replicate our data to another TrueNAS system.
-Unfortunately, this requires root access to the remote system, which is a security risk we're not willing to take.
+Unfortunately, this requires root access to the remote system, which is a security risk neither of us are willing to take
 
 So, how can we set up remote ZFS replication with a friend, maintaining our de-clouded status, without compromising the security of our TrueNAS systems?
 
 ## The Requirements
 
-1. Use TrueNAS's built-in replication tasks (uses `zfs send` and `zfs receive` for efficient replication, much faster than `rsync`)
+1. Use TrueNAS's built-in replication tasks (uses `zfs send` and `zfs receive` for efficient replication, which is significantly faster than `rsync`)
 2. Replicate to a friend's system with ZFS capabilities
 3. Avoid granting root access to each other's TrueNAS systems
 4. Maintain control over the allocated backup space
@@ -51,7 +51,7 @@ So, how can we set up remote ZFS replication with a friend, maintaining our de-c
 
 After exploring various options, we've found a secure and efficient solution using a hybrid VM setup that keeps us firmly in control of our data. Here's the high-level overview:
 
-1. Create a TrueNAS VM on a local hypervisor (e.g., Proxmox)
+1. Deploy a TrueNAS VM on a local hypervisor (e.g., Proxmox), running independently of your main TrueNAS system
 2. Set up an iSCSI target on your TrueNAS for backup storage
 3. Connect the iSCSI target as an additional disk to the VM and format it with ZFS
 4. Give your friend secure access to this VM
@@ -59,11 +59,25 @@ After exploring various options, we've found a secure and efficient solution usi
 
 ## Why This Works
 
-- **Security**: No need for root access on each other's TrueNAS systems and data can be encrypted on the iSCSI storage with fried's keys
+- **Security**: No need for root access on each other's TrueNAS systems and data can be encrypted on the iSCSI storage with friend's keys
 - **Performance**: VM OS runs from fast local storage, while backups use dedicated iSCSI storage
 - **Flexibility**: Easy to manage and update the VM independently of backup storage
 - **Efficiency**: Minimizes data transfer over iSCSI for system operations
 - **De-Clouded**: Your data stays between you and your friend, no cloud services involved
+
+{{% callout note %}}
+Regarding increasing storage capacity:
+
+- While TrueNAS allows increasing the size of zvols on the fly, this approach has limitations for our VM setup.
+- A more robust scaling method is to add new iSCSI targets in Proxmox:
+  1. Create additional zvols on your main TrueNAS
+  2. Set up new iSCSI targets for these zvols
+  3. Add these new targets as virtual disks to your TrueNAS VM in Proxmox
+  4. Expand the ZFS pool in the VM by adding these new virtual disks
+- This method allows for more flexible growth of your backup storage, as you can add disks of various sizes and expand your pool incrementally.
+- It also maintains better performance, as multiple iSCSI targets can potentially use different network paths or interfaces.
+
+{{% /callout %}}
 
 ## Step-by-Step Setup
 
@@ -119,7 +133,7 @@ After exploring various options, we've found a secure and efficient solution usi
 
 - **Network**: Ensure your internet connection can handle the data transfer
 - **Initial Seeding**: For large datasets, consider initial seeding in person
-- **Encryption**: Use encryption when for the replicated datasets and VPN access for added security
+- **Encryption**: Use encryption for the replicated datasets and VPN access for added security
 - **Testing**: Thoroughly test the setup before relying on it for critical backups
 - **Trust**: Choose your backup partner wisely - the other person will have access to the TrueNAS VM but not its data (if encrypted)
 - **VM Maintenance**: Regularly update and maintain the VM's operating system
