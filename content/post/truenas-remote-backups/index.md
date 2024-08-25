@@ -27,7 +27,7 @@ categories:
 
 ## The Challenge: Escaping the Cloud
 
-I recently wrote about my [homelab](#homelab) and how I use TrueNAS on my NAS for data storage.
+I recently wrote about my [homelab]({{< ref "/post/homelab" >}}) and how I use TrueNAS on my NAS for data storage.
 Most self-hosters are looking for ways to "de-cloud" themselves, taking control of their data away from big tech companies, and reducing monthly subscription fees.
 One subscription cost that many of us still rely on is cloud storage for backups.
 Personally, I use Rclone to back up my most essential data to Backblaze B2, but now that my data is growing, I'm looking for a more cost-effective solution.
