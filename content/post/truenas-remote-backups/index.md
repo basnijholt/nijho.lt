@@ -1,10 +1,10 @@
 ---
-title: "💽 Friend-to-Friend TrueNAS Backups: Secure, Decentralized Storage Without the Cloud"
-subtitle: "A Step-by-Step Guide to Setting Up Encrypted ZFS Replication with a Trusted Friend"
+title: Friend‑to‑friend TrueNAS backups without the cloud
+subtitle: A step-by-step guide to setting up encrypted ZFS replication with a trusted friend
 summary: |
-    Learn how to create a secure, decentralized backup system using TrueNAS and ZFS replication.
-    This guide shows you how to partner with a friend for mutual backups, leveraging the 
-    power of ZFS while maintaining network isolation and data privacy.
+   How to create a secure, decentralized backup system using TrueNAS and ZFS replication.
+   This guide shows you how to partner with a friend for mutual backups, leveraging the 
+   power of ZFS while maintaining network isolation and data privacy.
 projects: []
 date: '2024-08-24T00:00:00Z'
 draft: false
