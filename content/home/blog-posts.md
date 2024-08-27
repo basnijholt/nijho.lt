@@ -18,6 +18,7 @@ content:
     exclude_featured: false
   archive:
     enable: false
+  count: 10
 design:
   columns: '2'
   view: compact
