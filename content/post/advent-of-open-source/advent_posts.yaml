@@ -34,8 +34,7 @@ introduction:
   image: "github-contributions.png"
 
 projects:
-  - day: 1
-    repo: "adaptive-lighting"
+  - repo: "adaptive-lighting"
     url: "https://github.com/basnijholt/adaptive-lighting"
     emoji: "💡"
     title: "Adaptive Lighting"
@@ -59,8 +58,7 @@ projects:
       - Home Assistant
     license: "Apache-2.0"
 
-  - day: 2
-    repo: "home-assistant-config"
+  - repo: "home-assistant-config"
     url: "https://github.com/basnijholt/home-assistant-config"
     emoji: "🏠"
     title: "Home Assistant Config"
@@ -84,8 +82,7 @@ projects:
       - JavaScript
     license: "MIT"
 
-  - day: 3
-    repo: "adaptive"
+  - repo: "adaptive"
     url: "https://github.com/python-adaptive/adaptive"
     emoji: "📈"
     title: "Adaptive"
@@ -109,8 +106,7 @@ projects:
       - Parallel Computing
     license: "BSD-3-Clause"
 
-  - day: 4
-    repo: "rsync-time-machine"
+  - repo: "rsync-time-machine"
     url: "https://github.com/basnijholt/rsync-time-machine.py"
     emoji: "🕒"
     title: "rsync-time-machine"
@@ -133,8 +129,7 @@ projects:
       - rsync
     license: "Apache-2.0"
 
-  - day: 5
-    repo: "pipefunc"
+  - repo: "pipefunc"
     url: "https://github.com/pipefunc/pipefunc"
     emoji: "🕸️"
     title: "pipefunc"
@@ -154,10 +149,9 @@ projects:
     future_plans: ""
     technologies:
       - Python
-    license: "BSD-3-Clause"
+    license: "MIT"
 
-  - day: 6
-    repo: "unidep"
+  - repo: "unidep"
     url: "https://github.com/basnijholt/unidep"
     emoji: "🧬"
     title: "unidep"
@@ -181,8 +175,7 @@ projects:
       - conda
     license: "BSD-3-Clause"
 
-  - day: 7
-    repo: "markdown-code-runner"
+  - repo: "markdown-code-runner"
     url: "https://github.com/basnijholt/markdown-code-runner"
     emoji: "📝"
     title: "markdown-code-runner"
@@ -205,8 +198,7 @@ projects:
       - Markdown
     license: "MIT"
 
-  - day: 8
-    repo: "kwant"
+  - repo: "kwant"
     url: "https://github.com/kwant-project/kwant"
     emoji: "⚛️"
     title: "Kwant"
@@ -228,10 +220,9 @@ projects:
       - Python
       - C
       - Physics
-    license: "BSD-3-Clause"
+    license: "BSD-2-Clause"
 
-  - day: 9
-    repo: "adaptive-scheduler"
+  - repo: "adaptive-scheduler"
     url: "https://github.com/basnijholt/adaptive-scheduler"
     emoji: "📊"
     title: "adaptive-scheduler"
@@ -254,8 +245,7 @@ projects:
       - HPC
     license: "BSD-3-Clause"
 
-  - day: 10
-    repo: "instacron"
+  - repo: "instacron"
     url: "https://github.com/basnijholt/instacron"
     emoji: "📸"
     title: "instacron"
@@ -277,8 +267,7 @@ projects:
       - Python
     license: "MIT"
 
-  - day: 11
-    repo: "calendar-of-life"
+  - repo: "calendar-of-life"
     url: "https://github.com/basnijholt/calendar-of-life"
     emoji: "📅"
     title: "Calendar of Life"
@@ -301,8 +290,7 @@ projects:
       - matplotlib
     license: "MIT"
 
-  - day: 12
-    repo: "psychedelic-data-science"
+  - repo: "psychedelic-data-science"
     url: "https://github.com/basnijholt/psychedelic-data-science"
     emoji: "🍄"
     title: "Psychedelic Data Science"
@@ -325,8 +313,7 @@ projects:
       - Data Science
     license: "MIT"
 
-  - day: 13
-    repo: "yaml2bib"
+  - repo: "yaml2bib"
     url: "https://github.com/basnijholt/yaml2bib"
     emoji: "📖"
     title: "yaml2bib"
@@ -349,8 +336,7 @@ projects:
       - LaTeX
     license: "MIT"
 
-  - day: 14
-    repo: "fileup"
+  - repo: "fileup"
     url: "https://github.com/basnijholt/fileup"
     emoji: "📤"
     title: "fileup"
@@ -373,8 +359,7 @@ projects:
       - FTP
     license: "BSD-3-Clause"
 
-  - day: 15
-    repo: "arxiv-feed-mailer"
+  - repo: "arxiv-feed-mailer"
     url: "https://github.com/basnijholt/arxiv-feed-mailer"
     emoji: "📧"
     title: "arxiv-feed-mailer"
@@ -397,8 +382,7 @@ projects:
       - Gmail API
     license: "BSD-3-Clause"
 
-  - day: 16
-    repo: "wenfire"
+  - repo: "wenfire"
     url: "https://github.com/basnijholt/wenfire"
     emoji: "🔥"
     title: "WenFire"
@@ -418,10 +402,9 @@ projects:
     future_plans: ""
     technologies:
       - Python
-    license: null
+    license: "MIT"
 
-  - day: 17
-    repo: "clip-files"
+  - repo: "clip-files"
     url: "https://github.com/basnijholt/clip-files"
     emoji: "📎"
     title: "clip-files"
@@ -443,8 +426,7 @@ projects:
       - Python
     license: "Apache-2.0"
 
-  - day: 18
-    repo: "tiller-streamlit"
+  - repo: "tiller-streamlit"
     url: "https://github.com/basnijholt/tiller-streamlit"
     emoji: "💰"
     title: "tiller-streamlit"
@@ -465,10 +447,9 @@ projects:
     technologies:
       - Python
       - Streamlit
-    license: null
+    license: "MIT"
 
-  - day: 19
-    repo: "numthreads"
+  - repo: "numthreads"
     url: "https://github.com/basnijholt/numthreads"
     emoji: "🧵"
     title: "numthreads"
@@ -491,8 +472,7 @@ projects:
       - OpenBLAS
     license: "MIT"
 
-  - day: 20
-    repo: "pfapack"
+  - repo: "pfapack"
     url: "https://github.com/basnijholt/pfapack"
     emoji: "🔢"
     title: "pfapack"
@@ -515,8 +495,7 @@ projects:
       - OpenBLAS
     license: "MIT"
 
-  - day: 21
-    repo: "home-assistant-streamdeck-yaml"
+  - repo: "home-assistant-streamdeck-yaml"
     url: "https://github.com/basnijholt/home-assistant-streamdeck-yaml"
     emoji: "🎮"
     title: "Home Assistant Stream Deck YAML"
@@ -540,8 +519,7 @@ projects:
       - Home Assistant
     license: "Apache-2.0"
 
-  - day: 22
-    type: "combined"
+  - type: "combined"
     title: "Home Assistant Ecosystem"
     emoji: "🏠"
     tagline: "A collection of Home Assistant tools"
@@ -582,8 +560,7 @@ projects:
       - AsyncIO
     license: "Various"
 
-  - day: 23
-    type: "combined"
+  - type: "combined"
     title: "PhD Research Journey"
     emoji: "🎓"
     tagline: "The code behind my Physics PhD"
@@ -612,8 +589,7 @@ projects:
       - Physics
     license: "Various"
 
-  - day: 24
-    type: "combined"
+  - type: "combined"
     title: "Open Science Publications"
     emoji: "🔬"
     tagline: "Code accompanying scientific publications"
@@ -654,8 +630,7 @@ projects:
     license: "Various"
 
   # Backup post
-  - day: null
-    type: "combined"
+  - type: "combined"
     title: "Conda-forge Contributions"
     emoji: "🐍"
     tagline: "Building the scientific Python ecosystem"
