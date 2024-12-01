@@ -27,13 +27,37 @@ introduction:
     - Challenges faced and lessons learned
     - Where the project is heading
 
-    I hope this advent calendar provides insight into the world of open source maintenance and perhaps inspires others to share their own stories or start their own projects.
+    I hope this advent dar provides insight into the world of open source maintenance and perhaps inspires others to share their own stories or start their own projects.
 
     Let's begin with Day 1, right after this post!
 
   image: "github-contributions.png"
 
 projects:
+
+  - repo: "calendar-of-life"
+    url: "https://github.com/basnijholt/calendar-of-life"
+    emoji: "📅"
+    title: "Calendar of Life"
+    tagline: "Inspired by Kurzgesagt and Tim Urban"
+    description: "Create a calendar of your life, with one dot for each week"
+    stars: 5
+    commits: null
+    time_invested: ""
+    origin_story: ""
+    technical_highlights: ""
+    impact:
+      users: ""
+      stars: 5
+      notable_users: []
+    challenges: ""
+    lessons_learned: ""
+    future_plans: ""
+    technologies:
+      - Python
+      - matplotlib
+    license: "MIT"
+
   - repo: "adaptive-lighting"
     url: "https://github.com/basnijholt/adaptive-lighting"
     emoji: "💡"
@@ -265,29 +289,6 @@ projects:
     future_plans: ""
     technologies:
       - Python
-    license: "MIT"
-
-  - repo: "calendar-of-life"
-    url: "https://github.com/basnijholt/calendar-of-life"
-    emoji: "📅"
-    title: "Calendar of Life"
-    tagline: "Inspired by Kurzgesagt and Tim Urban"
-    description: "Create a calendar of your life, with one dot for each week"
-    stars: 5
-    commits: null
-    time_invested: ""
-    origin_story: ""
-    technical_highlights: ""
-    impact:
-      users: ""
-      stars: 5
-      notable_users: []
-    challenges: ""
-    lessons_learned: ""
-    future_plans: ""
-    technologies:
-      - Python
-      - matplotlib
     license: "MIT"
 
   - repo: "psychedelic-data-science"
