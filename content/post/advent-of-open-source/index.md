@@ -30,7 +30,7 @@ The nature of open source is interesting - when things work well, it's silent, b
 
 This December, I decided to celebrate and share the stories behind my open source projects.
 Over the next 24 days, I'll highlight one project each day - from tiny utilities that took a few hours to complex libraries representing years of work.
-These projects span an eclectic range of topics: from package dependency management to mathematical optimization algorithms, from parallel programming tools to home automation, from backup software to personal finance tools - and even code that makes one reflect on the finiteness of life itself.
+These projects span a wide range of topics: from package dependency management to mathematical optimization algorithms, from parallel programming tools to home automation, from backup software to personal finance tools - and even code that makes one reflect on the finiteness of life itself.
 Some of these projects serve thousands of users, while others might only have me as their sole user.
 But each project has a story, a reason why it was created, and lessons learned along the way.
 
@@ -49,7 +49,7 @@ For each project, I'll share:
 
 I hope this advent calendar provides insight into the world of open source maintenance and perhaps inspires others to share their own stories or start their own projects.
 
-Let's begin this journey tomorrow with day 1!
+Let's begin with Day 1, right after this post!
 
 ---
 
