@@ -21,6 +21,8 @@ categories:
     - advent
 ---
 
+# 🎄🎁 Advent of Open Source: Celebrating 24 Days of Personal Projects
+
 One of my biggest passions is writing code that solves real problems and sharing it with others who might face similar challenges.
 There's something deeply satisfying about turning a frustrating situation into a reusable solution that helps not just me, but potentially anyone else encountering the same obstacle.
 
