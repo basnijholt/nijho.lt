@@ -244,6 +244,7 @@ projects:
       - Home Assistant
     license: "Apache-2.0"
 
+  # Day 9
   - repo: "yaml2bib"
     url: "https://github.com/basnijholt/yaml2bib"
     emoji: "📖"
@@ -267,6 +268,7 @@ projects:
       - LaTeX
     license: "MIT"
 
+  # Day 10
   - repo: "home-assistant-config"
     url: "https://github.com/basnijholt/home-assistant-config"
     emoji: "🏠"
@@ -291,6 +293,7 @@ projects:
       - JavaScript
     license: "MIT"
 
+  # Day 11
   - repo: "adaptive"
     url: "https://github.com/python-adaptive/adaptive"
     emoji: "📈"
@@ -315,6 +318,7 @@ projects:
       - Parallel Computing
     license: "BSD-3-Clause"
 
+  # Day 12
   - repo: "pipefunc"
     url: "https://github.com/pipefunc/pipefunc"
     emoji: "🕸️"
@@ -337,6 +341,7 @@ projects:
       - Python
     license: "MIT"
 
+  # Day 13
   - repo: "unidep"
     url: "https://github.com/basnijholt/unidep"
     emoji: "🧬"
@@ -361,33 +366,41 @@ projects:
       - conda
     license: "BSD-3-Clause"
 
-  - repo: "kwant"
-    url: "https://github.com/kwant-project/kwant"
-    emoji: "⚛️"
-    title: "Kwant"
-    tagline: "Quantum transport calculations"
-    description: "Package for quantum transport calculations"
-    stars: 91
-    commits: null
-    time_invested: ""
+  # Day 14
+  - type: "combined"
+    title: "PhD Research Journey"
+    emoji: "🎓"
+    tagline: "The code behind my Physics PhD"
+    description: "Scientific code and thesis from my PhD research"
+    constituent_repos:
+      - name: "thesis"
+        url: "https://github.com/basnijholt/thesis"
+        stars: 14
+        description: "PhD thesis: Towards realistic numerical simulations of Majorana devices"
+      - name: "thesis-cover"
+        url: "https://github.com/basnijholt/thesis-cover"
+        stars: 36
+        description: "Parametric PhD thesis cover design"
+    time_invested: "4 years"
     origin_story: ""
     technical_highlights: ""
     impact:
-      users: ""
-      stars: 91
-      notable_users: []
+      citations: ""
+      stars: 50
     challenges: ""
     lessons_learned: ""
     future_plans: ""
     technologies:
       - Python
-      - C
+      - LaTeX
       - Physics
-    license: "BSD-2-Clause"
+    license: "Various"
 
+  # Day 15
   - repo: grapviz-anywidget
     url: https://github.com/pipefunc/graphviz-anywidget
 
+  # Day 16
   - repo: "adaptive-scheduler"
     url: "https://github.com/basnijholt/adaptive-scheduler"
     emoji: "📊"
@@ -411,6 +424,7 @@ projects:
       - HPC
     license: "BSD-3-Clause"
 
+  # Day 17
   - repo: "instacron"
     url: "https://github.com/basnijholt/instacron"
     emoji: "📸"
@@ -433,6 +447,7 @@ projects:
       - Python
     license: "MIT"
 
+  # Day 18
   - repo: "psychedelic-data-science"
     url: "https://github.com/basnijholt/psychedelic-data-science"
     emoji: "🍄"
@@ -456,6 +471,7 @@ projects:
       - Data Science
     license: "MIT"
 
+  # Day 19
   - repo: "fileup"
     url: "https://github.com/basnijholt/fileup"
     emoji: "📤"
@@ -479,29 +495,34 @@ projects:
       - FTP
     license: "BSD-3-Clause"
 
-  - repo: "arxiv-feed-mailer"
-    url: "https://github.com/basnijholt/arxiv-feed-mailer"
-    emoji: "📧"
-    title: "arxiv-feed-mailer"
-    tagline: "Daily arXiv paper notifications"
-    description: "Daily e-mail with filtered new arXiv entries using Gmail API"
-    stars: 5
-    commits: null
+  # Day 20
+  - type: "combined"
+    title: "Conda-forge Contributions"
+    emoji: "🐍"
+    tagline: "Building the scientific Python ecosystem"
+    description: "Maintaining packages in the conda-forge ecosystem"
+    constituent_repos:
+      - name: "conda-forge/staged-recipes"
+        url: "https://github.com/conda-forge/staged-recipes"
+        commits: 286
+        description: "Contributing new packages to conda-forge"
+    maintained_packages: "~30"
     time_invested: ""
     origin_story: ""
     technical_highlights: ""
     impact:
-      users: ""
-      stars: 5
-      notable_users: []
+      packages_maintained: 30
+      total_downloads: ""
     challenges: ""
     lessons_learned: ""
     future_plans: ""
     technologies:
       - Python
-      - Gmail API
-    license: "BSD-3-Clause"
-
+      - conda
+      - CI/CD
+    license: "Various"
+  
+  # Day 21
   - repo: "clip-files"
     url: "https://github.com/basnijholt/clip-files"
     emoji: "📎"
@@ -524,6 +545,7 @@ projects:
       - Python
     license: "Apache-2.0"
 
+  # Day 22
   - repo: "tiller-streamlit"
     url: "https://github.com/basnijholt/tiller-streamlit"
     emoji: "💰"
@@ -547,6 +569,7 @@ projects:
       - Streamlit
     license: "MIT"
 
+  # Day 23
   - repo: "pfapack"
     url: "https://github.com/basnijholt/pfapack"
     emoji: "🔢"
@@ -560,7 +583,7 @@ projects:
     technical_highlights: ""
     impact:
       users: ""
-      stars: 2
+      stars: 15
       notable_users: []
     challenges: ""
     lessons_learned: ""
@@ -570,6 +593,7 @@ projects:
       - OpenBLAS
     license: "MIT"
 
+  # Day 24
   - type: "combined"
     title: "Home Assistant Ecosystem"
     emoji: "🏠"
@@ -611,58 +635,51 @@ projects:
       - AsyncIO
     license: "Various"
 
-  - type: "combined"
-    title: "PhD Research Journey"
-    emoji: "🎓"
-    tagline: "The code behind my Physics PhD"
-    description: "Scientific code and thesis from my PhD research"
-    constituent_repos:
-      - name: "thesis"
-        url: "https://github.com/basnijholt/thesis"
-        stars: 14
-        description: "PhD thesis: Towards realistic numerical simulations of Majorana devices"
-      - name: "thesis-cover"
-        url: "https://github.com/basnijholt/thesis-cover"
-        stars: 36
-        description: "Parametric PhD thesis cover design"
-    time_invested: "4 years"
-    origin_story: ""
-    technical_highlights: ""
-    impact:
-      citations: ""
-      stars: 50
-    challenges: ""
-    lessons_learned: ""
-    future_plans: ""
-    technologies:
-      - Python
-      - LaTeX
-      - Physics
-    license: "Various"
-
-  # Backup post
-  - type: "combined"
-    title: "Conda-forge Contributions"
-    emoji: "🐍"
-    tagline: "Building the scientific Python ecosystem"
-    description: "Maintaining packages in the conda-forge ecosystem"
-    constituent_repos:
-      - name: "conda-forge/staged-recipes"
-        url: "https://github.com/conda-forge/staged-recipes"
-        commits: 286
-        description: "Contributing new packages to conda-forge"
-    maintained_packages: "~30"
+  # Day 25
+  - repo: "kwant"
+    url: "https://github.com/kwant-project/kwant"
+    emoji: "⚛️"
+    title: "Kwant"
+    tagline: "Quantum transport calculations"
+    description: "Package for quantum transport calculations"
+    stars: 91
+    commits: null
     time_invested: ""
     origin_story: ""
     technical_highlights: ""
     impact:
-      packages_maintained: 30
-      total_downloads: ""
+      users: ""
+      stars: 91
+      notable_users: []
     challenges: ""
     lessons_learned: ""
     future_plans: ""
     technologies:
       - Python
-      - conda
-      - CI/CD
-    license: "Various"
+      - C
+      - Physics
+    license: "BSD-2-Clause"
+
+  # Day 26
+  - repo: "arxiv-feed-mailer"
+    url: "https://github.com/basnijholt/arxiv-feed-mailer"
+    emoji: "📧"
+    title: "arxiv-feed-mailer"
+    tagline: "Daily arXiv paper notifications"
+    description: "Daily e-mail with filtered new arXiv entries using Gmail API"
+    stars: 5
+    commits: null
+    time_invested: ""
+    origin_story: ""
+    technical_highlights: ""
+    impact:
+      users: ""
+      stars: 5
+      notable_users: []
+    challenges: ""
+    lessons_learned: ""
+    future_plans: ""
+    technologies:
+      - Python
+      - Gmail API
+    license: "BSD-3-Clause"

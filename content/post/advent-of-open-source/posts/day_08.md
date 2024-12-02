@@ -12,7 +12,7 @@ While the Stream Deck's official software is great for streamers, it doesn't sup
 * Supports all Stream Deck models, including the Plus with dials
 * Cross-platform (Linux, macOS, Windows)
 * 30+ example configurations (AI-generated, then human-refined)
-* Documentation auto-generated from unit tests
+* Documentation auto-generated from code and unit tests
 * Available as a Home Assistant add-on
 * Community-contributed features like touchscreen support and dial controls
 
