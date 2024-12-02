@@ -219,6 +219,54 @@ projects:
       - OpenBLAS
     license: "MIT"
 
+  # Day 8
+  - repo: "home-assistant-streamdeck-yaml"
+    url: "https://github.com/basnijholt/home-assistant-streamdeck-yaml"
+    emoji: "🎮"
+    title: "Home Assistant Stream Deck YAML"
+    tagline: "Control Home Assistant with Stream Deck"
+    description: "Control Home Assistant on Stream Deck with YAML configuration"
+    stars: 250
+    commits: 320
+    time_invested: ""
+    origin_story: ""
+    technical_highlights: ""
+    impact:
+      users: ""
+      stars: 250
+      notable_users: []
+    challenges: ""
+    lessons_learned: ""
+    future_plans: ""
+    technologies:
+      - Python
+      - YAML
+      - Home Assistant
+    license: "Apache-2.0"
+
+  - repo: "yaml2bib"
+    url: "https://github.com/basnijholt/yaml2bib"
+    emoji: "📖"
+    title: "yaml2bib"
+    tagline: "YAML to BibTeX converter"
+    description: "Convert YAML files to BibTeX with correct journal abbreviations"
+    stars: 11
+    commits: null
+    time_invested: ""
+    origin_story: ""
+    technical_highlights: ""
+    impact:
+      users: ""
+      stars: 11
+      notable_users: []
+    challenges: ""
+    lessons_learned: ""
+    future_plans: ""
+    technologies:
+      - Python
+      - LaTeX
+    license: "MIT"
+
   - repo: "home-assistant-config"
     url: "https://github.com/basnijholt/home-assistant-config"
     emoji: "🏠"
@@ -337,6 +385,9 @@ projects:
       - Physics
     license: "BSD-2-Clause"
 
+  - repo: grapviz-anywidget
+    url: https://github.com/pipefunc/graphviz-anywidget
+
   - repo: "adaptive-scheduler"
     url: "https://github.com/basnijholt/adaptive-scheduler"
     emoji: "📊"
@@ -403,29 +454,6 @@ projects:
     technologies:
       - Python
       - Data Science
-    license: "MIT"
-
-  - repo: "yaml2bib"
-    url: "https://github.com/basnijholt/yaml2bib"
-    emoji: "📖"
-    title: "yaml2bib"
-    tagline: "YAML to BibTeX converter"
-    description: "Convert YAML files to BibTeX with correct journal abbreviations"
-    stars: 11
-    commits: null
-    time_invested: ""
-    origin_story: ""
-    technical_highlights: ""
-    impact:
-      users: ""
-      stars: 11
-      notable_users: []
-    challenges: ""
-    lessons_learned: ""
-    future_plans: ""
-    technologies:
-      - Python
-      - LaTeX
     license: "MIT"
 
   - repo: "fileup"
@@ -541,30 +569,6 @@ projects:
       - Python
       - OpenBLAS
     license: "MIT"
-
-  - repo: "home-assistant-streamdeck-yaml"
-    url: "https://github.com/basnijholt/home-assistant-streamdeck-yaml"
-    emoji: "🎮"
-    title: "Home Assistant Stream Deck YAML"
-    tagline: "Control Home Assistant with Stream Deck"
-    description: "Control Home Assistant on Stream Deck with YAML configuration"
-    stars: 250
-    commits: 320
-    time_invested: ""
-    origin_story: ""
-    technical_highlights: ""
-    impact:
-      users: ""
-      stars: 250
-      notable_users: []
-    challenges: ""
-    lessons_learned: ""
-    future_plans: ""
-    technologies:
-      - Python
-      - YAML
-      - Home Assistant
-    license: "Apache-2.0"
 
   - type: "combined"
     title: "Home Assistant Ecosystem"
