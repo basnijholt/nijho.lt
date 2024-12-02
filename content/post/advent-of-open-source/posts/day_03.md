@@ -4,10 +4,10 @@
 
 Sometimes the best open source projects start with "I can do better than this." That's exactly what happened when I looked at [laurent22/rsync-time-backup](https://github.com/laurent22/rsync-time-backup), a popular 600-line Bash script for Time Machine-style backups. While it worked, it had known bugs and was tricky to maintain due to Bash's limitations. It also lacked tests, type hints (bash duh...), and proper error handling. So, I did what any reasonable developer would do: rewrote it in Python! 🐍
 
-## Origin Story
+## 📖 Origin Story
 I needed reliable backups that worked across platforms and filesystems, unlike Apple's Time Machine. While many excellent backup tools exist, I was drawn to the simplicity of this approach: it just creates folders named `YYYY-MM-DD-HH-MM-SS` containing your files. No special tools needed for restoring or browsing - just your regular file explorer! I created a fully tested, typed, and documented Python port that maintains compatibility with the original while adding modern development practices.
 
-## Technical Highlights
+## 🔧 Technical Highlights
 * Creates incremental backups using hard links (saving space while keeping full snapshots)
 * Works on Linux, macOS, and Windows (via WSL or Cygwin)
 * Supports local and remote (SSH) backups
@@ -18,7 +18,7 @@ I needed reliable backups that worked across platforms and filesystems, unlike A
 * Usable as a standalone `.py` script or pip installable package
 * 100% test coverage
 
-## Impact
+## 📊 Impact
 The project reached the front page of Y Combinator's Hacker News, causing its popularity to explode:
 * 381 GitHub stars
 * 16 forks
@@ -26,7 +26,7 @@ The project reached the front page of Y Combinator's Hacker News, causing its po
 * Featured on Real Python podcast
 * Active discussion on Reddit's r/Python
 
-## Challenges and Solutions
+## 🎯 Challenges and Solutions
 * Maintaining compatibility with the original Bash script while improving the codebase
 * Making it work on Windows through WSL/Cygwin (surprisingly tricky!)
 * Handling various edge cases in filesystem operations
@@ -34,7 +34,7 @@ The project reached the front page of Y Combinator's Hacker News, causing its po
 * Adding comprehensive test coverage for file operations
 * Keeping the codebase dependency-free while maintaining functionality
 
-## Lessons Learned
+## 💡 Lessons Learned
 1. Sometimes a rewrite is worth it, especially when adding modern development practices
 2. Good documentation and test coverage are crucial for backup tools
 3. The Python community appreciates well-structured ports of useful tools
