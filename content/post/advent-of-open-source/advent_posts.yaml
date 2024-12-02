@@ -286,20 +286,20 @@ projects:
     license: "Various"
   
   # Day 12
-  - repo: "pipefunc"
-    url: "https://github.com/pipefunc/pipefunc"
-    emoji: "🕸️"
-    title: "pipefunc"
-    tagline: "Lightweight function pipeline creation"
-    description: "Lightweight function pipeline (DAG) creation in pure Python for scientific (HPC) workflows"
-    stars: 222
-    commits: 470
+  - repo: "instacron"
+    url: "https://github.com/basnijholt/instacron"
+    emoji: "📸"
+    title: "instacron"
+    tagline: "Automated Instagram posting"
+    description: "Instagram for the lazy - automatically upload photos to Instagram"
+    stars: 21
+    commits: null
     time_invested: ""
     origin_story: ""
     technical_highlights: ""
     impact:
       users: ""
-      stars: 222
+      stars: 21
       notable_users: []
     challenges: ""
     lessons_learned: ""
@@ -465,20 +465,20 @@ projects:
     license: "BSD-3-Clause"
 
   # Day 20
-  - repo: "instacron"
-    url: "https://github.com/basnijholt/instacron"
-    emoji: "📸"
-    title: "instacron"
-    tagline: "Automated Instagram posting"
-    description: "Instagram for the lazy - automatically upload photos to Instagram"
-    stars: 21
-    commits: null
+  - repo: "pipefunc"
+    url: "https://github.com/pipefunc/pipefunc"
+    emoji: "🕸️"
+    title: "pipefunc"
+    tagline: "Lightweight function pipeline creation"
+    description: "Lightweight function pipeline (DAG) creation in pure Python for scientific (HPC) workflows"
+    stars: 222
+    commits: 470
     time_invested: ""
     origin_story: ""
     technical_highlights: ""
     impact:
       users: ""
-      stars: 21
+      stars: 222
       notable_users: []
     challenges: ""
     lessons_learned: ""
