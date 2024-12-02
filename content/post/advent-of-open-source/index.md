@@ -50,31 +50,3 @@ For each project, I'll share:
 I hope this advent calendar provides insight into the world of open source maintenance and perhaps inspires others to share their own stories or start their own projects.
 
 Let's begin with Day 1, right after this post!
-
----
-
-```markdown
-# Day X: [Project Name]
-
-## What it does
-[2-3 sentences about the core functionality]
-
-## Why I built it
-[The motivation and context]
-
-## 🔧 Technical Highlights
-[Interesting implementation details or challenges]
-
-## 📊 Impact
-- GitHub stars: X
-- Downloads/month: Y
-- Notable users: [if applicable]
-- Time invested: [rough estimate]
-
-## 💡 Lessons Learned
-[Key takeaways from building and maintaining it]
-
-## Links
-- GitHub: [link]
-- Documentation: [link]
-- PyPI/npm/etc: [link]
