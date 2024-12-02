@@ -34,7 +34,7 @@ introduction:
   image: "github-contributions.png"
 
 projects:
-
+  # Day 1
   - repo: "calendar-of-life"
     url: "https://github.com/basnijholt/calendar-of-life"
     emoji: "📅"
@@ -58,6 +58,7 @@ projects:
       - matplotlib
     license: "MIT"
 
+  # Day 2
   - repo: "adaptive-lighting"
     url: "https://github.com/basnijholt/adaptive-lighting"
     emoji: "💡"
@@ -81,6 +82,142 @@ projects:
       - Python
       - Home Assistant
     license: "Apache-2.0"
+
+  # Day 3
+  - repo: "rsync-time-machine"
+    url: "https://github.com/basnijholt/rsync-time-machine.py"
+    emoji: "🕒"
+    title: "rsync-time-machine"
+    tagline: "Time Machine-style backups with rsync"
+    description: "Ultralight Time Machine-style backups using rsync"
+    stars: 381
+    commits: null
+    time_invested: ""
+    origin_story: ""
+    technical_highlights: ""
+    impact:
+      users: ""
+      stars: 381
+      notable_users: []
+    challenges: ""
+    lessons_learned: ""
+    future_plans: ""
+    technologies:
+      - Python
+      - rsync
+    license: "Apache-2.0"
+
+  # Day 4
+  - repo: "wenfire"
+    url: "https://github.com/basnijholt/wenfire"
+    emoji: "🔥"
+    title: "WenFire"
+    tagline: "Financial Independence Calculator"
+    description: "Financial Independence Calculator with visualization"
+    stars: 3
+    commits: null
+    time_invested: ""
+    origin_story: ""
+    technical_highlights: ""
+    impact:
+      users: ""
+      stars: 3
+      notable_users: []
+    challenges: ""
+    lessons_learned: ""
+    future_plans: ""
+    technologies:
+      - Python
+    license: "MIT"
+
+  # Day 5
+  - repo: "markdown-code-runner"
+    url: "https://github.com/basnijholt/markdown-code-runner"
+    emoji: "📝"
+    title: "markdown-code-runner"
+    tagline: "Run code blocks in Markdown files"
+    description: "Run (hidden) code blocks right within your Markdown files - keep simple README.mds in sync!"
+    stars: 97
+    commits: null
+    time_invested: ""
+    origin_story: ""
+    technical_highlights: ""
+    impact:
+      users: ""
+      stars: 97
+      notable_users: []
+    challenges: ""
+    lessons_learned: ""
+    future_plans: ""
+    technologies:
+      - Python
+      - Markdown
+    license: "MIT"
+
+  # Day 6
+  - type: "combined"
+    title: "Open Science Publications"
+    emoji: "🔬"
+    tagline: "Code accompanying scientific publications"
+    description: "Open source code from various quantum physics papers"
+    constituent_repos:
+      - name: "orbitalfield"
+        url: "https://github.com/basnijholt/orbitalfield"
+        stars: 6
+        description: "Code for Phys. Rev. B paper on orbital effects"
+      - name: "supercurrent-majorana-nanowire"
+        url: "https://github.com/basnijholt/supercurrent-majorana-nanowire"
+        commits: 282
+        description: "Supercurrent in Majorana nanowires"
+      - name: "spin-orbit-nanowires"
+        url: "https://github.com/basnijholt/spin-orbit-nanowires"
+        commits: 191
+        description: "Spin-orbit coupling in nanowires"
+      - name: "azure-quantum-tgp"
+        url: "https://github.com/microsoft/azure-quantum-tgp"
+        description: "Azure Quantum project"
+      - name: "zigzag-majoranas"
+        url: "https://github.com/basnijholt/zigzag-majoranas"
+        commits: 413
+        description: "Zigzag-shaped Majorana devices"
+    time_invested: ""
+    origin_story: ""
+    technical_highlights: ""
+    impact:
+      papers: []
+      citations: ""
+    challenges: ""
+    lessons_learned: ""
+    future_plans: ""
+    technologies:
+      - Python
+      - Physics
+      - Scientific Computing
+    license: "Various"
+
+  # Day 7
+  - repo: "numthreads"
+    url: "https://github.com/basnijholt/numthreads"
+    emoji: "🧵"
+    title: "numthreads"
+    tagline: "Thread control for numerical libraries"
+    description: "Ultra small package to set the number of threads in OpenBLAS"
+    stars: 2
+    commits: null
+    time_invested: ""
+    origin_story: ""
+    technical_highlights: ""
+    impact:
+      users: ""
+      stars: 2
+      notable_users: []
+    challenges: ""
+    lessons_learned: ""
+    future_plans: ""
+    technologies:
+      - Python
+      - OpenBLAS
+    license: "MIT"
 
   - repo: "home-assistant-config"
     url: "https://github.com/basnijholt/home-assistant-config"
@@ -130,29 +267,6 @@ projects:
       - Parallel Computing
     license: "BSD-3-Clause"
 
-  - repo: "rsync-time-machine"
-    url: "https://github.com/basnijholt/rsync-time-machine.py"
-    emoji: "🕒"
-    title: "rsync-time-machine"
-    tagline: "Time Machine-style backups with rsync"
-    description: "Ultralight Time Machine-style backups using rsync"
-    stars: 381
-    commits: null
-    time_invested: ""
-    origin_story: ""
-    technical_highlights: ""
-    impact:
-      users: ""
-      stars: 381
-      notable_users: []
-    challenges: ""
-    lessons_learned: ""
-    future_plans: ""
-    technologies:
-      - Python
-      - rsync
-    license: "Apache-2.0"
-
   - repo: "pipefunc"
     url: "https://github.com/pipefunc/pipefunc"
     emoji: "🕸️"
@@ -198,29 +312,6 @@ projects:
       - pip
       - conda
     license: "BSD-3-Clause"
-
-  - repo: "markdown-code-runner"
-    url: "https://github.com/basnijholt/markdown-code-runner"
-    emoji: "📝"
-    title: "markdown-code-runner"
-    tagline: "Run code blocks in Markdown files"
-    description: "Run (hidden) code blocks right within your Markdown files - keep simple README.mds in sync!"
-    stars: 97
-    commits: null
-    time_invested: ""
-    origin_story: ""
-    technical_highlights: ""
-    impact:
-      users: ""
-      stars: 97
-      notable_users: []
-    challenges: ""
-    lessons_learned: ""
-    future_plans: ""
-    technologies:
-      - Python
-      - Markdown
-    license: "MIT"
 
   - repo: "kwant"
     url: "https://github.com/kwant-project/kwant"
@@ -383,28 +474,6 @@ projects:
       - Gmail API
     license: "BSD-3-Clause"
 
-  - repo: "wenfire"
-    url: "https://github.com/basnijholt/wenfire"
-    emoji: "🔥"
-    title: "WenFire"
-    tagline: "Financial Independence Calculator"
-    description: "Financial Independence Calculator with visualization"
-    stars: 3
-    commits: null
-    time_invested: ""
-    origin_story: ""
-    technical_highlights: ""
-    impact:
-      users: ""
-      stars: 3
-      notable_users: []
-    challenges: ""
-    lessons_learned: ""
-    future_plans: ""
-    technologies:
-      - Python
-    license: "MIT"
-
   - repo: "clip-files"
     url: "https://github.com/basnijholt/clip-files"
     emoji: "📎"
@@ -448,29 +517,6 @@ projects:
     technologies:
       - Python
       - Streamlit
-    license: "MIT"
-
-  - repo: "numthreads"
-    url: "https://github.com/basnijholt/numthreads"
-    emoji: "🧵"
-    title: "numthreads"
-    tagline: "Thread control for numerical libraries"
-    description: "Ultra small package to set the number of threads in OpenBLAS"
-    stars: 2
-    commits: null
-    time_invested: ""
-    origin_story: ""
-    technical_highlights: ""
-    impact:
-      users: ""
-      stars: 2
-      notable_users: []
-    challenges: ""
-    lessons_learned: ""
-    future_plans: ""
-    technologies:
-      - Python
-      - OpenBLAS
     license: "MIT"
 
   - repo: "pfapack"
@@ -588,46 +634,6 @@ projects:
       - Python
       - LaTeX
       - Physics
-    license: "Various"
-
-  - type: "combined"
-    title: "Open Science Publications"
-    emoji: "🔬"
-    tagline: "Code accompanying scientific publications"
-    description: "Open source code from various quantum physics papers"
-    constituent_repos:
-      - name: "orbitalfield"
-        url: "https://github.com/basnijholt/orbitalfield"
-        stars: 6
-        description: "Code for Phys. Rev. B paper on orbital effects"
-      - name: "supercurrent-majorana-nanowire"
-        url: "https://github.com/basnijholt/supercurrent-majorana-nanowire"
-        commits: 282
-        description: "Supercurrent in Majorana nanowires"
-      - name: "spin-orbit-nanowires"
-        url: "https://github.com/basnijholt/spin-orbit-nanowires"
-        commits: 191
-        description: "Spin-orbit coupling in nanowires"
-      - name: "azure-quantum-tgp"
-        url: "https://github.com/microsoft/azure-quantum-tgp"
-        description: "Azure Quantum project"
-      - name: "zigzag-majoranas"
-        url: "https://github.com/basnijholt/zigzag-majoranas"
-        commits: 413
-        description: "Zigzag-shaped Majorana devices"
-    time_invested: ""
-    origin_story: ""
-    technical_highlights: ""
-    impact:
-      papers: []
-      citations: ""
-    challenges: ""
-    lessons_learned: ""
-    future_plans: ""
-    technologies:
-      - Python
-      - Physics
-      - Scientific Computing
     license: "Various"
 
   # Backup post
