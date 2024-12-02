@@ -364,34 +364,29 @@ projects:
     license: "Various"
 
   # Day 15
-  - repo: grapviz-anywidget
-    url: https://github.com/pipefunc/graphviz-anywidget
-
-  # Day 16
-  - repo: "adaptive-scheduler"
-    url: "https://github.com/basnijholt/adaptive-scheduler"
-    emoji: "📊"
-    title: "adaptive-scheduler"
-    tagline: "Run adaptive on many cores"
-    description: "Run many functions adaptively on many cores using various backends"
-    stars: 26
-    commits: 783
+  - repo: "clip-files"
+    url: "https://github.com/basnijholt/clip-files"
+    emoji: "📎"
+    title: "clip-files"
+    tagline: "Project file copier for AI chat"
+    description: "Makes it simple to paste your entire project into ChatGPT or Claude.ai"
+    stars: null
+    commits: null
     time_invested: ""
     origin_story: ""
     technical_highlights: ""
     impact:
       users: ""
-      stars: 26
+      stars: null
       notable_users: []
     challenges: ""
     lessons_learned: ""
     future_plans: ""
     technologies:
       - Python
-      - HPC
-    license: "BSD-3-Clause"
+    license: "Apache-2.0"
 
-  # Day 17
+  # Day 16
   - repo: "adaptive"
     url: "https://github.com/python-adaptive/adaptive"
     emoji: "📈"
@@ -414,6 +409,30 @@ projects:
       - Python
       - NumPy
       - Parallel Computing
+    license: "BSD-3-Clause"
+
+  # Day 17
+  - repo: "adaptive-scheduler"
+    url: "https://github.com/basnijholt/adaptive-scheduler"
+    emoji: "📊"
+    title: "adaptive-scheduler"
+    tagline: "Run adaptive on many cores"
+    description: "Run many functions adaptively on many cores using various backends"
+    stars: 26
+    commits: 783
+    time_invested: ""
+    origin_story: ""
+    technical_highlights: ""
+    impact:
+      users: ""
+      stars: 26
+      notable_users: []
+    challenges: ""
+    lessons_learned: ""
+    future_plans: ""
+    technologies:
+      - Python
+      - HPC
     license: "BSD-3-Clause"
 
   # Day 18
@@ -488,27 +507,8 @@ projects:
     license: "MIT"
 
   # Day 21
-  - repo: "clip-files"
-    url: "https://github.com/basnijholt/clip-files"
-    emoji: "📎"
-    title: "clip-files"
-    tagline: "Project file copier for AI chat"
-    description: "Makes it simple to paste your entire project into ChatGPT or Claude.ai"
-    stars: null
-    commits: null
-    time_invested: ""
-    origin_story: ""
-    technical_highlights: ""
-    impact:
-      users: ""
-      stars: null
-      notable_users: []
-    challenges: ""
-    lessons_learned: ""
-    future_plans: ""
-    technologies:
-      - Python
-    license: "Apache-2.0"
+  - repo: grapviz-anywidget
+    url: https://github.com/pipefunc/graphviz-anywidget
 
   # Day 22
   - repo: "tiller-streamlit"
