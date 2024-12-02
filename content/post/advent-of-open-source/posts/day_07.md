@@ -19,7 +19,7 @@ While working on high-performance computing clusters, I frequently encountered a
 * Both CLI and Python API
 
 ## 📊 Impact
-Over the past eight years, this simple tool has helped numerous researchers speed up their computational workflows, sometimes by orders of magnitude. The fix is often as simple as:
+Over my scientific computing career, I've encountered this threading issue dozens of times. Since creating this package a year ago, I've helped at least 5 different researchers speed up their workflows, sometimes by orders of magnitude. The beauty lies in its simplicity - the fix is often as simple as:
 ```bash
 eval $(numthreads 1)
 ```

@@ -30,13 +30,6 @@ The main challenges were (this was actually a very simple one):
 ## 💡 Lessons Learned
 This project taught me that sometimes the most impactful tools are the simplest ones. Sure, it's just a bunch of dots on a grid, but each dot represents a week of life - past, present, or future. It's a humbling reminder that while we can't add more dots to our grid, we can try to make each one count.
 
-## Technologies Used
-* Python
-* matplotlib
-* numpy
-* imageio (for animations)
-* APNG (for animated PNG support)
-
 Want to contemplate your own mortality in a more organized way? Check out the [project on GitHub](https://github.com/basnijholt/calendar-of-life)!
 
 #OpenSource #Python #DataVisualization #Programming
