@@ -7,6 +7,6 @@ tags:
   - Bitcoin
   - BTC
   - Binance
-date: "2019-25-11T00:00:00"
+date: "2019-11-25T00:00:00"
 external_link: "https://github.com/basnijholt/crypto-bot"
 ---
