@@ -1,38 +1,3 @@
-introduction:
-  title: "🎄🎁 Advent of Open Source: Celebrating 24 Days of Personal Projects"
-  content: |
-    One of my biggest passions is writing code that solves real problems and sharing it with others who might face similar challenges.
-    There's something deeply satisfying about turning a frustrating situation into a reusable solution that helps not just me, but potentially anyone else encountering the same obstacle.
-
-    As we enter the festive month of December, I wanted to try something different.
-    Like many open source maintainers, I spend countless hours creating and maintaining software that others use in their daily work.
-    The nature of open source is interesting - when things work well, it's silent, but when issues arise, that's when you hear from users.
-
-    This December, I decided to celebrate and share the stories behind my open source projects.
-    Over the next 24 days, I'll highlight one project each day - from tiny utilities that took a few hours to complex libraries representing years of work.
-    These projects span a wide range of topics: from package dependency management to mathematical optimization algorithms, from parallel programming tools to home automation, from backup software to personal finance tools - and even code that makes one reflect on the finiteness of life itself.
-    Some of these projects serve thousands of users, while others might only have me as their sole user.
-    But each project has a story, a reason why it was created, and lessons learned along the way.
-
-    Why do this? 
-    Open source is mostly thankless work - users typically appear only when something breaks, rarely when everything works smoothly.
-    December is a month of celebration and giving, so I decided to celebrate these contributions, however small or large.
-    Each project is, in its own way, a gift to the developer community - perhaps a gift no one explicitly asked for, but one I hoped would help someone somewhere.
-    Of course, none of this would be possible without standing on the shoulders of thousands of other open source developers.
-
-    For each project, I'll share:
-    - The origin story - what problem it solves and why I created it
-    - Technical highlights and interesting implementation details
-    - Usage statistics and community impact
-    - Challenges faced and lessons learned
-    - Where the project is heading
-
-    I hope this advent dar provides insight into the world of open source maintenance and perhaps inspires others to share their own stories or start their own projects.
-
-    Let's begin with Day 1, right after this post!
-
-  image: "github-contributions.png"
-
 projects:
   # Day 1
   - repo: "calendar-of-life"
@@ -294,30 +259,32 @@ projects:
     license: "MIT"
 
   # Day 11
-  - repo: "adaptive"
-    url: "https://github.com/python-adaptive/adaptive"
-    emoji: "📈"
-    title: "Adaptive"
-    tagline: "Parallel active learning of mathematical functions"
-    description: "A Python library for parallel active learning of mathematical functions"
-    stars: 1164
-    commits: 1431
+  - type: "combined"
+    title: "Conda-forge Contributions"
+    emoji: "🐍"
+    tagline: "Building the scientific Python ecosystem"
+    description: "Maintaining packages in the conda-forge ecosystem"
+    constituent_repos:
+      - name: "conda-forge/staged-recipes"
+        url: "https://github.com/conda-forge/staged-recipes"
+        commits: 286
+        description: "Contributing new packages to conda-forge"
+    maintained_packages: "~30"
     time_invested: ""
     origin_story: ""
     technical_highlights: ""
     impact:
-      users: ""
-      stars: 1164
-      notable_users: []
+      packages_maintained: 30
+      total_downloads: ""
     challenges: ""
     lessons_learned: ""
     future_plans: ""
     technologies:
       - Python
-      - NumPy
-      - Parallel Computing
-    license: "BSD-3-Clause"
-
+      - conda
+      - CI/CD
+    license: "Various"
+  
   # Day 12
   - repo: "pipefunc"
     url: "https://github.com/pipefunc/pipefunc"
@@ -425,27 +392,29 @@ projects:
     license: "BSD-3-Clause"
 
   # Day 17
-  - repo: "instacron"
-    url: "https://github.com/basnijholt/instacron"
-    emoji: "📸"
-    title: "instacron"
-    tagline: "Automated Instagram posting"
-    description: "Instagram for the lazy - automatically upload photos to Instagram"
-    stars: 21
-    commits: null
+  - repo: "adaptive"
+    url: "https://github.com/python-adaptive/adaptive"
+    emoji: "📈"
+    title: "Adaptive"
+    tagline: "Parallel active learning of mathematical functions"
+    description: "A Python library for parallel active learning of mathematical functions"
+    stars: 1164
+    commits: 1431
     time_invested: ""
     origin_story: ""
     technical_highlights: ""
     impact:
       users: ""
-      stars: 21
+      stars: 1164
       notable_users: []
     challenges: ""
     lessons_learned: ""
     future_plans: ""
     technologies:
       - Python
-    license: "MIT"
+      - NumPy
+      - Parallel Computing
+    license: "BSD-3-Clause"
 
   # Day 18
   - repo: "psychedelic-data-science"
@@ -496,32 +465,28 @@ projects:
     license: "BSD-3-Clause"
 
   # Day 20
-  - type: "combined"
-    title: "Conda-forge Contributions"
-    emoji: "🐍"
-    tagline: "Building the scientific Python ecosystem"
-    description: "Maintaining packages in the conda-forge ecosystem"
-    constituent_repos:
-      - name: "conda-forge/staged-recipes"
-        url: "https://github.com/conda-forge/staged-recipes"
-        commits: 286
-        description: "Contributing new packages to conda-forge"
-    maintained_packages: "~30"
+  - repo: "instacron"
+    url: "https://github.com/basnijholt/instacron"
+    emoji: "📸"
+    title: "instacron"
+    tagline: "Automated Instagram posting"
+    description: "Instagram for the lazy - automatically upload photos to Instagram"
+    stars: 21
+    commits: null
     time_invested: ""
     origin_story: ""
     technical_highlights: ""
     impact:
-      packages_maintained: 30
-      total_downloads: ""
+      users: ""
+      stars: 21
+      notable_users: []
     challenges: ""
     lessons_learned: ""
     future_plans: ""
     technologies:
       - Python
-      - conda
-      - CI/CD
-    license: "Various"
-  
+    license: "MIT"
+
   # Day 21
   - repo: "clip-files"
     url: "https://github.com/basnijholt/clip-files"
