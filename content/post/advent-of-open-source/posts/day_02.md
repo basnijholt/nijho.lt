@@ -27,6 +27,7 @@ The integration has 38 parameters to fine-tune your lighting. Try our [WebAssemb
 * Tens of thousands of active users
 * Available in 20+ languages
 * One of the most installed custom integrations
+* Featured in several YouTube videos and podcasts
 * Dedicated parameter visualization web app
 
 ## Challenges We Solved
