@@ -4,10 +4,10 @@
 
 What started as a personal hack to control my home (temperature, lights, TV, music) with a gifted Stream Deck evolved into something bigger. This project became my first real exploration of AI-assisted development, showing me how much faster I could work with AI as a tool. With 250+ stars and 9 contributors adding significant features, it's grown beyond my initial vision.
 
-## Origin Story
+## 📖 Origin Story
 While the Stream Deck's official software is great for streamers, it doesn't support Linux and its Home Assistant integration is not very programmable. After creating a simple solution using `python-elgato-streamdeck`, I realized others might be interested. Using AI as a development partner changed my workflow - it helped write tests, reviewed code, and generated use cases I hadn't thought of. What really surprised me was asking AI to brainstorm example configurations - it generated over 30 creative use cases with complete code examples, which I then turned into unit tests. These tests now automatically generate the documentation using `markdown-code-runner` (from Day 5).
 
-## Technical Highlights
+## 🔧 Technical Highlights
 * YAML configuration with Jinja2 templating
 * Supports all Stream Deck models, including the Plus with dials
 * Cross-platform (Linux, macOS, Windows)
@@ -16,7 +16,7 @@ While the Stream Deck's official software is great for streamers, it doesn't sup
 * Available as a Home Assistant add-on
 * Community-contributed features like touchscreen support and dial controls
 
-## Lessons Learned
+## 💡 Lessons Learned
 1. AI can significantly speed up development
 2. Faster development enables broader project scope
 3. Good examples make the best documentation

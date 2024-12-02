@@ -62,16 +62,16 @@ Let's begin with Day 1, right after this post!
 ## Why I built it
 [The motivation and context]
 
-## Technical highlights
+## 🔧 Technical Highlights
 [Interesting implementation details or challenges]
 
-## Impact
+## 📊 Impact
 - GitHub stars: X
 - Downloads/month: Y
 - Notable users: [if applicable]
 - Time invested: [rough estimate]
 
-## Lessons learned
+## 💡 Lessons Learned
 [Key takeaways from building and maintaining it]
 
 ## Links
