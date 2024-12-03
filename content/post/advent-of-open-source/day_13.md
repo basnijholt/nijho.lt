@@ -27,12 +27,13 @@ Then came the "aha" moment - what if we could install everything with a single c
 * Featured on Python Bytes podcast
 * Saves countless hours of dependency management
 * Makes complex project setups accessible
+* Actively maintained with 70 releases
 
 ## 🎯 Challenges and Solutions
 * Different package naming between pip and conda
 * Platform-specific dependencies
 * Cross-platform compatibility (Linux, Windows, MacOS)
-* Supporting both Conda and pip-only workflows
+* Supporting pip-only workflows
 
 ## 💡 Lessons Learned
 1. Good developer experience is worth the effort
