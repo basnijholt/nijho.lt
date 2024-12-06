@@ -6,7 +6,7 @@ Unlike other projects in this advent calendar, I want to celebrate being part of
 
 ## 📖 Origin Story
 
-I started with conda-forge in 2016 during my PhD work with Kwant, a quantum transport simulator. Installing it was a nightmare - it required system-level numerical libraries like MUMPS and Scotch, each with their own dependencies. After days of struggling, I thought, "There must be a better way!" That's when I discovered conda-forge and its mission to make scientific software installation painless.
+I started with conda-forge in 2016 during my PhD work with Kwant, a quantum transport simulator. Installing it was a nightmare - it required system-level numerical libraries like MUMPS and Scotch which required a special config file to link. When I discovered conda-forge and its mission to make scientific software installation painless, I knew this was the solution!
 
 ## 🔧 Technical Highlights
 
@@ -24,9 +24,9 @@ The real magic of conda-forge is its infrastructure:
 
 ## 📊 Impact
 
-What makes conda-forge truly special is how initial contributions blossom into collaborative efforts. I've witnessed this firsthand: after creating the initial MUMPS feedstock, 25 other contributors joined in, each bringing their unique expertise.
+What makes conda-forge truly special is how initial contributions blossom into collaborative efforts. I've experienced this firsthand: after creating the initial MUMPS feedstock, 25 other contributors joined in, each bringing their unique expertise.
 
-A recent experience illustrates this: I added CUDA support to both Google's Qsim and IBM's Cirq packages. Shortly after, Leo Fang, an engineer from NVIDIA who knows CUDA far better than I do, stepped up and made significant improvements. This is the beauty of open source - experts naturally gravitate to where they can make the biggest impact.
+A recent experience also illustrates this: I added CUDA support to both Google's Qsim and IBM's Cirq packages. Shortly after, Leo Fang, an engineer from NVIDIA who knows CUDA far better than I do, stepped up and made significant improvements. This is the beauty of open source - experts naturally gravitate to where they can make the biggest impact.
 
 This collaborative approach solves a problem I've encountered at several companies: the tendency to maintain complicated build systems internally with custom hacks. Instead of each organization reinventing the wheel, conda-forge provides a shared platform where:
 * Maintenance burden is distributed
