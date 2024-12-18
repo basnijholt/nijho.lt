@@ -2,18 +2,20 @@
 
 (See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
 
+📝 Note: Running out of awesome projects and I want to save the best for last, so today just something fun.
+
 While preparing for this advent calendar, I browsed through my 382 GitHub repositories and rediscovered this time capsule from 8 years ago. It explores the language of psychedelic experiences through data science - with an interesting hypothesis: do psychedelic experiences generate richer vocabulary compared to other substance reports?
 
 ## 📖 Origin Story
 
-Back in 2015, when I was still young (before back pain and two-day hangovers became a thing), I was learning data science and natural language processing. I had an amusing hypothesis: surely people describing their psychedelic experiences would use richer vocabulary than those writing about stimulants - I mean, who hasn't pondered the linguistic complexity of "everything is connected" versus "I cleaned my entire apartment at 4 AM"? Erowid.org, with its thousands of detailed first-person narratives across different substances, provided the perfect dataset to test this theory.
+Back in 2015, when I was still "young" (before back pain and two-day hangovers became a thing), I was learning data science and natural language processing. I had an amusing hypothesis: surely people describing their psychedelic experiences would use richer vocabulary than those writing about stimulants - I mean, who hasn't pondered the linguistic complexity of "everything is connected" versus "I cleaned my entire apartment at 4 AM"? Erowid.org, with its thousands of detailed first-person narratives across different substances, provided the perfect dataset to test this theory.
 
 ## 🔧 Technical Highlights
-* Ethical web scraping with BeautifulSoup
 * Natural language processing of experience reports
 * Vocabulary richness analysis across substance categories
 * TF-IDF vectorization for text analysis
 * Support Vector Machine classification of experience types
+* Web scraping with BeautifulSoup
 * K-means clustering for discovering common themes
 * Word cloud generation to visualize vocabulary differences
 
@@ -23,8 +25,7 @@ Back in 2015, when I was still young (before back pain and two-day hangovers bec
   * Processing subjective experience narratives
   * Document classification techniques
   * The challenges of quantifying vocabulary richness
-* Code that others have used to learn from
-* 9 GitHub stars (not bad for a learning project from 2015!)
+* 10 GitHub stars
 
 ## 🎯 Challenges and Solutions
 * Implementing respectful web scraping
@@ -33,7 +34,7 @@ Back in 2015, when I was still young (before back pain and two-day hangovers bec
 * Visualizing linguistic patterns across categories
 
 ## 💡 Lessons Learned
-1. Old code can surprise you - both good and bad
+1. Putting things on GitHub means it's less likely forgotten things get lost
 2. Early data science projects often reveal our initial fascinations
 3. Web scraping requires both technical skill and ethical consideration
 4. Text analysis tools have evolved dramatically since 2015
