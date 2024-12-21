@@ -4,22 +4,14 @@
 
 There are not enough days in this advent calendar to highlight all my projects. So today is a collection of IoT/Home Assistant-related packages. Each has its own story.
 
-## 📖 Origin Stories
+## 📖 Origin Stories & Technical Details
+My Home Assistant obsession began as described in [Day 10](https://www.linkedin.com/posts/basnijholt_opensource-homeassistant-smarthome-activity-7272248713882820608-w7RV). Many projects emerged from this hobby:
 
-My Home Assistant obsession began as described in Day 10. Many projects emerged from this hobby:
-
-- **aiokef**: To control my KEF speakers, I reverse-engineered network packets and decoded raw byte sequences to "speak" the speaker's language.
-- **miflora**: When @ChristianKuehnel couldn't maintain this plant sensor library anymore, he transferred it to me. Now it still helps users monitor plant health.
-- **addon-otmonitor**: This HA add-on packages OpenTherm Monitor for the OpenTherm Gateway (OTGW). It's an open-source alternative to Nest or Ecobee, giving full control over heating systems.
-- **home-assistant-macbook-touch-bar**: I transformed the short-lived MacBook Touch Bar into a mini Home Assistant control panel for lights, temperature, and more.
-- **python-kasa**: To modernize the popular `pyHS100` library for TP-Link devices, I converted it to use `asyncio`. With @rytilahti, we created the `python-kasa` organization. While I haven't contributed much since its inception, now it's the standard for controlling Kasa devices.
-
-## 🔧 Technical Highlights
-
-- **Network Reverse Engineering**: `aiokef` involved deep dives into network traffic, understanding the sequences of 1s and 0s to interact with hardware.
-- **Community Collaboration**: `miflora` and `python-kasa` show how open source projects can thrive through community handovers and collaborative development, ensuring continued growth even when original authors move on.
-- **Dockerization**: `addon-otmonitor` demonstrates how Docker can simplify the deployment of complex tools.
-- **Hardware Hacking**: `home-assistant-macbook-touch-bar` turned an useless piece of hardware into a useful interface, extending the reach of Home Assistant.
+- **aiokef**: To control my KEF speakers, I reverse-engineered network traffic and decoded raw byte sequences, diving deep into proprietary protocols to "speak" the speaker's language.
+- **miflora**: When @ChristianKuehnel couldn't maintain this plant sensor library anymore, he transferred it to me. A perfect example of open source collaboration, it continues to help users monitor plant health and demonstrates how projects can thrive through community handovers.
+- **addon-otmonitor**: This HA add-on packages OpenTherm Monitor for the OpenTherm Gateway (OTGW). Using Docker to simplify deployment, it's become a powerful open-source alternative to Nest or Ecobee, giving full control over heating systems.
+- **home-assistant-macbook-touch-bar**: Remember that useless touch bar on the old MacBook? I transformed it into a mini Home Assistant control panel for lights, temperature, and more - a classic case of hardware hacking giving new life to abandoned technology.
+- **python-kasa**: To modernize the popular `pyHS100` library for TP-Link devices, I converted it to use `asyncio`. With @rytilahti, we created the `python-kasa` organization through community collaboration. While I haven't contributed much since its inception, it's now the standard for controlling Kasa devices.
 
 ## 📊 Impact & Lessons
 These projects serve thousands of users while teaching valuable lessons:
