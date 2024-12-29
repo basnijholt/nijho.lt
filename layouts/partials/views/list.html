@@ -43,7 +43,8 @@
   {{ if and $show_authors $item.Params.authors }}
   <div class="article-metadata">
     <!-- THIS IS THE ONLY LINE I EDITED -->
-    <!-- from https://github.com/wowchemy/wowchemy-hugo-themes/blob/859b57464242bd76227ac3db8cf2f08ce2147ee5/modules/wowchemy/layouts/partials/views/list.html#L45 -->
+    <!-- 2022-04-23: from https://github.com/wowchemy/wowchemy-hugo-themes/blob/859b57464242bd76227ac3db8cf2f08ce2147ee5/modules/wowchemy/layouts/partials/views/list.html#L45 -->
+    <!-- 2024-12-29: still the same https://github.com/HugoBlox/hugo-blox-builder/blob/71de892c1c618fea9dafd2cad2db70bf4cd94924/modules/blox-bootstrap/layouts/partials/views/list.html -->
     {{ partial "page_metadata_authors_short" $item }}
   </div>
   {{ end }}
