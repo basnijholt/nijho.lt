@@ -20,6 +20,7 @@ categories:
   - advent
 authors:
   - admin
+excludeFromList: true
 ---
 
 (See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
