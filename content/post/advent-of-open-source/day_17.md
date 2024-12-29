@@ -6,18 +6,18 @@ featured: false
 summary: "Scaling adaptive sampling to 100,000+ cores with a novel meta-scheduling approach."
 subtitle: "A tool for efficient, interactive supercomputing from a Jupyter notebook."
 tags:
-    - open-source
-    - python
-    - hpc
-    - quantumcomputing
-    - parallelcomputing
-    - advent
+  - open-source
+  - python
+  - hpc
+  - quantumcomputing
+  - parallelcomputing
+  - advent
 categories:
-    - technology
-    - open-source
-    - advent
+  - technology
+  - open-source
+  - advent
 authors:
-    - admin
+  - admin
 ---
 
 (See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
@@ -35,29 +35,30 @@ Usually, you'd solve this by batching work ahead of time. But with adaptive samp
 ## 🔧 Technical Highlights
 
 We created a solution that:
-* Acts as a meta-scheduler, launching multiple sub-schedulers (Dask, ipyparallel, MPI, etc.)
-* Minimizes communication between scheduling layers
-* Handles job management through a simple database
-* Supports automatic fault tolerance and data saving
-* Works with any cluster scheduler (SLURM, PBS)
-* Provides real-time progress tracking in Jupyter notebooks
-* Scales to 50,000+ cores without breaking a sweat
+
+- Acts as a meta-scheduler, launching multiple sub-schedulers (Dask, ipyparallel, MPI, etc.)
+- Minimizes communication between scheduling layers
+- Handles job management through a simple database
+- Supports automatic fault tolerance and data saving
+- Works with any cluster scheduler (SLURM, PBS)
+- Provides real-time progress tracking in Jupyter notebooks
+- Scales to 50,000+ cores without breaking a sweat
 
 ## 📊 Impact
 
-* Used extensively for real quantum device simulations
-* 26 GitHub stars (but don't let that fool you - it's highly specialized!)
-* Enables interactive supercomputing from a simple Jupyter notebook
-* Likely ran for many millions of core-hours across various projects
-* Actively maintained with 61 releases since 2018, proving its ongoing value
+- Used extensively for real quantum device simulations
+- 26 GitHub stars (but don't let that fool you - it's highly specialized!)
+- Enables interactive supercomputing from a simple Jupyter notebook
+- Likely ran for many millions of core-hours across various projects
+- Actively maintained with 61 releases since 2018, proving its ongoing value
 
 ## 🎯 Challenges We Solved
 
-* Scheduler overhead killing performance at scale
-* Data locality and fault tolerance
-* Real-time monitoring of massive parallel jobs
-* Making supercomputing accessible through notebooks
-* Automatic job recovery after crashes (e.g., when using spot VMs or Heisenbugs)
+- Scheduler overhead killing performance at scale
+- Data locality and fault tolerance
+- Real-time monitoring of massive parallel jobs
+- Making supercomputing accessible through notebooks
+- Automatic job recovery after crashes (e.g., when using spot VMs or Heisenbugs)
 
 ## 💡 Lessons Learned
 

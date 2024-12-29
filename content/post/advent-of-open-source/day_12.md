@@ -6,18 +6,18 @@ featured: false
 summary: "Automating Instagram posting with random philosophical quotes and emojis, because why not?"
 subtitle: "A Python script for automated, humorous Instagram content generation."
 tags:
-    - open-source
-    - python
-    - automation
-    - photography
-    - instagram
-    - advent
+  - open-source
+  - python
+  - automation
+  - photography
+  - instagram
+  - advent
 categories:
-    - technology
-    - open-source
-    - advent
+  - technology
+  - open-source
+  - advent
 authors:
-    - admin
+  - admin
 ---
 
 (See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
@@ -29,33 +29,38 @@ Ever found yourself with beautiful photos but too lazy to post them? Instead of 
 Back in 2017, I had hundreds of landscape photos from traveling through South America that I wanted to share on Instagram. The solution? Write a Python script that would randomly select photos and post them automatically, complete with philosophical quotes randomly selected from Bukowski, Einstein, or Dostoevsky because... it seemed to be the default of all "influencers" at the time. Nothing says "authentic travel experience" like an auto-generated Bukowski quote about drinking next to your serene mountain photo!
 
 ## 🔧 Technical Highlights
-* Randomly selects photos from a directory
-* Adds location data from EXIF metadata
-* Generates captions with random philosophical quotes
-* Adds two random emojis to match the "mood"
-* Automatically generates relevant hashtags
-* Tracks posting frequency
-* Uses cron for scheduled posting
+
+- Randomly selects photos from a directory
+- Adds location data from EXIF metadata
+- Generates captions with random philosophical quotes
+- Adds two random emojis to match the "mood"
+- Automatically generates relevant hashtags
+- Tracks posting frequency
+- Uses cron for scheduled posting
 
 ## 📊 Impact
-* 21 GitHub stars
-* 4143 Instagram followers
-* Successfully posted hundreds of photos
-* Generated some concerned DMs (more on that below!)
+
+- 21 GitHub stars
+- 4143 Instagram followers
+- Successfully posted hundreds of photos
+- Generated some concerned DMs (more on that below!)
 
 ## 🎯 Challenges and Solutions
-* Instagram's ever-changing API
-* Handling rate limits and restrictions
-* Ensuring photos weren't posted multiple times
-* Making captions interesting without human input
-* The delicate art of random emoji selection
+
+- Instagram's ever-changing API
+- Handling rate limits and restrictions
+- Ensuring photos weren't posted multiple times
+- Making captions interesting without human input
+- The delicate art of random emoji selection
 
 ## 😅 Funny Story
-The random quote and emoji selector once created an unexpectedly dramatic post. Picture this: a beautiful landscape photo paired with a deeply philosophical quote about solitude, and topped with a broken heart emoji (💔). Within hours, I started receiving concerned DMs from friends asking if everything was okay and whether my relationship had ended! 
+
+The random quote and emoji selector once created an unexpectedly dramatic post. Picture this: a beautiful landscape photo paired with a deeply philosophical quote about solitude, and topped with a broken heart emoji (💔). Within hours, I started receiving concerned DMs from friends asking if everything was okay and whether my relationship had ended!
 
 I had to explain that no, I wasn't going through a breakup - my bot just had a flair for the dramatic! These occasional mismatches made the whole thing more entertaining.
 
 ## 💡 Lessons Learned
+
 1. Sometimes the best projects come from pure laziness
 2. Automation doesn't always save time, but it's fun
 3. Never underestimate the power of a misplaced emoji to trigger concerned messages

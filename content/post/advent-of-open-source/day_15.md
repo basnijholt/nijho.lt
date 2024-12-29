@@ -6,18 +6,18 @@ featured: false
 summary: "Automating the process of sharing code context with AI assistants."
 subtitle: "A command-line tool to quickly copy and format code for AI interactions."
 tags:
-    - open-source
-    - python
-    - devtools
-    - ai
-    - programming
-    - advent
+  - open-source
+  - python
+  - devtools
+  - ai
+  - programming
+  - advent
 categories:
-    - technology
-    - open-source
-    - advent
+  - technology
+  - open-source
+  - advent
 authors:
-    - admin
+  - admin
 ---
 
 (See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
@@ -32,30 +32,31 @@ In fact, I'm using it right now! The command `clip-files --initial-file ai.md --
 
 ## 🔧 Technical Highlights
 
-* Uses `tiktoken` for accurate GPT token counting
-* Supports both directory traversal and specific file selection
-* Automatically generates a file index for reference
-* Allows custom initial instructions via file
-* Preserves file paths in output for context
-* Clean, typed, and documented codebase
+- Uses `tiktoken` for accurate GPT token counting
+- Supports both directory traversal and specific file selection
+- Automatically generates a file index for reference
+- Allows custom initial instructions via file
+- Preserves file paths in output for context
+- Clean, typed, and documented codebase
 
 ## 📊 Impact
 
 While this tool has no GitHub stars (I haven't promoted it), its real impact is personal - I use it multiple times daily for:
-* Sharing entire open source codebases with AI assistants
-* Getting comprehensive code reviews
-* Discussing bug fixes with full context
-* Documentation improvements
-* Open source contributions
+
+- Sharing entire open source codebases with AI assistants
+- Getting comprehensive code reviews
+- Discussing bug fixes with full context
+- Documentation improvements
+- Open source contributions
 
 The tool's real value isn't in its complexity (it's just ~250 lines of code) but in how it removes friction from open source development. When working with open code, we might as well share all the context we can - and this tool makes that effortless.
 
 ## 🎯 Challenges and Solutions
 
-* Maintaining consistent formatting across different input methods
-* Calculating accurate token counts for different components
-* Providing meaningful error messages for invalid inputs
-* Structuring output to be AI-assistant friendly
+- Maintaining consistent formatting across different input methods
+- Calculating accurate token counts for different components
+- Providing meaningful error messages for invalid inputs
+- Structuring output to be AI-assistant friendly
 
 ## 💡 Lessons Learned
 

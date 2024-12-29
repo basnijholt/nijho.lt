@@ -6,18 +6,18 @@ featured: false
 summary: "Creating interactive graph visualizations in Jupyter with AnyWidget and a modernized JavaScript library."
 subtitle: "Two packages for visualizing pipefunc's computational graphs, born from a dive into JavaScript."
 tags:
-    - open-source
-    - javascript
-    - python
-    - datavisualization
-    - webdev
-    - advent
+  - open-source
+  - javascript
+  - python
+  - datavisualization
+  - webdev
+  - advent
 categories:
-    - technology
-    - open-source
-    - advent
+  - technology
+  - open-source
+  - advent
 authors:
-    - admin
+  - admin
 ---
 
 (See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
@@ -27,6 +27,7 @@ After creating pipefunc (Day 20), I wanted a way to visualize its (possibly larg
 ## 📖 Origin Story
 
 While working on pipefunc's visualization features, I discovered that existing solutions didn't quite meet my needs. However, I found several components that would solve my issue:
+
 - AnyWidget (interactive GraphViz in Jupyter)
 - @hpcc-js/wasm-graphviz (GraphViz in WASM)
 - d3-graphviz (interactive GraphViz in D3)
@@ -41,30 +42,32 @@ To my surprise, I found JavaScript's development tooling remarkably sophisticate
 ## 🔧 Technical Highlights
 
 graphviz-anywidget:
-* Interactive Graphviz visualization in Jupyter
-* WASM-powered graph rendering
-* Directional graph traversal
-* Node and edge highlighting
-* Works in JupyterLab, Notebook, and VS Code
+
+- Interactive Graphviz visualization in Jupyter
+- WASM-powered graph rendering
+- Directional graph traversal
+- Node and edge highlighting
+- Works in JupyterLab, Notebook, and VS Code
 
 graphvizsvg:
-* Modern ESM module for interactive SVG visualization
-* Automatic color transitions
-* Bi-directional graph traversal
-* Comprehensive test coverage
-* My first npm package!
+
+- Modern ESM module for interactive SVG visualization
+- Automatic color transitions
+- Bi-directional graph traversal
+- Comprehensive test coverage
+- My first npm package!
 
 ## 📊 Impact
 
-* Enhances pipefunc's visualization capabilities
-* Modernizes legacy jQuery code for modern web development
-* Proves that diving into new technologies can yield useful tools
+- Enhances pipefunc's visualization capabilities
+- Modernizes legacy jQuery code for modern web development
+- Proves that diving into new technologies can yield useful tools
 
 ## 🎯 Challenges and Solutions
 
-* Learning JavaScript/TypeScript from scratch
-* Making WASM work in Jupyter
-* Getting it to work in VS Code
+- Learning JavaScript/TypeScript from scratch
+- Making WASM work in Jupyter
+- Getting it to work in VS Code
 
 ## 💡 Lessons Learned
 

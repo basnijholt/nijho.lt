@@ -6,18 +6,18 @@ featured: false
 summary: "Simplifying complex computational workflows with automatic DAG construction and parallelization."
 subtitle: "A Python package to streamline scientific computations with minimal boilerplate."
 tags:
-    - open-source
-    - python
-    - datascience
-    - scientificcomputing
-    - programming
-    - advent
+  - open-source
+  - python
+  - datascience
+  - scientificcomputing
+  - programming
+  - advent
 categories:
-    - technology
-    - open-source
-    - advent
+  - technology
+  - open-source
+  - advent
 authors:
-    - admin
+  - admin
 ---
 
 (See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
@@ -30,36 +30,36 @@ Sometimes the best projects are born from the most unexpected moments. More than
 
 ## 🔧 Technical Highlights
 
-* Automatic DAG construction via very simple and lightweight syntax
-* N-dimensional parameter sweeps with automatic parallelization
-* Visual pipeline representation using NetworkX
-* Resource profiling (CPU, memory, time)
-* Type validation between pipeline stages
-* Ultra-fast: only 15 µs overhead per function
-* Flexible caching strategies (memory, disk, cloud)
-* Integration with scientific computing tools:
-  * NetworkX for graph algorithms
-  * NumPy for multi-dimensional arrays
-  * Xarray for labeled arrays
-  * Zarr for distributed storage
-  * Adaptive for parallel computing
+- Automatic DAG construction via very simple and lightweight syntax
+- N-dimensional parameter sweeps with automatic parallelization
+- Visual pipeline representation using NetworkX
+- Resource profiling (CPU, memory, time)
+- Type validation between pipeline stages
+- Ultra-fast: only 15 µs overhead per function
+- Flexible caching strategies (memory, disk, cloud)
+- Integration with scientific computing tools:
+  - NetworkX for graph algorithms
+  - NumPy for multi-dimensional arrays
+  - Xarray for labeled arrays
+  - Zarr for distributed storage
+  - Adaptive for parallel computing
 
 ## 📊 Impact
 
-* 230 GitHub stars
-* >600 tests with 100% coverage
-* Fully typed codebase
-* Comprehensive documentation
-* Tested on real workflow on SLURM cluster
-* Covered on Pycoder's Weekly with >100k subscribers
+- 230 GitHub stars
+- > 600 tests with 100% coverage
+- Fully typed codebase
+- Comprehensive documentation
+- Tested on real workflow on SLURM cluster
+- Covered on Pycoder's Weekly with >100k subscribers
 
 ## 🎯 Challenges and Solutions
 
-* Balancing simplicity with power
-* Making complex workflows intuitive
-* Handling distributed computing edge cases
-* Ensuring type safety across the pipeline
-* Optimizing performance without sacrificing features
+- Balancing simplicity with power
+- Making complex workflows intuitive
+- Handling distributed computing edge cases
+- Ensuring type safety across the pipeline
+- Optimizing performance without sacrificing features
 
 ## 💡 Lessons Learned
 
@@ -72,10 +72,11 @@ Sometimes the best projects are born from the most unexpected moments. More than
 ## 🔮 Future Plans
 
 The journey is far from over. Plans include:
-* Enhanced cloud computing support
-* More interactive visualization options
-* Interactive pipeline debugging tools
-* Expanded parameter sweep capabilities
+
+- Enhanced cloud computing support
+- More interactive visualization options
+- Interactive pipeline debugging tools
+- Expanded parameter sweep capabilities
 
 Want to simplify your computational workflows? Check out [pipefunc on GitHub](https://github.com/pipefunc/pipefunc) or read the [documentation](https://pipefunc.readthedocs.io/)!
 

@@ -6,18 +6,18 @@ featured: false
 summary: "Exploring the language of psychedelic experiences through data science and NLP."
 subtitle: "A fun project analyzing vocabulary richness in psychedelic trip reports."
 tags:
-    - open-source
-    - python
-    - datascience
-    - nlp
-    - machinelearning
-    - advent
+  - open-source
+  - python
+  - datascience
+  - nlp
+  - machinelearning
+  - advent
 categories:
-    - technology
-    - open-source
-    - advent
+  - technology
+  - open-source
+  - advent
 authors:
-    - admin
+  - admin
 ---
 
 (See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
@@ -31,29 +31,33 @@ While preparing for this advent calendar, I browsed through my 382 GitHub reposi
 Back in 2015, when I was still "young" (before back pain and two-day hangovers became a thing), I was learning data science and natural language processing. I had an amusing hypothesis: surely people describing their psychedelic experiences would use richer vocabulary than those writing about stimulants - I mean, who hasn't pondered the linguistic complexity of "everything is connected" versus "I cleaned my entire apartment at 4 AM"? Erowid.org, with its thousands of detailed first-person narratives across different substances, provided the perfect dataset to test this theory.
 
 ## 🔧 Technical Highlights
-* Natural language processing of experience reports
-* Vocabulary richness analysis across substance categories
-* TF-IDF vectorization for text analysis
-* Support Vector Machine classification of experience types
-* Web scraping with BeautifulSoup
-* K-means clustering for discovering common themes
-* Word cloud generation to visualize vocabulary differences
+
+- Natural language processing of experience reports
+- Vocabulary richness analysis across substance categories
+- TF-IDF vectorization for text analysis
+- Support Vector Machine classification of experience types
+- Web scraping with BeautifulSoup
+- K-means clustering for discovering common themes
+- Word cloud generation to visualize vocabulary differences
 
 ## 📊 Impact
-* A learning project that helped understand:
-  * How different experiences shape language use
-  * Processing subjective experience narratives
-  * Document classification techniques
-  * The challenges of quantifying vocabulary richness
-* 10 GitHub stars
+
+- A learning project that helped understand:
+  - How different experiences shape language use
+  - Processing subjective experience narratives
+  - Document classification techniques
+  - The challenges of quantifying vocabulary richness
+- 10 GitHub stars
 
 ## 🎯 Challenges and Solutions
-* Implementing respectful web scraping
-* Controlling for report length and education level
-* Creating meaningful metrics for vocabulary richness
-* Visualizing linguistic patterns across categories
+
+- Implementing respectful web scraping
+- Controlling for report length and education level
+- Creating meaningful metrics for vocabulary richness
+- Visualizing linguistic patterns across categories
 
 ## 💡 Lessons Learned
+
 1. Putting things on GitHub means it's less likely forgotten things get lost
 2. Early data science projects often reveal our initial fascinations
 3. Web scraping requires both technical skill and ethical consideration

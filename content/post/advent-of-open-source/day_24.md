@@ -6,18 +6,18 @@ featured: false
 summary: "A collection of Home Assistant-related projects, showcasing the power of open source to enhance daily life."
 subtitle: "From reverse-engineering speakers to repurposing hardware, these projects highlight open source innovation in the smart home."
 tags:
-    - open-source
-    - homeassistant
-    - iot
-    - python
-    - smarthome
-    - advent
+  - open-source
+  - homeassistant
+  - iot
+  - python
+  - smarthome
+  - advent
 categories:
-    - technology
-    - open-source
-    - advent
+  - technology
+  - open-source
+  - advent
 authors:
-    - admin
+  - admin
 ---
 
 (See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
@@ -25,6 +25,7 @@ authors:
 There are not enough days in this advent calendar to highlight all my projects. So today is a collection of IoT/Home Assistant-related packages. Each has its own story.
 
 ## 📖 Origin Stories & Technical Details
+
 My Home Assistant obsession began as described in [Day 10](https://www.linkedin.com/posts/basnijholt_opensource-homeassistant-smarthome-activity-7272248713882820608-w7RV). Many projects emerged from this hobby:
 
 - **aiokef**: To control my KEF speakers, I reverse-engineered network traffic and decoded raw byte sequences, diving deep into proprietary protocols to "speak" the speaker's language.
@@ -34,7 +35,9 @@ My Home Assistant obsession began as described in [Day 10](https://www.linkedin.
 - **python-kasa**: To modernize the popular `pyHS100` library for TP-Link devices, I converted it to use `asyncio`. With @rytilahti, we created the `python-kasa` organization through community collaboration. While I haven't contributed much since its inception, it's now the standard for controlling Kasa devices.
 
 ## 📊 Impact & Lessons
+
 These projects serve thousands of users while teaching valuable lessons:
+
 - Open source empowers us: from KEF speaker integration to plant monitoring
 - Reverse engineering unlocks potential: turning proprietary protocols into open solutions
 - Community drives success: projects like miflora and python-kasa thrive through collaboration
