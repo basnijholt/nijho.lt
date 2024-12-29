@@ -1,0 +1,46 @@
+<!-- Copied from https://github.com/HugoBlox/hugo-blox-builder/pull/3137 -->
+<!-- to prevent `ERROR deprecated: .Site.GoogleAnalytics was deprecated in Hugo v0.120.0 and will be removed in Hugo 0.136.0. Use .Site.Config.Services.GoogleAnalytics.ID instead.` -->
+<!-- https://github.com/HugoBlox/hugo-blox-builder/blob/71de892c1c618fea9dafd2cad2db70bf4cd94924/modules/blox-seo/layouts/partials/analytics/google_analytics.html -->
+<!-- found at https://discord.com/channels/722225264733716590/1273692407287906384 -->
+{{ $ga := site.Params.marketing.analytics.google_analytics | default "" }}
+
+{{ if hugo.IsProduction | and $ga }}
+
+{{ $gtag_config := cond site.Params.features.privacy_pack.enable "{ 'anonymize_ip': true }" "{}" }}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{$ga}}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url, target) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           if (target !== '_blank') {
+             document.location = url;
+           }
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target, event.target.getAttribute('target'));  // Send GA event.
+  }
+
+  gtag('js', new Date());
+  gtag('config', '{{$ga}}', {{$gtag_config|safeJS}});
+  gtag('set', {'cookie_flags': 'SameSite=None;Secure'});
+
+  // Outbound link tracking.
+  document.addEventListener('click', onClickCallback, false);
+</script>
+{{ end }}
