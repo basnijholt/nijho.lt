@@ -1,4 +1,24 @@
-# 🎄🎁 Advent of Open Source – Day 5/24: markdown-code-runner 📝
+---
+title: "🎄🎁 Advent of Open Source – Day 5/24: markdown-code-runner 📝"
+date: 2024-12-05
+draft: false
+featured: false
+summary: "Keeping documentation in sync with code by automatically executing and updating Markdown code blocks."
+subtitle: "A tool to ensure code examples and outputs in Markdown files are always up-to-date."
+tags:
+    - open-source
+    - python
+    - documentation
+    - devtools
+    - programming
+    - advent
+categories:
+    - technology
+    - open-source
+    - advent
+authors:
+    - admin
+---
 
 (See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
 

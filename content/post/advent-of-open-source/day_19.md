@@ -1,4 +1,24 @@
-# 🎄🎁 Advent of Open Source – Day 19/24: fileup 📤
+---
+title: "🎄🎁 Advent of Open Source – Day 19/24: fileup 📤"
+date: 2024-12-19
+draft: false
+featured: false
+summary: "Sharing files directly from the terminal with a simple, zero-dependency utility."
+subtitle: "A tiny command-line tool for effortless file sharing, used for over 7 years."
+tags:
+    - open-source
+    - python
+    - devtools
+    - commandline
+    - programming
+    - advent
+categories:
+    - technology
+    - open-source
+    - advent
+authors:
+    - admin
+---
 
 (See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
 

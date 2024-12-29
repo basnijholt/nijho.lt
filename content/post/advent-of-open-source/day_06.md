@@ -1,4 +1,24 @@
-# 🎄🎁 Advent of Open Source – Day 6/24: Open Science Publications 🔬
+---
+title: "🎄🎁 Advent of Open Source – Day 6/24: Open Science Publications 🔬"
+date: 2024-12-06
+draft: false
+featured: false
+summary: "Making scientific research truly reproducible with fully open-source code and data."
+subtitle: "A commitment to open science through publicly available, runnable code for every publication."
+tags:
+    - open-source
+    - openscience
+    - physics
+    - quantumcomputing
+    - python
+    - advent
+categories:
+    - technology
+    - open-source
+    - advent
+authors:
+    - admin
+---
 
 (See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
 

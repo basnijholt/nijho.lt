@@ -1,4 +1,24 @@
-# 🎄🎁 Advent of Open Source – Day 10/24: Home Assistant Config 🏠
+---
+title: "🎄🎁 Advent of Open Source – Day 10/24: Home Assistant Config 🏠"
+date: 2024-12-10
+draft: false
+featured: false
+summary: "Sharing my extensive Home Assistant setup with 137 automations and counting."
+subtitle: "A deep dive into a comprehensive, privacy-focused smart home configuration."
+tags:
+    - open-source
+    - homeassistant
+    - smarthome
+    - iot
+    - python
+    - advent
+categories:
+    - technology
+    - open-source
+    - advent
+authors:
+    - admin
+---
 
 (See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
 

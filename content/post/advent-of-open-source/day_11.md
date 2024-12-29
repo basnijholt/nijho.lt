@@ -1,4 +1,24 @@
-# 🎄🎁 Advent of Open Source – Day 11/24: conda-forge Contributions 🐍
+---
+title: "🎄🎁 Advent of Open Source – Day 11/24: conda-forge Contributions 🐍"
+date: 2024-12-11
+draft: false
+featured: false
+summary: "Contributing to the backbone of scientific Python through the conda-forge community."
+subtitle: "Maintaining over 40 conda-forge recipes, enabling easy installation of scientific software."
+tags:
+    - open-source
+    - python
+    - scientific
+    - programming
+    - community
+    - advent
+categories:
+    - technology
+    - open-source
+    - advent
+authors:
+    - admin
+---
 
 (See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
 

@@ -1,4 +1,24 @@
-# 🎄🎁 Advent of Open Source – Day 2/24: Adaptive Lighting 💡
+---
+title: "🎄🎁 Advent of Open Source – Day 2/24: Adaptive Lighting 💡"
+date: 2024-12-02
+draft: false
+featured: false
+summary: "Automating home lighting to sync with the sun, making smart homes even smarter."
+subtitle: "A popular Home Assistant integration for dynamic, sun-synced lighting."
+tags:
+    - open-source
+    - homeassistant
+    - smarthome
+    - iot
+    - python
+    - advent
+categories:
+    - technology
+    - open-source
+    - advent
+authors:
+    - admin
+---
 
 (See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
 

@@ -1,4 +1,23 @@
-# 🎄🎁 Advent of Open Source – Day 1/24: Calendar of Life 📅
+---
+title: "🎄🎁 Advent of Open Source – Day 1/24: Calendar of Life 📅"
+date: 2024-12-01
+draft: false
+featured: false
+summary: "Visualizing the finite weeks of our lives with a Python project, because who doesn't need a daily reminder of their mortality?"
+subtitle: "A Python project to visualize life in weeks, reminding us of time's passage."
+tags:
+    - open-source
+    - python
+    - datavisualization
+    - programming
+    - advent
+categories:
+    - technology
+    - open-source
+    - advent
+authors:
+    - admin
+---
 
 (See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J).)
 

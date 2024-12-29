@@ -1,4 +1,24 @@
-# 🎄🎁 Advent of Open Source – Day 8/24: Home Assistant Stream Deck YAML 🎮
+---
+title: "🎄🎁 Advent of Open Source – Day 8/24: Home Assistant Stream Deck YAML 🎮"
+date: 2024-12-08
+draft: false
+featured: false
+summary: "Transforming a Stream Deck into a powerful, customizable Home Assistant controller."
+subtitle: "A YAML-based project for controlling Home Assistant with a Stream Deck, enhanced by AI."
+tags:
+    - open-source
+    - homeassistant
+    - smarthome
+    - python
+    - ai
+    - advent
+categories:
+    - technology
+    - open-source
+    - advent
+authors:
+    - admin
+---
 
 (See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
 

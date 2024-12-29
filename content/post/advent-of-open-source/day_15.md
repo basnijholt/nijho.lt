@@ -1,4 +1,24 @@
-# 🎄🎁 Advent of Open Source – Day 15/24: clip-files 📋
+---
+title: "🎄🎁 Advent of Open Source – Day 15/24: clip-files 📋"
+date: 2024-12-15
+draft: false
+featured: false
+summary: "Automating the process of sharing code context with AI assistants."
+subtitle: "A command-line tool to quickly copy and format code for AI interactions."
+tags:
+    - open-source
+    - python
+    - devtools
+    - ai
+    - programming
+    - advent
+categories:
+    - technology
+    - open-source
+    - advent
+authors:
+    - admin
+---
 
 (See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
 

@@ -1,4 +1,24 @@
-# 🎄🎁 Advent of Open Source – Day 18/24: Psychedelic Data Science 🍄
+---
+title: "🎄🎁 Advent of Open Source – Day 18/24: Psychedelic Data Science 🍄"
+date: 2024-12-18
+draft: false
+featured: false
+summary: "Exploring the language of psychedelic experiences through data science and NLP."
+subtitle: "A fun project analyzing vocabulary richness in psychedelic trip reports."
+tags:
+    - open-source
+    - python
+    - datascience
+    - nlp
+    - machinelearning
+    - advent
+categories:
+    - technology
+    - open-source
+    - advent
+authors:
+    - admin
+---
 
 (See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
 

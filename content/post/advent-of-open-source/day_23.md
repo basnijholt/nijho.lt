@@ -1,4 +1,26 @@
-# 🎄🎁 Advent of Open Source – Day 23/24: pfapack 🔢
+---
+title: "🎄🎁 Advent of Open Source – Day 23/24: pfapack 🔢"
+date: 2024-12-23
+draft: false
+featured: false
+summary: "Making efficient Pfaffian computations accessible to Python users with optimized C and FORTRAN under the hood."
+subtitle: "A user-friendly Python package for calculating the square root of the determinant of skew-symmetric matrices."
+tags:
+    - open-source
+    - python
+    - scientificcomputing
+    - math
+    - pfaffian
+    - fortran
+    - c
+    - advent
+categories:
+    - technology
+    - open-source
+    - advent
+authors:
+    - admin
+---
 
 (See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
 

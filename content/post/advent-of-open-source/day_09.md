@@ -1,4 +1,24 @@
-# 🎄🎁 Advent of Open Source – Day 9/24: yaml2bib 📚
+---
+title: "🎄🎁 Advent of Open Source – Day 9/24: yaml2bib 📚"
+date: 2024-12-09
+draft: false
+featured: false
+summary: "Solving the universal academic headache of inconsistent BibTeX entries."
+subtitle: "A tool to generate perfect BibTeX files from YAML using DOIs, ensuring citation consistency."
+tags:
+    - open-source
+    - python
+    - academia
+    - latex
+    - research
+    - advent
+categories:
+    - technology
+    - open-source
+    - advent
+authors:
+    - admin
+---
 
 (See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
 

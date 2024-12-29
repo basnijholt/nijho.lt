@@ -1,4 +1,24 @@
-# 🎄🎁 Advent of Open Source – Day 20/24: instacron 📸
+---
+title: "🎄🎁 Advent of Open Source – Day 12/24: instacron 📸"
+date: 2024-12-12
+draft: false
+featured: false
+summary: "Automating Instagram posting with random philosophical quotes and emojis, because why not?"
+subtitle: "A Python script for automated, humorous Instagram content generation."
+tags:
+    - open-source
+    - python
+    - automation
+    - photography
+    - instagram
+    - advent
+categories:
+    - technology
+    - open-source
+    - advent
+authors:
+    - admin
+---
 
 (See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
 
