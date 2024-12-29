@@ -18,6 +18,7 @@ categories:
   - advent
 authors:
   - admin
+excludeFromList: true
 ---
 
 (See my [intro post](../))
