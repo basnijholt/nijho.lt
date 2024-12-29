@@ -5,3 +5,9 @@
 This is my personal website build with [Hugo](https://gohugo.io/) and the [Academic theme](https://github.com/gcushen/hugo-academic/) ([docs](https://sourcethemes.com/academic/docs/)) and hosted via [Netlify](https://www.netlify.com/).
 
 See the builds on Netlify [here](https://app.netlify.com/sites/nijholt/deploys?filter=main).
+
+
+Run the following command to start the server locally:
+```bash
+docker build -t blog . && docker run -it -p 8080:80 blog
+```
