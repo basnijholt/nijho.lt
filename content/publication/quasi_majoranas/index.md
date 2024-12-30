@@ -17,7 +17,7 @@ abstract: "Andreev bound states in hybrid superconductor-semiconductor devices c
 
 summary: "Andreev bound states in hybrid superconductor-semiconductor devices can have near-zero energy in the topologically trivial regime as long as the confinement potential is sufficiently smooth."
 
-featured: true
+featured: false
 
 url_pdf: "https://arxiv.org/pdf/1806.02801.pdf"
 url_code: "https://zenodo.org/record/1285177"

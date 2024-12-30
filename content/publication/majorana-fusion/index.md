@@ -162,7 +162,7 @@ abstract: "The fusion of non-Abelian anyons or topological defects is a fundamen
 
 summary: "The fusion of non-Abelian anyons or topological defects is a fundamental operation in measurement-only topological quantum computation."
 
-featured: true
+featured: false
 
 url_pdf: "https://arxiv.org/pdf/2401.09549.pdf"
 url_preprint: "https://arxiv.org/abs/2401.09549"

@@ -16,7 +16,7 @@ abstract: "We study the effects of strong coupling between a superconductor and 
 
 summary: "We study the effects of strong coupling between a superconductor and a semiconductor nanowire on the creation of the Majorana bound states, when the quasiparticle dwell time in the normal part of the nanowire is much shorter than the inverse superconducting gap."
 
-featured: true
+featured: false
 
 url_pdf: "https://arxiv.org/pdf/1609.00637.pdf"
 url_code: "https://github.com/basnijholt/shortjunction"

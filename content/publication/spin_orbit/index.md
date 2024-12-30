@@ -29,7 +29,7 @@ abstract: "Spin-orbit interaction (SOI), a relativistic effect linking the motio
 
 summary: "Spin-orbit interaction (SOI), a relativistic effect linking the motion of an electron (orbit) with its magnetic moment (spin), is an essential ingredient for various realisations of topological superconductivity, which host Majorana zero-modes, the building blocks of topological quantum computation."
 
-featured: true
+featured: false
 
 url_pdf: "https://arxiv.org/pdf/1807.01940.pdf"
 links: [{name: "arXiv:1807.01940", url: "http://arxiv.org/abs/1807.01940"}, {name: "10.1103/PhysRevLett.122.187702", url: "https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.122.187702"}]

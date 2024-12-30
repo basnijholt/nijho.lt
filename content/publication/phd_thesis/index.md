@@ -14,7 +14,7 @@ abstract: >
 
 summary: "Towards realistic numerical simulations of Majorana devices."
 
-featured: true
+featured: false
 
 url_pdf: "https://repository.tudelft.nl/islandora/object/uuid:6cdf1184-ce38-412d-a3a5-1a793c787e58/datastream/OBJ/download"
 url_code: "https://github.com/basnijholt/thesis"

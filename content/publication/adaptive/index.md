@@ -22,7 +22,7 @@ abstract: >
 
 summary: "Large scale computer simulations are time-consuming to run and often require sweeps over input parameters to obtain a qualitative understanding of the simulation output."
 
-featured: true
+featured: false
 
 url_pdf: "https://gitlab.kwant-project.org/qt/adaptive-paper/-/jobs/119119/artifacts/raw/paper.pdf?inline=false"
 url_preprint: "https://github.com/python-adaptive/paper"

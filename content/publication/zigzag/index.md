@@ -17,7 +17,7 @@ abstract: "High density superconductor-semiconductor-superconductor junctions ha
 
 summary: "High density superconductor-semiconductor-superconductor junctions have a small induced superconducting gap due to the quasiparticle trajectories with a large momentum parallel to the junction having a very long flight time."
 
-featured: true
+featured: false
 
 url_pdf: "https://arxiv.org/pdf/1903.06168.pdf"
 url_code: "https://zenodo.org/record/2578027"
