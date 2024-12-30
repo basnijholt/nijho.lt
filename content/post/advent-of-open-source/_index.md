@@ -21,6 +21,10 @@ categories:
     - advent
 ---
 
+{{% callout note %}}
+Originally published on [LinkedIn](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-24-activity-7269075513002909697-UrHE?utm_source=share&utm_medium=member_desktop).
+{{% /callout %}}
+
 One of my biggest passions is writing code that solves real problems and sharing it with others who might face similar challenges.
 There's something deeply satisfying about turning a frustrating situation into a reusable solution that helps not just me, but potentially anyone else encountering the same obstacle.
 
