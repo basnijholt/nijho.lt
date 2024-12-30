@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 16/24: Adaptive 📈"
+title: "Adaptive 📈"
 date: 2024-12-16
 draft: false
 featured: false
-summary: "Revolutionizing parameter space exploration with adaptive sampling algorithms."
-subtitle: "A Python package for efficient, intelligent sampling in scientific computing."
+summary: "🎄🎁 Advent of Open Source – Day 16/24: Revolutionizing parameter space exploration with adaptive sampling algorithms."
+subtitle: "🎄🎁 Advent of Open Source – Day 16/24: A Python package for efficient, intelligent sampling in scientific computing."
 tags:
   - open-source
   - python
@@ -20,7 +20,7 @@ authors:
   - admin
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 During my PhD, I was running quantum transport simulations on our 800-core computational cluster. Traditional parameter sweeps using dense grids were hitting the cluster's limits - wasting precious compute time on uninteresting regions while potentially missing important features. Most parameter spaces we explored were "boring" with occasional interesting regions that required higher sampling density.
 

@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 24/24: Home Assistant Ecosystem 🏠"
+title: "Home Assistant Ecosystem 🏠"
 date: 2024-12-24
 draft: false
 featured: false
-summary: "A collection of Home Assistant-related projects, showcasing the power of open source to enhance daily life."
-subtitle: "From reverse-engineering speakers to repurposing hardware, these projects highlight open source innovation in the smart home."
+summary: "🎄🎁 Advent of Open Source – Day 24/24: A collection of Home Assistant-related projects, showcasing the power of open source to enhance daily life."
+subtitle: "🎄🎁 Advent of Open Source – Day 24/24: From reverse-engineering speakers to repurposing hardware, these projects highlight open source innovation in the smart home."
 tags:
   - open-source
   - homeassistant
@@ -20,7 +20,7 @@ authors:
   - admin
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 There are not enough days in this advent calendar to highlight all my projects. So today is a collection of IoT/Home Assistant-related packages. Each has its own story.
 

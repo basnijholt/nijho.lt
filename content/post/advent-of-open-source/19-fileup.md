@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 19/24: fileup 📤"
+title: "fileup 📤"
 date: 2024-12-19
 draft: false
 featured: false
-summary: "Sharing files directly from the terminal with a simple, zero-dependency utility."
-subtitle: "A tiny command-line tool for effortless file sharing, used for over 7 years."
+summary: "🎄🎁 Advent of Open Source – Day 19/24: Sharing files directly from the terminal with a simple, zero-dependency utility."
+subtitle: "🎄🎁 Advent of Open Source – Day 19/24: A tiny command-line tool for effortless file sharing, used for over 7 years."
 tags:
   - open-source
   - python
@@ -20,7 +20,7 @@ authors:
   - admin
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 Sometimes the best tools are the ones you build for yourself and keep using for years. Today's project is fileup, a tiny command-line utility that's been making my life easier for 7 years - because sharing files shouldn't require leaving the terminal!
 

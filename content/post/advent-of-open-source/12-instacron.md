@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 12/24: instacron 📸"
+title: "instacron 📸"
 date: 2024-12-12
 draft: false
 featured: false
-summary: "Automating Instagram posting with random philosophical quotes and emojis, because why not?"
-subtitle: "A Python script for automated, humorous Instagram content generation."
+summary: "🎄🎁 Advent of Open Source – Day 12/24: Automating Instagram posting with random philosophical quotes and emojis, because why not?"
+subtitle: "🎄🎁 Advent of Open Source – Day 12/24: A Python script for automated, humorous Instagram content generation."
 tags:
   - open-source
   - python
@@ -20,7 +20,7 @@ authors:
   - admin
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 Ever found yourself with beautiful photos but too lazy to post them? Instead of changing my habits, I did what any developer would do: spent way more time automating the process than it would have taken to post manually.
 

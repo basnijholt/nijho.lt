@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 10/24: Home Assistant Config 🏠"
+title: "Home Assistant Config 🏠"
 date: 2024-12-10
 draft: false
 featured: false
-summary: "Sharing my extensive Home Assistant setup with 137 automations and counting."
-subtitle: "A deep dive into a comprehensive, privacy-focused smart home configuration."
+summary: "🎄🎁 Advent of Open Source – Day 10/24: Sharing my extensive Home Assistant setup with 137 automations and counting."
+subtitle: "🎄🎁 Advent of Open Source – Day 10/24: A deep dive into a comprehensive, privacy-focused smart home configuration."
 tags:
   - open-source
   - homeassistant
@@ -20,7 +20,7 @@ authors:
   - admin
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 Funny how things work out - initially, I didn't care for home automation at all. But when in 2020 I discovered Home Assistant was written in Python, my favorite programming language, I suddenly found a new hobby. Over the years, I've built a comprehensive setup with over 137 automations (and counting!). These automations are triggered by everything from simple motion sensors to complex patterns of conditions and sensor states, creating a home that responds intelligently to our needs.
 

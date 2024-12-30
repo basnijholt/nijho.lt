@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 7/24: numthreads 🧵"
+title: "numthreads 🧵"
 date: 2024-12-07
 draft: false
 featured: false
-summary: "Solving a common performance pitfall in scientific computing with a tiny yet powerful tool."
-subtitle: "A simple utility to control thread counts for numerical libraries, preventing performance degradation."
+summary: "🎄🎁 Advent of Open Source – Day 07/24: Solving a common performance pitfall in scientific computing with a tiny yet powerful tool."
+subtitle: "🎄🎁 Advent of Open Source – Day 07/24: A simple utility to control thread counts for numerical libraries, preventing performance degradation."
 tags:
   - open-source
   - python
@@ -20,7 +20,7 @@ authors:
   - admin
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 Sometimes the smallest tools solve the most persistent problems. Today's project is about taming automatic parallelization in scientific computing - a deceptively simple challenge that has cost countless CPU hours.
 

@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 15/24: clip-files 📋"
+title: "clip-files 📋"
 date: 2024-12-15
 draft: false
 featured: false
-summary: "Automating the process of sharing code context with AI assistants."
-subtitle: "A command-line tool to quickly copy and format code for AI interactions."
+summary: "🎄🎁 Advent of Open Source – Day 15/24: Automating the process of sharing code context with AI assistants."
+subtitle: "🎄🎁 Advent of Open Source – Day 15/24: A command-line tool to quickly copy and format code for AI interactions."
 tags:
   - open-source
   - python
@@ -20,7 +20,7 @@ authors:
   - admin
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 Sometimes the most useful tools are born from daily frustrations. When working with AI assistants like ChatGPT or Claude, I found myself constantly copying files to share context. After doing this manually dozens of times, I created a tool to automate it.
 

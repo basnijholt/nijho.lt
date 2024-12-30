@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 22/24: tiller-streamlit 💰"
+title: "tiller-streamlit 💰"
 date: 2024-12-22
 draft: false
 featured: false
-summary: "Visualizing personal finances with Tiller and Streamlit for better financial independence tracking."
-subtitle: "A Streamlit app that automatically pulls financial data from Tiller for insightful analysis."
+summary: "🎄🎁 Advent of Open Source – Day 22/24: Visualizing personal finances with Tiller and Streamlit for better financial independence tracking."
+subtitle: "🎄🎁 Advent of Open Source – Day 22/24: A Streamlit app that automatically pulls financial data from Tiller for insightful analysis."
 tags:
   - open-source
   - python
@@ -23,7 +23,7 @@ authors:
   - admin
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 Tracking personal finances is crucial, especially when working towards financial independence (see my WenFIRE post on Day 4). Today's project is `tiller-streamlit`, a Streamlit app that visualizes your financial data from Tiller. I host it on my local network under `money.local` using Traefik for easy access.
 

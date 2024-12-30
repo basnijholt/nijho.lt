@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 14/24: PhD Thesis Cover Design 🎨"
+title: "PhD Thesis Cover Design 🎨"
 date: 2024-12-14
 draft: false
 featured: false
-summary: "Combining quantum physics, machine learning, and generative art to create unique PhD thesis covers."
-subtitle: "An open-source project for designing personalized thesis covers using Python."
+summary: "🎄🎁 Advent of Open Source – Day 14/24: Combining quantum physics, machine learning, and generative art to create unique PhD thesis covers."
+subtitle: "🎄🎁 Advent of Open Source – Day 14/24: An open-source project for designing personalized thesis covers using Python."
 tags:
   - open-source
   - phd
@@ -20,7 +20,7 @@ authors:
   - admin
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 When most people think of open source, they think of software. But what about open-sourcing your PhD thesis and creating a generative art system for its cover?
 

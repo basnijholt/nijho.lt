@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 2/24: Adaptive Lighting 💡"
+title: "Adaptive Lighting 💡"
 date: 2024-12-02
 draft: false
 featured: false
-summary: "Automating home lighting to sync with the sun, making smart homes even smarter."
-subtitle: "A popular Home Assistant integration for dynamic, sun-synced lighting."
+summary: "🎄🎁 Advent of Open Source – Day 02/24: Automating home lighting to sync with the sun, making smart homes even smarter."
+subtitle: "🎄🎁 Advent of Open Source – Day 02/24: A popular Home Assistant integration for dynamic, sun-synced lighting."
 tags:
   - open-source
   - homeassistant
@@ -20,7 +20,7 @@ authors:
   - admin
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 Unlike yesterday's Calendar of Life project, today we're looking at one of my most popular contributions. It's one of several Home Assistant and home automation related projects I'll be sharing this month. While my coding journey started in scientific computing with physics simulations, discovering how to control my home environment through code sparked a new obsession. Home Assistant, currently the **#1** open source project on GitHub, is the brain of my smart home and lets you control and automate everything from lights to thermostats, completely locally and privacy-focused.
 

@@ -17,7 +17,9 @@ content:
     author: ''
     exclude_featured: false
   archive:
-    enable: false
+    enable: true
+    text: See all blog posts
+    link: post/
   count: 10
 design:
   columns: '2'

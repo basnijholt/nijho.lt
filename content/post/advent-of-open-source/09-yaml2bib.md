@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 9/24: yaml2bib 📚"
+title: "yaml2bib 📚"
 date: 2024-12-09
 draft: false
 featured: false
-summary: "Solving the universal academic headache of inconsistent BibTeX entries."
-subtitle: "A tool to generate perfect BibTeX files from YAML using DOIs, ensuring citation consistency."
+summary: "🎄🎁 Advent of Open Source – Day 09/24: Solving the universal academic headache of inconsistent BibTeX entries."
+subtitle: "🎄🎁 Advent of Open Source – Day 09/24: A tool to generate perfect BibTeX files from YAML using DOIs, ensuring citation consistency."
 tags:
   - open-source
   - python
@@ -20,7 +20,7 @@ authors:
   - admin
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 Every academic writing in LaTeX knows the pain: managing BibTeX files with hundreds of citations, each potentially formatted slightly differently, with inconsistent journal abbreviations, and duplicated entries across chapters. While procrastinating on writing my PhD thesis, I became obsessed with solving this universal academic headache.
 

@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 6/24: Open Science Publications 🔬"
+title: "Open Science Publications 🔬"
 date: 2024-12-06
 draft: false
 featured: false
-summary: "Making scientific research truly reproducible with fully open-source code and data."
-subtitle: "A commitment to open science through publicly available, runnable code for every publication."
+summary: "🎄🎁 Advent of Open Source – Day 06/24: Making scientific research truly reproducible with fully open-source code and data."
+subtitle: "🎄🎁 Advent of Open Source – Day 06/24: A commitment to open science through publicly available, runnable code for every publication."
 tags:
   - open-source
   - openscience
@@ -20,7 +20,7 @@ authors:
   - admin
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 Today's post is about something I have strong opinions on: making scientific research reproducible. While many researchers talk about open science, actually making your work reproducible for anyone requires significant effort.
 

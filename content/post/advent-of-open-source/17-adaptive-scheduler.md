@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 17/24: Adaptive Scheduler 🚀"
+title: "Adaptive Scheduler 🚀"
 date: 2024-12-17
 draft: false
 featured: false
-summary: "Scaling adaptive sampling to 100,000+ cores with a novel meta-scheduling approach."
-subtitle: "A tool for efficient, interactive supercomputing from a Jupyter notebook."
+summary: "🎄🎁 Advent of Open Source – Day 17/24: Scaling adaptive sampling to 100,000+ cores with a novel meta-scheduling approach."
+subtitle: "🎄🎁 Advent of Open Source – Day 17/24: A tool for efficient, interactive supercomputing from a Jupyter notebook."
 tags:
   - open-source
   - python
@@ -20,7 +20,7 @@ authors:
   - admin
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 Ever tried to efficiently run 100,000 cores from a Jupyter notebook? No? Well, I have, and it led to some interesting discoveries about the limits of parallel computing tools.
 

@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 3/24: rsync-time-machine 🕒"
+title: "rsync-time-machine 🕒"
 date: 2024-12-03
 draft: false
 featured: false
-summary: "Rebuilding a popular backup tool in Python for better reliability and cross-platform compatibility."
-subtitle: "A Python port of rsync-time-backup, enhancing Time Machine-style backups."
+summary: "🎄🎁 Advent of Open Source – Day 03/24: Rebuilding a popular backup tool in Python for better reliability and cross-platform compatibility."
+subtitle: "🎄🎁 Advent of Open Source – Day 03/24: A Python port of rsync-time-backup, enhancing Time Machine-style backups."
 tags:
   - open-source
   - python
@@ -20,7 +20,7 @@ authors:
   - admin
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 Sometimes the best open source projects start with "I can do better than this." That's exactly what happened when I looked at [laurent22/rsync-time-backup](https://github.com/laurent22/rsync-time-backup), a popular 600-line Bash script for Time Machine-style backups. While it worked, it had known bugs and was tricky to maintain due to Bash's limitations. It also lacked tests, type hints (bash duh...), and proper error handling. So, I did what any reasonable developer would do: rewrote it in Python! 🐍
 
