@@ -22,7 +22,7 @@ categories:
 ---
 
 {{% callout note %}}
-Originally published on [LinkedIn](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-24-activity-7269075513002909697-UrHE?utm_source=share&utm_medium=member_desktop).
+I originally posted this on [LinkedIn](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-24-activity-7269075513002909697-UrHE?utm_source=share&utm_medium=member_desktop) between 1 December and 24 December 2024.
 {{% /callout %}}
 
 One of my biggest passions is writing code that solves real problems and sharing it with others who might face similar challenges.
