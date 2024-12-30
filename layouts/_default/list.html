@@ -8,7 +8,7 @@
   <div class="article-style">{{ . }}</div>
   {{ end }}
 
-  {{ $paginator := .Paginate (where .Data.Pages "Params.excludeFromList" "!=" true) }}
+  {{ $paginator := .Paginate .Data.Pages }}
   {{ range $paginator.Pages }}
   <div>
     <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
