@@ -37,7 +37,7 @@ Working in quantum physics, I frequently need to compute the Pfaffian. Michael h
 - **Multiple Algorithms:** Supports both the Parlett-Reid and Householder methods.
 - **Optimized for Performance:** Leverages low-level optimizations for speed.
 - **Conda and Pip Installable:** Easy installation via `conda-forge` and PyPI.
-- **Automated Wheel Builds:** Uses `pypa/cibuildwheel` for streamlined, automated builds and releases.
+- **Automated Wheel Builds:** Uses [`pypa/cibuildwheel`](https://github.com/pypa/cibuildwheel) for streamlined, automated builds and releases.
 - **Cross-Platform Compatibility:** Works on Linux, macOS, and Windows (with some caveats).
 
 ## 📊 Impact
@@ -58,7 +58,7 @@ Working in quantum physics, I frequently need to compute the Pfaffian. Michael h
 - Making specialized tools accessible broadens their impact.
 - Wrapping low-level code in Python can improve usability.
 - Automated builds are essential for maintainability.
-- `pypa/cibuildwheel` is awesome for cross-platform builds.
+- [`pypa/cibuildwheel`](https://github.com/pypa/cibuildwheel) is awesome for cross-platform builds.
 
 ## 🙏 Credits
 
