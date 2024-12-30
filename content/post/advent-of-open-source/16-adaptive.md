@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 16/24: Adaptive 📈"
+title: "Adaptive 📈"
 date: 2024-12-16
 draft: false
 featured: false
-summary: "Revolutionizing parameter space exploration with adaptive sampling algorithms."
-subtitle: "A Python package for efficient, intelligent sampling in scientific computing."
+summary: "🎄🎁 Advent of Open Source – Day 16/24: Revolutionizing parameter space exploration with adaptive sampling algorithms."
+subtitle: "🎄🎁 Advent of Open Source – Day 16/24: A Python package for efficient, intelligent sampling in scientific computing."
 tags:
   - open-source
   - python

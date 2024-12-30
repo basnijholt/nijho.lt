@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 6/24: Open Science Publications 🔬"
+title: "Open Science Publications 🔬"
 date: 2024-12-06
 draft: false
 featured: false
-summary: "Making scientific research truly reproducible with fully open-source code and data."
-subtitle: "A commitment to open science through publicly available, runnable code for every publication."
+summary: "🎄🎁 Advent of Open Source – Day 06/24: Making scientific research truly reproducible with fully open-source code and data."
+subtitle: "🎄🎁 Advent of Open Source – Day 06/24: A commitment to open science through publicly available, runnable code for every publication."
 tags:
   - open-source
   - openscience

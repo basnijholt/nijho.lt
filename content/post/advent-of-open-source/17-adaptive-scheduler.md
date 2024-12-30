@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 17/24: Adaptive Scheduler 🚀"
+title: "Adaptive Scheduler 🚀"
 date: 2024-12-17
 draft: false
 featured: false
-summary: "Scaling adaptive sampling to 100,000+ cores with a novel meta-scheduling approach."
-subtitle: "A tool for efficient, interactive supercomputing from a Jupyter notebook."
+summary: "🎄🎁 Advent of Open Source – Day 17/24: Scaling adaptive sampling to 100,000+ cores with a novel meta-scheduling approach."
+subtitle: "🎄🎁 Advent of Open Source – Day 17/24: A tool for efficient, interactive supercomputing from a Jupyter notebook."
 tags:
   - open-source
   - python

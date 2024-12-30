@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 12/24: instacron 📸"
+title: "instacron 📸"
 date: 2024-12-12
 draft: false
 featured: false
-summary: "Automating Instagram posting with random philosophical quotes and emojis, because why not?"
-subtitle: "A Python script for automated, humorous Instagram content generation."
+summary: "🎄🎁 Advent of Open Source – Day 12/24: Automating Instagram posting with random philosophical quotes and emojis, because why not?"
+subtitle: "🎄🎁 Advent of Open Source – Day 12/24: A Python script for automated, humorous Instagram content generation."
 tags:
   - open-source
   - python

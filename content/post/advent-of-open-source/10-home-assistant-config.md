@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 10/24: Home Assistant Config 🏠"
+title: "Home Assistant Config 🏠"
 date: 2024-12-10
 draft: false
 featured: false
-summary: "Sharing my extensive Home Assistant setup with 137 automations and counting."
-subtitle: "A deep dive into a comprehensive, privacy-focused smart home configuration."
+summary: "🎄🎁 Advent of Open Source – Day 10/24: Sharing my extensive Home Assistant setup with 137 automations and counting."
+subtitle: "🎄🎁 Advent of Open Source – Day 10/24: A deep dive into a comprehensive, privacy-focused smart home configuration."
 tags:
   - open-source
   - homeassistant

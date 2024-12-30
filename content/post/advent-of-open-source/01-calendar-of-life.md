@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 1/24: Calendar of Life 📅"
+title: "Calendar of Life 📅"
 date: 2024-12-01
 draft: false
 featured: false
-summary: "Visualizing the finite weeks of our lives with a Python project, because who doesn't need a daily reminder of their mortality?"
-subtitle: "A Python project to visualize life in weeks, reminding us of time's passage."
+summary: "🎄🎁 Advent of Open Source – Day 01/24: Visualizing the finite weeks of our lives with a Python project, because who doesn't need a daily reminder of their mortality?"
+subtitle: "🎄🎁 Advent of Open Source – Day 01/24: A Python project to visualize life in weeks, reminding us of time's passage."
 tags:
   - open-source
   - python

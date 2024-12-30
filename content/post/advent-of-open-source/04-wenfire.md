@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 4/24: WenFire: When Could I retire?! 🔥"
+title: "WenFire: When Could I retire?! 🔥"
 date: 2024-12-04
 draft: false
 featured: false
-summary: "Calculating the path to financial independence with a personalized web app."
-subtitle: "A financial independence calculator built with FastAPI, htmx, and Vega-Lite."
+summary: "🎄🎁 Advent of Open Source – Day 04/24: Calculating the path to financial independence with a personalized web app."
+subtitle: "🎄🎁 Advent of Open Source – Day 04/24: A financial independence calculator built with FastAPI, htmx, and Vega-Lite."
 tags:
   - open-source
   - python

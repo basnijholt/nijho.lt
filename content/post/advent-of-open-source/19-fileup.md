@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 19/24: fileup 📤"
+title: "fileup 📤"
 date: 2024-12-19
 draft: false
 featured: false
-summary: "Sharing files directly from the terminal with a simple, zero-dependency utility."
-subtitle: "A tiny command-line tool for effortless file sharing, used for over 7 years."
+summary: "🎄🎁 Advent of Open Source – Day 19/24: Sharing files directly from the terminal with a simple, zero-dependency utility."
+subtitle: "🎄🎁 Advent of Open Source – Day 19/24: A tiny command-line tool for effortless file sharing, used for over 7 years."
 tags:
   - open-source
   - python

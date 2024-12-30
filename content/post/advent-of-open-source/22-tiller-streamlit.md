@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 22/24: tiller-streamlit 💰"
+title: "tiller-streamlit 💰"
 date: 2024-12-22
 draft: false
 featured: false
-summary: "Visualizing personal finances with Tiller and Streamlit for better financial independence tracking."
-subtitle: "A Streamlit app that automatically pulls financial data from Tiller for insightful analysis."
+summary: "🎄🎁 Advent of Open Source – Day 22/24: Visualizing personal finances with Tiller and Streamlit for better financial independence tracking."
+subtitle: "🎄🎁 Advent of Open Source – Day 22/24: A Streamlit app that automatically pulls financial data from Tiller for insightful analysis."
 tags:
   - open-source
   - python

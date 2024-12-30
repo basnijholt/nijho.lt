@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 21/24: Interactive Graph Visualization 🕸️"
+title: "Interactive Graph Visualization 🕸️"
 date: 2024-12-21
 draft: false
 featured: false
-summary: "Creating interactive graph visualizations in Jupyter with AnyWidget and a modernized JavaScript library."
-subtitle: "Two packages for visualizing pipefunc's computational graphs, born from a dive into JavaScript."
+summary: "🎄🎁 Advent of Open Source – Day 21/24: Creating interactive graph visualizations in Jupyter with AnyWidget and a modernized JavaScript library."
+subtitle: "🎄🎁 Advent of Open Source – Day 21/24: Two packages for visualizing pipefunc's computational graphs, born from a dive into JavaScript."
 tags:
   - open-source
   - javascript

@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 3/24: rsync-time-machine 🕒"
+title: "rsync-time-machine 🕒"
 date: 2024-12-03
 draft: false
 featured: false
-summary: "Rebuilding a popular backup tool in Python for better reliability and cross-platform compatibility."
-subtitle: "A Python port of rsync-time-backup, enhancing Time Machine-style backups."
+summary: "🎄🎁 Advent of Open Source – Day 03/24: Rebuilding a popular backup tool in Python for better reliability and cross-platform compatibility."
+subtitle: "🎄🎁 Advent of Open Source – Day 03/24: A Python port of rsync-time-backup, enhancing Time Machine-style backups."
 tags:
   - open-source
   - python

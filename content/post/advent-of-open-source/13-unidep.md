@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 13/24: UniDep 🧬"
+title: "UniDep 🧬"
 date: 2024-12-13
 draft: false
 featured: false
-summary: "Simplifying Python dependency management across pip, conda, and complex projects."
-subtitle: "A tool to unify dependency management, making project setup a breeze."
+summary: "🎄🎁 Advent of Open Source – Day 13/24: Simplifying Python dependency management across pip, conda, and complex projects."
+subtitle: "🎄🎁 Advent of Open Source – Day 13/24: A tool to unify dependency management, making project setup a breeze."
 tags:
   - open-source
   - python

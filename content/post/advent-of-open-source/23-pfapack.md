@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 23/24: pfapack 🔢"
+title: "pfapack 🔢"
 date: 2024-12-23
 draft: false
 featured: false
-summary: "Making efficient Pfaffian computations accessible to Python users with optimized C and FORTRAN under the hood."
-subtitle: "A user-friendly Python package for calculating the square root of the determinant of skew-symmetric matrices."
+summary: "🎄🎁 Advent of Open Source – Day 23/24: Making efficient Pfaffian computations accessible to Python users with optimized C and FORTRAN under the hood."
+subtitle: "🎄🎁 Advent of Open Source – Day 23/24: A user-friendly Python package for calculating the square root of the determinant of skew-symmetric matrices."
 tags:
   - open-source
   - python

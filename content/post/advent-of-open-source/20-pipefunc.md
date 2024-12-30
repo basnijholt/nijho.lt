@@ -1,10 +1,10 @@
 ---
-title: "🎄🎁 Advent of Open Source – Day 20/24: pipefunc 🕸️"
+title: "pipefunc 🕸️"
 date: 2024-12-20
 draft: false
 featured: false
-summary: "Simplifying complex computational workflows with automatic DAG construction and parallelization."
-subtitle: "A Python package to streamline scientific computations with minimal boilerplate."
+summary: "🎄🎁 Advent of Open Source – Day 20/24: Simplifying complex computational workflows with automatic DAG construction and parallelization."
+subtitle: "🎄🎁 Advent of Open Source – Day 20/24: A Python package to streamline scientific computations with minimal boilerplate."
 tags:
   - open-source
   - python
