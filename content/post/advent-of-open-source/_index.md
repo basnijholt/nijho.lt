@@ -46,11 +46,11 @@ Of course, none of this would be possible without standing on the shoulders of t
 
 For each project, I'll share:
 
-- The origin story - what problem it solves and why I created it
-- Technical highlights and interesting implementation details
-- Usage statistics and community impact
-- Challenges faced and lessons learned
-- Where the project is heading
+- 📖 The origin story - what problem it solves and why I created it
+- 🔧 Technical highlights and interesting implementation details
+- 📊 Usage statistics and community impact
+- 🎯 Challenges faced and lessons learned
+- 🔮 Where the project is heading
 
 I hope this advent calendar provides insight into the world of open source maintenance and perhaps inspires others to share their own stories or start their own projects.
 
