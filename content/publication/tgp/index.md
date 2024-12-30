@@ -138,7 +138,7 @@ abstract: "We present measurements and simulations of semiconductor-superconduct
 
 summary: "We present measurements and simulations of semiconductor-superconductor heterostructure devices that are consistent with the observation of topological superconductivity and Majorana zero modes."
 
-featured: false
+featured: true
 
 url_pdf: "https://arxiv.org/pdf/2207.02472.pdf"
 url_code: "https://github.com/microsoft/azure-quantum-tgp"

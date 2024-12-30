@@ -17,12 +17,12 @@ categories:
   - technology
   - open-source
   - advent
+  - advent-post
 authors:
   - admin
-excludeFromList: true
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 Ever tried to set up a Python project that needs both pip and conda packages? Then you know the pain of maintaining multiple requirement files. UniDep was born from years of frustration with this exact problem.
 

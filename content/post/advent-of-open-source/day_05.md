@@ -16,12 +16,12 @@ categories:
   - technology
   - open-source
   - advent
+  - advent-post
 authors:
   - admin
-excludeFromList: true
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 Documentation should be as close to the code as possible - that's the principle of "information locality." But how do you keep code examples and their outputs in sync? Enter markdown-code-runner, a tool that executes code blocks within Markdown files and updates their output in-place!
 

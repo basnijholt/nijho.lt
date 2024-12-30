@@ -19,12 +19,12 @@ categories:
   - technology
   - open-source
   - advent
+  - advent-post
 authors:
   - admin
-excludeFromList: true
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 Tracking personal finances is crucial, especially when working towards financial independence (see my WenFIRE post on Day 4). Today's project is `tiller-streamlit`, a Streamlit app that visualizes your financial data from Tiller. I host it on my local network under `money.local` using Traefik for easy access.
 

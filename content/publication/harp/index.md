@@ -19,7 +19,7 @@ abstract: "We investigate the mechanistic nature of the Snf2 family protein HARP
 
 summary: "We investigate the mechanistic nature of the Snf2 family protein HARP, mutations of which are responsible for Schimke immuno-osseous dysplasia."
 
-featured: false
+featured: true
 
 url_pdf: "https://academic.oup.com/nar/article-pdf/45/8/4687/16608518/gkx147.pdf"
 links: [{name: "10.1093/nar/gkx147", url: "https://academic.oup.com/nar/article/45/8/4687/3057348"}]

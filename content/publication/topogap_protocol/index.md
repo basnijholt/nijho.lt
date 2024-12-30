@@ -27,7 +27,7 @@ abstract: "We develop a protocol to determine the presence and extent of a topol
 
 summary: "We develop a protocol to determine the presence and extent of a topological phase with Majorana zero modes in a hybrid superconductor-semiconductor device."
 
-featured: false
+featured: true
 
 url_pdf: "https://arxiv.org/pdf/2103.12217.pdf"
 url_preprint: "https://arxiv.org/abs/2103.12217"

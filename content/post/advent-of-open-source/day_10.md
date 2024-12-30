@@ -16,12 +16,12 @@ categories:
   - technology
   - open-source
   - advent
+  - advent-post
 authors:
   - admin
-excludeFromList: true
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 Funny how things work out - initially, I didn't care for home automation at all. But when in 2020 I discovered Home Assistant was written in Python, my favorite programming language, I suddenly found a new hobby. Over the years, I've built a comprehensive setup with over 137 automations (and counting!). These automations are triggered by everything from simple motion sensors to complex patterns of conditions and sensor states, creating a home that responds intelligently to our needs.
 

@@ -24,7 +24,7 @@ abstract: "A method to evaluate a semiconductor-superconductor heterojunction fo
 
 summary: "A method to evaluate a semiconductor-superconductor heterojunction for use in a qubit register of a topological quantum computer."
 
-featured: false
+featured: true
 
 url_pdf: "https://patentimages.storage.googleapis.com/f8/95/39/1d75746f5051a8/US11808796.pdf"
 links: [{name: "US11808796B2", url: "https://patents.google.com/patent/US11808796B2/en"}]

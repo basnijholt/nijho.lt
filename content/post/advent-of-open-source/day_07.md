@@ -16,12 +16,12 @@ categories:
   - technology
   - open-source
   - advent
+  - advent-post
 authors:
   - admin
-excludeFromList: true
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 Sometimes the smallest tools solve the most persistent problems. Today's project is about taming automatic parallelization in scientific computing - a deceptively simple challenge that has cost countless CPU hours.
 

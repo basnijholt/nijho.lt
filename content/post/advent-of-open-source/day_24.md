@@ -16,12 +16,12 @@ categories:
   - technology
   - open-source
   - advent
+  - advent-post
 authors:
   - admin
-excludeFromList: true
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 There are not enough days in this advent calendar to highlight all my projects. So today is a collection of IoT/Home Assistant-related packages. Each has its own story.
 

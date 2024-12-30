@@ -16,12 +16,12 @@ categories:
   - technology
   - open-source
   - advent
+  - advent-post
 authors:
   - admin
-excludeFromList: true
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 What started as a personal hack to control my home (temperature, lights, TV, music) with a gifted Stream Deck evolved into something bigger. This project became my first real exploration of AI-assisted development, showing me how much faster I could work with AI as a tool. With 250+ stars and 9 contributors adding significant features, it's grown beyond my initial vision.
 

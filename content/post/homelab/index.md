@@ -5,7 +5,7 @@ summary: An overview of my journey from using a Raspberry Pi for Home Assistant 
 projects: []
 date: '2024-07-06T00:00:00Z'
 draft: false
-featured: false
+featured: true
 
 authors:
   - admin

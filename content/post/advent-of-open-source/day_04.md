@@ -16,12 +16,12 @@ categories:
   - technology
   - open-source
   - advent
+  - advent-post
 authors:
   - admin
-excludeFromList: true
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 While I absolutely love my work at IonQ, I believe I'll love it even more when my family's livelihood doesn't depend on it. That's the dream of financial independence - doing what you love because you want to, not because you have to. This led me to create WenFire, a financial independence calculator that helps answer the eternal questions: "When can I retire?" and "How many days of extra work will that new iPhone or car cost me?"
 

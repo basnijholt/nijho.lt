@@ -15,7 +15,7 @@ content:
     category: ''
     publication_type: ''
     author: ''
-    exclude_featured: false
+    featured_only: true
   archive:
     enable: false
   count: 10

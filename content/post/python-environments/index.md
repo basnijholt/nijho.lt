@@ -5,7 +5,7 @@ summary: A Personal Journey Through Pyenv, Pipenv, venv, Virtualenv, Homebrew, A
 projects: []
 date: '2023-04-25T00:00:00Z'
 draft: false
-featured: false
+featured: true
 
 image:
   caption: 'Bing.com AI generated image based on the blog post title'

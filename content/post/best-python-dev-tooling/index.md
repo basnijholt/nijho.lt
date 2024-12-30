@@ -5,7 +5,7 @@ summary: Explore the top developer tools for enhancing productivity and code qua
 projects: []
 date: '2023-04-22T00:00:00Z'
 draft: false
-featured: false
+featured: true
 
 image:
   caption: 'Another hyper-modern way to deal with the snake'

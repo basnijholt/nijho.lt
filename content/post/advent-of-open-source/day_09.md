@@ -16,12 +16,12 @@ categories:
   - technology
   - open-source
   - advent
+  - advent-post
 authors:
   - admin
-excludeFromList: true
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 Every academic writing in LaTeX knows the pain: managing BibTeX files with hundreds of citations, each potentially formatted slightly differently, with inconsistent journal abbreviations, and duplicated entries across chapters. While procrastinating on writing my PhD thesis, I became obsessed with solving this universal academic headache.
 

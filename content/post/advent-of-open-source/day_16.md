@@ -16,12 +16,12 @@ categories:
   - technology
   - open-source
   - advent
+  - advent-post
 authors:
   - admin
-excludeFromList: true
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 During my PhD, I was running quantum transport simulations on our 800-core computational cluster. Traditional parameter sweeps using dense grids were hitting the cluster's limits - wasting precious compute time on uninteresting regions while potentially missing important features. Most parameter spaces we explored were "boring" with occasional interesting regions that required higher sampling density.
 

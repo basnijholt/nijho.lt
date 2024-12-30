@@ -16,12 +16,12 @@ categories:
   - technology
   - open-source
   - advent
+  - advent-post
 authors:
   - admin
-excludeFromList: true
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 After creating pipefunc (Day 20), I wanted a way to visualize its (possibly large and complex) computational graphs interactively in Jupyter notebooks. What started as a simple visualization PR evolved into two standalone packages: graphviz-anywidget (Python) and graphvizsvg (JavaScript) - which unexpectedly introduced me to JavaScript development!
 

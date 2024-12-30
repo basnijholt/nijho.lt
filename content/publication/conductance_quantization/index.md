@@ -25,7 +25,7 @@ abstract: "Ballistic electron transport is a key requirement for existence of a 
 
 summary: "Ballistic electron transport is a key requirement for existence of a topological phase transition in proximitized InSb nanowires."
 
-featured: false
+featured: true
 
 url_pdf: "https://arxiv.org/pdf/1603.03751.pdf"
 links: [{name: "arXiv:1603.03751", url: "http://arxiv.org/abs/1603.03751"}, {name: "10.1021/acs.nanolett.6b00051", url: "https://pubs.acs.org/doi/10.1021/acs.nanolett.6b00051"}]

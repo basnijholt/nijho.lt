@@ -27,7 +27,7 @@ abstract: "Junctions created by coupling two superconductors via a semiconductor
 
 summary: "Junctions created by coupling two superconductors via a semiconductor nanowire in the presence of high magnetic fields are the basis for detection, fusion, and braiding of Majorana bound states."
 
-featured: false
+featured: true
 
 url_pdf: "https://arxiv.org/pdf/1706.03331.pdf"
 url_code: "https://journals.aps.org/prl/supplemental/10.1103/PhysRevLett.119.187704"

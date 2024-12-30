@@ -16,12 +16,12 @@ categories:
   - technology
   - open-source
   - advent
+  - advent-post
 authors:
   - admin
-excludeFromList: true
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 Sometimes the best open source projects start with "I can do better than this." That's exactly what happened when I looked at [laurent22/rsync-time-backup](https://github.com/laurent22/rsync-time-backup), a popular 600-line Bash script for Time Machine-style backups. While it worked, it had known bugs and was tricky to maintain due to Bash's limitations. It also lacked tests, type hints (bash duh...), and proper error handling. So, I did what any reasonable developer would do: rewrote it in Python! 🐍
 

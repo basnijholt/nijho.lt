@@ -5,7 +5,7 @@ summary: 🔍 Exploring Quantum Device Simulations, Adaptive Sampling, and Neura
 projects: []
 date: '2020-04-04T13:40:00Z'
 draft: false
-featured: false
+featured: true
 
 image:
   caption: 'One of the covers I generated'

@@ -18,12 +18,12 @@ categories:
   - technology
   - open-source
   - advent
+  - advent-post
 authors:
   - admin
-excludeFromList: true
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 Ever needed to calculate the square root of the determinant of a skew-symmetric matrix? Probably not, but if you're in quantum physics, you might have! This is called the Pfaffian. Today's project, `pfapack`, is a Python package that provides efficient routines for computing it. The underlying algorithms and original code implementations were developed by my PhD co-promotor Michael Wimmer. I created the `pfapack` package to make this powerful tool easily accessible.
 

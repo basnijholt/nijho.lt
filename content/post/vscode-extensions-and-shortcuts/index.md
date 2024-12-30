@@ -5,7 +5,7 @@ summary: My personal setup for maximal productivity and minimal keystrokes.
 projects: []
 date: '2023-04-16T00:00:00Z'
 draft: false
-featured: false
+featured: true
 
 image:
   caption: 'My favorite extensions'

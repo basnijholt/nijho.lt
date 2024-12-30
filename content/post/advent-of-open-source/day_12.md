@@ -16,12 +16,12 @@ categories:
   - technology
   - open-source
   - advent
+  - advent-post
 authors:
   - admin
-excludeFromList: true
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 Ever found yourself with beautiful photos but too lazy to post them? Instead of changing my habits, I did what any developer would do: spent way more time automating the process than it would have taken to post manually.
 

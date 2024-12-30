@@ -5,7 +5,7 @@ summary: An overview of how Git worktrees can simplify your workflow by allowing
 projects: []
 date: '2024-09-19T00:00:00Z'
 draft: false
-featured: false
+featured: true
 
 authors:
   - admin

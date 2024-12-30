@@ -16,12 +16,12 @@ categories:
   - technology
   - open-source
   - advent
+  - advent-post
 authors:
   - admin
-excludeFromList: true
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 Unlike other projects in this advent calendar, I want to celebrate being part of something much bigger: the conda-forge community, where thousands of volunteers maintain the packages that power scientific Python.
 

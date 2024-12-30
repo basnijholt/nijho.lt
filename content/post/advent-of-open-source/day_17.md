@@ -16,12 +16,12 @@ categories:
   - technology
   - open-source
   - advent
+  - advent-post
 authors:
   - admin
-excludeFromList: true
 ---
 
-(See my [intro post](https://www.linkedin.com/posts/basnijholt_advent-of-open-source-celebrating-activity-7269075513002909697-M89J))
+(See my [intro post](../))
 
 Ever tried to efficiently run 100,000 cores from a Jupyter notebook? No? Well, I have, and it led to some interesting discoveries about the limits of parallel computing tools.
 
