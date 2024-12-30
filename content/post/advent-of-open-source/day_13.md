@@ -17,7 +17,6 @@ categories:
   - technology
   - open-source
   - advent
-  - advent-post
 authors:
   - admin
 ---

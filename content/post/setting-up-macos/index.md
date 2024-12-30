@@ -5,7 +5,7 @@ summary: Streamline your MacOS setup with Homebrew, over 100 essential apps, and
 projects: []
 date: '2023-04-21T00:00:00Z'
 draft: false
-featured: true
+featured: false
 
 image:
   caption: 'Setting up a full stack development environment on MacOS in 1 hour'

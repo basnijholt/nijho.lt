@@ -5,7 +5,7 @@ summary: A setup for maximal productivity and minimal keystrokes, with `zsh`, `o
 projects: []
 date: '2023-04-15T00:00:00Z'
 draft: false
-featured: true
+featured: false
 
 image:
   caption: 'My top 25 most used Terminal commands, as you can see, most commands are 1 or 2 characters long'

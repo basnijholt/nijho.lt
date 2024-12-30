@@ -5,7 +5,7 @@ summary: This December, I'm celebrating the festive season by sharing the storie
 projects: []
 date: '2024-12-01T00:00:00Z'
 draft: false
-featured: true
+featured: false
 
 authors:
   - admin
