@@ -34,6 +34,8 @@ What started as a simple tool to avoid duplicate dependency definitions turned i
 
 Then came the "aha" moment - what if we could install everything with a single command? After implementing UniDep, those complex setup guides became a one-liner: `unidep install-all -e`. It installs all dependencies and sets up every package in the monorepo in editable mode. What used to take hours now takes minutes.
 
+{{< figure src="meme.png" caption="The difficulty of managing pip and conda" alt="Meme with the text 'ONE DOES NOT SIMPLY MANAGE BOTH PIP AND CONDA DEPENDENCIES' featuring Sean Bean as Boromir from The Lord of the Rings." >}}
+
 ## 🔧 Technical Highlights
 
 - Single source of truth for all dependencies

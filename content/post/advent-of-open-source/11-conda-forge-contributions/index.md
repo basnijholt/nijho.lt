@@ -29,6 +29,8 @@ Unlike other projects in this advent calendar, I want to celebrate being part of
 
 I started with conda-forge in 2016 during my PhD work with Kwant, a quantum transport simulator. Installing it was a nightmare - it required system-level numerical libraries like MUMPS and Scotch which required a special config file to link. When I discovered conda-forge and its mission to make scientific software installation painless, I knew this was the solution!
 
+{{< figure src="meme.png" caption="The humble work of conda-forge maintainers" alt="Meme showing a farmer standing in a field, with the text 'MAINTAINING CONDA-FORGE PACKAGES FOR THE SCIENTIFIC COMMUNITY' above and 'It ain't much, but it's honest work' below." >}}
+
 ## 🔧 Technical Highlights
 
 Over the past 8 years, I've maintained over 40 build recipes, including:

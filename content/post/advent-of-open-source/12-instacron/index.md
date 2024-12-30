@@ -29,6 +29,15 @@ Ever found yourself with beautiful photos but too lazy to post them? Instead of 
 
 Back in 2017, I had hundreds of landscape photos from traveling through South America that I wanted to share on Instagram. The solution? Write a Python script that would randomly select photos and post them automatically, complete with philosophical quotes randomly selected from Bukowski, Einstein, or Dostoevsky because... it seemed to be the default of all "influencers" at the time. Nothing says "authentic travel experience" like an auto-generated Bukowski quote about drinking next to your serene mountain photo!
 
+{{< figure src="image_2.png" caption="Instacron Example Post" alt="Screenshot of an Instagram post with a person standing in a stone archway overlooking a sunset, captioned 'Taken in United States, Santa Barbara' with hashtags related to nature and travel." >}}
+
+{{< figure src="image_3.png" caption="Instacron Example Post" alt="Screenshot of an Instagram post of a cave with a river flowing through it, captioned 'Taken in Thailand, some cave' with hashtags related to travel and adventure." >}}
+
+{{< figure src="image_4.png" caption="Instacron Example Post" alt="Screenshot of an Instagram post showing a misty mountain landscape at sunrise, captioned 'Taken in Thailand-Laos border' with hashtags related to nature and travel." >}}
+
+{{< figure src="image_5.png" caption="Instacron Example Post" alt="Screenshot of an Instagram post of a mountain range with a green field in the foreground, captioned 'Taken in Lago Argentino, SC, Argentina' with hashtags related to nature and travel." >}}
+
+
 ## 🔧 Technical Highlights
 
 - Randomly selects photos from a directory

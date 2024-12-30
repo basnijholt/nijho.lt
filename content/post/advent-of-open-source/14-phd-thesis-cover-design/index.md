@@ -29,6 +29,8 @@ When most people think of open source, they think of software. But what about op
 
 With my PhD defense approaching and needing around 100 copies of my thesis, I faced a design challenge. As someone more comfortable with Python than Photoshop, I turned what started as a simple visualization idea into a full-blown generative art project with machine learning-based clustering.
 
+{{< figure src="image_2.jpg" caption="Multiple printed copies of the thesis" alt="A photograph of multiple printed copies of Bas's PhD thesis laid out on a table outdoors. Each copy has a unique, colorful, generated cover design. Potted plants are visible in the background." >}}
+
 ## 🔧 Technical Highlights
 
 - Generated 3,671 unique covers from quantum physics simulation data

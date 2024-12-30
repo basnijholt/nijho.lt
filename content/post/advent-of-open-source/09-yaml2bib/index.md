@@ -29,6 +29,8 @@ Every academic writing in LaTeX knows the pain: managing BibTeX files with hundr
 
 When writing a PhD thesis with multiple chapters that share citations, maintaining consistency is crucial but tedious. Different chapters might cite the same paper but with slightly different BibTeX entries - one using the full journal name, another using abbreviations, or worse, having slightly different titles or author lists. Rather than manually standardizing ~350 citations, I created yaml2bib: give it a list of DOIs in YAML format, and it generates a perfect BibTeX file with consistent journal abbreviations and formatting.
 
+{{< figure src="meme.png" caption="The pain of manual BibTeX management" alt="Meme depicting a cartoon dog sitting calmly in a room engulfed in flames, saying 'This is fine.' The dog is labeled 'Managing 300+ BibTeX entries manually'." >}}
+
 ## 🔧 Technical Highlights
 
 - Fetches citation data from CrossRef using DOIs

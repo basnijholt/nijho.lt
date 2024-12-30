@@ -31,6 +31,8 @@ What started with basic light controls evolved into a complete home automation s
 
 Unfortunately, I've been less active lately with my Home Assistant setup because so many other projects draw my attention. One of these "projects" is my 1.5-year-old twin boys, who now have their own room with specialized automations, including 100% local cameras with ML pattern detection for monitoring without compromising privacy.
 
+{{< figure src="meme.png" caption="The evolution of home automation" alt="Meme with four panels, each showing a brain with increasing complexity. The panels are labeled: 'MANUAL LIGHT SWITCHES', 'SMART BULBS', 'MOTION SENSORS', and '137 AUTOMATIONS RUNNING YOUR ENTIRE HOME'." >}}
+
 ## 🔧 Technical Highlights
 
 - 137 documented automations with auto-generated documentation
