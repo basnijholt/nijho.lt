@@ -70,6 +70,6 @@ Tracking personal finances is crucial, especially when working towards financial
 - Goal Setting: Set financial goals and track progress.
 - Investment Tracking: Incorporate investment data for a complete picture.
 
-Want to visualize your own finances with Tiller and Streamlit? Check out `tiller-streamlit` on GitHub ([https://github.com/basnijholt/tiller-streamlit](https://github.com/basnijholt/tiller-streamlit))!
+Want to visualize your own finances with Tiller and Streamlit? Check out [`tiller-streamlit` on GitHub](https://github.com/basnijholt/tiller-streamlit)!
 
 #OpenSource #Python #Streamlit #PersonalFinance #DataVisualization #Tiller #Traefik #Docker

@@ -23,11 +23,15 @@ excludeFromList: true
 
 (See my [intro post](../))
 
-Sometimes the most useful tools are born from daily frustrations. When working with AI assistants like ChatGPT or Claude, I found myself constantly copying files to share context. After doing this manually dozens of times, I created a tool to automate it.
+Sometimes the most useful tools are born from daily frustrations.
+When working with AI assistants like ChatGPT or Claude, I found myself constantly copying files to share context.
+After doing this manually dozens of times, I created a tool to automate it.
 
 ## 📖 Origin Story
 
-While contributing to open source, I frequently like to share entire (or large parts of) codebases with AI assistants for context or code review. Since the code is open source anyway, there's no reason not to share the full context! But manually copying files, adding their paths for context, and ensuring I didn't exceed token limits was tedious. Instead of continuing this manual process, I spent an evening creating `clip-files` - and have used it multiple times daily ever since.
+While contributing to open source, I frequently like to share entire (or large parts of) codebases with AI assistants for context or code review.
+Since the code is open source anyway, there's no reason not to share the full context! But manually copying files, adding their paths for context, and ensuring I didn't exceed token limits was tedious.
+Instead of continuing this manual process, I spent an evening creating [`clip-files`](https://github.com/basnijholt/clip-files) - and have used it multiple times daily ever since.
 
 In fact, I'm using it right now! The command (shown below) lets me share this entire advent calendar series with AI assistants for proofreading.
 
@@ -55,7 +59,8 @@ While this tool has no GitHub stars (I haven't promoted it), its real impact is 
 - Documentation improvements
 - Open source contributions
 
-The tool's real value isn't in its complexity (it's just ~250 lines of code) but in how it removes friction from open source development. When working with open code, we might as well share all the context we can - and this tool makes that effortless.
+The tool's real value isn't in its complexity (it's just ~250 lines of code) but in how it removes friction from open source development.
+When working with open code, we might as well share all the context we can - and this tool makes that effortless.
 
 ## 🎯 Challenges and Solutions
 

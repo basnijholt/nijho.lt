@@ -1,5 +1,5 @@
 ---
-title: "rsync-time-machine 🕒"
+title: "rsync-time-machine.py 🕒"
 date: 2024-12-03
 draft: false
 featured: false
@@ -23,11 +23,14 @@ excludeFromList: true
 
 (See my [intro post](../))
 
-Sometimes the best open source projects start with "I can do better than this." That's exactly what happened when I looked at [laurent22/rsync-time-backup](https://github.com/laurent22/rsync-time-backup), a popular 600-line Bash script for Time Machine-style backups. While it worked, it had known bugs and was tricky to maintain due to Bash's limitations. It also lacked tests, type hints (bash duh...), and proper error handling. So, I did what any reasonable developer would do: rewrote it in Python! 🐍
+Sometimes the best open source projects start with "I can do better than this." That's exactly what happened when I looked at [laurent22/rsync-time-backup](https://github.com/laurent22/rsync-time-backup), a popular 600-line Bash script for Time Machine-style backups. While it worked, it had known bugs and was tricky to maintain due to Bash's limitations. It also lacked tests, type hints (bash duh...), and proper error handling. So, I did what any reasonable developer would do: rewrote it in Python: [`rsync-time-machine.py`](https://github.com/basnijholt/rsync-time-machine.py)! 🐍
 
 ## 📖 Origin Story
 
-I needed reliable backups that worked across platforms and filesystems, unlike Apple's Time Machine. While many excellent backup tools exist, I was drawn to the simplicity of this approach: it just creates folders named `YYYY-MM-DD-HH-MM-SS` containing your files. No special tools needed for restoring or browsing - just your regular file explorer! I created a fully tested, typed, and documented Python port that maintains compatibility with the original while adding modern development practices.
+I needed reliable backups that worked across platforms and filesystems, unlike Apple's Time Machine.
+While many excellent backup tools exist, I was drawn to the simplicity of this approach: it just creates folders named `YYYY-MM-DD-HH-MM-SS` containing your files.
+No special tools needed for restoring or browsing - just your regular file explorer!
+I created a fully tested, typed, and documented Python port that maintains compatibility with the original while adding modern development practices.
 
 ## 🔧 Technical Highlights
 

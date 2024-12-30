@@ -24,11 +24,11 @@ excludeFromList: true
 
 (See my [intro post](../))
 
-Ever tried to set up a Python project that needs both pip and conda packages? Then you know the pain of maintaining multiple requirement files. UniDep was born from years of frustration with this exact problem.
+Ever tried to set up a Python project that needs both pip and conda packages? Then you know the pain of maintaining multiple requirement files. [UniDep](https://github.com/basnijholt/unidep) was born from years of frustration with this exact problem.
 
 ## 📖 Origin Story
 
-While working on large monorepos with hundreds of dependencies, I kept running into the same issue: maintaining separate files for conda (`environment.yml`), pip (`requirements.txt`), and Python packaging (`pyproject.toml`). Coming from languages like Rust, where package management is a joy, Python's fragmented ecosystem can feel overwhelming, especially to newcomers (obligatory xkcd.com/1987).
+While working on large monorepos with hundreds of dependencies, I kept running into the same issue: maintaining separate files for conda (`environment.yml`), pip (`requirements.txt`), and Python packaging (`pyproject.toml`). Coming from languages like Rust, where package management is a joy, Python's fragmented ecosystem can feel overwhelming, especially to newcomers (obligatory [xkcd.com/1987](https://xkcd.com/1987/)).
 
 What started as a simple tool to avoid duplicate dependency definitions turned into something much more powerful. In enterprise environments, it's common to find monorepos with over 1000 dependencies spread across dozens of packages. Setting up these environments traditionally involves following lengthy setup guides, installing packages in the correct order, and hoping nothing breaks.
 
@@ -45,7 +45,7 @@ Then came the "aha" moment - what if we could install everything with a single c
 - Works with pip, conda, and mamba
 - Monorepo-friendly with local dependency support
 - Integrates with setuptools and hatchling
-- > 99% test coverage, fully-typed
+- ≥99% test coverage, fully-typed
 
 ## 📊 Impact
 

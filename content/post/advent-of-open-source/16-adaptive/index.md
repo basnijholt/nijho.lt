@@ -23,11 +23,15 @@ excludeFromList: true
 
 (See my [intro post](../))
 
-During my PhD, I was running quantum transport simulations on our 800-core computational cluster. Traditional parameter sweeps using dense grids were hitting the cluster's limits - wasting precious compute time on uninteresting regions while potentially missing important features. Most parameter spaces we explored were "boring" with occasional interesting regions that required higher sampling density.
+During my PhD, I was running quantum transport simulations on our 800-core computational cluster.
+Traditional parameter sweeps using dense grids were hitting the cluster's limits - wasting precious compute time on uninteresting regions while potentially missing important features.
+Most parameter spaces we explored were "boring" with occasional interesting regions that required higher sampling density.
 
 ## 📖 Origin Story
 
-Initially, in 2016, I had a collection of one-off adaptive sampling scripts. Together with Joseph Weston and the support of my PhD advisor Anton Akhmerov, we turned it into a full-fledged Python package. What began as an internal tool to make our cluster usage more efficient slowly gained traction in the wider scientific computing community.
+Initially, in 2016, I had a collection of one-off adaptive sampling scripts.
+Together with Joseph Weston and the support of my PhD advisor Anton Akhmerov, we turned it into a full-fledged Python package "[Adaptive](https://github.com/python-adaptive/adaptive)".
+What began as an internal tool to make our cluster usage more efficient slowly gained traction in the wider scientific computing community.
 
 ## 🔧 Technical Highlights
 

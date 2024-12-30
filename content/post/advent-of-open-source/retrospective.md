@@ -27,7 +27,7 @@ Several people reached out asking this question, and honestly, I'm a bit uncomfo
 
 I only have one data point: my own journey. What worked for me was simple but not necessarily replicable: passion. Or sometimes, what might be closer to obsession:
 
-- > 10,000 hours of coding, loving (almost) every minute
+- 10,000+ hours of coding, loving (almost) every minute
 - Reading my own GitHub code at night, thinking about improvements
 - Literally losing sleep because my mind is racing with ideas for a project
 - Being unable to let go of a problem until it's solved

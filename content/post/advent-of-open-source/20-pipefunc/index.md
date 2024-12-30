@@ -50,7 +50,7 @@ Sometimes the best projects are born from the most unexpected moments. More than
 ## 📊 Impact
 
 - 230 GitHub stars
-- >600 tests with 100% coverage
+- 700+ tests with 100% coverage
 - Fully typed codebase
 - Comprehensive documentation
 - Tested on real workflow on SLURM cluster
@@ -84,5 +84,3 @@ The journey is far from over. Plans include:
 Want to simplify your computational workflows? Check out [pipefunc on GitHub](https://github.com/pipefunc/pipefunc) or read the [documentation](https://pipefunc.readthedocs.io/)!
 
 #OpenSource #Python #DataScience #ScientificComputing #Programming
-
-Would you like me to draft the LinkedIn version with these corrections as well?

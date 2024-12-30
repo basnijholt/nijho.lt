@@ -23,11 +23,15 @@ excludeFromList: true
 
 (See my [intro post](../))
 
-While I absolutely love my work at IonQ, I believe I'll love it even more when my family's livelihood doesn't depend on it. That's the dream of financial independence - doing what you love because you want to, not because you have to. This led me to create WenFire, a financial independence calculator that helps answer the eternal questions: "When can I retire?" and "How many days of extra work will that new iPhone or car cost me?"
+While I absolutely love my job, I believe I'll love it even more when my family's livelihood doesn't depend on it.
+That's the dream of financial independence - doing what you love because you want to, not because you have to.
+This led me to create [WenFire](https://wenfire.nijho.lt/), a financial independence calculator that helps answer the eternal questions: "When can I retire?" and "How many days of extra work will that new iPhone or car cost me?"
 
 ## 📖 Origin Story
 
-There are many retirement calculators out there, but they all made assumptions I didn't quite agree with (and I'm sure others won't agree with my assumptions either!). I wanted something that matched my specific views on salary growth and investment returns. Plus, I had been itching to learn more about building web applications, so this project let me explore FastAPI, htmx, and Vega-Lite while solving a personal need.
+There are many retirement calculators out there, but they all made assumptions I didn't quite agree with (and I'm sure others won't agree with my assumptions either!).
+I wanted something that matched my specific views on salary growth and investment returns.
+Plus, I had been itching to learn more about building web applications, so this project let me explore FastAPI, htmx, and Vega-Lite while solving a personal need.
 
 ## 🔧 Technical Highlights
 
@@ -45,7 +49,8 @@ There are many retirement calculators out there, but they all made assumptions I
 
 ## 📊 Impact
 
-While this project only has 3 GitHub stars, its real value is personal - it helps me track my own journey to financial independence. It's also been a great learning experience in web development, an area where I had little prior experience.
+While this project only has 3 GitHub stars, its real value is personal - it helps me track my own journey to financial independence.
+It's also been a great learning experience in web development, an area where I had little prior experience.
 
 ## 🎯 Challenges and Solutions
 

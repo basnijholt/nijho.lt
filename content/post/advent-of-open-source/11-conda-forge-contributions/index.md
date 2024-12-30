@@ -23,7 +23,7 @@ excludeFromList: true
 
 (See my [intro post](../))
 
-Unlike other projects in this advent calendar, I want to celebrate being part of something much bigger: the conda-forge community, where thousands of volunteers maintain the packages that power scientific Python.
+Unlike other projects in this advent calendar, I want to celebrate being part of something much bigger: the [conda-forge](https://conda-forge.org/) community, where thousands of volunteers maintain the packages that power scientific Python.
 
 ## 📖 Origin Story
 
@@ -35,9 +35,9 @@ I started with conda-forge in 2016 during my PhD work with Kwant, a quantum tran
 
 Over the past 8 years, I've maintained over 40 build recipes, including:
 
-- Major scientific packages like VTK, MUMPS, and Scotch
-- Quantum physics tools like Qsim, Qcodes, and Kwant
-- Visualization libraries like HoloViews
+- Major scientific packages like [VTK](https://vtk.org/), [MUMPS](https://mumps-solver.org/), and [Scotch](https://www.labri.fr/perso/pelegrin/scotch/)
+- Quantum physics tools like [Qsim](https://quantumai.google/qsim), [Qcodes](https://github.com/microsoft/Qcodes), and [Kwant](https://kwant-project.org/)
+- Visualization libraries like [HoloViews](https://holoviews.org/)
 - Plus all the packages I've authored myself
 
 The real magic of conda-forge is its infrastructure:
@@ -51,7 +51,7 @@ The real magic of conda-forge is its infrastructure:
 
 What makes conda-forge truly special is how initial contributions blossom into collaborative efforts. I've experienced this firsthand: after creating the initial MUMPS feedstock, 25 other contributors joined in, each bringing their unique expertise.
 
-A recent experience also illustrates this: I added CUDA support to both Google's Qsim and IBM's Cirq packages. Shortly after, Leo Fang, an engineer from NVIDIA who knows CUDA far better than I do, stepped up and made significant improvements. This is the beauty of open source - experts naturally gravitate to where they can make the biggest impact.
+A recent experience also illustrates this: I added CUDA support to both [Google's Qsim](https://github.com/conda-forge/qsimcirq-feedstock/pull/3) and [IBM's Cirq](https://github.com/conda-forge/qiskit-aer-feedstock/pull/19) packages. Shortly after, [Leo Fang](https://github.com/leofang), an engineer from NVIDIA who knows CUDA far better than I do, stepped up and made significant improvements. This is the beauty of open source - experts naturally gravitate to where they can make the biggest impact.
 
 This collaborative approach solves a problem I've encountered at several companies: the tendency to maintain complicated build systems internally with custom hacks. Instead of each organization reinventing the wheel, conda-forge provides a shared platform where:
 

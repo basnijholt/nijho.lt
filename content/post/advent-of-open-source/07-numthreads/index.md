@@ -23,11 +23,14 @@ excludeFromList: true
 
 (See my [intro post](../))
 
-Sometimes the smallest tools solve the most persistent problems. Today's project is about taming automatic parallelization in scientific computing - a deceptively simple challenge that has cost countless CPU hours.
+Sometimes the smallest tools solve the most persistent problems.
+Today's project is about taming automatic parallelization in scientific computing - a deceptively simple challenge that has cost countless CPU hours.
 
 ## 📖 Origin Story
 
-While working on high-performance computing clusters, I frequently encountered a counterintuitive problem: code running slower on multiple CPU cores than on a single one. Many scientific libraries (NumPy, SciPy) automatically parallelize operations, which sounds great but can actually harm performance when you're already parallelizing at a higher level. After repeatedly explaining to colleagues why they needed to set various environment variables to disable this behavior, I created numthreads to solve it once and for all.
+While working on high-performance computing clusters, I frequently encountered a counterintuitive problem: code running slower on multiple CPU cores than on a single one.
+Many scientific libraries (NumPy, SciPy) automatically parallelize operations, which sounds great but can actually harm performance when you're already parallelizing at a higher level.
+After repeatedly explaining to colleagues why they needed to set various environment variables to disable this behavior, I created [`numthreads`](https://github.com/basnijholt/numthreads) to solve it once and for all.
 
 {{< figure src="meme.png" caption="Overenthusiastic threading" alt="Meme showing a person labeled 'YOUR CODE' about to be hugged by a pink creature labeled 'NUMTHREADS.SET(1)', representing setting the number of threads to 1. In the background, a yellow circle labeled 'CPU PERFORMANCE' is visible." >}}
 

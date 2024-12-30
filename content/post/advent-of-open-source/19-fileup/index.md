@@ -23,7 +23,7 @@ excludeFromList: true
 
 (See my [intro post](../))
 
-Sometimes the best tools are the ones you build for yourself and keep using for years. Today's project is fileup, a tiny command-line utility that's been making my life easier for 7 years - because sharing files shouldn't require leaving the terminal!
+Sometimes the best tools are the ones you build for yourself and keep using for years. Today's project is [`fileup`](https://github.com/basnijholt/fileup), a tiny command-line utility that's been making my life easier for 7 years - because sharing files shouldn't require leaving the terminal!
 
 ## 📖 Origin Story
 

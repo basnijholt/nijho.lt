@@ -4,7 +4,7 @@ date: 2024-12-17
 draft: false
 featured: false
 summary: "🎄🎁 Advent of Open Source – Day 17/24: Scaling adaptive sampling to 100,000+ cores with a novel meta-scheduling approach."
-subtitle: "🎄🎁 Advent of Open Source – Day 17/24: A tool for efficient, interactive supercomputing from a Jupyter notebook."
+subtitle: "🎄🎁 Advent of Open Source – Day 17/24: A [tool](https://github.com/basnijholt/adaptive-scheduler) for efficient, interactive supercomputing from a Jupyter notebook."
 tags:
   - open-source
   - python
@@ -27,7 +27,7 @@ Ever tried to efficiently run 100,000 cores from a Jupyter notebook? No? Well, I
 
 ## 📖 Origin Story
 
-During my 2018 internship at Microsoft Quantum, we faced a unique challenge: our adaptive sampling algorithms needed to run on massive computing clusters (50,000+ cores), but existing tools couldn't handle it efficiently.
+During my 2018 internship at Microsoft Quantum, we faced a unique challenge: our [adaptive sampling algorithms](https://github.com/python-adaptive/adaptive) needed to run on massive computing clusters (50,000+ cores), but existing tools couldn't handle it efficiently.
 
 The problem was interesting: traditional parallel computing tools like Dask rely on a central scheduler process. Imagine 100,000 cores, each finishing a task every 10 seconds. That means every 10 microseconds, a core needs new work! With typical scheduler overhead being 1-50 milliseconds, workers would spend 99% of their time waiting rather than computing.
 
@@ -37,7 +37,7 @@ Usually, you'd solve this by batching work ahead of time. But with adaptive samp
 
 We created a solution that:
 
-- Acts as a meta-scheduler, launching multiple sub-schedulers (Dask, ipyparallel, MPI, etc.)
+- Acts as a meta-scheduler, launching multiple sub-schedulers ([Dask](https://www.dask.org/), [ipyparallel](https://ipyparallel.readthedocs.io/en/latest/), [mpi4py](https://mpi4py.readthedocs.io/en/stable/), etc.)
 - Minimizes communication between scheduling layers
 - Handles job management through a simple database
 - Supports automatic fault tolerance and data saving

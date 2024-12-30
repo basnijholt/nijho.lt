@@ -23,22 +23,27 @@ excludeFromList: true
 
 (See my [intro post](../))
 
-After creating [pipefunc (Day 20)](../20-pipefunc), I wanted a way to visualize its (possibly large and complex) computational graphs interactively in Jupyter notebooks. What started as a simple visualization PR evolved into two standalone packages: [graphviz-anywidget](https://github.com/pipefunc/graphviz-anywidget) (Python) and [graphvizsvg](https://github.com/pipefunc/graphvizsvg) (JavaScript) - which unexpectedly introduced me to JavaScript development!
+After creating [pipefunc (Day 20)](../20-pipefunc), I wanted a way to visualize its (possibly large and complex) computational graphs interactively in Jupyter notebooks.
+What started as a simple visualization PR evolved into two standalone packages: [graphviz-anywidget](https://github.com/pipefunc/graphviz-anywidget) (Python) and [graphvizsvg](https://github.com/pipefunc/graphvizsvg) (JavaScript) - which unexpectedly introduced me to JavaScript development!
 
 ## 📖 Origin Story
 
-While working on pipefunc's visualization features, I discovered that existing solutions didn't quite meet my needs. However, I found several components that would solve my issue:
+While working on pipefunc's visualization features, I discovered that existing solutions didn't quite meet my needs.
+However, I found several components that would solve my issue:
 
 - [AnyWidget](https://anywidget.dev/) (interactive GraphViz in Jupyter)
 - [@hpcc-js/wasm-graphviz](https://github.com/hpcc-systems/hpcc-js-wasm) (GraphViz in WASM)
 - [d3-graphviz](https://github.com/magjac/d3-graphviz) (interactive GraphViz in D3)
-- ![jquery.graphviz.svg](https://github.com/mountainstorm/jquery.graphviz.svg/) (GraphViz SVG manipulation)
+- [jquery.graphviz.svg](https://github.com/mountainstorm/jquery.graphviz.svg/) (GraphViz SVG manipulation)
 
-AnyWidget would work with ESM modules, however, I had no clue what that even was. The jquery.graphviz.svg package wasn't one and hadn't been maintained in 8 years.
+AnyWidget would work with ESM modules, however, I had no clue what that even was.
+The `jquery.graphviz.svg` package wasn't one and hadn't been maintained in 8 years.
 
-With AI as my JavaScript mentor, I first rewrote jquery.graphviz.svg into a modern ESM module (graphvizsvg), adding comprehensive tests that uncovered bugs in the original. Then, using AnyWidget, I created graphviz-anywidget to connect everything together - combining the WASM-powered d3-graphviz with the interactive features from graphvizsvg into a seamless Python package.
+With AI as my JavaScript mentor, I first rewrote `jquery.graphviz.svg` into a modern ESM module (graphvizsvg), adding comprehensive tests that uncovered bugs in the original.
+Then, using AnyWidget, I created graphviz-anywidget to connect everything together - combining the WASM-powered d3-graphviz with the interactive features from graphvizsvg into a seamless Python package.
 
-To my surprise, I found JavaScript's development tooling remarkably sophisticated - especially npm, which handles everything from linting to testing to bundling to publishing. Something we're still missing in Python!
+To my surprise, I found JavaScript's development tooling remarkably sophisticated - especially npm, which handles everything from linting to testing to bundling to publishing.
+Something we're still missing in Python!
 
 ## 🔧 Technical Highlights
 
