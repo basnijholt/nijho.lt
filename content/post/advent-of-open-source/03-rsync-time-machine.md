@@ -43,13 +43,13 @@ I needed reliable backups that worked across platforms and filesystems, unlike A
 
 ## 📊 Impact
 
-The project reached the front page of Y Combinator's Hacker News, causing its popularity to explode:
+The project reached the front page of [Y Combinator's Hacker News](https://news.ycombinator.com/item?id=35933238), causing its popularity to explode:
 
 - 381 GitHub stars
 - 16 forks
 - 6 contributors
-- Featured on Real Python podcast
-- Active discussion on Reddit's r/Python
+- [Featured on Real Python podcast](https://realpython.com/podcasts/rpp/158/#t=1588)
+- Active discussion on Reddit's [r/commandline](https://www.reddit.com/r/commandline/comments/13gtnrp/ported_a_popular_untested_600_line_bash_script_to/)
 
 ## 🎯 Challenges and Solutions
 

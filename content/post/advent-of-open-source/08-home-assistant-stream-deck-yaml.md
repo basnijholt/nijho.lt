@@ -27,7 +27,7 @@ What started as a personal hack to control my home (temperature, lights, TV, mus
 
 ## 📖 Origin Story
 
-While the Stream Deck's official software is great for streamers, it doesn't support Linux and its Home Assistant integration is not very programmable. After creating a simple solution using `python-elgato-streamdeck`, I realized others might be interested. Using AI as a development partner changed my workflow - it helped write tests, reviewed code, and generated use cases I hadn't thought of. What really surprised me was asking AI to brainstorm example configurations - it generated over 30 creative use cases with complete code examples, which I then turned into unit tests. These tests now automatically generate the documentation using `markdown-code-runner` (from Day 5).
+While the Stream Deck's official software is great for streamers, it doesn't support Linux and its Home Assistant integration is not very programmable. After creating a simple solution using [`python-elgato-streamdeck`](https://github.com/abcminiuser/python-elgato-streamdeck), I realized others might be interested. Using AI as a development partner changed my workflow - it helped write tests, reviewed code, and generated use cases I hadn't thought of. What really surprised me was asking AI to brainstorm example configurations - it generated over 30 creative use cases with complete code examples, which I then turned into unit tests. These tests now automatically generate the documentation using [`markdown-code-runner` ](https://github.com/basnijholt/markdown-code-runner)([from Day 5](../05-markdown-code-runner)).
 
 ## 🔧 Technical Highlights
 

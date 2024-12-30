@@ -26,7 +26,7 @@ excludeFromList: true
 
 (See my [intro post](../))
 
-Tracking personal finances is crucial, especially when working towards financial independence (see my WenFIRE post on Day 4). Today's project is `tiller-streamlit`, a Streamlit app that visualizes your financial data from Tiller. I host it on my local network under `money.local` using Traefik for easy access.
+Tracking personal finances is crucial, especially when working towards financial independence (see my [WenFIRE post on Day 4](../04-wenfire)). Today's project is [`tiller-streamlit`](https://github.com/basnijholt/tiller-streamlit), a Streamlit app that visualizes your financial data from [Tiller](https://www.tillerhq.com/). I host it on my local network under `money.local` using Traefik for easy access.
 
 ## 📖 Origin Story
 

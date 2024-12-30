@@ -23,7 +23,7 @@ excludeFromList: true
 
 (See my [intro post](../))
 
-Unlike yesterday's Calendar of Life project, today we're looking at one of my most popular contributions. It's one of several Home Assistant and home automation related projects I'll be sharing this month. While my coding journey started in scientific computing with physics simulations, discovering how to control my home environment through code sparked a new obsession. Home Assistant, currently the **#1** open source project on GitHub, is the brain of my smart home and lets you control and automate everything from lights to thermostats, completely locally and privacy-focused.
+Unlike [yesterday's Calendar of Life](../01-calendar-of-life) project, today we're looking at one of my most popular contributions. It's one of several Home Assistant and home automation related projects ([Day 8](../08-home-assistant-stream-deck-yaml), [Day 10](../10-home-assistant-config), [Day 24](../24-home-assistant-ecosystem)) I'll be sharing this month. While my coding journey started in scientific computing with physics simulations, discovering how to control my home environment through code sparked a new obsession. Home Assistant, currently the **#1** open source project on GitHub, is the brain of my smart home and lets you control and automate everything from lights to thermostats, completely locally and privacy-focused.
 
 Keep your lighting in sync with the sun, they said. It'll be simple, they said...
 

@@ -25,7 +25,7 @@ excludeFromList: true
 
 (See my [intro post](../))
 
-Ever needed to calculate the square root of the determinant of a skew-symmetric matrix? Probably not, but if you're in quantum physics, you might have! This is called the Pfaffian. Today's project, `pfapack`, is a Python package that provides efficient routines for computing it. The underlying algorithms and original code implementations were developed by my PhD co-promotor Michael Wimmer. I created the `pfapack` package to make this powerful tool easily accessible.
+Ever needed to calculate the square root of the determinant of a skew-symmetric matrix? Probably not, but if you're in quantum physics, you might have! This is called the Pfaffian. Today's project, [`pfapack`](https://github.com/basnijholt/pfapack), is a Python package that provides efficient routines for computing it. The underlying algorithms and original code implementations were developed by my PhD co-promotor Michael Wimmer. I created the `pfapack` package to make this powerful tool easily accessible.
 
 ## 📖 Origin Story
 
@@ -64,6 +64,6 @@ Working in quantum physics, I frequently need to compute the Pfaffian. Michael h
 
 All the credits for the underlying algorithms and original code implementations go to Michael Wimmer. I simply made it easier to distribute and use in Python.
 
-Want to compute Pfaffians efficiently in Python? Check out `pfapack` on GitHub ([https://github.com/basnijholt/pfapack](https://github.com/basnijholt/pfapack)) or install it via `pip install pfapack` or `conda install -c conda-forge pfapack`!
+Want to compute Pfaffians efficiently in Python? Check out [`pfapack` on GitHub](https://github.com/basnijholt/pfapack) or install it via `pip install pfapack` or `conda install -c conda-forge pfapack`!
 
 #OpenSource #Python #ScientificComputing #Math #Pfaffian #FORTRAN #C

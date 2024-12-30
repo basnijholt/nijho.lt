@@ -52,7 +52,7 @@ Sometimes the best projects are born from the most unexpected moments. More than
 - Fully typed codebase
 - Comprehensive documentation
 - Tested on real workflow on SLURM cluster
-- Covered on Pycoder's Weekly with >100k subscribers
+- Covered on [Pycoder's Weekly](https://pycoders.com/issues/650) with >100k subscribers
 
 ## 🎯 Challenges and Solutions
 

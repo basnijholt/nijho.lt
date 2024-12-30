@@ -29,7 +29,12 @@ Sometimes the most useful tools are born from daily frustrations. When working w
 
 While contributing to open source, I frequently like to share entire (or large parts of) codebases with AI assistants for context or code review. Since the code is open source anyway, there's no reason not to share the full context! But manually copying files, adding their paths for context, and ensuring I didn't exceed token limits was tedious. Instead of continuing this manual process, I spent an evening creating `clip-files` - and have used it multiple times daily ever since.
 
-In fact, I'm using it right now! The command `clip-files --initial-file ai.md --files introduction.md day*.md` lets me share this entire advent calendar series with AI assistants for proofreading.
+In fact, I'm using it right now! The command (shown below) lets me share this entire advent calendar series with AI assistants for proofreading.
+
+```bash
+clip-files --initial-file ai.md --files introduction.md day*.md
+```
+
 
 ## 🔧 Technical Highlights
 

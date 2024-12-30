@@ -31,7 +31,7 @@ During my 2018 internship at Microsoft Quantum, we faced a unique challenge: our
 
 The problem was interesting: traditional parallel computing tools like Dask rely on a central scheduler process. Imagine 100,000 cores, each finishing a task every 10 seconds. That means every 10 microseconds, a core needs new work! With typical scheduler overhead being 1-50 milliseconds, workers would spend 99% of their time waiting rather than computing.
 
-Usually, you'd solve this by batching work ahead of time. But with adaptive sampling (yesterday's project), that's impossible - you need the results of previous calculations to know what to compute next. It was like trying to conduct an orchestra where each musician needs personal instructions every few seconds!
+Usually, you'd solve this by batching work ahead of time. But with adaptive sampling ([yesterday's project](../16-adaptive)), that's impossible - you need the results of previous calculations to know what to compute next. It was like trying to conduct an orchestra where each musician needs personal instructions every few seconds!
 
 ## 🔧 Technical Highlights
 

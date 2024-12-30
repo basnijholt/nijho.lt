@@ -48,7 +48,7 @@ Then came the "aha" moment - what if we could install everything with a single c
 ## 📊 Impact
 
 - 221 GitHub stars
-- Featured on Python Bytes podcast
+- Featured on [Python Bytes podcast](https://www.youtube.com/live/PRaTs3PnJvI?si=UrVozo81Pj8WcyXh&t=489)
 - Saves countless hours of dependency management
 - Makes complex project setups accessible
 - Actively maintained with 70 releases

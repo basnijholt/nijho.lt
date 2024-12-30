@@ -46,7 +46,7 @@ Unfortunately, I've been less active lately with my Home Assistant setup because
 - 185 forks
 - Used as reference by countless Home Assistant enthusiasts
 - Featured in Home Assistant community
-- Spawned several spin-off projects (like Adaptive Lighting from Day 2!)
+- Spawned several spin-off projects (like [Adaptive Lighting](../02-adaptive-lighting) from Day 2!)
 
 ## 💡 Lessons Learned
 

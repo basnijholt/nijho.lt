@@ -51,7 +51,7 @@ The project combines:
 
 - Thesis repository: 14 GitHub stars
 - Cover design repository: 36 GitHub stars
-- Real-world adoption: Dr. Tomas Pippia from TU Delft used the code to create his own thesis cover
+- Real-world adoption: [Dr. Tomas Pippia from TU Delft](https://repository.tudelft.nl/record/uuid:e88a1897-0033-47e3-8b4f-84fd9cd5eec0) used the code to create his own thesis cover
 - ~100 unique printed copies, each with its own generated cover and edition number
 
 ## 🎯 Challenges and Solutions

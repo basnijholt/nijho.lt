@@ -23,16 +23,16 @@ excludeFromList: true
 
 (See my [intro post](../))
 
-After creating pipefunc (Day 20), I wanted a way to visualize its (possibly large and complex) computational graphs interactively in Jupyter notebooks. What started as a simple visualization PR evolved into two standalone packages: graphviz-anywidget (Python) and graphvizsvg (JavaScript) - which unexpectedly introduced me to JavaScript development!
+After creating [pipefunc (Day 20)](../20-pipefunc), I wanted a way to visualize its (possibly large and complex) computational graphs interactively in Jupyter notebooks. What started as a simple visualization PR evolved into two standalone packages: [graphviz-anywidget](https://github.com/pipefunc/graphviz-anywidget) (Python) and [graphvizsvg](https://github.com/pipefunc/graphvizsvg) (JavaScript) - which unexpectedly introduced me to JavaScript development!
 
 ## 📖 Origin Story
 
 While working on pipefunc's visualization features, I discovered that existing solutions didn't quite meet my needs. However, I found several components that would solve my issue:
 
-- AnyWidget (interactive GraphViz in Jupyter)
-- @hpcc-js/wasm-graphviz (GraphViz in WASM)
-- d3-graphviz (interactive GraphViz in D3)
-- jquery.graphviz.svg (GraphViz SVG manipulation)
+- [AnyWidget](https://anywidget.dev/) (interactive GraphViz in Jupyter)
+- [@hpcc-js/wasm-graphviz](https://github.com/hpcc-systems/hpcc-js-wasm) (GraphViz in WASM)
+- [d3-graphviz](https://github.com/magjac/d3-graphviz) (interactive GraphViz in D3)
+- ![jquery.graphviz.svg](https://github.com/mountainstorm/jquery.graphviz.svg/) (GraphViz SVG manipulation)
 
 AnyWidget would work with ESM modules, however, I had no clue what that even was. The jquery.graphviz.svg package wasn't one and hadn't been maintained in 8 years.
 
@@ -42,7 +42,7 @@ To my surprise, I found JavaScript's development tooling remarkably sophisticate
 
 ## 🔧 Technical Highlights
 
-graphviz-anywidget:
+[graphviz-anywidget](https://github.com/pipefunc/graphviz-anywidget):
 
 - Interactive Graphviz visualization in Jupyter
 - WASM-powered graph rendering
@@ -50,7 +50,7 @@ graphviz-anywidget:
 - Node and edge highlighting
 - Works in JupyterLab, Notebook, and VS Code
 
-graphvizsvg:
+[graphvizsvg](https://github.com/pipefunc/graphvizsvg):
 
 - Modern ESM module for interactive SVG visualization
 - Automatic color transitions
@@ -60,7 +60,7 @@ graphvizsvg:
 
 ## 📊 Impact
 
-- Enhances pipefunc's visualization capabilities
+- Enhances [pipefunc](https://github.com/pipefunc/pipefunc)'s visualization capabilities
 - Modernizes legacy jQuery code for modern web development
 - Proves that diving into new technologies can yield useful tools
 

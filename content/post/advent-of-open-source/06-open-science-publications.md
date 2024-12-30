@@ -42,7 +42,7 @@ During my Ph.D. and subsequent research, I noticed a frustrating pattern in scie
 
 What I consider best practices has evolved over time. Today, I would:
 
-- Use Pixi for universal lock files across operating systems and programming languages
+- Use [Pixi](https://pixi.sh/) for universal lock files across operating systems and programming languages
 - Provide a minimal Docker container that just installs the pixi lock file
 - Create self-documenting Jupyter notebooks that reproduce every result
 - Include clear figure-to-code mapping for paper reproducibility
