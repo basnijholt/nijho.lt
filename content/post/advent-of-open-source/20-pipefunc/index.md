@@ -41,11 +41,11 @@ Sometimes the best projects are born from the most unexpected moments. More than
 - Ultra-fast: only 15 µs overhead per function
 - Flexible caching strategies (memory, disk, cloud)
 - Integration with scientific computing tools:
-  - NetworkX for graph algorithms
-  - NumPy for multi-dimensional arrays
-  - Xarray for labeled arrays
-  - Zarr for distributed storage
-  - Adaptive for parallel computing
+  - [NetworkX](https://networkx.org/) for graph algorithms
+  - [NumPy](https://numpy.org/) for multi-dimensional arrays
+  - [Xarray](https://docs.xarray.dev/) for labeled arrays
+  - [Zarr](https://zarr.dev/) for distributed storage
+  - [Adaptive](https://adaptive.readthedocs.io/) for parallel computing
 
 ## 📊 Impact
 
