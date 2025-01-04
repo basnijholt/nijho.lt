@@ -32,7 +32,7 @@ categories:
 
 Like many Python developers, I've spent considerable time trying different environment management tools to find what works best for me.
 
-After exploring various options from virtualenv to Anaconda, I found that Conda-based solutions fit my needs well - mainly because they handle non-Python dependencies without much hassle.
+After exploring various options from virtualenv to Conda, I found that Conda-based solutions fit my needs well - mainly because they handle non-Python dependencies without much hassle.
 
 While Conda itself can be slow when setting up environments, tools like Mamba provide the same functionality with better performance.
 
