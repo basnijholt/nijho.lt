@@ -40,7 +40,7 @@ So, during the holiday season, I did what any reasonable developer would do: pro
 
 Here's a demo of [`tuitorial`](https://github.com/basnijholt/tuitorial) explaining `pipefunc` - a package that lets you create computational pipelines with automatic parallelization, caching, and dependency management:
 
-{{< video autoplay="true" loop="true" src="https://github.com/user-attachments/assets/53a0cdff-ed1b-479f-b94c-6a7b113bd8b3" >}}
+{{< video autoplay="true" loop="true" controls="yes" src="tuitorial-0.4.0.mp4" >}}
 
 ## Who Should Use This?
 
