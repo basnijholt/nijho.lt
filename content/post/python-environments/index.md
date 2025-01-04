@@ -22,6 +22,8 @@ tags:
   - venv
   - virtualenv
   - homebrew
+  - pixi
+  - uv
 
 categories:
   - setup
