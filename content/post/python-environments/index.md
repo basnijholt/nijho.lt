@@ -93,19 +93,21 @@ It allows you to switch between different Python versions without interfering wi
 
 **_Setup Instructions_**
 
-1. Install pyenv:
-   - macOS: `brew install pyenv`
-   - Ubuntu: `curl https://pyenv.run | bash`
-2. Add the following lines to your shell configuration file (e.g., `~/.bashrc`, `~/.zshrc`):
+1.  Install pyenv:
 
-```bash
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-```
+    - macOS: `brew install pyenv`
+    - Ubuntu: `curl https://pyenv.run | bash`
 
-3. Restart your shell or run `source ~/.bashrc` (or `source ~/.zshrc`)
-4. Install a specific Python version: `pyenv install 3.8.5`
-5. Set the Python version for your project: `pyenv local 3.8.5`
+2.  Add the following lines to your shell configuration file (e.g., `~/.bashrc`, `~/.zshrc`):
+
+    ```bash
+    export PATH="$HOME/.pyenv/bin:$PATH"
+    eval "$(pyenv init -)"
+    ```
+
+3.  Restart your shell or run `source ~/.bashrc` (or `source ~/.zshrc`)
+4.  Install a specific Python version: `pyenv install 3.8.5`
+5.  Set the Python version for your project: `pyenv local 3.8.5`
 
 ### 📦 Pipenv
 
@@ -139,33 +141,33 @@ It uses the same Conda repositories and environment files, making it easy to swi
 
 **_Setup Instructions_**
 
-1. Install Mambaforge with Mamba pre-installed:
+1.  Install Mambaforge with Mamba pre-installed:
 
-Download and install Mambaforge with Mamba for your platform: https://github.com/conda-forge/miniforge#mambaforge
+    Download and install Mambaforge with Mamba for your platform: https://github.com/conda-forge/miniforge#mambaforge
 
-Alternatively, you can install Mamba within an existing Conda environment:
+    Alternatively, you can install Mamba within an existing Conda environment:
 
-```
-conda install mamba -c conda-forge
-```
+    ```
+    conda install -c conda-forge mamba
+    ```
 
-2. Create a new environment with Mamba:
+2.  Create a new environment with Mamba:
 
-```bash
-mamba create --name my_env python=3.8
-```
+    ```bash
+    mamba create --name my_env python=3.8
+    ```
 
-3. Activate the environment:
+3.  Activate the environment:
 
-```bash
-mamba activate my_env
-```
+    ```bash
+    mamba activate my_env
+    ```
 
-4. Install packages using Mamba:
+4.  Install packages using Mamba:
 
-```bash
-mamba install <package_name> -c conda-forge
-```
+    ```bash
+    mamba install <package_name> -c conda-forge
+    ```
 
 By using Mamba instead of Conda, you can significantly speed up environment resolution and package installation while still benefiting from the Conda ecosystem.
 
@@ -178,37 +180,27 @@ For those who need Conda features, you can install Conda using Micromamba with `
 
 **_Setup Instructions_**
 
-1. Download the appropriate Micromamba binary for your platform from [the official repository](https://github.com/mamba-org/mamba/releases).
-
-2. Make the binary executable and move it to a directory in your `PATH`:
-
-```bash
-chmod +x micromamba mv micromamba /usr/local/bin/
-```
-
-3. Create a new environment with Micromamba:
-
-```bash
-micromamba create -n my_env python -c conda-forge
-```
-
-4. Activate the environment:
-
-```bash
-micromamba activate my_env
-```
-
-5. Install packages using Micromamba:
-
-```bash
-micromamba install <package_name> -c conda-forge
-```
-
-6. If you need Conda's features, you can install Conda within your Micromamba environment:
-
-```bash
-micromamba install conda
-```
+1.  Download the appropriate Micromamba binary for your platform from [the official repository](https://github.com/mamba-org/mamba/releases).
+2.  Make the binary executable and move it to a directory in your `PATH`:
+    ```bash
+    chmod +x micromamba mv micromamba /usr/local/bin/
+    ```
+3.  Create a new environment with Micromamba:
+    ```bash
+    micromamba create -n my_env python -c conda-forge
+    ```
+4.  Activate the environment:
+    ```bash
+    micromamba activate my_env
+    ```
+5.  Install packages using Micromamba:
+    ```bash
+    micromamba install <package_name> -c conda-forge
+    ```
+6.  If you need Conda's features, you can install Conda within your Micromamba environment:
+    ```bash
+    micromamba install conda
+    ```
 
 For example, if you need nb_conda_kernels to use your Micromamba environment in JupyterLab:
 
@@ -227,20 +219,18 @@ With Docker, you can package your Python application along with its dependencies
 
 **_Setup Instructions_**
 
-1. Install Docker: https://docs.docker.com/get-docker/
-2. Create a `Dockerfile` in your project directory with the following contents:
-
-```bash
-FROM python:3.11
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-CMD ["python", "your_script.py"]
-```
-
-3. Build the Docker image: `docker build -t my_project .`
-4. Run the Docker container: `docker run my_project`
+1.  Install Docker: https://docs.docker.com/get-docker/
+2.  Create a `Dockerfile` in your project directory with the following contents:
+    ```bash
+    FROM python:3.11
+    WORKDIR /app
+    COPY requirements.txt .
+    RUN pip install --no-cache-dir -r requirements.txt
+    COPY . .
+    CMD ["python", "your_script.py"]
+    ```
+3.  Build the Docker image: `docker build -t my_project .`
+4.  Run the Docker container: `docker run my_project`
 
 ### 🏞️ Venv
 
@@ -249,13 +239,11 @@ Venv simplifies the process of creating isolated environments for different proj
 
 **_Setup Instructions_**
 
-1. Create a new virtual environment: `python3 -m venv my_env`
-2. Activate the environment:
-
-- macOS/Linux: `source my_env/bin/activate`
-- Windows: `my_envScriptsactivate`
-
-3. Install packages: `pip install <package_name>`
+1.  Create a new virtual environment: `python3 -m venv my_env`
+2.  Activate the environment:
+    - macOS/Linux: `source my_env/bin/activate`
+    - Windows: `my_envScriptsactivate`
+3.  Install packages: `pip install <package_name>`
 
 ### 🌐 Virtualenv
 
@@ -279,22 +267,16 @@ Homebrew can be useful for installing and managing Python versions for system-le
 **_Setup Instructions_**
 
 1.  Install Homebrew (if not already installed):
-
     - macOS: Follow the instructions at [https://brew.sh](https://brew.sh/)
     - Linux: Follow the instructions at [https://docs.brew.sh/Homebrew-on-Linux](https://docs.brew.sh/Homebrew-on-Linux)
-
 2.  Install a specific Python version:
-
     ```bash
     brew install python@3.11
     ```
-
 3.  Add the installed Python version to your `PATH` by adding the following line to your shell configuration file (e.g., `~/.bashrc`, `~/.zshrc`):
-
     ```bash
     export PATH="/usr/local/opt/python@3.11/bin:$PATH"
     ```
-
 4.  Restart your shell or run `source ~/.bashrc` (or `source ~/.zshrc`) to apply the changes.
 5.  Verify the Python version: `python3.11 --version`
 
@@ -315,42 +297,34 @@ It is inspired by tools like Cargo, nix, and npm and aims to provide a modern pa
 
 **_Setup Instructions_**
 
-1. Install pixi following instructions at [prefix.dev](https://prefix.dev/docs/pixi/installation)
+1.  Install pixi following instructions at [prefix.dev](https://prefix.dev/docs/pixi/installation)
+2.  Initialize a new project:
+    ```bash
+    pixi init my-project
+    cd my-project
+    ```
+3.  Add dependencies:
+    ```bash
+    pixi add python numpy pandas
+    ```
+4.  Run Python in the environment:
+    ```bash
+    pixi run python
+    ```
+5.  Create and run tasks (defined in pixi.toml):
 
-2. Initialize a new project:
+    ```bash
+    # Add a task
+    pixi task add hello "python hello_world.py"
 
-```bash
-pixi init my-project
-cd my-project
-```
+    # Run the task
+    pixi run hello
+    ```
 
-3. Add dependencies:
-
-```bash
-pixi add python numpy pandas
-```
-
-4. Run Python in the environment:
-
-```bash
-pixi run python
-```
-
-5. Create and run tasks (defined in pixi.toml):
-
-```bash
-# Add a task
-pixi task add hello "python hello_world.py"
-
-# Run the task
-pixi run hello
-```
-
-6. Start an interactive shell in the environment:
-
-```bash
-pixi shell
-```
+6.  Start an interactive shell in the environment:
+    ```bash
+    pixi shell
+    ```
 
 Pixi can also be used as a global installation tool:
 
@@ -383,28 +357,21 @@ Besides being fast, it is awesome because it is a single binary that can be used
 
 **_Setup Instructions_**
 
-1. [Install uv](https://docs.astral.sh/uv/getting-started/installation/):
-
-```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
-```
-
-2. Create a new virtual environment:
-
-```bash
-uv venv
-```
-
-3. Activate the environment:
-
-- Unix/macOS: `source .venv/bin/activate`
-- Windows: `.venv\Scripts\activate`
-
-4. Install packages (much faster than pip):
-
-```bash
-uv pip install numpy pandas
-```
+1.  [Install uv](https://docs.astral.sh/uv/getting-started/installation/):
+    ```bash
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    ```
+2.  Create a new virtual environment:
+    ```bash
+    uv venv
+    ```
+3.  Activate the environment:
+    - Unix/macOS: `source .venv/bin/activate`
+    - Windows: `.venv\Scripts\activate`
+4.  Install packages (much faster than pip):
+    ```bash
+    uv pip install numpy pandas
+    ```
 
 It will automatically maintain a `uv.lock` file to ensure deterministic builds.
 Install this lock file with `uv sync`.
