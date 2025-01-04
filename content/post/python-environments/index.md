@@ -58,20 +58,20 @@ _I had to split the tables into two because of the number of columns._
 
 **_Table 1: Python Environment Management Tools_**
 
-| Tool                                                                            | Key Features                  | Native/3rd Party | Python Versions | Non-Python Deps |
-| ------------------------------------------------------------------------------- | ----------------------------- | ---------------- | --------------- | --------------- |
-| [Pyenv](https://github.com/pyenv/pyenv)                                         | Python version management     | 3rd Party        | Multiple        | ❌              |
-| [Pipenv](https://pipenv.pypa.io/en/latest/)                                     | Package & env management      | 3rd Party        | Single          | ❌              |
-| [Conda](https://docs.conda.io/en/latest/)                                       | Package & env management      | 3rd Party        | Single          | ✅              |
-| [Mamba](https://mamba.readthedocs.io/en/latest/)                                | Fast Conda replacement        | 3rd Party        | Single          | ✅              |
-| [Micromamba](https://mamba.readthedocs.io/en/latest/user_guide/micromamba.html) | Lightweight Mamba             | 3rd Party        | Single          | ✅              |
-| [Docker](https://www.docker.com/)                                               | Containerization              | 3rd Party        | Multiple        | ✅              |
-| [Venv](https://docs.python.org/3/library/venv.html)                             | Built-in env management       | Native           | Single          | ❌              |
-| [Virtualenv](https://virtualenv.pypa.io/en/latest/)                             | Env management (pre-3.3)      | 3rd Party        | Single          | ❌              |
-| [Homebrew](https://brew.sh/)                                                    | macOS/Linux package manager   | 3rd Party        | Multiple        | ✅              |
-| [Pixi](https://prefix.dev/docs/pixi/overview)                                   | Fast Conda alternative        | 3rd Party        | Multiple        | ✅              |
-| [uv](https://github.com/astral-sh/uv)                                           | Fast pip and venv replacement | 3rd Party        | Multiple        | ❌              |
-| System Package Managers                                                         | OS-based package management   | Native           | Multiple        | ✅              |
+| Tool                                                                            | Key Features                  | Native/3rd Party | Non-Python Deps |
+| ------------------------------------------------------------------------------- | ----------------------------- | ---------------- | --------------- |
+| [Pyenv](https://github.com/pyenv/pyenv)                                         | Python version management     | 3rd Party        | ❌              |
+| [Pipenv](https://pipenv.pypa.io/en/latest/)                                     | Package & env management      | 3rd Party        | ❌              |
+| [Conda](https://docs.conda.io/en/latest/)                                       | Package & env management      | 3rd Party        | ✅              |
+| [Mamba](https://mamba.readthedocs.io/en/latest/)                                | Fast Conda replacement        | 3rd Party        | ✅              |
+| [Micromamba](https://mamba.readthedocs.io/en/latest/user_guide/micromamba.html) | Lightweight Mamba             | 3rd Party        | ✅              |
+| [Docker](https://www.docker.com/)                                               | Containerization              | 3rd Party        | ✅              |
+| [Venv](https://docs.python.org/3/library/venv.html)                             | Built-in env management       | Native           | ❌              |
+| [Virtualenv](https://virtualenv.pypa.io/en/latest/)                             | Env management (pre-3.3)      | 3rd Party        | ❌              |
+| [Homebrew](https://brew.sh/)                                                    | macOS/Linux package manager   | 3rd Party        | ✅              |
+| [Pixi](https://prefix.dev/docs/pixi/overview)                                   | Fast Conda alternative        | 3rd Party        | ✅              |
+| [uv](https://github.com/astral-sh/uv)                                           | Fast pip and venv replacement | 3rd Party        | ❌              |
+| System Package Managers                                                         | OS-based package management   | Native           | ✅              |
 
 **_Table 2: Python Environment Management Tools_**
 
