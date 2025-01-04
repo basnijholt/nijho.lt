@@ -3,7 +3,7 @@ title: "🐍 Python Environment Paradise: Finding My Perfect Workflow 🌴"
 subtitle: A Personal Journey Through Pyenv, Pipenv, venv, Virtualenv, Homebrew, Anaconda, Miniconda, Micromamba, Pixi, and uv
 summary: A Personal Journey Through Pyenv, Pipenv, venv, Virtualenv, Homebrew, Anaconda, Miniconda, Micromamba, Pixi, and uv
 projects: []
-date: "2023-04-25T00:00:00Z"
+date: "2025-01-04T00:00:00Z"
 draft: false
 featured: false
 
@@ -158,7 +158,7 @@ mamba create --name my_env python=3.8
 3. Activate the environment:
 
 ```bash
-conda activate my_env
+mamba activate my_env
 ```
 
 4. Install packages using Mamba:
@@ -315,8 +315,6 @@ It is inspired by tools like Cargo, nix, and npm and aims to provide a modern pa
 
 **_Setup Instructions_**
 
-**_Setup Instructions_**
-
 1. Install pixi following instructions at [prefix.dev](https://prefix.dev/docs/pixi/installation)
 
 2. Initialize a new project:
@@ -419,12 +417,13 @@ Key features of uv:
 - Global package caching
 - Deterministic builds
 
+There is much more to uv, so check out the [documentation](https://docs.astral.sh/uv/) for more details.
+
 ## 3. Conclusion 🏁
 
 The choice you make for managing your Python environments ultimately depends on your use case.
-If you don't have to frequently deal with non-Python dependencies, I would recommend using venv.
+If you don't have to frequently deal with non-Python dependencies, I would recommend using `uv` for its speed and simplicity.
 However, because I often work with projects that require non-Python dependencies, I've found that Micromamba is the perfect fit for me.
-When I work with pure Python though, I adopt `uv` for its speed and simplicity.
 
 That being said, each tool has its own strengths and weaknesses, and it's important to choose the one that works best for your specific needs.
 I hope this journey through Python environment management has been helpful and informative.
