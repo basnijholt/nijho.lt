@@ -7,12 +7,6 @@ date: "2023-04-25T00:00:00Z"
 draft: false
 featured: false
 
-image:
-  caption: "Bing.com AI generated image based on the blog post title"
-  focal_point: ""
-  placement: 2
-  preview_only: false
-
 authors:
   - admin
 
