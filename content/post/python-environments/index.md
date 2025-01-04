@@ -3,7 +3,7 @@ title: "🐍 Python Environment Paradise: Finding My Perfect Workflow 🌴"
 subtitle: A Personal Journey Through Pyenv, Pipenv, venv, Virtualenv, Homebrew, Anaconda, Miniconda, Micromamba, Pixi, and uv
 summary: A Personal Journey Through Pyenv, Pipenv, venv, Virtualenv, Homebrew, Anaconda, Miniconda, Micromamba, Pixi, and uv
 projects: []
-date: "2025-01-04T00:00:00Z"
+date: "2025-01-03T00:00:00Z"
 draft: false
 featured: false
 
