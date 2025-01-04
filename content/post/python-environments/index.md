@@ -38,11 +38,12 @@ While Conda itself can be slow when setting up environments, tools like Mamba pr
 
 In this post, I'll share my experience with different Python environment tools and provide practical commands for setting up Python environments.
 
-{{< toc >}}
-
 {{% callout note %}}
+TL;DR, I use `micromamba` for projects with non-Python dependencies and `uv` for projects without them.
 This approach works well for me, you own mileage may vary.
 {{% /callout %}}
+
+{{< toc >}}
 
 ## 2. The Alternatives 🌟
 
