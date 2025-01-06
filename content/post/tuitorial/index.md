@@ -38,13 +38,13 @@ So, during the holiday season, I did what any reasonable developer would do: pro
 
 ## See It in Action
 
-Here's a demo of [`tuitorial`](https://github.com/basnijholt/tuitorial) explaining `pipefunc` - a package that lets you create computational pipelines with automatic parallelization, caching, and dependency management:
+Here's a demo of [`tuitorial`](https://github.com/basnijholt/tuitorial) explaining [`pipefunc`](https://github.com/pipefunc/pipefunc) - a package that lets you create computational pipelines with automatic parallelization, caching, and dependency management:
 
 {{< video autoplay="true" loop="true" controls="yes" src="tuitorial-0.4.0.mp4" >}}
 
 ## Who Should Use This?
 
-While `tuitorial` isn't for everyone, it's perfect for:
+While [`tuitorial`](https://github.com/basnijholt/tuitorial) isn't for everyone, it's perfect for:
 
 - Developers giving technical presentations
 - Teachers explaining code concepts
@@ -67,7 +67,7 @@ Check out the [documentation](https://github.com/basnijholt/tuitorial) for examp
 
 ## Final Thoughts
 
-Building `tuitorial` was a lot of fun!
+Building [`tuitorial`](https://github.com/basnijholt/tuitorial) was a lot of fun!
 While it may not replace PowerPoint for your next business presentation, it offers a unique approach to code demonstrations that I hope others will find useful.
 
 Try it out and let me know what you think!
