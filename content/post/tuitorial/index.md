@@ -1,9 +1,9 @@
 ---
-title: "tuitorial: Terminal-based Interactive Code Tutorials 📚"
+title: "tuitorial: terminal-based interactive code tutorials 📚"
 date: 2025-01-04
 draft: false
 featured: false
-summary: "A Python package for creating engaging code walkthroughs in your terminal with rich highlighting options and interactive navigation. 💻"
+summary: A Python package for creating engaging code walkthroughs in your terminal with rich highlighting options and interactive navigation.
 tags:
   - python
   - terminal
