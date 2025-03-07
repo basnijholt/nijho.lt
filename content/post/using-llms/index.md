@@ -55,8 +55,8 @@ tl;dr: I use [LibreChat](https://www.librechat.ai/), with [OpenRouter](https://o
 
 For most of the last year, I've relied on [OpenWebUI](https://openwebui.com/) as my primary interface for accessing various commercial LLMs:
 
-- OpenAI's GPT-4o
-- Anthropic's Claude 3.5
+- OpenAI's models
+- Anthropic's Claude models
 - Google's Gemini models
 
 OpenWebUI is primarily designed for running local models, but it can work with remote APIs through what it calls ["functions"](https://openwebui.com/functions) - essentially Python modules that establish connections to these external APIs.
