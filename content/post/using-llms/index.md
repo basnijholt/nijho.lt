@@ -55,18 +55,18 @@ For most of the last year, I've relied on [OpenWebUI](https://openwebui.com/) as
 - Anthropic's Claude 3.5
 - Google's Gemini models
 
-OpenWebUI is primarily designed for running local models, but it can work with remote APIs through what it calls "functions" - essentially Python modules that establish connections to these external APIs.
+OpenWebUI is primarily designed for running local models, but it can work with remote APIs through what it calls ["functions"](https://openwebui.com/functions) - essentially Python modules that establish connections to these external APIs.
 While functional, this approach requires additional setup and configuration to get working properly.
 
-## Discovering Librechat: A Game-Changer
+## Discovering LibreChat: A Game-Changer
 
-Recently, I discovered [Librechat](https://www.librechat.ai/), which has dramatically improved my LLM experience:
+Recently, I discovered [LibreChat](https://www.librechat.ai/), which has dramatically improved my LLM experience:
 
 - **Speed**: Pages load in under a second, compared to 5-10 seconds with OpenWebUI.
 This performance difference is especially noticeable when accessing either interface from my iPhone.
 - **API Support**: Native integration with virtually all major AI company APIs you can think of, right out of the box
 - **Convenience**: No need to implement custom Python functions - all popular models are supported by default
-- **Reasoning Support**: Librechat works much better with the new reasoning models, properly placing the reasoning part of replies in a dropdown.
+- **Reasoning Support**: LibreChat works much better with the new reasoning models, properly placing the reasoning part of replies in a dropdown.
 The amount of reasoning tokens is also easily parameterized.
 
 ## The Rise of Free & Nearly-Free Powerful Models
@@ -94,7 +94,7 @@ This has dramatically expanded my toolkit without increasing costs.
 
 ## Easy Deployment with Docker Compose
 
-Both OpenWebUI and Librechat are extremely easy to deploy using Docker Compose.
+Both OpenWebUI and LibreChat are extremely easy to deploy using Docker Compose.
 As someone who self-hosts numerous services, I appreciate how straightforward it is to get either of these interfaces up and running with a simple docker-compose file.
 This accessibility makes it easy for even those with limited server experience to set up their own LLM workstation.
 
@@ -124,7 +124,7 @@ This makes it effortless to share code with LLMs regardless of which interface I
 
 ## My Current Setup
 
-Today, I maintain access to multiple top-tier models through Librechat's interface and OpenRouter.ai's API.
+Today, I maintain access to multiple top-tier models through LibreChat's interface and OpenRouter.ai's API.
 This gives me flexibility to choose the right model for specific tasks while enjoying a responsive, feature-rich environment without unnecessary subscription costs.
 
 For fellow self-hosters and developers looking to optimize their LLM workflow, I highly recommend this combination, especially if you're currently using web interfaces or struggling with OpenWebUI's performance.
@@ -147,9 +147,9 @@ For most of the last year, I've relied on [OpenWebUI](https://openwebui.com/) as
 OpenWebUI is primarily designed for running local models, but it can work with remote APIs through what it calls "functions" - essentially Python modules that establish connections to these external APIs.
 While functional, this approach requires additional setup and configuration to get working properly.
 
-## Discovering Librechat: A Game-Changer
+## Discovering LibreChat: A Game-Changer
 
-Recently, I discovered [Librechat](https://www.librechat.ai/), which has dramatically improved my LLM experience:
+Recently, I discovered [LibreChat](https://www.librechat.ai/), which has dramatically improved my LLM experience:
 
 - **Speed**: Pages load in under a second, compared to 5-10 seconds with OpenWebUI.
 This performance difference is especially noticeable when accessing either interface from my iPhone.
@@ -181,7 +181,7 @@ This has dramatically expanded my toolkit without increasing costs.
 
 ## Easy Deployment with Docker Compose
 
-Both OpenWebUI and Librechat are extremely easy to deploy using Docker Compose.
+Both OpenWebUI and LibreChat are extremely easy to deploy using Docker Compose.
 As someone who self-hosts numerous services, I appreciate how straightforward it is to get either of these interfaces up and running with a simple docker-compose file.
 This accessibility makes it easy for even those with limited server experience to set up their own LLM workstation.
 
@@ -211,7 +211,7 @@ This makes it effortless to share code with LLMs regardless of which interface I
 
 ## My Current Setup
 
-Today, I maintain access to multiple top-tier models through Librechat's interface and OpenRouter.ai's API.
+Today, I maintain access to multiple top-tier models through LibreChat's interface and OpenRouter.ai's API.
 This gives me flexibility to choose the right model for specific tasks while enjoying a responsive, feature-rich environment without unnecessary subscription costs.
 
 For fellow self-hosters and developers looking to optimize their LLM workflow, I highly recommend this combination, especially if you're currently using web interfaces or struggling with OpenWebUI's performance.
