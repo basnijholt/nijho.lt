@@ -51,6 +51,20 @@ Setting it up takes a little technical know-how, but once it's up and running, u
 tl;dr: I use [LibreChat](https://www.librechat.ai/), with [OpenRouter](https://openrouter.ai/), and [`clip-files`](https://github.com/basnijholt/clip-files), and currently Claude 3.7 is my favorite model.
 {{% /callout %}}
 
+## My Golden Rule for AI-Generated Code
+
+While AI can generate impressive amounts of code quickly, I follow one critical principle in my workflow: **I never commit code I don't fully understand**.
+With the ease of generating solutions comes the responsibility to ensure quality and correctness.
+
+My approach involves:
+
+- **Understanding every line**: Before committing any AI-generated code, I carefully review and understand each line. This helps avoid introducing subtle bugs that might be hidden in seemingly working code.
+- **100% test coverage**: I ensure comprehensive test coverage for AI-generated implementations. This serves two purposes: it verifies the code works as expected and creates concrete examples that document the intended behavior.
+- **Critical evaluation**: I assess whether the proposed solution aligns with project architecture and best practices. Often, I'll ask the AI to refactor or explain its approach before accepting it.
+- **Incremental adoption**: Rather than accepting large code blocks wholesale, I typically integrate smaller, well-understood portions that can be thoroughly tested.
+
+This mindset transforms AI from a potential shortcut that could introduce technical debt into a powerful assistant that accelerates development while maintaining quality standards.
+
 ## Starting with OpenWebUI
 
 For most of the last year, I've relied on [OpenWebUI](https://openwebui.com/) as my primary interface for accessing various commercial LLMs:
