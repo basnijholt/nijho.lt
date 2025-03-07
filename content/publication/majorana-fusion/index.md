@@ -177,6 +177,6 @@ summary: "The fusion of non-Abelian anyons or topological defects is a fundament
 featured: false
 
 url_pdf: "https://arxiv.org/pdf/2401.09549.pdf"
-url_code: "github.com/microsoft/azure-quantum-parity-readout"
-links: [{name: "arXiv:2401.09549", url: "https://arxiv.org/abs/2401.09549"}, {name: "GitHub", url: "github.com/microsoft/azure-quantum-parity-readout"}, {name: "10.1038/s41586-024-08445-2", url: "https://www.nature.com/articles/s41586-024-08445-2"}]
+url_code: "https://github.com/microsoft/azure-quantum-parity-readout"
+links: [{name: "arXiv:2401.09549", url: "https://arxiv.org/abs/2401.09549"}, {name: "GitHub", url: "https://github.com/microsoft/azure-quantum-parity-readout"}, {name: "10.1038/s41586-024-08445-2", url: "https://www.nature.com/articles/s41586-024-08445-2"}]
 ---
