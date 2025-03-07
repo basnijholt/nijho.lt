@@ -114,13 +114,14 @@ This consolidated approach saves money while providing more flexibility.
 ## Code Editor Experiments
 
 I've tried [Cursor editor](https://www.cursor.com/), which offers an interesting AI-integrated coding experience.
-While many features are impressive, I encountered limitations—particularly with the Python debugger, which is a known issue.
+While many features are impressive, I encountered limitations—particularly with the Python debugger, which is [a known issue](https://forum.cursor.com/t/python-debugger-doesnt-launch/1661/19).
 Despite its promise, these limitations pushed me back to my custom workflow.
 
 ## My DIY Solution: clip-files
 
 To compensate, I heavily rely on a CLI tool I created called "[clip-files](https://github.com/basnijholt/clip-files/)." This simple utility lets me pass filenames as arguments, and it copies their contents to my clipboard along with useful metadata.
 This makes it effortless to share code with LLMs regardless of which interface I'm using—simple, fast, and effective.
+Together with the [`zsh-autosuggestions`](https://github.com/zsh-users/zsh-autosuggestions) plugin–which I talked about in [another post](../terminal-ninja/)–generating the right prompt is a breeze.
 
 ## My Current Setup
 
