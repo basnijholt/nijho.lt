@@ -59,7 +59,7 @@ authors:
 - Maren Elisabeth Kloster
 - Christina Knapp
 - Dariusz Kocon
-- Jonne Koski
+- Jonne V. Koski
 - Pasi Kostamo
 - Mahesh Kumar
 - Tom Laeven

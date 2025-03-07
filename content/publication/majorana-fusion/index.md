@@ -1,6 +1,6 @@
 ---
-title: "Interferometric Single-Shot Parity Measurement in an InAs-Al Hybrid Device"
-date: "2024-01-17T00:00:00"
+title: "Interferometric single-shot parity measurement in InAs–Al hybrid devices"
+date: "2025-02-19T00:00:00"
 
 authors:
 - Morteza Aghaee
@@ -13,31 +13,31 @@ authors:
 - Amin Barzegar
 - Bela Bauer
 - Jonathan Becker
+- Umesh Kumar Bhaskar
 - Alex Bocharov
 - Srini Boddapati
 - David Bohn
 - Jouri Bommer
-- Esben Bork Hansen
 - Leo Bourdet
 - Arnaud Bousquet
 - Samuel Boutin
-- Signe Brynold Markussen
-- Juan Carlos Estrada Saldaña
 - Lucas Casparis
-- Benjamin James Chapman
+- Benjamin J. Chapman
 - Sohail Chatoor
+- Anna Wulff Christensen
 - Cassandra Chua
 - Patrick Codd
 - William S. Cole
 - Paul Cooper
 - Fabiano Corsetti
 - Ajuan Cui
-- Juan Pablo Dehollain
 - Paolo Dalpasso
-- Michiel W. A. de Moor
+- Juan Pablo Dehollain
 - Gijs de Lange
+- Michiel W. A. de Moor
 - Andreas Ekefjärd
 - Tareq El Dandachi
+- Juan Carlos Estrada Saldaña
 - Saeed Fallahi
 - Luca Galletti
 - Geoff Gardner
@@ -49,37 +49,35 @@ authors:
 - Jan Gukelberger
 - Marzie Hamdast
 - Firas Hamze
-- Morten Hannibal Madsen
-- Jens Hedegaard Nielsen
-- Jens Munk Nielsen
+- Esben Bork Hansen
 - Sebastian Heedt
 - Zahra Heidarnia
 - Jesús Herranz Zamorano
 - Samantha Ho
 - Laurens Holgaard
 - John Hornibrook
-- William Hvidtfelt Padkær Nielsen
 - Jinnapat Indrapiromkul
 - Henrik Ingerslev
 - Lovro Ivancevic
+- Thomas Jensen
 - Jaspreet Jhoja
 - Jeffrey Jones
-- Konstantin V Kalashnikov
+- Konstantin V. Kalashnikov
 - Ray Kallaher
+- Rachpon Kalra
 - Farhad Karimi
 - Torsten Karzig
-- Cameron King
+- Evelyn King
 - Maren Elisabeth Kloster
 - Christina Knapp
 - Dariusz Kocon
-- Jonne Koski
+- Jonne V. Koski
 - Pasi Kostamo
-- Umesh Kumar Bhaskar
 - Mahesh Kumar
 - Tom Laeven
 - Thorvald Larsen
-- Kyunghoon Lee
 - Jason Lee
+- Kyunghoon Lee
 - Grant Leum
 - Kongyi Li
 - Tyler Lindemann
@@ -87,22 +85,28 @@ authors:
 - Julie Love
 - Marijn Lucas
 - Roman M. Lutchyn
+- Morten Hannibal Madsen
 - Nash Madulid
 - Albert Malmros
 - Michael Manfra
 - Devashish Mantri
+- Signe Brynold Markussen
 - Esteban A. Martinez
 - Marco Mattila
 - Robert McNeil
-- Ryan V Mishmash
+- Antonio B. Mei
+- Ryan V. Mishmash
 - Gopakumar Mohandas
 - Christian Mollgaard
 - Trevor Morgan
 - George Moussa
 - Chetan Nayak
+- Jens Hedegaard Nielsen
+- Jens Munk Nielsen
+- William Hvidtfelt Padkær Nielsen
 - Bas Nijholt
 - Mike Nystrom
-- Eoin O'Farrell
+- Eoin O’Farrell
 - Thomas Ohki
 - Keita Otani
 - Brian Paquelet Wütz
@@ -112,6 +116,7 @@ authors:
 - Dima Pikulin
 - Guen Prawiroatmodjo
 - Frank Preiss
+- Eduardo Puchol Morejon
 - Mohana Rajpalke
 - Craig Ranta
 - Katrine Rasmussen
@@ -120,7 +125,6 @@ authors:
 - David J. Reilly
 - Yuan Ren
 - Ken Reneris
-- Antonio Rodolph Mei
 - Richard Rouse
 - Ivan Sadovskyy
 - Lauri Sainiemi
@@ -151,13 +155,21 @@ authors:
 - David J. van Woerkom
 - Dmitrii V. Viazmitinov
 - Dominik Vogel
+- John Watson
+- Alex Webster
+- Joseph Weston
 - Georg W. Winkler
-- John D. Watson
+- Di Xu
+- Chung Kai Yang
+- Emrah Yucelen
+- Roland Zeisel
+- Guoji Zheng
+- Justin Zilke
 
 publication_types: ["paper"]  # Preprint / Working Paper
 
-publication: "Preprint"
-# publication_short: "Nature"
+publication: "In *Nature* (Nat)."
+publication_short: "In *Nat*"
 abstract: "The fusion of non-Abelian anyons or topological defects is a fundamental operation in measurement-only topological quantum computation. In topological superconductors, this operation amounts to a determination of the shared fermion parity of Majorana zero modes. As a step towards this, we implement a single-shot interferometric measurement of fermion parity in an indium arsenide-aluminum heterostructure with a gate-defined nanowire. The interferometer is formed by tunnel-coupling the proximitized nanowire to quantum dots. The nanowire causes a state-dependent shift of these quantum dots' quantum capacitance of up to 1 fF. Our quantum capacitance measurements show flux h/2e-periodic bimodality with a signal-to-noise ratio of 1 in 3.7 μs at optimal flux values. From the time traces of the quantum capacitance measurements, we extract a dwell time in the two associated states that is longer than 1 ms at in-plane magnetic fields of approximately 2 T. These results are consistent with a measurement of the fermion parity encoded in a pair of Majorana zero modes that are separated by approximately 3 μm and subjected to a low rate of poisoning by non-equilibrium quasiparticles. The large capacitance shift and long poisoning time enable a minimum measurement error probability of 1%."
 
 summary: "The fusion of non-Abelian anyons or topological defects is a fundamental operation in measurement-only topological quantum computation."
@@ -165,6 +177,6 @@ summary: "The fusion of non-Abelian anyons or topological defects is a fundament
 featured: false
 
 url_pdf: "https://arxiv.org/pdf/2401.09549.pdf"
-url_preprint: "https://arxiv.org/abs/2401.09549"
-links: [{name: "2401.09549", url: "https://arxiv.org/abs/2401.09549"}]
+url_code: "github.com/microsoft/azure-quantum-parity-readout"
+links: [{name: "arXiv:2401.09549", url: "https://arxiv.org/abs/2401.09549"}, {name: "GitHub", url: "github.com/microsoft/azure-quantum-parity-readout"}, {name: "10.1038/s41586-024-08445-2", url: "https://www.nature.com/articles/s41586-024-08445-2"}]
 ---
