@@ -17,7 +17,7 @@ authors:
 - Alex Bocharov
 - Srini Boddapati
 - David Bohn
-- Jouri Bommer
+- Jouri D. S. Bommer
 - Leo Bourdet
 - Arnaud Bousquet
 - Samuel Boutin
@@ -106,7 +106,7 @@ authors:
 - William Hvidtfelt Padkær Nielsen
 - Bas Nijholt
 - Mike Nystrom
-- Eoin O’Farrell
+- Eoin O'Farrell
 - Thomas Ohki
 - Keita Otani
 - Brian Paquelet Wütz
@@ -155,7 +155,7 @@ authors:
 - David J. van Woerkom
 - Dmitrii V. Viazmitinov
 - Dominik Vogel
-- John Watson
+- John D. Watson
 - Alex Webster
 - Joseph Weston
 - Georg W. Winkler

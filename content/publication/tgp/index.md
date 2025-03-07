@@ -24,7 +24,7 @@ authors:
 - Philippe Caroff
 - Lucas Casparis
 - Maja C. Cassidy
-- Anna Wulf Christensen
+- Anna Wulff Christensen
 - Noah Clay
 - William S. Cole
 - Fabiano Corsetti
@@ -35,7 +35,7 @@ authors:
 - Michiel W. A. de Moor
 - Juan Carlos Estrada Saldaña
 - Saeed Fallahi
-- Zahra Heidarnia Fathabad
+- Zahra Heidarnia
 - John Gamble
 - Geoff Gardner
 - Deshan Govender
