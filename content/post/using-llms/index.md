@@ -58,7 +58,7 @@ For most of the last year, I've relied on [OpenWebUI](https://openwebui.com/) as
 OpenWebUI is primarily designed for running local models, but it can work with remote APIs through what it calls ["functions"](https://openwebui.com/functions) - essentially Python modules that establish connections to these external APIs.
 While functional, this approach requires additional setup and configuration to get working properly.
 
-## Discovering LibreChat: A Game-Changer
+## Discovering LibreChat: A Major Upgrade
 
 Recently, I discovered [LibreChat](https://www.librechat.ai/), which has dramatically improved my LLM experience:
 
@@ -78,7 +78,7 @@ Several extremely capable models are now either completely free or essentially f
 - **[DeepSeek](https://www.deepseek.com/)**: DeepSeek v3 is the best in this category, offering remarkable performance at minimal cost
 - **[Qwen](https://qwen-ai.com/qwq-32b/)**: Another powerful option that won't break the bank
 
-This democratization of access to high-quality models has been a game-changer for my development workflow.
+This democratization of access to high-quality models has substantially improved my development workflow.
 
 ## Claude 3.7: Worth Every Penny
 
@@ -88,9 +88,13 @@ The quality of responses, understanding of complex contexts, and overall reliabi
 
 ## OpenRouter: Hundreds of Models, One API
 
-A game-changing discovery has been OpenRouter.ai.
+A particularly valuable discovery has been [OpenRouter.ai](https://openrouter.ai/).
 With just one API key, I can access hundreds of different models, many of which are completely free to use.
 This has dramatically expanded my toolkit without increasing costs.
+
+{{% callout note %}}
+Note that OpenRouter doesn't charge anything extra for using their interface, however, they very likely keep your data.
+{{% /callout %}}
 
 ## Easy Deployment with Docker Compose
 
