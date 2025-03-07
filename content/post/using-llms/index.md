@@ -8,7 +8,7 @@ draft: false
 featured: false
 
 image:
-  caption: 'Modern development workflow powered by AI'
+  caption: 'LibreChat with a meta question about my blogpost'
   focal_point: ''
   placement: 2
   preview_only: false
