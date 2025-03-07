@@ -47,6 +47,10 @@ Over the past 1.5 years, I've developed a workflow for integrating Large Languag
 I wanted to share my setup and recent discoveries that have improved my experience.
 Setting it up takes a little technical know-how, but once it's up and running, using it is easy, even my spouse uses it!
 
+{{% callout note %}}
+tl;dr: I use [LibreChat](https://www.librechat.ai/), with [OpenRouter](https://openrouter.ai/), and [`clip-files`](https://github.com/basnijholt/clip-files), and currently Claude 3.7 is my favorite model.
+{{% /callout %}}
+
 ## Starting with OpenWebUI
 
 For most of the last year, I've relied on [OpenWebUI](https://openwebui.com/) as my primary interface for accessing various commercial LLMs:
