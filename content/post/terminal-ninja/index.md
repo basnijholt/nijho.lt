@@ -78,9 +78,6 @@ Here's an example of submodules I track in my dotfiles repository:
 [submodule "submodules/keychain"]
 	path = submodules/keychain
 	url = git@github.com:funtoo/keychain.git
-[submodule "syncthing-resolve-conflicts"]
-	path = submodules/syncthing-resolve-conflicts
-	url = git@github.com:dschrempf/syncthing-resolve-conflicts.git
 [submodule "configs/zsh/k"]
 	path = submodules/k
 	url = git@github.com:supercrabtree/k.git
@@ -293,6 +290,31 @@ To set up Zsh-autosuggestions:
     ```
 
 ![](https://user-images.githubusercontent.com/6897215/233818577-189256ff-b1e2-4790-984e-6fd191df5c00.gif)
+
+## 🦇 Bat: A Supercharged Cat Alternative
+
+[Bat](https://github.com/sharkdp/bat) is a modern replacement for the `cat` command with syntax highlighting, Git integration, and other enhancements that make viewing files in the terminal much more pleasant.
+
+Installing Bat is straightforward with most package managers:
+
+```bash
+brew install bat # macOS
+apt install bat # Ubuntu/Debian
+```
+
+To seamlessly replace `cat` with `bat` while maintaining the simple behavior when needed, add this to your `.zshrc`:
+
+```bash
+if command -v bat &> /dev/null; then
+    alias cat="bat --plain --paging=never"
+fi
+```
+
+This alias makes `bat` behave like `cat` by default (without line numbers or fancy formatting), but you can still use the `bat` command directly when you want the enhanced features.
+
+![](https://imgur.com/rGsdnDe.png)
+
+Bat is particularly useful when viewing code files, configuration files, or any text that benefits from syntax highlighting, making it easier to quickly understand the content at a glance.
 
 ## 🧩 Putting it All Together
 
