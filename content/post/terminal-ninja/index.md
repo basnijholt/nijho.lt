@@ -144,6 +144,9 @@ source $ZSH/oh-my-zsh.sh
 
 ![](https://github.com/agkozak/zsh-z/raw/da8dee3ccaf882d1bf653c34850041025616ceb5/img/demo.gif)
 
+Alternative: [zoxide](https://github.com/ajeetdsouza/zoxide), a more modern and faster version of Z in Rust.
+Need to try it myself.
+
 ## ⏰ Oh-my-zsh Dirhistory Plugin: Time Travel Through Directories
 
 The `dirhistory` plugin makes navigating directories incredibly simple with keyboard shortcuts:
@@ -290,6 +293,9 @@ To set up Zsh-autosuggestions:
     ```
 
 ![](https://user-images.githubusercontent.com/6897215/233818577-189256ff-b1e2-4790-984e-6fd191df5c00.gif)
+
+Alternative: [`direnv`](https://direnv.net/), very similar to `autoenv`, but seems more widely used.
+Still need to try it myself.
 
 ## 🦇 Bat: A Supercharged Cat Alternative
 
