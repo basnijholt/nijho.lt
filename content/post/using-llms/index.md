@@ -94,7 +94,7 @@ Several extremely capable models are now either completely free or essentially f
 
 - **Google's [gemini-exp-1206](https://ai.google.dev/gemini-api/docs/models/experimental-models)**: Impressively capable with a huge context window for code
 - **[DeepSeek](https://www.deepseek.com/)**: DeepSeek v3 is the best in this category, offering remarkable performance at minimal cost
-- **[Qwen](https://qwen-ai.com/qwq-32b/)**: Another powerful option that won't break the bank
+- **[Qwen QwQ 32B](https://huggingface.co/Qwen/QwQ-32B-Preview)**: Another powerful option that won't break the bank
 
 This democratization of access to high-quality models has substantially improved my development workflow.
 
