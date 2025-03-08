@@ -3,7 +3,8 @@ title: 👩‍💻 Be a Ninja in the Terminal 🥷
 subtitle: A setup for maximal productivity and minimal keystrokes, with `zsh`, `oh-my-zsh`, `keychain`, `starship`, `autoenv`, `z`, `zsh-autosuggestions`, and more.
 summary: A setup for maximal productivity and minimal keystrokes, with `zsh`, `oh-my-zsh`, `keychain`, `starship`, `autoenv`, `z`, `zsh-autosuggestions`, and more.
 projects: []
-date: '2023-04-15T00:00:00Z'
+date: '2025-03-07T00:00:00Z'
+# initial_date: '2023-04-15T00:00:00Z'
 draft: false
 featured: false
 
@@ -34,6 +35,10 @@ categories:
   - terminal
   - level:intermediate
 ---
+
+{{% callout note %}}
+Originally written in April 2023 but updated in March 2025.
+{{% /callout %}}
 
 Welcome to a world of terminal productivity!
 When helping others with programming problems on their computer, I often find myself in their terminal, and feel like walking through sand.
