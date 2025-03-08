@@ -35,12 +35,11 @@ categories:
   - level:intermediate
 ---
 
-Welcome to the dojo, fellow terminal warriors!
-Today, I'll guide you through the mystic arts of terminal productivity, sharing with you the tools I use to maximize efficiency and minimize keystrokes.
+Welcome to a world of terminal productivity!
 When helping others with programming problems on their computer, I often find myself in their terminal, and feel like walking through sand.
 When I show how awesome of an experience it can be, I often find myself repeating the same suggestions over and over again.
 So, I decided to write this guide to help others set up their terminal in a similar fashion.
-In this short post, we'll explore the wonders of [`zsh`](https://www.zsh.org/), [`oh-my-zsh`](https://ohmyz.sh/), [`keychain`](https://wiki.gentoo.org/wiki/Keychain), [`starship`](https://starship.rs/), [`autoenv`](https://github.com/hyperupcall/autoenv), [`z`](https://github.com/agkozak/zsh-z), [`zsh-autosuggestions`](https://github.com/zsh-users/zsh-autosuggestions), several Oh My ZSH plugins, having a `dotfiles` repo, and more!
+Let's explore the wonders of [`zsh`](https://www.zsh.org/), [`oh-my-zsh`](https://ohmyz.sh/), [`keychain`](https://wiki.gentoo.org/wiki/Keychain), [`starship`](https://starship.rs/), [`autoenv`](https://github.com/hyperupcall/autoenv), [`z`](https://github.com/agkozak/zsh-z), [`zsh-autosuggestions`](https://github.com/zsh-users/zsh-autosuggestions), and other useful tools!
 
 ![](https://camo.githubusercontent.com/18cdb04e93fe276412b588dbed23bc328614bf7a4d09ea4d8862d38f1c466c65/687474703a2f2f6d656469612e74756d626c722e636f6d2f74756d626c725f6c74757a6a766251364c31717a677078392e676966)
 
@@ -48,16 +47,18 @@ In this short post, we'll explore the wonders of [`zsh`](https://www.zsh.org/), 
 
 ## 💾 Dotfiles: Version Control Your Configuration Files
 
-As a terminal ninja, you know the importance of your configuration files. They hold the keys to your productivity, personalizing your terminal experience and making it truly your own.
-To ensure the safety and portability of your configurations, it's essential to keep a `dotfiles` folder, where you store and version control your configuration files and plugin repositories.
+Configuration files are the key to a personalized terminal experience.
+Keeping a `dotfiles` folder where you store and version control your config files ensures they're safe, portable, and easily shared.
 
 By keeping your `.bashrc`, `.zshrc`, and other configuration files under version control, you can:
 
-1.  Keep track of changes and easily revert to previous versions if something goes wrong.
-2.  Synchronize your settings across multiple machines, allowing you to recreate your terminal setup on any system.
+1.  Track changes and easily revert to previous versions if something breaks.
+2.  Sync your settings across multiple machines, recreating your setup anywhere.
 3.  Share your configurations with others, helping them improve their own terminal experience.
 
-As an example, these are the submodules (we will go over a few later in this post) I am tracking in my `dotfiles` repository:
+A powerful approach is to not only track your configuration files but also to include plugins and tools as git submodules in your dotfiles repository. This keeps everything organized and makes it easy to update or share your complete setup.
+
+Here's an example of submodules I track in my dotfiles repository:
 
 ```bash
 [submodule "configs/zsh/oh-my-zsh"]
@@ -95,31 +96,22 @@ As an example, these are the submodules (we will go over a few later in this pos
 # (... a couple more ...)
 ```
 
-In this example, you store not only your configuration files but also several of the plugins as git submodules.
-This approach ensures that all your essential settings and tools are in one place, making it easy to manage, backup, and share.
+To start version controlling your dotfiles, create a new Git repository, add your config files and submodules, then commit and push to a remote repository for safekeeping.
 
-To get started with version controlling your dotfiles, create a new Git repository and add your configuration files and submodules.
-Then, commit your changes and push them to a remote repository (such as GitHub or GitLab) for safekeeping and easy access.
-
-I highly recommend using [Dotbot](https://github.com/anishathalye/dotbot) to automate the installation of your dotfiles.
-
-Embrace the power of version control and keep your dotfiles safe and secure, as any true terminal ninja would.
+[Dotbot](https://github.com/anishathalye/dotbot) is highly recommended for automating the installation of your dotfiles.
 
 {{% callout note %}}
 Although I keep my dotfiles in a Git repository, I have not made it public. I might do so in the future, let me know if you're interested!
 {{% /callout %}}
 
-## 🐚 The Art of Shell: Zsh and Oh-my-zsh
+## 🐚 The Power of Zsh and Oh-my-zsh
 
-The first step in our journey is choosing the right shell.
-We want a shell that is powerful, versatile, and expressive.
-Enter the Zen of Zsh, a fantastic shell for interactive use, with features that make your life easier.
+The first step toward terminal efficiency is choosing the right shell.
+Zsh is a powerful, versatile, and user-friendly shell with features that significantly improve the command line experience.
+Oh-my-zsh adds even more functionality as a framework for managing Zsh configurations.
+It brings themes, plugins, and functions that make the terminal more powerful and enjoyable to use.
 
-But why stop there? Let's add some spice to our shell with Oh-my-zsh, a delightful framework for managing Zsh configurations.
-It's the secret sauce that brings our terminal to life with themes, plugins, and functions.
-I suggest a few plugins in the example below and go through them in more detail later in this post.
-
-To set up Zsh and Oh-my-zsh, follow these steps:
+Setting up Zsh and Oh-my-zsh is straightforward:
 
 1.  Install Zsh (check your system's package manager for instructions).
 2.  Install Oh-my-zsh by running:
@@ -137,9 +129,9 @@ To set up Zsh and Oh-my-zsh, follow these steps:
 
 ## 🚀 Oh-my-zsh Z Plugin: Jump Around!
 
-A true ninja can swiftly navigate through the file system, and [Z](https://github.com/agkozak/zsh-z) is our secret weapon.
-Z is a fantastic utility that allows us to jump around our directories based on the frequency and recency of use.
-With the power of Z, we can leap to any folder in an instant, vanishing and reappearing like a shadow in the night.
+Quick navigation through the file system is essential for productivity.
+[Z](https://github.com/agkozak/zsh-z) is a fantastic utility that lets you jump to directories based on frequency and recency of use.
+With Z, you can instantly leap to any frequently-used folder without typing the full path.
 
 To set up Z, add the following lines to your `.zshrc`:
 
@@ -152,7 +144,7 @@ source $ZSH/oh-my-zsh.sh
 
 ## ⏰ Oh-my-zsh Dirhistory Plugin: Time Travel Through Directories
 
-The `dirhistory` plugin in Oh-my-zsh allows you to navigate your directory history and hierarchy with ease, using simple keyboard shortcuts. Let's go through its functionalities:
+The `dirhistory` plugin makes navigating directories incredibly simple with keyboard shortcuts:
 
 *   **ALT-LEFT**: Move back to previously visited directories.
 *   **ALT-RIGHT**: Undo the effect of ALT-LEFT, returning to the directories you moved back from.
@@ -166,15 +158,13 @@ plugins=(... dirhistory ...)
 source $ZSH/oh-my-zsh.sh
 ```
 
-With the `dirhistory` plugin, navigating through directories becomes a breeze.
-You'll be able to move up and down the directory hierarchy and traverse your directory history with just a few keystrokes, making your terminal experience even more efficient and enjoyable.
+This plugin makes directory navigation a breeze, reducing the need for repetitive typing.
 
 ## 🔧 Oh-my-zsh Git Plugin: Turbocharge Your Git Workflow
 
-If you are a developer, you probably use Git *a lot*!
-I know I do.
-Writing out `git checkout` and `git commit` every time I want to switch branches or commit changes is a waste of time, therefore I use [the `git` plugin](https://github.com/ohmyzsh/ohmyzsh/tree/5d3e86e2a48adf7a308773f8f1b725d187c7c5ef/plugins/git#git-plugin) in Oh-my-zsh which provides useful aliases to make my Git workflow more efficient.
-Let's go through some of ***my*** most commonly used aliases (ranked by frequency of use):
+For developers who use Git frequently, typing out full commands like `git checkout` and `git commit` gets tedious.
+[The `git` plugin](https://github.com/ohmyzsh/ohmyzsh/tree/5d3e86e2a48adf7a308773f8f1b725d187c7c5ef/plugins/git#git-plugin) in Oh-my-zsh provides useful aliases that save time and keystrokes.
+Here are some of the most commonly used aliases:
 
 *   `gco`: `git checkout` - Switch branches or restore working tree files.
 *   `gd`: `git diff` - Show changes between the working tree and the index or a tree.
@@ -199,22 +189,21 @@ plugins=(... git ...)
 source $ZSH/oh-my-zsh.sh
 ```
 
-See this list of [Git aliases](https://github.com/ohmyzsh/ohmyzsh/tree/5d3e86e2a48adf7a308773f8f1b725d187c7c5ef/plugins/git#git-plugin) that the Git plugin provides for more useful aliases.
+Check out the full list of [Git aliases](https://github.com/ohmyzsh/ohmyzsh/tree/5d3e86e2a48adf7a308773f8f1b725d187c7c5ef/plugins/git#git-plugin) that the Git plugin provides.
 
-## 🔑 Keychain: The Keeper of Secrets
+## 🔑 Keychain: SSH Key Management Made Simple
 
-As ninjas, we must keep our secrets safe.
-[Keychain](https://wiki.gentoo.org/wiki/Keychain) helps us do just that by managing our SSH keys, ensuring we have secure access to remote systems.
-This is particularly useful when cloning Git repositories or interacting with remote servers using SSH.
+[Keychain](https://wiki.gentoo.org/wiki/Keychain) is a tool that manages SSH keys, making secure access to remote systems much more convenient.
+It's especially useful when working with Git repositories or remote servers via SSH.
 
-With Keychain, you only need to ***enter your SSH password once*** after rebooting, and it will remember it for future sessions, saving you valuable time and effort.
+With Keychain, you only need to ***enter your SSH password once*** after rebooting, and it will remember it for future sessions.
 
-To set up Keychain clone the Keychain tool (to e.g., your `dotfiles` directory):
+To set up Keychain, clone it to your dotfiles directory:
 ```bash
 git clone git@github.com:funtoo/keychain.git ~/dotfiles/keychain
 ```
 
-Then in your `.bash_profile`, add the following lines:
+Then add these lines to your `.bash_profile`:
 
 ```bash
 if [[ `hostname` == 'Linux' ]]; then
@@ -230,14 +219,14 @@ if [[ `uname` == 'Darwin' ]]; then
 fi
 ```
 
-## 🌌 Starship: The Cosmic Shell Prompt
+## 🌌 Starship: A Sleek, Informative Shell Prompt
 
-With our shell of choice and secrets secured, it's time to gaze upon the stars! [Starship](https://starship.rs/) is a minimal, blazing-fast, and fully customizable shell prompt that provides us with essential information at a glance.
-It gives us valuable feedback about our current environment, such as the Git branch, Python virtual environment, and more.
+[Starship](https://starship.rs/) is a minimal, blazing-fast, and fully customizable shell prompt that provides essential information at a glance.
+It shows details about your current environment, such as Git branch, Python virtual environment, and more.
 
-To set up Starship, follow these steps:
+Setting up Starship is simple:
 
-1.  Install Starship using the appropriate command for your system:
+1.  Install it using the appropriate command for your system:
     
     ```bash
     curl -fsSL https://starship.rs/install.sh | bash
@@ -254,22 +243,20 @@ To set up Starship, follow these steps:
   Your browser does not support the video tag.
 </video>
 
-## 🌍 Autoenv: Automatic Environment Management
+## 🌍 Autoenv: Smart Environment Management
 
-In the life of a terminal ninja, we frequently traverse different projects, each with its unique environment requirements.
-[Autoenv](https://github.com/hyperupcall/autoenv) comes to our rescue by automating the process of activating and deactivating project-specific settings.
-It magically detects when we enter or leave a directory and takes the appropriate actions to set or unset environment variables.
+When working with multiple projects, each often requires specific environment settings.
+[Autoenv](https://github.com/hyperupcall/autoenv) automates the process of activating and deactivating these settings when you enter or leave a directory.
 
-For example you can setup a `.env` file in your project directory to automatically activate a virtual environment when you enter the directory.
-I frequently create a `.env` file in a repo and activate a Python environment:
+For example, you can create a `.env` file in your project directory to automatically activate a Python environment:
 
 ```bash
 conda activate myenv
 ```
 
-To set up Autoenv, follow these steps:
+To set up Autoenv:
 
-1.  Install Autoenv by cloning the repository (or add it to your `dotfiles`):
+1.  Clone the repository (or add it to your `dotfiles`):
     
     ```bash
     git clone git://github.com/hyperupcall/autoenv.git ~/.autoenv
@@ -281,13 +268,12 @@ To set up Autoenv, follow these steps:
     source ~/.autoenv/activate.sh
     ```
 
-## 💡 Zsh-autosuggestions: The Wisest of Mentors
+## 💡 Zsh-autosuggestions: Command Suggestions as You Type
 
-As we hone our terminal skills, we often find ourselves repeating commands.
-[Zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) is our trusted mentor, always ready with sage advice.
-It suggests commands based on our command history, saving us precious keystrokes and making our terminal life more enjoyable.
+[Zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) suggests commands based on your command history as you type.
+This saves keystrokes and makes repetitive tasks much faster.
 
-To set up Zsh-autosuggestions, follow these steps:
+To set up Zsh-autosuggestions:
 
 1.  Clone the repository:
     
@@ -305,10 +291,10 @@ To set up Zsh-autosuggestions, follow these steps:
 
 ## 🧩 Putting it All Together
 
-Now that you know the secrets of our terminal ninja setup, it's time to embark on your own journey.
-Armed with these powerful tools, you'll conquer the terminal with grace and efficiency.
-Remember, the path of the ninja is one of continuous learning and growth.
-Embrace the way of the terminal, and become one with the command line. 🥷
+With these powerful tools at your disposal, you're now equipped to make your terminal experience faster, more efficient, and more enjoyable.
+These tools work together to reduce repetitive typing, simplify complex workflows, and provide helpful information when you need it.
+Each component adds something valuable to your terminal setup, creating a seamless and productive environment.
 
-Feel free to reach out if you have any questions or require clarification on any of the tools mentioned.
-Happy ninja-ing!
+Try implementing these tools one by one, and see how they transform your command-line experience.
+Feel free to reach out if you have questions about any of the tools mentioned.
+Happy terminal customizing!
