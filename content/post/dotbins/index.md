@@ -115,13 +115,13 @@ With `dotbins`, I've been able to upgrade several tools from my previous setup:
 
 | Old Tool | Modern Alternative | Advantage |
 |----------|-------------------|-----------|
-| `zsh-z` | `zoxide` | Faster, smarter, works across shells |
-| `cat` | `bat` | Syntax highlighting, Git integration |
-| `ls` | `eza` | Better formatting, Git integration |
-| `grep` | `ripgrep` | Much faster, respects `.gitignore` |
-| Default Git diff | `delta` | Syntax highlighting, better visual diffs |
-| N/A | `fzf` | Fuzzy finding makes everything better |
-| N/A | `atuin` | Shell history with search and sync |
+| [`zsh-z`](https://github.com/agkozak/zsh-z) | [`zoxide`](https://github.com/ajeetdsouza/zoxide) | Faster, smarter, works across shells |
+| `cat` | [`bat`](https://github.com/sharkdp/bat) | Syntax highlighting, Git integration |
+| `ls` | [`eza`](https://github.com/eza-community/eza) | Better formatting, Git integration |
+| `grep` | [`ripgrep`](https://github.com/BurntSushi/ripgrep) | Much faster, respects `.gitignore` |
+| Default Git diff | [`delta`](https://github.com/dandavison/delta) | Syntax highlighting, better visual diffs |
+| N/A | [`fzf`](https://github.com/junegunn/fzf) | Fuzzy finding makes everything better |
+| N/A | [`atuin`](https://github.com/atuinsh/atuin) | Shell history with search and sync |
 
 The best part? All of these are now automatically available on every machine where I clone my dotfiles, without any additional installation steps.
 
