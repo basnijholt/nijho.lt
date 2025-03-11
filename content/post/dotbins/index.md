@@ -1,5 +1,5 @@
 ---
-title: 🧰 dotbins: Taking Your Terminal Setup to the Next Level
+title: "🧰 dotbins: Taking Your Terminal Setup to the Next Level"
 subtitle: Managing modern CLI tools across multiple environments without admin privileges, using pre-compiled binaries in your dotfiles
 summary: A solution for managing pre-compiled binaries for CLI tools directly in your dotfiles repository, making tools like `zoxide`, `bat`, `eza`, and more available on any system without installation.
 projects: []
