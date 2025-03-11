@@ -1,5 +1,5 @@
 ---
-title: "🧰 dotbins: Taking Your Terminal Setup to the Next Level"
+title: "🧰 dotbins: Managing Binary Tools in Your Dotfiles"
 subtitle: Managing modern CLI tools across multiple environments without admin privileges, using pre-compiled binaries in your dotfiles
 summary: A solution for managing pre-compiled binaries for CLI tools directly in your dotfiles repository, making tools like `zoxide`, `bat`, `eza`, and more available on any system without installation.
 projects: []
@@ -34,8 +34,6 @@ categories:
   - terminal
   - level:intermediate
 ---
-
-# 🧰 dotbins: Taking Your Terminal Setup to the Next Level
 
 In my [previous post about terminal productivity](../terminal-ninja/), I shared a setup combining tools like `zsh`, `oh-my-zsh`, `zsh-z`, and various plugins to create a highly efficient command-line environment. While that setup served me well for years, I've recently encountered a challenge: incorporating modern, compiled CLI tools across all my environments without administrative privileges.
 
