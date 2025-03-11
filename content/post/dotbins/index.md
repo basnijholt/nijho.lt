@@ -3,13 +3,13 @@ title: "🧰 dotbins: Managing Binary Tools in Your Dotfiles"
 subtitle: Managing modern CLI tools across multiple environments without admin privileges, using pre-compiled binaries in your dotfiles
 summary: A solution for managing pre-compiled binaries for CLI tools directly in your dotfiles repository, making tools like `zoxide`, `bat`, `eza`, and more available on any system without installation.
 projects: []
-date: '2025-03-11T00:00:00Z'
+date: "2025-03-11T00:00:00Z"
 draft: false
 featured: false
 
 image:
-  caption: 'dotbins in action - downloading and managing CLI tools across platforms'
-  focal_point: ''
+  caption: "dotbins in action - downloading and managing CLI tools across platforms"
+  focal_point: ""
   placement: 2
   preview_only: false
 
@@ -55,6 +55,7 @@ These tools significantly enhance terminal productivity, but they come with a ca
 While my previous setup worked well because all the tools were basic shell scripts I could include as submodules in my dotfiles repository, these modern alternatives require installation.
 
 This became frustrating when working on:
+
 - Remote systems where I lacked admin/sudo permissions
 - Machines that I use only temporarily
 - Systems where I didn't want to install package managers
@@ -113,15 +114,15 @@ When I clone my dotfiles on a new system, I get not just my configuration files,
 
 With `dotbins`, I've been able to upgrade several tools from my previous setup:
 
-| Old Tool | Modern Alternative | Advantage |
-|----------|-------------------|-----------|
-| [`zsh-z`](https://github.com/agkozak/zsh-z) | [`zoxide`](https://github.com/ajeetdsouza/zoxide) | Faster, smarter, works across shells |
-| `cat` | [`bat`](https://github.com/sharkdp/bat) | Syntax highlighting, Git integration |
-| `ls` | [`eza`](https://github.com/eza-community/eza) | Better formatting, Git integration |
-| `grep` | [`ripgrep`](https://github.com/BurntSushi/ripgrep) | Much faster, respects `.gitignore` |
-| Default Git diff | [`delta`](https://github.com/dandavison/delta) | Syntax highlighting, better visual diffs |
-| N/A | [`fzf`](https://github.com/junegunn/fzf) | Fuzzy finding makes everything better |
-| N/A | [`atuin`](https://github.com/atuinsh/atuin) | Shell history with search and sync |
+| Old Tool                                    | Modern Alternative                                 | Advantage                                |
+| ------------------------------------------- | -------------------------------------------------- | ---------------------------------------- |
+| [`zsh-z`](https://github.com/agkozak/zsh-z) | [`zoxide`](https://github.com/ajeetdsouza/zoxide)  | Faster, smarter, works across shells     |
+| `cat`                                       | [`bat`](https://github.com/sharkdp/bat)            | Syntax highlighting, Git integration     |
+| `ls`                                        | [`eza`](https://github.com/eza-community/eza)      | Better formatting, Git integration       |
+| `grep`                                      | [`ripgrep`](https://github.com/BurntSushi/ripgrep) | Much faster, respects `.gitignore`       |
+| Default Git diff                            | [`delta`](https://github.com/dandavison/delta)     | Syntax highlighting, better visual diffs |
+| N/A                                         | [`fzf`](https://github.com/junegunn/fzf)           | Fuzzy finding makes everything better    |
+| N/A                                         | [`atuin`](https://github.com/atuinsh/atuin)        | Shell history with search and sync       |
 
 The best part? All of these are now automatically available on every machine where I clone my dotfiles, without any additional installation steps.
 
@@ -130,6 +131,7 @@ The best part? All of these are now automatically available on every machine whe
 If you'd like to adopt this approach, here's how to get started:
 
 1. Install `dotbins`:
+
    ```bash
    pip install dotbins
    # Or better yet, use uv:
@@ -137,16 +139,17 @@ If you'd like to adopt this approach, here's how to get started:
    ```
 
 2. Create a configuration file at `~/.config/dotbins/config.yaml`:
+
    ```yaml
    tools_dir: ~/.mydotbins/tools
-   
+
    platforms:
      linux:
        - amd64
        - arm64
      macos:
        - arm64
-   
+
    tools:
      # Add your favorite tools here
      fzf:
@@ -160,21 +163,23 @@ If you'd like to adopt this approach, here's how to get started:
    ```
 
 3. Initialize and download your tools:
+
    ```bash
    dotbins init
    dotbins update
    ```
 
 4. Add the shell integration to your `.zshrc` or `.bashrc`:
+
    ```bash
    # dotbins - Add platform-specific binaries to PATH
    _os=$(uname -s | tr '[:upper:]' '[:lower:]')
    [[ "$_os" == "darwin" ]] && _os="macos"
-   
+
    _arch=$(uname -m)
    [[ "$_arch" == "x86_64" ]] && _arch="amd64"
    [[ "$_arch" == "aarch64" || "$_arch" == "arm64" ]] && _arch="arm64"
-   
+
    export PATH="$HOME/.mydotbins/tools/$_os/$_arch/bin:$PATH"
    ```
 
