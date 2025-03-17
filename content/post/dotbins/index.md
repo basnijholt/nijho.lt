@@ -44,12 +44,12 @@ Today, I'm excited to [introduce **`dotbins`**](https://github.com/basnijholt/do
 Over the past few years, we've seen an explosion of incredible, modern CLI tools written in languages like Rust and Go.
 Tools like:
 
-- `zoxide` (a smarter, faster alternative to `zsh-z`)
-- `bat` (a `cat` replacement with syntax highlighting)
-- `eza` (a modern `ls` alternative)
-- `delta` (a better diff viewer for Git)
-- `fzf` (a fuzzy finder for your terminal)
-- `ripgrep` (a faster, better `grep`)
+- [`zoxide`](https://github.com/ajeetdsouza/zoxide) (a smarter, faster alternative to `zsh-z`)
+- [`bat`](https://github.com/sharkdp/bat) (a `cat` replacement with syntax highlighting)
+- [`eza`](https://github.com/eza-community/eza) (a modern `ls` alternative)
+- [`delta`](https://github.com/dandavison/delta) (a better diff viewer for Git)
+- [`fzf`](https://github.com/junegunn/fzf) (a fuzzy finder for your terminal)
+- [`ripgrep`](https://github.com/BurntSushi/ripgrep) (a faster, better `grep`)
 
 These tools significantly enhance terminal productivity, but they come with a catch: **they're compiled binaries**, not simple scripts.
 While my previous setup worked well because all the tools were basic shell scripts I could include as submodules in my dotfiles repository, these modern alternatives require installation.
