@@ -50,6 +50,7 @@ Tools like:
 - [`delta`](https://github.com/dandavison/delta) (a better diff viewer for Git)
 - [`fzf`](https://github.com/junegunn/fzf) (a fuzzy finder for your terminal)
 - [`ripgrep`](https://github.com/BurntSushi/ripgrep) (a faster, better `grep`)
+- [`atuin`](https://github.com/atuinsh/atuin) (a shell history with search and sync)
 
 These tools significantly enhance terminal productivity, but they come with a catch: **they're compiled binaries**, not simple scripts.
 While my previous setup worked well because all the tools were basic shell scripts I could include as submodules in my dotfiles repository, these modern alternatives require installation.
@@ -120,6 +121,7 @@ With `dotbins`, I've been able to upgrade several tools from my previous setup:
 | `cat`                                       | [`bat`](https://github.com/sharkdp/bat)            | Syntax highlighting, Git integration     |
 | `ls`                                        | [`eza`](https://github.com/eza-community/eza)      | Better formatting, Git integration       |
 | `grep`                                      | [`ripgrep`](https://github.com/BurntSushi/ripgrep) | Much faster, respects `.gitignore`       |
+| Control + R                                 | [`atuin`](https://github.com/atuinsh/atuin)        | Shell history with search and sync       |
 | Default Git diff                            | [`delta`](https://github.com/dandavison/delta)     | Syntax highlighting, better visual diffs |
 | N/A                                         | [`fzf`](https://github.com/junegunn/fzf)           | Fuzzy finding makes everything better    |
 | N/A                                         | [`atuin`](https://github.com/atuinsh/atuin)        | Shell history with search and sync       |
