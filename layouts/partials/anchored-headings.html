@@ -1,0 +1,3 @@
+<!-- from https://github.com/jakewies/hugo-theme-codex/blob/9e911e331c90fcd56ae5d01ae5ecb2fa06ba55da/layouts/partials/anchored-headings.html -->
+<!-- formats .Content headings by adding an anchor -->
+{{ . | replaceRE "(<h[2-3] id=\"([^\"]+)\".+)(</h[2-9]+>)" "${1}<a class=\"anchor\" href=\"#${2}\"> #</a>${3}" | safeHTML }}
