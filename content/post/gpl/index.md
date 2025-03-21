@@ -22,7 +22,6 @@ categories:
   - level:intermediate
 
 image:
-  caption: "GPL Licenses in Python - navigating licensing in your projects"
   focal_point: ""
   placement: 2
   preview_only: false
