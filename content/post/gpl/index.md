@@ -1,5 +1,5 @@
 ---
-title: "⚖ GPL for Python Packaging"
+title: "GPL for Python Packaging ⚖"
 subtitle: Understanding GPL licenses and their implications for Python code and packaging
 summary: Clarifying GPL licenses (GPLv2, GPLv3, LGPL, AGPL) and how they affect Python software, including the concept of "linking" in Python through imports.
 projects: []

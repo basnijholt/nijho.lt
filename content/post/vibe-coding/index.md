@@ -1,5 +1,5 @@
 ---
-title: 🧠 I Tried "Vibe coding" for 3 Hours, My Application Worked, but Then I Spent 15 Hours Fixing It
+title: I Tried "Vibe coding" for 3 Hours, My Application Worked, but Then I Spent 15 Hours Fixing It 🧠
 subtitle: A cautionary tale about letting AI generate code without careful review or understanding
 summary: While "vibe coding" can quickly produce working prototypes, my experience shows why it shouldn't be used for production code without careful human oversight.
 projects: []

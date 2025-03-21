@@ -1,5 +1,5 @@
 ---
-title: 👩‍💻 Be a Ninja in the Terminal 🥷
+title: Be a Ninja in the Terminal 🥷
 subtitle: A setup for maximal productivity and minimal keystrokes, with `zsh`, `oh-my-zsh`, `keychain`, `starship`, `autoenv`, `z`, `zsh-autosuggestions`, and more.
 summary: A setup for maximal productivity and minimal keystrokes, with `zsh`, `oh-my-zsh`, `keychain`, `starship`, `autoenv`, `z`, `zsh-autosuggestions`, and more.
 projects: []
