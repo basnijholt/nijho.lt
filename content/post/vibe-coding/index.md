@@ -1,5 +1,5 @@
 ---
-title: I tried "vibe coding" for 3 hours, my application worked, but then i spent 15 hours fixing it
+title: I tried "vibe coding" for 3 hours, my application worked, but then I spent 15 hours fixing it
 subtitle: A cautionary tale about letting AI generate code without careful review or understanding
 summary: While "vibe coding" can quickly produce working prototypes, my experience shows why it shouldn't be used for production code without careful human oversight.
 projects: []
@@ -25,9 +25,9 @@ categories:
   - level:intermediate
 ---
 
-## I tried "vibe coding" for 3 hours, my application worked, but then i spent 15 hours fixing it
+## I tried "vibe coding" for 3 hours, my application worked, but then I spent 15 hours fixing it
 
-That's not an exaggeration—it's exactly how it happened.
+That's not an exaggeration—it's really what happened.
 
 Recently, I tried "[Vibe coding](https://en.wikipedia.org/wiki/Vibe_coding)," a term coined by Andrej Karpathy, a prominent AI researcher, co-founder of OpenAI, and former AI lead at Tesla.
 In [his viral tweet](https://x.com/karpathy/status/1886192184808149383) from February 2025, Karpathy described vibe coding as a programming approach where you "fully give in to the vibes, embrace exponentials, and forget that the code even exists."
