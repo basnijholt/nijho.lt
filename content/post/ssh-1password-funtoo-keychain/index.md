@@ -42,6 +42,10 @@ categories:
 For about a decade, I've relied on two key tools in my development workflow: [Funtoo Keychain](https://www.funtoo.org/Funtoo:Keychain) for managing my `ssh-agent` and 1Password for securely storing secrets.
 While I used them extensively, I never actually integrated them directly for SSH key passphrase handling.
 
+{{% callout note %}}
+I wrote about Keychain before in [this post](../terminal-ninja/#-keychain-ssh-key-management-made-simple).
+{{% /callout %}}
+
 Recently, with the advent of [1Password's built-in SSH agent](https://developer.1password.com/docs/ssh/get-started/), I gave it a try, attracted by the promise of managing keys directly within my vault.
 However, I quickly found myself frequently prompted for my master password or biometrics, which interrupted my flow more often than I preferred compared to Keychain's persistence.
 
