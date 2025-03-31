@@ -84,7 +84,6 @@ This script simply calls `op read` to fetch the passphrase using its [Secret Ref
 - Locate the passphrase field, click the options/arrow, and copy the "Copy Secret Reference".
 - Create the script at `~/.ssh/askpass-1password.sh`:
 
-
 ```sh
 #!/bin/sh
 # ~/.ssh/askpass-1password.sh
