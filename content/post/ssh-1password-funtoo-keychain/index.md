@@ -3,7 +3,7 @@ title: Combining Keychain and 1Password CLI for SSH Agent Management
 subtitle: A method to use 1Password CLI for secure SSH key passphrase storage while leveraging Keychain for persistent agent access and minimal prompts.
 summary: Using 1Password CLI with Keychain for secure, persistent SSH agent access with fewer password prompts after initial setup.
 projects: []
-date: "2025-03-31T00:00:00Z"
+date: "2025-03-30T00:00:00Z"
 draft: false
 featured: false
 
