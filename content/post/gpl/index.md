@@ -19,7 +19,7 @@ tags:
 
 categories:
   - licensing
-  - level:intermediate
+  - level:beginner
 
 image:
   focal_point: ""

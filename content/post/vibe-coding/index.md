@@ -22,7 +22,7 @@ tags:
 
 categories:
   - development
-  - level:intermediate
+  - level:beginning
 ---
 
 ## I tried "vibe coding" for 3 hours, my application worked, but then I spent 15 hours fixing it

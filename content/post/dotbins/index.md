@@ -32,7 +32,7 @@ tags:
 
 categories:
   - terminal
-  - level:intermediate
+  - level:beginner
 ---
 
 In my [previous post about terminal productivity](../terminal-ninja/), I shared a setup combining tools like `zsh`, `oh-my-zsh`, `zsh-z`, and various plugins to create a highly efficient command-line environment. While that setup served me well for years, I've recently encountered a challenge: incorporating modern, compiled CLI tools across all my environments without administrative privileges.
