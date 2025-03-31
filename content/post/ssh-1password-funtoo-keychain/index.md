@@ -53,7 +53,7 @@ The answer is yes, and this post outlines the setup that achieves that balance.
 
 {{% callout note %}}
 Requires 1Password CLI (`op`) and Funtoo Keychain installed.
-This post assumes you have a working SSH key and a 1Password account with the CLI installed and authenticated.
+This post assumes you [have a working SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key) and a [1Password with the CLI installed and authenticated](https://developer.1password.com/docs/cli/get-started/).
 Run `brew install --cask 1password-cli` and `brew install keychain` to install them.
 {{% /callout %}}
 
