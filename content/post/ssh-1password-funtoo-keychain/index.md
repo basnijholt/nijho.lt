@@ -51,6 +51,12 @@ The answer is yes, and this post outlines the setup that achieves that balance.
 
 **The Goal:** Use 1Password as the secure vault for the SSH key passphrase but rely on `keychain` to manage the `ssh-agent` process and ensure the key, once unlocked, remains available for the entire login session without further prompts from 1Password.
 
+{{% callout note %}}
+Requires 1Password CLI (`op`) and Funtoo Keychain installed.
+This post assumes you have a working SSH key and a 1Password account with the CLI installed and authenticated.
+Run `brew install --cask 1password-cli` and `brew install keychain` to install them.
+{{% /callout %}}
+
 **Why This Approach?**
 
 This setup directly addresses the trade-off I encountered.
