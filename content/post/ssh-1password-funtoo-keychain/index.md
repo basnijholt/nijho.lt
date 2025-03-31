@@ -78,11 +78,12 @@ By using `keychain` for agent management and calling the `op` CLI via the standa
 
 This script simply calls `op read` to fetch the passphrase using its [Secret Reference URI](https://developer.1password.com/docs/cli/secret-reference-syntax/).
 
+![Copy Secret Reference screenshot](https://developer.1password.com/img/cli/copy-secret-reference-dark.png)
+
 - Find your SSH key item in 1Password.
 - Locate the passphrase field, click the options/arrow, and copy the "Copy Secret Reference".
 - Create the script at `~/.ssh/askpass-1password.sh`:
 
-![Copy Secret Reference screenshot](https://developer.1password.com/img/cli/copy-secret-reference-dark.png)
 
 ```sh
 #!/bin/sh
