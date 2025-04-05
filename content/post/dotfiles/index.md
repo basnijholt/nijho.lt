@@ -31,6 +31,8 @@ tags:
   - cross-platform
   - keychain
   - git
+  - uv
+  - iterm2
 
 categories:
   - terminal
@@ -125,6 +127,20 @@ This setup is detailed [here]({{< ref "/post/ssh-1password-funtoo-keychain" >}})
 On my Macs, I use [Nix-Darwin](https://github.com/LnL7/nix-darwin) to manage system settings and even Homebrew packages declaratively (`configs/nix-darwin/`).
 Running `nixswitch` applies the entire configuration, making macOS setups highly reproducible.
 
+## A Note on Alternatives & Design Choices
+
+You might wonder why I haven't adopted certain popular tools or approaches. Here's some rationale behind the choices made in this setup:
+
+- **Why not `fish` shell?** While `fish` offers many appealing modern features (and its Rust rewrite is intriguing!), a core requirement for my setup is broad compatibility. I need my core shell environment to function reliably even on minimal Linux systems (servers, containers, HPC nodes) where `bash` is often the only guarantee. For this reason, I use `zsh` as a powerful, yet largely POSIX-compatible, middle ground that works well across my diverse environments without requiring a non-standard shell installation everywhere.
+
+- **Why iTerm2 on macOS?** I've experimented with newer terminals like WezTerm, Ghostty, Kitty, and Alacritty. Many offer benefits like impressive speed and GPU rendering. However, I consistently return to [iTerm2](https://iterm2.com/).
+
+  - **Criticisms & Rebuttals:** iTerm2 is often criticized for being "bloated" or "slow," and historically, its settings weren't easily version controllable. Frankly, on modern hardware, any perceived slowness is negligible for my use cases. More importantly, iTerm2 _does_ allow its profiles to be saved as JSON (see [my `Profiles.json`](https://github.com/basnijholt/dotfiles/blob/main/configs/iterm/Profiles.json) in this repo), making the configuration easily version controlled via dotfiles.
+  - **The Killer Feature:** The primary reason I stick with iTerm2 is its robust **Semantic History** feature. The ability to Cmd-Click filenames in terminal output – even complex ones with line numbers like `src/my_module/file.py:123` – and have them open directly in VS Code at the correct line is indispensable for my debugging and development workflow. I haven't found this replicated with the same reliability and ease of configuration elsewhere.
+  - **Ghostty Example:** I recently tried Ghostty and liked many aspects, but quickly ran into limitations that highlighted my reliance on iTerm2 features, such as the lack of built-in text search, scrollbars, and crucially, the clickable file paths with line numbers ([as discussed here](https://bsky.app/profile/basnijholt.bsky.social/post/3lehtwv2pxc2j)).
+
+- **No `sudo` Required:** A key design principle is that the installation process via `./install` (Dotbot symlinking, `uv tool install`, `dotbins` fetching binaries) operates _entirely within the user's home directory_. No `sudo` access is needed to get the core environment up and running. This makes the setup viable in restricted environments like HPC clusters, shared servers, or locked-down corporate machines where admin rights aren't available.
+
 ## A Look Inside: Structure
 
 The repository is organized to keep things separated logically:
@@ -180,6 +196,7 @@ It solves real problems I've encountered in maintaining that consistency.
 By sharing it, I hope to offer some practical ideas and perhaps save others some time in crafting their own ideal setup.
 
 Feel free to explore the [repository](https://github.com/basnijholt/dotfiles), borrow what you find useful, and adapt it to your needs.
+If you find it helpful, consider giving it a star!
 If you have suggestions or find issues, contributions are welcome!
 
 Happy terminal tinkering!
@@ -196,3 +213,4 @@ Happy terminal tinkering!
 - [Dotbot](https://github.com/anishathalye/dotbot)
 - [Dotbins](https://github.com/basnijholt/dotbins)
 - [Git Secret](https://github.com/sobolevn/git-secret)
+- [iTerm2](https://iterm2.com/)
