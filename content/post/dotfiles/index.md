@@ -42,7 +42,7 @@ categories:
 
 Many of us spend a significant amount of time in the terminal.
 Over the years, I've found that investing in a well-organized and consistent command-line environment pays dividends in productivity and, frankly, makes the daily grind more enjoyable.
-After refining my personal setup across more than 10 different machines – ranging from my primary MacBooks to Linux servers (x86/ARM), Raspberry Pis in my [homelab](/homelab), cloud VMs, and even my iPhone via iSH – I've decided it's time to share it publicly.
+After refining my personal setup across more than 10 different machines – ranging from my primary MacBooks to Linux servers (x86/ARM), Raspberry Pis in my [homelab](../homelab), cloud VMs, and even my iPhone via iSH – I've decided it's time to share it publicly.
 The need for a consistent experience across such diverse hardware and operating systems was a major driving force behind this setup's evolution.
 
 Today, I'm open sourcing my complete [dotfiles repository](https://github.com/basnijholt/dotfiles) 🎉.
@@ -113,12 +113,12 @@ tools:
 ```
 
 The shell setup automatically adds the correct binary path and runs any needed initialization.
-More details in my [`dotbins` post](/dotbins).
+More details in my [`dotbins` post](../dotbins).
 
 ### 5. Sensible SSH Key Management
 
 Using [Funtoo Keychain](https://www.funtoo.org/Funtoo:Keychain), often integrated with the 1Password CLI for passphrase retrieval, means I typically only deal with my SSH key passphrase once per login session.
-This setup is detailed [here](/ssh-1password-funtoo-keychain).
+This setup is detailed [here](../ssh-1password-funtoo-keychain).
 
 ### 6. (macOS) Declarative Setup with Nix-Darwin
 
@@ -175,7 +175,7 @@ You'll need your own strategy for managing secrets, whether it's a similar priva
 
 ## Conclusion
 
-This dotfiles setup represents my ongoing effort to build a productive, consistent, and enjoyable terminal environment across a diverse range of machines – from personal laptops to [homelab servers](/homelab) and cloud instances.
+This dotfiles setup represents my ongoing effort to build a productive, consistent, and enjoyable terminal environment across a diverse range of machines – from personal laptops to [homelab servers](../homelab) and cloud instances.
 It solves real problems I've encountered in maintaining that consistency.
 By sharing it, I hope to offer some practical ideas and perhaps save others some time in crafting their own ideal setup.
 
@@ -189,10 +189,10 @@ Happy terminal tinkering!
 **Further Reading & Links:**
 
 - [My Dotfiles Repository on GitHub](https://github.com/basnijholt/dotfiles)
-- Blog Post: [My Homelab Setup](/homelab)
-- Blog Post: [Be a Ninja in the Terminal 🥷](/terminal-ninja)
-- Blog Post: [dotbins: Managing Binary Tools in Your Dotfiles 🧰](/dotbins)
-- Blog Post: [Combining Keychain and 1Password CLI for SSH Agent Management](/ssh-1password-funtoo-keychain)
+- Blog Post: [My Homelab Setup](../homelab)
+- Blog Post: [Be a Ninja in the Terminal 🥷](../terminal-ninja)
+- Blog Post: [dotbins: Managing Binary Tools in Your Dotfiles 🧰](../dotbins)
+- Blog Post: [Combining Keychain and 1Password CLI for SSH Agent Management](../ssh-1password-funtoo-keychain)
 - [Dotbot](https://github.com/anishathalye/dotbot)
 - [Dotbins](https://github.com/basnijholt/dotbins)
 - [Git Secret](https://github.com/sobolevn/git-secret)
