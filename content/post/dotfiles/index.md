@@ -58,9 +58,11 @@ If you're looking for ideas to streamline your own terminal workflow, I hope you
 I have maintained my dotfiles for many years in a private repository.
 Sharing this setup feels like a natural step for a few reasons:
 
-1.  **Giving Back:** I've learned a lot from countless other dotfiles repos and articles shared by the community. It feels right to contribute my own approach.
-2.  **Sharing Solutions:** This setup incorporates solutions to problems I've wrestled with, like managing binaries without `sudo` (leading to my [`dotbins`](https://github.com/basnijholt/dotbins) tool), achieving [consistent SSH agent behavior]({{< ref "/post/ssh-1password-funtoo-keychain" >}}), or getting Python environments to activate seamlessly with [direnv](https://direnv.net/).
+1.  **Sharing Solutions:** This setup incorporates solutions to problems I've wrestled with, like managing binaries without `sudo` (leading to my [`dotbins`](https://github.com/basnijholt/dotbins) tool), achieving [consistent SSH agent behavior]({{< ref "/post/ssh-1password-funtoo-keychain" >}}), or getting Python environments to activate seamlessly with [direnv](https://direnv.net/).
+2.  **Giving Back:** I've learned a lot from countless other dotfiles repos and articles shared by the community. It feels right to contribute my own approach.
 3.  **Transparency & Learning:** Open sourcing allows others to see how different pieces fit together and perhaps adapt ideas for their own configurations.
+
+However, the driving force was the recent creation of my [`dotbins` tool]({{< ref "/post/dotbins" >}}) and honestly, I just want to share "my way" of doing things.
 
 ## Core Ideas & Highlights
 
