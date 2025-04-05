@@ -88,10 +88,10 @@ This makes it much easier to understand, maintain, and debug specific parts of t
 
 ### 3. Automation via Dotbot
 
-A core goal here is a true `./install` and done setup.
+A core goal here is a true [`./install`](https://github.com/basnijholt/dotfiles/blob/main/install) and done setup.
 [Dotbot](https://github.com/anishathalye/dotbot) is key to this automation.
 Setting up a new machine or syncing changes is streamlined using this tool.
-The `install.conf.yaml` file defines which config files get symlinked where, _and_ runs initial setup commands.
+The [`install.conf.yaml`](https://github.com/basnijholt/dotfiles/blob/main/install.conf.yaml) file defines which config files get symlinked where, _and_ runs initial setup commands.
 This includes updating submodules and, importantly, using `uv tool install` to install a curated list of essential Python CLI tools (`ruff`, `pre-commit`, `dotbins` itself, etc.) globally, ensuring they're immediately available after installation.
 For remote machines, `scripts/sync-dotfiles.sh` handles pulling updates and optionally re-running the install.
 
