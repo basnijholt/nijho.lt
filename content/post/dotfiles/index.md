@@ -93,7 +93,7 @@ A core goal here is a true [`./install`](https://github.com/basnijholt/dotfiles/
 Setting up a new machine or syncing changes is streamlined using this tool.
 The [`install.conf.yaml`](https://github.com/basnijholt/dotfiles/blob/main/install.conf.yaml) file defines which config files get symlinked where, _and_ runs initial setup commands.
 This includes updating submodules and, importantly, using `uv tool install` to install a curated list of essential Python CLI tools (`ruff`, `pre-commit`, `dotbins` itself, etc.) globally, ensuring they're immediately available after installation.
-For remote machines, `scripts/sync-dotfiles.sh` handles pulling updates and optionally re-running the install.
+For remote machines, [`scripts/sync-dotfiles.sh`](https://github.com/basnijholt/dotfiles/blob/main/scripts/sync-dotfiles.sh) handles pulling updates and optionally re-running the install.
 
 ### 4. Hassle-Free CLI Tools with `dotbins`
 
