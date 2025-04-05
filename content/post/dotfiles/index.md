@@ -55,6 +55,7 @@ If you're looking for ideas to streamline your own terminal workflow, I hope you
 
 ## Why Open Source Now?
 
+I have maintained my dotfiles for many years in a private repository.
 Sharing this setup feels like a natural step for a few reasons:
 
 1.  **Giving Back:** I've learned a lot from countless other dotfiles repos and articles shared by the community. It feels right to contribute my own approach.
