@@ -134,7 +134,7 @@ Running `nixswitch` applies the entire configuration, making macOS setups highly
 
 You might wonder why I haven't adopted certain popular tools or approaches. Here's some rationale behind the choices made in this setup:
 
-- **Why not `fish` shell?** While `fish` offers many appealing modern features (and its Rust rewrite is intriguing!), a core requirement for my setup is broad compatibility. I need my core shell environment to function reliably even on minimal Linux systems (servers, containers, HPC nodes) where `bash` is often the only guarantee. For this reason, I use `zsh` as a powerful, yet largely POSIX-compatible, middle ground that works well across my diverse environments without requiring a non-standard shell installation everywhere.
+- **Why not `fish` shell?** While `fish` offers many appealing modern features (and [its Rust rewrite is intriguing](https://fishshell.com/blog/rustport/)!), a core requirement for my setup is broad compatibility. I need my core shell environment to function reliably even on minimal Linux systems (servers, containers, HPC nodes) where `bash` is often the only guarantee. For this reason, I use `zsh` as a powerful, yet largely POSIX-compatible, middle ground that works well across my diverse environments without requiring a non-standard shell installation everywhere.
 
 - **Why iTerm2 on macOS?** I've experimented with newer terminals like WezTerm, Ghostty, Kitty, and Alacritty. Many offer benefits like impressive speed and GPU rendering. However, I consistently return to [iTerm2](https://iterm2.com/).
 
