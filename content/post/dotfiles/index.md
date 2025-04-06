@@ -93,6 +93,10 @@ This makes it much easier to understand, maintain, and debug specific parts of t
 
 ### 3. Automation via Dotbot
 
+{{% callout note %}}
+The setup does not require `sudo` access, and the installation process is entirely in the user's home directory!
+{{% /callout %}}
+
 A core goal here is a true [`./install`](https://github.com/basnijholt/dotfiles/blob/main/install) and done setup.
 [Dotbot](https://github.com/anishathalye/dotbot) is key to this automation.
 Setting up a new machine or syncing changes is streamlined using this tool.
@@ -142,6 +146,8 @@ You might wonder why I haven't adopted certain popular tools or approaches. Here
   - **The Killer Feature:** The primary reason I stick with iTerm2 is its robust **Semantic History** feature. The ability to Cmd-Click URLs/filenames in terminal output – even complex ones with line numbers like `src/my_module/file.py:123` – and have them open directly in VS Code at the correct line is indispensable for my debugging and development workflow. I haven't found this replicated with the same reliability and ease of configuration elsewhere.
   - **Other Features:** I also like simple features selecting text and (without `⌘+C`!) pasting it right back into the terminal, and the window and tab management features.
   - **Ghostty Example:** I recently tried Ghostty and liked many aspects, but quickly ran into limitations that highlighted my reliance on iTerm2 features, such as the lack of built-in text search, scrollbars, and crucially, the clickable file paths with line numbers ([as discussed here](https://bsky.app/profile/basnijholt.bsky.social/post/3lehtwv2pxc2j)).
+
+- **Why Dotbot/Git over `chezmoi`?** [Chezmoi](https://www.chezmoi.io/) is a very popular and powerful dotfiles manager, often praised for its templating and management features. However, I prefer the directness of using `git` for version control and Dotbot for simple symlinking. My setup *is* the Git repository, which feels intuitive. Crucially, I rely heavily on **Git submodules** (perhaps Git's least loved feature 🤔) to manage external tools and plugins directly within my dotfiles repo. This submodule-centric approach integrates seamlessly with a standard Git workflow, which made Dotbot a more natural fit for me than chezmoi's model.
 
 - **No `sudo` Required:** A key design principle is that the installation process via `./install` (Dotbot symlinking, `uv tool install`, `dotbins` fetching binaries) operates _entirely within the user's home directory_. No `sudo` access is needed to get the core environment up and running. This makes the setup viable in restricted environments like HPC clusters, shared servers, or locked-down corporate machines where admin rights aren't available.
 
