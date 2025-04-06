@@ -3,8 +3,7 @@ title: Be a Ninja in the Terminal 🥷
 subtitle: A setup for maximal productivity and minimal keystrokes, with `zsh`, `oh-my-zsh`, `keychain`, `starship`, `autoenv`, `z`, `zsh-autosuggestions`, and more.
 summary: A setup for maximal productivity and minimal keystrokes, with `zsh`, `oh-my-zsh`, `keychain`, `starship`, `autoenv`, `z`, `zsh-autosuggestions`, and more.
 projects: []
-date: '2025-03-07T00:00:00Z'
-# initial_date: '2023-04-15T00:00:00Z'
+date: '2023-04-15T00:00:00Z'
 draft: false
 featured: false
 
@@ -36,8 +35,10 @@ categories:
   - level:intermediate
 ---
 
-{{% callout note %}}
-Originally written in April 2023 but updated in March 2025.
+{{% callout warning %}}
+Originally written in April 2023 but slightly updated in March 2025.
+Since then, I have published my entire [`dotfiles`](https://github.com/basnijholt/dotfiles) repo, see the [dotfiles blog post]({{< ref "/post/dotfiles" >}}) for more details.
+Since writing this post, I switched from `z-zsh` to [`zoxide`](https://github.com/ajeetdsouza/zoxide), and am using a bunch of other modern CLI tools.
 {{% /callout %}}
 
 Welcome to a world of terminal productivity!
