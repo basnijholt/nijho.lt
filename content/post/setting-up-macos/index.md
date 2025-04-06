@@ -27,7 +27,7 @@ categories:
 ---
 
 {{% callout warning %}}
-Since ≈2025, I have been using [Nix-Darwin](https://github.com/nix-darwin/nix-darwin) to set up my MacOS installations.
+Since end-2024, I have been using [Nix-Darwin](https://github.com/nix-darwin/nix-darwin) to set up my MacOS installations.
 See my [`dotfiles`](https://github.com/basnijholt/dotfiles) repo and the [dotfiles blog post]({{< ref "/post/dotfiles" >}}) for more details.
 {{% /callout %}}
 
