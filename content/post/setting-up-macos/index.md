@@ -26,6 +26,11 @@ categories:
   - level:beginner
 ---
 
+{{% callout warning %}}
+Since ≈2025, I have been using [Nix-Darwin](https://github.com/nix-darwin/nix-darwin) to set up my MacOS installations.
+See my [`dotfiles`](https://github.com/basnijholt/dotfiles) repo and the [dotfiles blog post]({{< ref "/post/dotfiles" >}}) for more details.
+{{% /callout %}}
+
 ## Introduction
 
 Setting up a new MacOS installation can be a tedious process. This blog post will guide you through the essential steps and applications to install when setting up your fresh MacOS environment.
