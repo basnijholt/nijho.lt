@@ -38,7 +38,7 @@ categories:
 {{% callout warning %}}
 Originally written in April 2023 but slightly updated in March 2025.
 Since then, I have published my entire [`dotfiles`](https://github.com/basnijholt/dotfiles) repo, see the [dotfiles blog post]({{< ref "/post/dotfiles" >}}) for more details.
-Since writing this post, I switched from `z-zsh` to [`zoxide`](https://github.com/ajeetdsouza/zoxide), and am using a bunch of other modern CLI tools.
+Since writing this post, I switched from `z-zsh` to [`zoxide`](https://github.com/ajeetdsouza/zoxide), and from `autoenv` to [`direnv`](https://direnv.net/), and am using a bunch of other modern CLI tools.
 {{% /callout %}}
 
 Welcome to a world of terminal productivity!
