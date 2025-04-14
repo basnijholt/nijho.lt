@@ -1,9 +1,9 @@
 ---
-title: "🐍 Functions Over Classes? Why I Prefer a Simpler, Functional Style in Python"
+title: "Functions Over Classes? Why I Prefer a Simpler, Functional Style in Python 🐍"
 subtitle: Embracing small functions and data classes for clarity, testability, and reduced cognitive load in software development.
 summary: Exploring my preference for a functional programming style in Python, utilizing small, focused functions and simple data-holding classes while largely avoiding inheritance, leading to more maintainable and testable code, while still using classes where they make sense for APIs.
 projects: []
-date: "2025-04-13T00:00:00Z"
+date: "2025-04-14T00:00:00Z"
 draft: false
 featured: false
 
@@ -25,12 +25,6 @@ categories:
   - development
   - philosophy
   - level:intermediate
-
-image:
-  caption: "Balancing focused functions with clear, class-based APIs"
-  focal_point: "Smart"
-  placement: 2
-  preview_only: false
 ---
 
 Over years of building software, from scientific simulation tools like [`Adaptive`](https://github.com/python-adaptive/adaptive) and [`pipefunc`](https://github.com/pipefunc/pipefunc) to utility packages like [`unidep`](https://github.com/basnijholt/unidep), I've found myself preferring a certain coding style: using small, focused functions more than large classes with complex internal state and deep inheritance hierarchies.
