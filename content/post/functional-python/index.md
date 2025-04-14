@@ -27,7 +27,7 @@ categories:
   - level:intermediate
 ---
 
-Over years of building software, from scientific simulation tools like [`Adaptive`](https://github.com/python-adaptive/adaptive) and [`pipefunc`](https://github.com/pipefunc/pipefunc) to utility packages like [`unidep`](https://github.com/basnijholt/unidep), I've found myself preferring a certain coding style: using small, focused functions more than large classes with complex internal state and deep inheritance hierarchies.
+Over years of building software, from scientific simulation tools like [`Adaptive`](https://github.com/python-adaptive/adaptive) and [`pipefunc`](https://github.com/pipefunc/pipefunc) to package management packages like [`unidep`](https://github.com/basnijholt/unidep), I've found myself preferring a certain coding style: using small, focused functions more than large classes with complex internal state and deep inheritance hierarchies.
 This isn't about dogma, but about a pragmatic approach that, in my experience, leads to code that is easier to understand, test, and maintain.
 
 This post outlines why I lean towards this functional-inspired style in my Python projects, while still recognizing where classes are the right tool.
