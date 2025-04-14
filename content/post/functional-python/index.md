@@ -1,5 +1,5 @@
 ---
-title: "Functions Over Classes? Why I Prefer a Simpler, Functional Style in Python 🐍"
+title: "Functions over classes? Why I prefer a simpler, functional style in Python 🐍"
 subtitle: Embracing small functions and data classes for clarity, testability, and reduced cognitive load in software development.
 summary: Exploring my preference for a functional programming style in Python, utilizing small, focused functions and simple data-holding classes while largely avoiding inheritance, leading to more maintainable and testable code, while still using classes where they make sense for APIs.
 projects: []
