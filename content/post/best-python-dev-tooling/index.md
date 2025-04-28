@@ -1,7 +1,7 @@
 ---
-title: "🚀 Supercharging Your Python Development: A Guide to the Best Tools When Building a Package 📦"
-subtitle: Explore the top developer tools for enhancing productivity and code quality in Python projects
-summary: Explore the top developer tools for enhancing productivity and code quality in Python projects
+title: "My Python Project Toolkit: Essential Tools for Robust and Productive Development 🧰"
+subtitle: A look at my preferred tools for improving code quality, testing, automation, and documentation in Python projects.
+summary: A look at my preferred tools for improving code quality, testing, automation, and documentation in Python projects.
 projects: []
 date: '2023-04-22T00:00:00Z'
 draft: false
