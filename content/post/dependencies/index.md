@@ -118,7 +118,7 @@ In this context, the focus changes from _minimizing external impact_ (libraries)
 
 ## 4. Conclusion: Not Hypocrisy, but Context-Driven Strategy 🙏
 
-My approach to dependencies _is_ asymmetric.
+My approach to dependencies _is_ "it depends on the situation".
 I'm stricter about dependencies for my libraries than for my applications or personal tools.
 I am cautious about adopting dependencies while actively producing them for others.
 
@@ -133,5 +133,5 @@ Understanding the different risks and goals for each situation helps make good d
 It's about choosing the right trade-offs for the specific situation, whether you're building a foundational block for the community or a specific tool for a controlled environment.
 
 How do you handle dependencies across different types of projects?
-Do you find yourself navigating similar asymmetries?
+Do you find yourself navigating similar questions?
 Share your thoughts!
