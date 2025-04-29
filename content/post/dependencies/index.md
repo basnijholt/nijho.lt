@@ -1,5 +1,5 @@
 ---
-title: "Confessions of an Asymmetric Hypocrite: On Python Dependencies"
+title: "Confessions of an asymmetric hypocrite: on Python dependencies"
 subtitle: "Why I'm ultra-cautious adding dependencies to my libraries, yet hope you depend on mine, and relax entirely for applications"
 summary: "Exploring my seemingly hypocritical stance on dependencies: strict minimalism for my libraries, expecting adoption of my own work, yet embracing a wide range of dependencies in applications due to context and isolation."
 projects: []
