@@ -30,8 +30,8 @@ categories:
 
 ## Introduction: The Dependency Dilemma 🤔
 
-I just listed to a podcast "[Build software that lasts!](https://www.youtube.com/watch?v=5ZyzeeYZgeM) with Bert Hubert (a fellow Dutch), who prefers to reduce the number of dependencies to an absolute minimum (also see his [blog post "A 2024 Plea for Lean Software (with running code)"](https://berthub.eu/articles/posts/a-2024-plea-for-lean-software/)).
-While I agree one shouldn't use [`is-even`](https://www.npmjs.com/package/is-even) as a dependency ([`is-odd`](https://www.npmjs.com/package/is-odd) is a better choice), I think there is a lot of value in reducing the number of dependencies but *also* in using the right tool for the job and not continuously re-inventing the wheel.
+I just listed to a podcast "[Build software that lasts!](https://www.youtube.com/watch?v=5ZyzeeYZgeM) with Bert Hubert (a fellow Dutch), who prefers to reduce the number of dependencies to an absolute minimum (also see his related blog posts [[1](https://berthub.eu/articles/posts/on-long-term-software-development/)] and [[2](https://berthub.eu/articles/posts/a-2024-plea-for-lean-software/)]).
+While I agree one shouldn't use [`is-even`](https://www.npmjs.com/package/is-even) as a dependency ([`is-odd`](https://www.npmjs.com/package/is-odd) is a better choice 😏), I think there is a lot of value in reducing the number of dependencies but *also* in using the right tool for the job and not continuously re-inventing the wheel.
 The podcast got me thinking about my own stance on dependencies and how I actively avoid introducing dependencies into my libraries while expecting (hoping 🤞) others to depend on my work.
 
 Like many software developers, I've spent countless hours wrestling with dependencies.
