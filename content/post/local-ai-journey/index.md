@@ -43,6 +43,17 @@ So, a couple of weeks ago, I convinced myself to buy someone's old gaming machin
 After many deep research calls with ChatGPT about the best bang-for-the-buck consumer-grade GPU, I landed on an NVIDIA 3090.
 I found a beast of a machine for $1350, and my initial idea was set.
 
+{{< detail-tag "Click here to see the full system specs" >}}
+*   **GPU:** ASUS ROG STRIX RTX 3090 OC (24GB)
+*   **CPU:** AMD Ryzen 9 3900X (12-Core)
+*   **Motherboard:** ASUS ROG Crosshair VIII Hero
+*   **Power Supply:** Be Quiet! 1200W Dark Power Pro
+*   **RAM:** 32GB G.Skill Trident Z Royal DDR4
+*   **Storage:** 2TB Intel M.2 NVMe SSD
+*   **Case:** Corsair 4000D Airflow
+*   **CPU Cooler:** Thermalright Peerless Assassin 120
+{{< /detail-tag >}}
+
 Fast forward four weeks.
 I have installed many games, but I have yet to play a single minute.
 Instead, I've been on an unexpected and intense deep-dive into the world of local AI.
@@ -64,8 +75,8 @@ I'll share the two open-source Python packages that came out of it, [`agent-cli`
 Before I could even get to the fun AI stuff, I had to wrestle with the machine itself.
 I started with Pop!_OS, which is supposed to be a great out of the box solution that "just works".
 However, it's been a long time since I used Linux on the desktop; my experience is almost exclusively with servers.
-I quickly installed some of the wrong packages and ended up debugging stuff in Grub.
-I got frustrated with the different commands and realized that reproducing the system was going to be a pain.
+I quickly installed some of the wrong NVIDIA drivers and ended up debugging stuff in Grub.
+I got frustrated with the different commands I ran to setup everything and realized that reproducing this system was going to be a massive pain.
 Since I've grown to love Nix on my Mac with Nix-Darwin, I decided to switch the whole system to **NixOS**.
 This has been an amazing decision.
 Even though there are many pain points with Nix, I think it is well worth it.
