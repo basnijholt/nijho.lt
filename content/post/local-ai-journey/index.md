@@ -35,7 +35,7 @@ I've wanted to dabble with local AI for a long time, mainly because of the possi
 Local AI allows me to use all of my data—financial records, personal messages, location history, even transcribing everything I say—without the privacy concerns of sending it to a cloud provider.
 This level of deep, personal data analysis is only something I'd be comfortable with on my own hardware.
 
-However, I never found it worth it to buy a powerful GPU just for that.
+However, I couldn't justify buying a powerful GPU just for an imagined AI project that I might never really start.
 Then it hit me: I could also use it for gaming (duh).
 Because I really enjoyed "The Last of Us" series, I thought, "okay why not play this Last of Us game on the PC".
 This was the push I needed.
