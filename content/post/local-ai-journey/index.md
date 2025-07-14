@@ -99,7 +99,7 @@ It has genuinely streamlined my workflow.
 **⚡ Surprising Speed: Local vs. Cloud**
 
 One of my biggest surprises was the raw speed of local models.
-While I added an OpenAI provider to `agent-cli` for those without local hardware, I consistently find that local execution is faster than waiting on a cloud API.
+While I added an OpenAI provider to `agent-cli` for those without local hardware (someone I know wanted to try it), I consistently find that local execution is faster than waiting on a cloud API.
 For example, a local transcription with Whisper + Ollama lands in my clipboard in well under a second—often beating the network round-trip to a remote service.
 {{% /callout %}}
 
@@ -112,6 +112,7 @@ The toolkit includes:
 *   `chat`: A conversational AI with tool-calling capabilities.
 
 It's been a fantastic success in my personal workflow, and it's all open-source for you to try.
+Contributions and ideas are always welcome!
 
 ## 4. The Grand Ambition: `AIBrain` 🧠
 
@@ -130,7 +131,7 @@ However, I've hit a significant challenge.
 {{% callout warning %}}
 **The Performance Bottleneck**
 
-When I started processing just a few days' worth of emails, my computer sounded like it was going to catch on fire.
+When I started processing just a few days' worth of emails, even with a 12-core CPU and a 24GB GPU, my computer sounded like it was going to catch on fire.
 Processing hundreds of gigabytes of personal data is a massive undertaking, and it's clear that my current approach isn't scalable enough.
 {{% /callout %}}
 
@@ -148,3 +149,5 @@ The future of personal, private AI is being built right now, not just in large c
 
 I'd be curious to hear how others are tackling large-scale local data processing.
 Feel free to share your thoughts or ideas!
+
+And who knows, maybe one day I'll even find the time to play 'The Last of Us'.
