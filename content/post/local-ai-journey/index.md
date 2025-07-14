@@ -21,6 +21,9 @@ tags:
   - langgraph
   - crewai
   - pydanticai
+  - nvidia-rtx-3090
+  - local-llm
+  - whisper.cpp
 categories:
   - Technology
   - Software Development
@@ -37,10 +40,10 @@ This level of deep, personal data analysis is only something I'd be comfortable 
 
 However, I couldn't justify buying a powerful GPU just for an imagined AI project that I might never really start.
 Then it hit me: I could also use it for gaming (duh).
-Because I really enjoyed "The Last of Us" series, I thought, "okay why not play this Last of Us game on the PC".
+Because I really enjoyed *The Last of Us* series, I thought, “*Okay, why not play **The Last of Us** on PC?*”
 This was the push I needed.
 So, a couple of weeks ago, I convinced myself to buy someone's old gaming machine.
-After many deep research calls with ChatGPT about the best bang-for-the-buck consumer-grade GPU, I landed on an NVIDIA 3090.
+After many deep research sessions with ChatGPT about the best bang-for-the-buck consumer-grade GPU, I landed on an NVIDIA 3090.
 I found an (old) beast of a machine, and my initial idea was set.
 
 {{< detail-tag "Click here to see the full system specs ($1350 for all this!)" >}}
@@ -75,7 +78,7 @@ Before I could even get to the fun AI stuff, I had to wrestle with the machine i
 I started with Pop!_OS, which is supposed to be a great out of the box solution that "just works".
 However, it's been a long time since I used Linux on the desktop; my experience is almost exclusively with servers.
 I quickly installed some of the wrong NVIDIA drivers and ended up debugging stuff in Grub.
-I got frustrated with the different commands I ran to setup everything and realized that reproducing this system was going to be a massive pain.
+I got frustrated with the different commands I had to run to set up everything and realized that reproducing this system was going to be a massive pain.
 Since I've grown to love Nix on my Mac with Nix-Darwin, I decided to switch the whole system to **NixOS**.
 This has been an amazing decision.
 Even though there are many pain points with Nix, I think it is well worth it.
@@ -88,7 +91,8 @@ These soon evolved into my first real project of this adventure: [`agent-cli`](h
 
 `agent-cli` is a collection of **local-first**, AI-powered command-line agents that run entirely on your machine.
 The core philosophy is privacy; your data never leaves your computer.
-It's designed for seamless integration with system-wide hotkeys, and I'm now using it constantly.
+It's designed for seamless integration with system-wide hotkeys.
+I'm now using it constantly.
 
 Instead of typing, I now dictate almost everything.
 A quick hotkey, and `agent-cli transcribe` turns my speech into text.
@@ -113,14 +117,18 @@ The toolkit includes:
 *   `chat`: A conversational AI with tool-calling capabilities.
 
 It's been a fantastic success in my personal workflow, and it's all open-source for you to try.
-Contributions and ideas are always welcome!
+Contributions and ideas welcome!
 
 Once I trusted my toolchain, the obvious next step was to feed *all* my data into it.
 
 ## 4. The Grand Ambition: `AIBrain` 🧠
 
 My second package, [`AIBrain`](https://github.com/basnijholt/aibrain), is a much larger endeavor.
-The vision is to create a "life-OS"—a private, local AI that processes all my personal data (emails, calendar, files, photos, messages, browser history, location data) to generate summaries and answer questions.
+The vision is to create a "life-OS"—a private, local AI that processes all my personal data (emails, calendar, files, photos, messages, browser history, location data) to generate summaries and answer questions, eventually allowing for queries like:
+```bash
+aibrain ask "When did I get into landscape photography?"
+aibrain ask "How many countries did I visit between 2015-2025?"
+```
 
 This project led me to explore the landscape of agentic frameworks.
 I started with **CrewAI**, but I quickly found that despite the hype and funding, it had some painful problems (specifically [this issue](https://github.com/crewAIInc/crewAI/issues/3031) where things just fail without any helpful error messages).
@@ -134,7 +142,7 @@ However, I've hit a significant challenge.
 {{% callout warning %}}
 **🔥 The Performance Bottleneck**
 
-When I started processing just a few days' worth of emails, even with a 12-core CPU and a 24GB GPU, my computer sounded like it was going to catch on fire.
+Even with a 12-core CPU and 24GB GPU, processing just a few days’ worth of email made the fans scream for half an hour.
 Processing hundreds of gigabytes of personal data is a massive undertaking, and it's clear that my current approach isn't scalable enough.
 {{% /callout %}}
 
@@ -153,4 +161,4 @@ The future of personal, private AI is being built right now, not just in large c
 
 ⭐ If this resonates, star the repos & drop issues/questions.
 
-And who knows, maybe one day I'll even find the time to play 'The Last of Us'.
+And who knows, maybe I'll even find the time to play 'The Last of Us'.
