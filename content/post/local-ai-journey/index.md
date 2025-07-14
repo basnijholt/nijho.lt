@@ -36,7 +36,7 @@ Because I really enjoyed "The Last of Us" series, I thought, "okay why not play 
 This was the push I needed.
 So, a couple of weeks ago, I convinced myself to buy someone's old gaming machine.
 After many deep research calls with ChatGPT about the best bang-for-the-buck consumer-grade GPU, I landed on an NVIDIA 3090.
-I found a beast of a machine for $1350, and my initial idea was set.
+I found an (old) beast of a machine for $1350, and my initial idea was set.
 
 {{< detail-tag "Click here to see the full system specs" >}}
 *   **GPU:** ASUS ROG STRIX RTX 3090 OC (24GB)
