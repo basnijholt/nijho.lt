@@ -32,7 +32,7 @@ image:
 ## 1. Introduction: The Unplayed Games
 
 I've wanted to dabble with local AI for a long time, but I never found it worth it to buy a GPU just for that.
-Then it hit me: I could also use it for gaming, duh.
+Then it hit me: I could also use it for gaming (duh).
 Because I really enjoyed "The Last of Us" series, I thought, "okay why not play this Last of Us game on the PC".
 This was the push I needed.
 So, a couple of weeks ago, I convinced myself to buy someone's old gaming machine.
@@ -45,18 +45,26 @@ Instead, I've been on an unexpected and intense journey into the world of local 
 That gaming rig has been humming away, but not rendering virtual worlds.
 It's been training, transcribing, and thinking.
 
+I'm writing this post simply because I am so enthusiastic about this journey.
+I've found that local models are surprisingly powerful for specific use cases.
+Of course, they aren't going to replace Gemini or Claude for coding, but for many other applications, they work incredibly well.
+Lately, I've been so obsessed with this that I'm sleeping significantly less and spending all my free hours working on it.
+
 {{% callout note %}}
 **TL;DR:** This post is the story of how a quest for gaming turned into a deep dive into local, private AI.
-I'll share the two open-source Python packages that came out of it, `agent-cli` and `AIBrain`, and the lessons I learned along the way.
+I'll share the two open-source Python packages that came out of it, [`agent-cli`](https://github.com/basnijholt/agent-cli) and [`AIBrain`](https://github.com/basnijholt/aibrain), and the lessons I learned along the way.
 {{% /callout %}}
 
 ## 2. The Rocky Road to a Working Setup
 
 Before I could even get to the fun AI stuff, I had to wrestle with the machine itself.
-Like many Linux enthusiasts, I started with Pop!_OS, but the infamous NVIDIA driver issues quickly became a roadblock.
-After some frustration and a lot of troubleshooting, I made the switch to **NixOS**.
-This turned out to be a great decision, providing a stable and reproducible environment that finally tamed the 3090.
-Your own mileage may vary, but for me, NixOS was the solid foundation I needed.
+I started with Pop!_OS, which is supposed to be a great out of the box solution that "just works".
+However, it's been a long time since I used Linux on the desktop; my experience is almost exclusively with servers.
+I quickly installed some of the wrong packages and ended up debugging stuff in Grub.
+I got frustrated with the different commands and realized that reproducing the system was going to be a pain.
+Since I've grown to love Nix on my Mac with Nix-Darwin, I decided to switch the whole system to **NixOS**.
+This has been an amazing decision.
+Even though there are many pain points with Nix, I think it is well worth it.
 
 ## 3. The First Victory: `agent-cli` 🐍
 
@@ -85,12 +93,12 @@ It's been a fantastic success in my personal workflow, and it's all open-source 
 ## 4. The Grand Ambition: `AIBrain` 🧠
 
 My second package, [`AIBrain`](https://github.com/basnijholt/aibrain), is a much larger endeavor.
-The vision is to create a "life-OS"—a private, local AI that processes all my personal data (emails, calendar, files, photos) to generate summaries and answer questions.
+The vision is to create a "life-OS"—a private, local AI that processes all my personal data (emails, calendar, files, photos, messages, browser history, location data) to generate summaries and answer questions.
 
 This project led me to explore the landscape of agentic frameworks.
-I started with **CrewAI**, but I quickly found that despite the hype and funding, it had some painful problems.
+I started with **CrewAI**, but I quickly found that despite the hype and funding, it had some painful problems (specifically [this issue](https://github.com/crewAIInc/crewAI/issues/3031) where things just fail without any helpful error messages).
 I decided to switch to **LangGraph**, which felt more robust.
-I also chose to avoid **Pydantic AI** because its **Ollama** support is just a wrapper around the OpenAI-compatible API, which doesn't expose all the useful options.
+I also chose to not use **PydanticAI** (which I used in `agent-cli`) because its **Ollama** support is just a wrapper around the OpenAI-compatible API, which doesn't expose all the useful options (I even opened [a PR](https://github.com/ollama/ollama/pull/11249/) in Ollama to make its OpenAI compatible API more feature-complete, but it has not been merged yet).
 
 The core infrastructure of `AIBrain` is ready.
 It can index emails, calendar events, and files in various formats (PDF, Excel, PowerPoint, images).
