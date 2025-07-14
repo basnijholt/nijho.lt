@@ -20,11 +20,6 @@ categories:
   - Technology
   - Software Development
   - "level:intermediate"
-image:
-  caption: 'A collage of the technologies that powered my local AI journey.'
-  focal_point: 'Center'
-  placement: 2
-  preview_only: false
 ---
 
 {{< toc >}}
