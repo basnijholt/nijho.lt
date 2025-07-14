@@ -41,11 +41,11 @@ I found a beast of a machine for $1350, and my initial idea was set.
 
 Fast forward four weeks.
 I have installed many games, but I have yet to play a single minute.
-Instead, I've been on an unexpected and intense journey into the world of local AI.
+Instead, I've been on an unexpected and intense deep-dive into the world of local AI.
 That gaming rig has been humming away, but not rendering virtual worlds.
 It's been training, transcribing, and thinking.
 
-I'm writing this post simply because I am so enthusiastic about this journey.
+I'm writing this post simply because I am so enthusiastic about local AI.
 I've found that local models are surprisingly powerful for specific use cases.
 Of course, they aren't going to replace Gemini or Claude for coding, but for many other applications, they work incredibly well.
 Lately, I've been so obsessed with this that I'm sleeping significantly less and spending all my free hours working on it.
@@ -120,7 +120,7 @@ It's incredible what you can achieve with local hardware today.
 `agent-cli` is a finished, polished tool that I use daily.
 `AIBrain` is a much bigger dream, and I'm still figuring out how to solve the performance puzzle to make it truly practical.
 
-This journey has reinforced my passion for local-first software and open-source development.
+This experience has reinforced my passion for local-first software and open-source development.
 The future of personal, private AI is being built right now, not just in large corporate labs, but in the homes of hobbyists tinkering with their gaming rigs.
 
 I'd be curious to hear how others are tackling large-scale local data processing.
