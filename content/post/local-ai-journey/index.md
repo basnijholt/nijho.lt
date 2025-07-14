@@ -95,10 +95,12 @@ A quick hotkey, and `agent-cli transcribe` turns my speech into text.
 Another hotkey, and `agent-cli autocorrect` cleans it up using a local LLM running on **Ollama**.
 It has genuinely streamlined my workflow.
 
-{% callout note %}
-One of the main surprises to me was how quick these local models can be.
-I added OpenAI as an alternative to Agent AI for people that want to try it out without local hardware, but found that doing it locally is actually quicker than doing it over the cloud.
-For example, my transcriptions end up in my clipboard in much less than a second.
+{{% callout note %}}
+**⚡ Surprising Speed: Local vs. Cloud**
+
+One of my biggest surprises was the raw speed of local models.
+While I added an OpenAI provider to `agent-cli` for those without local hardware, I consistently find that local execution is faster than waiting on a cloud API.
+For example, a local transcription with Whisper + Ollama lands in my clipboard in well under a second—often beating the network round-trip to a remote service.
 {{% /callout %}}
 
 The toolkit includes:
