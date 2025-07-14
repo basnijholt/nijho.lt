@@ -1,5 +1,5 @@
 ---
-title: "🎮 From Gaming Rig to AI Brain: My Accidental Deep Dive into Local AI"
+title: "🎮 From Gaming Rig to AI Brain: My Accidental Deep Dive into Local AI with an RTX 3090"
 subtitle: "How I bought a gaming PC with a 3090 but ended up building two local-first Python AI packages instead."
 summary: "A personal journey of buying a gaming PC and accidentally falling down the rabbit hole of local, private AI.
 I share my experience building agent-cli and AIBrain, the tools I used, and the lessons I learned along the way."
@@ -16,6 +16,11 @@ tags:
   - local-first
   - open-source
   - nixos
+  - gpu
+  - whisper
+  - langgraph
+  - crewai
+  - pydanticai
 categories:
   - Technology
   - Software Development
@@ -36,9 +41,9 @@ Because I really enjoyed "The Last of Us" series, I thought, "okay why not play 
 This was the push I needed.
 So, a couple of weeks ago, I convinced myself to buy someone's old gaming machine.
 After many deep research calls with ChatGPT about the best bang-for-the-buck consumer-grade GPU, I landed on an NVIDIA 3090.
-I found an (old) beast of a machine for $1350, and my initial idea was set.
+I found an (old) beast of a machine, and my initial idea was set.
 
-{{< detail-tag "Click here to see the full system specs" >}}
+{{< detail-tag "Click here to see the full system specs ($1350 for all this!)" >}}
 *   **GPU:** ASUS ROG STRIX RTX 3090 OC (24GB)
 *   **CPU:** AMD Ryzen 9 3900X (12-Core)
 *   **Motherboard:** ASUS ROG Crosshair VIII Hero
@@ -50,9 +55,8 @@ I found an (old) beast of a machine for $1350, and my initial idea was set.
 {{< /detail-tag >}}
 
 Fast forward four weeks.
-I have installed many games, but I have yet to play a single minute.
-Instead, I've been on an unexpected and intense deep-dive into the world of local AI.
-That gaming rig has been humming away, but not rendering virtual worlds.
+I haven't played a single minute, but my machine is now indexing 200 GB of email archives and facing a serious performance bottleneck I'll get to later.
+That "gaming" machine has been humming away, but not rendering virtual worlds.
 It's been training, transcribing, and thinking.
 
 I'm writing this post simply because I am so enthusiastic about local AI.
@@ -75,6 +79,7 @@ I got frustrated with the different commands I ran to setup everything and reali
 Since I've grown to love Nix on my Mac with Nix-Darwin, I decided to switch the whole system to **NixOS**.
 This has been an amazing decision.
 Even though there are many pain points with Nix, I think it is well worth it.
+For those interested, you can see the complete setup, including all the local AI services, in my [NixOS configuration on GitHub](https://github.com/basnijholt/dotfiles/blob/841cd5fb94b65556e7a2cc7d8ea618f86b50bf1d/configs/nixos/configuration.nix).
 
 ## 3. The First Victory: `agent-cli` 🐍
 
@@ -89,6 +94,7 @@ Instead of typing, I now dictate almost everything.
 A quick hotkey, and `agent-cli transcribe` turns my speech into text.
 Another hotkey, and `agent-cli autocorrect` cleans it up using a local LLM running on **Ollama**.
 It has genuinely streamlined my workflow.
+For example, I can pipe the tools together, like correcting text from my clipboard and then having it spoken aloud: `agent-cli autocorrect | agent-cli speak`.
 
 {{% callout note %}}
 **⚡ Surprising Speed: Local vs. Cloud**
@@ -109,6 +115,8 @@ The toolkit includes:
 It's been a fantastic success in my personal workflow, and it's all open-source for you to try.
 Contributions and ideas are always welcome!
 
+Once I trusted my toolchain, the obvious next step was to feed *all* my data into it.
+
 ## 4. The Grand Ambition: `AIBrain` 🧠
 
 My second package, [`AIBrain`](https://github.com/basnijholt/aibrain), is a much larger endeavor.
@@ -124,7 +132,7 @@ It can index emails, calendar events, and files in various formats (PDF, Excel, 
 However, I've hit a significant challenge.
 
 {{% callout warning %}}
-**The Performance Bottleneck**
+**🔥 The Performance Bottleneck**
 
 When I started processing just a few days' worth of emails, even with a 12-core CPU and a 24GB GPU, my computer sounded like it was going to catch on fire.
 Processing hundreds of gigabytes of personal data is a massive undertaking, and it's clear that my current approach isn't scalable enough.
@@ -138,11 +146,11 @@ It's incredible what you can achieve with local hardware today.
 
 `agent-cli` is a finished, polished tool that I use daily.
 `AIBrain` is a much bigger dream, and I'm still figuring out how to solve the performance puzzle to make it truly practical.
+Next up: smarter chunking with LangGraph, vector-DB swap-outs, and GPU scheduling tricks.
 
 This experience has reinforced my passion for local-first software and open-source development.
 The future of personal, private AI is being built right now, not just in large corporate labs, but in the homes of hobbyists tinkering with their gaming rigs.
 
-I'd be curious to hear how others are tackling large-scale local data processing.
-Feel free to share your thoughts or ideas!
+⭐ If this resonates, star the repos & drop issues/questions.
 
 And who knows, maybe one day I'll even find the time to play 'The Last of Us'.
