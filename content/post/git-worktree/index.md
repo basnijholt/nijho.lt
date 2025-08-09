@@ -23,7 +23,7 @@ categories:
   - level:beginner
 ---
 
-Recently, I discovered a game-changer in Git that has streamlined my workflow: **worktrees**.
+Recently, I discovered a great feature in Git that has improved my workflow: **worktrees**.
 This feature allows developers to handle multiple branches of a single repository simultaneously, eliminating the need for constant branch-switching or multiple clones.
 For example, I typically want to keep the `main` branch in one editor window and the `feature` branch in another to easily test changes.
 With Git worktrees, I essentially have two separate working directories for each branch, making it easier to manage changes and switch between tasks.
