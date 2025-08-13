@@ -153,43 +153,41 @@ llama-swap uses a YAML configuration that directly launches llama.cpp server ins
 Here's part of my setup showing how models are defined:
 
 ```yaml
-environment.etc."llama-swap/config.yaml".text = ''
-  models:
-    # Small models for quick tasks
-    "qwen2.5-0.5b":
-      cmd: |
-        ${pkgs.llama-cpp}/bin/llama-server
-        --hf-repo bartowski/Qwen2.5-0.5B-Instruct-GGUF
-        --hf-file Qwen2.5-0.5B-Instruct-Q4_K_M.gguf
-        --port ''${PORT}
-        --ctx-size 8192
-        --n-gpu-layers 99
-        --main-gpu 0
-    
-    # Coding specialists  
-    "qwen3-coder-30b":
-      cmd: |
-        ${pkgs.llama-cpp}/bin/llama-server
-        --hf-repo unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF
-        --hf-file Qwen3-Coder-30B-A3B-q4_k_m.gguf
-        --port ''${PORT}
-        --ctx-size 32768
-        --n-gpu-layers 99
-        --main-gpu 0
-        --flash-attn
-    
-    # And yes, gpt-oss works perfectly with proper templates!
-    "gpt-oss-20b":
-      cmd: |
-        ${pkgs.llama-cpp}/bin/llama-server
-        --hf-repo openai/gpt-oss-20b-gguf
-        --hf-file gpt-oss-20b-q4_0.gguf
-        --port ''${PORT}
-        --ctx-size 8192
-        --n-gpu-layers 99
-        --main-gpu 0
-        --chat-template /etc/llama-templates/openai-gpt-oss-20b.jinja
-'';
+models:
+  # Small models for quick tasks
+  "qwen2.5-0.5b":
+    cmd: |
+      ${pkgs.llama-cpp}/bin/llama-server
+      --hf-repo bartowski/Qwen2.5-0.5B-Instruct-GGUF
+      --hf-file Qwen2.5-0.5B-Instruct-Q4_K_M.gguf
+      --port ${PORT}
+      --ctx-size 8192
+      --n-gpu-layers 99
+      --main-gpu 0
+  
+  # Coding specialists  
+  "qwen3-coder-30b":
+    cmd: |
+      ${pkgs.llama-cpp}/bin/llama-server
+      --hf-repo unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF
+      --hf-file Qwen3-Coder-30B-A3B-q4_k_m.gguf
+      --port ${PORT}
+      --ctx-size 32768
+      --n-gpu-layers 99
+      --main-gpu 0
+      --flash-attn
+  
+  # And yes, gpt-oss works perfectly with proper templates!
+  "gpt-oss-20b":
+    cmd: |
+      ${pkgs.llama-cpp}/bin/llama-server
+      --hf-repo openai/gpt-oss-20b-gguf
+      --hf-file gpt-oss-20b-q4_0.gguf
+      --port ${PORT}
+      --ctx-size 8192
+      --n-gpu-layers 99
+      --main-gpu 0
+      --chat-template /etc/llama-templates/openai-gpt-oss-20b.jinja
 ```
 
 Notice how each model directly calls `llama-server` with HuggingFace repo integration for automatic downloading.
@@ -221,11 +219,9 @@ This means my 24GB RTX 3090 is available for other tasks (like that game of The 
 
 ### What I Miss from Ollama
 
-- ❌ **Automatic model downloading**: With Ollama, `ollama pull` was convenient
-- ❌ **Built-in model library**: Now I manually download from HuggingFace
-- ❌ **Modelfile abstractions**: These were nice for quick experiments
+- ❌ **Modelfile abstractions**: These were nice for quick experiments with custom system prompts
 
-But honestly? These conveniences aren't worth the compatibility headaches and opaque development process.
+But honestly? That's about it. llama-swap with llama.cpp's HuggingFace integration actually downloads models automatically too, I just specify the repo and file in the config.
 
 ## Performance and Resource Usage
 
