@@ -35,8 +35,10 @@ The model was performing so poorly that I initially wrote it off as just another
 
 But then I started digging.
 On the LocalLLaMA subreddit, I found thread after thread of users reporting the same issue: models that should be performing well were giving terrible results in Ollama.
-The culprit? Incorrect prompt templates and chat formats.
-Ollama was mangling the input in ways that destroyed model performance.
+The culprits? Multiple issues plaguing Ollama:
+- Incorrect prompt templates and chat formats mangling inputs
+- For gpt-oss specifically, Ollama's forked ggml implementation was incompatible with standard GGUF files and significantly slower
+- General performance overhead from their abstraction layer
 Users who tried the exact same GGUF files in llama.cpp reported dramatically better results.
 
 Even worse, benchmarks were showing that Ollama had significant performance overhead compared to running llama.cpp directly.
