@@ -54,6 +54,11 @@ This pattern means Ollama will always be behind llama.cpp, adding their own bugs
 Meanwhile, I've had [a pull request](https://github.com/ollama/ollama/pull/11249) sitting unreviewed for over a month that fixes their broken OpenAI API (missing `keep_alive` option that breaks PydanticAI and other libraries).
 Compare that to llama.cpp: I submitted [a PR there](https://github.com/ggml-org/llama.cpp/pull/15295) and it was merged in less than an hour.
 
+This whole experience drove me to add llama.cpp support to my own application, [agent-cli](https://github.com/basnijholt/agent-cli).
+Agent-cli is my local-first AI toolkit for voice and text interaction that I use constantly for dictation, autocorrection, and voice commands.
+Adding llama.cpp support was [surprisingly trivial](https://github.com/basnijholt/agent-cli/pull/45): it now works alongside Ollama as another provider option, and it's what I personally use now.
+My users appreciate having a more reliable alternative when Ollama acts up.
+
 {{% callout warning %}}
 **The Frustration:** When a tool that claims to be "the easiest way to run large language models locally" makes good models perform terribly due to incorrect templating, adds unnecessary performance overhead, forks upstream projects for marketing wins at the expense of compatibility, and ignores community contributions while being unresponsive to actual users, it's time to look for alternatives.
 {{% /callout %}}
