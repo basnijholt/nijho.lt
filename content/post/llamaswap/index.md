@@ -95,28 +95,50 @@ Here's my complete configuration:
 
 ```nix
 # Override llama.cpp to get the latest version with CUDA support
-llama-cpp = pkgs.llama-cpp.override {
+llama-cpp = (pkgs.llama-cpp.override {
   cudaSupport = true;
-  cudaPackages = pkgs.cudaPackages_12;
-};
+  rocmSupport = false;
+  metalSupport = false;
+}).overrideAttrs (oldAttrs: rec {
+  version = "6150";
+  src = pkgs.fetchFromGitHub {
+    owner = "ggml-org";
+    repo = "llama.cpp";
+    tag = "b${version}";
+    hash = "sha256-oClTUbwVagHb08LmUsOJErr4lEVYSyqfU5nGKTlsH+o=";
+  };
+});
+
+# Get llama-swap from GitHub releases
+llama-swap = pkgs.runCommand "llama-swap" { } ''
+  mkdir -p $out/bin
+  tar -xzf ${
+    pkgs.fetchurl {
+      url = "https://github.com/mostlygeek/llama-swap/releases/download/v150/llama-swap_150_linux_amd64.tar.gz";
+      hash = "sha256-NKXN2zM8qjBYBgkhQ78obUiMZCFNcW2av3fJNJrFm2Y=";
+    }
+  } -C $out/bin
+  chmod +x $out/bin/llama-swap
+'';
 
 # Configure llama-swap as a systemd service
 systemd.services.llama-swap = {
-  description = "llama-swap model server";
+  description = "llama-swap - OpenAI compatible proxy with automatic model swapping";
   after = [ "network.target" ];
   wantedBy = [ "multi-user.target" ];
   
   serviceConfig = {
     Type = "simple";
-    ExecStart = "${pkgs.llama-swap}/bin/llama-swap";
-    Restart = "always";
     User = "basnijholt";
+    Group = "users";
+    ExecStart = "${pkgs.llama-swap}/bin/llama-swap --config /etc/llama-swap/config.yaml --listen 0.0.0.0:9292 --watch-config";
+    Restart = "always";
+    RestartSec = 10;
+    
+    # Environment for CUDA support
     Environment = [
-      "LLAMA_CPP_BIN=${llama-cpp}/bin/llama-server"
-      "MODELS_PATH=/home/basnijholt/.cache/llama-swap/models"
-      "HOST=0.0.0.0"
-      "PORT=11434"  # Same as Ollama for compatibility
-      "MODEL_TTL=3600"  # Unload models after 1 hour
+      "PATH=/run/current-system/sw/bin"
+      "LD_LIBRARY_PATH=/run/opengl-driver/lib:/run/opengl-driver-32/lib"
     ];
   };
 };
@@ -127,47 +149,57 @@ One `nixos-rebuild switch` and I have a working llama-swap server with the lates
 
 ## Model Configuration
 
-llama-swap uses a simple YAML configuration for models.
-Here's my setup with a mix of coding, reasoning, and general-purpose models:
+llama-swap uses a YAML configuration that directly launches llama.cpp server instances.
+Here's part of my setup showing how models are defined:
 
 ```yaml
-models:
-  # Small, fast models for quick tasks
-  - name: qwen2.5-coder:3b
-    path: models/qwen2.5-coder-3b-instruct-q8_0.gguf
-    context_size: 32768
+environment.etc."llama-swap/config.yaml".text = ''
+  models:
+    # Small models for quick tasks
+    "qwen2.5-0.5b":
+      cmd: |
+        ${pkgs.llama-cpp}/bin/llama-server
+        --hf-repo bartowski/Qwen2.5-0.5B-Instruct-GGUF
+        --hf-file Qwen2.5-0.5B-Instruct-Q4_K_M.gguf
+        --port ''${PORT}
+        --ctx-size 8192
+        --n-gpu-layers 99
+        --main-gpu 0
     
-  - name: llama3.2:3b
-    path: models/llama-3.2-3b-instruct-q8_0.gguf
-    context_size: 131072
+    # Coding specialists  
+    "qwen3-coder-30b":
+      cmd: |
+        ${pkgs.llama-cpp}/bin/llama-server
+        --hf-repo unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF
+        --hf-file Qwen3-Coder-30B-A3B-q4_k_m.gguf
+        --port ''${PORT}
+        --ctx-size 32768
+        --n-gpu-layers 99
+        --main-gpu 0
+        --flash-attn
     
-  # Coding specialists
-  - name: qwen2.5-coder:14b
-    path: models/qwen2.5-coder-14b-instruct-q5_k_m.gguf
-    context_size: 32768
-    
-  - name: qwen2.5-coder:32b
-    path: models/qwen2.5-coder-32b-instruct-q4_k_m.gguf
-    context_size: 32768
-    gpu_layers: 35  # Partial offloading for larger model
-    
-  # Reasoning models
-  - name: qwq:32b
-    path: models/qwq-32b-preview-q4_k_m.gguf
-    context_size: 32768
-    gpu_layers: 30
-    
-  # And yes, gpt-oss works perfectly!
-  - name: gpt-oss:20b
-    path: models/gpt-oss-20b-q5_k_m.gguf
-    context_size: 8192
+    # And yes, gpt-oss works perfectly with proper templates!
+    "gpt-oss-20b":
+      cmd: |
+        ${pkgs.llama-cpp}/bin/llama-server
+        --hf-repo openai/gpt-oss-20b-gguf
+        --hf-file gpt-oss-20b-q4_0.gguf
+        --port ''${PORT}
+        --ctx-size 8192
+        --n-gpu-layers 99
+        --main-gpu 0
+        --chat-template /etc/llama-templates/openai-gpt-oss-20b.jinja
+'';
 ```
+
+Notice how each model directly calls `llama-server` with HuggingFace repo integration for automatic downloading.
+The `--chat-template` flag for gpt-oss ensures it uses the correct prompt format!
 
 ## The Migration Experience
 
 Switching from Ollama to llama-swap was surprisingly smooth:
 
-1. **API Compatibility**: Since both expose OpenAI-compatible endpoints, my existing tools ([agent-cli](https://github.com/basnijholt/agent-cli), LibreChat) worked immediately
+1. **API Compatibility**: Both expose OpenAI-compatible endpoints (llama-swap on port 9292), so my existing tools ([agent-cli](https://github.com/basnijholt/agent-cli), LibreChat) worked with minimal config changes
 2. **Better Resource Usage**: My GPU is completely free when not actively running inference
 3. **Model Flexibility**: I can now run any GGUF model without worrying about compatibility
 4. **Performance**: Direct llama.cpp access means I get all the latest optimizations
