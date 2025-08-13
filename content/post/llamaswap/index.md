@@ -121,6 +121,12 @@ llama-swap = pkgs.runCommand "llama-swap" { } ''
   chmod +x $out/bin/llama-swap
 '';
 
+# Download the proper chat template for gpt-oss
+environment.etc."llama-templates/openai-gpt-oss-20b.jinja".source = pkgs.fetchurl {
+  url = "https://huggingface.co/openai/gpt-oss-20b/resolve/main/chat_template.jinja";
+  sha256 = "sha256-pMmRnLvUrN1RzP/iLaBJJksbc+WQVfpYgRqZ7718gUY=";
+};
+
 # Configure llama-swap as a systemd service
 systemd.services.llama-swap = {
   description = "llama-swap - OpenAI compatible proxy with automatic model swapping";
