@@ -42,13 +42,18 @@ Users who tried the exact same GGUF files in llama.cpp reported dramatically bet
 Even worse, benchmarks were showing that Ollama had significant performance overhead compared to running llama.cpp directly.
 We're talking 20-30% slower inference speeds for the same models on the same hardware.
 
+And then there's the development pace. 
+I've had [a pull request](https://github.com/ollama/ollama/pull/11249) open for over a month now that fixes a real issue with Ollama's OpenAI-compatible API.
+The API doesn't expose options like `keep_alive`, which breaks compatibility with libraries like PydanticAI that rely on the OpenAI API standard.
+Many users have reported this problem, but the PR sits unreviewed while the developers focus on... well, I'm not sure what.
+
 {{% callout warning %}}
-**The Frustration:** When a tool that claims to be "the easiest way to run large language models locally" makes good models perform terribly due to incorrect templating and adds unnecessary performance overhead, it's time to look for alternatives.
+**The Frustration:** When a tool that claims to be "the easiest way to run large language models locally" makes good models perform terribly due to incorrect templating, adds unnecessary performance overhead, and ignores community contributions that fix real problems, it's time to look for alternatives.
 {{% /callout %}}
 
 ## Discovering the Alternative: llama-swap + llama.cpp
 
-After some research and experimentation, I discovered a more elegant solution: [llama-swap](https://github.com/gianlucatruda/llama-swap) combined with [llama.cpp](https://github.com/ggerganov/llama.cpp).
+After some research and experimentation, I discovered a more elegant solution: [llama-swap](https://github.com/mostlygeek/llama-swap) combined with [llama.cpp](https://github.com/ggml-org/llama.cpp).
 This combination not only fixes the template issues but also offers something Ollama struggles with: true model hot-swapping with automatic VRAM management.
 
 ### What is llama-swap?
