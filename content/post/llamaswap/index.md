@@ -25,29 +25,31 @@ categories:
 
 {{< toc >}}
 
-## The Breaking Point: When gpt-oss Wouldn't Load
+## The Breaking Point: When gpt-oss Performed Terribly
 
 I've been running local AI models on my RTX 3090 machine for months now, primarily using Ollama as my model server.
-It worked well enough for the standard models—Llama, Mistral, Qwen—but recently I hit a wall that made me reconsider my entire setup.
-I wanted to try the promising `gpt-oss-20b` model, a GGUF file that should have been a simple drop-in addition to my local AI toolkit.
-Instead, I got this error:
+It worked well enough for the standard models (Llama, Mistral, Qwen), but recently I hit a wall that made me reconsider my entire setup.
+I loaded up the promising `gpt-oss-20b` model, expecting great things based on the hype.
+Instead, I got responses that were barely coherent.
+The model was performing so poorly that I initially wrote it off as just another overhyped release.
 
-```
-Error: tensor 'blk.0.ffn_down_exps.weight' has invalid ggml type 39 (NONE)
-```
+But then I started digging.
+On the LocalLLaMA subreddit, I found thread after thread of users reporting the same issue: models that should be performing well were giving terrible results in Ollama.
+The culprit? Incorrect prompt templates and chat formats.
+Ollama was mangling the input in ways that destroyed model performance.
+Users who tried the exact same GGUF files in llama.cpp reported dramatically better results.
 
-After digging through [GitHub issues](https://github.com/ollama/ollama/issues/11714), I discovered I wasn't alone.
-Multiple users were reporting the same problem across different Ollama versions, while the exact same GGUF files worked perfectly in llama.cpp.
-This wasn't just a minor bug—it was a fundamental compatibility issue that the Ollama team seemed in no rush to fix.
+Even worse, benchmarks were showing that Ollama had significant performance overhead compared to running llama.cpp directly.
+We're talking 20-30% slower inference speeds for the same models on the same hardware.
 
 {{% callout warning %}}
-**The Frustration:** When a tool that claims to be "the easiest way to run large language models locally" can't run a standard GGUF model that works fine in the underlying technology it's supposedly built on, something is fundamentally wrong.
+**The Frustration:** When a tool that claims to be "the easiest way to run large language models locally" makes good models perform terribly due to incorrect templating and adds unnecessary performance overhead, it's time to look for alternatives.
 {{% /callout %}}
 
 ## Discovering the Alternative: llama-swap + llama.cpp
 
 After some research and experimentation, I discovered a more elegant solution: [llama-swap](https://github.com/gianlucatruda/llama-swap) combined with [llama.cpp](https://github.com/ggerganov/llama.cpp).
-This combination offers something Ollama struggles with: true model hot-swapping with automatic VRAM management.
+This combination not only fixes the template issues but also offers something Ollama struggles with: true model hot-swapping with automatic VRAM management.
 
 ### What is llama-swap?
 
@@ -62,8 +64,8 @@ llama-swap is a lightweight service that sits in front of llama.cpp, providing:
 
 Going directly to llama.cpp (through llama-swap) has several advantages:
 
-- **Latest GGUF support**: Since it's the reference implementation, new GGUF features work immediately
-- **Better performance**: No abstraction overhead, direct access to all optimization flags
+- **Correct prompt templates**: Models actually work as intended with proper formatting
+- **Better performance**: No abstraction overhead, 20-30% faster inference than Ollama
 - **Transparency**: You know exactly what's running and how
 - **Flexibility**: Full control over model parameters, context sizes, and hardware utilization
 
@@ -160,9 +162,9 @@ This means my 24GB RTX 3090 is available for other tasks (like that game of The 
 
 ### Advantages of llama-swap + llama.cpp
 
-- ✅ **Universal GGUF compatibility**: If it's a valid GGUF, it works
+- ✅ **Correct prompt handling**: Models actually perform as designed
+- ✅ **20-30% faster inference**: Direct llama.cpp beats Ollama's overhead
 - ✅ **Zero idle VRAM usage**: Models completely unload when not in use
-- ✅ **Latest features immediately**: No waiting for wrapper updates
 - ✅ **Full control**: Direct access to all llama.cpp parameters
 - ✅ **Transparent operation**: I know exactly what's happening under the hood
 
@@ -203,8 +205,8 @@ With llama-swap and llama.cpp, I have a setup that:
 For those hitting similar Ollama limitations or just wanting more control over their local AI setup, I highly recommend giving llama-swap a try.
 The initial setup might require a bit more configuration, but the flexibility and reliability are worth it.
 
-And yes, `gpt-oss-20b` loads perfectly now.
-Every single time.
+And yes, `gpt-oss-20b` actually performs like it should now.
+The difference is night and day.
 
 ---
 
