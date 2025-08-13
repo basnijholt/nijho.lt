@@ -42,13 +42,18 @@ Users who tried the exact same GGUF files in llama.cpp reported dramatically bet
 Even worse, benchmarks were showing that Ollama had significant performance overhead compared to running llama.cpp directly.
 We're talking 20-30% slower inference speeds for the same models on the same hardware.
 
-And then there's the development pace. 
-I've had [a pull request](https://github.com/ollama/ollama/pull/11249) open for over a month now that fixes a real issue with Ollama's OpenAI-compatible API.
-The API doesn't expose options like `keep_alive`, which breaks compatibility with libraries like PydanticAI that rely on the OpenAI API standard.
-Many users have reported this problem, but the PR sits unreviewed while the developers focus on... well, I'm not sure what.
+And then there's the development approach.
+The maintainer of llama.cpp, Georgi Gerganov, [explained it perfectly](https://github.com/ollama/ollama/issues/11714#issuecomment-3172893576) regarding the gpt-oss debacle:
+Ollama forked the ggml inference engine to rush out "day-1 support" for gpt-oss without coordinating with upstream.
+The result? Their implementation was not only incompatible with standard GGUF files but also significantly slower and unoptimized.
+After the marketing win, they're now scrambling to throw out their fork and copy the upstream implementation.
+
+This pattern means Ollama will always be behind llama.cpp, adding their own bugs and incompatibilities along the way.
+Meanwhile, I've had [a pull request](https://github.com/ollama/ollama/pull/11249) sitting unreviewed for over a month that fixes their broken OpenAI API (missing `keep_alive` option that breaks PydanticAI and other libraries).
+Compare that to llama.cpp: I submitted [a PR there](https://github.com/ggml-org/llama.cpp/pull/15295) and it was merged in less than an hour.
 
 {{% callout warning %}}
-**The Frustration:** When a tool that claims to be "the easiest way to run large language models locally" makes good models perform terribly due to incorrect templating, adds unnecessary performance overhead, and ignores community contributions that fix real problems, it's time to look for alternatives.
+**The Frustration:** When a tool that claims to be "the easiest way to run large language models locally" makes good models perform terribly due to incorrect templating, adds unnecessary performance overhead, forks upstream projects for marketing wins at the expense of compatibility, and ignores community contributions while being unresponsive to actual users, it's time to look for alternatives.
 {{% /callout %}}
 
 ## Discovering the Alternative: llama-swap + llama.cpp
@@ -69,8 +74,10 @@ llama-swap is a lightweight service that sits in front of llama.cpp, providing:
 
 Going directly to llama.cpp (through llama-swap) has several advantages:
 
+- **Always up-to-date**: You get improvements immediately, not after Ollama eventually copies them
 - **Correct prompt templates**: Models actually work as intended with proper formatting
 - **Better performance**: No abstraction overhead, 20-30% faster inference than Ollama
+- **Responsive development**: PRs get reviewed and merged quickly (hours, not months)
 - **Transparency**: You know exactly what's running and how
 - **Flexibility**: Full control over model parameters, context sizes, and hardware utilization
 
