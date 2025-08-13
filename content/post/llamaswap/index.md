@@ -217,11 +217,24 @@ This means my 24GB RTX 3090 is available for other tasks (like that game of The 
 - ✅ **Full control**: Direct access to all llama.cpp parameters
 - ✅ **Transparent operation**: I know exactly what's happening under the hood
 
-### What I Miss from Ollama
+### The Trade-off
 
-- ❌ **Modelfile abstractions**: These were nice for quick experiments with custom system prompts
+The main thing I miss from Ollama is the simplicity of `ollama pull model-name` and being done with it.
+With llama-swap, I need to specify the model in a YAML configuration file with the exact HuggingFace repo and file.
 
-But honestly? That's about it. llama-swap with llama.cpp's HuggingFace integration actually downloads models automatically too, I just specify the repo and file in the config.
+But this added complexity is both a pro and a con:
+
+**Pros of the declarative approach:**
+- **Fine-grained control**: I can specify exactly how many layers run on GPU vs CPU (`--n-gpu-layers`)
+- **Reproducibility**: My entire model configuration is in version control
+- **Transparency**: I know exactly which quantization and version I'm using
+- **Customization**: Full control over context size, flash attention, batching, etc.
+
+**Cons:**
+- **More decisions**: I need to choose quantizations, layer splits, and parameters myself
+- **Slightly more work**: Can't just pull a model by name without knowing the details
+
+But for me, the control is worth it. I'd rather spend a minute configuring a model properly than wonder why it's performing poorly with hidden defaults.
 
 ## Performance and Resource Usage
 
