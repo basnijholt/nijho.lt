@@ -1,7 +1,7 @@
 ---
-title: "My Python Project Toolkit: Essential Tools for Robust and Productive Development 🧰"
-subtitle: A look at my preferred tools for improving code quality, testing, automation, and documentation in Python projects.
-summary: A look at my preferred tools for improving code quality, testing, automation, and documentation in Python projects.
+title: "My Python Project Toolkit: Essential Tools for Robust and Productive Development 🐍"
+subtitle: "A look at my preferred tools for improving code quality, testing, automation, and documentation in Python projects."
+summary: "A personal selection of essential Python tools covering linting, formatting, testing, versioning, CI, and documentation to build more robust and maintainable projects."
 projects: []
 date: '2023-04-22T00:00:00Z'
 draft: false
@@ -49,7 +49,10 @@ categories:
 
 ## 🌟 1. Introduction
 
-As a passionate Python developer, I am always on the hunt for the best tools to streamline my development process and enhance the quality of my projects. Over time, I have discovered a set of tools that have become indispensable in my workflow, making my coding experience more efficient and enjoyable. Using the right developer tools for Python projects is crucial for maximizing productivity, ensuring code consistency, and maintaining high-quality code.
+Like many Python developers, I've spent considerable time refining my toolkit.
+Finding the right combination of linters, formatters, testing frameworks, and automation helpers is crucial for both productivity and maintaining high-quality code, especially when working on projects ranging from scientific simulations to open-source packages like my own Adaptive library ( {{< ref "/project/adaptive" >}} ).
+Over the years, through trial and error, I've settled on a set of tools that form the core of my development workflow for almost every new Python project.
+This setup isn't the only way, of course, but it's one I've found makes a significant difference in streamlining development and ensuring robustness.
 
 In this blog post, I will share these essential tools that I now use for every single new project. We will explore the benefits of each tool and discuss how they can help you supercharge your Python development. The tools covered in this post include [pre-commit](https://pre-commit.com/), [Black](https://black.readthedocs.io/en/stable/), [Ruff](https://beta.ruff.rs/docs/rules/), [Mypy](https://mypy.readthedocs.io/en/stable/), [Versioningit](https://versioningit.readthedocs.io/en/latest/), [Pyproject.toml with PEP 621](https://www.python.org/dev/peps/pep-0621/), [Nox](https://nox.thea.codes/en/stable/), [pytest](https://docs.pytest.org/en/7.3.x/), [GitHub Actions CI matrix](https://docs.github.com/en/actions/learn-github-actions), and [Read the Docs](https://readthedocs.org/), [Sphinx](https://www.sphinx-doc.org/), [MyST-NB](https://myst-nb.readthedocs.io/en/latest/), and [Jupytext notebooks](https://jupytext.readthedocs.io/en/latest/) for documentation. Let's dive in and learn how to enhance your Python projects with these powerful tools!
 
