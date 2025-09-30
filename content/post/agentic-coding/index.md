@@ -46,7 +46,7 @@ Not my core principle—I still **never commit code I don't understand**—but t
 
 First, let's look at the evidence of AI's overall impact on my productivity:
 
-![PyPI Package Publication Analysis](/pypi_packages_histogram.svg)
+{{< figure src="pypi_packages_histogram.svg" alt="PyPI Package Publication Analysis" >}}
 
 This graph tells a striking story.
 After maintaining a steady pace for years (2016-2023), my productivity exploded with the introduction of AI tools.
@@ -58,7 +58,7 @@ But this transformation didn't happen overnight—it came in two distinct phases
 {{% callout note %}}
 **TL;DR:** My AI coding journey had two major phases: Phase 1 started in March 2023 with GPT-4's release—using chat interfaces with copy-paste workflows.
 Phase 2 began just two months ago in July 2025 with **Claude Code**—an agentic AI that can explore codebases, run tests, and debug itself.
-This second leap was so transformative that I spent $10,000 worth of API usage in the first month alone (thankfully capped at $200 with the Pro plan).
+This second leap was so transformative that I spent >10k USD worth of API usage in the first month alone (thankfully capped at $200 with the Pro plan).
 {{% /callout %}}
 
 ## 2. But Don't You Love Programming?
@@ -331,9 +331,10 @@ Let me share some concrete data from my PyPI packages analysis:
 ### Package Creation by Year
 
 - **2016-2022** (7 years pre-AI): ~2 packages/year average
-- **2023** (GPT-4 launch year): 4 packages
-- **2024** (full year with copy-paste AI): 6 packages
-- **2025** (8 months, 2 with Claude Code): 8 packages already!
+- **2023** (GPT-4 launch year): 6 packages
+- **2024** (full year with copy-paste AI): 7 packages
+- **2025 until 3 months ago** (6 months): 7 packages
+- **since 3 months** (2 with Claude Code, 1 with Codex CLI): wrote about 400k line of code (although this includes many iterations)!
 
 The acceleration is clear: Copy-paste AI took me from 2 to 6 packages/year.
 But in just the 2 months since adopting Claude Code, I've already published as many packages as I would typically create in 4 years pre-AI!
@@ -979,7 +980,7 @@ _What's your experience with AI coding assistants? Have you tried moving from ge
 
 ## Links and Resources
 
-- [Claude Code (formerly Windsurf)](https://claude.ai/code)
+- [Claude Code](https://claude.ai/code)
 - [My PyPI packages](https://pypi.org/user/basnijholt/)
 - [My GitHub](https://github.com/basnijholt)
 - [Original vibe coding post]({{< ref "/post/vibe-coding" >}})
