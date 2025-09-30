@@ -46,7 +46,7 @@ Not my core principle—I still **never commit code I don't understand**—but t
 
 First, let's look at the evidence of AI's overall impact on my productivity:
 
-![PyPI Package Publication Analysis](/pypi_packages_histogram.svg)
+{{< figure src="pypi_packages_histogram.svg" alt="PyPI Package Publication Analysis" >}}
 
 This graph tells a striking story.
 After maintaining a steady pace for years (2016-2023), my productivity exploded with the introduction of AI tools.
