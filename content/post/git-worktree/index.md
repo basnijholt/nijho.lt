@@ -1,5 +1,5 @@
 ---
-title: "📚 Discovering Git Worktrees: A Handy Tool for Multitasking"
+title: "Discovering Git worktrees: a handy tool for multitasking 📚"
 subtitle: Exploring the benefits and ease of using Git worktrees for efficient multibranch development.
 summary: An overview of how Git worktrees can simplify your workflow by allowing simple management of multiple branches within a single repository.
 projects: []
