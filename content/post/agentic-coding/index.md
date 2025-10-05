@@ -335,8 +335,7 @@ Let me share some concrete data from my PyPI packages analysis:
 - **2025 until 3 months ago** (6 months): 7 packages
 - **since 3 months** (2 with Claude Code, 1 with Codex CLI): wrote about 400k line of code (although this includes many iterations)!
 
-The acceleration is clear: Copy-paste AI took me from 2 to 6 packages/year.
-But in just the 2 months since adopting Claude Code, I've already published as many packages as I would typically create in 4 years pre-AI!
+The acceleration with AI is clear!
 
 ### Recent Packages Built with Agentic AI
 
@@ -415,7 +414,6 @@ Every project gets a `CLAUDE.md` file with explicit rules:
 - **No defensive programming**: Don't wrap things in try-except unless necessary
 - **Functional over classes**: Prefer simple functions in Python
 - **No backward compatibility**: For new projects, embrace breaking changes
-- **Imports at the top**: Never in functions (except for circular imports)
 - **Be ruthless**: Aggressively remove unused code
 
 #### Custom Commands and Workflows
@@ -455,24 +453,12 @@ This is especially powerful for:
 - **Edge cases** where even good documentation doesn't cover everything
 
 These constraints transform AI from a loose cannon into a precision tool.
-The AI can generate lots of code quickly, but it all must pass through these quality gates.
-
-### The Agentic Advantage
-
-Claude Code respects these different contexts and constraints by:
-
-- **Adapting to project importance** based on my guidance
-- **Following CLAUDE.md rules** specific to each project
-- **Running all quality checks** before claiming completion
-- **Explaining architecture** when I need to understand it deeply
-- **Iterating until all tests pass** rather than just generating once
-- **Following existing patterns** in established codebases
-
-It's not about blindly accepting code—it's about building a system where AI-generated code must meet the same quality standards as human-written code.
 
 ## 7. Common Pitfalls I've Noticed
 
-After months of using agentic AI tools, I've noticed consistent patterns that require vigilance:
+After a few months of using agentic AI tools, I've noticed consistent patterns that require vigilance:
+
+**Note from the futute: I now realise this is very model dependent! GPT-5 has different pitfalls than Claude Opus 4.1**
 
 ### The "Defensive Programming" Trap
 
