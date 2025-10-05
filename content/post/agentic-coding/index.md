@@ -458,7 +458,7 @@ These constraints transform AI from a loose cannon into a precision tool.
 
 After a few months of using agentic AI tools, I've noticed consistent patterns that require vigilance:
 
-**Note from the futute: I now realise this is very model dependent! GPT-5 has different pitfalls than Claude Opus 4.1**
+**Note from the future: I now realize this is very model dependent! GPT-5 has different pitfalls than Claude Opus 4.1**
 
 ### The "Defensive Programming" Trap
 
@@ -473,12 +473,12 @@ except Exception:
 result = some_function()  # Let it fail loudly if something's wrong
 ```
 
-AI tends to wrap everything in try-except blocks, suppressing errors that should bubble up.
+Claude tends to wrap everything in try-except blocks, suppressing errors that should bubble up.
 This is why my `CLAUDE.md` explicitly forbids unnecessary error handling.
 
 ### The "Backwards Compatibility" Obsession
 
-AI constantly adds backwards compatibility for features that were literally just introduced in the same session:
+Claude constantly adds backwards compatibility for features that were literally just introduced in the same session:
 
 - "Maintaining compatibility with the old version" (that never existed)
 - Fallback mechanisms for code paths that were just created
@@ -495,7 +495,7 @@ AI constantly adds backwards compatibility for features that were literally just
 Despite explicit instructions in `CLAUDE.md`:
 
 - Creates `your_module_v2.py` alongside `your_module.py` instead of updating
-- Still tries `git add -A` or `git add .` regularly
+- Still tries `git add -A` or `git add .` regularly despite explicit bans
 - Loves to "helpfully" revert debugging changes from other files
 - Commits `.env` files if not watched carefully
 
@@ -503,12 +503,11 @@ Despite explicit instructions in `CLAUDE.md`:
 
 - **Loves defensive programming**: Validates things that can't be wrong
 - **Gladly reads `.env`**: Will expose secrets if not careful
-- **Needs git constantly**: Wants to commit after every tiny change
 - **Reverts unrelated changes**: "Cleans up" debugging code from other features
 
 ### The "Mission Accomplished" Hallucination
 
-This is the most dangerous pitfall.
+This is a dangerous pitfall.
 Claude Code will sometimes claim complete success when it hasn't actually fixed anything:
 
 - **Claims victory**: "I've fixed all the issues!"
@@ -544,6 +543,7 @@ During problem-solving, Claude Code leaves a trail of attempts:
 - Extra imports and unused functions
 
 Before merging, always ask: "Review your changes and remove all debugging artifacts and failed attempts."
+Getting to a high code coverage (approaching 100%) helps ensure no dead code remains, as long as your tests use public APIs.
 
 ### Why This Happens
 
@@ -555,7 +555,7 @@ These patterns emerge because AI is trained on public code that often:
 - Follows "enterprise" patterns even for simple scripts
 - Contains debugging code from development
 
-This is why **constraints are essential**—without them, AI defaults to these "safe" but overcomplicated patterns.
+This is why **constraints are essential**—without them, Claude defaults to these "safe" but overcomplicated patterns.
 
 ## 8. Critical Success Factors: What Actually Makes This Work
 
