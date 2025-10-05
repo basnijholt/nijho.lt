@@ -152,7 +152,7 @@ The barrier between "wouldn't it be cool if..." and "here's a working prototype"
 
 Here's something that would be literally impossible without AI: I decided to enable ALL 800+ Ruff linting rules on a 20,000-line codebase.
 
-For context, [Ruff](https://docs.astral.sh/ruff/) is a blazingly fast Python linter that implements rules from over a dozen different tools.
+For context, [Ruff](https://docs.astral.sh/ruff/) is a extremely fast Python linter that implements rules from over a dozen different tools.
 Most projects enable maybe 50-100 rules.
 I wanted all 800+.
 
@@ -161,7 +161,7 @@ The result? **≈2,500 violations** across the entire codebase.
 Fixing these by hand would take 20 hours if I could fix one per 30 seconds...
 But with Claude Code's agent spawning capabilities, I did something insane:
 
-1. **Opened 10 terminal windows** with Claude Code
+1. **Opened 8 terminal windows** with Claude Code
 2. **Created a work orchestration document** that one AI managed
 3. **Each session spawned 10 parallel sub-agents** using [/agents](https://docs.anthropic.com/en/docs/claude-code/sub-agents)
 4. **Total: ~80 AI agents** working on my code simultaneously
@@ -179,7 +179,7 @@ This is the kind of code quality improvement that simply wouldn't happen without
 
 ### 1,400 Commits, Rewritten in Minutes for $2.50
 
-Here's another "impossible without AI" story: I had 1,400 commits with terrible messages.
+Here's another "impossible without AI" story: I had 1,400 commits with terrible messages (in a not-yet-released and private project).
 
 Since I commit so frequently (using them as snapshots in feature branches), my commit messages were all over the place:
 
@@ -236,7 +236,7 @@ Frustrated with Cursor becoming painfully slow, I tried Claude Code based on the
 Not by accident—I was just working at my optimal pace.
 The experience was so mind-blowing that within two weeks, I'd spent nearly $200 and immediately upgraded to the $200/month Pro plan.
 
-To put this in perspective: Using my command-line tool `ccusage` to track token consumption, I calculated that I used **$10,000 worth of API tokens in my first month**.
+To put this in perspective: Using a command-line tool `ccusage` to track token consumption, I calculated that I used **$10,000 worth of API tokens in my first month**.
 Thankfully, the Pro plan capped my cost at $200!
 
 ### What Made Claude Code Different?
@@ -249,7 +249,6 @@ The shift from copy-paste to agentic AI was like upgrading from a bicycle to a s
 - No access to your codebase
 - Can't run tests or see errors
 - You debug everything manually
-- Limited context window
 
 #### After (Claude Code)
 
@@ -257,11 +256,10 @@ The shift from copy-paste to agentic AI was like upgrading from a bicycle to a s
 - Executes commands and runs tests
 - Sees error messages and debugs itself
 - Iterates until tests pass
-- Maintains context across sessions
 - Uses tools to explore and validate
 
 The difference is profound.
-I went from carefully copying snippets with `clip-files` to having an assistant that can explore my entire project, run my test suite, fix failures, and even commit the changes (though I always review first!).
+I went from carefully copying snippets with `clip-files` to having an assistant that can explore my entire project, run my test suite, fix failures, and even commit the changes.
 
 ## 4. My Current Agentic Workflow
 
@@ -275,6 +273,7 @@ Here's my setup that would make any developer from 10 years ago think I'm insane
 I use [Zellij](https://zellij.dev/) (a terminal multiplexer like tmux) with a custom layout for my projects:
 
 - **5 main tabs**: Each split into two panes—Claude Code on one side, terminal on the other
+- **Using independent copies of same repository**: Each tab is a separate Git worktree with its own environment, own environment variables, own deployment
 - **Each tab = different feature**: Using [Git worktrees]({{< ref "/post/git-worktree" >}}) to work on 6 features simultaneously
 - **Monitoring tabs**: `ccusage` for tracking Claude usage, `htop` for CPU, `nvtop` for GPU
 - **Voice-driven orchestration**: I cycle through tabs, review code while speaking, move to next
@@ -290,7 +289,7 @@ My workflow looks like this:
 This parallel workflow is how I built a complex project (that I haven't released yet) in one month that would have taken 9+ months before.
 The key is [Git worktrees]({{< ref "/post/git-worktree" >}})—each feature gets its own working directory, so there's no context switching overhead.
 
-[TODO INSERT GIF: Terminal multiplexer showing multiple Claude Code sessions]
+<!-- [TODO INSERT GIF: Terminal multiplexer showing multiple Claude Code sessions] -->
 
 ### Starting a New Package
 
