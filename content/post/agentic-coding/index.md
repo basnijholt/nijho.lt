@@ -563,12 +563,17 @@ After two months of intense usage, here are the non-negotiable practices that ma
 
 ### Teach It Your Test Commands (Day 1 Priority)
 
-**This is absolutely crucial.** Claude Code needs to know how to run your tests:
+**This is absolutely crucial.** Claude Code needs to know how to run your tests and how to activate the environment:
 
 ```bash
-"To run tests, use: pytest tests/ -xvs"
-"For coverage: pytest --cov=src --cov-report=term-missing"
-"To run specific test: pytest tests/test_module.py::test_function"
+# To run tests, use: 
+uv run pytest tests/ -xvs"
+
+# For coverage:
+uv run pytest --cov=src --cov-report=term-missing
+
+# To run specific test
+uv run pytest tests/test_module.py::test_function
 ```
 
 Without this, it's just guessing whether code works.
@@ -578,7 +583,7 @@ With it, it becomes genuinely useful.
 
 I commit **obsessively** when using Claude Code:
 
-- After every successful feature implementation
+- After every successful (even partial) feature implementation
 - Before letting it attempt any major refactoring
 - Whenever tests pass
 - Before any "cleanup" operation
@@ -586,12 +591,12 @@ I commit **obsessively** when using Claude Code:
 But here's the key: **I develop every feature in its own branch**, even as a solo developer. My workflow:
 
 1. Create a feature branch for each new feature or fix
-2. Make frequent commits as snapshots (sometimes just a period for the message)
+2. Make frequent commits as snapshots (sometimes just a period for the message or tell Claude to commit)
 3. Open a pull request to review the full diff myself
 4. Merge only after reviewing all changes
 
 This has saved me from disaster multiple times.
-Git is your undo button when Claude goes nuclear.
+Git is your undo button when Claude goes nuclear (e.g., breaks or removes your code).
 
 ### Maintain Healthy Skepticism
 
@@ -637,7 +642,7 @@ Using my [`agent-cli`]({{< ref "/post/local-ai-journey" >}}) tool, I've develope
 
 Effective agentic coding requires **precise, detailed instructions**.
 A good prompt isn't 20 words—it's often 200-500 words explaining exactly what you want, what to avoid, and how to approach the problem.
-Nobody wants to type that much.
+Most people don't want to type that much.
 
 ### My Voice Workflow
 
@@ -688,7 +693,7 @@ Create a `CLAUDE.md` or similar file in your project root with your preferences:
 
 ### Use the Task System
 
-Claude Code's task system is brilliant for complex work:
+Claude Code's todo system is great for complex work:
 
 ```
 1. ✅ Implement core functionality
@@ -699,7 +704,7 @@ Claude Code's task system is brilliant for complex work:
 
 ### Leverage the Search Capabilities
 
-Don't reimagine the wheel—let Claude search for existing patterns:
+Let Claude search for existing patterns:
 
 - "Find all API endpoint implementations in this project"
 - "Show me how we handle authentication elsewhere"
@@ -712,7 +717,7 @@ Instead of reviewing 500 lines at once:
 1. Have Claude implement a single feature
 2. Review and understand it
 3. Run tests
-4. Commit
+4. Commit(s) and PR
 5. Move to the next feature
 
 ## 11. The Tools I've Tried
@@ -751,7 +756,7 @@ My journey through AI coding assistants has been evolutionary:
 
 ### OpenAI's Codex CLI (The Reasoning Beast)
 
-Recently tried OpenAI's Codex—their new CLI alternative to Claude Code—and I'll admit, for pure reasoning with their o1 model, it's impressive:
+Recently tried OpenAI's Codex—their new CLI alternative to Claude Code—and I'll admit, for pure reasoning with their GPT-5-Codex model, it's impressive:
 
 - **Solved a race condition** in an unfamiliar language that took me hours with Claude Opus
 - **More elegant solutions** for complex algorithmic problems
@@ -765,8 +770,8 @@ But here's why I still use Claude Code daily:
 - **No session persistence**: Codex forgets everything, Claude Code remembers
 - **Context management**: Have to re-provide all context after accidental exits
 
-For a complex race condition bug, Codex with o1 gave me the most elegant solution.
-But for day-to-day development where I need reliability, good UX, and the ability to resume work? Claude Code wins hands down.
+For a complex race condition bug, Codex with GPT-5 gave me the most elegant solution.
+But for day-to-day development where I need reliability, good UX, and the ability to resume work?
 
 ### Why Not Copilot or Other "Cheaper" Tools?
 
@@ -783,7 +788,7 @@ The economics don't work out:
 The 10x price difference reflects a 10x (or more) difference in capability.
 Copilot is autocomplete on steroids.
 Claude Code is a tireless pair programming partner with perfect memory who can debug, test, and iterate.
-The ROI is obvious when you're shipping 24x more code.
+The ROI is obvious when you're shipping 10x more code.
 
 ## 12. Real Talk: Is This Sustainable?
 
@@ -802,10 +807,9 @@ Here's my honest assessment:
 
 - **Code review fatigue**: You must stay vigilant
 - **Dependency on tools**: What if Claude Code disappears?
-- **Learning curve**: Teaching AI your patterns takes time
 - **Cost**: $200/month Pro plan (but worth every penny given the $10K+ value)
 - **The temptation to "vibe"**: Constant discipline required
-- **Addiction potential**: I literally couldn't stop that first night!
+- **Addiction potential**: I literally couldn't stop coding, having the desire to deplete all tokens and get my money's worth!
 
 ### My Verdict
 
@@ -821,7 +825,8 @@ This creates a fascinating paradox where these tools become increasingly valuabl
 ### The Exponential Trap for Beginners
 
 For beginners, agentic tools can feel like a superpower initially.
-They can build a working application in hours! But here's the danger: without the experience to recognize bad patterns, they're essentially building at 10x speed in the wrong direction.
+They can build a working application in hours!
+But here's the danger: without the experience to recognize bad patterns, they're essentially building at 10x speed in the wrong direction.
 It's like giving a Formula 1 car to someone who just got their driver's license—the speed multiplies both the distance traveled and the potential for catastrophic crashes.
 
 A beginner using Claude Code might:
@@ -845,9 +850,6 @@ When I look at Claude Code's suggestions, I can instantly recognize:
 
 The review process that might take a beginner hours takes me minutes.
 I'm not learning what the code does—I'm validating that it does what I already know it should do.
-This creates a powerful compound effect:
-
-**Experience × AI Speed = Exponential Productivity**
 
 ### The Right Way for Every Level
 
@@ -915,7 +917,6 @@ Don't expect AI to:
 - **Solve novel algorithmic problems**: It won't invent the next PageRank
 - **Make architectural decisions**: It can't decide if you need microservices
 - **Understand business logic**: It doesn't know why your company does things
-- **Debug complex race conditions**: (Though o1 is getting better at this)
 - **Create truly innovative solutions**: It remixes what it's seen, not invents
 - **Make judgment calls**: Security vs convenience, performance vs maintainability
 
