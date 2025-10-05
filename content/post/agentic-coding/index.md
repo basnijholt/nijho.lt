@@ -42,13 +42,13 @@ I concluded that while AI was fantastic for quick prototyping, it was dangerous 
 I even declared I'd "never invest in, build upon, or use such products."
 
 Fast forward to today, and something remarkable has changed.
-Not my core principle—I still **never commit code I don't understand**—but the tooling and my approach have evolved through two distinct phases.
+Not my core principle—I still **never merge code I don't understand**—but the tooling and my approach have evolved through two distinct phases.
 
 First, let's look at the evidence of AI's overall impact on my productivity:
 
 {{< figure src="pypi_packages_histogram.svg" alt="PyPI Package Publication Analysis" >}}
 
-This graph tells a striking story.
+This graph tells an interesting story.
 After maintaining a steady pace for years (2016-2023), my productivity exploded with the introduction of AI tools.
 In 2024-2025 alone, I've published **14 new Python packages** and made **over 400 releases**.
 That's more new packages than in the previous 6 years combined!
@@ -58,7 +58,7 @@ But this transformation didn't happen overnight—it came in two distinct phases
 {{% callout note %}}
 **TL;DR:** My AI coding journey had two major phases: Phase 1 started in March 2023 with GPT-4's release—using chat interfaces with copy-paste workflows.
 Phase 2 began just two months ago in July 2025 with **Claude Code**—an agentic AI that can explore codebases, run tests, and debug itself.
-This second leap was so transformative that I spent >10k USD worth of API usage in the first month alone (thankfully capped at $200 with the Pro plan).
+This second leap was as transformative as the first one. I spent >10k USD worth of API usage in the first month alone (thankfully capped at $200 with the Pro plan).
 {{% /callout %}}
 
 ## 2. But Don't You Love Programming?
@@ -82,11 +82,11 @@ I'm ridiculously particular about code quality.
 I literally cannot look at poorly formatted code without feeling physical discomfort.
 Every operator, every indentation, every naming convention matters to me.
 I enforce strict linting rules and will spend time refactoring code just because the style bothers me.
-This isn't about being pretentious—it's about caring deeply about the craft.
+This isn't about being pretentious—it's about caring deeply about my craft.
 
 But here's the revelation: AI doesn't take away my ability to care about these details.
-Instead, it gives me **insane leverage** to create more while maintaining my exacting standards.
-I still review every line, still enforce my style guides, still refactor when something bothers me.
+Instead, it gives me **insane leverage** to create more while maintaining my personal standards.
+I still review every line (although I am more lenient in certain cases), still enforce my style guides, still refactor when something bothers me.
 But now I can build 10x faster.
 
 It turns out that what I truly love isn't the mechanical act of typing—it's the creative act of bringing ideas to life.
@@ -122,7 +122,7 @@ In bed.
 (Poor sleep hygiene, I know.)
 
 When I woke up the next morning and tested it... it actually worked!
-I spent a few more hours adding tests and cleaning it up, but the core functionality was built in that magical hour between midnight and 1 AM.
+I spent a few more hours adding tests and cleaning it up, but the core functionality was built in that hour between midnight and 1 AM.
 
 This is impossible without AI.
 Nobody's writing a Matrix client from their phone in bed at midnight.
@@ -190,7 +190,7 @@ Since I commit so frequently (using them as snapshots in feature branches), my c
 
 I wanted them all to follow a consistent convention with prefixes like `fix:`, `feat:`, `test:`, `ci:`, etc.
 
-Obviously, rewriting 1,400 commit messages by hand is insane.
+Obviously, rewriting 1,400 commit messages by hand is not going to happen.
 But with AI?
 
 I had Claude write me an agent using the Agno framework that would:
@@ -217,7 +217,7 @@ My AI coding journey wasn't a single leap—it happened in two distinct phases, 
 
 When GPT-4 launched in March 2023, it changed everything.
 After my vibe coding disaster, I started using AI more carefully.
-I built tools like [`clip-files`]({{< ref "/post/advent-of-open-source/15-clip-files" >}}) to efficiently copy code context into ChatGPT or Claude's web interface.
+I built tools like [`clip-files`]({{< ref "/post/advent-of-open-source/15-clip-files" >}}) to efficiently copy code context into a ChatGPT-like web interface.
 For over two years, this workflow was:
 
 - **Manual but effective**: Copy code → paste into AI → review suggestions → implement manually
@@ -233,7 +233,7 @@ But I was still the one running tests, debugging errors, and validating everythi
 Just two months ago, in July 2025, everything changed again.
 Frustrated with Cursor becoming painfully slow, I tried Claude Code based on the buzz online.
 **That first night, I spent $70 on API tokens**.
-Not by accident—I was just working at my optimal pace.
+Not by accident—I just kept adding $10-$20 increments like a gambling addict.
 The experience was so mind-blowing that within two weeks, I'd spent nearly $200 and immediately upgraded to the $200/month Pro plan.
 
 To put this in perspective: Using a command-line tool `ccusage` to track token consumption, I calculated that I used **$10,000 worth of API tokens in my first month**.
@@ -296,7 +296,7 @@ The key is [Git worktrees]({{< ref "/post/git-worktree" >}})—each feature gets
 ```bash
 # I describe what I want to build
 "I need a Python package that manages CLI tool binaries within Git repositories,
-automatically downloading the correct binary for the user's platform"
+automatically downloading the correct binary for the user's platform, here <insert path> is a repo with boilerplate skeleton to copy (use same conventions)"
 
 # Claude Code then:
 # 1. Creates the project structure
