@@ -34,7 +34,7 @@ image:
 I am dictating this post at ten kilometers altitude on a flight home from Mexico, Blink Shell open on my iPhone while an agentic assistant running on my NixOS box shapes my sentences in real time.
 I am currently a little addicted to agentic coding: as soon as an idea pops into my head, I feel compelled to act on it immediately, even if that means hacking from a cramped seat in the sky.
 This is the workflow I have been refining after the experiments I described in [my agentic coding write-up]({{< ref "/post/agentic-coding" >}}) and the self-hosted AI obsession in [my local AI journey]({{< ref "/post/local-ai-journey" >}}).
-It's my contingency plan for those moments when a laptop simply isn't nearby—the rest of the time I'm still at a keyboard like any other developer.
+It's my contingency plan for those moments when a computer simply isn't nearby—the rest of the time I'm still at a keyboard like any other developer.
 It is a personal, mostly open stack: transcription, automation, and orchestration run on my own hardware, while the actual coding agent still calls into the best proprietary frontier model I can access.
 
 Earlier this autumn I switched from `Claude Opus 4.1` to OpenAI's `gpt-5-codex-high` for the heavy lifting.
@@ -55,11 +55,11 @@ For coding help I now lean on `gpt-5-codex-high` (and will happily swap again if
 For years I used **iSH** with an SSH client on my phone to hop into servers.
 Because coding on a phone keyboard is terrible, I kept it to tiny configuration tweaks or one-off fixes of a few characters.
 Agentic tools changed that: with a CLI coding agent, I don’t need to type the code—I describe the change, review the patch, and run it.
-That made meaningful work on the phone possible for the first time, for those moments when a laptop isn’t around.
+That made meaningful work on the phone possible for the first time, for those moments when a computer isn’t around.
 
 I tried **VS Code in the browser**, bounced between **iSH** and **Terminus** for SSH, and even lived inside a handful of in-browser terminal clients.
 I also spent time with mobile companions like [**Happy**](https://happy.engineering/) and [**Omnara**](https://www.ycombinator.com/companies/omnara), both designed to mirror Claude Code sessions on the phone, but they still felt like another relay layer between me and my shell.
-That friction pushed me toward a phone‑ready, self‑hosted workflow that still gives me raw SSH access to my own machine when the laptop is out of reach.
+That friction pushed me toward a phone‑ready, self‑hosted workflow that still gives me raw SSH access to my own machine when the computer is out of reach.
 
 This post is based on the way I develop software today.
 Your mileage may vary, but if you also care about privacy, open tooling, and reproducible environments, I think there are useful pieces here.
@@ -171,12 +171,12 @@ The whole loop finishes fast enough that I can capture intent by voice and paste
 
 On the phone, I aim for the smallest practical edits and initial implementations.
 Even on personal repos, I still open a PR—sometimes prompting alone gets me to a merge‑ready result.
-For open‑source with real users, I finish on the laptop with a careful review and any final edits.
+For open‑source with real users, I finish on the computer with a careful review and any final edits.
 
 ## 9. Lessons Learned and Caveats
 
 - **Network hiccups still matter.** Mosh hides most drops, but large git clones will stall on weak LTE. I queue those until I am on Wi-Fi.
-- **Keep shortcuts debuggable.** I log every transcription to `/var/log/agent-cli/transcriptions.log` so I can replay failures from a laptop.
+- **Keep shortcuts debuggable.** I log every transcription to `/var/log/agent-cli/transcriptions.log` so I can replay failures from a computer.
 - **Voice accuracy improves with context.** Feeding previous snippets into the Ollama rewrite step keeps variable names consistent.
 - **Beware of clipboard overwrites.** iOS allows only one clipboard at a time; I use Shortcuts automation to delay re-runs for five seconds so I have time to paste.
 - **Documentation helps future me.** Everything lives in my dotfiles (`configs/shortcuts/`, `configs/agent-cli/`). When I swap phones, I just re-run `./install`.
