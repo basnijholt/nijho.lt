@@ -31,13 +31,13 @@ image:
   preview_only: false
 ---
 
-I am dictating this post at ten kilometers altitude on a flight home from Mexico, Blink Shell open on my iPhone, while an agentic assistant on my NixOS machine writes an initial draft for this post.
+I am dictating this post at ten kilometers altitude on a flight home from Mexico, Blink Shell open on my iPhone, while an agentic assistant on my [NixOS](https://nixos.org/) machine writes an initial draft for this post.
 Admittedly, I’m a little addicted to agentic coding: when an idea pops up, I want to jump on it right away—even if that means doing it from a cramped seat in the sky.
 This is the workflow I’ve arrived at after trying many alternatives, it extends [my agentic coding write-up]({{< ref "/post/agentic-coding" >}}) and the self-hosted AI obsession in [my local AI journey]({{< ref "/post/local-ai-journey" >}}).
 It's my backup plan for those moments when a computer simply isn't nearby—the rest of the time I'm still at a keyboard like any other developer.
 This is in no way a replacement for a proper computer/laptop workflow but gets the job done when needed.
-It's a personal, mostly open-source stack built around `agent-cli`—my local-first voice layer.
-Here's how it works: I speak into my phone, the audio goes to FasterWhisper for transcription, Ollama cleans up the text, and it lands on my clipboard ready to paste.
+It's a personal, mostly open-source stack built around [`agent-cli`](https://github.com/basnijholt/agent-cli)—my local-first voice layer.
+Here's how it works: I speak into my phone, the audio goes to [FasterWhisper](https://github.com/SYSTRAN/faster-whisper-server) for transcription, [Ollama](https://ollama.com/) cleans up the text, and it lands on my clipboard ready to paste.
 My iOS Shortcut handles this through a small HTTP interface that agent-cli exposes.
 The coding agent itself still uses the best proprietary model I can access.
 
@@ -58,7 +58,7 @@ Everything is local except the model.
 
 ## 1. Why Phone Coding Works Now
 
-For years I used **iSH** (a full Alpine Linux emulator) with SSH to hop into servers from my phone, but dropping connections were a constant frustration (Mosh fixes this, more on that later).
+For years I used [**iSH**](https://ish.app/) (a full Alpine Linux emulator) with SSH to hop into servers from my phone, but dropped connections were a constant frustration (Mosh fixes this, more on that later).
 Because coding on a phone keyboard is terrible, I kept it to tiny configuration tweaks or one-off fixes of a few characters.
 Agentic tools changed that: with a CLI coding agent, I don’t need to type the code—I describe the change, review the patch, and run it.
 That made meaningful work on the phone possible for the first time, for those moments when a computer isn’t around.
@@ -86,29 +86,31 @@ To give you a sense of what I tried, here is the short comparison that convinced
 | VS Code in the browser                                                                                  | Familiar editor UI                                          | Needs a steady connection and still lives outside my dotfiles comfort zone                                          |
 | iSH / Terminus SSH                                                                                      | Works without extra infrastructure                          | Laggy, no Mosh, and awkward keybindings                                                                             |
 | In-browser terminals                                                                                    | Instant access from anywhere                                | Poor copy/paste ergonomics and flaky mobile keyboards                                                               |
-| [Happy](https://apps.apple.com/us/app/happy-codex-claude-code-app/id6748571505) (Claude Code companion) | Push notifications, encrypted mobile UI for Claude Code     | Requires wrapping every session with a separate CLI and still abstracts away my shell                               |
+| [Happy](https://apps.apple.com/us/app/happy-codex-claude-code-app/id6748571505) (Claude Code companion) | Push notifications, encrypted mobile UI for Claude Code     | Requires wrapping every session with a separate CLI and still abstracts away my shell, and was quite buggy for me   |
 | [Omnara](https://omnara.com) (agent command center)                                                     | Centralizes Claude Code/Codex sessions with terminal replay | Proxies via their servers; I already trust OpenAI for the model and don't want another third‑party handling my code |
 
 The stack below gives me the resilience of Mosh, the ergonomics of Zellij, and full control over the AI layer.
 
 ## 3. Layer 1: WireGuard From the Router
 
+[WireGuard](https://www.wireguard.com/) is a modern VPN that lets me securely access my home network from anywhere.
 I terminate WireGuard on my router so every device in the house (and on the road) can dial home with the same config.
+(If you want something easier to set up without opening ports, [Tailscale](https://tailscale.com/) is a more user-friendly option.)
 
 - **Server:** ASUS XT8 router with WireGuard enabled via the router UI.
 - **Client:** The WireGuard iOS app with `On-Demand` rules so the tunnel flips on whenever I am off trusted Wi-Fi.
 - **DNS:** All mobile sessions resolve through my home DNS, so `git.nijho.lt` and internal services resolve instantly.
 
-This gives Blink a local-LAN address for my desktop `nixos`, without hairpin NAT or double SSH jumps.
+This gives Blink a local-LAN address for my desktop `nixos`.
 
 ## 4. Layer 2: Blink Shell + Mosh for Durable Sessions
 
 What is [Mosh](https://mosh.org/)?
 It's like SSH, but it stays connected when the network changes or the phone sleeps, and it feels faster on bad connections.
 
-Blink Shell is my daily driver on iOS because it pairs beautifully with Mosh and has solid keyboard ergonomics (external keyboards, sane modifiers, and reliable shortcuts).
+[Blink Shell](https://blink.sh/) is my daily driver on iOS because it pairs beautifully with Mosh and has great keyboard ergonomics.
 
-- I launch sessions using `mosh bas@nixos -- zellij attach -c phone`.
+- I launch sessions using `mosh bas@nixos -- zellij attach --create phone` ([Zellij](https://zellij.dev/) is my terminal multiplexer—more on that in the next section).
 - Mosh smooths over spotty LTE and keeps my session alive when the phone sleeps.
 
 Mosh keeps the session responsive across flaky networks and sleep.
