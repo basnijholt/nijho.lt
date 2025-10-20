@@ -1,6 +1,6 @@
 ---
 title: "📱 Agentic Phone Coding: WireGuard, Blink Shell, and My Self-Hosted AI Stack"
-subtitle: "A reproducible voice-driven workflow using Mosh, Zellij, FasterWhisper, Ollama, and my agent-cli server to build software from an iPhone"
+subtitle: "A reproducible voice-driven workflow using WireGuard, Mosh, Zellij, FasterWhisper, Ollama, Codex CLI, and my agent-cli server to build software from an iPhone"
 summary: "My mostly self-hosted mobile development loop: WireGuard from an iPhone into my NixOS machine, persistent Blink/Mosh sessions, a systemd-managed agent-cli server, and an iOS Shortcut for FasterWhisper+Ollama dictation—paired with the best proprietary coding model available."
 date: 2025-10-20
 draft: false
