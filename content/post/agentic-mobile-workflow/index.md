@@ -103,7 +103,7 @@ Blink Shell is my daily driver on iOS because it pairs beautifully with Mosh and
 - Mosh smooths over spotty LTE and keeps my session alive when the phone sleeps.
  
 
-If you have ever lost a long REPL session to a dropped train tunnel, Mosh feels like magic.
+Mosh keeps the session responsive across flaky networks and sleep.
 
 ## 5. Layer 3: Zellij Layouts
 
