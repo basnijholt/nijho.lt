@@ -176,6 +176,8 @@ This phone setup simply extends the workflow from [Agentic Coding]({{< ref "/pos
 I connect to the same Zellij session on `nixos`, so when a new idea hits, I can pick up exactly where I left off and keep going—no new environment, no copy‑paste dance.
 Everything stays on my hardware (voice and automation), with only the coding model (`gpt-5-codex-high`) living behind an external API.
 
+It’s the most effective mobile workflow I’ve had so far. It’s mostly open‑source not out of dogma, but because those tools are the best options for my needs. The one exception is the coding model: there’s no true open equivalent right now, and it makes no sense to buy 20× H100s just to self‑host a frontier model.
+
 If you're curious to dive deeper, here are a few related posts:
 
 - [Dotfiles: A Practical, Cross-Platform Terminal Setup]({{< ref "/post/dotfiles" >}})
