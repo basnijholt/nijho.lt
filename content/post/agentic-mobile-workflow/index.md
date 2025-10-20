@@ -170,15 +170,7 @@ On the phone, I aim for the smallest practical edits and initial implementations
 Even on personal repos, I still open a PR—sometimes prompting alone gets me to a merge‑ready result.
 For open‑source with real users, I finish on the computer with a careful review and any final edits.
 
-## 10. Where to Go Next
-
-This workflow already let me hack on [`matty`](https://github.com/basnijholt/matty) and bug-fix [Adaptive](https://github.com/basnijholt/adaptive) while away from my desk, but there is room to expand:
-
-- Integrate [`clip-files`]({{< ref "/post/advent-of-open-source/15-clip-files" >}}) so I can blast entire repos into the agent context instantly.
-- Explore [LangGraph](https://langchain-ai.github.io/langgraph/) orchestration the way I teased in {{< ref "/post/local-ai-journey" >}} for multi-agent debugging.
-- Add an `agent-cli deploy` command that runs `nixos-rebuild` for my homelab nodes without leaving the phone.
-
-## 11. Conclusion and Further Reading
+## 9. Conclusion and Further Reading
 
 I wanted a workflow that matched the autonomy I described in [Agentic Coding]({{< ref "/post/agentic-coding" >}}) but that fit in my pocket.
 WireGuard, Blink, Mosh, Zellij, and my `agent-cli` server gave me exactly that: agentic development from anywhere, with privacy intact.
