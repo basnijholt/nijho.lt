@@ -68,7 +68,7 @@ Your mileage may vary, but if you also care about privacy, open tooling, and rep
 
 I approached the project with a few hard requirements:
 
-- **Zero proprietary relays:** Audio, source code, and shell history stay on my hardware.
+- **Single trust boundary:** Only the model provider (OpenAI) sees code context; audio and automation stay local, and I avoid any additional third‑party relays.
 - **Resilient sessions:** I want to lock my phone, board a plane, and resume where I left off.
 - **Voice-friendly:** Dictation should be accurate enough that I can trust it.
 - **Reproducible config:** The entire stack must live in my [dotfiles]({{< ref "/post/dotfiles" >}}) and [NixOS configuration](https://github.com/basnijholt/dotfiles/tree/main/configs/nixos).
@@ -81,7 +81,7 @@ To give you a sense of what I tried, here is the short comparison that convinced
 | iSH / Terminus SSH | Works without extra infrastructure | Laggy, no Mosh, and awkward keybindings |
 | In-browser terminals | Instant access from anywhere | Poor copy/paste ergonomics and flaky mobile keyboards |
 | [Happy](https://apps.apple.com/us/app/happy-codex-claude-code-app/id6748571505) (Claude Code companion) | Push notifications, encrypted mobile UI for Claude Code | Requires wrapping every session with a separate CLI and still abstracts away my shell |
-| [Omnara](https://omnara.com) (agent command center) | Centralizes Claude Code/Cursor sessions with terminal replay | Proxies via their servers; I prefer direct SSH/Zellij without a relay |
+| [Omnara](https://omnara.com) (agent command center) | Centralizes Claude Code/Cursor sessions with terminal replay | Proxies via their servers; I already trust OpenAI for the model and don't want another third‑party handling my code |
 
 The stack below gives me the resilience of Mosh, the ergonomics of Zellij, and full control over the AI layer.
 
