@@ -66,7 +66,7 @@ Your mileage may vary, but if you also care about privacy, open tooling, and rep
 
 ## 2. Constraints and Trade-offs
 
-I approached the project with a few hard requirements:
+This started with a few constraints and grew organically; today these are my guiding principles:
 
 - **Single trust boundary:** Only the model provider (OpenAI) sees code context; audio and automation stay local, and I avoid any additional third‑party relays.
 - **Resilient sessions:** Connections should survive sleep and spotty networks.
