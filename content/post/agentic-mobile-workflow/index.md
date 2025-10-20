@@ -58,7 +58,7 @@ Everything is local except the model.
 
 ## 1. Why Phone Coding Works Now
 
-For years I used **iSH** (a full Alpine Linux emulator) with SSH to hop into servers from my phone, but dropping connections were a constant frustration.
+For years I used **iSH** (a full Alpine Linux emulator) with SSH to hop into servers from my phone, but dropping connections were a constant frustration (Mosh fixes this, more on that later).
 Because coding on a phone keyboard is terrible, I kept it to tiny configuration tweaks or one-off fixes of a few characters.
 Agentic tools changed that: with a CLI coding agent, I don’t need to type the code—I describe the change, review the patch, and run it.
 That made meaningful work on the phone possible for the first time, for those moments when a computer isn’t around.
