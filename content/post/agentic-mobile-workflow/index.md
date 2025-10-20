@@ -37,10 +37,10 @@ This is the workflow I have been refining after the experiments I described in [
 It's my contingency plan for those moments when a laptop simply isn't nearby—the rest of the time I'm still at a keyboard like any other developer.
 It is a personal, mostly open stack: transcription, automation, and orchestration run on my own hardware, while the actual coding agent still calls into the best proprietary frontier model I can access.
 
-Earlier this autumn I switched from Claude Code to OpenAI's `gpt-5-codex-high` models for the heavy lifting.
+Earlier this autumn I switched from `Claude Opus 4.1` to OpenAI's `gpt-5-codex-high` for the heavy lifting.
 Anthropic's September 17 postmortem, [“A postmortem of three recent issues”](https://www.anthropic.com/engineering/a-postmortem-of-three-recent-issues), detailing three infrastructure bugs and weeks of degraded quality, was the final straw for trusting my mainline development flow to their stack.
 
-Day to day, a CLI-first agent stack holds the workflow together: the [Code CLI](https://github.com/just-every/code) (a fast-moving fork of Codex) hosts multiple shells and coding sessions in parallel, and `agent-cli` pipes transcripts, diffs, and prompts through the same terminal where I already live.
+Day to day, a CLI-first agent stack holds the workflow together: the [Code CLI](https://github.com/just-every/code) (a fast-moving fork of Codex) is just a coding agent in the terminal; I run multiple instances in parallel via `zellij` (or separate SSH sessions), and `agent-cli` pipes transcripts, diffs, and prompts through the same terminal where I already live.
 My agentic tooling changes almost monthly—whenever a better local option appears, I happily swap it in—but today this stack captures what actually gets work done when the phone is the only screen within reach.
 For coding help I now lean on `gpt-5-codex-high` (and will happily swap again if something better appears); the local tooling in this post simply gives that model a private, flexible cockpit.
 
