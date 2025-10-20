@@ -40,7 +40,7 @@ It is a personal, mostly open stack: transcription, automation, and orchestratio
 Earlier this autumn I switched from `Claude Opus 4.1` to OpenAI's `gpt-5-codex-high` for the heavy lifting.
 Anthropic's September 17 postmortem, [“A postmortem of three recent issues”](https://www.anthropic.com/engineering/a-postmortem-of-three-recent-issues), detailing three infrastructure bugs and weeks of degraded quality, was the final straw for trusting my mainline development flow to their stack.
 
-Day to day, a CLI-first agent stack holds the workflow together: the [Code CLI](https://github.com/just-every/code) (a fast-moving fork of Codex) is just a coding agent in the terminal; I run multiple instances in parallel via `zellij` (or separate SSH sessions), and `agent-cli` captures dictation and the prompts I’d otherwise type—right in the same terminal where I already work. It doesn’t manage diffs or PRs; that’s handled by my `coder` agent when I ask it to.
+Day to day, a CLI-first agent stack holds the workflow together: the [Code CLI](https://github.com/just-every/code) (a fast-moving fork of Codex) is a coding agent in the terminal; I run multiple instances in parallel via `zellij` (or separate SSH sessions), and `agent-cli` captures dictation and the prompts I’d otherwise type—right in the same terminal where I already work.
 My agentic tooling changes almost monthly—whenever a better local option appears, I happily swap it in—but today this stack captures what actually gets work done when the phone is the only screen within reach.
 For coding help I now lean on `gpt-5-codex-high` (and will happily swap again if something better appears); the local tooling in this post simply gives that model a private, flexible cockpit.
 
@@ -109,7 +109,7 @@ If you have ever lost a long REPL session to a dropped train tunnel, Mosh feels 
 
 I use **Zellij** as my terminal multiplexer for mobile work.
 
-- I stick to the defaults and use a couple of predefined layouts (e.g., a "phone" layout with editor + shell panes). No plugins.
+- I stick to the defaults and use a couple of predefined layouts (e.g., a "phone" layout with editor + shell panes).
 
 Ergonomics matter even more on a glass keyboard, so I lean on a few shell helpers:
 
@@ -134,7 +134,7 @@ The models run on the same box:
 - **FasterWhisper** via [`faster-whisper-server`](https://github.com/guillaumekln/faster-whisper) for transcription.
 - **Ollama** for local text cleanup/rephrasing before sending prompts to the coding agent.
 
-It’s not the fastest—FasterWhisper on my box is slower than Apple’s on‑device dictation—but the accuracy makes it a clear win for me when coding from the phone.
+FasterWhisper on my box is slower than Apple’s on‑device dictation. The accuracy makes it a clear win for me when coding from the phone.
 
 For deep coding refactors, though, I still hand context to `gpt-5-codex-high` through Code's proprietary back end—open models continue to trail frontier systems here, so I happily mix the two.
 
