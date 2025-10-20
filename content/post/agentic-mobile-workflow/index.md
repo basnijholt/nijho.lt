@@ -167,11 +167,11 @@ The whole loop finishes fast enough that I can capture intent by voice and paste
 - Ensure WireGuard is connected.
 - Dictate the feature/change, paste into the Code CLI (using `gpt-5-codex-high`), and iterate.
 - Review diffs either in another Mosh/Zellij pane or as a pull request.
-- I handle commits and pushes myself from the terminal.
+- An agent commits and pushes to a branch, then opens a PR via `gh` for me to review and merge.
 
 On the phone, I aim for the smallest practical edits and initial implementations.
-For serious work, I usually finish on a laptop with a few careful changes.
-For personal or semi‑trivial fixes, I sometimes accept the agent’s output as‑is; for open‑source with real users, I’m much more thorough.
+Even on personal repos, I still open a PR—sometimes prompting alone gets me to a merge‑ready result.
+For open‑source with real users, I finish on the laptop with a careful review and any final edits.
 
 ## 9. Lessons Learned and Caveats
 
