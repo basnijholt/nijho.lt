@@ -49,7 +49,7 @@ My agentic tooling changes almost monthly—whenever a better local option appea
 
 Earlier this year I noticed a pattern: I would get a new idea, feel an overwhelming urge to implement it right away, and then fight with whatever device I had nearby.
 I tried **VS Code in the browser**, bounced between **iSH** and **Terminus** for SSH, and even lived inside a handful of in-browser terminal clients.
-I experimented with a couple of opinionated coding-agent apps too, but they hid most of the knobs I need.
+I also spent time with mobile companions like **Happy** and **Omnara**, both designed to mirror Claude Code sessions on the phone, but they still felt like another relay layer between me and my shell.citeturn0search0turn1search0
 That friction is what pushed me toward a phone-first, self-hosted workflow that can keep up with my agentic-coding impulses while still giving me raw SSH access to my own machine.
 
 This post is based on the way I develop software today.
@@ -71,7 +71,8 @@ To give you a sense of what I tried, here is the short comparison that convinced
 | VS Code in the browser | Familiar editor UI | Needs a steady connection and still lives outside my dotfiles comfort zone |
 | iSH / Terminus SSH | Works without extra infrastructure | Laggy, no Mosh, and awkward keybindings |
 | In-browser terminals | Instant access from anywhere | Poor copy/paste ergonomics and flaky mobile keyboards |
-| Prebuilt coding-agent apps | Hands-off automation | Not flexible enough, and you lose direct shell control |
+| Happy (Claude Code companion) | Push notifications, encrypted mobile UI for Claude Code | Requires wrapping every session with a separate CLI and still abstracts away my shell.citeturn0search0turn0search3 |
+| Omnara (agent command center) | Centralizes Claude Code/Cursor sessions with terminal replay | Great for monitoring fleets, but I wanted direct tmux-style control instead of a dashboard.citeturn1search0turn1search1 |
 
 The stack below gives me the resilience of Mosh, the ergonomics of Zellij, and full control over the AI layer.
 
