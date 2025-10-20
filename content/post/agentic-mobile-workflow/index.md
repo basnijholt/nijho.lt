@@ -161,21 +161,17 @@ The whole loop finishes fast enough that I can capture intent by voice and paste
 **Security tip:** Lock the Shortcut to run only when your WireGuard tunnel is active and require Face ID before pushing clipboard data. I also gate the `agent-cli ingest` command through a per-device SSH key with a forced command wrapper.
 {{% /callout %}}
 
-## 8. A Typical Coding Session From the Phone
+## 8. Workflow in Practice
 
-Here's what a real session looks like when I'm away from a laptop (like right now, dictating on a plane):
+- Open Blink and Mosh into `nixos`; `zellij` reattaches with my existing panes.
+- Ensure WireGuard is connected.
+- Dictate the feature/change, paste into the Code CLI (using `gpt-5-codex-high`), and iterate.
+- Review diffs either in another Mosh/Zellij pane or as a pull request.
+- I handle commits and pushes myself from the terminal.
 
-1. Flick the action button and dictate a summary of the feature I want to build.
-2. Open Blink, auto-connects through WireGuard, resumes the last Mosh session, and re-attaches to `zellij`.
-3. Paste the dictation into my `agent-cli chat` pane to seed context, run tests with one tap on the on-screen keyboard, and let the agent propose patches.
-4. Jump into `nvim` for manual edits, using Zellij's copy-mode to yank snippets.
-5. Review diffs, run `nix flake check`, and push from the phone.
-6. When inspiration fades, I lock the phone. Hours later I unlock it, and everything is exactly where I left it.
-
-When the draft looks good, I hand off the git plumbing to my `coder` agent running on the same host—it stages the changes, writes the commit, pushes the branch, and opens a pull request for me. Final review happens in the GitHub iOS app.
-
-Because all the heavy lifting happens on the NixOS machine, my phone stays cool and battery usage is surprisingly mild.
-Give me a proper keyboard and I'm there immediately, but in those moments without one this setup keeps ideas from evaporating.
+On the phone, I aim for the smallest practical edits and initial implementations.
+For serious work, I usually finish on a laptop with a few careful changes.
+For personal or semi‑trivial fixes, I sometimes accept the agent’s output as‑is; for open‑source with real users, I’m much more thorough.
 
 ## 9. Lessons Learned and Caveats
 
