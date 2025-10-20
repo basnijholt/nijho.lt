@@ -36,12 +36,15 @@ I am currently a little addicted to agentic coding: as soon as an idea pops into
 This is the workflow I have been refining after the experiments I described in [my agentic coding write-up]({{< ref "/post/agentic-coding" >}}) and the self-hosted AI obsession in [my local AI journey]({{< ref "/post/local-ai-journey" >}}).
 It is a personal, mostly open stack: transcription, automation, and orchestration run on my own hardware, while the actual coding agent still calls into the best proprietary frontier model I can access.
 
+Earlier this autumn I switched from Claude Code to OpenAI's GPT-5 High Reasoning models for the heavy lifting.
+Anthropic's September 17 postmortem on three infrastructure bugs—after weeks of outages and degraded code quality—was the final straw for trusting my mainline development flow to their stack.citeturn0search1
+
 At the moment, the glue for all of this is [Code](https://github.com/just-every/code), a fast-moving fork of Codex CLI.
 My agentic tooling changes almost monthly—whenever a better local option appears, I happily swap it in—but today this stack captures what actually gets work done from the phone.
-For coding help I still lean on Claude Code (or whichever proprietary model is currently best-in-class); the local tooling in this post simply gives that model a private, flexible cockpit.
+For coding help I now lean on GPT-5 High Reasoning (and will happily swap again if something better appears); the local tooling in this post simply gives that model a private, flexible cockpit.
 
 {{% callout note %}}
-**TL;DR:** I connect my iPhone to my home network over **WireGuard**, stay logged in with **Blink Shell** plus **Mosh** for resilient SSH, manage terminals with **Zellij**, and run my own [`agent-cli`](https://github.com/basnijholt/agent-cli) server under **systemd**. An iOS Shortcut records my voice, ships audio to the server for **FasterWhisper** transcription, runs text clean-up with **Ollama**, and returns the result directly into my mobile clipboard so I can paste the text straight into the coding agent CLI—while the model itself still lives on the best proprietary frontier API I can access.
+**TL;DR:** I connect my iPhone to my home network over **WireGuard**, stay logged in with **Blink Shell** plus **Mosh** for resilient SSH, manage terminals with **Zellij**, and run my own [`agent-cli`](https://github.com/basnijholt/agent-cli) server under **systemd**. An iOS Shortcut records my voice, ships audio to the server for **FasterWhisper** transcription, runs text clean-up with **Ollama**, and returns the result directly into my mobile clipboard so I can paste the text straight into the GPT-5 High Reasoning CLI—while the model itself still lives on the best proprietary frontier API I can access.
 {{% /callout %}}
 
 {{< toc >}}
@@ -152,7 +155,7 @@ The models run on the same box:
 
 Because it is all local, latency stays below 600 ms for typical dictation snippets.
 
-For deep coding refactors, though, I still hand context to Claude Code through Code's proprietary back end—open models continue to trail frontier systems here, so I happily mix the two.
+For deep coding refactors, though, I still hand context to GPT-5 High Reasoning through Code's proprietary back end—open models continue to trail frontier systems here, so I happily mix the two.
 
 ## 7. Layer 5: The iOS Shortcut Pipeline
 
