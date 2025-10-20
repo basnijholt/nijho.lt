@@ -91,7 +91,7 @@ Blink Shell is my daily driver on iOS because it supports real keyboard shortcut
 
 - I launch sessions using `mosh bas@nixos-builder -- zellij attach -c phone`.
 - Mosh smooths over spotty LTE and keeps my session alive when the phone sleeps.
-- Blink's [shortcuts integration](https://blink.sh/docs/shortcuts/) lets me trigger the "Dictate to clipboard" automation right inside the terminal.
+- Blink exposes a URL scheme that my custom Shortcut (built with **AgencyAlly**) calls into, so I can fire the "Dictate to clipboard" workflow without leaving the terminal.
 
 If you have ever lost a long REPL session to a dropped train tunnel, Mosh feels like magic.
 
@@ -152,7 +152,7 @@ Because it is all local, latency stays below 600 ms for typical dictation snippe
 
 ## 7. Layer 5: The iOS Shortcut Pipeline
 
-The Shortcut attached to my iPhone's action button is the glue between the physical microphone and my NixOS stack.
+The Shortcut attached to my iPhone's action button—something I built myself in Shortcuts + **AgencyAlly**, not a Blink feature—is the glue between the physical microphone and my NixOS stack.
 
 1. **Record audio:** The Shortcut opens a native recorder and stops when I tap the screen.
 2. **Send to server:** It runs `ssh bas@nixos-builder agent-cli ingest --stdin` with the WAV payload.
