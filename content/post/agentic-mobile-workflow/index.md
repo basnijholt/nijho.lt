@@ -102,6 +102,12 @@ In an earlier draft of this post I accidentally wrote "tmux" out of muscle memor
 - My mobile-friendly keybindings sit in [`configs/zellij/config.kdl`](https://github.com/basnijholt/dotfiles/blob/8f6bf0b7219195a46a3e010d3538e1e449634db7/configs/zellij/config.kdl), so Blink renders clean borders and sensible shortcuts on the small screen.
 - I sync all plugins and keymaps through the same dotfiles pipeline I described in [Terminal Ninja]({{< ref "/post/terminal-ninja" >}}).
 
+Ergonomics matter even more on a glass keyboard, so I lean on a few shell helpers:
+
+- **[`zoxide`](https://github.com/ajeetdsouza/zoxide)** means I can jump between repos with `z foo` instead of pecking long paths.
+- **Single-character aliases** like `p` for `pytest` and `gs` for `git status` live in [`configs/shell/10_aliases.sh`](https://github.com/basnijholt/dotfiles/blob/8f6bf0b7219195a46a3e010d3538e1e449634db7/configs/shell/10_aliases.sh), keeping command entry to a minimum.
+- **Autocompletion plugins**—[`zsh-autosuggestions`](https://github.com/zsh-users/zsh-autosuggestions) and `zsh-syntax-highlighting`—are wired up in [`configs/shell/70_zsh_plugins.sh`](https://github.com/basnijholt/dotfiles/blob/8f6bf0b7219195a46a3e010d3538e1e449634db7/configs/shell/70_zsh_plugins.sh), so I get inline hints and colour cues while I dictate edits.
+
 Because Zellij renders well inside Blink, I get clear borders and no weird emoji alignment issues.
 
 ## 6. Layer 4: A systemd-managed `agent-cli` Server
