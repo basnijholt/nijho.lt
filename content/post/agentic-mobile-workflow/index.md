@@ -40,7 +40,7 @@ It is a personal, mostly open stack: transcription, automation, and orchestratio
 Earlier this autumn I switched from `Claude Opus 4.1` to OpenAI's `gpt-5-codex-high` for the heavy lifting.
 Anthropic's September 17 postmortem, [“A postmortem of three recent issues”](https://www.anthropic.com/engineering/a-postmortem-of-three-recent-issues), detailing three infrastructure bugs and weeks of degraded quality, was the final straw for trusting my mainline development flow to their stack.
 
-Day to day, a CLI-first agent stack holds the workflow together: the [Code CLI](https://github.com/just-every/code) (a fast-moving fork of Codex) is just a coding agent in the terminal; I run multiple instances in parallel via `zellij` (or separate SSH sessions), and `agent-cli` pipes transcripts, diffs, and prompts through the same terminal where I already live.
+Day to day, a CLI-first agent stack holds the workflow together: the [Code CLI](https://github.com/just-every/code) (a fast-moving fork of Codex) is just a coding agent in the terminal; I run multiple instances in parallel via `zellij` (or separate SSH sessions), and `agent-cli` captures dictation and the prompts I’d otherwise type—right in the same terminal where I already work. It doesn’t manage diffs or PRs; that’s handled by my `coder` agent when I ask it to.
 My agentic tooling changes almost monthly—whenever a better local option appears, I happily swap it in—but today this stack captures what actually gets work done when the phone is the only screen within reach.
 For coding help I now lean on `gpt-5-codex-high` (and will happily swap again if something better appears); the local tooling in this post simply gives that model a private, flexible cockpit.
 
@@ -170,6 +170,10 @@ The Shortcut attached to my iPhone's action button—something I built myself in
 6. **Notify:** I get a haptic tap on the phone and a confirmation toast inside Blink.
 
 The whole loop finishes fast enough that I can dictate a git commit message, tap once, and paste it into `git commit` inside Zellij without re-typing anything.
+
+{{% callout note %}}
+**Dictation quality:** In my experience, the built‑in iOS dictation is absolute shit compared to Whisper/FasterWhisper. Accuracy, punctuation, and latency are consistently better with the FasterWhisper server running at home.
+{{% /callout %}}
 
 {{% callout warning %}}
 **Security tip:** Lock the Shortcut to run only when your WireGuard tunnel is active and require Face ID before pushing clipboard data. I also gate the `agent-cli ingest` command through a per-device SSH key with a forced command wrapper.
