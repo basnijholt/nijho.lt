@@ -41,7 +41,7 @@ My agentic tooling changes almost monthly—whenever a better local option appea
 For coding help I still lean on Claude Code (or whichever proprietary model is currently best-in-class); the local tooling in this post simply gives that model a private, flexible cockpit.
 
 {{% callout note %}}
-**TL;DR:** I connect my iPhone to my home network over **WireGuard**, stay logged in with **Blink Shell** plus **Mosh** for resilient SSH, manage terminals with **Zellij**, and run my own [`agent-cli`](https://github.com/basnijholt/agent-cli) server under **systemd**. An iOS Shortcut records my voice, ships audio to the server for **FasterWhisper** transcription, runs text clean-up with **Ollama**, and returns the result directly into my mobile clipboard so I can paste commands or commit messages instantly—while the coding agent itself still talks to whichever proprietary frontier model is delivering the best edits this month.
+**TL;DR:** I connect my iPhone to my home network over **WireGuard**, stay logged in with **Blink Shell** plus **Mosh** for resilient SSH, manage terminals with **Zellij**, and run my own [`agent-cli`](https://github.com/basnijholt/agent-cli) server under **systemd**. An iOS Shortcut records my voice, ships audio to the server for **FasterWhisper** transcription, runs text clean-up with **Ollama**, and returns the result directly into my mobile clipboard so I can paste the text straight into the coding agent CLI—while the model itself still lives on the best proprietary frontier API I can access.
 {{% /callout %}}
 
 {{< toc >}}
