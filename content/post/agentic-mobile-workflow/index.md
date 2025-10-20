@@ -49,7 +49,7 @@ My agentic tooling changes almost monthly—whenever a better local option appea
 
 Earlier this year I noticed a pattern: I would get a new idea, feel an overwhelming urge to implement it right away, and then fight with whatever device I had nearby.
 I tried **VS Code in the browser**, bounced between **iSH** and **Terminus** for SSH, and even lived inside a handful of in-browser terminal clients.
-I also spent time with mobile companions like **Happy** and **Omnara**, both designed to mirror Claude Code sessions on the phone, but they still felt like another relay layer between me and my shell.citeturn0search0turn1search0
+I also spent time with mobile companions like [**Happy**](https://happy.engineering/) and [**Omnara**](https://www.ycombinator.com/companies/omnara), both designed to mirror Claude Code sessions on the phone, but they still felt like another relay layer between me and my shell.
 That friction is what pushed me toward a phone-first, self-hosted workflow that can keep up with my agentic-coding impulses while still giving me raw SSH access to my own machine.
 
 This post is based on the way I develop software today.
@@ -71,8 +71,8 @@ To give you a sense of what I tried, here is the short comparison that convinced
 | VS Code in the browser | Familiar editor UI | Needs a steady connection and still lives outside my dotfiles comfort zone |
 | iSH / Terminus SSH | Works without extra infrastructure | Laggy, no Mosh, and awkward keybindings |
 | In-browser terminals | Instant access from anywhere | Poor copy/paste ergonomics and flaky mobile keyboards |
-| Happy (Claude Code companion) | Push notifications, encrypted mobile UI for Claude Code | Requires wrapping every session with a separate CLI and still abstracts away my shell.citeturn0search0turn0search3 |
-| Omnara (agent command center) | Centralizes Claude Code/Cursor sessions with terminal replay | Great for monitoring fleets, but I wanted direct tmux-style control instead of a dashboard.citeturn1search0turn1search1 |
+| [Happy](https://apps.apple.com/us/app/happy-codex-claude-code-app/id6748571505) (Claude Code companion) | Push notifications, encrypted mobile UI for Claude Code | Requires wrapping every session with a separate CLI and still abstracts away my shell |
+| [Omnara](https://omnara.com) (agent command center) | Centralizes Claude Code/Cursor sessions with terminal replay | Great for monitoring fleets, but I wanted direct tmux-style control instead of a dashboard |
 
 The stack below gives me the resilience of Mosh, the ergonomics of Zellij, and full control over the AI layer.
 
@@ -92,7 +92,7 @@ Blink Shell is my daily driver on iOS because it supports real keyboard shortcut
 
 - I launch sessions using `mosh bas@nixos-builder -- zellij attach -c phone`.
 - Mosh smooths over spotty LTE and keeps my session alive when the phone sleeps.
-- Blink exposes a URL scheme that my custom Shortcut (built with **AgencyAlly**) calls into, so I can fire the "Dictate to clipboard" workflow without leaving the terminal.
+- Blink exposes a URL scheme that my custom Shortcut (tied into **agent-cli**) calls into, so I can fire the "Dictate to clipboard" workflow without leaving the terminal.
 
 If you have ever lost a long REPL session to a dropped train tunnel, Mosh feels like magic.
 
@@ -153,7 +153,7 @@ Because it is all local, latency stays below 600 ms for typical dictation snippe
 
 ## 7. Layer 5: The iOS Shortcut Pipeline
 
-The Shortcut attached to my iPhone's action button—something I built myself in Shortcuts + **AgencyAlly**, not a Blink feature—is the glue between the physical microphone and my NixOS stack.
+The Shortcut attached to my iPhone's action button—something I built myself in Shortcuts + `agent-cli`, not a Blink feature—is the glue between the physical microphone and my NixOS stack.
 
 1. **Record audio:** The Shortcut opens a native recorder and stops when I tap the screen.
 2. **Send to server:** It runs `ssh bas@nixos-builder agent-cli ingest --stdin` with the WAV payload.
