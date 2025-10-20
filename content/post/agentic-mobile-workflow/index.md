@@ -50,12 +50,16 @@ For coding help I now lean on `gpt-5-codex-high` (and will happily swap again if
 
 {{< toc >}}
 
-## 1. The Motivation: Ship Features the Moment Ideas Arrive
+## 1. Why Phone Coding Works Now
 
-Earlier this year I noticed a pattern: I would get a new idea, feel an overwhelming urge to implement it right away, and then fight with whatever device I had nearby.
+For years I used **iSH** with an SSH client on my phone to hop into servers.
+Because coding on a phone keyboard is terrible, I kept it to tiny configuration tweaks or one-off fixes of a few characters.
+Agentic tools changed that: with a CLI coding agent, I don’t need to type the code—I describe the change, review the patch, and run it.
+That made meaningful work on the phone possible for the first time, for those moments when a laptop isn’t around.
+
 I tried **VS Code in the browser**, bounced between **iSH** and **Terminus** for SSH, and even lived inside a handful of in-browser terminal clients.
 I also spent time with mobile companions like [**Happy**](https://happy.engineering/) and [**Omnara**](https://www.ycombinator.com/companies/omnara), both designed to mirror Claude Code sessions on the phone, but they still felt like another relay layer between me and my shell.
-That friction is what pushed me toward a phone-ready, self-hosted workflow that can keep up with my agentic-coding impulses while still giving me raw SSH access to my own machine when the laptop is out of reach.
+That friction pushed me toward a phone‑ready, self‑hosted workflow that still gives me raw SSH access to my own machine when the laptop is out of reach.
 
 This post is based on the way I develop software today.
 Your mileage may vary, but if you also care about privacy, open tooling, and reproducible environments, I think there are useful pieces here.
@@ -66,7 +70,7 @@ I approached the project with a few hard requirements:
 
 - **Zero proprietary relays:** Audio, source code, and shell history stay on my hardware.
 - **Resilient sessions:** I want to lock my phone, board a plane, and resume where I left off.
-- **Voice-friendly:** Dictation should be fast enough that I do not reach for a laptop.
+- **Voice-friendly:** Dictation should be accurate enough that I can trust it.
 - **Reproducible config:** The entire stack must live in my [dotfiles]({{< ref "/post/dotfiles" >}}) and [NixOS configuration](https://github.com/basnijholt/dotfiles/tree/main/configs/nixos).
 
 To give you a sense of what I tried, here is the short comparison that convinced me to roll my own:
@@ -154,7 +158,7 @@ The models run on the same box:
 - **Ollama** hosting `llama3.1:70b` for rewrite/edit prompts plus `qwen2.5-coder` when I want a second opinion.
 - Optional `rtx` acceleration so the GPU stays warm for consecutive dictations.
 
-It’s not the fastest—FasterWhisper on my box is slower than Apple’s on‑device dictation—but the accuracy and punctuation quality make it a clear win for me when coding from the phone.
+It’s not the fastest—FasterWhisper on my box is slower than Apple’s on‑device dictation—but the accuracy makes it a clear win for me when coding from the phone.
 
 For deep coding refactors, though, I still hand context to `gpt-5-codex-high` through Code's proprietary back end—open models continue to trail frontier systems here, so I happily mix the two.
 
