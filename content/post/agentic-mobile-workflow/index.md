@@ -45,6 +45,10 @@ My agentic tooling changes almost monthly—whenever a better option appears, I 
 For coding help I now lean on `gpt-5-codex-high` (and will happily swap again if something better appears); the local tooling in this post simply gives that model a private, flexible cockpit.
 
 {{% callout note %}}
+Meta: I’m writing about agentic coding on mobile while doing it from my phone. It’s not the most efficient way to write, but it gets the job done — during a 6.5‑hour flight I dictated and iterated this entire post. See [PR #40](https://github.com/basnijholt/nijho.lt/pull/40) (50+ commits) for the full review trail.
+{{% /callout %}}
+
+{{% callout note %}}
 **TL;DR:** iPhone → WireGuard → Blink+Mosh → Zellij. I dictate via a Shortcut → FasterWhisper (transcribe) → Ollama (polish) → clipboard, then paste into the Code CLI using OpenAI’s `gpt-5-codex-high`. Everything is local except the model.
 {{% /callout %}}
 
@@ -175,11 +179,6 @@ For open‑source with real users, I finish on the computer with a careful revie
 This phone setup simply extends the workflow from [Agentic Coding]({{< ref "/post/agentic-coding" >}}).
 I connect to the same Zellij session on `nixos`, so when a new idea hits, I can pick up exactly where I left off and keep going—no new environment, no copy‑paste dance.
 Everything stays on my hardware (voice and automation), with only the coding model (`gpt-5-codex-high`) living behind an external API.
-
-{{% callout note %}}
-Meta: I drafted and iterated this entire post on my phone during a 6.5‑hour flight, by dictation, to demonstrate the workflow in practice. See [PR #40](https://github.com/basnijholt/nijho.lt/pull/40) — 46 commits as of October 20, 2025 — for the full review/iteration history.
-{{% /callout %}}
-
 It’s the most effective mobile workflow I’ve had so far. It’s mostly open‑source not out of dogma, but because those tools are the best options for my needs. The one exception is the coding model: there’s no true open equivalent right now, and it makes no sense to buy 20× H100s just to self‑host a frontier model.
 
 If you're curious to dive deeper, here are a few related posts:
