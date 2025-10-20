@@ -115,7 +115,7 @@ Ergonomics matter even more on a glass keyboard, so I lean on a few shell helper
 
 - **[`zoxide`](https://github.com/ajeetdsouza/zoxide)** means I can jump between repos with `z foo` instead of pecking long paths.
 - **Single-character aliases** like `p` for `pytest` and `gs` for `git status` live in [`configs/shell/10_aliases.sh`](https://github.com/basnijholt/dotfiles/blob/8f6bf0b7219195a46a3e010d3538e1e449634db7/configs/shell/10_aliases.sh), keeping command entry to a minimum.
-- **Autocompletion plugins**—[`zsh-autosuggestions`](https://github.com/zsh-users/zsh-autosuggestions) and `zsh-syntax-highlighting`—are wired up in [`configs/shell/70_zsh_plugins.sh`](https://github.com/basnijholt/dotfiles/blob/8f6bf0b7219195a46a3e010d3538e1e449634db7/configs/shell/70_zsh_plugins.sh), so I get inline hints and colour cues while I dictate edits.
+- **Autocompletion plugins**—[`zsh-autosuggestions`](https://github.com/zsh-users/zsh-autosuggestions) and `zsh-syntax-highlighting`—are wired up in [`configs/shell/70_zsh_plugins.sh`](https://github.com/basnijholt/dotfiles/blob/8f6bf0b7219195a46a3e010d3538e1e449634db7/configs/shell/70_zsh_plugins.sh), so I get inline hints and colour cues while I work by voice.
 
 I break these tricks down in more depth in [Terminal Ninja]({{< ref "/post/terminal-ninja" >}}), explain how I sync them with my [Dotfiles]({{< ref "/post/dotfiles" >}}), and even package binaries like `zoxide` with [Dotbins]({{< ref "/post/dotbins" >}}).
 
@@ -149,7 +149,7 @@ The Shortcut attached to my iPhone's action button—something I built myself in
 5. **Push to clipboard:** The Shortcut puts the cleaned text on the iOS clipboard so I can paste it into the Code CLI.
 6. **Notify:** I get a haptic tap on the phone and a confirmation toast inside Blink.
 
-The whole loop finishes fast enough that I can dictate a git commit message, tap once, and paste it into `git commit` inside Zellij without re-typing anything.
+The whole loop finishes fast enough that I can capture intent by voice and paste it into the Code CLI without re‑typing.
 
 {{% callout note %}}
 **Dictation quality:** In my experience, the built‑in iOS dictation is absolute shit compared to Whisper/FasterWhisper. Accuracy and punctuation are much better with the FasterWhisper server running at home; it’s a bit slower, but that trade‑off is worth it for clean, usable text.
