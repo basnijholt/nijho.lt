@@ -81,7 +81,7 @@ To give you a sense of what I tried, here is the short comparison that convinced
 | iSH / Terminus SSH | Works without extra infrastructure | Laggy, no Mosh, and awkward keybindings |
 | In-browser terminals | Instant access from anywhere | Poor copy/paste ergonomics and flaky mobile keyboards |
 | [Happy](https://apps.apple.com/us/app/happy-codex-claude-code-app/id6748571505) (Claude Code companion) | Push notifications, encrypted mobile UI for Claude Code | Requires wrapping every session with a separate CLI and still abstracts away my shell |
-| [Omnara](https://omnara.com) (agent command center) | Centralizes Claude Code/Cursor sessions with terminal replay | Great for monitoring fleets, but I wanted direct tmux-style control instead of a dashboard |
+| [Omnara](https://omnara.com) (agent command center) | Centralizes Claude Code/Cursor sessions with terminal replay | Proxies via their servers; I prefer direct SSH/Zellij without a relay |
 
 The stack below gives me the resilience of Mosh, the ergonomics of Zellij, and full control over the AI layer.
 
@@ -89,7 +89,7 @@ The stack below gives me the resilience of Mosh, the ergonomics of Zellij, and f
 
 I terminate WireGuard on my router so every device in the house (and on the road) can dial home with the same config.
 
-- **Server:** MikroTik router running WireGuard peers managed via Nix (the router module lives in my dotfiles, but it is private for now).
+- **Server:** ASUS XT8 router with WireGuard enabled via the router UI.
 - **Client:** The WireGuard iOS app with `On-Demand` rules so the tunnel flips on whenever I am off trusted Wi-Fi.
 - **DNS:** All mobile sessions resolve through my Pi-hole, so `git.nijho.lt` and internal services resolve instantly.
 
