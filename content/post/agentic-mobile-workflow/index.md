@@ -154,7 +154,7 @@ For a step‑by‑step setup, see the iOS Shortcut Guide in the repo: [agent-cli
 The whole loop finishes fast enough that I can capture intent by voice and paste it into the Code CLI without re‑typing.
 
 {{% callout note %}}
-**Dictation quality:** In my experience, the built‑in iOS dictation is absolute shit compared to Whisper/FasterWhisper. Accuracy and punctuation are much better with the FasterWhisper server running at home; it’s a bit slower, but that trade‑off is worth it for clean, usable text.
+**Dictation quality:** In my experience, the built‑in iOS dictation is absolute garbage compared to Whisper/FasterWhisper. Accuracy and punctuation are much better with the FasterWhisper server running at home; it’s a bit slower, but that trade‑off is worth it for clean, usable text.
 {{% /callout %}}
 
 {{% callout warning %}}
@@ -163,7 +163,7 @@ The whole loop finishes fast enough that I can capture intent by voice and paste
 
 ## 8. A Typical Coding Session From the Phone
 
-Here's what a real session looks like when I'm away from a laptop (like right now, dictating from the bathtub):
+Here's what a real session looks like when I'm away from a laptop (like right now, dictating on a plane):
 
 1. Flick the action button and dictate a summary of the feature I want to build.
 2. Open Blink, auto-connects through WireGuard, resumes the last Mosh session, and re-attaches to `zellij`.
