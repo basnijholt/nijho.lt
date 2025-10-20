@@ -172,8 +172,9 @@ For open‑source with real users, I finish on the computer with a careful revie
 
 ## 9. Conclusion and Further Reading
 
-I wanted a workflow that matched the autonomy I described in [Agentic Coding]({{< ref "/post/agentic-coding" >}}) but that fit in my pocket.
-WireGuard, Blink, Mosh, Zellij, and my `agent-cli` server gave me exactly that: agentic development from anywhere, with privacy intact.
+This phone setup simply extends the workflow from [Agentic Coding]({{< ref "/post/agentic-coding" >}}).
+I connect to the same Zellij session on `nixos`, so when a new idea hits, I can pick up exactly where I left off and keep going—no new environment, no copy‑paste dance.
+Everything stays on my hardware (voice and automation), with only the coding model (`gpt-5-codex-high`) living behind an external API.
 
 If you're curious to dive deeper, here are a few related posts:
 
