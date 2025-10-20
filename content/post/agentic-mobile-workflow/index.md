@@ -34,13 +34,14 @@ image:
 I am dictating this post at ten kilometers altitude on a flight home from Mexico, Blink Shell open on my iPhone while an agentic assistant running on my NixOS box shapes my sentences in real time.
 I am currently a little addicted to agentic coding: as soon as an idea pops into my head, I feel compelled to act on it immediately, even if that means hacking from a cramped seat in the sky.
 This is the workflow I have been refining after the experiments I described in [my agentic coding write-up]({{< ref "/post/agentic-coding" >}}) and the self-hosted AI obsession in [my local AI journey]({{< ref "/post/local-ai-journey" >}}).
+It's my contingency plan for those moments when a laptop simply isn't nearby—the rest of the time I'm still at a keyboard like any other developer.
 It is a personal, mostly open stack: transcription, automation, and orchestration run on my own hardware, while the actual coding agent still calls into the best proprietary frontier model I can access.
 
 Earlier this autumn I switched from Claude Code to OpenAI's GPT-5 High Reasoning models for the heavy lifting.
 Anthropic's September 17 postmortem on three infrastructure bugs—after weeks of outages and degraded code quality—was the final straw for trusting my mainline development flow to their stack.citeturn0search1
 
 At the moment, the glue for all of this is [Code](https://github.com/just-every/code), a fast-moving fork of Codex CLI.
-My agentic tooling changes almost monthly—whenever a better local option appears, I happily swap it in—but today this stack captures what actually gets work done from the phone.
+My agentic tooling changes almost monthly—whenever a better local option appears, I happily swap it in—but today this stack captures what actually gets work done when the phone is the only screen within reach.
 For coding help I now lean on GPT-5 High Reasoning (and will happily swap again if something better appears); the local tooling in this post simply gives that model a private, flexible cockpit.
 
 {{% callout note %}}
@@ -54,7 +55,7 @@ For coding help I now lean on GPT-5 High Reasoning (and will happily swap again 
 Earlier this year I noticed a pattern: I would get a new idea, feel an overwhelming urge to implement it right away, and then fight with whatever device I had nearby.
 I tried **VS Code in the browser**, bounced between **iSH** and **Terminus** for SSH, and even lived inside a handful of in-browser terminal clients.
 I also spent time with mobile companions like [**Happy**](https://happy.engineering/) and [**Omnara**](https://www.ycombinator.com/companies/omnara), both designed to mirror Claude Code sessions on the phone, but they still felt like another relay layer between me and my shell.
-That friction is what pushed me toward a phone-first, self-hosted workflow that can keep up with my agentic-coding impulses while still giving me raw SSH access to my own machine.
+That friction is what pushed me toward a phone-ready, self-hosted workflow that can keep up with my agentic-coding impulses while still giving me raw SSH access to my own machine when the laptop is out of reach.
 
 This post is based on the way I develop software today.
 Your mileage may vary, but if you also care about privacy, open tooling, and reproducible environments, I think there are useful pieces here.
@@ -176,7 +177,7 @@ The whole loop finishes fast enough that I can dictate a git commit message, tap
 
 ## 8. A Typical Coding Session From the Phone
 
-Here's what a real session looks like today:
+Here's what a real session looks like when I'm away from a laptop (like right now, dictating from the bathtub):
 
 1. Flick the action button and dictate a summary of the feature I want to build.
 2. Open Blink, auto-connects through WireGuard, resumes the last Mosh session, and re-attaches to `zellij`.
@@ -188,6 +189,7 @@ Here's what a real session looks like today:
 When the draft looks good, I hand off the git plumbing to my `coder` agent running on the same host—it stages the changes, writes the commit, pushes the branch, and opens a pull request for me. Final review happens in the GitHub iOS app, which is perfect for quick proofreading while the plane starts its descent.
 
 Because all the heavy lifting happens on the NixOS machine, my phone stays cool and battery usage is surprisingly mild.
+Give me a proper keyboard and I'm there immediately, but in those moments without one this setup keeps ideas from evaporating.
 
 ## 9. Lessons Learned and Caveats
 
