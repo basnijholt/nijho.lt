@@ -156,9 +156,7 @@ The whole loop finishes fast enough that I can capture intent by voice and paste
 **Dictation quality:** In my experience, the built‑in iOS dictation is absolute garbage compared to Whisper/FasterWhisper. Accuracy and punctuation are much better with the FasterWhisper server running at home; it’s a bit slower, but that trade‑off is worth it for clean, usable text.
 {{% /callout %}}
 
-{{% callout warning %}}
-**Security tip:** Lock the Shortcut to run only when your WireGuard tunnel is active and require Face ID before pushing clipboard data. I also gate the `agent-cli ingest` command through a per-device SSH key with a forced command wrapper.
-{{% /callout %}}
+
 
 ## 8. Workflow in Practice
 
