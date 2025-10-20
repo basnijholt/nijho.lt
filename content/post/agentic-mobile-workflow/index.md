@@ -91,7 +91,7 @@ I terminate WireGuard on my router so every device in the house (and on the road
 
 - **Server:** ASUS XT8 router with WireGuard enabled via the router UI.
 - **Client:** The WireGuard iOS app with `On-Demand` rules so the tunnel flips on whenever I am off trusted Wi-Fi.
-- **DNS:** All mobile sessions resolve through my Pi-hole, so `git.nijho.lt` and internal services resolve instantly.
+- **DNS:** All mobile sessions resolve through my home DNS, so `git.nijho.lt` and internal services resolve instantly.
 
 This gives Blink a local-LAN address for my desktop `nixos-builder`, without hairpin NAT or double SSH jumps.
 
@@ -123,39 +123,18 @@ I break these tricks down in more depth in [Terminal Ninja]({{< ref "/post/termi
 
 Because Zellij renders well inside Blink, I get clear borders and no weird emoji alignment issues.
 
-## 6. Layer 4: A systemd-managed `agent-cli` Server
+## 6. Layer 4: `agent-cli` Server
 
-The heart of the workflow is a long-lived background service that exposes transcription, rewrite, and command helpers via a secure UNIX socket.
+The workflow uses a long‑lived `agent-cli` server on my NixOS machine to handle transcription and prompt cleanup.
+I run it as a systemd user service defined in my dotfiles—see the permalink to `configs/nixos/modules/user.nix` here:
+[`user.nix` (agent-cli user service)](https://github.com/basnijholt/dotfiles/blob/8f6bf0b7219195a46a3e010d3538e1e449634db7/configs/nixos/modules/user.nix#L29-L40).
 
-```ini
-# /etc/systemd/system/agent-cli-server.service
-[Unit]
-Description=agent CLI server
-After=network-online.target
-
-[Service]
-User=bas
-Group=users
-WorkingDirectory=/home/basnijholt/repos/agent-cli
-Environment="OLLAMA_HOST=127.0.0.1:11434"
-ExecStart=/home/basnijholt/.local/bin/agent-cli server --config /home/basnijholt/.config/agent-cli/server.toml
-Restart=on-failure
-RestartSec=3
-RuntimeMaxSec=0
-
-[Install]
-WantedBy=default.target
-```
-
-I manage that file declaratively with NixOS (`systemd.services.agent-cli-server`), so rebuilding the machine pins the correct binary and config checksum.
-The server speaks JSON-RPC over a local socket; my Shortcut pushes audio files into `/run/agent-cli/inbox`, and the service publishes cleaned-up text to a redis channel and clipboard helper.
-
-If you want to peek at the actual configuration I use, the code lives in [`configs/nixos/modules/user.nix`](https://github.com/basnijholt/dotfiles/blob/8f6bf0b7219195a46a3e010d3538e1e449634db7/configs/nixos/modules/user.nix#L29-L40), which keeps the `uvx agent-cli server` user service alive with the right dependencies.
+My Shortcut sends audio to the server; it returns cleaned text that I paste into the Code CLI.
 
 The models run on the same box:
 
-- **FasterWhisper** (medium.en) via [`faster-whisper-server`](https://github.com/guillaumekln/faster-whisper) behind a UNIX socket for instant transcriptions.
-- **Ollama** hosting `llama3.1:70b` for rewrite/edit prompts plus `qwen2.5-coder` when I want a second opinion.
+- **FasterWhisper** via [`faster-whisper-server`](https://github.com/guillaumekln/faster-whisper) for transcription.
+- **Ollama** for local text cleanup/rephrasing before sending prompts to the coding agent.
 - Optional `rtx` acceleration so the GPU stays warm for consecutive dictations.
 
 It’s not the fastest—FasterWhisper on my box is slower than Apple’s on‑device dictation—but the accuracy makes it a clear win for me when coding from the phone.
