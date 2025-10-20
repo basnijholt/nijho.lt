@@ -32,7 +32,7 @@ image:
 ---
 
 I am dictating this post at ten kilometers altitude on a flight home from Mexico, Blink Shell open on my iPhone while an agentic assistant running on my NixOS box shapes my sentences in real time.
-I am currently a little addicted to agentic coding: as soon as an idea pops into my head, I want to ship it immediately, even if that means hacking from a cramped seat in the sky.
+I am currently a little addicted to agentic coding: as soon as an idea pops into my head, I feel compelled to act on it immediately, even if that means hacking from a cramped seat in the sky.
 This is the workflow I have been refining after the experiments I described in [my agentic coding write-up]({{< ref "/post/agentic-coding" >}}) and the self-hosted AI obsession in [my local AI journey]({{< ref "/post/local-ai-journey" >}}).
 It is a personal, open stack: no code or transcripts touch a proprietary endpoint, and everything runs on the same NixOS box that also powers my homelab.
 
