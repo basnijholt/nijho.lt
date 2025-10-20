@@ -48,8 +48,9 @@ My agentic tooling changes almost monthly—whenever a better local option appea
 ## 1. The Motivation: Ship Features the Moment Ideas Arrive
 
 Earlier this year I noticed a pattern: I would get a new idea, feel an overwhelming urge to implement it right away, and then fight with whatever device I had nearby.
-I tried glossy remote IDEs again, including **Happy CLI** and a few browser-based editors, but every option either forced me through a third-party API or broke the moment the connection hiccupped.
-That friction is what pushed me toward a phone-first, self-hosted workflow that can keep up with my agentic-coding impulses.
+I tried **VS Code in the browser**, bounced between **iSH** and **Terminus** for SSH, and even lived inside a handful of in-browser terminal clients.
+I experimented with a couple of opinionated coding-agent apps too, but they hid most of the knobs I need.
+That friction is what pushed me toward a phone-first, self-hosted workflow that can keep up with my agentic-coding impulses while still giving me raw SSH access to my own machine.
 
 This post is based on the way I develop software today.
 Your mileage may vary, but if you also care about privacy, open tooling, and reproducible environments, I think there are useful pieces here.
@@ -67,10 +68,10 @@ To give you a sense of what I tried, here is the short comparison that convinced
 
 | Approach | Pros | Why I moved on |
 | --- | --- | --- |
-| Cloud IDEs (Codespaces, Devpod) | Slick editors, good specs | Ran afoul of my private repos and required shuttling secrets |
-| Happy CLI | Native iOS app with AI helpers | Relay sits outside my homelab and I cannot audit the pipeline |
-| iSH + SSH (my old setup) | Worked everywhere | Slow, no mosh, missing modern terminal features |
-| Phone VNC | Visual parity | Latency and battery drain, awkward text selection |
+| VS Code in the browser | Familiar editor UI | Needs a steady connection and still lives outside my dotfiles comfort zone |
+| iSH / Terminus SSH | Works without extra infrastructure | Laggy, no Mosh, and awkward keybindings |
+| In-browser terminals | Instant access from anywhere | Poor copy/paste ergonomics and flaky mobile keyboards |
+| Prebuilt coding-agent apps | Hands-off automation | Not flexible enough, and you lose direct shell control |
 
 The stack below gives me the resilience of Mosh, the ergonomics of Zellij, and full control over the AI layer.
 
