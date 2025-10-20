@@ -1,6 +1,6 @@
 ---
 title: "📱 Agentic Phone Coding: WireGuard, Blink Shell, and My Self-Hosted AI Stack"
-subtitle: "A reproducible voice-driven workflow using Mosh, Zellij, FasterWhisper, Ollama, and my agent-cli server to build software from an iPhone without sending code to SaaS."
+subtitle: "A reproducible voice-driven workflow using Mosh, Zellij, FasterWhisper, Ollama, and my agent-cli server to build software from an iPhone"
 summary: "My mostly self-hosted mobile development loop: WireGuard from an iPhone into my NixOS machine, persistent Blink/Mosh sessions, a systemd-managed agent-cli server, and an iOS Shortcut for FasterWhisper+Ollama dictation—paired with the best proprietary coding model available."
 date: 2025-10-20
 draft: false
@@ -36,14 +36,16 @@ Admittedly, I’m a little addicted to agentic coding: when an idea pops up, I w
 This is the workflow I’ve arrived at after trying many alternatives, it extends [my agentic coding write-up]({{< ref "/post/agentic-coding" >}}) and the self-hosted AI obsession in [my local AI journey]({{< ref "/post/local-ai-journey" >}}).
 It's my backup plan for those moments when a computer simply isn't nearby—the rest of the time I'm still at a keyboard like any other developer.
 This is in no way a replacement for a proper computer/laptop workflow but gets the job done when needed.
-It’s a personal, mostly open‑source stack: `agent-cli` is my local‑first voice and clipboard layer—streaming mic audio to FasterWhisper for ASR, cleaning/polishing with a local LLM via Ollama, and (when needed) speaking results via Piper.
-It also exposes a small HTTP interface that my iOS Shortcut hits to send audio and receive cleaned text.
-The coding agent still calls into the best proprietary frontier model I can access.
+It's a personal, mostly open-source stack built around `agent-cli`—my local-first voice layer.
+Here's how it works: I speak into my phone, the audio goes to FasterWhisper for transcription, Ollama cleans up the text, and it lands on my clipboard ready to paste.
+My iOS Shortcut handles this through a small HTTP interface that agent-cli exposes.
+The coding agent itself still uses the best proprietary model I can access.
 
 {{% callout note %}}
-Meta: I’m writing about agentic coding on mobile from my actual phone.
-It’s not the most efficient way to write, but it gets the job done — during a 6.5‑hour flight I dictated and iterated this entire post, although I took more than 50 iterations (>50 commits) to get it right.
-See [PR #40](https://github.com/basnijholt/nijho.lt/pull/40) for the full review trail.
+Meta: I'm writing about agentic coding on mobile from my actual phone.
+It's not the most efficient way to write, but it gets the job done — during a 6.5‑hour flight I dictated and iterated this entire post.
+Each iteration was a commit: dictate changes, review the diff, refine, commit, repeat.
+See all [50+ commits in PR #40](https://github.com/basnijholt/nijho.lt/pull/40) for the full iteration trail.
 {{% /callout %}}
 
 {{% callout note %}}
@@ -56,13 +58,13 @@ Everything is local except the model.
 
 ## 1. Why Phone Coding Works Now
 
-For years I used **iSH** (full Alpine Linux emulator) with an SSH client on my phone to hop into servers.
+For years I used **iSH** (a full Alpine Linux emulator) with SSH to hop into servers from my phone, but dropping connections were a constant frustration.
 Because coding on a phone keyboard is terrible, I kept it to tiny configuration tweaks or one-off fixes of a few characters.
 Agentic tools changed that: with a CLI coding agent, I don’t need to type the code—I describe the change, review the patch, and run it.
 That made meaningful work on the phone possible for the first time, for those moments when a computer isn’t around.
 
 I tried **VS Code in the browser**, bounced between **iSH** and **Terminus** for SSH, and even lived inside a handful of in-browser terminal clients.
-I also spent time with mobile companions like [**Happy**](https://happy.engineering/) and [**Omnara**](https://www.ycombinator.com/companies/omnara), both designed to mirror Claude Code sessions on the phone, but they still felt like another relay layer between me and my shell.
+I also spent time with mobile companions like [**Happy**](https://happy.engineering/) and [**Omnara**](https://www.ycombinator.com/companies/omnara), both designed to mirror Claude Code sessions on the phone, but they still felt like extra steps between me and my actual terminal.
 That friction pushed me toward a phone‑ready, self‑hosted workflow that still gives me raw SSH access to my own machine when the computer is out of reach.
 
 This post is based on the way I develop software today.
@@ -70,7 +72,7 @@ Your mileage may vary, but if you also care about privacy, open tooling, and rep
 
 ## 2. Constraints and Trade-offs
 
-This started with a few constraints and grew organically; today these are my guiding principles:
+This setup grew organically over time. What emerged are less strict requirements and more happy accidents that turned into core benefits:
 
 - **Single trust boundary:** Only the model provider (OpenAI) sees code context; audio and automation stay local, and I avoid any additional third‑party relays.
 - **Resilient sessions:** Connections should survive sleep and spotty networks.
@@ -129,7 +131,7 @@ I break these tricks down in more depth in [Terminal Ninja]({{< ref "/post/termi
 
 [`agent-cli`](https://github.com/basnijholt/agent-cli) runs as a small server on my NixOS machine.
 In this workflow I only use `transcribe` from iOS Shortcuts: the phone records audio, the server transcribes and cleans it up, and I paste the text.
-Agent‑CLI also provides commands like `autocorrect`, `voice-edit`, a wake‑word `assistant`, and a conversational `chat` agent, but I’m not using those here.
+(Agent-CLI has other features like `autocorrect` and `chat`, but I don't use them for this workflow.)
 On this machine I run a long‑lived `agent-cli` user service (systemd) so Shortcuts can POST audio to it and get cleaned text back—ready to paste into Codex CLI.
 The service is defined in my dotfiles—see: [`configs/nixos/modules/user.nix` (agent-cli service)](https://github.com/basnijholt/dotfiles/blob/8f6bf0b7219195a46a3e010d3538e1e449634db7/configs/nixos/modules/user.nix#L29-L40).
 
@@ -140,7 +142,7 @@ The models and services run on the same box:
 - **FasterWhisper** via [`faster-whisper-server`](https://github.com/SYSTRAN/faster-whisper) for high‑accuracy streaming transcription.
 - **Ollama** for on‑device rewrite/cleanup before sending prompts to the coding agent.
 
-My iOS Shortcut record roundtrip is slower than Apple’s on‑device dictation, but the accuracy is much better, which matters more.
+My iOS Shortcut dictation workflow is slower than Apple's built-in dictation, but the accuracy is much better—and that matters more.
 
 For the actual coding agent, I use a [fork](https://github.com/just-every/code) of Codex CLI with OpenAI’s `gpt-5-codex-high` model (here no open-source solution matches the frontier).
 
@@ -161,11 +163,13 @@ Accuracy and punctuation are much better with the FasterWhisper server running a
 
 ## 8. Workflow in Practice
 
-- Ensure WireGuard is connected.
-- Open Blink and the session is already open! (To initialize, I Mosh into `nixos`; `zellij` reattaches with my existing panes.)
-- Dictate the feature/change, paste into Codex CLI (using `gpt-5-codex-high`), and iterate.
-- Review diffs either in another Mosh/Zellij pane or as a pull request.
-- An agent commits and pushes to a branch, then opens a PR via `gh` for me to review and merge.
+Here's the typical flow:
+
+- WireGuard auto-connects when I'm off home WiFi
+- Open Blink—my Mosh session is still alive from last time, Zellij panes intact
+- Dictate the change, paste into Codex CLI, review the agent's response
+- Check diffs in an adjacent Zellij pane or different Blink tab with separate Mosh session
+- The agent commits and pushes to a branch, then opens a PR via `gh` for me to review and merge
 
 On the phone, I aim for the smallest practical edits and initial implementations.
 Even on personal repos, I still open a PR—sometimes prompting alone gets me to a merge‑ready result.
@@ -173,9 +177,9 @@ For open‑source with real users, I finish on the computer with a careful revie
 
 ## 9. Conclusion and Further Reading
 
-This phone setup simply extends the workflow from [Agentic Coding]({{< ref "/post/agentic-coding" >}}).
-I connect to the same Zellij session on `nixos`, so when a new idea hits, I can pick up exactly where I left off and keep going—no new environment, no copy‑paste dance.
-Everything stays on my hardware (voice and automation), with only the coding model (`gpt-5-codex-high`) living behind an external API.
+This phone setup extends my [Agentic Coding]({{< ref "/post/agentic-coding" >}}) workflow to mobile.
+I connect to the same Zellij session on `nixos`, so when an idea hits, I pick up exactly where I left off—same environment, same context, no setup.
+Everything runs on my hardware (voice processing and automation) except the coding model itself.
 It’s the most effective mobile workflow I’ve had so far.
 It’s mostly open‑source not out of dogma, but because those tools are the best options for my needs.
 The one exception is the coding model: there’s no true open equivalent right now, and it makes no sense to buy 20× H100s just to self‑host a frontier model even if such a high quality model would be available open-source.
