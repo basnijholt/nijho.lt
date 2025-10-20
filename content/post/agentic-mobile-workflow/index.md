@@ -97,11 +97,11 @@ This gives Blink a local-LAN address for my desktop `nixos-builder`, without hai
 
 ## 4. Layer 2: Blink Shell + Mosh for Durable Sessions
 
-Blink Shell is my daily driver on iOS because it supports real keyboard shortcuts, Face ID auth, and custom URL schemes for Shortcuts.
+Blink Shell is my daily driver on iOS because it pairs beautifully with Mosh and has solid keyboard ergonomics (external keyboards, sane modifiers, and reliable shortcuts).
 
 - I launch sessions using `mosh bas@nixos-builder -- zellij attach -c phone`.
 - Mosh smooths over spotty LTE and keeps my session alive when the phone sleeps.
-- Blink exposes a URL scheme that my custom Shortcut (tied into **agent-cli**) calls into, so I can fire the "Dictate to clipboard" workflow without leaving the terminal.
+ 
 
 If you have ever lost a long REPL session to a dropped train tunnel, Mosh feels like magic.
 
@@ -170,7 +170,7 @@ The Shortcut attached to my iPhone's action button—something I built myself in
 2. **Send to server:** It runs `ssh bas@nixos-builder agent-cli ingest --stdin` with the WAV payload.
 3. **Transcribe:** `agent-cli` calls FasterWhisper, producing raw text plus timestamps.
 4. **Polish:** The text flows into an Ollama prompt that applies my personal style guide (short sentences, no filler).
-5. **Push to clipboard:** The server emits a WebSocket message to a tiny Blink companion script (`blink://clipboard?text=...`), so the completed text pops into the iOS clipboard.
+5. **Push to clipboard:** The Shortcut puts the cleaned text on the iOS clipboard so I can paste it into the Code CLI.
 6. **Notify:** I get a haptic tap on the phone and a confirmation toast inside Blink.
 
 The whole loop finishes fast enough that I can dictate a git commit message, tap once, and paste it into `git commit` inside Zellij without re-typing anything.
