@@ -109,9 +109,7 @@ If you have ever lost a long REPL session to a dropped train tunnel, Mosh feels 
 
 I use **Zellij** as my terminal multiplexer for mobile work.
 
-- `zellij` handles pane management, status bars, and plugin hints far better on a phone display.
-- My mobile-friendly keybindings sit in [`configs/zellij/config.kdl`](https://github.com/basnijholt/dotfiles/blob/8f6bf0b7219195a46a3e010d3538e1e449634db7/configs/zellij/config.kdl), so Blink renders clean borders and sensible shortcuts on the small screen.
-- I sync all plugins and keymaps through the same dotfiles pipeline I described in [Terminal Ninja]({{< ref "/post/terminal-ninja" >}}).
+- I stick to the defaults and use a couple of predefined layouts (e.g., a "phone" layout with editor + shell panes). No plugins.
 
 Ergonomics matter even more on a glass keyboard, so I lean on a few shell helpers:
 
