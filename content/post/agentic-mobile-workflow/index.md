@@ -32,8 +32,12 @@ image:
 ---
 
 I am dictating this post at ten kilometers altitude on a flight home from Mexico, Blink Shell open on my iPhone while an agentic assistant running on my NixOS box shapes my sentences in real time.
+I am currently a little addicted to agentic coding: as soon as an idea pops into my head, I want to ship it immediately, even if that means hacking from a cramped seat in the sky.
 This is the workflow I have been refining after the experiments I described in [my agentic coding write-up]({{< ref "/post/agentic-coding" >}}) and the self-hosted AI obsession in [my local AI journey]({{< ref "/post/local-ai-journey" >}}).
 It is a personal, open stack: no code or transcripts touch a proprietary endpoint, and everything runs on the same NixOS box that also powers my homelab.
+
+At the moment, the glue for all of this is [Code](https://github.com/just-every/code), a fast-moving fork of Codex CLI.
+My agentic tooling changes almost monthly—whenever a better local option appears, I happily swap it in—but today this stack captures what actually gets work done from the phone.
 
 {{% callout note %}}
 **TL;DR:** I connect my iPhone to my home network over **WireGuard**, stay logged in with **Blink Shell** plus **Mosh** for resilient SSH, manage terminals with **Zellij**, and run my own [`agent-cli`](https://github.com/basnijholt/agent-cli) server under **systemd**. An iOS Shortcut records my voice, ships audio to the server for **FasterWhisper** transcription, runs text clean-up with **Ollama**, and returns the result directly into my mobile clipboard so I can paste commands or commit messages instantly.
@@ -41,11 +45,11 @@ It is a personal, open stack: no code or transcripts touch a proprietary endpoin
 
 {{< toc >}}
 
-## 1. The Motivation: Ship Features While Away From the Desk
+## 1. The Motivation: Ship Features the Moment Ideas Arrive
 
-Earlier this year I was bouncing between travel, conferences, and late-night ideas that would not wait.
-I tried glossy remote IDEs again, including **Happy CLI** and a few browser-based editors, but every option either forced me through a third-party API or broke the moment commuter Wi-Fi dropped.
-That friction is what pushed me toward a phone-first, self-hosted workflow.
+Earlier this year I noticed a pattern: I would get a new idea, feel an overwhelming urge to implement it right away, and then fight with whatever device I had nearby.
+I tried glossy remote IDEs again, including **Happy CLI** and a few browser-based editors, but every option either forced me through a third-party API or broke the moment the connection hiccupped.
+That friction is what pushed me toward a phone-first, self-hosted workflow that can keep up with my agentic-coding impulses.
 
 This post is based on the way I develop software today.
 Your mileage may vary, but if you also care about privacy, open tooling, and reproducible environments, I think there are useful pieces here.
@@ -74,7 +78,7 @@ The stack below gives me the resilience of Mosh, the ergonomics of Zellij, and f
 
 I terminate WireGuard on my router so every device in the house (and on the road) can dial home with the same config.
 
-- **Server:** MikroTik router running WireGuard peers defined in Nix (`services.wireguard.interfaces` in my dotfiles).
+- **Server:** MikroTik router running WireGuard peers managed via Nix (the router module lives in my dotfiles, but it is private for now).
 - **Client:** The WireGuard iOS app with `On-Demand` rules so the tunnel flips on whenever I am off trusted Wi-Fi.
 - **DNS:** All mobile sessions resolve through my Pi-hole, so `git.nijho.lt` and internal services resolve instantly.
 
@@ -95,7 +99,7 @@ If you have ever lost a long REPL session to a dropped train tunnel, Mosh feels 
 In an earlier draft of this post I accidentally wrote "tmux" out of muscle memory, but I fully switched to **Zellij** months ago.
 
 - `zellij` handles pane management, status bars, and plugin hints far better on a phone display.
-- My layout for mobile work lives at `configs/zellij/layouts/phone.kdl` in the dotfiles repo. It boots three panes: editor, logs, and an `agent-cli chat` window.
+- My mobile-friendly keybindings sit in [`configs/zellij/config.kdl`](https://github.com/basnijholt/dotfiles/blob/8f6bf0b7219195a46a3e010d3538e1e449634db7/configs/zellij/config.kdl), so Blink renders clean borders and sensible shortcuts on the small screen.
 - I sync all plugins and keymaps through the same dotfiles pipeline I described in [Terminal Ninja]({{< ref "/post/terminal-ninja" >}}).
 
 Because Zellij renders well inside Blink, I get clear borders and no weird emoji alignment issues.
@@ -126,6 +130,8 @@ WantedBy=default.target
 
 I manage that file declaratively with NixOS (`systemd.services.agent-cli-server`), so rebuilding the machine pins the correct binary and config checksum.
 The server speaks JSON-RPC over a local socket; my Shortcut pushes audio files into `/run/agent-cli/inbox`, and the service publishes cleaned-up text to a redis channel and clipboard helper.
+
+If you want to peek at the actual configuration I use, the code lives in [`configs/nixos/modules/user.nix`](https://github.com/basnijholt/dotfiles/blob/8f6bf0b7219195a46a3e010d3538e1e449634db7/configs/nixos/modules/user.nix#L29-L40), which keeps the `uvx agent-cli server` user service alive with the right dependencies.
 
 The models run on the same box:
 
@@ -174,6 +180,7 @@ Because all the heavy lifting happens on the NixOS machine, my phone stays cool 
 - **Voice accuracy improves with context.** Feeding previous snippets into the Ollama rewrite step keeps variable names consistent.
 - **Beware of clipboard overwrites.** iOS allows only one clipboard at a time; I use Shortcuts automation to delay re-runs for five seconds so I have time to paste.
 - **Documentation helps future me.** Everything lives in my dotfiles (`configs/shortcuts/`, `configs/agent-cli/`). When I swap phones, I just re-run `./install`.
+- **NixOS keeps networking tidy.** Firewall rules (including the UDP range for Mosh and the agent server port) are codified in [`configs/nixos/hosts/pc/networking.nix`](https://github.com/basnijholt/dotfiles/blob/8f6bf0b7219195a46a3e010d3538e1e449634db7/configs/nixos/hosts/pc/networking.nix#L30-L49), so the setup survives rebuilds.
 
 ## 10. Where to Go Next
 
