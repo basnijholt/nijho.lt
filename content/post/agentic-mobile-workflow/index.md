@@ -75,7 +75,7 @@ This started with a few constraints and grew organically; today these are my gui
 - **Single trust boundary:** Only the model provider (OpenAI) sees code context; audio and automation stay local, and I avoid any additional third‑party relays.
 - **Resilient sessions:** Connections should survive sleep and spotty networks.
 - **Voice-friendly:** Dictation should be accurate enough that I can trust it.
-- **Reproducible config:** The entire stack must live in my [dotfiles]({{< ref "/post/dotfiles" >}}) and [NixOS configuration](https://github.com/basnijholt/dotfiles/tree/main/configs/nixos).
+- **Reproducible config:** The entire stack must live in my [dotfiles]({{< ref "/post/dotfiles" >}}) and [NixOS configuration](https://github.com/basnijholt/dotfiles/tree/8f6bf0b7219195a46a3e010d3538e1e449634db7/configs/nixos).
 
 To give you a sense of what I tried, here is the short comparison that convinced me to roll my own:
 
