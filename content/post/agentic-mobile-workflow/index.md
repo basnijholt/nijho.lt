@@ -127,7 +127,7 @@ The workflow uses a long‑lived `agent-cli` server on my NixOS machine to handl
 I run it as a systemd user service defined in my dotfiles—see the permalink to `configs/nixos/modules/user.nix` here:
 [`user.nix` (agent-cli user service)](https://github.com/basnijholt/dotfiles/blob/8f6bf0b7219195a46a3e010d3538e1e449634db7/configs/nixos/modules/user.nix#L29-L40).
 
-My Shortcut sends audio to the server; it returns cleaned text that I paste into the Code CLI.
+The server exposes a simple HTTP endpoint (`POST /transcribe`). The iOS Shortcut records audio and posts it as a Form field named `audio` (type File); the server replies with JSON containing `cleaned_transcript` (or `raw_transcript`). I paste that text into the Code CLI.
 
 The models run on the same box:
 
@@ -144,11 +144,10 @@ The Shortcut attached to my iPhone's action button—something I built myself in
 
 For a step‑by‑step setup, see the iOS Shortcut Guide in the repo: [agent-cli/iOS_Shortcut_Guide.md](https://github.com/basnijholt/agent-cli/blob/main/iOS_Shortcut_Guide.md).
 
-1. **Record audio:** The Shortcut opens a native recorder and stops when I tap the screen.
-2. **Send to server:** It runs `ssh bas@nixos agent-cli ingest --stdin` with the WAV payload.
-3. **Transcribe:** `agent-cli` calls FasterWhisper, producing raw text plus timestamps.
-4. **Polish:** The text flows into an Ollama prompt that applies my personal style guide (short sentences, no filler).
-5. **Push to clipboard:** The Shortcut puts the cleaned text on the iOS clipboard so I can paste it into the Code CLI.
+1. **Record audio:** The Shortcut uses “Record Audio” and stops on tap.
+2. **Send to server:** “Get Contents of URL” (POST) to `http://nixos:61337/transcribe` with Request Body = Form and a field `audio` (type File) set to the recording.
+3. **Transcribe + polish:** The server handles FasterWhisper (ASR) and optional cleanup (Ollama/OpenAI), returning JSON with `cleaned_transcript`.
+4. **Copy to clipboard:** “Get Dictionary Value” → `cleaned_transcript` → “Copy to Clipboard,” then paste into the Code CLI.
 6. **Notify:** I get a haptic tap on the phone and a confirmation toast inside Blink.
 
 The whole loop finishes fast enough that I can capture intent by voice and paste it into the Code CLI without re‑typing.
