@@ -148,11 +148,11 @@ The Shortcut attached to my iPhone's action button—something I built myself in
 
 For a step‑by‑step setup, see the iOS Shortcut Guide in the repo: [agent-cli/iOS_Shortcut_Guide.md](https://github.com/basnijholt/agent-cli/blob/main/iOS_Shortcut_Guide.md).
 
-1. **Record audio:** The Shortcut uses “Record Audio” and stops on tap.
+1. **Record audio:** Triggered via the iPhone Action Button, the Shortcut uses “Record Audio” and stops on tap.
 2. **Send to server:** “Get Contents of URL” (POST) to `http://nixos:61337/transcribe` with Request Body = Form and a field `audio` (type File) set to the recording.
 3. **Transcribe + polish:** The server handles FasterWhisper (ASR) and optional cleanup (Ollama/OpenAI), returning JSON with `cleaned_transcript`.
 4. **Copy to clipboard:** “Get Dictionary Value” → `cleaned_transcript` → “Copy to Clipboard,” then paste into the Code CLI.
-6. **Notify:** I get a haptic tap on the phone and a confirmation toast inside Blink.
+6. **Notify:** I get a haptic tap on the phone (and an optional Shortcuts banner if enabled).
 
 The whole loop finishes fast enough that I can capture intent by voice and paste it into the Code CLI without re‑typing.
 
