@@ -170,15 +170,6 @@ On the phone, I aim for the smallest practical edits and initial implementations
 Even on personal repos, I still open a PR—sometimes prompting alone gets me to a merge‑ready result.
 For open‑source with real users, I finish on the computer with a careful review and any final edits.
 
-## 9. Lessons Learned and Caveats
-
-- **Network hiccups still matter.** Mosh hides most drops, but large git clones will stall on weak LTE. I queue those until I am on Wi-Fi.
-- **Keep shortcuts debuggable.** I log every transcription to `/var/log/agent-cli/transcriptions.log` so I can replay failures from a computer.
-- **Voice accuracy improves with context.** Feeding previous snippets into the Ollama rewrite step keeps variable names consistent.
-- **Beware of clipboard overwrites.** iOS allows only one clipboard at a time; I use Shortcuts automation to delay re-runs for five seconds so I have time to paste.
-- **Documentation helps future me.** Everything lives in my dotfiles (`configs/shortcuts/`, `configs/agent-cli/`). When I swap phones, I just re-run `./install`.
-- **NixOS keeps networking tidy.** Firewall rules (including the UDP range for Mosh and the agent server port) are codified in [`configs/nixos/hosts/pc/networking.nix`](https://github.com/basnijholt/dotfiles/blob/8f6bf0b7219195a46a3e010d3538e1e449634db7/configs/nixos/hosts/pc/networking.nix#L30-L49), so the setup survives rebuilds.
-
 ## 10. Where to Go Next
 
 This workflow already let me hack on [`matty`](https://github.com/basnijholt/matty) and bug-fix [Adaptive](https://github.com/basnijholt/adaptive) while away from my desk, but there is room to expand:
