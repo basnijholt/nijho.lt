@@ -38,9 +38,9 @@ It's my contingency plan for those moments when a laptop simply isn't nearby—t
 It is a personal, mostly open stack: transcription, automation, and orchestration run on my own hardware, while the actual coding agent still calls into the best proprietary frontier model I can access.
 
 Earlier this autumn I switched from Claude Code to OpenAI's GPT-5 High Reasoning models for the heavy lifting.
-Anthropic's September 17 postmortem on three infrastructure bugs—after weeks of outages and degraded code quality—was the final straw for trusting my mainline development flow to their stack.citeturn0search1
+Anthropic's September 17 postmortem on three infrastructure bugs—after weeks of outages and degraded code quality—was the final straw for trusting my mainline development flow to their stack.citeturn0search0
 
-At the moment, the glue for all of this is [Code](https://github.com/just-every/code), a fast-moving fork of Codex CLI.
+Day to day, the workflow stays glued together by a CLI-first agent stack: [Code](https://github.com/just-every/code) hosts multiple shells and coding sessions in parallel, and `agent-cli` pipes transcripts, diffs, and prompts through the same terminal where I already live.
 My agentic tooling changes almost monthly—whenever a better local option appears, I happily swap it in—but today this stack captures what actually gets work done when the phone is the only screen within reach.
 For coding help I now lean on GPT-5 High Reasoning (and will happily swap again if something better appears); the local tooling in this post simply gives that model a private, flexible cockpit.
 
