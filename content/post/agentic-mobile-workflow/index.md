@@ -38,14 +38,14 @@ It's my contingency plan for those moments when a laptop simply isn't nearby—t
 It is a personal, mostly open stack: transcription, automation, and orchestration run on my own hardware, while the actual coding agent still calls into the best proprietary frontier model I can access.
 
 Earlier this autumn I switched from Claude Code to OpenAI's `gpt-5-codex-high` models for the heavy lifting.
-Anthropic's September 17 postmortem on three infrastructure bugs—after weeks of outages and degraded code quality—was the final straw for trusting my mainline development flow to their stack.citeturn0search0
+Anthropic's September 17 postmortem, [“A postmortem of three recent issues”](https://www.anthropic.com/engineering/a-postmortem-of-three-recent-issues), detailing three infrastructure bugs and weeks of degraded quality, was the final straw for trusting my mainline development flow to their stack.
 
-Day to day, a CLI-first agent stack holds the workflow together: [Code](https://github.com/just-every/code) hosts multiple shells and coding sessions in parallel, and `agent-cli` pipes transcripts, diffs, and prompts through the same terminal where I already live.
+Day to day, a CLI-first agent stack holds the workflow together: the [Code CLI](https://github.com/just-every/code) (a fast-moving fork of Codex) hosts multiple shells and coding sessions in parallel, and `agent-cli` pipes transcripts, diffs, and prompts through the same terminal where I already live.
 My agentic tooling changes almost monthly—whenever a better local option appears, I happily swap it in—but today this stack captures what actually gets work done when the phone is the only screen within reach.
 For coding help I now lean on `gpt-5-codex-high` (and will happily swap again if something better appears); the local tooling in this post simply gives that model a private, flexible cockpit.
 
 {{% callout note %}}
-**TL;DR:** I connect my iPhone to my home network over **WireGuard**, stay logged in with **Blink Shell** plus **Mosh** for resilient SSH, manage terminals with **Zellij**, and run my own [`agent-cli`](https://github.com/basnijholt/agent-cli) server under **systemd**. An iOS Shortcut records my voice, ships audio to the server for **FasterWhisper** transcription, runs text clean-up with **Ollama**, and returns the result directly into my mobile clipboard so I can paste the text straight into the `gpt-5-codex-high` CLI—while the model itself still lives on the best proprietary frontier API I can access.
+**TL;DR:** I connect my iPhone to my home network over **WireGuard**, stay logged in with **Blink Shell** plus **Mosh** for resilient SSH, manage terminals with **Zellij**, and run my own [`agent-cli`](https://github.com/basnijholt/agent-cli) server under **systemd**. An iOS Shortcut records my voice, ships audio to the server for **FasterWhisper** transcription, runs text clean-up with **Ollama**, and returns the result directly into my mobile clipboard so I can paste the text straight into the Code CLI configured to use OpenAI’s `gpt-5-codex-high`—while the model itself still lives on the best proprietary frontier API I can access.
 {{% /callout %}}
 
 {{< toc >}}
@@ -160,7 +160,7 @@ For deep coding refactors, though, I still hand context to `gpt-5-codex-high` th
 
 ## 7. Layer 5: The iOS Shortcut Pipeline
 
-The Shortcut attached to my iPhone's action button—something I built myself in Shortcuts + `agent-cli`, not a Blink feature—bridges the physical microphone and my NixOS stack.
+The Shortcut attached to my iPhone's action button—something I built myself in Shortcuts + `agent-cli`—bridges the physical microphone and my NixOS stack.
 
 1. **Record audio:** The Shortcut opens a native recorder and stops when I tap the screen.
 2. **Send to server:** It runs `ssh bas@nixos-builder agent-cli ingest --stdin` with the WAV payload.
