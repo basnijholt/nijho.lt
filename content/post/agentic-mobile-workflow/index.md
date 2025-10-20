@@ -41,7 +41,7 @@ Earlier this autumn I switched from `Claude Opus 4.1` to OpenAI's `gpt-5-codex-h
 Anthropic's September 17 postmortem, [“A postmortem of three recent issues”](https://www.anthropic.com/engineering/a-postmortem-of-three-recent-issues), detailing three infrastructure bugs and weeks of degraded quality, was the final straw for trusting my mainline development flow to their stack.
 
 Day to day, a CLI-first agent stack holds the workflow together: the [Code CLI](https://github.com/just-every/code) (a fast-moving fork of Codex) is a coding agent in the terminal; I run multiple instances in parallel via `zellij` (or separate SSH sessions), and `agent-cli` captures dictation and the prompts I’d otherwise type—right in the same terminal where I already work.
-My agentic tooling changes almost monthly—whenever a better local option appears, I happily swap it in—but today this stack captures what actually gets work done when the phone is the only screen within reach.
+My agentic tooling changes almost monthly—whenever a better option appears, I happily swap it in—but today this stack captures what actually gets work done when the phone is the only screen within reach.
 For coding help I now lean on `gpt-5-codex-high` (and will happily swap again if something better appears); the local tooling in this post simply gives that model a private, flexible cockpit.
 
 {{% callout note %}}
