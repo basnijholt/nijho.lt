@@ -131,7 +131,7 @@ The workflow uses a long‑lived `agent-cli` server on my NixOS machine to handl
 I run it as a systemd user service defined in my dotfiles—see the permalink to `configs/nixos/modules/user.nix` here:
 [`user.nix` (agent-cli user service)](https://github.com/basnijholt/dotfiles/blob/8f6bf0b7219195a46a3e010d3538e1e449634db7/configs/nixos/modules/user.nix#L29-L40).
 
-The server exposes a simple HTTP endpoint (`POST /transcribe`). The iOS Shortcut records audio and posts it as a Form field named `audio` (type File); the server replies with JSON containing `cleaned_transcript` (or `raw_transcript`). I paste that text into the Code CLI.
+The Shortcut sends recorded audio to this server and receives cleaned text back, which I paste into the Code CLI.
 
 The models run on the same box:
 
@@ -146,13 +146,9 @@ For deep coding refactors, though, I still hand context to `gpt-5-codex-high` th
 
 The Shortcut attached to my iPhone's action button—something I built myself in Shortcuts + `agent-cli`—bridges the physical microphone and my NixOS stack.
 
-For a step‑by‑step setup, see the iOS Shortcut Guide in the repo: [agent-cli/iOS_Shortcut_Guide.md](https://github.com/basnijholt/agent-cli/blob/main/iOS_Shortcut_Guide.md).
+For the full recipe, see the iOS Shortcut Guide: [agent-cli/iOS_Shortcut_Guide.md](https://github.com/basnijholt/agent-cli/blob/main/iOS_Shortcut_Guide.md).
 
-1. **Record audio:** Triggered via the iPhone Action Button, the Shortcut uses “Record Audio” and stops on tap.
-2. **Send to server:** “Get Contents of URL” (POST) to `http://nixos:61337/transcribe` with Request Body = Form and a field `audio` (type File) set to the recording.
-3. **Transcribe + polish:** The server handles FasterWhisper (ASR) and optional cleanup (Ollama/OpenAI), returning JSON with `cleaned_transcript`.
-4. **Copy to clipboard:** “Get Dictionary Value” → `cleaned_transcript` → “Copy to Clipboard,” then paste into the Code CLI.
-6. **Notify:** I get a haptic tap on the phone (and an optional Shortcuts banner if enabled).
+In short: I press the Action Button, the Shortcut records a snippet, sends it to `agent-cli`, and copies the cleaned text to my clipboard so I can paste it into the Code CLI.
 
 The whole loop finishes fast enough that I can capture intent by voice and paste it into the Code CLI without re‑typing.
 
