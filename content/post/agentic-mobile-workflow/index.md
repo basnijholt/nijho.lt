@@ -142,6 +142,8 @@ For deep coding refactors, though, I still hand context to `gpt-5-codex-high` th
 
 The Shortcut attached to my iPhone's action button—something I built myself in Shortcuts + `agent-cli`—bridges the physical microphone and my NixOS stack.
 
+For a step‑by‑step setup, see the iOS Shortcut Guide in the repo: [agent-cli/iOS_Shortcut_Guide.md](https://github.com/basnijholt/agent-cli/blob/main/iOS_Shortcut_Guide.md).
+
 1. **Record audio:** The Shortcut opens a native recorder and stops when I tap the screen.
 2. **Send to server:** It runs `ssh bas@nixos agent-cli ingest --stdin` with the WAV payload.
 3. **Transcribe:** `agent-cli` calls FasterWhisper, producing raw text plus timestamps.
