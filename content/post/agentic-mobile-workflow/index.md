@@ -45,7 +45,7 @@ My agentic tooling changes almost monthly—whenever a better local option appea
 For coding help I now lean on `gpt-5-codex-high` (and will happily swap again if something better appears); the local tooling in this post simply gives that model a private, flexible cockpit.
 
 {{% callout note %}}
-**TL;DR:** I connect my iPhone to my home network over **WireGuard**, stay logged in with **Blink Shell** plus **Mosh** for resilient SSH, manage terminals with **Zellij**, and run my own [`agent-cli`](https://github.com/basnijholt/agent-cli) server under **systemd**. An iOS Shortcut records my voice, ships audio to the server for **FasterWhisper** transcription, runs text clean-up with **Ollama**, and returns the result directly into my mobile clipboard so I can paste the text straight into the Code CLI configured to use OpenAI’s `gpt-5-codex-high`—while the model itself still lives on the best proprietary frontier API I can access.
+**TL;DR:** iPhone → WireGuard → Blink+Mosh → Zellij. I dictate via a Shortcut → FasterWhisper (transcribe) → Ollama (polish) → clipboard, then paste into the Code CLI using OpenAI’s `gpt-5-codex-high`. Everything is local except the model.
 {{% /callout %}}
 
 {{< toc >}}
@@ -69,7 +69,7 @@ Your mileage may vary, but if you also care about privacy, open tooling, and rep
 I approached the project with a few hard requirements:
 
 - **Single trust boundary:** Only the model provider (OpenAI) sees code context; audio and automation stay local, and I avoid any additional third‑party relays.
-- **Resilient sessions:** I want to lock my phone, board a plane, and resume where I left off.
+- **Resilient sessions:** Connections should survive sleep and spotty networks.
 - **Voice-friendly:** Dictation should be accurate enough that I can trust it.
 - **Reproducible config:** The entire stack must live in my [dotfiles]({{< ref "/post/dotfiles" >}}) and [NixOS configuration](https://github.com/basnijholt/dotfiles/tree/main/configs/nixos).
 
@@ -93,13 +93,13 @@ I terminate WireGuard on my router so every device in the house (and on the road
 - **Client:** The WireGuard iOS app with `On-Demand` rules so the tunnel flips on whenever I am off trusted Wi-Fi.
 - **DNS:** All mobile sessions resolve through my home DNS, so `git.nijho.lt` and internal services resolve instantly.
 
-This gives Blink a local-LAN address for my desktop `nixos-builder`, without hairpin NAT or double SSH jumps.
+This gives Blink a local-LAN address for my desktop `nixos`, without hairpin NAT or double SSH jumps.
 
 ## 4. Layer 2: Blink Shell + Mosh for Durable Sessions
 
 Blink Shell is my daily driver on iOS because it pairs beautifully with Mosh and has solid keyboard ergonomics (external keyboards, sane modifiers, and reliable shortcuts).
 
-- I launch sessions using `mosh bas@nixos-builder -- zellij attach -c phone`.
+- I launch sessions using `mosh bas@nixos -- zellij attach -c phone`.
 - Mosh smooths over spotty LTE and keeps my session alive when the phone sleeps.
  
 
@@ -121,7 +121,7 @@ Ergonomics matter even more on a glass keyboard, so I lean on a few shell helper
 
 I break these tricks down in more depth in [Terminal Ninja]({{< ref "/post/terminal-ninja" >}}), explain how I sync them with my [Dotfiles]({{< ref "/post/dotfiles" >}}), and even package binaries like `zoxide` with [Dotbins]({{< ref "/post/dotbins" >}}).
 
-Because Zellij renders well inside Blink, I get clear borders and no weird emoji alignment issues.
+
 
 ## 6. Layer 4: `agent-cli` Server
 
@@ -135,7 +135,6 @@ The models run on the same box:
 
 - **FasterWhisper** via [`faster-whisper-server`](https://github.com/guillaumekln/faster-whisper) for transcription.
 - **Ollama** for local text cleanup/rephrasing before sending prompts to the coding agent.
-- Optional `rtx` acceleration so the GPU stays warm for consecutive dictations.
 
 It’s not the fastest—FasterWhisper on my box is slower than Apple’s on‑device dictation—but the accuracy makes it a clear win for me when coding from the phone.
 
@@ -146,7 +145,7 @@ For deep coding refactors, though, I still hand context to `gpt-5-codex-high` th
 The Shortcut attached to my iPhone's action button—something I built myself in Shortcuts + `agent-cli`—bridges the physical microphone and my NixOS stack.
 
 1. **Record audio:** The Shortcut opens a native recorder and stops when I tap the screen.
-2. **Send to server:** It runs `ssh bas@nixos-builder agent-cli ingest --stdin` with the WAV payload.
+2. **Send to server:** It runs `ssh bas@nixos agent-cli ingest --stdin` with the WAV payload.
 3. **Transcribe:** `agent-cli` calls FasterWhisper, producing raw text plus timestamps.
 4. **Polish:** The text flows into an Ollama prompt that applies my personal style guide (short sentences, no filler).
 5. **Push to clipboard:** The Shortcut puts the cleaned text on the iOS clipboard so I can paste it into the Code CLI.
@@ -173,7 +172,7 @@ Here's what a real session looks like when I'm away from a laptop (like right no
 5. Review diffs, run `nix flake check`, and push from the phone.
 6. When inspiration fades, I lock the phone. Hours later I unlock it, and everything is exactly where I left it.
 
-When the draft looks good, I hand off the git plumbing to my `coder` agent running on the same host—it stages the changes, writes the commit, pushes the branch, and opens a pull request for me. Final review happens in the GitHub iOS app, which is perfect for quick proofreading while the plane starts its descent.
+When the draft looks good, I hand off the git plumbing to my `coder` agent running on the same host—it stages the changes, writes the commit, pushes the branch, and opens a pull request for me. Final review happens in the GitHub iOS app.
 
 Because all the heavy lifting happens on the NixOS machine, my phone stays cool and battery usage is surprisingly mild.
 Give me a proper keyboard and I'm there immediately, but in those moments without one this setup keeps ideas from evaporating.
