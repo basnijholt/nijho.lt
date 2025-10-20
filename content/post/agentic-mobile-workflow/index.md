@@ -1,7 +1,7 @@
 ---
 title: "📱 Agentic Phone Coding: WireGuard, Blink Shell, and My Self-Hosted AI Stack"
 subtitle: "A reproducible voice-driven workflow using Mosh, Zellij, FasterWhisper, Ollama, and my agent-cli server to build software from an iPhone without sending code to SaaS."
-summary: "My fully self-hosted mobile development loop: WireGuard from an iPhone into my NixOS machine, persistent Blink/Mosh sessions, a systemd-managed agent-cli server, and an iOS Shortcut that turns speech into clean code with FasterWhisper and Ollama."
+summary: "My mostly self-hosted mobile development loop: WireGuard from an iPhone into my NixOS machine, persistent Blink/Mosh sessions, a systemd-managed agent-cli server, and an iOS Shortcut for FasterWhisper+Ollama dictation—paired with the best proprietary coding model available."
 date: 2025-10-19
 draft: true
 featured: false
@@ -34,13 +34,14 @@ image:
 I am dictating this post at ten kilometers altitude on a flight home from Mexico, Blink Shell open on my iPhone while an agentic assistant running on my NixOS box shapes my sentences in real time.
 I am currently a little addicted to agentic coding: as soon as an idea pops into my head, I feel compelled to act on it immediately, even if that means hacking from a cramped seat in the sky.
 This is the workflow I have been refining after the experiments I described in [my agentic coding write-up]({{< ref "/post/agentic-coding" >}}) and the self-hosted AI obsession in [my local AI journey]({{< ref "/post/local-ai-journey" >}}).
-It is a personal, open stack: no code or transcripts touch a proprietary endpoint, and everything runs on the same NixOS box that also powers my homelab.
+It is a personal, mostly open stack: transcription, automation, and orchestration run on my own hardware, while the actual coding agent still calls into the best proprietary frontier model I can access.
 
 At the moment, the glue for all of this is [Code](https://github.com/just-every/code), a fast-moving fork of Codex CLI.
 My agentic tooling changes almost monthly—whenever a better local option appears, I happily swap it in—but today this stack captures what actually gets work done from the phone.
+For coding help I still lean on Claude Code (or whichever proprietary model is currently best-in-class); the local tooling in this post simply gives that model a private, flexible cockpit.
 
 {{% callout note %}}
-**TL;DR:** I connect my iPhone to my home network over **WireGuard**, stay logged in with **Blink Shell** plus **Mosh** for resilient SSH, manage terminals with **Zellij**, and run my own [`agent-cli`](https://github.com/basnijholt/agent-cli) server under **systemd**. An iOS Shortcut records my voice, ships audio to the server for **FasterWhisper** transcription, runs text clean-up with **Ollama**, and returns the result directly into my mobile clipboard so I can paste commands or commit messages instantly.
+**TL;DR:** I connect my iPhone to my home network over **WireGuard**, stay logged in with **Blink Shell** plus **Mosh** for resilient SSH, manage terminals with **Zellij**, and run my own [`agent-cli`](https://github.com/basnijholt/agent-cli) server under **systemd**. An iOS Shortcut records my voice, ships audio to the server for **FasterWhisper** transcription, runs text clean-up with **Ollama**, and returns the result directly into my mobile clipboard so I can paste commands or commit messages instantly—while the coding agent itself still talks to whichever proprietary frontier model is delivering the best edits this month.
 {{% /callout %}}
 
 {{< toc >}}
@@ -150,6 +151,8 @@ The models run on the same box:
 - Optional `rtx` acceleration so the GPU stays warm for consecutive dictations.
 
 Because it is all local, latency stays below 600 ms for typical dictation snippets.
+
+For deep coding refactors, though, I still hand context to Claude Code through Code's proprietary back end—open models continue to trail frontier systems here, so I happily mix the two.
 
 ## 7. Layer 5: The iOS Shortcut Pipeline
 
