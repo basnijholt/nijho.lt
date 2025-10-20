@@ -85,7 +85,7 @@ To give you a sense of what I tried, here is the short comparison that convinced
 | iSH / Terminus SSH | Works without extra infrastructure | Laggy, no Mosh, and awkward keybindings |
 | In-browser terminals | Instant access from anywhere | Poor copy/paste ergonomics and flaky mobile keyboards |
 | [Happy](https://apps.apple.com/us/app/happy-codex-claude-code-app/id6748571505) (Claude Code companion) | Push notifications, encrypted mobile UI for Claude Code | Requires wrapping every session with a separate CLI and still abstracts away my shell |
-| [Omnara](https://omnara.com) (agent command center) | Centralizes Claude Code/Cursor sessions with terminal replay | Proxies via their servers; I already trust OpenAI for the model and don't want another third‑party handling my code |
+| [Omnara](https://omnara.com) (agent command center) | Centralizes Claude Code/Codex sessions with terminal replay | Proxies via their servers; I already trust OpenAI for the model and don't want another third‑party handling my code |
 
 The stack below gives me the resilience of Mosh, the ergonomics of Zellij, and full control over the AI layer.
 
