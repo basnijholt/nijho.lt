@@ -105,9 +105,9 @@ Blink Shell is my daily driver on iOS because it pairs beautifully with Mosh and
 
 If you have ever lost a long REPL session to a dropped train tunnel, Mosh feels like magic.
 
-## 5. Layer 3: Zellij Layouts Instead of tmux
+## 5. Layer 3: Zellij Layouts
 
-In an earlier draft of this post I accidentally wrote "tmux" out of muscle memory, but I fully switched to **Zellij** months ago.
+I use **Zellij** as my terminal multiplexer for mobile work.
 
 - `zellij` handles pane management, status bars, and plugin hints far better on a phone display.
 - My mobile-friendly keybindings sit in [`configs/zellij/config.kdl`](https://github.com/basnijholt/dotfiles/blob/8f6bf0b7219195a46a3e010d3538e1e449634db7/configs/zellij/config.kdl), so Blink renders clean borders and sensible shortcuts on the small screen.
