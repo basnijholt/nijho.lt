@@ -154,7 +154,7 @@ The models run on the same box:
 - **Ollama** hosting `llama3.1:70b` for rewrite/edit prompts plus `qwen2.5-coder` when I want a second opinion.
 - Optional `rtx` acceleration so the GPU stays warm for consecutive dictations.
 
-Because it is all local, latency stays below 600 ms for typical dictation snippets.
+It’s not the fastest—FasterWhisper on my box is slower than Apple’s on‑device dictation—but the accuracy and punctuation quality make it a clear win for me when coding from the phone.
 
 For deep coding refactors, though, I still hand context to `gpt-5-codex-high` through Code's proprietary back end—open models continue to trail frontier systems here, so I happily mix the two.
 
@@ -172,7 +172,7 @@ The Shortcut attached to my iPhone's action button—something I built myself in
 The whole loop finishes fast enough that I can dictate a git commit message, tap once, and paste it into `git commit` inside Zellij without re-typing anything.
 
 {{% callout note %}}
-**Dictation quality:** In my experience, the built‑in iOS dictation is absolute shit compared to Whisper/FasterWhisper. Accuracy, punctuation, and latency are consistently better with the FasterWhisper server running at home.
+**Dictation quality:** In my experience, the built‑in iOS dictation is absolute shit compared to Whisper/FasterWhisper. Accuracy and punctuation are much better with the FasterWhisper server running at home; it’s a bit slower, but that trade‑off is worth it for clean, usable text.
 {{% /callout %}}
 
 {{% callout warning %}}
