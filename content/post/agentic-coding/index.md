@@ -84,7 +84,7 @@ Every operator, every indentation, every naming convention matters to me.
 I enforce strict linting rules and will spend time refactoring code just because the style bothers me.
 This isn't about being pretentious—it's about caring deeply about my craft.
 
-But here's the revelation: AI doesn't take away my ability to care about these details.
+The revelation: AI doesn't take away my ability to care about these details.
 Instead, it gives me **insane leverage** to create more while maintaining my personal standards.
 I still review every line (although I am more lenient in certain cases), still enforce my style guides, still refactor when something bothers me.
 But now I can build 10x faster.
@@ -97,7 +97,7 @@ And with AI, I can bring more ideas to life than ever before.
 AI has unlocked something incredible: the ability to explore ideas that weren't worth the effort before.
 It's now trivial to write 2,000 lines of code to solve a simple problem.
 Before AI, spending 5+ hours on a utility script wasn't justifiable.
-Now? I can build it in less than an hour.
+Now? I can build it in 10 minutes.
 
 Here are just some of the "wouldn't have been worth it" projects I've built recently:
 
@@ -113,7 +113,7 @@ But with AI? I can explore every random idea that pops into my head at 2 AM.
 
 ### The Matty Story: From Midnight Idea to Working Code
 
-Here's the perfect example of this power: One night around midnight, I was lying in bed (slightly intoxicated) when I had an idea—I needed a way for my AI agents to communicate via Matrix.
+Here is the perfect example of this power: One night around midnight, I was lying in bed (slightly intoxicated) when I had an idea—I needed a way for my AI agents to communicate via Matrix.
 So I grabbed my iPhone, SSHed into my machine, and started building.
 
 One hour later, at 1 AM, I had created **[Matty](https://github.com/basnijholt/matty)**—a fully functional terminal-based Matrix client.
@@ -150,7 +150,7 @@ The barrier between "wouldn't it be cool if..." and "here's a working prototype"
 
 ### The 800-Rule Compliance Marathon: 80 AI Agents at Once
 
-Here's something that would be literally impossible without AI: I decided to enable ALL 800+ Ruff linting rules on a 20,000-line codebase.
+Another thing that would be literally impossible without AI: I decided to enable ALL 800+ Ruff linting rules on a 20,000-line codebase.
 
 For context, [Ruff](https://docs.astral.sh/ruff/) is a extremely fast Python linter that implements rules from over a dozen different tools.
 Most projects enable maybe 50-100 rules.
@@ -216,7 +216,6 @@ My AI coding journey wasn't a single leap—it happened in two distinct phases, 
 ### Phase 1: Copy-Paste Era (March 2023 - July 2025)
 
 When GPT-4 launched in March 2023, it changed everything.
-After my vibe coding disaster, I started using AI more carefully.
 I built tools like [`clip-files`]({{< ref "/post/advent-of-open-source/15-clip-files" >}}) to efficiently copy code context into a ChatGPT-like web interface.
 For over two years, this workflow was:
 
@@ -317,7 +316,7 @@ Here's a real interaction pattern:
 4. **Claude runs tests again** → More pass, some still fail
 5. **Claude debugs the remaining issues**
 6. **Claude validates all tests pass**
-7. **I review the final code and understand it**
+7. **I review the final code and understand it (tell it to make changes if needed)**
 8. **Claude creates a proper Git commit**
 
 This iterative, validated approach is what makes agentic coding so powerful.
