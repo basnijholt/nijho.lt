@@ -1,6 +1,6 @@
 ---
-title: "🤖 From Vibe Coding to Agentic Coding: How AI Tools Transformed My Open Source Productivity"
-subtitle: "My journey from skeptical AI code reviewer to building 32 Python packages with agentic AI assistants—without sacrificing code quality"
+title: "On agentic coding 🤖"
+subtitle: "What changed when my assistant could run tests"
 summary: "After initially struggling with 'vibe coding', I discovered how agentic AI tools fundamentally changed my approach to software development. I share concrete data showing an explosion in productivity and explain why I recently switched to GPT‑5 with Codex CLI for model quality."
 date: 2025-08-25
 draft: false
