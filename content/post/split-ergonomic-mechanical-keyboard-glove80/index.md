@@ -4,6 +4,7 @@ slug: "glove80-split-ergonomic-keyboard"
 aliases:
   - "/post/glove80-experience/"
 draft: false
+date: '2025-11-06T00:00:00Z'
 summary: "Frustrating start, rewarding finish—comfort, speed, programmable wins."
 description: "Two years on a split, columnar Glove80: comfort gains, what broke in Month 1, the programmable features I actually use, and a beginner-friendly path (Keybr → MonkeyType) to ramp back to speed."
 tags:
@@ -20,7 +21,6 @@ tags:
   - Keyboard Maestro
   - mod-tap
   - sticky keys
-lastmod: 2025-11-06
 featured: false
 image:
   caption: "Glove80, both halves on desk"
