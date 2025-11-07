@@ -7,7 +7,21 @@ This is my personal website build with [Hugo](https://gohugo.io/) and the [Acade
 See the builds on Netlify [here](https://app.netlify.com/sites/nijholt/deploys?filter=main).
 
 
-Run the following command to start the server locally:
+## Local Development
+
+Run the following command to start the development server with live reload:
 ```bash
-docker build -t blog . && docker run -it -p 8080:80 blog
+docker-compose up -d
+```
+
+The site will be available at http://localhost:1313 and will automatically rebuild when you make changes.
+
+To view logs:
+```bash
+docker-compose logs -f hugo
+```
+
+To stop the server:
+```bash
+docker-compose down
 ```
