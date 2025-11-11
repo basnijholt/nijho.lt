@@ -34,7 +34,7 @@ image:
 
 {{< toc >}}
 
-## 1. The Journey from Skepticism to Productivity
+## 1. From skepticism to productivity
 
 About eight months ago, I wrote about my disastrous experience with "[vibe coding]({{< ref "/post/vibe-coding" >}})"—where I let AI generate code without careful review.
 What started as a fun 3-hour prototype turned into a 15-hour debugging nightmare.
@@ -61,7 +61,7 @@ Phase 2 began just two months ago in July 2025 with **Claude Code**—an agentic
 This second leap was as transformative as the first one. I spent >10k USD worth of API usage in the first month alone (thankfully capped at $200 with the Pro plan).
 {{% /callout %}}
 
-## 2. But Don't You Love Programming?
+## 2. But don't you love programming?
 
 I've heard this objection countless times: "I love programming too much to let AI do it for me."
 
@@ -92,7 +92,7 @@ But now I can build 10x faster.
 It turns out that what I truly love isn't the mechanical act of typing—it's the creative act of bringing ideas to life.
 And with AI, I can bring more ideas to life than ever before.
 
-### The Power to Explore
+### The power to explore
 
 AI has unlocked something incredible: the ability to explore ideas that weren't worth the effort before.
 It's now trivial to write 2,000 lines of code to solve a simple problem.
@@ -111,7 +111,7 @@ Each of these would have taken weeks of manual coding.
 The effort-to-reward ratio just wasn't there.
 But with AI? I can explore every random idea that pops into my head at 2 AM.
 
-### The Matty Story: From Midnight Idea to Working Code
+### The Matty story: from midnight idea to working code
 
 Here is the perfect example of this power: One night around midnight, I was lying in bed (slightly intoxicated) when I had an idea—I needed a way for my AI agents to communicate via Matrix.
 So I grabbed my iPhone, SSHed into my machine, and started building.
@@ -128,7 +128,7 @@ This is impossible without AI.
 Nobody's writing a Matrix client from their phone in bed at midnight.
 But with Claude Code? It's just another Tuesday night idea that becomes reality.
 
-### Clip-Files UI: When Ideas Strike at Random Moments
+### clip-files UI: when ideas strike at random moments
 
 What happens more often than you'd think: I get an idea at a completely random moment and NEED to implement it immediately.
 
@@ -148,7 +148,7 @@ But back in the copy-paste era, this 20-minute bathtub interruption made mobile 
 
 The barrier between "wouldn't it be cool if..." and "here's a working prototype" has essentially disappeared.
 
-### The 800-Rule Compliance Marathon: 80 AI Agents at Once
+### The 800-rule marathon: 80 AI agents at once
 
 Another thing that would be literally impossible without AI: I decided to enable ALL 800+ Ruff linting rules on a 20,000-line codebase.
 
@@ -177,7 +177,7 @@ Each session's sub-agents would tackle different files in parallel.
 When conflicts arose, the orchestrator would resolve them.
 This is the kind of code quality improvement that simply wouldn't happen without AI—not because it's technically difficult, but because the human effort required is unrealistic.
 
-### 1,400 Commits, Rewritten in Minutes for $2.50
+### 1,400 commits, rewritten in minutes for $2.50
 
 Here's another "impossible without AI" story: I had 1,400 commits with terrible messages (in a not-yet-released and private project).
 
@@ -209,11 +209,11 @@ The entire Git history now looks more professional and searchable.
 
 The barrier between "wouldn't it be cool if..." and "here's a working prototype" has essentially disappeared.
 
-## 3. The Two-Phase AI Revolution
+## 3. The two-phase AI revolution
 
 My AI coding journey wasn't a single leap—it happened in two distinct phases, each with its own breakthrough moment.
 
-### Phase 1: Copy-Paste Era (March 2023 - July 2025)
+### Phase 1: copy-paste era (March 2023 - July 2025)
 
 When GPT-4 launched in March 2023, it changed everything.
 I built tools like [`clip-files`]({{< ref "/post/advent-of-open-source/15-clip-files" >}}) to efficiently copy code context into a ChatGPT-like web interface.
@@ -227,7 +227,7 @@ For over two years, this workflow was:
 This phase was already productive—I was shipping more code than before.
 But I was still the one running tests, debugging errors, and validating everything.
 
-### Phase 2: The Claude Code Revolution (July 2025)
+### Phase 2: the Claude Code revolution (July 2025)
 
 Just two months ago, in July 2025, everything changed again.
 Frustrated with Cursor becoming painfully slow, I tried Claude Code based on the buzz online.
@@ -238,11 +238,11 @@ The experience was so mind-blowing that within two weeks, I'd spent nearly $200 
 To put this in perspective: Using a command-line tool `ccusage` to track token consumption, I calculated that I used **$10,000 worth of API tokens in my first month**.
 Thankfully, the Pro plan capped my cost at $200!
 
-### What Made Claude Code Different?
+### What made Claude Code different?
 
 The shift from copy-paste to agentic AI was like upgrading from a bicycle to a spaceship:
 
-#### Before (Copy-Paste with ChatGPT/Claude Web)
+#### Before (copy-paste with ChatGPT/Claude Web)
 
 - Generate code based on prompts
 - No access to your codebase
@@ -260,11 +260,11 @@ The shift from copy-paste to agentic AI was like upgrading from a bicycle to a s
 The difference is profound.
 I went from carefully copying snippets with `clip-files` to having an assistant that can explore my entire project, run my test suite, fix failures, and even commit the changes.
 
-## 4. My Current Agentic Workflow
+## 4. My current agentic workflow
 
 Here's how I actually work with Claude Code on a typical project:
 
-### Parallel Development: 6 Features at Once
+### Parallel development: 6 features at once
 
 One of Claude Code's superpowers is enabling truly parallel development.
 Here's my setup that would make any developer from 10 years ago think I'm insane:
@@ -290,7 +290,7 @@ The key is [Git worktrees]({{< ref "/post/git-worktree" >}})—each feature gets
 
 <!-- [TODO INSERT GIF: Terminal multiplexer showing multiple Claude Code sessions] -->
 
-### Starting a New Package
+### Starting a new package
 
 ```bash
 # I describe what I want to build
@@ -305,7 +305,7 @@ automatically downloading the correct binary for the user's platform, here <inse
 # 5. Sets up CI/CD workflows
 ```
 
-### The Key Difference: Iteration and Validation
+### The key difference: iteration and validation
 
 Unlike my vibe coding disaster, Claude Code doesn't just dump code and leave.
 Here's a real interaction pattern:
@@ -322,11 +322,11 @@ Here's a real interaction pattern:
 This iterative, validated approach is what makes agentic coding so powerful.
 It's not about blindly accepting generated code—it's about having an assistant that can explore, test, and refine solutions.
 
-## 5. The Evidence: Explosive Productivity
+## 5. The evidence: explosive productivity
 
 Let me share some concrete data from my PyPI packages analysis:
 
-### Package Creation by Year
+### Package creation by year
 
 - **2016-2022** (7 years pre-AI): ~2 packages/year average
 - **2023** (GPT-4 launch year): 6 packages
@@ -336,7 +336,7 @@ Let me share some concrete data from my PyPI packages analysis:
 
 The acceleration with AI is clear!
 
-### Recent Packages Built with Agentic AI
+### Recent packages built with agentic AI
 
 Here are some packages I've built recently with Claude Code:
 
@@ -346,15 +346,15 @@ Here are some packages I've built recently with Claude Code:
 Each of these would have taken me weeks or months to build alone.
 With Claude Code, I'm shipping production-ready packages in days.
 
-## 6. Why This Isn't "Vibe Coding" (But With Nuance)
+## 6. Why this isn't "vibe coding" (but with nuance)
 
 You might wonder: isn't this just vibe coding with extra steps? The answer is nuanced and depends on the context—similar to my [philosophy on dependencies]({{< ref "/post/dependencies" >}}).
 
-### My Context-Driven Standards
+### My context-driven standards
 
 Just like I have different standards for dependencies in libraries versus applications, I apply different levels of scrutiny based on what I'm building:
 
-#### For Critical Libraries (e.g., Adaptive, pipefunc, unidep)
+#### For critical libraries (e.g., Adaptive, pipefunc, unidep)
 
 **Maximum scrutiny** - These are packages others depend on:
 
@@ -364,7 +364,7 @@ Just like I have different standards for dependencies in libraries versus applic
 - **Documentation must be comprehensive**
 - **My reputation is on the line**
 
-#### For Experimental CLIs and Personal Tools
+#### For experimental CLIs and personal tools
 
 **Pragmatic approach** - Isolated tools with no downstream dependencies:
 
@@ -374,7 +374,7 @@ Just like I have different standards for dependencies in libraries versus applic
 - **Focus on functionality over perfection**
 - **Similar to my relaxed dependency stance for applications**
 
-### The Internal Dependency Graph Principle
+### The internal dependency graph principle
 
 The key insight: **My scrutiny level correlates with how foundational the code is within the project**:
 
@@ -395,18 +395,18 @@ The key insight: **My scrutiny level correlates with how foundational the code i
 This isn't about being lazy—it's about focusing human attention where it matters most.
 I can trust AI more with a plotting function that nothing depends on than with a core data structure that the entire system uses.
 
-### Building Constraints Around AI
+### Building constraints around AI
 
 The secret to productive agentic coding isn't just the AI—it's the **constraints and guardrails** I build around it:
 
-#### Automated Quality Gates
+#### Automated quality gates
 
 - **Ruff with strictest rules**: Catches style issues, complexity problems, and common bugs
 - **MyPy in strict mode**: Enforces type safety across the entire codebase
 - **Pre-commit hooks**: Automatically format and validate code before commits
 - **Comprehensive test suites**: AI must make tests pass, not just write code
 
-#### Project-Specific Guidance
+#### Project-specific guidance
 
 Every project gets a `CLAUDE.md` file with explicit rules:
 
@@ -415,7 +415,7 @@ Every project gets a `CLAUDE.md` file with explicit rules:
 - **No backward compatibility**: For new projects, embrace breaking changes
 - **Be ruthless**: Aggressively remove unused code
 
-#### Custom Commands and Workflows
+#### Custom commands and workflows
 
 I've built specific commands that inject context and constraints:
 
@@ -423,14 +423,14 @@ I've built specific commands that inject context and constraints:
 - **Safe commit practices**: Never use `git add .`, always selective staging
 - **Initialize understanding**: Load project context and current work state
 
-#### Local Virtual Environments: Stop the Hallucinations
+#### Local virtual environments: stop the hallucinations
 
 Here's a critical tip that eliminated a lot of my AI frustrations: **keep a virtual environment with all dependencies installed locally**.
 
 Instead of letting Claude hallucinate how libraries work, I tell it explicitly in my `CLAUDE.md`:
 
 ```markdown
-### Step 1: Understand the Context
+### Step 1: understand the context
 
 - **READ THE SOURCE CODE**: This library has a `.venv` folder with all dependencies installed.
   So read the source code when in doubt.
@@ -453,13 +453,13 @@ This is especially powerful for:
 
 These constraints transform AI from a loose cannon into a precision tool.
 
-## 7. Common Pitfalls I've Noticed
+## 7. Common pitfalls I've noticed
 
 After a few months of using agentic AI tools, I've noticed consistent patterns that require vigilance:
 
 **Note from the future: I now realize this is very model dependent! GPT-5 has different pitfalls than Claude Opus 4.1**
 
-### The "Defensive Programming" Trap
+### The "defensive programming" trap
 
 ```python
 # AI loves this:
@@ -475,7 +475,7 @@ result = some_function()  # Let it fail loudly if something's wrong
 Claude tends to wrap everything in try-except blocks, suppressing errors that should bubble up.
 This is why my `CLAUDE.md` explicitly forbids unnecessary error handling.
 
-### The "Backwards Compatibility" Obsession
+### The "backwards compatibility" obsession
 
 Claude constantly adds backwards compatibility for features that were literally just introduced in the same session:
 
@@ -483,13 +483,13 @@ Claude constantly adds backwards compatibility for features that were literally 
 - Fallback mechanisms for code paths that were just created
 - Multiple ways to do the same thing "for flexibility"
 
-### The "Over-Engineering" Disease
+### The "over-engineering" disease
 
 - Implements factory patterns for simple object creation
 - Adds abstraction layers that serve no purpose
 - "Production ready" code for experimental scripts
 
-### The Git Commit Sins
+### The git commit sins
 
 Despite explicit instructions in `CLAUDE.md`:
 
@@ -498,13 +498,13 @@ Despite explicit instructions in `CLAUDE.md`:
 - Loves to "helpfully" revert debugging changes from other files
 - Commits `.env` files if not watched carefully
 
-### The "Helpful" Anti-Patterns
+### The "helpful" anti-patterns
 
 - **Loves defensive programming**: Validates things that can't be wrong
 - **Gladly reads `.env`**: Will expose secrets if not careful
 - **Reverts unrelated changes**: "Cleans up" debugging code from other features
 
-### The "Mission Accomplished" Hallucination
+### The "mission accomplished" hallucination
 
 This is a dangerous pitfall.
 Claude Code will sometimes claim complete success when it hasn't actually fixed anything:
@@ -518,7 +518,7 @@ Claude Code will sometimes claim complete success when it hasn't actually fixed 
 
 **Always demand proof.** Never accept "it's done" without seeing actual test output.
 
-### The Nuclear Option
+### The nuclear option
 
 I've had Claude Code literally try to delete all project files when "cleaning up":
 
@@ -531,7 +531,7 @@ rm -rf src/  # 😱
 This is why **frequent git commits are non-negotiable**.
 I commit after every small success.
 
-### The Debugging Debris
+### The debugging debris
 
 During problem-solving, Claude Code leaves a trail of attempts:
 
@@ -544,7 +544,7 @@ During problem-solving, Claude Code leaves a trail of attempts:
 Before merging, always ask: "Review your changes and remove all debugging artifacts and failed attempts."
 Getting to a high code coverage (approaching 100%) helps ensure no dead code remains, as long as your tests use public APIs.
 
-### Why This Happens
+### Why this happens
 
 These patterns emerge because AI is trained on public code that often:
 
@@ -556,11 +556,11 @@ These patterns emerge because AI is trained on public code that often:
 
 This is why **constraints are essential**—without them, Claude defaults to these "safe" but overcomplicated patterns.
 
-## 8. Critical Success Factors: What Actually Makes This Work
+## 8. Critical success factors: what actually makes this work
 
 After two months of intense usage, here are the non-negotiable practices that make agentic coding actually productive:
 
-### Teach It Your Test Commands (Day 1 Priority)
+### Teach it your test commands (day 1 priority)
 
 **This is absolutely crucial.** Claude Code needs to know how to run your tests and how to activate the environment:
 
@@ -578,7 +578,7 @@ uv run pytest tests/test_module.py::test_function
 Without this, it's just guessing whether code works.
 With it, it becomes genuinely useful.
 
-### Git Commits Are Your Safety Net
+### Git commits are your safety net
 
 I commit **obsessively** when using Claude Code:
 
@@ -597,7 +597,7 @@ But here's the key: **I develop every feature in its own branch**, even as a sol
 This has saved me from disaster multiple times.
 Git is your undo button when Claude goes nuclear (e.g., breaks or removes your code).
 
-### Maintain Healthy Skepticism
+### Maintain healthy skepticism
 
 Never trust, always verify:
 
@@ -608,7 +608,7 @@ Never trust, always verify:
 
 Think of Claude Code as an enthusiastic junior developer who sometimes exaggerates their accomplishments.
 
-### Force It to Clean Up After Itself
+### Force it to clean up after itself
 
 After any debugging session, always:
 
@@ -623,7 +623,7 @@ After any debugging session, always:
 
 My custom `/anti-cruft` command automates this, but you can do it manually too.
 
-### Code Coverage Is Your Friend
+### Code coverage is your friend
 
 High test coverage (90%+) ensures:
 
@@ -632,18 +632,18 @@ High test coverage (90%+) ensures:
 - All paths are exercised
 - You can refactor confidently
 
-## 9. My Secret Weapon: Voice-to-Code Workflow
+## 9. My secret weapon: voice-to-code workflow
 
 One of my biggest productivity multipliers isn't Claude Code itself—it's how I communicate with it.
 Using my [`agent-cli`]({{< ref "/post/local-ai-journey" >}}) tool, I've developed a voice-first workflow that's transformed how I write prompts.
 
-### The Problem with Typing Prompts
+### The problem with typing prompts
 
 Effective agentic coding requires **precise, detailed instructions**.
 A good prompt isn't 20 words—it's often 200-500 words explaining exactly what you want, what to avoid, and how to approach the problem.
 Most people don't want to type that much.
 
-### My Voice Workflow
+### My voice workflow
 
 Here's my actual workflow:
 
@@ -655,7 +655,7 @@ Here's my actual workflow:
 This is powered by OpenAI's Whisper model running locally on my RTX 3090 at home.
 It's more reliable than macOS dictation and gives me complete privacy.
 
-### Why This Works So Well
+### Why this works so well
 
 - **Rich prompts**: I naturally give more context when speaking
 - **Code review narration**: I can review code while explaining issues
@@ -673,16 +673,16 @@ For example, instead of typing "fix the bug," I might say:
 
 This level of detail is what makes AI coding actually productive.
 
-## 10. Additional Tips for Agentic Coding
+## 10. Additional tips for agentic coding
 
 Beyond the critical success factors and voice workflow, here are more tips to maximize your productivity:
 
-### Set Clear Constraints
+### Set clear constraints
 
 Create a `CLAUDE.md` or similar file in your project root with your preferences:
 
 ```markdown
-## Project Standards
+## Project standards
 
 - Never use try/except to suppress errors silently
 - Always run pytest before marking task complete
@@ -690,7 +690,7 @@ Create a `CLAUDE.md` or similar file in your project root with your preferences:
 - Prefer simple solutions over clever ones
 ```
 
-### Use the Task System
+### Use the task system
 
 Claude Code's todo system is great for complex work:
 
@@ -701,7 +701,7 @@ Claude Code's todo system is great for complex work:
 4. ⏳ Add documentation
 ```
 
-### Leverage the Search Capabilities
+### Leverage the search capabilities
 
 Let Claude search for existing patterns:
 
@@ -709,7 +709,7 @@ Let Claude search for existing patterns:
 - "Show me how we handle authentication elsewhere"
 - "What testing patterns are we using?"
 
-### Review in Chunks
+### Review in chunks
 
 Instead of reviewing 500 lines at once:
 
@@ -719,24 +719,24 @@ Instead of reviewing 500 lines at once:
 4. Commit(s) and PR
 5. Move to the next feature
 
-## 11. The Tools I've Tried
+## 11. The tools I've tried
 
 My journey through AI coding assistants has been evolutionary:
 
-### Pre-AI Era
+### Pre-AI era
 
 - Manual coding with IDE autocomplete
 - Stack Overflow copy-paste
 - Productivity baseline: 1-2 packages per year
 
-### Phase 1: Copy-Paste Tools (March 2023 - July 2025)
+### Phase 1: copy-paste tools (March 2023 - July 2025)
 
 - **ChatGPT/Claude Web** + my [`clip-files`]({{< ref "/post/advent-of-open-source/15-clip-files" >}}) tool
 - Manual context sharing
 - Helpful for ideation and code review
 - Productivity: 3x improvement (from 2 to 6 packages/year)
 
-### Cursor (Early 2024)
+### Cursor (early 2024)
 
 - Great autocomplete
 - Limited context awareness
@@ -744,7 +744,7 @@ My journey through AI coding assistants has been evolutionary:
 - Still led to my vibe coding disaster
 - Productivity: 5x improvement (but with quality issues)
 
-### Phase 2: Claude Code (July 2025 - Present)
+### Phase 2: Claude Code (July 2025 - present)
 
 - Full codebase awareness
 - Can execute commands and debug
@@ -753,7 +753,7 @@ My journey through AI coding assistants has been evolutionary:
 - **$70 spent on first night, $10,000 worth in first month**
 - Productivity: 24x improvement over pre-AI baseline with maintained quality
 
-### OpenAI's Codex CLI (The Reasoning Beast)
+### OpenAI's Codex CLI (the reasoning beast)
 
 Recently tried OpenAI's Codex—their new CLI alternative to Claude Code—and I'll admit, for pure reasoning with their GPT-5-Codex model, it's impressive:
 
@@ -772,7 +772,7 @@ But here's why I still use Claude Code daily:
 For a complex race condition bug, Codex with GPT-5 gave me the most elegant solution.
 But for day-to-day development where I need reliability, good UX, and the ability to resume work?
 
-### Why Not Copilot or Other "Cheaper" Tools?
+### Why not Copilot or other "cheaper" tools?
 
 Let me be blunt: **You get what you pay for.** People often say "I tried Copilot and it wasn't that useful" or "Gemini in chat didn't help much." Of course not—these tools are **at least 10x cheaper** than Claude Code with Opus.
 
@@ -789,12 +789,12 @@ Copilot is autocomplete on steroids.
 Claude Code is a tireless pair programming partner with perfect memory who can debug, test, and iterate.
 The ROI is obvious when you're shipping 10x more code.
 
-## 12. Real Talk: Is This Sustainable?
+## 12. Is this sustainable?
 
 You might wonder if this productivity is sustainable or if I'm just building lower-quality software faster.
 Here's my honest assessment:
 
-### The Good
+### The good
 
 - **Faster prototyping**: Ideas to working code in hours, not days
 - **Better test coverage**: AI never gets lazy about writing tests
@@ -802,7 +802,7 @@ Here's my honest assessment:
 - **Improved documentation**: AI loves writing docs (I don't)
 - **Reduced burnout**: Less time on boilerplate, more on interesting problems
 
-### The Challenges
+### The challenges
 
 - **Code review fatigue**: You must stay vigilant
 - **Dependency on tools**: What if Claude Code disappears?
@@ -810,18 +810,18 @@ Here's my honest assessment:
 - **The temptation to "vibe"**: Constant discipline required
 - **Addiction potential**: I literally couldn't stop coding, having the desire to deplete all tokens and get my money's worth!
 
-### My Verdict
+### My verdict
 
 It's absolutely sustainable **if** you maintain discipline.
 The moment you start accepting code you don't understand, you're building a house of cards.
 But with proper review and testing, agentic AI is a massive force multiplier.
 
-## 13. The Experience Multiplier: Why Seniority Matters More Than Ever
+## 13. The experience multiplier: why seniority matters more than ever
 
 Here's a counterintuitive truth about agentic AI tools: **they amplify your existing skills exponentially, not linearly**.
 This creates a fascinating paradox where these tools become increasingly valuable as you become more experienced.
 
-### The Exponential Trap for Beginners
+### The exponential trap for beginners
 
 For beginners, agentic tools can feel like a superpower initially.
 They can build a working application in hours!
@@ -837,7 +837,7 @@ A beginner using Claude Code might:
 
 They're forced into a difficult position: either slow down to understand everything (negating the speed benefit) or accumulate technical debt at an exponential rate.
 
-### The Senior Developer Advantage
+### The senior developer advantage
 
 For experienced developers, it's a completely different game.
 When I look at Claude Code's suggestions, I can instantly recognize:
@@ -850,31 +850,31 @@ When I look at Claude Code's suggestions, I can instantly recognize:
 The review process that might take a beginner hours takes me minutes.
 I'm not learning what the code does—I'm validating that it does what I already know it should do.
 
-### The Right Way for Every Level
+### The right way for every level
 
 That said, everyone can benefit from agentic tools—you just need to adjust your approach:
 
-#### For Beginners
+#### For beginners
 
 - **Use AI as a learning accelerator**: Ask it to explain every decision
 - **Build small projects first**: Master fundamentals before scaling up
 - **Prioritize understanding over speed**: Better to build slowly and learn
 - **Pair with mentors**: Have experienced developers review AI-generated code
 
-#### For Intermediate Developers
+#### For intermediate developers
 
 - **Focus on patterns**: Use AI to learn architectural patterns and best practices
 - **Experiment safely**: Try new approaches in side projects first
 - **Question everything**: Don't accept solutions without understanding the tradeoffs
 
-#### For Senior Developers
+#### For senior developers
 
 - **Leverage for velocity**: Use your experience to review and direct quickly
 - **Focus on architecture**: Let AI handle implementation while you design systems
 - **Teach the AI**: Create project-specific guidelines to improve output quality
 - **Push boundaries**: Explore more ambitious projects now that implementation is faster
 
-### The Real Multiplier Effect
+### The real multiplier effect
 
 The productivity boost isn't just about writing code faster.
 For senior developers, agentic tools multiply:
@@ -888,13 +888,13 @@ For senior developers, agentic tools multiply:
 This is why I've been able to ship 14 packages in 18 months.
 It's not just that I'm writing code faster—I'm able to explore ideas, validate approaches, and iterate on designs at a pace that was previously impossible.
 
-## 14. Reality Check: What AI Can and Can't Do
+## 14. Reality check: what AI can and can't do
 
 Many people try AI coding and give up disappointed.
 That's because they're treating it like a magic genie that will solve the unsolved problems of the universe.
 **It won't.**
 
-### What AI CAN Do (The Churn Work)
+### What AI CAN do (the churn work)
 
 AI excels at tasks you could do yourself but would take hours:
 
@@ -909,7 +909,7 @@ AI excels at tasks you could do yourself but would take hours:
 
 This is the "churn"—the necessary but time-consuming work that makes up 80% of development.
 
-### What AI CAN'T Do (The Creative Work)
+### What AI CAN'T do (the creative work)
 
 Don't expect AI to:
 
@@ -919,7 +919,7 @@ Don't expect AI to:
 - **Create truly innovative solutions**: It remixes what it's seen, not invents
 - **Make judgment calls**: Security vs convenience, performance vs maintainability
 
-### The Sweet Spot
+### The sweet spot
 
 I use AI for tasks where:
 
@@ -931,7 +931,7 @@ I use AI for tasks where:
 This isn't about AI doing things you can't do—it's about AI doing things you don't want to spend time doing.
 Once you understand this, AI becomes incredibly powerful.
 
-## 15. Looking Forward: The Future of Development
+## 15. Looking forward: the future of development
 
 As I showed in my [local AI journey]({{< ref "/post/local-ai-journey" >}}), I'm deeply interested in where AI and development intersect.
 Agentic coding represents a fundamental shift in how we build software:
@@ -945,7 +945,7 @@ This isn't about replacing developers—it's about amplifying our capabilities.
 I'm still the architect, the decision-maker, and the quality gatekeeper.
 But now I can focus on the interesting problems while my AI assistant handles the implementation details.
 
-## 16. Conclusion: Principles Over Process
+## 16. Conclusion: principles over process
 
 My journey from vibe coding skeptic to agentic coding advocate might seem like a complete reversal, but it's not.
 My core principle remains unchanged: **never commit code you don't understand**.
@@ -963,7 +963,7 @@ If you're interested in trying agentic coding yourself, start small, maintain yo
 
 _What's your experience with AI coding assistants? Have you tried moving from generative to agentic tools? I'd love to hear your thoughts!_
 
-## Links and Resources
+## Links and resources
 
 - [Claude Code](https://claude.ai/code)
 - [My PyPI packages](https://pypi.org/user/basnijholt/)
