@@ -1,7 +1,7 @@
 ---
 title: "Using gpt-oss:20b in OpenCode with a larger context and high reasoning"
-subtitle: ""
-summary: ""
+subtitle: "Setting up a fully open and local agent workflow for private data"
+summary: "I set up OpenAI's gpt-oss:20b in Ollama with a larger context window and high reasoning in OpenCode to process my private journal entries locally."
 date: 2025-11-13
 draft: false
 featured: true
