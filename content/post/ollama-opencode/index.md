@@ -24,7 +24,9 @@ The correct date is in the filename, so I wanted to use an LLM to batch update t
 However, I do not want to share my **private journal** with any third-party service.
 Instead, I used [Ollama](https://ollama.com/) with `gpt-oss:20b` and [OpenCode](https://opencode.ai/) to do this all locally.
 
-It took me too long to figure out how to get `gpt-oss:20b` working well in OpenCode, so I’m writing the steps down (partly for my future self).
+The naive solution of just using `gpt-oss:20b` with Ollama's defaults doesn't work (e.g., tool calls don't work).
+The main issues is that Ollama sets the context window to only **4096 tokens** and medium reasoning by default.
+It took me too long to figure out how to get `gpt-oss:20b` working well in OpenCode (mostly because the OpenAI compatible API of Ollama doesn't allow setting the context window), so I’m writing the steps down (partly for my future self).
 
 In the end I could simply run the following command to batch update my journal entries:
 
