@@ -35,6 +35,11 @@ for file in ./*.md; do
 done
 ```
 
+{{% callout note %}}
+Yes, of course I could have scripted this without an LLM, but where’s the fun in that?
+Also I might want to do more complex updates in the future on less structured data.
+{{% /callout %}}
+
 This post describes how to:
 
 1. Create a **long-context** variant of `gpt-oss:20b` in Ollama.
