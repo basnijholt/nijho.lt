@@ -56,6 +56,9 @@ The speed and code quality for this task were genuinely impressive, and it handl
 
 However, the experience wasn't without its "personality quirks."
 Twice, Gemini got stuck in a loop saying *"Should I? I should"* over and over again.
+Or the following also happened:
+
+![Gemini infinite loop](infinite-loop.png)
 
 It also has a bad habit of amending commits multiple times and force-pushing them.
 For me the Git history is a critical source of truth, and I don't like rewriting it because I might just have reviewed those commits already.
@@ -66,6 +69,12 @@ I also found the Gemini CLI interface frustrating.
 Basic tasks like selecting text or scrolling up are surprisingly difficult.
 I'm not sure why they chose this design or why they feel the need to deviate from standard CLI behavior.
 It feels like unnecessary friction in an otherwise promising tool.
+
+### Proofreading this post
+
+I also asked Gemini to proofread this very blog post.
+It made some suggestions—some I liked, others I didn't, so I reverted the ones I didn't want.
+But in every single subsequent iteration, it would forcefully re-apply its rejected changes, adding emojis I had removed or rewriting sentences I had explicitly restored.
 
 ### The "main branch" incident
 
@@ -83,12 +92,6 @@ My prompt was `> should the README reflect this?` and before that I asked to rev
 When I asked *why* it merged it, it instantly force-pushed to `main` again!
 
 ![Gemini force pushing to main](force-push-again.png)
-
-### Proofreading this post
-
-I also asked Gemini to proofread this very blog post.
-It made some suggestions—some I liked, others I didn't, so I reverted the ones I didn't want.
-But in every single subsequent iteration, it would forcefully re-apply its rejected changes, adding emojis I had removed or rewriting sentences I had explicitly restored.
 
 ### Artifacts and existential crises
 
