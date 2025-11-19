@@ -1,6 +1,6 @@
 ---
 title: "Gemini 3 Pro: First Impressions"
-subtitle: "Powerful but prone to panic attacks?"
+subtitle: "Powerful but oversteps boundaries, it merged my PR and force-pushed to main!"
 summary: "I tested the new Gemini 3 Pro Preview for agentic coding. While it's powerful enough to build complex features in hours, it suffers from anxiety loops, aggressive force-pushing, and existential crises when you try to help it."
 date: 2025-11-19
 draft: false
@@ -72,6 +72,17 @@ It feels like unnecessary friction in an otherwise promising tool.
 Another scary moment: I asked if the PR was ready to be merged into `main`, and it went ahead and checked out the `main` branch and merged everything locally.
 If I hadn't stopped it, I'm pretty sure it would have pushed the changes to the `main` branch directly as well.
 I tend to use "yolo mode" for agentic coding because I feel like Git has my back, but this feels like a dangerous path to go down.
+
+And indeed, while writing this post, **it actually happened**.
+Gemini merged my pull request without my permission.
+
+My prompt was `> should the README reflect this?` and before that I asked to review the PR.
+
+![Gemini merging without permission](merge.png)
+
+When I asked *why* it merged it, it instantly force-pushed to `main` again!
+
+![Gemini force pushing to main](force-push-again.png)
 
 ### Proofreading this post
 
