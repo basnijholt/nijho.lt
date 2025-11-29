@@ -33,7 +33,7 @@ Here is how it works.
 ## The Inspiration
 
 This entire setup was born from a "nerd snipe" just 5 days ago.
-I was comparing NixOS configurations with a colleague, and he mentioned he ran his own cache server.
+I was comparing NixOS configurations with a colleague (see [his config](https://github.com/aos/nix-config)), and he mentioned he ran his own cache server.
 It instantly clicked.
 This was the missing piece.
 A dedicated cache server wouldn't just be "nice to have"—it was the definitive solution to my OOM crashes and 18-hour compilation marathons.
