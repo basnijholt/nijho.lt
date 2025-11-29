@@ -62,7 +62,6 @@ graph TD
         NUC[Intel NUC]
         HP[HP EliteDesk]
         
-        %% Force vertical stacking
         PC ~~~ NUC ~~~ HP
     end
 
