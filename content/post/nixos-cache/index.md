@@ -50,11 +50,11 @@ Here is the high-level workflow:
 graph TD
     subgraph Server [Build Server - nix-cache]
         Timer[Systemd Timer 2 AM] --> AutoBuild[auto-build Service]
-        AutoBuild -->|1. Clone Dotfiles| Git[Git Repo]
-        AutoBuild -->|2. Update Flake| FlakeLock[flake.lock]
-        AutoBuild -->|3. Build Configs| Store[Nix Store]
-        Store -->|Serve Binaries| Harmonia[Harmonia Cache]
-        AutoBuild -->|4. Save Hash| RevFile[hostname.rev]
+        AutoBuild -->|1. Clone| Git[Git Repo]
+        Git -->|2. Update| FlakeLock[flake.lock]
+        FlakeLock -->|3. Build| Store[Nix Store]
+        Store -->|4. Save Hash| RevFile[hostname.rev]
+        Store -->|5. Serve| Harmonia[Harmonia Cache]
     end
 
     subgraph Fleet [My Machines]
