@@ -48,8 +48,8 @@ Here is the high-level workflow:
 
 ```mermaid
 graph TD
-    subgraph Server [Build Server (nix-cache)]
-        Timer[Systemd Timer (2 AM)] --> AutoBuild[auto-build Service]
+    subgraph Server [Build Server - nix-cache]
+        Timer[Systemd Timer 2 AM] --> AutoBuild[auto-build Service]
         AutoBuild -->|1. Clone Dotfiles| Git[Git Repo]
         AutoBuild -->|2. Update Flake| FlakeLock[flake.lock]
         AutoBuild -->|3. Build Configs| Store[Nix Store]
@@ -58,9 +58,9 @@ graph TD
     end
 
     subgraph Fleet [My Machines]
-        PC[PC (Desktop)]
-        NUC[NUC (Home Server)]
-        HP[HP (Laptop)]
+        PC[PC Desktop]
+        NUC[NUC Home Server]
+        HP[HP Laptop]
     end
 
     PC -->|1. Check Hash| RevFile
