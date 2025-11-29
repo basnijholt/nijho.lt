@@ -47,9 +47,8 @@ So, I set up a dedicated build server (an LXC container named `nix-cache`) that 
 Here is the high-level workflow:
 
 ```mermaid
-graph LR
+graph TD
     subgraph Server [Build Server - nix-cache]
-        direction TB
         Timer[Systemd Timer 2 AM] --> AutoBuild[auto-build Service]
         AutoBuild -->|1. Clone| Git[Git Repo]
         Git -->|2. Update| FlakeLock[flake.lock]
@@ -59,10 +58,12 @@ graph LR
     end
 
     subgraph Fleet [My Machines]
-        direction TB
         PC[PC Desktop]
         NUC[Intel NUC]
         HP[HP EliteDesk]
+        
+        %% Force vertical stacking
+        PC ~~~ NUC ~~~ HP
     end
 
     PC -->|1. Check Hash| RevFile
