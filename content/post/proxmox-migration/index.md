@@ -10,18 +10,6 @@ tags: ["nixos", "proxmox", "incus", "homelab", "migration", "agentic-ai"]
 I have officially decommissioned my Proxmox cluster.
 After years of running my homelab on Proxmox, starting with a single NUC and expanding to a multi-node cluster, I have migrated everything to NixOS running Incus.
 
-## The Problem with Proxmox
-
-Proxmox is fantastic software.
-It lowered the barrier to entry for me and taught me almost everything I know about virtualization, LXC containers, and ZFS.
-But fundamentally, Proxmox is built around **clicking buttons**.
-It is a GUI-first paradigm.
-While you *can* automate it with Terraform or Ansible, it often feels like fighting the tool.
-State drift is real.
-You change a setting in the UI to debug something, forget about it, and six months later your "infrastructure as code" is out of sync with reality.
-For a human, this is annoying.
-For an AI agent, it is a dead end.
-
 ## From Skeptic to Believer
 
 I wasn't always a Nix evangelist.
@@ -42,8 +30,19 @@ I never really believed that everything would be byte-for-byte equivalent until 
 It booted, I copied my data, and everything was identical.
 That was the moment it clicked.
 
-## The Declarative Advantage: Remembering Hardware Hacks
+## The Friction of Imperative Systems
 
+Proxmox is fantastic software.
+It lowered the barrier to entry for me and taught me almost everything I know about virtualization, LXC containers, and ZFS.
+But fundamentally, Proxmox is built around **clicking buttons**.
+It is a GUI-first paradigm.
+While you *can* automate it with Terraform or Ansible, it often feels like fighting the tool.
+State drift is real.
+You change a setting in the UI to debug something, forget about it, and six months later your "infrastructure as code" is out of sync with reality.
+For a human, this is annoying.
+For an AI agent, it is a dead end.
+
+This friction manifests in hardware management too.
 On my HP EliteDesk, the Intel I219-LM network card has a known bug where it hangs with hardware offloading enabled.
 I vaguely remembered fixing this years ago on Proxmox, but I had forgotten the details.
 When I set up NixOS, I ran into the same issue: the network would randomly drop.
@@ -53,9 +52,7 @@ I added a comment explaining exactly *why* `tso off gso off` is needed, citing t
 If I ever reinstall this machine, the fix applies automatically.
 On Proxmox, I would have had to rediscover this pain all over again.
 
-## The HTPC Dilemma: All or Nothing
-
-I also wanted to use my Intel NUC as a Home Theater PC (HTPC) to play movies.
+Another example is my Intel NUC, which I wanted to use as a Home Theater PC (HTPC).
 On Proxmox, this was a nightmare.
 To get video output, I had to pass the GPU through to a VM.
 But doing so meant the Proxmox host lost access to the GPU entirely, meaning no local console if things went wrong.
@@ -65,7 +62,7 @@ The host OS runs [Kodi directly](https://github.com/basnijholt/dotfiles/blob/4f5
 Simultaneously, `incus` runs in the background, hosting my containers.
 I get my HTPC and my server on the same metal, without the virtualization tax or the "headless host" limitation.
 
-## The Agentic Future
+## The Agentic Multiplier
 
 I have written before about [my shift towards agentic coding](/post/agentic-coding/).
 In a world where AI agents execute tasks, **CLI-first** and **declarative** systems are king.
@@ -82,8 +79,6 @@ It just changes one line in a `.nix` file and runs a command.
 The agent can even verify the change was successful by checking the git diff or the active configuration.
 This is the infrastructure counterpart to the "agentic coding" revolution I'm living in.
 
-## Scaling with AI
-
 A friend recently complimented me on how nicely my configuration was structured, especially for managing 8 different machines.
 The funny thing is, I haven't written almost a single line of my configuration myself.
 I did all of it using agentic AI over many sessions.
@@ -91,15 +86,13 @@ I have restructured and refactored it quite a few times, going from a single mac
 The AI handles the heavy lifting of refactoring, ensuring that my [PC, NUC, and HP](https://github.com/basnijholt/dotfiles/blob/4f534bf32fb4396dd86ce631dec00717eab7656d/configs/nixos/flake.nix) all share common modules while keeping their unique personalities.
 It feels like I have a team of junior developers maintaining my infrastructure.
 
-## Why Incus?
+## The Architecture: Incus & Simulation
 
 I still wish there was a purely "Nix" way to manage persistent, stateful LXC containers and VMs.
 There are projects like `nixos-containers` or `microvm.nix`, but they often lack the operational maturity or live-migration features of a robust hypervisor.
 [Incus](https://linuxcontainers.org/incus/) (the community fork of LXD) fills this gap perfectly.
 It gives me the "cattle" management of NixOS for the host, while allowing me to run "pet" legacy workloads (like my old Ubuntu containers or Home Assistant VM) in a stable, manageable environment.
 Crucially, Incus is entirely controllable via a clean CLI, making it a perfect citizen in my agentic workflow.
-
-## Simulation before Migration
 
 One neat thing I did was create Incus VMs that replicate the exact same configuration as my physical machines.
 Before I actually switched off my last Proxmox host, I was already confident that the full configuration worked because I had a virtual machine running the same setup.
