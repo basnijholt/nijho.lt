@@ -1,5 +1,5 @@
 ---
-title: "Automating nightly NixOS builds with a local cache server"
+title: "Automating nightly NixOS builds with a local cache server to avoid local compilation"
 date: 2025-11-29T09:30:00+01:00
 draft: false
 tags: ["nixos", "linux", "cuda", "devops", "automation"]
