@@ -22,6 +22,29 @@ You change a setting in the UI to debug something, forget about it, and six mont
 For a human, this is annoying.
 For an AI agent, it is a dead end.
 
+## The Declarative Advantage: Remembering Hardware Hacks
+
+On my HP EliteDesk, the Intel I219-LM network card has a known bug where it hangs with hardware offloading enabled.
+I vaguely remembered fixing this years ago on Proxmox, but I had forgotten the details.
+When I set up NixOS, I ran into the same issue: the network would randomly drop.
+This time, however, the fix isn't a forgotten command run in a root shell history.
+It is a [documented systemd service](https://github.com/basnijholt/dotfiles/blob/513baba0f7f9e4ef54e63b824abdf6a4fcfbee31/configs/nixos/hosts/hp/networking.nix#L16-L31) in my configuration.
+I added a comment explaining exactly *why* `tso off gso off` is needed, citing the forum threads.
+If I ever reinstall this machine, the fix applies automatically.
+On Proxmox, I would have had to rediscover this pain all over again.
+
+## The HTPC Dilemma: All or Nothing
+
+I also wanted to use my Intel NUC as a Home Theater PC (HTPC) to play movies.
+On Proxmox, this was a nightmare.
+To get video output, I had to pass the GPU through to a VM.
+But doing so meant the Proxmox host lost access to the GPU entirely, meaning no local console if things went wrong.
+It was a strict trade-off: either I have a media player, or I have a debuggable hypervisor.
+With NixOS, I don't have to choose.
+The host OS runs [Kodi directly](https://github.com/basnijholt/dotfiles/blob/513baba0f7f9e4ef54e63b824abdf6a4fcfbee31/configs/nixos/hosts/nuc/kodi.nix), giving me native hardware acceleration and video output.
+Simultaneously, `incus` runs in the background, hosting my containers.
+I get my HTPC and my server on the same metal, without the virtualization tax or the "headless host" limitation.
+
 ## The Agentic Future
 
 I have written before about [my shift towards agentic coding](/post/agentic-coding/).
