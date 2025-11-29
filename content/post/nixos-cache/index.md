@@ -74,7 +74,7 @@ graph TD
 
 ### 1. The Build Server (`nix-cache`)
 
-Every night at 2 AM, a systemd timer triggers my [`auto-build` service](https://github.com/basnijholt/dotfiles/blob/513baba0f7f9e4ef54e63b824abdf6a4fcfbee31/configs/nixos/hosts/nix-cache/auto-build.nix).
+Every night at 2 AM, a systemd timer triggers my [`auto-build` service](https://github.com/basnijholt/dotfiles/blob/4f534bf32fb4396dd86ce631dec00717eab7656d/configs/nixos/hosts/nix-cache/auto-build.nix).
 This service:
 1.  Pulls the latest `dotfiles` from git.
 2.  Updates the `flake.lock`.
@@ -86,14 +86,14 @@ This service:
 
 The build server runs [Harmonia](https://github.com/nix-community/harmonia), a lightweight binary cache.
 Since the builds finished successfully on the server, all the resulting binaries (the "store paths") are now waiting in the server's nix store, ready to be served over HTTP.
-You can see my Harmonia configuration [here](https://github.com/basnijholt/dotfiles/blob/513baba0f7f9e4ef54e63b824abdf6a4fcfbee31/configs/nixos/hosts/nix-cache/harmonia.nix).
+You can see my Harmonia configuration [here](https://github.com/basnijholt/dotfiles/blob/4f534bf32fb4396dd86ce631dec00717eab7656d/configs/nixos/hosts/nix-cache/harmonia.nix).
 
 ### 3. The Client (`nixcacheupdate`)
 
 This is the key mechanism.
 On my workstation, I don't just run `nix flake update` (which would likely grab a slightly newer version of nixpkgs than my server built, causing a cache miss).
 
-Instead, I use a custom script, [`upgrade-from-cache.sh`](https://github.com/basnijholt/dotfiles/blob/513baba0f7f9e4ef54e63b824abdf6a4fcfbee31/configs/nixos/upgrade-from-cache.sh), which I aliased to `nixcacheupdate`.
+Instead, I use a custom script, [`upgrade-from-cache.sh`](https://github.com/basnijholt/dotfiles/blob/4f534bf32fb4396dd86ce631dec00717eab7656d/configs/nixos/upgrade-from-cache.sh), which I aliased to `nixcacheupdate`.
 This script:
 1.  SSHs into the build server and asks: *"What commit did you successfully build for me last night?"*
 2.  Reads the hash from the `.rev` file.

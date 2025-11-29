@@ -28,7 +28,7 @@ On my HP EliteDesk, the Intel I219-LM network card has a known bug where it hang
 I vaguely remembered fixing this years ago on Proxmox, but I had forgotten the details.
 When I set up NixOS, I ran into the same issue: the network would randomly drop.
 This time, however, the fix isn't a forgotten command run in a root shell history.
-It is a [documented systemd service](https://github.com/basnijholt/dotfiles/blob/513baba0f7f9e4ef54e63b824abdf6a4fcfbee31/configs/nixos/hosts/hp/networking.nix#L16-L31) in my configuration.
+It is a [documented systemd service](https://github.com/basnijholt/dotfiles/blob/4f534bf32fb4396dd86ce631dec00717eab7656d/configs/nixos/hosts/hp/networking.nix#L16-L31) in my configuration.
 I added a comment explaining exactly *why* `tso off gso off` is needed, citing the forum threads.
 If I ever reinstall this machine, the fix applies automatically.
 On Proxmox, I would have had to rediscover this pain all over again.
@@ -41,7 +41,7 @@ To get video output, I had to pass the GPU through to a VM.
 But doing so meant the Proxmox host lost access to the GPU entirely, meaning no local console if things went wrong.
 It was a strict trade-off: either I have a media player, or I have a debuggable hypervisor.
 With NixOS, I don't have to choose.
-The host OS runs [Kodi directly](https://github.com/basnijholt/dotfiles/blob/513baba0f7f9e4ef54e63b824abdf6a4fcfbee31/configs/nixos/hosts/nuc/kodi.nix), giving me native hardware acceleration and video output.
+The host OS runs [Kodi directly](https://github.com/basnijholt/dotfiles/blob/4f534bf32fb4396dd86ce631dec00717eab7656d/configs/nixos/hosts/nuc/kodi.nix), giving me native hardware acceleration and video output.
 Simultaneously, `incus` runs in the background, hosting my containers.
 I get my HTPC and my server on the same metal, without the virtualization tax or the "headless host" limitation.
 
@@ -86,7 +86,7 @@ On Proxmox:
 vzdump 101 --dumpdir /var/lib/vz/dump --mode suspend --compress zstd
 ```
 
-On NixOS (using my [`migrate-lxc.sh`](https://github.com/basnijholt/dotfiles/blob/main/configs/nixos/archive/migrate-lxc.sh) script):
+On NixOS (using my [`migrate-lxc.sh`](https://github.com/basnijholt/dotfiles/blob/4f534bf32fb4396dd86ce631dec00717eab7656d/configs/nixos/archive/migrate-lxc.sh) script):
 ```bash
 # Stream the backup into a new Incus container
 ./migrate-lxc.sh vzdump-lxc-101-*.tar.zst ubuntu-container
@@ -106,7 +106,7 @@ On Proxmox:
 qemu-img convert -p -O qcow2 /dev/zvol/rpool/data/vm-100-disk-0 vm-100.qcow2
 ```
 
-On NixOS (using [`migrate-vm.sh`](https://github.com/basnijholt/dotfiles/blob/main/configs/nixos/archive/migrate-vm.sh)):
+On NixOS (using [`migrate-vm.sh`](https://github.com/basnijholt/dotfiles/blob/4f534bf32fb4396dd86ce631dec00717eab7656d/configs/nixos/archive/migrate-vm.sh)):
 ```bash
 # Import the disk and create the VM
 ./migrate-vm.sh vm-100.qcow2 home-assistant
