@@ -63,13 +63,13 @@ graph TD
         HP[HP EliteDesk]
     end
 
-    PC -->|1. Check Hash| RevFile
-    NUC -->|1. Check Hash| RevFile
-    HP -->|1. Check Hash| RevFile
+    RevFile -->|1. Read Hash| PC
+    RevFile -->|1. Read Hash| NUC
+    RevFile -->|1. Read Hash| HP
 
-    PC -.->|2. Fetch Binaries| Harmonia
-    NUC -.->|2. Fetch Binaries| Harmonia
-    HP -.->|2. Fetch Binaries| Harmonia
+    Harmonia -.->|2. Fetch Binaries| PC
+    Harmonia -.->|2. Fetch Binaries| NUC
+    Harmonia -.->|2. Fetch Binaries| HP
 ```
 
 ### 1. The Build Server (`nix-cache`)
