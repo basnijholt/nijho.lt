@@ -60,7 +60,7 @@ graph TD
     subgraph Fleet [My Machines]
         PC[PC Desktop]
         NUC[NUC Home Server]
-        HP[HP Laptop]
+        HP[HP EliteDesk]
     end
 
     PC -->|1. Check Hash| RevFile
