@@ -1,5 +1,5 @@
 ---
-title: "The CUDA compilation nightmare: how I solved 18-hour builds with NixOS"
+title: "Automating nightly NixOS builds with a local cache server"
 date: 2025-11-29T09:30:00+01:00
 draft: false
 tags: ["nixos", "linux", "cuda", "devops", "automation"]
