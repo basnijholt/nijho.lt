@@ -22,6 +22,19 @@ You change a setting in the UI to debug something, forget about it, and six mont
 For a human, this is annoying.
 For an AI agent, it is a dead end.
 
+## From Skeptic to Believer
+
+I wasn't always a Nix evangelist.
+In fact, I initially despised the language and its syntax.
+I couldn't figure out how it worked, and I already had my own specific way of setting up my dotfiles.
+I used [Dotbot](/post/dotfiles/) for symlinking and a tool I wrote called [dotbins](/post/dotbins/) for managing binaries.
+I didn't feel like I required Nix for most of my tools.
+I used [nix-darwin](https://github.com/basnijholt/dotfiles/blob/4f534bf32fb4396dd86ce631dec00717eab7656d/configs/nix-darwin/configuration.nix) on my Mac for a long time, but only to specify Homebrew packages and application settings.
+I never really believed that everything would be byte-for-byte equivalent.
+But then I migrated from one disk to another and had to set everything up again.
+My system booted, copied some data, and everything was identical.
+It actually clicked for me.
+
 ## The Declarative Advantage: Remembering Hardware Hacks
 
 On my HP EliteDesk, the Intel I219-LM network card has a known bug where it hangs with hardware offloading enabled.
@@ -62,6 +75,15 @@ It just changes one line in a `.nix` file and runs a command.
 The agent can even verify the change was successful by checking the git diff or the active configuration.
 This is the infrastructure counterpart to the "agentic coding" revolution I'm living in.
 
+## Scaling with AI
+
+A friend recently complimented me on how nicely my configuration was structured, especially for managing 8 different machines.
+The funny thing is, I haven't written almost a single line of my configuration myself.
+I did all of it using agentic AI over many sessions.
+I have restructured and refactored it quite a few times, going from a single machine to 2 machines, and eventually to 9.
+The AI handles the heavy lifting of refactoring, ensuring that my [PC, NUC, and HP](https://github.com/basnijholt/dotfiles/blob/4f534bf32fb4396dd86ce631dec00717eab7656d/configs/nixos/flake.nix) all share common modules while keeping their unique personalities.
+It feels like I have a team of junior developers maintaining my infrastructure.
+
 ## Why Incus?
 
 I still wish there was a purely "Nix" way to manage persistent, stateful LXC containers and VMs.
@@ -69,6 +91,14 @@ There are projects like `nixos-containers` or `microvm.nix`, but they often lack
 [Incus](https://linuxcontainers.org/incus/) (the community fork of LXD) fills this gap perfectly.
 It gives me the "cattle" management of NixOS for the host, while allowing me to run "pet" legacy workloads (like my old Ubuntu containers or Home Assistant VM) in a stable, manageable environment.
 Crucially, Incus is entirely controllable via a clean CLI, making it a perfect citizen in my agentic workflow.
+
+## Simulation before Migration
+
+One neat thing I did was create Incus VMs that replicate the exact same configuration as my physical machines.
+Before I actually switched off my last Proxmox host, I was already confident that the full configuration worked because I had a virtual machine running the same setup.
+I just have a small file with [overrides](https://github.com/basnijholt/dotfiles/blob/4f534bf32fb4396dd86ce631dec00717eab7656d/configs/nixos/hosts/hp/incus-overrides.nix).
+Then I could validate that the virtual machine worked.
+This removed the fear of "nuking and paving" my physical servers.
 
 ## The Migration
 
