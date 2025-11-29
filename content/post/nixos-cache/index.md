@@ -18,6 +18,10 @@ Your RAM usage creeps up... 16GB, 32GB, 64GB.
 The UI starts to stutter, the mouse freezes, and your music stops.
 **OOM Killer** might save you, but often the system locks up completely.
 There is no way to recover; you have to physically hit the reset button.
+I recently installed `earlyoom`, which helps avoid the total system lockup by killing the process before the kernel panics.
+But that is a hollow victory.
+It is incredibly frustrating to have a build run for 5 hours across 24 cores at 100% usage, only to be killed right at the linking stage.
+The result is the same: I didn't get my update, and I wasted a lot of electricity.
 
 To fix this, you try the safe route: `--cores 1 --max-jobs 1`.
 It works, but now your update takes **18 hours**.
