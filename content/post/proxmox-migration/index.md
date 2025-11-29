@@ -30,10 +30,17 @@ I couldn't figure out how it worked, and I already had my own specific way of se
 I used [Dotbot](/post/dotfiles/) for symlinking and a tool I wrote called [dotbins](/post/dotbins/) for managing binaries.
 I didn't feel like I required Nix for most of my tools.
 I used [nix-darwin](https://github.com/basnijholt/dotfiles/blob/4f534bf32fb4396dd86ce631dec00717eab7656d/configs/nix-darwin/configuration.nix) on my Mac for a long time, but only to specify Homebrew packages and application settings.
-I never really believed that everything would be byte-for-byte equivalent.
-But then I migrated from one disk to another and had to set everything up again.
-My system booted, copied some data, and everything was identical.
-It actually clicked for me.
+
+My true conversion happened when I bought my gaming PC, as described in my [local LLM post](/post/local-ai-journey/).
+I initially installed Pop!_OS because I wanted to play games and absolutely wanted to avoid Windows.
+I got some games to work, but I constantly ran into NVIDIA driver issues that required running random, imperative commands to fix.
+I felt that was a bad solution because I could never reproduce those debugging steps later.
+Then I did the dumb thing of updating my NVIDIA drivers, not knowing about the fragility of Linux kernel modules, and got stuck in a GRUB boot loop.
+Frustrated, I installed NixOS, hoping its promise of atomic updates would solve this.
+The result was glorious.
+I never really believed that everything would be byte-for-byte equivalent until I migrated that system to a new disk.
+It booted, I copied my data, and everything was identical.
+That was the moment it clicked.
 
 ## The Declarative Advantage: Remembering Hardware Hacks
 
