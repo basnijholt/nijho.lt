@@ -59,7 +59,7 @@ graph TD
 
     subgraph Fleet [My Machines]
         PC[PC Desktop]
-        NUC[NUC Home Server]
+        NUC[Intel NUC]
         HP[HP EliteDesk]
     end
 
@@ -90,8 +90,8 @@ You can see my Harmonia configuration [here](https://github.com/basnijholt/dotfi
 
 ### 3. The Client (`nixcacheupdate`)
 
-This is the magic part.
-On my laptop, I don't just run `nix flake update` (which would likely grab a slightly newer version of nixpkgs than my server built, causing a cache miss).
+This is the key mechanism.
+On my workstation, I don't just run `nix flake update` (which would likely grab a slightly newer version of nixpkgs than my server built, causing a cache miss).
 
 Instead, I use a custom script, [`upgrade-from-cache.sh`](https://github.com/basnijholt/dotfiles/blob/513baba0f7f9e4ef54e63b824abdf6a4fcfbee31/configs/nixos/upgrade-from-cache.sh), which I aliased to `nixcacheupdate`.
 This script:
@@ -104,9 +104,9 @@ This script:
       --override-input nixpkgs github:NixOS/nixpkgs/<REMOTE_COMMIT_HASH>
     ```
 
-## Why This Rocks
+## The benefits
 
-1.  **Guaranteed Cache Hits:** My laptop is mathematically forced to use the exact same package inputs as the server.
+1.  **Guaranteed Cache Hits:** My workstation is mathematically forced to use the exact same package inputs as the server.
     Nix calculates the hash, sees the match in the Harmonia cache, and downloads the binary instead of compiling it.
 2.  **No More OOMs:** The heavy lifting happens on a machine where I don't care if the build is slow or memory-intensive.
 3.  **Iterate Faster:** I can still tweak my local configuration files (`configuration.nix`, `home.nix`).
