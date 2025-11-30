@@ -91,7 +91,7 @@ It just [writes a systemd service definition](https://github.com/basnijholt/dotf
 The agent can even verify the change was successful by checking the git diff or the active configuration.
 This is the infrastructure counterpart to the "agentic coding" revolution I'm living in.
 
-A friend recently complimented me on how nicely my configuration was structured, especially for managing 8 different machines.
+A friend who has used NixOS for many years recently complimented me on how nicely my configuration was structured, especially for managing 8 different machines.
 The funny thing is, I haven't written almost a single line of my configuration myself.
 I did all of it using agentic AI over many sessions.
 I have restructured and refactored it quite a few times, going from a single machine to 2 machines, and eventually to 9.
