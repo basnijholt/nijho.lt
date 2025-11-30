@@ -110,9 +110,9 @@ This standardization meant I could swap the entire inference engine underneath m
 ## My NixOS setup
 
 Since I manage my entire system with Nix, setting up `llama-swap` and pinning `llama-cpp` to the absolute bleeding edge was surprisingly elegant.
-I even wrote an [auto-update script](https://github.com/basnijholt/dotfiles/blob/main/configs/nixos/scripts/update_overrides.py) to ensure I'm always on the latest commit.
+I even wrote an [auto-update script](https://github.com/basnijholt/dotfiles/blob/51c7af46e62a7d13b4ff497380c8b58c05ed81c8/configs/nixos/scripts/update_overrides.py) to ensure I'm always on the latest commit.
 
-Here's my complete configuration:
+Here's my complete configuration (see [`package-overrides.nix`](https://github.com/basnijholt/dotfiles/blob/51c7af46e62a7d13b4ff497380c8b58c05ed81c8/configs/nixos/hosts/pc/package-overrides.nix#L28-L76) and [`ai.nix`](https://github.com/basnijholt/dotfiles/blob/51c7af46e62a7d13b4ff497380c8b58c05ed81c8/configs/nixos/hosts/pc/ai.nix#L360-L380)):
 
 ```nix
 # Override llama-cpp to latest version with CUDA support
@@ -215,4 +215,4 @@ Go to the source. The control is worth it.
 
 ---
 
-*Check out my [NixOS configuration](https://github.com/basnijholt/dotfiles/tree/flake) for the complete setup!*
+*Check out my [NixOS configuration](https://github.com/basnijholt/dotfiles/tree/51c7af46e62a7d13b4ff497380c8b58c05ed81c8) for the complete setup!*
