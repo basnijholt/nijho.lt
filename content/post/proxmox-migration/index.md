@@ -40,8 +40,8 @@ It is a GUI-first paradigm.
 While you *can* automate it with Terraform or Ansible, it often feels like fighting the tool.
 State drift is real.
 You change a setting in the UI to debug something, forget about it, and six months later your "infrastructure as code" is out of sync with reality.
-For a human, this is annoying.
-For an AI agent, it is a disaster.
+For a human maintaining a system manually, this is annoying.
+But when you introduce AI agents, this becomes a disaster for the operator.
 An agent running in "YOLO mode" might execute hundreds of imperative commands to fix a problem.
 It might succeed, but it leaves your system in an undefined, unreproducible state that no one—not even the agent—can fully understand or replicate later.
 
