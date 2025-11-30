@@ -7,7 +7,7 @@ tags: ["nixos", "linux", "cuda", "devops", "automation"]
 
 # The CUDA compilation nightmare: how I solved 18-hour builds with NixOS
 
-I recently migrated my entire fleet to NixOS (read my [full migration story](/post/proxmox-migration/)).
+I recently migrated my entire fleet to NixOS (read my [full migration story](/post/proxmox-to-nixos/)).
 If you use NixOS on `unstable` and have heavy dependencies, you've probably faced the dreaded "compiling from source" wall.
 
 It starts innocently enough.
