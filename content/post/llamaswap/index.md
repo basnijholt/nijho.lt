@@ -80,7 +80,7 @@ You enter the territory of **heterogeneous inference**.
 
 Ollama tries to handle splitting automatically, but I found myself fighting it.
 I wanted to say: *"Put 40 layers on GPU 0, 40 layers on GPU 1, and keep the KV cache here."*
-Or: *"This model is slightly too big for VRAM; I want to offload exactly the last 10% to CPU RAM because I have fast DDR5."*
+Or: *"This model is slightly too big for VRAM; I want to offload exactly the last 10% to system RAM."*
 
 With `llama.cpp` directly, this is just a command line flag.
 With `llama-swap`, I can define this behavior per-model in a config file:
