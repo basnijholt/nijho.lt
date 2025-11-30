@@ -59,12 +59,18 @@ I'm finally ready to vouch for it.
 ## The original trigger: broken models
 
 Four months ago, my frustration stemmed from compatibility.
-I was trying to run `gpt-oss-20b`, a model that required specific chat templates and GGUF handling that Ollama simply broke.
-Ollama had forked the inference engine to rush out support, leading to mangled templates and poor performance.
-Maintainers of `llama.cpp` even called out the "day-1 support" rush that led to suboptimal, incompatible implementations.
+I was trying to run `gpt-oss-20b`, a model that required specific chat templates and GGUF handling that [Ollama](https://ollama.com/) simply broke.
 
-While Ollama has improved since then, the pattern remains: it is always a wrapper that lags behind the core innovation happening in `llama.cpp`.
-If you want the latest features *now*, you go to the source.
+The maintainer of [`llama.cpp`](https://github.com/ggml-org/llama.cpp), Georgi Gerganov, [explained it perfectly](https://github.com/ollama/ollama/issues/11714#issuecomment-3172893576) regarding the gpt-oss debacle:
+Ollama forked the ggml inference engine to rush out "day-1 support" for gpt-oss without coordinating with upstream.
+The result? Their implementation was not only incompatible with standard GGUF files but also significantly slower and unoptimized.
+
+Benchmarks at the time showed Ollama had significant performance overhead—often 20-30% slower inference speeds compared to running `llama.cpp` directly.
+
+This pattern means Ollama will always be behind `llama.cpp`.
+Meanwhile, I've had [a pull request](https://github.com/ollama/ollama/pull/11249) sitting unreviewed for over a month that fixes their broken OpenAI API.
+Compare that to `llama.cpp`: I submitted [a PR there](https://github.com/ggml-org/llama.cpp/pull/15295) and it was merged in less than an hour.
+If you want the latest features *now* (and a responsive community), you go to the source.
 
 ## The catalyst: dual GPUs and control
 
