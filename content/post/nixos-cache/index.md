@@ -1,7 +1,15 @@
 ---
 title: "Automating nightly NixOS builds with a local cache server to avoid local compilation"
+subtitle: "Solving the CUDA compilation nightmare and OOM crashes"
+summary: "Compiling heavy CUDA packages on NixOS unstable can take 18 hours or crash your system. I solved this by setting up a dedicated local cache server using Harmonia and a nightly auto-build service. This setup ensures my fleet is always updated to the absolute latest version—without ever compiling a single line of code on my workstations."
 date: 2025-11-29T09:30:00+01:00
 draft: false
+authors:
+  - admin
+categories:
+  - Software Development
+  - DevOps
+  - NixOS
 tags: ["nixos", "linux", "cuda", "devops", "automation"]
 ---
 
