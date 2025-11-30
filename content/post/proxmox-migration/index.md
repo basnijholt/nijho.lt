@@ -123,6 +123,10 @@ This removed the fear of "nuking and paving" my physical servers.
 Migrating was surprisingly straightforward, thanks to `vzdump` and `qemu-img`.
 Here is how I moved my 7+ years of digital history without losing data.
 
+I also kept some [detailed migration notes](https://github.com/basnijholt/dotfiles/blob/fa890fa22ee608be2d11ab4f705550337092c414/configs/nixos/archive/PROXMOX_MIGRATION.md) in my dotfiles.
+These notes should be sufficient for anyone trying to do the same.
+And if not, giving them to an AI (I used Gemini 3 Pro) will certainly allow you to figure it out.
+
 ### 1. Migrating LXC Containers
 
 For my LXC containers (running Docker, DNS, etc.), I essentially "teleported" them.
