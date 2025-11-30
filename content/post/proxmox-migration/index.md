@@ -41,7 +41,9 @@ While you *can* automate it with Terraform or Ansible, it often feels like fight
 State drift is real.
 You change a setting in the UI to debug something, forget about it, and six months later your "infrastructure as code" is out of sync with reality.
 For a human, this is annoying.
-For an AI agent, it is a dead end.
+For an AI agent, it is a disaster.
+An agent running in "YOLO mode" might execute hundreds of imperative commands to fix a problem.
+It might succeed, but it leaves your system in an undefined, unreproducible state that no one—not even the agent—can fully understand or replicate later.
 
 This friction manifests in hardware management too.
 On my HP EliteDesk, the Intel I219-LM network card has a known bug where it hangs with hardware offloading enabled.
