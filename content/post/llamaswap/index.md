@@ -86,20 +86,21 @@ With `llama.cpp` directly, this is just a command line flag.
 With `llama-swap`, I can define this behavior per-model in a config file:
 
 ```yaml
-"qwen2.5-72b-instruct":
+"gpt-oss:120b":
   cmd: |
     ${pkgs.llama-cpp}/bin/llama-server
-    --hf-repo Qwen/Qwen2.5-72B-Instruct-GGUF
-    --hf-file qwen2.5-72b-instruct-q4_k_m.gguf
+    -hf ggml-org/gpt-oss-120b-GGUF
     --port ${PORT}
-    --ctx-size 8192
-    --n-gpu-layers 80   # Precise control over offloading
-    --split-mode row    # Essential for dual 3090s to maximize bandwidth!
-    --main-gpu 0
+    --ctx-size 65536
+    --split-mode layer
+    --tensor-split 3,1.3  # Tuned balance between my GPUs
+    --n-cpu-moe 15        # Offload 15 experts to CPU RAM
+    --threads 8
+    --chat-template-kwargs '{"reasoning_effort": "high"}'
 ```
 
 This level of granularity turned my rig from a "black box" into a tunable instrument.
-The `--split-mode row` flag alone is a game-changer for dual GPUs, splitting the computation across cards to utilize combined bandwidth, something Ollama exposes poorly or not at all.
+The `--tensor-split` and `--n-cpu-moe` flags allow me to run a 120B parameter model that technically shouldn't fit, by carefully balancing the load across both GPUs and system RAM.
 
 ## API compatibility and the "switch"
 
