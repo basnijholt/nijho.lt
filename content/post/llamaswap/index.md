@@ -35,7 +35,7 @@ Why? **Laziness.**
 Once the novelty of that specific model wore off, I drifted back to Ollama.
 The real convenience of Ollama was never the `ollama run` command—I almost exclusively interact with my models via the API using my own tools like [agent-cli](https://github.com/basnijholt/agent-cli).
 The convenience was `ollama pull`.
-Being able to grab a model with one command and have it "just work" was addictive.
+Being able to grab a model with one command and have it "just work" was great.
 
 But as a NixOS user, this imperative convenience is actually a flaw.
 I want my system to be declarative.
