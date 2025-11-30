@@ -200,8 +200,8 @@ systemd.services.llama-swap = {
 
 ### Advantages of llama-swap + llama.cpp
 
-- **Heterogeneous Compute**: Perfectly balance loads between GPUs and CPU RAM.
-- **Bleeding Edge**: I use features (like new quantization types) the day they land in `llama.cpp`.
+- **Heterogeneous compute**: Perfectly balance loads between GPUs and CPU RAM.
+- **Bleeding edge**: I use features (like new quantization types) the day they land in `llama.cpp`.
 - **Zero idle VRAM**: Models unload completely when not in use.
 - **Transparent operation**: No hidden prompts or "helpful" formatting that breaks complex tasks.
 
