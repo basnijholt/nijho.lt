@@ -167,7 +167,7 @@ On NixOS (using [`migrate-vm.sh`](https://github.com/basnijholt/dotfiles/blob/4f
 ## The Result
 
 I now manage my entire fleet—Host OS, networking, storage, and hypervisor configuration—from a single git repository.
-My "pets" live comfortably inside Incus, but their cage is defined declaratively.
+I get the best of both worlds: persistent, stateful services where I need them, and a reproducible, bulletproof host operating system.
 I can wipe my host machine, reinstall NixOS, run a restore script, and be back online in minutes.
 Best of all, I never have to remember which checkbox I clicked in a web UI three years ago.
 It is all in the code.
