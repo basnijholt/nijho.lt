@@ -2,7 +2,7 @@
 title: "🦙 Switching from Ollama to llama-swap + llama.cpp: A Journey to Better Local AI"
 subtitle: "How incompatible GGUF models and development frustrations led me to a more flexible local LLM setup with llama-swap and llama.cpp"
 summary: "After hitting compatibility issues with Ollama's GGUF model support and growing frustrated with its development approach, I switched to llama-swap + llama.cpp for a more transparent and flexible local AI setup that actually works with the models I want to use."
-date: 2025-08-13
+date: 2025-11-29
 draft: false
 featured: true
 authors:
@@ -94,28 +94,46 @@ Since I manage my entire system with Nix, setting up llama-swap was surprisingly
 Here's my complete configuration:
 
 ```nix
-# Override llama.cpp to get the latest version with CUDA support
-llama-cpp = (pkgs.llama-cpp.override {
-  cudaSupport = true;
-  rocmSupport = false;
-  metalSupport = false;
-}).overrideAttrs (oldAttrs: rec {
-  version = "6150";
-  src = pkgs.fetchFromGitHub {
-    owner = "ggml-org";
-    repo = "llama.cpp";
-    tag = "b${version}";
-    hash = "sha256-oClTUbwVagHb08LmUsOJErr4lEVYSyqfU5nGKTlsH+o=";
-  };
-});
+# Override llama-cpp to latest version with CUDA support
+llama-cpp =
+  (pkgs.llama-cpp.override {
+    cudaSupport = true;
+    rocmSupport = false;
+    metalSupport = false;
+    # Enable BLAS for optimized CPU layer performance (OpenBLAS)
+    blasSupport = true;
+  }).overrideAttrs
+    (oldAttrs: rec {
+      version = "7205";
+      src = pkgs.fetchFromGitHub {
+        owner = "ggml-org";
+        repo = "llama.cpp";
+        tag = "b${version}";
+        hash = "sha256-1CcYbc8RWAPVz8hoxKEmbAgQesC1oGFZ3fhfuU5vmOc=";
+        leaveDotGit = true;
+        postFetch = ''
+          git -C "$out" rev-parse --short HEAD > $out/COMMIT
+          find "$out" -name .git -print0 | xargs -0 rm -rf
+        '';
+      };
+      # Enable native CPU optimizations (AVX, AVX2, etc.)
+      cmakeFlags = (oldAttrs.cmakeFlags or []) ++ [
+        "-DGGML_NATIVE=ON"
+      ];
+      # Disable Nix's march=native stripping
+      preConfigure = ''
+        export NIX_ENFORCE_NO_NATIVE=0
+        ${oldAttrs.preConfigure or ""}
+      '';
+    });
 
-# Get llama-swap from GitHub releases
+# llama-swap from GitHub releases
 llama-swap = pkgs.runCommand "llama-swap" { } ''
   mkdir -p $out/bin
   tar -xzf ${
     pkgs.fetchurl {
-      url = "https://github.com/mostlygeek/llama-swap/releases/download/v150/llama-swap_150_linux_amd64.tar.gz";
-      hash = "sha256-NKXN2zM8qjBYBgkhQ78obUiMZCFNcW2av3fJNJrFm2Y=";
+      url = "https://github.com/mostlygeek/llama-swap/releases/download/v175/llama-swap_175_linux_amd64.tar.gz";
+      hash = "sha256-zeyVz0ldMxV4HKK+u5TtAozfRI6IJmeBo92IJTgkGrQ=";
     }
   } -C $out/bin
   chmod +x $out/bin/llama-swap
