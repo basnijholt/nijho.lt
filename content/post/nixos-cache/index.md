@@ -10,6 +10,9 @@ tags: ["nixos", "linux", "cuda", "devops", "automation"]
 I recently migrated my entire fleet to NixOS (read my [full migration story](/post/proxmox-migration/)).
 If you use NixOS for machine learning or heavy development, you've probably faced the dreaded "compiling from source" wall.
 
+I solved this by building a dedicated, automated build cache that effectively "pins" my entire fleet to a nightly snapshot.
+Here is how it works.
+
 {{% callout note %}}
 **Update:** I recently discovered that a significant part of my "CUDA nightmare" was due to a change in the official CUDA binary cache URL.
 It moved from `cuda-maintainers.cachix.org` to `https://cache.nixos-cuda.org`, and information about this was surprisingly sparse.
@@ -17,7 +20,7 @@ Once I added the [new cache URL](https://wiki.nixos.org/wiki/CUDA), many of the 
 However, the architecture described below remains valuable for pinning `nixpkgs` revisions and avoiding compilation when upstream caches (Hydra or CUDA) are lagging behind `nixos-unstable`.
 {{% /callout %}}
 
-It starts innocently enough.
+## The Inspiration
 You run `nixos-rebuild switch`, expecting a quick update.
 Suddenly, Nix decides it needs to compile PyTorch with CUDA support, or even "standard" desktop apps like Firefox and Thunderbird, from scratch.
 
