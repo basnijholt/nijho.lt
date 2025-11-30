@@ -106,6 +106,13 @@ There are projects like `nixos-containers` or `microvm.nix`, but they often lack
 It gives me the "cattle" management of NixOS for the host, while allowing me to run "pet" legacy workloads (like my old Ubuntu containers or Home Assistant VM) in a stable, manageable environment.
 Crucially, Incus is entirely controllable via a clean CLI, making it a perfect citizen in my agentic workflow.
 
+Over time, I had already migrated most of my legacy LXC containers—services like DNS or media managers—to declarative Docker Compose files running inside VMs.
+But I still had one major holdout: **Home Assistant OS**.
+I didn't have a good alternative for it.
+I assumed I needed a dedicated appliance OS like Proxmox to run it reliably.
+I didn't realize that with Incus on NixOS, running a full VM for Home Assistant is trivial.
+It’s just another QEMU process, but managed with the same ease as a container.
+
 One neat thing I did was create Incus VMs that replicate the exact same configuration as my physical machines.
 Before I actually switched off my last Proxmox host, I was already confident that the full configuration worked because I had a virtual machine running the same setup.
 I just have a small file with [overrides](https://github.com/basnijholt/dotfiles/blob/4f534bf32fb4396dd86ce631dec00717eab7656d/configs/nixos/hosts/hp/incus-overrides.nix).
