@@ -87,7 +87,7 @@ This means my AI agents can read, understand, and even safely modify my infrastr
 Proxmox's opaque database and UI-driven workflow were a black box to my agents.
 NixOS is an open book.
 If I want my agent to "deploy a Faster Whisper API server on port 9000 and expose it to the LAN", it doesn't need to navigate a "Services" menu, then a "Network" menu, and then a "Firewall" menu.
-It just writes a systemd service definition and adds `networking.firewall.allowedTCPPorts = [ 9000 ];` in the same file.
+It just [writes a systemd service definition](https://github.com/basnijholt/dotfiles/blob/fa890fa22ee608be2d11ab4f705550337092c414/configs/nixos/hosts/pc/ai.nix#L385) and adds `networking.firewall.allowedTCPPorts = [ 9000 ];` in the same file.
 The agent can even verify the change was successful by checking the git diff or the active configuration.
 This is the infrastructure counterpart to the "agentic coding" revolution I'm living in.
 
