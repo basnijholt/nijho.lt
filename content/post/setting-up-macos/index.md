@@ -1,5 +1,5 @@
 ---
-title: "🍏 Setting Up Your Fresh MacOS Installation: A Comprehensive Guide ✅"
+title: "My macOS setup: Homebrew, apps, and defaults 🍏"
 subtitle: Streamline your MacOS setup with Homebrew, over 100 essential apps, and customization tips
 summary: Streamline your MacOS setup with Homebrew, over 100 essential apps, and customization tips
 projects: []

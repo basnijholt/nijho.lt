@@ -1,5 +1,5 @@
 ---
-title: "🔧 My Homelab: from a single Raspberry Pi to a Proxmox cluster and a dedicated NAS"
+title: "My homelab: from a single Raspberry Pi to a Proxmox cluster and a dedicated NAS 🔧"
 subtitle: Exploring the evolution of my homelab setup, from Home Assistant on a Raspberry Pi to a Proxmox cluster and dedicated NAS
 summary: An overview of my journey from using a Raspberry Pi for Home Assistant to creating a Proxmox cluster and dedicated NAS for running various services efficiently.
 projects: []

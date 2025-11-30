@@ -33,8 +33,14 @@ I went down the rabbit hole, set up `llama-swap` and `llama.cpp`, got the model 
 
 Why? **Laziness.**
 Once the novelty of that specific model wore off, I drifted back to Ollama.
-Despite its flaws, `ollama run llama3` is just *easy*.
-I didn't have a strong enough reason to maintain a custom setup, so I let convenience win.
+The real convenience of Ollama was never the `ollama run` command—I almost exclusively interact with my models via the API using my own tools like [agent-cli](https://github.com/basnijholt/agent-cli).
+The convenience was `ollama pull`.
+Being able to grab a model with one command and have it "just work" was addictive.
+
+But as a NixOS user, this imperative convenience is actually a flaw.
+I want my system to be declarative.
+I want my model configuration committed to git, not hiding in a local database.
+So I let convenience win for a while, but it always felt wrong.
 
 But last month, that changed.
 I upgraded my hobbyist AI rig by adding a **second RTX 3090**.
@@ -88,6 +94,18 @@ With `llama-swap`, I can define this behavior per-model in a config file:
 
 This level of granularity turned my rig from a "black box" into a tunable instrument.
 The `--split-mode row` flag alone is a game-changer for dual GPUs, splitting the computation across cards to utilize combined bandwidth, something Ollama exposes poorly or not at all.
+
+## API compatibility and the "switch"
+
+One of the reasons I hesitated to switch was the fear of breaking my existing workflows.
+I use [agent-cli](https://github.com/basnijholt/agent-cli) and other custom Python scripts daily.
+But it turned out to be a non-issue.
+Both Ollama and `llama-swap` (wrapping `llama-server`) expose an OpenAI-compatible API.
+
+Once I adopted the pattern of setting a custom `OPENAI_BASE_URL` in my projects, the backend became irrelevant.
+My tools don't care if they are talking to `api.openai.com`, a local Ollama instance, or `llama-swap`.
+They just send JSON and get JSON back.
+This standardization meant I could swap the entire inference engine underneath my applications without changing a single line of their code.
 
 ## My NixOS setup
 
@@ -178,12 +196,13 @@ systemd.services.llama-swap = {
 ### The trade-off
 
 The main trade-off is "laziness."
-You can't just `ollama run new-model` and have it appear.
+You can't just `ollama pull new-model` and have it appear.
 You have to find the GGUF on HuggingFace, decide on the quantization (Q4_K_M? Q6_K?), and add 5 lines of YAML to your config.
 
 But honestly? That's a feature, not a bug.
 It forces you to understand *what* you are running.
 It stops you from running a quantized model that is too stupid for your task just because it was the default.
+And for a NixOS user, putting that configuration into code instead of a hidden database is exactly how it should be.
 
 ## Conclusion: maturing as an AI hobbyist
 

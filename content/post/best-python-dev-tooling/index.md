@@ -1,5 +1,5 @@
 ---
-title: "My Python Project Toolkit: Essential Tools for Robust and Productive Development 🧰"
+title: "My favorite tools that keep my Python projects sane 🧰"
 subtitle: A look at my preferred tools for improving code quality, testing, automation, and documentation in Python projects.
 summary: A look at my preferred tools for improving code quality, testing, automation, and documentation in Python projects.
 projects: []

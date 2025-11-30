@@ -1,5 +1,5 @@
 ---
-title: "🎮 From Gaming Rig to AI Brain: My Accidental Deep Dive into Local AI with an RTX 3090"
+title: "How a 3090 turned into two local‑first AI projects 🎮"
 subtitle: "How I bought a gaming PC with a 3090 but ended up building two local-first Python AI packages instead."
 summary: "A personal journey of buying a gaming PC and accidentally falling down the rabbit hole of local, private AI.
 I share my experience building agent-cli and AIBrain, the tools I used, and the lessons I learned along the way."

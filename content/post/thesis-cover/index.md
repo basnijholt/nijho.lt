@@ -1,7 +1,7 @@
 ---
-title: 🎨 Crafting Unique Ph.D. Thesis Covers with Python 🐍
-subtitle: 🔍 Exploring Quantum Device Simulations, Adaptive Sampling, and Neural Networks to Create Visually Stunning Thesis Covers 📚
-summary: 🔍 Exploring Quantum Device Simulations, Adaptive Sampling, and Neural Networks to Create Visually Stunning Thesis Covers 📚
+title: Crafting unique Ph.D. thesis covers with Python 🎨
+subtitle: Exploring quantum device simulations, adaptive sampling, and neural networks to create beautiful thesis covers
+summary: Exploring quantum device simulations, adaptive sampling, and neural networks to create beautiful thesis covers
 projects: []
 date: '2020-04-04T13:40:00Z'
 draft: false

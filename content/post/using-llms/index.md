@@ -1,5 +1,5 @@
 ---
-title: "Optimizing My LLM Workflow: Self-Hosting AI Interfaces for Open Source Development 💻"
+title: "My LLM workflow: local frontends, (mostly) remote models 💻"
 subtitle: A practical guide to accessing powerful AI models through self-hosted interfaces
 summary: How I leverage LibreChat, OpenWebUI, and various AI APIs to enhance my development workflow without subscriptions
 projects: []

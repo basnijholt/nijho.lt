@@ -1,5 +1,5 @@
 ---
-title: "Open Sourcing My Dotfiles: A Practical, Cross-Platform Terminal Setup 🏠"
+title: "Open-sourcing my dotfiles: a practical, cross-platform terminal setup 🏠"
 subtitle: Sharing years of refinement in shell configuration, automation, and tool management for macOS and Linux environments.
 summary: After years running them privately across 10+ machines (macOS, Linux, cloud, homelab), I'm open-sourcing my dotfiles, featuring modular configs, dotbins for CLI tools, Nix-Darwin, and more.
 projects: []
