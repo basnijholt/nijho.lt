@@ -65,6 +65,15 @@ The host OS runs [Kodi directly](https://github.com/basnijholt/dotfiles/blob/4f5
 Simultaneously, `incus` runs in the background, hosting my containers.
 I get my HTPC and my server on the same metal, without the virtualization tax or the "headless host" limitation.
 
+There is a deeper philosophical difference too.
+Systems like Proxmox or TrueNAS are designed as appliances.
+You aren't supposed to run arbitrary commands on the host; installing packages or tweaking config files is discouraged because you might break the middleware or lose changes on upgrade.
+You are effectively locked out of your own hardware's full potential.
+With NixOS, the host is fully mine.
+I can mess with it—installing Kodi, tweaking network drivers, running local LLMs—without fear.
+Because the state is declarative, it is 100% obvious and reproducible.
+I can break the host configuration and recover to a working state in seconds, even if the machine is running essential services.
+
 ## The Agentic Multiplier
 
 I have written before about [my shift towards agentic coding](/post/agentic-coding/).
