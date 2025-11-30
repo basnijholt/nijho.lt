@@ -37,7 +37,7 @@ The real convenience of Ollama was never the `ollama run` command—I almost exc
 The convenience was `ollama pull`.
 Being able to grab a model with one command and have it "just work" was great.
 
-But as a NixOS user, this imperative convenience is actually a flaw.
+But as a [NixOS](/post/proxmox-to-nixos/) user, this imperative convenience is actually a flaw.
 I want my system to be declarative.
 I want my model configuration committed to git, not hiding in a local database.
 So I let convenience win for a while, but it always felt wrong.
