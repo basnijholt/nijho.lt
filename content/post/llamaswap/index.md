@@ -227,4 +227,4 @@ Go to the source. The control is worth it.
 
 ---
 
-*Check out my [NixOS configuration](https://github.com/basnijholt/dotfiles/tree/51c7af46e62a7d13b4ff497380c8b58c05ed81c8) for the complete setup!*
+*Check out my [NixOS configuration](https://github.com/basnijholt/dotfiles/tree/51c7af46e62a7d13b4ff497380c8b58c05ed81c8/configs/nixos) for the complete setup!*
