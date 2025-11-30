@@ -8,10 +8,9 @@ tags: ["nixos", "linux", "cuda", "devops", "automation"]
 # The CUDA compilation nightmare: how I solved 18-hour builds with NixOS
 
 I recently migrated my entire fleet to NixOS (read my [full migration story](/post/proxmox-migration/)).
-If you use NixOS for machine learning or heavy development, you've probably faced the dreaded "compiling from source" wall.
+If you use NixOS on `unstable` and have heavy dependencies, you've probably faced the dreaded "compiling from source" wall.
 
-I solved this by building a dedicated, automated build cache that effectively "pins" my entire fleet to a nightly snapshot.
-Here is how it works.
+It starts innocently enough.
 
 {{% callout note %}}
 **Update:** I recently discovered that a significant part of my "CUDA nightmare" was due to a change in the official CUDA binary cache URL.
