@@ -127,3 +127,12 @@ I get the stability of a frozen release with the freshness of `nixos-unstable`, 
 
 If you are struggling with CUDA builds on NixOS, stop compiling locally.
 Let a server take the heat.
+
+## References & Configuration
+
+All configuration files mentioned in this post are available in my [dotfiles repository](https://github.com/basnijholt/dotfiles).
+
+1.  [**auto-build.nix**](https://github.com/basnijholt/dotfiles/blob/fa890fa22ee608be2d11ab4f705550337092c414/configs/nixos/hosts/nix-cache/auto-build.nix): The systemd service that orchestrates nightly builds.
+2.  [**harmonia.nix**](https://github.com/basnijholt/dotfiles/blob/fa890fa22ee608be2d11ab4f705550337092c414/configs/nixos/hosts/nix-cache/harmonia.nix): Configuration for the Harmonia binary cache server.
+3.  [**upgrade-from-cache.sh**](https://github.com/basnijholt/dotfiles/blob/fa890fa22ee608be2d11ab4f705550337092c414/configs/nixos/upgrade-from-cache.sh): The client-side script aliased to `nixcacheupdate`.
+4.  [**aos/nix-config**](https://github.com/aos/nix-config): My colleague's configuration that inspired this setup.
