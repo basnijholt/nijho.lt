@@ -96,7 +96,6 @@ The funny thing is, I haven't written almost a single line of my configuration m
 I did all of it using agentic AI over many sessions.
 I have restructured and refactored it quite a few times, going from a single machine to 2 machines, and eventually to 9.
 The AI handles the heavy lifting of refactoring, ensuring that my [PC, NUC, and HP](https://github.com/basnijholt/dotfiles/blob/4f534bf32fb4396dd86ce631dec00717eab7656d/configs/nixos/flake.nix) all share common modules while keeping their unique personalities.
-It feels like I have a team of junior developers maintaining my infrastructure.
 
 ## The Architecture: Incus & Simulation
 
