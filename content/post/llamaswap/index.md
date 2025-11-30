@@ -28,8 +28,8 @@ categories:
 ## The draft I never published
 
 I started writing this blog post four months ago.
-Back then, I was frustrated because a specific model I wanted to try—`gpt-oss-20b`—was completely broken in Ollama.
-I went down the rabbit hole, set up `llama-swap` and `llama.cpp`, got the model working perfectly, wrote half this post... and then I stopped.
+Back then, I was frustrated because a specific model I wanted to try—`gpt-oss-20b`—was completely broken in [Ollama](https://ollama.com/).
+I went down the rabbit hole, set up [`llama-swap`](https://github.com/mostlygeek/llama-swap) and [`llama.cpp`](https://github.com/ggml-org/llama.cpp), got the model working perfectly, wrote half this post... and then I stopped.
 
 Why? **Laziness.**
 Once the novelty of that specific model wore off, I drifted back to Ollama.
