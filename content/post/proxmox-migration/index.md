@@ -23,7 +23,7 @@ My true conversion happened when I bought my gaming PC, as described in my [loca
 I initially installed Pop!_OS because I wanted to play games and absolutely wanted to avoid Windows.
 I got some games to work, but I constantly ran into NVIDIA driver issues that required running random, imperative commands to fix.
 I felt that was a bad solution because I could never reproduce those debugging steps later.
-Then I did the dumb thing of updating my NVIDIA drivers, not knowing about the fragility of Linux kernel modules, and got stuck in a GRUB boot loop.
+Then I did the dumb thing of updating my NVIDIA drivers, not realizing that imperatively managing driver versions and repositories is a recipe for disaster, and got stuck in a GRUB boot loop.
 Frustrated, I installed NixOS, hoping its promise of atomic updates would solve this.
 The result was glorious.
 I never really believed that everything would be byte-for-byte equivalent until I migrated that system to a new disk.
