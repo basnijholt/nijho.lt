@@ -56,7 +56,7 @@ If I ever reinstall this machine, the fix applies automatically.
 On Proxmox, I would have had to rediscover this pain all over again.
 
 Another example is my Intel NUC, which I wanted to use as a Home Theater PC (HTPC).
-On Proxmox, this was a nightmare.
+On Proxmox, this was a headache.
 To get video output, I had to pass the GPU through to a VM.
 But doing so meant the Proxmox host lost access to the GPU entirely, meaning no local console if things went wrong.
 It was a strict trade-off: either I have a media player, or I have a debuggable hypervisor.
