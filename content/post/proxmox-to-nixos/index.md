@@ -172,3 +172,16 @@ I can wipe my host machine, reinstall NixOS, run a restore script, and be back o
 Best of all, I never have to remember which checkbox I clicked in a web UI three years ago.
 It is all in the code.
 And because it is code, my agents can help me manage it.
+
+## References & Configuration
+
+All configuration files mentioned in this post are available in my [dotfiles repository](https://github.com/basnijholt/dotfiles).
+
+1.  [**flake.nix**](https://github.com/basnijholt/dotfiles/blob/fa890fa22ee608be2d11ab4f705550337092c414/configs/nixos/flake.nix): The entry point defining my entire fleet (PC, NUC, HP).
+2.  [**networking.nix**](https://github.com/basnijholt/dotfiles/blob/fa890fa22ee608be2d11ab4f705550337092c414/configs/nixos/hosts/hp/networking.nix#L16-L31): The declarative fix for the Intel I219-LM network hang.
+3.  [**kodi.nix**](https://github.com/basnijholt/dotfiles/blob/fa890fa22ee608be2d11ab4f705550337092c414/configs/nixos/hosts/nuc/kodi.nix): NUC HTPC configuration running Kodi directly on the host.
+4.  [**ai.nix**](https://github.com/basnijholt/dotfiles/blob/fa890fa22ee608be2d11ab4f705550337092c414/configs/nixos/hosts/pc/ai.nix#L385): Declarative service definition for Faster Whisper.
+5.  [**incus-overrides.nix**](https://github.com/basnijholt/dotfiles/blob/fa890fa22ee608be2d11ab4f705550337092c414/configs/nixos/hosts/hp/incus-overrides.nix): Overrides used to simulate physical machines inside Incus VMs.
+6.  [**migrate-lxc.sh**](https://github.com/basnijholt/dotfiles/blob/fa890fa22ee608be2d11ab4f705550337092c414/configs/nixos/archive/migrate-lxc.sh): Script to import Proxmox `vzdump` archives into Incus containers.
+7.  [**migrate-vm.sh**](https://github.com/basnijholt/dotfiles/blob/fa890fa22ee608be2d11ab4f705550337092c414/configs/nixos/archive/migrate-vm.sh): Script to import QCOW2 disk images into Incus VMs.
+8.  [**PROXMOX_MIGRATION.md**](https://github.com/basnijholt/dotfiles/blob/fa890fa22ee608be2d11ab4f705550337092c414/configs/nixos/archive/PROXMOX_MIGRATION.md): Detailed raw notes and inventory of the migration.
