@@ -7,7 +7,7 @@ tags: ["nixos", "linux", "cuda", "devops", "automation"]
 
 # The CUDA compilation nightmare: how I solved 18-hour builds with NixOS
 
-**TL;DR / Update:** I recently discovered that a significant part of my "CUDA nightmare" was due to a change in the official CUDA binary cache URL.
+**Update:** I recently discovered that a significant part of my "CUDA nightmare" was due to a change in the official CUDA binary cache URL.
 It moved from `cuda-maintainers.cachix.org` to `https://cache.nixos-cuda.org`, and information about this was surprisingly sparse.
 Once I added the [new cache URL](https://wiki.nixos.org/wiki/CUDA), many of the heavy builds simply disappeared because I could finally download them.
 However, the architecture described below remains valuable for pinning `nixpkgs` revisions and avoiding compilation when upstream caches (Hydra or CUDA) are lagging behind `nixos-unstable`.
