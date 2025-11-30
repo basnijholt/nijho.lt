@@ -44,6 +44,7 @@ Here is how it works.
 It moved from `cuda-maintainers.cachix.org` to `https://cache.nixos-cuda.org`, and information about this was surprisingly sparse.
 Once I added the [new cache URL](https://wiki.nixos.org/wiki/CUDA), many of the heavy builds simply disappeared because I could finally download them.
 However, the architecture described below remains valuable for pinning `nixpkgs` revisions and avoiding compilation when upstream caches (Hydra or CUDA) are lagging behind `nixos-unstable`.
+I updated the [nixos.wiki](https://nixos.wiki/wiki/CUDA) to reflect this change as well, which showed conflicting information.
 {{% /callout %}}
 
 ## The Inspiration
