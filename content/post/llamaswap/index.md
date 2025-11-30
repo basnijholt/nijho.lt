@@ -1,7 +1,7 @@
 ---
-title: "🦙 Switching from Ollama to llama-swap + llama.cpp: A Journey to Better Local AI"
-subtitle: "How incompatible GGUF models and development frustrations led me to a more flexible local LLM setup with llama-swap and llama.cpp"
-summary: "After hitting compatibility issues with Ollama's GGUF model support and growing frustrated with its development approach, I switched to llama-swap + llama.cpp for a more transparent and flexible local AI setup that actually works with the models I want to use."
+title: "🦙 Switching from Ollama to llama-swap + llama.cpp: The Power User's Choice"
+subtitle: "Why I finally ditched Ollama after upgrading to dual RTX 3090s and needing true control over my local AI models"
+summary: "I started writing this post four months ago when a specific model broke in Ollama. I initially went back to Ollama out of laziness, but after upgrading to dual RTX 3090s, I realized that for serious multi-GPU inference and RAM offloading, you need the raw control of llama.cpp. Here is how I manage my new 48GB VRAM setup declaratively with NixOS."
 date: 2025-11-29
 draft: false
 featured: true
@@ -15,8 +15,8 @@ tags:
   - llm
   - gguf
   - nixos
-  - self-hosting
-  - open-source
+  - dual-gpu
+  - rtx3090
 categories:
   - Technology
   - AI
@@ -25,72 +25,75 @@ categories:
 
 {{< toc >}}
 
-## The Breaking Point: When gpt-oss Performed Terribly
+## The draft I never published
 
-I've been running local AI models on my RTX 3090 machine for months now, primarily using Ollama as my model server.
-It worked well enough for the standard models (Llama, Mistral, Qwen), but recently I hit a wall that made me reconsider my entire setup.
-I loaded up the promising `gpt-oss-20b` model, expecting great things based on the hype.
-Instead, I got responses that were barely coherent.
-The model was performing so poorly that I initially wrote it off as just another overhyped release.
+I started writing this blog post four months ago.
+Back then, I was frustrated because a specific model I wanted to try—`gpt-oss-20b`—was completely broken in Ollama.
+I went down the rabbit hole, set up `llama-swap` and `llama.cpp`, got the model working perfectly, wrote half this post... and then I stopped.
 
-But then I started digging.
-On the LocalLLaMA subreddit, I found thread after thread of users reporting the same issue: models that should be performing well were giving terrible results in Ollama.
-The culprits? Multiple issues plaguing Ollama:
-- Incorrect prompt templates and chat formats mangling inputs
-- For gpt-oss specifically, Ollama's forked ggml implementation was incompatible with standard GGUF files and significantly slower
-- General performance overhead from their abstraction layer
-Users who tried the exact same GGUF files in llama.cpp reported dramatically better results.
+Why? **Laziness.**
+Once the novelty of that specific model wore off, I drifted back to Ollama.
+Despite its flaws, `ollama run llama3` is just *easy*.
+I didn't have a strong enough reason to maintain a custom setup, so I let convenience win.
 
-Even worse, benchmarks were showing that Ollama had significant performance overhead compared to running llama.cpp directly.
-We're talking 20-30% slower inference speeds for the same models on the same hardware.
+But last month, that changed.
+I upgraded my hobbyist AI rig by adding a **second RTX 3090**.
+Suddenly, I had 48GB of VRAM and a whole new set of problems—and possibilities.
+I wanted to run massive models (like Llama-3-70B at high precision).
+I needed to balance layers between two GPUs.
+I needed to spill specific parts of the model into system RAM without crashing.
 
-And then there's the development approach.
-The maintainer of llama.cpp, Georgi Gerganov, [explained it perfectly](https://github.com/ollama/ollama/issues/11714#issuecomment-3172893576) regarding the gpt-oss debacle:
-Ollama forked the ggml inference engine to rush out "day-1 support" for gpt-oss without coordinating with upstream.
-The result? Their implementation was not only incompatible with standard GGUF files but also significantly slower and unoptimized.
-After the marketing win, they're now scrambling to throw out their fork and copy the upstream implementation.
+When you start pushing hardware to its limits, "magic" abstractions like Ollama stop being helpful and start getting in the way.
+I realized that `llama.cpp` isn't just a backend; it is *the* place where development happens.
+If you want to use split-mode inference, granular CPU offloading, or the latest quantization tricks immediately, there is no alternative.
 
-This pattern means Ollama will always be behind llama.cpp, adding their own bugs and incompatibilities along the way.
-Meanwhile, I've had [a pull request](https://github.com/ollama/ollama/pull/11249) sitting unreviewed for over a month that fixes their broken OpenAI API (missing `keep_alive` option that breaks PydanticAI and other libraries).
-Compare that to llama.cpp: I submitted [a PR there](https://github.com/ggml-org/llama.cpp/pull/15295) and it was merged in less than an hour.
+So, I dusted off this draft, updated my Nix configuration, and I've been running `llama-swap` full-time for a month.
+I'm finally ready to vouch for it.
 
-This whole experience drove me to add llama.cpp support to my own application, [agent-cli](https://github.com/basnijholt/agent-cli).
-Agent-cli is my local-first AI toolkit for voice and text interaction that I use constantly for dictation, autocorrection, and voice commands.
-Adding llama.cpp support was [surprisingly trivial](https://github.com/basnijholt/agent-cli/pull/45): it now works alongside Ollama as another provider option, and it's what I personally use now.
-My users appreciate having a more reliable alternative when Ollama acts up.
+## The original trigger: broken models
 
-{{% callout warning %}}
-**The Frustration:** When a tool that claims to be "the easiest way to run large language models locally" makes good models perform terribly due to incorrect templating, adds unnecessary performance overhead, forks upstream projects for marketing wins at the expense of compatibility, and ignores community contributions while being unresponsive to actual users, it's time to look for alternatives.
-{{% /callout %}}
+Four months ago, my frustration stemmed from compatibility.
+I was trying to run `gpt-oss-20b`, a model that required specific chat templates and GGUF handling that Ollama simply broke.
+Ollama had forked the inference engine to rush out support, leading to mangled templates and poor performance.
+Maintainers of `llama.cpp` even called out the "day-1 support" rush that led to suboptimal, incompatible implementations.
 
-## Discovering the Alternative: llama-swap + llama.cpp
+While Ollama has improved since then, the pattern remains: it is always a wrapper that lags behind the core innovation happening in `llama.cpp`.
+If you want the latest features *now*, you go to the source.
 
-After some research and experimentation, I discovered a more elegant solution: [llama-swap](https://github.com/mostlygeek/llama-swap) combined with [llama.cpp](https://github.com/ggml-org/llama.cpp).
-This combination not only fixes the template issues but also offers something Ollama struggles with: true model hot-swapping with automatic VRAM management.
+## The catalyst: dual GPUs and control
 
-### What is llama-swap?
+With a single GPU, you usually either fit the model or you don't.
+With two GPUs (and 64GB of system RAM), things get interesting.
+You enter the territory of **heterogeneous inference**.
 
-llama-swap is a lightweight service that sits in front of llama.cpp, providing:
+Ollama tries to handle splitting automatically, but I found myself fighting it.
+I wanted to say: *"Put 40 layers on GPU 0, 40 layers on GPU 1, and keep the KV cache here."*
+Or: *"This model is slightly too big for VRAM; I want to offload exactly the last 10% to CPU RAM because I have fast DDR5."*
 
-- **Automatic model loading/unloading**: Models are loaded into VRAM on-demand and unloaded after a configurable TTL
-- **OpenAI-compatible API**: Drop-in replacement for any tool expecting an OpenAI-style endpoint
-- **Zero VRAM usage when idle**: Unlike Ollama, which keeps models loaded, llama-swap frees your GPU completely when not in use
-- **Support for multiple model configurations**: Easy switching between different models and quantizations
+With `llama.cpp` directly, this is just a command line flag.
+With `llama-swap`, I can define this behavior per-model in a config file:
 
-### Why llama.cpp Directly?
+```yaml
+"qwen2.5-72b-instruct":
+  cmd: |
+    ${pkgs.llama-cpp}/bin/llama-server
+    --hf-repo Qwen/Qwen2.5-72B-Instruct-GGUF
+    --hf-file qwen2.5-72b-instruct-q4_k_m.gguf
+    --port ${PORT}
+    --ctx-size 8192
+    --n-gpu-layers 80   # Precise control over offloading
+    --split-mode row    # Essential for dual 3090s to maximize bandwidth!
+    --main-gpu 0
+```
 
-Going directly to llama.cpp (through llama-swap) has several advantages:
+This level of granularity turned my rig from a "black box" into a tunable instrument.
+The `--split-mode row` flag alone is a game-changer for dual GPUs, splitting the computation across cards to utilize combined bandwidth, something Ollama exposes poorly or not at all.
 
-- **Always up-to-date**: You get improvements immediately, not after Ollama eventually copies them
-- **Correct prompt templates**: Models actually work as intended with proper formatting
-- **Better performance**: No abstraction overhead, 20-30% faster inference than Ollama
-- **Responsive development**: PRs get reviewed and merged quickly (hours, not months)
-- **Transparency**: You know exactly what's running and how
-- **Flexibility**: Full control over model parameters, context sizes, and hardware utilization
+## My NixOS setup
 
-## My NixOS Setup
+Since I manage my entire system with Nix, setting up `llama-swap` and pinning `llama-cpp` to the absolute bleeding edge was surprisingly elegant.
+I even wrote an [auto-update script](https://github.com/basnijholt/dotfiles/blob/main/configs/nixos/scripts/update_overrides.py) to ensure I'm always on the latest commit.
 
-Since I manage my entire system with Nix, setting up llama-swap was surprisingly elegant.
 Here's my complete configuration:
 
 ```nix
@@ -139,12 +142,6 @@ llama-swap = pkgs.runCommand "llama-swap" { } ''
   chmod +x $out/bin/llama-swap
 '';
 
-# Download the proper chat template for gpt-oss
-environment.etc."llama-templates/openai-gpt-oss-20b.jinja".source = pkgs.fetchurl {
-  url = "https://huggingface.co/openai/gpt-oss-20b/resolve/main/chat_template.jinja";
-  sha256 = "sha256-pMmRnLvUrN1RzP/iLaBJJksbc+WQVfpYgRqZ7718gUY=";
-};
-
 # Configure llama-swap as a systemd service
 systemd.services.llama-swap = {
   description = "llama-swap - OpenAI compatible proxy with automatic model swapping";
@@ -155,6 +152,7 @@ systemd.services.llama-swap = {
     Type = "simple";
     User = "basnijholt";
     Group = "users";
+    # Point to your declarative config file
     ExecStart = "${pkgs.llama-swap}/bin/llama-swap --config /etc/llama-swap/config.yaml --listen 0.0.0.0:9292 --watch-config";
     Restart = "always";
     RestartSec = 10;
@@ -168,130 +166,34 @@ systemd.services.llama-swap = {
 };
 ```
 
-The beauty of this setup is that it's completely declarative.
-One `nixos-rebuild switch` and I have a working llama-swap server with the latest llama.cpp, CUDA acceleration enabled, and automatic model management.
-
-## Model Configuration
-
-llama-swap uses a YAML configuration that directly launches llama.cpp server instances.
-Here's part of my setup showing how models are defined:
-
-```yaml
-models:
-  # Small models for quick tasks
-  "qwen2.5-0.5b":
-    cmd: |
-      ${pkgs.llama-cpp}/bin/llama-server
-      --hf-repo bartowski/Qwen2.5-0.5B-Instruct-GGUF
-      --hf-file Qwen2.5-0.5B-Instruct-Q4_K_M.gguf
-      --port ${PORT}
-      --ctx-size 8192
-      --n-gpu-layers 99
-      --main-gpu 0
-  
-  # Coding specialists  
-  "qwen3-coder-30b":
-    cmd: |
-      ${pkgs.llama-cpp}/bin/llama-server
-      --hf-repo unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF
-      --hf-file Qwen3-Coder-30B-A3B-q4_k_m.gguf
-      --port ${PORT}
-      --ctx-size 32768
-      --n-gpu-layers 99
-      --main-gpu 0
-      --flash-attn
-  
-  # And yes, gpt-oss works perfectly with proper templates!
-  "gpt-oss-20b":
-    cmd: |
-      ${pkgs.llama-cpp}/bin/llama-server
-      --hf-repo openai/gpt-oss-20b-gguf
-      --hf-file gpt-oss-20b-q4_0.gguf
-      --port ${PORT}
-      --ctx-size 8192
-      --n-gpu-layers 99
-      --main-gpu 0
-      --chat-template /etc/llama-templates/openai-gpt-oss-20b.jinja
-```
-
-Notice how each model directly calls `llama-server` with HuggingFace repo integration for automatic downloading.
-The `--chat-template` flag for gpt-oss ensures it uses the correct prompt format!
-
-## The Migration Experience
-
-Switching from Ollama to llama-swap was surprisingly smooth:
-
-1. **API Compatibility**: Both expose OpenAI-compatible endpoints (llama-swap on port 9292), so my existing tools ([agent-cli](https://github.com/basnijholt/agent-cli), LibreChat) worked with minimal config changes
-2. **Better Resource Usage**: My GPU is completely free when not actively running inference
-3. **Model Flexibility**: I can now run any GGUF model without worrying about compatibility
-4. **Performance**: Direct llama.cpp access means I get all the latest optimizations
-
-{{% callout note %}}
-**Performance Tip**: With llama-swap's TTL feature, I set models to unload after 1 hour.
-This means my 24GB RTX 3090 is available for other tasks (like that game of The Last of Us I still haven't played) when I'm not actively using AI.
-{{% /callout %}}
-
-## What I Gained (and Lost)
+## What I gained (and lost)
 
 ### Advantages of llama-swap + llama.cpp
 
-- ✅ **Correct prompt handling**: Models actually perform as designed
-- ✅ **20-30% faster inference**: Direct llama.cpp beats Ollama's overhead
-- ✅ **Zero idle VRAM usage**: Models completely unload when not in use
-- ✅ **Full control**: Direct access to all llama.cpp parameters
-- ✅ **Transparent operation**: I know exactly what's happening under the hood
+- ✅ **Heterogeneous Compute**: Perfectly balance loads between GPUs and CPU RAM.
+- ✅ **Bleeding Edge**: I use features (like new quantization types) the day they land in `llama.cpp`.
+- ✅ **Zero idle VRAM**: Models unload completely when not in use.
+- ✅ **Transparent operation**: No hidden prompts or "helpful" formatting that breaks complex tasks.
 
-### The Trade-off
+### The trade-off
 
-The main thing I miss from Ollama is the simplicity of `ollama pull model-name` and being done with it.
-With llama-swap, I need to specify the model in a YAML configuration file with the exact HuggingFace repo and file.
+The main trade-off is "laziness."
+You can't just `ollama run new-model` and have it appear.
+You have to find the GGUF on HuggingFace, decide on the quantization (Q4_K_M? Q6_K?), and add 5 lines of YAML to your config.
 
-But this added complexity is both a pro and a con:
+But honestly? That's a feature, not a bug.
+It forces you to understand *what* you are running.
+It stops you from running a quantized model that is too stupid for your task just because it was the default.
 
-**Pros of the declarative approach:**
-- **Fine-grained control**: I can specify exactly how many layers run on GPU vs CPU (`--n-gpu-layers`)
-- **Reproducibility**: My entire model configuration is in version control
-- **Transparency**: I know exactly which quantization and version I'm using
-- **Customization**: Full control over context size, flash attention, batching, etc.
+## Conclusion: maturing as an AI hobbyist
 
-**Cons:**
-- **More decisions**: I need to choose quantizations, layer splits, and parameters myself
-- **Slightly more work**: Can't just pull a model by name without knowing the details
+My switch back to `llama-swap` wasn't about fixing a bug; it was about outgrowing a tool.
+Ollama is the "starter bike" of local AI—fantastic for getting rolling.
+But when you add a second GPU, start caring about tokens per second, and want to maximize every gigabyte of your 48GB VRAM buffer, you need a manual transmission.
 
-But for me, the control is worth it. I'd rather spend a minute configuring a model properly than wonder why it's performing poorly with hidden defaults.
-
-## Performance and Resource Usage
-
-One unexpected benefit has been the improved resource management.
-Here's a typical day with both setups:
-
-**Ollama**: Keeps models loaded, my 24GB VRAM often had 18-20GB occupied even when idle
-
-**llama-swap**: Truly dynamic loading means:
-- Idle: 0GB VRAM used
-- Active (small model): 3-5GB for a 3B parameter model
-- Active (large model): 15-20GB for a 32B parameter model
-- Automatic unloading after my 1-hour TTL
-
-This dynamic management means I can actually use my GPU for other tasks without having to manually stop services.
-
-## Conclusion: Sometimes Simpler is Better
-
-My switch from Ollama to llama-swap + llama.cpp reinforced something I've learned repeatedly in my open-source journey: sometimes going closer to the source gives you more flexibility and fewer headaches.
-While Ollama aims to be user-friendly, its abstraction layer introduced compatibility issues and opacity that ultimately made my workflow worse, not better.
-
-With llama-swap and llama.cpp, I have a setup that:
-- Works with every model I want to try
-- Manages resources intelligently
-- Integrates perfectly with my NixOS configuration
-- Gives me full visibility and control
-
-For those hitting similar Ollama limitations or just wanting more control over their local AI setup, I highly recommend giving llama-swap a try.
-The initial setup might require a bit more configuration, but the flexibility and reliability are worth it.
-
-And yes, `gpt-oss-20b` actually performs like it should now.
-The difference is night and day.
+For anyone else building a hobbyist multi-GPU rig: stop fighting the abstraction.
+Go to the source. The control is worth it.
 
 ---
 
-*Check out my [NixOS configuration](https://github.com/basnijholt/dotfiles/tree/flake) for the complete llama-swap setup, and feel free to reach out if you're considering making the switch!*
+*Check out my [NixOS configuration](https://github.com/basnijholt/dotfiles/tree/flake) for the complete setup!*
