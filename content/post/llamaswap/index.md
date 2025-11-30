@@ -45,7 +45,7 @@ So I let convenience win for a while, but it always felt wrong.
 But last month, that changed.
 I upgraded my hobbyist AI rig by adding a **second RTX 3090**.
 Suddenly, I had 48GB of VRAM and a whole new set of problems—and possibilities.
-I wanted to run massive models (like Llama-3-70B at high precision).
+I wanted to run massive models (like `gpt-oss-120b` or `Qwen-3-VL-32B` with a huge context window).
 I needed to balance layers between two GPUs.
 I needed to spill specific parts of the model into system RAM without crashing.
 
