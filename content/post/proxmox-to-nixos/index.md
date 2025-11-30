@@ -1,7 +1,7 @@
 ---
 title: "I've gone full Nix: Proxmox to NixOS + Incus"
 subtitle: "Why I replaced my clickable hypervisor with declarative text files"
-summary: "After years of running a Proxmox cluster, I migrated my entire homelab to NixOS with Incus. I explain the philosophical friction of imperative 'appliance' OSs vs declarative hosts, share how I migrated my LXC/VM workloads, and why this is the ultimate stack for AI agent management."
+summary: "After years of running a Proxmox cluster, I migrated my entire homelab to NixOS with Incus. I explain the philosophical friction of imperative 'appliance' OSs vs declarative hosts, share how I migrated my LXC/VM workloads, and why it is the perfect infrastructure to manage using AI agents."
 date: 2025-11-29T13:00:00+01:00
 draft: false
 authors:
