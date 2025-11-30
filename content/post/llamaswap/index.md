@@ -1,5 +1,5 @@
 ---
-title: "🦙 Switching from Ollama to llama-swap + llama.cpp: the power user's choice 🚀"
+title: "Switching from Ollama to llama-swap + llama.cpp: the power user's choice 🦙"
 subtitle: "Why I finally ditched Ollama after upgrading to dual RTX 3090s and needing true control over my local AI models"
 summary: "I started writing this post four months ago when a specific model broke in Ollama. I initially went back to Ollama out of laziness, but after upgrading to dual RTX 3090s, I realized that for serious multi-GPU inference and RAM offloading, you need the raw control of llama.cpp. Here is how I manage my new 48GB VRAM setup declaratively with NixOS."
 date: 2025-11-29
