@@ -124,6 +124,15 @@ Unlike Ollama, which releases every few weeks, `llama.cpp` can have multiple rel
 My cache server runs this update script automatically, builds the new binaries, and serves them to my workstation.
 I get the absolute latest performance improvements without ever compiling source code locally.
 
+### Compiler flags matter
+
+One critical lesson I learned: default builds matter.
+Initially, I was getting a measly **8 tokens/sec** on `gpt-oss:120b`.
+It turned out the default `llama.cpp` package wasn't enabling BLAS or native CPU optimizations, crippling the layers I offloaded to system RAM.
+
+By overriding the package to enable `blasSupport` and passing `-DGGML_NATIVE=ON` (as seen below), performance jumped to **50 tokens/sec**.
+This is another reason why I prefer managing this via Nix: I can enforce these compile-time flags declaratively.
+
 Here's my complete configuration (see [`package-overrides.nix`](https://github.com/basnijholt/dotfiles/blob/51c7af46e62a7d13b4ff497380c8b58c05ed81c8/configs/nixos/hosts/pc/package-overrides.nix#L28-L76) and [`ai.nix`](https://github.com/basnijholt/dotfiles/blob/51c7af46e62a7d13b4ff497380c8b58c05ed81c8/configs/nixos/hosts/pc/ai.nix#L360-L380)):
 
 ```nix
