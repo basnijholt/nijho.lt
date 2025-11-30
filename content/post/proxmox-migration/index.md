@@ -27,6 +27,7 @@ Then I did the dumb thing of updating my NVIDIA drivers, not realizing that impe
 Frustrated, I installed NixOS, hoping its promise of atomic updates would solve this.
 The result was glorious.
 I never really believed that everything would be byte-for-byte equivalent until I migrated that system to a new disk.
+I didn't clone the drive; I just applied my Nix configuration to a fresh install.
 It booted, I copied my data, and everything was identical.
 That was the moment it clicked.
 
