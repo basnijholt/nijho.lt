@@ -112,6 +112,11 @@ This standardization meant I could swap the entire inference engine underneath m
 Since I manage my entire system with Nix, setting up `llama-swap` and pinning `llama-cpp` to the absolute bleeding edge was surprisingly elegant.
 I even wrote an [auto-update script](https://github.com/basnijholt/dotfiles/blob/51c7af46e62a7d13b4ff497380c8b58c05ed81c8/configs/nixos/scripts/update_overrides.py) to ensure I'm always on the latest commit.
 
+This is where my [NixOS build cache](/post/nixos-cache/) shines.
+Unlike Ollama, which releases every few weeks, `llama.cpp` can have multiple releases *a day*.
+My cache server runs this update script automatically, builds the new binaries, and serves them to my workstation.
+I get the absolute latest performance improvements without ever compiling source code locally.
+
 Here's my complete configuration (see [`package-overrides.nix`](https://github.com/basnijholt/dotfiles/blob/51c7af46e62a7d13b4ff497380c8b58c05ed81c8/configs/nixos/hosts/pc/package-overrides.nix#L28-L76) and [`ai.nix`](https://github.com/basnijholt/dotfiles/blob/51c7af46e62a7d13b4ff497380c8b58c05ed81c8/configs/nixos/hosts/pc/ai.nix#L360-L380)):
 
 ```nix
