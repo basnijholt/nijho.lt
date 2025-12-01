@@ -63,11 +63,11 @@ I added a comment explaining exactly *why* `tso off gso off` is needed, citing t
 If I ever reinstall this machine, the fix applies automatically.
 On Proxmox, I would have had to rediscover this pain all over again.
 
-Another example is my Intel NUC, which I wanted to use as a Home Theater PC (HTPC).
-On Proxmox, this was a headache.
-To get video output, I had to pass the GPU through to a VM.
-But doing so meant the Proxmox host lost access to the GPU entirely, meaning no local console if things went wrong.
-It was a strict trade-off: either I have a media player, or I have a debuggable hypervisor.
+Another example is my Intel NUC.
+Since my homelab lives behind my TV, I wondered if I could also use it as a Home Theater PC (HTPC).
+On Proxmox, this would have required passing the GPU through to a VM to get video output.
+But doing so would mean the Proxmox host loses access to the GPU entirely, meaning no local console if things go wrong.
+It was a strict trade-off: either a media player, or a debuggable hypervisor. I tried it, but it was so much trouble that I quickly reverted.
 With NixOS, I don't have to choose.
 The host OS runs [Kodi directly](https://github.com/basnijholt/dotfiles/blob/4f534bf32fb4396dd86ce631dec00717eab7656d/configs/nixos/hosts/nuc/kodi.nix), giving me native hardware acceleration and video output.
 Simultaneously, `incus` runs in the background, hosting my containers.
