@@ -15,39 +15,41 @@ tags: ["nixos", "raspberry-pi", "zfs", "headless", "automation"]
 
 # NixOS on Raspberry Pi: The Headless, Wireless, ZFS Way
 
-I have a Raspberry Pi 4. I have an external Samsung T5 SSD. I want to turn them into a rock-solid, declarative server running [NixOS](https://nixos.org/).
+I have a Raspberry Pi 4 glued to the bottom of a standing lamp.
+This is not a joke.
+The lamp sits in the corner of my living room, and the Pi serves as a lightweight always-on server.
+It is physically impossible to connect it to HDMI or Ethernet without dismounting it and rearranging furniture.
 
-Sounds simple, right?
+I also have an external Samsung T5 SSD that I want to use as the root filesystem.
+SD cards are slow and unreliable; I have had them corrupt on me before.
+I want ZFS for snapshots and compression.
 
-But I have a few constraints that make this surprisingly difficult:
-1.  **I refuse to use the SD card for the OS.** SD cards are slow and unreliable. I want the root filesystem on the SSD, and I want it to be **ZFS** for snapshots and compression.
-2.  **I refuse to attach a monitor.** The Pi lives in a cupboard. I want to plug it in, walk away, and SSH into it.
-3.  **I am doing this from a Mac.** This complicates building Linux artifacts.
-4.  **I want it to be fully declarative.** No "flash an image, then SSH in and run `apt update`". The entire install process should be code.
+So my constraints are:
+1. **No monitor.** The Pi cannot be connected to HDMI.
+2. **No Ethernet.** It must connect over WiFi immediately on first boot.
+3. **ZFS on SSD.** Not the SD card.
+4. **Fully declarative.** The entire setup should be reproducible from code.
 
-Here is the journey of how I solved the "Chicken and Egg" problem of headless bootstrapping.
+This turned out to be one of the most frustrating NixOS projects I have undertaken.
+It took me 55 commits and countless hours of debugging.
+Here is what I tried, what failed, and what finally worked.
 
-## The Problem with "Standard" Installs
+## The Core Problem
 
-If you download a standard Raspberry Pi OS or Ubuntu image, the workflow is usually:
-1.  Flash SD card.
-2.  Edit a `wpa_supplicant.conf` or `user-data` file in the boot partition to enable WiFi/SSH.
-3.  Boot.
-4.  Manually run commands to move the OS to the SSD.
+The fundamental issue is a chicken-and-egg problem: to install NixOS on the SSD, I need to boot *something* first.
+That something needs WiFi credentials baked in (so I can SSH to it), and it needs ZFS tools (so it can partition the SSD).
+But I cannot interactively configure WiFi because there is no monitor.
 
-This is imperative. It's fragile. And if I mess up the SSD migration, I have to start over.
+## Attempt 1: Hijacking DietPi with nixos-anywhere
 
-With NixOS, we have tools like [**nixos-anywhere**](https://github.com/nix-community/nixos-anywhere), which can take a running Linux machine, wipe it, and install a perfect NixOS configuration in its place via SSH. This sounded perfect.
+The Pi was already running DietPi.
+I thought I could use [nixos-anywhere](https://github.com/nix-community/nixos-anywhere) to "hijack" it—SSH in and have it replace the running OS with NixOS.
 
-## Attempt 1: The "Hijack" Method (Failure)
+`nixos-anywhere` uses `kexec` to load a NixOS installer into RAM, then wipes the disk and installs.
+I ran:
 
-My first thought was: "The Pi is already running DietPi (Debian). I can just use `nixos-anywhere` to hijack it!"
-
-`nixos-anywhere` works by using `kexec`—a Linux kernel feature that allows a running kernel to load *another* kernel into RAM and execute it, effectively soft-rebooting into a new OS without a BIOS reset. It uploads a NixOS installer into RAM, switches to it, wipes the disk, and installs.
-
-I ran the command:
 ```bash
-nix run github:nix-community/nixos-anywhere -- root@192.168.1.x ...
+nix run github:nix-community/nixos-anywhere -- root@192.168.1.x --flake .#pi4
 ```
 
 It failed immediately:
@@ -55,196 +57,187 @@ It failed immediately:
 kexec_load failed: Function not implemented
 ```
 
-It turns out minimal kernels (like those in DietPi or some default Pi images) often compile *out* `kexec` support to save a few kilobytes of RAM. Without `kexec`, `nixos-anywhere` cannot launch its installer. This path was a dead end unless I recompiled the Debian kernel first, which defeats the point.
+DietPi's minimal kernel compiles out `kexec` support to save memory.
+Without `kexec`, `nixos-anywhere` cannot work.
+I could have recompiled the kernel, but that defeats the purpose of a quick install.
 
-## The Solution: A Custom Bootstrap Image
+## Attempt 2: A NixOS Bootstrap SD Card
 
+Since I could not hijack the existing OS, I needed to build a custom NixOS SD card image with:
+- SSH enabled with my public keys
+- WiFi credentials baked in
+- ZFS tools for partitioning the SSD
 
+This is where I spent most of my time.
 
-Since I couldn't hijack the existing OS, I had to replace it. I needed a bootable SD card image that:
+### The Disappearing WiFi Driver
 
-1.  Is a valid NixOS system.
+My first builds booted, but the Pi had no network.
+I eventually discovered that the Broadcom WiFi driver (`brcmfmac`) was missing.
+The SD image builder aggressively strips kernel modules to keep the image small.
+Since WiFi is not strictly required to *boot*, it got removed.
 
-2.  Has **SSH enabled** with my public keys pre-authorized (no passwords).
-
-3.  Has **WiFi credentials** baked in (so it gets online immediately).
-
-4.  Contains the necessary proprietary firmware for the Pi 4.
-
-5.  **Has ZFS tools** (so `nixos-anywhere` can run the installation from this environment).
-
-
-
-### The Hurdles (and Fixes)
-
-
-
-Building this image wasn't straightforward. I hit three major roadblocks:
-
-
-
-#### 1. The Disappearing WiFi Driver
-
-My first builds booted but had no network. Debugging showed that the Broadcom WiFi driver (`brcmfmac`) was missing.
-
-It turns out the `sd-image` builder aggressively shrinks the kernel modules to keep the image small. Since WiFi isn't needed to *boot* (strictly speaking), it stripped the driver.
-
-
-
-**The Fix:** I forced the module into the `initrd`, which protects it from being stripped. I also had to explicitly include the proprietary firmware package.
-
-
-
+I forced the module to load:
 ```nix
-
-# installers/pi4-sd.nix
-
-{
-
-  # ...
-
-  # Force WiFi module into initrd to prevent shrinking
-
-  boot.initrd.availableKernelModules = [ "brcmfmac" ];
-
-  
-
-  # Essential for WiFi on Pi 4 (Proprietary blobs)
-
-  hardware.enableRedistributableFirmware = true;
-
-  hardware.firmware = [ pkgs.raspberrypiWirelessFirmware ];
-
-}
-
+boot.kernelModules = [ "brcmfmac" ];
 ```
 
+### ZFS vs. Bleeding Edge Kernels
 
+I initially used `pkgs.linuxPackages_latest`.
+The build failed because OpenZFS had not caught up to that kernel version yet.
+I switched to the LTS kernel, which is stable and fully supported by ZFS.
 
-#### 2. ZFS vs. Bleeding Edge Kernels
+### The Kexec Dead End (Again)
 
-I initially used `pkgs.linuxPackages_latest` (Kernel 6.18+). The build failed immediately because OpenZFS hadn't caught up to that kernel version yet, marking the ZFS module as "broken."
+Even with a working NixOS bootstrap image, `nixos-anywhere` failed at the `kexec` step with `Resource busy`.
+The Pi 4 hardware locks up during kexec transitions.
+I tried `--phases disko,install` to skip kexec, but the complexity of nixos-anywhere's remote building made it unreliable on the Pi's limited resources.
 
-**The Fix:** I switched to the LTS kernel (`pkgs.linuxPackages`), which is stable and fully supported by ZFS.
+### WiFi Credentials and Git
 
+Here is a subtle problem: WiFi credentials should not be committed to git.
+But Nix flakes only see git-tracked files by default.
+I needed a way to include a gitignored `wifi.nix` file in the build.
 
+I learned this the hard way when an AI assistant I was using accidentally ran `git add -f wifi.nix` and pushed my credentials to GitHub.
+I had to change my WiFi password and SSID, which took hours because every device in my house needed to be reconfigured.
 
-#### 3. The Kexec Dead End
-
-Even with a working bootstrap image, `nixos-anywhere` failed at the `kexec` step with `Resource busy`. The Pi 4 hardware/kernel combination often locks up during kexec transitions.
-
-**The Fix:** Since my bootstrap image was already running NixOS (and I added ZFS support to it), I realized **I didn't need to kexec**. I just needed to skip that phase.
-
-
-
-### Defining the Installer
-
-
-
-I added a special `pi4-bootstrap` configuration to my [flake.nix](https://github.com/basnijholt/dotfiles/blob/main/configs/nixos/flake.nix).
-
-
-
-```nix
-
-# installers/pi4-sd.nix
-
-{ lib, pkgs, modulesPath, ... }:
-
-{
-
-  imports = [
-
-    (modulesPath + "/installer/sd-card/sd-image-aarch64.nix")
-
-    ../hosts/pi4/networking.nix # Contains WiFi config
-
-  ];
-
-
-
-  # Bake in WiFi credentials (from a secret file)
-
-  imports = lib.optional (builtins.pathExists ../hosts/pi4/wifi.nix) ../hosts/pi4/wifi.nix;
-
-
-
-  networking.hostName = lib.mkForce "pi4-bootstrap";
-
-  
-
-  # Enable ZFS (so we can format the target drive)
-
-  boot.supportedFilesystems = lib.mkForce [ "ext4" "vfat" "zfs" ];
-
-  networking.hostId = "8425e349"; # Required for ZFS
-
-  
-
-  # Use LTS kernel for ZFS compatibility
-
-  boot.kernelPackages = pkgs.linuxPackages;
-
-  
-
-  # Essential tools
-
-  environment.systemPackages = with pkgs; [ git vim htop kexec-tools ];
-
-}
-
+The solution is to use `path:.` instead of `.` when building:
+```bash
+nix build 'path:.#nixosConfigurations.pi4-bootstrap.config.system.build.sdImage' --impure
 ```
 
+The `path:.` prefix tells Nix to include all files in the directory, not just git-tracked ones.
+The `--impure` flag allows reading files outside the pure evaluation sandbox.
 
+## Attempt 3: Flash the SSD Directly from x86
 
-### The macOS Cross-Compilation Hurdle
+After getting the SD card approach working (barely), I had what I thought was a better idea.
 
-Here was the next problem: I am on an Apple Silicon Mac (`aarch64-darwin`). The Raspberry Pi is `aarch64-linux`. 
-While the architecture is the same (ARM64), the OS is not. Nix on macOS cannot natively build Linux kernel modules or disk images (it lacks the Linux filesystem tools).
+Why bother with an SD card at all?
+I have a Linux PC with ZFS support.
+I could just connect the SSD directly, partition it, install NixOS, and then move it to the Pi.
+The Pi 4 can boot directly from USB; it does not strictly need an SD card.
 
-Usually, you set up a remote builder or a Linux VM. But I didn't want to maintain a permanent builder just for this.
+This seemed elegant.
+No SD card shuffling.
+No waiting for WiFi to connect.
+Just plug in a fully-configured SSD and boot.
 
-**The Fix: Docker as an Ephemeral Builder**
+### The binfmt Nightmare
 
-I realized I could use Docker to spin up a Linux environment *just* to build this image. By mounting my local directory into the container, I could build the artifact and spit it back out to my Mac.
+The problem is that my PC is x86_64 and the Pi is aarch64.
+NixOS can cross-compile, but many packages need to run native code during the build (like running `ldconfig` or activation scripts).
+Linux has a feature called `binfmt_misc` that can transparently run ARM binaries through QEMU emulation.
 
-I documented the exact command in my [README](https://github.com/basnijholt/dotfiles/blob/main/configs/nixos/hosts/pi4/README.md), but it looks roughly like this:
+I enabled it:
+```nix
+boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+```
+
+Then I tried to build the Pi's system and run `nixos-install` with `--root /mnt` pointing to the mounted SSD.
+
+It was painfully slow.
+My 24-core Ryzen 3900X ran at 100% on all cores for over two hours, building the Raspberry Pi Linux kernel under emulation.
+It still was not done when I gave up.
+
+The emulation overhead is brutal.
+Every ARM instruction gets translated to x86 at runtime.
+For a kernel build with millions of instructions, this adds up to hours of wall-clock time.
+
+### It Worked... Almost
+
+After working around the binfmt issues and configuring the Nix sandbox to expose the emulator:
+```nix
+boot.binfmt.registrations.aarch64-linux.fixBinary = true;
+nix.settings.extra-sandbox-paths = [ "/run/binfmt" ];
+```
+
+I eventually got the SSD to boot on the Pi.
+The system came up.
+But it did not connect to WiFi.
+
+The problem is that `nixos-install` does not run activation scripts.
+NetworkManager's `ensureProfiles` option generates the WiFi profile during activation, which never happened.
+So the system booted, but `/etc/NetworkManager/system-connections/` was empty.
+No WiFi profile, no connection, no SSH access.
+
+I was back to square one.
+
+## The Working Solution: Keep It Simple
+
+After all this complexity, I went back to the SD card approach.
+
+The final workflow:
+
+1. **Build a minimal NixOS SD image** on my Mac (using Docker, which is fast because Docker on Apple Silicon runs ARM natively—no emulation).
+2. **Flash the SD card** and boot the Pi.
+3. **SSH in** once WiFi connects.
+4. **Run three commands** to partition the SSD with [disko](https://github.com/nix-community/disko) and install NixOS:
 
 ```bash
-docker run --rm -it \
-  --platform linux/arm64 \
-  -v $(pwd):/work \
-  nixos/nix \
-  nix build .#nixosConfigurations.pi4-bootstrap.config.system.build.sdImage
+sudo nix run github:nix-community/disko -- --mode disko ./disko.nix
+nix build .#nixosConfigurations.pi4.config.system.build.toplevel --print-out-paths
+sudo nixos-install --system "$SYSTEM" --root /mnt --no-root-passwd
 ```
 
-This effectively gives me an on-demand Linux build farm.
+No binfmt emulation.
+Just native ARM code running on ARM hardware.
 
-## The Installation Dance
+### Why Docker on Mac is Fast
 
-With my custom `pi4-bootstrap.img` generated, the process became beautifully reproducible:
+Building on my Mac via Docker finished in minutes, not hours.
+This surprised me at first—my Mac has fewer cores than my Ryzen.
+But Docker on Apple Silicon uses native ARM virtualization, not emulation.
+The Linux kernel running inside Docker is actual ARM code running on actual ARM silicon.
+There is no instruction translation overhead.
 
-1.  **Flash:** Write the image to an SD card.
-2.  **Boot:** Plug the SD card and the empty SSD into the Pi and power it on.
-3.  **Wait:** The Pi boots, loads the firmware, brings up `wlan0` with my credentials, and starts `sshd`.
-4.  **Install:** I run `nixos-anywhere` from my Mac.
+Meanwhile, my x86 PC was trying to emulate every ARM instruction through software.
+Even with 24 cores, software emulation cannot compete with native execution.
 
-Because `kexec` fails on this hardware, I explicitly tell `nixos-anywhere` to skip the reboot-into-ram phase and just run the partitioning and installation directly from my running bootstrap OS.
+## What I Learned
 
-```bash
-nix run github:nix-community/nixos-anywhere -- \
-  --flake .#pi4 \
-  --build-on remote \
-  --phases disko,install \
-  root@<PI_IP_ADDRESS>
-```
+Here is a summary of the approaches I tried:
 
-`nixos-anywhere` connects to the bootstrap OS (running on the SD card), detects the SSD, and uses my [Disko configuration](https://github.com/basnijholt/dotfiles/blob/main/configs/nixos/hosts/pi4/disko.nix) to partition it with ZFS. It then installs the *final* system configuration—which includes ZFS support, heavy virtualization tools, and my home server apps—onto the SSD.
+| Approach | Result |
+|----------|--------|
+| nixos-anywhere on DietPi | Failed: no kexec support |
+| nixos-anywhere on NixOS SD | Failed: kexec locks up Pi 4 |
+| Direct SSD flash via binfmt on x86 | Too slow (2+ hours on 24 cores) |
+| Direct SSD flash (completed) | Booted, but no WiFi (activation scripts) |
+| SD card bootstrap + install on Pi | Works reliably |
+
+The lesson: do not fight the hardware.
+Running ARM code on ARM silicon is fast.
+Emulating ARM on x86 is slow.
+The "clever" approach of pre-building everything on my PC was actually the worst approach.
+
+## The Final Configuration
+
+The [bootstrap image](https://github.com/basnijholt/dotfiles/blob/main/configs/nixos/installers/pi-bootstrap.nix) is minimal:
+- SSH with my public keys
+- WiFi via NetworkManager
+- ZFS support
+- Binary caches for faster builds
+
+One optimization: I removed NetworkManager's VPN plugins (`plugins = lib.mkForce []`).
+Without this, the build pulls in ffmpeg and webkit as dependencies, adding gigabytes to the image for features I do not need.
+
+The [disko configuration](https://github.com/basnijholt/dotfiles/blob/main/configs/nixos/hosts/pi4/disko.nix) sets up a 512MB ESP partition and uses the rest for a ZFS pool with separate datasets for `/`, `/nix`, `/var`, and `/home`.
+
+One important detail: I manually pre-create the WiFi profile in `/etc/NetworkManager/system-connections/` after running `nixos-install`, because activation scripts do not run during installation.
+Without this, the system would boot but not connect to WiFi—the same problem I hit with the direct SSD approach.
 
 ## The Result
 
-I now have a Raspberry Pi 4 that boots from an external SSD with enterprise-grade storage features (compression, snapshots), managed entirely by code.
+I now have a Raspberry Pi 4 that boots from an external SSD with ZFS, managed entirely by code.
+The Pi lives on its lamp, connecting over WiFi, and I never had to attach a monitor.
 
-If I ever want to repurpose this Pi, I don't need to hook up a monitor. I just flash the bootstrap card, boot it, and push a new config.
+If I need to reinstall, I flash the bootstrap SD card, SSH in, and run three commands.
+The entire configuration is in [my dotfiles](https://github.com/basnijholt/dotfiles/tree/main/configs/nixos/hosts/pi4).
 
-The combination of **NixOS**, **Disko**, and **nixos-anywhere** feels like a superpower for homelabs. It turns hardware into software.
+It took 55 commits to get here.
+Most of those commits were failed experiments.
+But now that it works, it is completely reproducible.
+That is the NixOS promise: the pain is front-loaded, but you only pay it once.
