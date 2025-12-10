@@ -37,11 +37,11 @@ image:
 If you've read my posts on [agentic coding]({{< ref "/post/agentic-coding" >}}) or my [local AI journey]({{< ref "/post/local-ai-journey" >}}), you know I am all-in on using AI to control my computer and write software.
 But there has been a glaring hole in my setup: **Context**.
 
-LLMs are brilliant but amnesiac.
+LLMs are powerful but stateless.
 Every time I start a new chat, the model forgets who I am, what I'm working on, and that I prefer [functional Python code]({{< ref "/post/functional-python" >}}) over object-oriented styles.
 Worse, it also forgets the thing I just told it five minutes ago in another window.
 
-The industry solution to this is [RAG (Retrieval-Augmented Generation)](https://en.wikipedia.org/wiki/Retrieval-augmented_generation) and [Memory](https://arxiv.org/abs/2310.08560).
+The standard solution to this is [RAG (Retrieval-Augmented Generation)](https://en.wikipedia.org/wiki/Retrieval-augmented_generation) and [Memory](https://arxiv.org/abs/2310.08560).
 But when I looked at the available tools, I hit a wall.
 
 Most solutions fell into two buckets:
@@ -72,7 +72,7 @@ This isn't my first attempt at building a memory system.
 A few months ago, I built [**AI Journal**](https://github.com/basnijholt/aijournal)—an ambitious local-first journaling app where an AI would read your entries and build a "living self-model" of who you are.
 It had sophisticated features: a structured "persona core," typed "claim atoms" with evidence links, four organizational layers (L1→L4), recency-aware scoring with decay functions, and Git-based time travel to "ask questions of your younger self."
 
-The architecture was solid.
+The architecture seemed solid.
 The problem was simpler: **local models aren't good enough yet.**
 
 I designed the whole thing to run entirely on Ollama with my dual RTX 3090s.
@@ -82,7 +82,7 @@ Whether the design was right, I still don't know—but the execution definitely 
 The lesson: I tried to build the entire system at once without validating the core concepts and individual ideas first.
 This time, I took a different approach: **tackle it problem by problem.**
 Instead of designing a complete system upfront, I would validate each piece—chunking, retrieval, re-ranking, memory reconciliation—before combining them.
-The experience and UX would be my own, but the algorithms would be stolen from the best.
+The experience and UX would be my own, but the algorithms would be adapted from established projects.
 
 ## 3. How I studied SOTA: clone, read, re-implement
 
@@ -123,7 +123,7 @@ Installing LlamaIndex with all its dependencies pulls in PyTorch.
 PyTorch alone is **2-3GB**.
 Add transformers, sentence-transformers, and the kitchen sink, and you're looking at an **8GB+ environment** just to ask questions about some PDFs.
 
-This is insane for a CLI tool.
+This felt excessive for a CLI tool.
 
 One of my core design goals was **minimal dependencies**.
 I wanted `agent-cli` to install in seconds, not minutes.
@@ -196,7 +196,7 @@ A common pattern in modern RAG systems is **Two-Stage Retrieval**.
 A cross-encoder looks at the query and the document *together* and outputs a relevance score.
 It's computationally heavier, but since I'm running this locally on my RTX 3090 (or even CPU via ONNX), the 50ms latency penalty is worth it for results that are actually useful.
 
-I didn't invent this—I just implemented it cleanly without the 8GB dependency tax.
+This isn't a new idea, but implementing it cleanly with ONNX avoided the huge dependency tax.
 
 ## 6. Memory: files over databases
 
@@ -206,7 +206,7 @@ If the AI remembers "User likes pizza," that's a vector in a DB.
 If it hallucinates and records "User hates pizza," good luck fixing it.
 You need to write a script to query the DB and delete the row.
 
-**I hate data I can't touch.**
+**I prefer data I can inspect.**
 
 My memory system stores every fact as a **Markdown file** with YAML front matter.
 
@@ -220,7 +220,7 @@ conversation_id: "default"
 The user prefers using 'uv' for Python package management.
 ```
 
-### Git integration: time travel for your brain 🕰️
+### Git integration: versioning memory 🕰️
 
 Because memories are just files, I added a feature that I haven't seen anywhere else: **Automatic Git Versioning**.
 
@@ -279,7 +279,7 @@ Any tool that supports custom OpenAI-compatible endpoints works out of the box:
 
 - **`agent-cli chat`** in the terminal
 - **Cursor** or **Cline** for agentic coding
-- **Open WebUI**, **LibreChat**, or **Lobe Chat** in the browser
+- **[Open WebUI](https://openwebui.com/)**, **[LibreChat](https://www.librechat.ai/)**, or **[Lobe Chat](https://lobechat.com/)** in the browser
 
 Because my system speaks "OpenAI," all of these tools share the *same* memory and the *same* document index.
 If I tell the terminal agent "I'm working on Project X," and then switch to Cursor, Cursor knows about Project X.
