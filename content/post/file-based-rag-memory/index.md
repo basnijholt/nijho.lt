@@ -217,11 +217,11 @@ This leads to incredible capabilities:
 2.  **Correction:** If the AI learns something wrong, I open the markdown file in VS Code, edit it, and save.
 3.  **Reversion:** Agent hallucinated wildly yesterday? `git reset --hard HEAD~1`.
 
-### The reconciliation loop (learned from Letta)
+### The reconciliation loop
 
 The logic for storing memories isn't just "append to file."
-Studying Letta (MemGPT) taught me that memory systems need active **reconciliation**.
-When I say "Actually, I switched to poetry," the system:
+Studying Mem0 (and Letta) taught me that memory systems need active **reconciliation**.
+When I say "Actually, I switched to nix instead of uv," the system:
 
 1.  **Retrieves** existing memories about package managers.
 2.  **Decides** (using a lightweight LLM) whether to `ADD`, `UPDATE`, or `DELETE`.
@@ -257,7 +257,7 @@ Three reasons: **Privacy**, **Integration**, and **Dependencies**.
 ### Privacy
 I want to feed my AI my financial records, my health data, and my private journals.
 I am not comfortable sending that to OpenAI's long-term storage or some VC-backed startup's vector cloud.
-With `agent-cli`, the vectors live in `~/.cache/agent-cli/chroma`, the files live in `~/documents`, and the only thing leaving my machine is the specific context needed for a specific query (if I use a cloud model) or nothing at all (if I use Ollama).
+With `agent-cli`, the vectors live in `~/.cache/agent-cli/chroma`, the files live in `~/documents`, and the only thing leaving my machine is the specific context needed for a specific query (if I use a cloud model) or nothing at all (if I use Ollama/[llama.cpp]({{< ref "/post/llama-nixos" >}})).
 
 ### Integration
 By building this as an API proxy, I solved the "fragmented tools" problem.
