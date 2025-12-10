@@ -161,6 +161,20 @@ When moving or deleting files, the system updates the index accordingly.
 The "secret sauce" isn't the retrieval itself; it's how I expose it.
 Instead of building a custom chat app, I built an **OpenAI-compatible proxy**.
 
+```mermaid
+flowchart LR
+    Client[Client<br/>(Cursor, Open WebUI)] --> Retrieve
+
+    subgraph Proxy [RAG Proxy]
+        direction TB
+        Retrieve --> Augment[Augment & Forward]
+        Chroma[(ChromaDB)] -.-> Retrieve
+        Watcher[File Watcher] --> Chroma
+    end
+
+    Augment --> Upstream[Upstream LLM]
+```
+
 ```bash
 # Point any OpenAI-compatible tool at your local proxy
 export OPENAI_BASE_URL=http://localhost:8000/v1
@@ -280,30 +294,48 @@ This matters when you want to run the system on a cheap VPS or your friend's lap
 
 The entire system is open-source and available in [`agent-cli`](https://github.com/basnijholt/agent-cli).
 
-If you want to try the RAG proxy with your own documents:
+### Try Memory
+
+Get an LLM that remembers you using [Ollama](https://ollama.com).
 
 ```bash
-# Install with RAG support (~300MB, not 8GB!)
-uv tool install "agent-cli[rag]"
-
-# Start the proxy watching your documents folder
-agent-cli rag-proxy \
-  --docs-folder ~/my-documents \
-  --openai-api-key sk-...
+# 1. Pull models and start proxy
+ollama pull embeddinggemma:300m && ollama pull gpt-oss:20b
+uvx -p 3.13 --from "agent-cli[memory]" agent-cli memory proxy \
+  --memory-path ./my-memories \
+  --openai-base-url http://localhost:11434/v1 \
+  --embedding-model embeddinggemma:300m
 ```
 
-Then just point your chat app to `http://localhost:8000/v1`.
+```bash
+# 2. Chat from the terminal (env vars point to proxy)
+export OPENAI_BASE_URL=http://localhost:8100/v1 OPENAI_API_KEY=dummy
 
-For the memory system:
+# Tell it something about yourself
+uvx openai api chat.completions.create -m gpt-oss:20b -g user "My name is Alice and I love hiking"
+
+# Later, ask if it remembers
+uvx openai api chat.completions.create -m gpt-oss:20b -g user "What's my name?"
+```
+
+### Try RAG
+
+Chat with your documents.
 
 ```bash
-# Install with Memory support
-uv tool install "agent-cli[memory]"
+# 1. Start the RAG proxy (runs in foreground)
+uvx -p 3.13 --from "agent-cli[rag]" agent-cli rag-proxy \
+  --docs-folder ./my-docs \
+  --openai-base-url http://localhost:11434/v1 \
+  --embedding-model embeddinggemma:300m
+```
 
-# Start the memory proxy
-agent-cli memory proxy \
-    --memory-path ./my-brain \
-    --openai-api-key sk-...
+```bash
+# 2. Chat with your docs
+OPENAI_BASE_URL=http://localhost:8000/v1 OPENAI_API_KEY=dummy \
+  uvx openai api chat.completions.create \
+  -m gpt-oss:20b \
+  -g user "What does my documentation say about X?"
 ```
 
 ## 9. What I learned
