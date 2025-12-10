@@ -1,5 +1,5 @@
 ---
-title: "I built my own SOTA RAG and Memory system because databases scare me 🧠"
+title: "I built my own SOTA file-based RAG and Markdown Memory system with Git integration"
 subtitle: "Why I rejected vector DBs and web UIs in favor of Markdown, Git, and a simple folder."
 summary: "I wanted my AI agents to remember me and read my documents, but existing solutions required complex APIs or opaque databases. After my ambitious AI Journal project hit the wall of local model limitations, I took a different approach: clone LlamaIndex, LangChain, Letta, Mem0, and PydanticAI, study how SOTA systems work, and re-implement the best parts with minimal dependencies and ONNX instead of PyTorch."
 date: 2025-12-15
@@ -38,14 +38,14 @@ If you've read my posts on [agentic coding]({{< ref "/post/agentic-coding" >}}) 
 But there has been a glaring hole in my setup: **Context**.
 
 LLMs are brilliant but amnesiac.
-Every time I start a new chat, the model forgets who I am, what I'm working on, and that I prefer concise Python code over verbose Java-style classes.
-Worse, it doesn't know about the PDF spec I just downloaded or the internal documentation I wrote last week.
+Every time I start a new chat, the model forgets who I am, what I'm working on, and that I prefer [functional Python code]({{< ref "/post/functional-python" >}}) over object-oriented styles.
+Worse, it also forgets the thing I just told it five minutes ago in another window.
 
 The industry solution to this is RAG (Retrieval-Augmented Generation) and Memory.
 But when I looked at the available tools, I hit a wall.
 
 Most solutions fell into two buckets:
-1.  **SaaS / Web UIs:** Upload your files to a cloud service (privacy nightmare) or use a specific web chat interface that locks you in.
+1.  **SaaS / Web UIs:** Upload your files to a cloud service or use a specific web chat interface that locks you in.
 2.  **Developer Libraries:** "Just use LangChain/LlamaIndex!" they say. Great, now I have to write a Python script every time I want to ask a question about a PDF?
 
 I didn't want a library. I didn't want a web UI.
@@ -53,12 +53,16 @@ I didn't want a library. I didn't want a web UI.
 I wanted to drop a file into `~/my-docs`, and have my AI instantly know about it.
 And I wanted my AI's "memory" to be a file I can edit, not a hidden vector in a database I can't inspect.
 
-So, in the spirit of [my migration to NixOS]({{< ref "/post/proxmox-to-nixos" >}}), I decided to build a declarative, file-based solution myself.
+So I decided to build my own file-based solution.
 
 {{% callout note %}}
-**TL;DR:** I built [`agent-cli`](https://github.com/basnijholt/agent-cli) features that act as a **middleware proxy**.
-You point your existing AI tools (like VS Code, Cursor, or chat apps) to `http://localhost:8000`, and suddenly they have long-term memory and access to your local files.
-I studied the state-of-the-art by cloning LlamaIndex, LangChain, Letta, Mem0, and PydanticAI—then re-implemented the best ideas with ONNX Runtime instead of PyTorch, keeping my install under 200MB instead of 8GB.
+**TL;DR:** I built [`agent-cli`](https://github.com/basnijholt/agent-cli) features that combine two ideas:
+
+1. **File-based storage:** Documents in a folder, memories as Markdown files with Git versioning.
+2. **OpenAI-compatible proxy:** Works with *any* OpenAI-compatible tool—Cursor, Cline, Open WebUI, LibreChat, Lobe Chat, your terminal—without lock-in.
+
+Tools like Open WebUI have built-in RAG, but that forces you to use only Open WebUI.
+My proxy means I can switch tools whenever I want, and they all share the same memory and document index.
 {{% /callout %}}
 
 ## 2. Learning from failure: AI Journal
@@ -258,13 +262,15 @@ With `agent-cli`, the vectors live in `~/.cache/agent-cli/chroma`, the files liv
 
 ### Integration
 By building this as an API proxy, I solved the "fragmented tools" problem.
-I use:
+Any tool that supports custom OpenAI-compatible endpoints works out of the box:
+
 - **`agent-cli chat`** in the terminal
-- **Open WebUI** in the browser
-- **Cursor** for coding
+- **Cursor** or **Cline** for agentic coding
+- **Open WebUI**, **LibreChat**, or **Lobe Chat** in the browser
 
 Because my system speaks "OpenAI," all of these tools share the *same* memory and the *same* document index.
 If I tell the terminal agent "I'm working on Project X," and then switch to Cursor, Cursor knows about Project X.
+I can try a new chat UI tomorrow without losing anything—just point it to `localhost:8000`.
 
 ### Dependencies
 I refuse to accept that asking questions about a PDF requires downloading 8GB of PyTorch.
