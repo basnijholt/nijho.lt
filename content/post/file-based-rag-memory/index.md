@@ -41,7 +41,7 @@ LLMs are brilliant but amnesiac.
 Every time I start a new chat, the model forgets who I am, what I'm working on, and that I prefer [functional Python code]({{< ref "/post/functional-python" >}}) over object-oriented styles.
 Worse, it also forgets the thing I just told it five minutes ago in another window.
 
-The industry solution to this is RAG (Retrieval-Augmented Generation) and Memory.
+The industry solution to this is [RAG (Retrieval-Augmented Generation)](https://en.wikipedia.org/wiki/Retrieval-augmented_generation) and [Memory](https://arxiv.org/abs/2310.08560).
 But when I looked at the available tools, I hit a wall.
 
 Most solutions fell into two buckets:
@@ -67,7 +67,7 @@ My proxy means I can switch tools whenever I want, and they all share the same m
 
 ## 2. Learning from failure: AI Journal
 
-I have to be honest: this isn't my first attempt at building a memory system.
+This isn't my first attempt at building a memory system.
 
 A few months ago, I built [**AI Journal**](https://github.com/basnijholt/aijournal)—an ambitious local-first journaling app where an AI would read your entries and build a "living self-model" of who you are.
 It had sophisticated features: a structured "persona core," typed "claim atoms" with evidence links, four organizational layers (L1→L4), recency-aware scoring with decay functions, and Git-based time travel to "ask questions of your younger self."
@@ -75,8 +75,8 @@ It had sophisticated features: a structured "persona core," typed "claim atoms" 
 The architecture was solid.
 The problem was simpler: **local models aren't good enough yet.**
 
-I designed the whole thing to run entirely on Ollama with my RTX 3090.
-But even with a 24GB GPU, the models couldn't reliably extract structured claims, handle the multi-step reconciliation, or maintain coherence across long conversations.
+I designed the whole thing to run entirely on Ollama with my dual RTX 3090s.
+But even with a 48GB of VRAM, the models couldn't reliably extract structured claims, handle the multi-step reconciliation, or maintain coherence across long conversations.
 The vision was right; the execution hit the wall of current local LLM capabilities.
 
 The lesson wasn't that my ideas were wrong—it's that I tried to build the whole cathedral at once instead of laying bricks.
@@ -315,7 +315,7 @@ This journey reinforced a few beliefs:
 
 2. **Study implementations, not just papers.** Reading about two-stage retrieval is one thing. Reading how LlamaIndex actually implements it—the edge cases, the defaults, the performance tradeoffs—is far more valuable. Clone the repos. Read the code.
 
-3. **Dependencies matter.** The difference between a 300MB install and an 8GB install is the difference between a tool people actually use and a tool that rots in a GitHub repo. ONNX Runtime over PyTorch was one of the best decisions I made.
+3. **Dependencies matter.** A 30-second install versus a 10-minute download changes whether someone actually tries your tool. ONNX Runtime over PyTorch was one of the best decisions I made.
 
 4. **Files are the ultimate API.** By stripping away the complex databases and proprietary interfaces, I ended up with a system that is robust, version-controllable, and surprisingly simple to reason about.
 
