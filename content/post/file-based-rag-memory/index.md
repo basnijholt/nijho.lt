@@ -342,7 +342,7 @@ OPENAI_BASE_URL=http://localhost:8000/v1 OPENAI_API_KEY=dummy \
 
 This journey reinforced a few beliefs:
 
-1. **Lay bricks, don't build cathedrals.** AI Journal failed not because the ideas were wrong, but because I tried to build a complete system before validating individual components. This time I tackled problems one at a time—chunking, retrieval, re-ranking, memory reconciliation—and only combined them once each piece worked.
+1. **Validate components first.** AI Journal failed not because the ideas were wrong, but because I tried to build a complete system before validating individual components. This time I tackled problems one at a time—chunking, retrieval, re-ranking, memory reconciliation—and only combined them once each piece worked.
 
 2. **Study implementations, not just papers.** Reading about two-stage retrieval is one thing. Reading how LlamaIndex actually implements it—the edge cases, the defaults, the performance tradeoffs—is far more valuable. Clone the repos. Read the code.
 
