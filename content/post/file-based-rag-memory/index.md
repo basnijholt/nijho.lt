@@ -1,5 +1,5 @@
 ---
-title: "I built my own SOTA file-based RAG and Markdown Memory system with Git integration"
+title: "SOTA RAG & Memory without the database: Files, Git, and simple folders"
 subtitle: "Why I rejected vector DBs and web UIs in favor of Markdown, Git, and a simple folder."
 summary: "I wanted my AI agents to remember me and read my documents, but existing solutions required complex APIs or opaque databases. After my ambitious AI Journal project hit the wall of local model limitations, I took a different approach: clone LlamaIndex, LangChain, Letta, Mem0, and PydanticAI, study how SOTA systems work, and re-implement the best parts with minimal dependencies and ONNX instead of PyTorch."
 date: 2025-12-15
@@ -35,7 +35,7 @@ image:
 ## 1. The amnesia problem
 
 If you've read my posts on [agentic coding]({{< ref "/post/agentic-coding" >}}) or my [local AI journey]({{< ref "/post/local-ai-journey" >}}), you know I am all-in on using AI to control my computer and write software.
-But there has been a glaring hole in my setup: **Context**.
+But one critical piece was missing: **Context**.
 
 LLMs are powerful but stateless.
 Every time I start a new chat, the model forgets who I am, what I'm working on, and that I prefer [functional Python code]({{< ref "/post/functional-python" >}}) over object-oriented styles.
