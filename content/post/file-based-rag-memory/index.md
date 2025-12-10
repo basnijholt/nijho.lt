@@ -77,16 +77,16 @@ The problem was simpler: **local models aren't good enough yet.**
 
 I designed the whole thing to run entirely on Ollama with my dual RTX 3090s.
 But even with a 48GB of VRAM, the models couldn't reliably extract structured claims, handle the multi-step reconciliation, or maintain coherence across long conversations.
-The vision was right; the execution hit the wall of current local LLM capabilities.
+Whether the design was right, I still don't know—but the execution definitely hit the wall of current local LLM capabilities.
 
-The lesson wasn't that my ideas were wrong—it's that I tried to build the whole cathedral at once instead of laying bricks.
+The lesson: I tried to build the entire system at once without validating the core concepts and individual ideas first.
 This time, I took a different approach: **tackle it problem by problem.**
-Instead of designing a complete system upfront, I would re-implement small, proven elements of memory and RAG systems, ensuring every technical detail is solid and research-backed.
+Instead of designing a complete system upfront, I would validate each piece—chunking, retrieval, re-ranking, memory reconciliation—before combining them.
 The experience and UX would be my own, but the algorithms would be stolen from the best.
 
 ## 3. How I studied SOTA: Clone, read, re-implement
 
-My approach was methodical.
+My approach was more methodical this time.
 I cloned five major frameworks into the same workspace as `agent-cli`:
 
 - **[LlamaIndex](https://github.com/run-llama/llama_index)**: The OG RAG framework
@@ -97,14 +97,14 @@ I cloned five major frameworks into the same workspace as `agent-cli`:
 
 I then used an army of AI models to help me understand the architectures:
 
-- **GPT-5.1** and **Codex Max** for implementation
-- **Gemini 3 Pro** for its massive context window to ingest entire codebases
-- **Opus 4.5** for architectural reasoning
+- **GPT-5.1-Codex Max**
+- **Gemini 3 Pro**
+- **Opus 4.5**
 - **ChatGPT Pro** (with Deep Research) to validate my understanding against papers and documentation
 
 This sounds excessive, but it saved me from repeating the AI Journal disaster.
 Instead of guessing how two-stage retrieval should work, I could read exactly how LlamaIndex implements it.
-Instead of inventing my own memory reconciliation, I could study how Letta handles contradictions.
+Instead of inventing my own memory reconciliation, I could study how mem0 handles contradictions.
 
 {{% callout note %}}
 **The key insight:** These frameworks are incredibly over-engineered for my use case, but the *core algorithms* are gold.
@@ -128,35 +128,14 @@ I wanted it to work on my Mac, my NixOS server, and my friend's laptop without d
 The solution: **ONNX Runtime**.
 
 ONNX Runtime is ~200MB and runs inference on basically anything—CPU, CUDA, even Apple Silicon.
-For embeddings, I use `text-embedding-3-small` via OpenAI's API (cheap and fast) or local ONNX models.
+For embeddings, I use [`embeddinggemma`](https://developers.googleblog.com/introducing-embeddinggemma/) running locally via [llama.cpp]({{< ref "/post/llama-nixos" >}}).
 For re-ranking, I use a cross-encoder exported to ONNX (`Xenova/ms-marco-MiniLM-L-6-v2`).
 
 The result: `pip install agent-cli[rag]` takes about 30 seconds and adds ~300MB.
-Compare that to the multi-gigabyte behemoths of the "production-ready" frameworks.
-
-{{< detail-tag "Click to see the dependency comparison" >}}
-**Typical RAG framework install:**
-```
-pytorch==2.x           ~2.5GB
-transformers           ~500MB
-sentence-transformers  ~300MB
-langchain              ~200MB
-chromadb               ~100MB
-+ various deps         ~500MB
-─────────────────────────────
-Total: ~4-8GB
-```
-
-**agent-cli[rag] install:**
-```
-onnxruntime            ~200MB
-chromadb               ~100MB
-fastapi + uvicorn      ~20MB
-watchfiles             ~5MB
-─────────────────────────────
-Total: ~350MB
-```
-{{< /detail-tag >}}
+The key insight: embeddings and re-ranking are cheap operations.
+You don't need a GPU for them—CPU is perfectly fine.
+PyTorch with CUDA support can easily reach 2-3GB+; ONNX Runtime is ~200MB and runs anywhere.
+Since I'm not training models, just running inference on small encoders, ONNX is the obvious choice.
 
 ## 5. RAG: Just let me grep it (kind of)
 
