@@ -163,16 +163,16 @@ Instead of building a custom chat app, I built an **OpenAI-compatible proxy**.
 
 ```mermaid
 flowchart LR
-    Client[Client<br/>(Cursor, Open WebUI)] --> Retrieve
+    Client["Client<br/>(Cursor, Open WebUI)"] --> Retrieve
 
-    subgraph Proxy [RAG Proxy]
+    subgraph Proxy ["RAG Proxy"]
         direction TB
-        Retrieve --> Augment[Augment & Forward]
-        Chroma[(ChromaDB)] -.-> Retrieve
-        Watcher[File Watcher] --> Chroma
+        Retrieve --> Augment["Augment & Forward"]
+        Chroma[("ChromaDB")] -.-> Retrieve
+        Watcher["File Watcher"] --> Chroma
     end
 
-    Augment --> Upstream[Upstream LLM]
+    Augment --> Upstream["Upstream LLM"]
 ```
 
 ```bash
