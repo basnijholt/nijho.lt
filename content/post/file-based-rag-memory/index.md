@@ -32,7 +32,7 @@ image:
 
 {{< toc >}}
 
-## 1. The Amnesia Problem
+## 1. The amnesia problem
 
 If you've read my posts on [agentic coding]({{< ref "/post/agentic-coding" >}}) or my [local AI journey]({{< ref "/post/local-ai-journey" >}}), you know I am all-in on using AI to control my computer and write software.
 But there has been a glaring hole in my setup: **Context**.
@@ -84,7 +84,7 @@ This time, I took a different approach: **tackle it problem by problem.**
 Instead of designing a complete system upfront, I would validate each piece—chunking, retrieval, re-ranking, memory reconciliation—before combining them.
 The experience and UX would be my own, but the algorithms would be stolen from the best.
 
-## 3. How I studied SOTA: Clone, read, re-implement
+## 3. How I studied SOTA: clone, read, re-implement
 
 My approach was more methodical this time.
 I cloned five major frameworks into the same workspace as `agent-cli`:
@@ -95,25 +95,29 @@ I cloned five major frameworks into the same workspace as `agent-cli`:
 - **[Mem0](https://github.com/mem0ai/mem0)**: Focused specifically on memory extraction
 - **[PydanticAI](https://github.com/pydantic/pydantic-ai)**: Clean, typed agent framework
 
-I then used an army of AI models to help me understand the architectures:
+I didn't read through all this code myself—that would take months.
+Instead, I used AI coding agents to search the codebases and write summaries of the technical implementation details:
 
-- **GPT-5.1-Codex Max**
-- **Gemini 3 Pro**
-- **Opus 4.5**
-- **ChatGPT Pro** (with Deep Research) to validate my understanding against papers and documentation
+- **Gemini CLI** (Gemini 3.0 Pro)
+- **Claude Code** (Opus 4.5)
+- **Codex CLI** (GPT-5.1-Codex-Max)
 
-This sounds excessive, but it saved me from repeating the AI Journal disaster.
-Instead of guessing how two-stage retrieval should work, I could read exactly how LlamaIndex implements it.
-Instead of inventing my own memory reconciliation, I could study how mem0 handles contradictions.
+I fed those summaries into **ChatGPT 5 Pro** together with my high level plan of what I wanted to create, and it created an implementation plan.
+Then I took that plan back to the coding agents for implementation.
+I personally found Opus 4.5 the best coding model, but GPT‑5.1 Codex Max was the best at reviewing the code and actually identifying critical bugs.
+
+For validation, I used [`clip-files`](https://github.com/basnijholt/clip-files) to copy the agent-cli source code plus the architecture documents (like [memory.md](https://github.com/basnijholt/agent-cli/blob/main/docs/architecture/memory.md) and [rag.md](https://github.com/basnijholt/agent-cli/blob/main/docs/architecture/rag.md)) into ChatGPT 5 Pro to validate the approach.
+
+The AI did the searching and implementing; I did the understanding and decision-making.
 
 {{% callout note %}}
-**The key insight:** These frameworks are incredibly over-engineered for my use case, but the *core algorithms* are gold.
+**The key insight:** Existing frameworks are incredibly over-engineered for my use case, but the *core algorithms* are gold.
 My job was to extract the essence and re-implement it cleanly.
 {{% /callout %}}
 
-## 4. The dependency problem: Why ONNX over PyTorch
+## 4. The dependency problem: why ONNX over PyTorch
 
-One thing became immediately clear when studying these frameworks: **they're massive**.
+One thing became immediately clear when going through these frameworks: **they're massive**.
 
 Installing LlamaIndex with all its dependencies pulls in PyTorch.
 PyTorch alone is **2-3GB**.
@@ -137,7 +141,7 @@ You don't need a GPU for them—CPU is perfectly fine.
 PyTorch with CUDA support can easily reach 2-3GB+; ONNX Runtime is ~200MB and runs anywhere.
 Since I'm not training models, just running inference on small encoders, ONNX is the obvious choice.
 
-## 5. RAG: Just let me grep it (kind of)
+## 5. RAG: just let me grep it (kind of)
 
 My requirement for RAG was simple: **Files on disk are the source of truth.**
 
@@ -150,32 +154,29 @@ Here is the workflow:
 3.  It chunks the text and embeds it into a local ChromaDB instance.
 4.  It's immediately searchable.
 
-### The Architecture: OpenAI Compatibility
+When moving or deleting files, the system updates the index accordingly.
+
+### The architecture: OpenAI compatibility
 
 The "secret sauce" isn't the retrieval itself; it's how I expose it.
 Instead of building a custom chat app, I built an **OpenAI-compatible proxy**.
 
-```python
-# The proxy intercepts the chat request
-@app.post("/v1/chat/completions")
-async def chat_completions(request: Request):
-    # 1. Search local docs for query
-    # 2. Inject context into system prompt
-    # 3. Forward to real LLM (OpenAI/Ollama)
-    return await process_chat_request(...)
+```bash
+# Point any OpenAI-compatible tool at your local proxy
+export OPENAI_BASE_URL=http://localhost:8000/v1
 ```
 
-This means I can set `OPENAI_BASE_URL=http://localhost:8000/v1` in virtually *any* tool—my terminal, a web UI, or an IDE—and that tool instantly gains the ability to "read" my document folder.
+That's it. Any tool that supports custom OpenAI endpoints—Cursor, Cline, Open WebUI, LibreChat—instantly gains the ability to "read" my document folder.
 
-### Two-Stage Retrieval: The SOTA approach
+### Two-stage retrieval: the SOTA approach
 
 This is where studying LlamaIndex paid off.
 Standard "semantic search" (using just embeddings/bi-encoders) is often disappointing.
 It finds text that *looks* similar but isn't actually relevant.
 
-LlamaIndex, Cohere, and academic papers all converge on the same solution: **Two-Stage Retrieval**.
+A common pattern in modern RAG systems is **Two-Stage Retrieval**.
 
-1.  **Fast Stage:** Retrieve 3x candidates using standard embeddings (`text-embedding-3-small` or local models).
+1.  **Fast Stage:** Retrieve 3x candidates using standard embeddings (`text-embedding-3-small` or local models like [`embeddinggemma`](https://developers.googleblog.com/introducing-embeddinggemma/)).
 2.  **Smart Stage:** Use a **Cross-Encoder** to re-rank the results.
 
 A cross-encoder looks at the query and the document *together* and outputs a relevance score.
@@ -183,7 +184,7 @@ It's computationally heavier, but since I'm running this locally on my RTX 3090 
 
 I didn't invent this—I just implemented it cleanly without the 8GB dependency tax.
 
-## 6. Memory: Files over Databases
+## 6. Memory: files over databases
 
 This is where my approach diverges most from standard tools like Mem0.
 Most memory systems treat memories as database rows.
@@ -205,7 +206,7 @@ conversation_id: "default"
 The user prefers using 'uv' for Python package management.
 ```
 
-### Git Integration: Time Travel for your Brain 🕰️
+### Git integration: time travel for your brain 🕰️
 
 Because memories are just files, I added a feature that I haven't seen anywhere else: **Automatic Git Versioning**.
 
@@ -216,7 +217,7 @@ This leads to incredible capabilities:
 2.  **Correction:** If the AI learns something wrong, I open the markdown file in VS Code, edit it, and save.
 3.  **Reversion:** Agent hallucinated wildly yesterday? `git reset --hard HEAD~1`.
 
-### The Reconciliation Loop (learned from Letta)
+### The reconciliation loop (learned from Letta)
 
 The logic for storing memories isn't just "append to file."
 Studying Letta (MemGPT) taught me that memory systems need active **reconciliation**.
@@ -227,6 +228,25 @@ When I say "Actually, I switched to poetry," the system:
 3.  **Executes** the file operation (moving the old fact to a `deleted/` folder for audit trails).
 
 This keeps the memory bank clean and contradictory-free, unlike simple vector stores that just accumulate conflicting junk over time.
+
+### The tiny detail that broke everything
+
+After implementing the memory system—mostly modeled after Mem0—I noticed it didn't work as well.
+After a lot of debugging, I found a tiny difference: I was asking the model for structured data via a tool call, whereas Mem0 uses freeform JSON that the LLM returns directly.
+
+Since I use PydanticAI, fixing this was a one-line change:
+
+```python
+agent = Agent(
+    model=model_cfg,
+    system_prompt=UPDATE_MEMORY_PROMPT,
+-   output_type=list[MemoryDecision],
++   output_type=PromptedOutput(list[MemoryDecision]),  # JSON mode instead of tool calls
+    retries=3,
+)
+```
+
+This is exactly why studying implementations matters—not just the algorithms, but the tiny details that make them work.
 
 ## 7. Why building this was necessary
 
