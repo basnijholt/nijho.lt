@@ -184,7 +184,7 @@ That's it. Any tool that supports custom OpenAI endpoints—Cursor, Cline, Open 
 
 ### Two-stage retrieval: the SOTA approach
 
-This is where studying LlamaIndex paid off.
+I looked at LlamaIndex here.
 Standard "semantic search" (using just embeddings/bi-encoders) is often disappointing.
 It finds text that *looks* similar but isn't actually relevant.
 
@@ -234,7 +234,7 @@ This leads to incredible capabilities:
 ### The reconciliation loop
 
 The logic for storing memories isn't just "append to file."
-Studying Mem0 (and Letta) taught me that memory systems need active **reconciliation**.
+Digging into Mem0 (and Letta) showed me that memory systems need active **reconciliation**.
 When I say "Actually, I switched to nix instead of uv," the system:
 
 1.  **Retrieves** existing memories about package managers.
@@ -260,7 +260,7 @@ agent = Agent(
 )
 ```
 
-This is exactly why studying implementations matters—not just the algorithms, but the tiny details that make them work.
+This is exactly why reading the source code matters—not just the algorithms, but the tiny details that make them work.
 
 ## 7. Why building this was necessary
 
