@@ -1,0 +1,18 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.13.6/.schema/devbox.schema.json",
+  "packages": [
+    "hugo@0.123.3",
+    "git@latest"
+  ],
+  "shell": {
+    "init_hook": [
+      "echo 'Hugo development environment ready!'",
+      "hugo version"
+    ],
+    "scripts": {
+      "dev": "hugo server --buildDrafts --disableFastRender",
+      "build": "hugo --gc --minify",
+      "build:preview": "hugo --gc --minify --buildFuture"
+    }
+  }
+}
