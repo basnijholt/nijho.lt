@@ -286,8 +286,8 @@ If I tell the terminal agent "I'm working on Project X," and then switch to Curs
 I can try a new chat UI tomorrow without losing anything—just point it to `localhost:8000`.
 
 ### Dependencies
-I refuse to accept that asking questions about a PDF requires downloading 8GB of PyTorch.
-By carefully choosing ONNX Runtime over the PyTorch ecosystem, I kept the entire install lightweight and fast.
+To me, it just doesn't feel right that asking questions about a PDF requires downloading 8GB of PyTorch.
+By choosing ONNX Runtime over the PyTorch ecosystem, I kept the entire install lightweight and fast.
 This matters when you want to run the system on a cheap VPS or your friend's laptop.
 
 ## 8. Try it yourself
