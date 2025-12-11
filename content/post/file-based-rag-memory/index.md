@@ -344,12 +344,10 @@ This journey reinforced a few beliefs:
 
 1. **Validate components first.** AI Journal failed not because the ideas were wrong, but because I tried to build a complete system before validating individual components. This time I tackled problems one at a time—chunking, retrieval, re-ranking, memory reconciliation—and only combined them once each piece worked.
 
-2. **Study implementations, not just papers.** Reading about two-stage retrieval is one thing. Reading how LlamaIndex actually implements it—the edge cases, the defaults, the performance tradeoffs—is far more valuable. Clone the repos. Read the code.
+2. **Study implementations, not just papers.** Reading about two-stage retrieval is one thing. Reading how LlamaIndex actually implements it—the edge cases, the defaults, the performance tradeoffs—is far more valuable. Clone the repos. Read (or make AI read) the code.
 
-3. **Dependencies matter.** A 30-second install versus a 10-minute download changes whether someone actually tries your tool. ONNX Runtime over PyTorch was one of the best decisions I made.
+3. **Dependencies matter.** A 30-second install versus a 10-minute download changes whether someone actually tries your tool. I am happy with the ONNX Runtime over PyTorch choice.
 
 4. **Files are the ultimate API.** By stripping away the complex databases and proprietary interfaces, I ended up with a system that is robust, version-controllable, and surprisingly simple to reason about.
 
-5. **Use the best model for each job.** I used five different AI models during development, each with different strengths. Gemini 3 Pro for ingesting entire codebases, Opus 4.5 for architectural reasoning, Codex Max for implementation. The days of loyalty to a single model are over.
-
-Now, if only I could get the AI to remember to run the tests before pushing to production... (Wait, I can just add that to the memory!)
+5. **Use the best model for each job.** I used 4 different AI models during development, each with different strengths. Gemini 3.0 Pro, Opus 4.5, GPT-5.1-Codex Max. I used all of them during the implementation phase, but each one has its own strengths. Fore example, Opus 4.5 was the best coding model, but GPT-5.1 Codex Max was the best at reviewing the code and actually identifying critical bugs (use the built-in `/review` feature).
