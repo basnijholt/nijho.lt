@@ -15,6 +15,33 @@ tags: ["nixos", "raspberry-pi", "zfs", "headless", "automation"]
 
 # NixOS on Raspberry Pi: The Headless, Wireless, ZFS Way
 
+## Why Am I Doing This?
+
+Let me be honest: my Raspberry Pis were working perfectly fine.
+They had been running DietPi for years without a single issue.
+There was absolutely no practical reason to change anything.
+
+But I have become a Nix evangelist.
+A true believer.
+Once you experience the peace of knowing your entire system is defined in code—reproducible, version-controlled, and recoverable—going back to imperative configuration feels like writing code without git.
+
+I wrote about [my conversion from Proxmox to NixOS](/post/proxmox-to-nixos/) and how I set up a [local nix cache server](/post/nixos-cache/) to avoid compilation nightmares.
+Now my entire homelab—PC, NUC, HP EliteDesk—is managed declaratively.
+The Raspberry Pis were the last holdouts.
+They had to be assimilated.
+
+There is also a practical benefit beyond ideology: ZFS.
+With ZFS on the Pi 4's external SSD, I can use [Syncoid](https://github.com/jimsalterjrs/sanoid) to automatically replicate snapshots to my TrueNAS server.
+The Pi joins my backup rotation alongside every other machine in my fleet.
+If the SSD fails, I can restore from a snapshot instead of rebuilding from scratch.
+
+(My Pi 3, by contrast, just runs from an SD card with ext4—ZFS on an SD card is not a good idea due to the write amplification and limited lifespan of flash storage. But at least the *configuration* is still declarative and reproducible. One caveat: the Pi 3's 1GB of RAM is not enough to run `nixos-rebuild` locally—the Nix evaluator gets OOM-killed. I build on my PC and deploy remotely with a [simple script](https://github.com/basnijholt/dotfiles/blob/main/configs/nixos/hosts/pi3/deploy.sh).)
+
+So here I am, spending days solving a problem I did not have, for a machine that was already working.
+This is the NixOS way.
+
+## The Setup
+
 I have a Raspberry Pi 4 glued to the bottom of a standing lamp.
 This is not a joke.
 The lamp sits in the corner of my living room, and the Pi serves as a lightweight always-on server.
@@ -31,7 +58,7 @@ So my constraints are:
 4. **Fully declarative.** The entire setup should be reproducible from code.
 
 This turned out to be one of the most frustrating NixOS projects I have undertaken.
-It took me 55 commits and countless hours of debugging.
+It took me nearly 70 commits and countless hours of debugging.
 Here is what I tried, what failed, and what finally worked.
 
 ## The Core Problem
@@ -226,18 +253,29 @@ Without this, the build pulls in ffmpeg and webkit as dependencies, adding gigab
 
 The [disko configuration](https://github.com/basnijholt/dotfiles/blob/main/configs/nixos/hosts/pi4/disko.nix) sets up a 512MB ESP partition and uses the rest for a ZFS pool with separate datasets for `/`, `/nix`, `/var`, and `/home`.
 
-One important detail: I manually pre-create the WiFi profile in `/etc/NetworkManager/system-connections/` after running `nixos-install`, because activation scripts do not run during installation.
-Without this, the system would boot but not connect to WiFi—the same problem I hit with the direct SSD approach.
+One important detail: the install script copies `wifi.nix` (which is gitignored) and builds with `path:.` and `--impure` to include it.
+NetworkManager's `ensureProfiles` option is actually a systemd service that runs *after* boot, not during installation.
+So the WiFi profile gets created on first boot, and the system connects automatically.
 
 ## The Result
 
 I now have a Raspberry Pi 4 that boots from an external SSD with ZFS, managed entirely by code.
 The Pi lives on its lamp, connecting over WiFi, and I never had to attach a monitor.
 
+Best of all, it is now part of my backup rotation.
+Syncoid runs nightly, replicating ZFS snapshots to my TrueNAS server.
+If the SSD fails, I can restore from a snapshot.
+If I want to migrate to new hardware, I just apply the same Nix configuration.
+The Pi is no longer a snowflake—it is cattle, just like the rest of my fleet.
+
 If I need to reinstall, I flash the bootstrap SD card, SSH in, and run three commands.
 The entire configuration is in [my dotfiles](https://github.com/basnijholt/dotfiles/tree/main/configs/nixos/hosts/pi4).
 
-It took 55 commits to get here.
+It took nearly 70 commits to get here.
 Most of those commits were failed experiments.
 But now that it works, it is completely reproducible.
 That is the NixOS promise: the pain is front-loaded, but you only pay it once.
+
+Was it necessary? Absolutely not.
+Would I do it again? Without hesitation.
+This is what being a Nix evangelist means.
