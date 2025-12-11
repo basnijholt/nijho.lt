@@ -2,7 +2,7 @@
 title: "SOTA RAG & Memory without the database: Files, Git, and simple folders"
 subtitle: "Why I rejected vector DBs and web UIs in favor of Markdown, Git, and a simple folder."
 summary: "I wanted my AI agents to remember me and read my documents, but existing solutions required complex APIs or opaque databases. After my ambitious AI Journal project hit the wall of local model limitations, I took a different approach: clone LlamaIndex, LangChain, Letta, Mem0, and PydanticAI, study how SOTA systems work, and re-implement the best parts with minimal dependencies and ONNX instead of PyTorch."
-date: 2025-12-15
+date: 2025-12-10
 draft: false
 featured: true
 authors:
