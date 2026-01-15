@@ -62,8 +62,8 @@ That's a lot of friction for something you want to do *frequently* when using ag
 So I built `agent-cli dev`.
 
 {{% callout note %}}
-**TL;DR:** `agent-cli dev new --agent` creates a complete, isolated development environment in one command.
-It creates a git worktree, installs dependencies, copies env files, sets up direnv, and opens your AI coding agent in a new terminal tab—all automatically.
+**TL;DR:** `agent-cli dev new --agent --prompt "Fix the login bug"` creates a complete, isolated development environment in one command.
+It creates a git worktree, installs dependencies, copies env files, sets up direnv, and opens your AI coding agent in a new terminal tab with your prompt already loaded—all automatically.
 No more manual setup, no more excuses to not work in parallel.
 {{% /callout %}}
 
@@ -179,23 +179,75 @@ The real magic is opening a new terminal tab with the agent already running.
 The command detects which terminal you're in and uses the appropriate API—whether that's iTerm2, Kitty, Warp, or GNOME Terminal.
 It even works with terminal multiplexers like **tmux** and **zellij** (my current favorite), opening a new window/tab in your existing session.
 
-## 6. My actual workflow
+## 6. Spawning agents with prompts
 
-Here's how I will use this in practice.
+The `--prompt` option transforms how I spawn parallel agents.
+Instead of just opening a blank Claude session, I can give the new agent its task immediately:
+
+```bash
+agent-cli dev new fix-auth-bug --agent --prompt "Fix the login validation bug in auth.py. The issue is that empty passwords pass validation."
+```
+
+The agent opens with the prompt already loaded and starts working immediately.
+No copy-pasting, no context switching, no "let me explain what I need you to do."
+
+For longer, more detailed prompts (which you should use for complex tasks), there's `--prompt-file`:
+
+```bash
+agent-cli dev new new-feature --agent --prompt-file .claude/spawn-prompt.md
+```
+
+This is particularly powerful when you're in a Claude session and discover a feature that needs work but is unrelated to your current task.
+Instead of context-switching or noting it for later, you can spawn a new agent right there:
+
+1. Write a detailed prompt to a file (Claude can do this)
+2. Run `agent-cli dev new unrelated-feature --agent --prompt-file .claude/spawn-prompt.md`
+3. A new terminal tab opens with a fresh Claude session already working on the task
+4. Continue with your original work
+
+The spawned agent works independently in its own branch while you stay focused.
+
+## 7. Teaching Claude to spawn agents
+
+Here's where it gets really interesting: you can teach Claude Code itself how to spawn parallel agents.
+
+```bash
+agent-cli dev install-skill
+```
+
+This installs a [Claude Code skill](https://docs.anthropic.com/en/docs/claude-code/skills) that teaches Claude how to use `agent-cli dev`.
+The skill includes detailed examples and prompt templates following Anthropic's [prompt engineering guide](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview).
+
+With the skill installed, you can say things like:
+
+- "Work on auth, payments, and notifications in parallel"
+- "This feature is unrelated to what we're doing—spawn a new agent for it"
+- "Split this refactoring by module and work on them simultaneously"
+
+Claude will write well-structured prompts (using proper XML tags, clear context, explicit requirements) and spawn the agents for you.
+Each spawned agent writes a report to `.claude/REPORT.md` when done, so you can easily review what happened.
+
+One of my favorite patterns: I ask Claude to look at the latest 10 open GitHub issues and spawn an agent for each one.
+Ten independent parallel environments, set up in seconds, each working on a different issue.
+That's the kind of leverage this enables.
+
+## 8. My actual workflow
+
+Here's how I use this in practice.
 I'm working on [agent-cli](https://github.com/basnijholt/agent-cli) itself, and I want to add three features:
 
 ```bash
 # Tab 1: New RAG feature
-agent-cli dev new rag-improvements --agent
+agent-cli dev new rag-improvements --agent --prompt "Improve RAG chunking strategy for better retrieval accuracy"
 
 # Tab 2: Fix a bug in the transcribe command
-agent-cli dev new fix-transcribe-vad --agent
+agent-cli dev new fix-transcribe-vad --agent --prompt "Fix VAD detection cutting off words at sentence boundaries"
 
 # Tab 3: Refactor the config system
-agent-cli dev new config-refactor --agent
+agent-cli dev new config-refactor --agent --prompt "Refactor config.py to use a single Config class with lazy loading"
 ```
 
-Three commands, three isolated environments, three Claude Code sessions running in parallel.
+Three commands, three isolated environments, three Claude Code sessions already working on their tasks.
 
 I cycle through the tabs every 10-15 minutes:
 - Review what Claude did
@@ -212,7 +264,7 @@ agent-cli dev clean --merged
 This uses the GitHub CLI to check which branches have merged PRs, then removes those worktrees and deletes the branches.
 No more zombie worktrees cluttering my disk.
 
-## 7. Managing environments
+## 9. Managing environments
 
 A few other commands I use regularly:
 
@@ -235,7 +287,7 @@ agent-cli dev doctor
 
 The `doctor` command is handy for seeing which terminals, editors, and coding agents are installed and detected.
 
-## 8. Getting started
+## 10. Getting started
 
 `agent-cli dev` is part of the [agent-cli](https://github.com/basnijholt/agent-cli) package:
 
@@ -250,8 +302,11 @@ Then in any git repository:
 # Check what's available
 agent-cli dev doctor
 
-# Create your first parallel environment
-agent-cli dev new --agent
+# Create your first parallel environment with a task
+agent-cli dev new my-feature --agent --prompt "Add user profile page with avatar upload"
+
+# Or install the skill so Claude can spawn agents for you
+agent-cli dev install-skill
 ```
 
 **Supported coding agents:** Claude Code, Codex, Gemini, Aider, GitHub Copilot, Continue, OpenCode, and Cursor Agent.
@@ -285,6 +340,8 @@ The code is open-source at [github.com/basnijholt/agent-cli](https://github.com/
 
 - [agent-cli on GitHub](https://github.com/basnijholt/agent-cli)
 - [`agent-cli dev` documentation](https://agent-cli.nijho.lt/commands/dev/)
+- [Claude Code skills](https://docs.anthropic.com/en/docs/claude-code/skills)
+- [Anthropic prompt engineering guide](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview)
 - [My post on git worktrees]({{< ref "/post/git-worktree" >}})
 - [My post on agentic coding]({{< ref "/post/agentic-coding" >}})
 - [Zellij](https://zellij.dev/) / [tmux](https://github.com/tmux/tmux)
