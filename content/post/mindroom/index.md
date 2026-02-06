@@ -132,16 +132,34 @@ You see tool calls happening live:
 [results here]
 ```
 
-Here's a fun detail: the Matrix protocol doesn't actually support streaming.
-I hacked it in by rapidly editing the same message as new tokens arrive, so it *appears* as if the response streams in.
-An `⋯` marker shows while the agent is still thinking—a small touch, but it makes the experience feel responsive and alive.
-
 <!-- TODO: Screen recording (short video/GIF) of an agent responding in real-time —
      showing the streaming text appearing incrementally, the ⋯ marker while thinking,
      and tool call/result blocks (🔧/✅) appearing mid-response. A 10-15 second clip
      captures the "alive" feeling better than any screenshot. -->
 
-## 4. Memory that follows you
+## 4. Building on Matrix: the good and the tricky
+
+One of the best things about building on Matrix is what you get for free.
+End-to-end encryption (Olm/Megolm), a fully bridged chat platform that just works, a choice of clients, federation between organizations—all of that comes with the protocol.
+You don't have to build any of it yourself.
+
+But because Matrix has such a tight specification, it also brings challenges.
+
+The protocol doesn't support streaming.
+AI agents that think for 30 seconds before dumping a wall of text make for a terrible chat experience, so I hacked streaming in by rapidly editing the same message as new tokens arrive.
+An `⋯` marker shows while the agent is still thinking—a small touch, but it makes the experience feel responsive and alive.
+
+There's also a size limit on message content.
+That's fine for human chat, but AI responses can get long—especially when tool calls and their results are included.
+I worked around this by using Matrix's attachment feature: when a response exceeds the limit, the content continues in an attachment that gets updated as the message keeps streaming in.
+This required forking the [Element](https://element.io/) chat client so that attachments display inline rather than as downloadable files, making the whole thing seamless.
+
+{{% callout note %}}
+These workarounds are the kind of thing you don't anticipate when you pick a protocol.
+Matrix gives you an incredible foundation, but making it work well for AI required bending it in ways it wasn't designed for.
+{{% /callout %}}
+
+## 5. Memory that follows you
 
 This is where things get really interesting—and it's the feature that made me most excited when I first got it working.
 MindRoom implements a dual memory system inspired by [Mem0](https://mem0.ai/):
@@ -162,7 +180,7 @@ The implementation uses [Mem0](https://mem0.ai/)'s `AsyncMemory` with configurab
      memory in action. Alternatively, a side-by-side of two platforms (Matrix native +
      Slack/Telegram bridge) showing the same agent maintaining context. -->
 
-## 5. 80+ tool integrations
+## 6. 80+ tool integrations
 
 One of the more fun parts of building MindRoom was the tool ecosystem—I may have gotten a bit carried away here.
 Agents can use over 80 integrations:
@@ -187,7 +205,7 @@ def get_github_toolkit() -> type[Toolkit]:
     return GithubToolkit
 ```
 
-## 6. Teams: agents that collaborate
+## 7. Teams: agents that collaborate
 
 Single agents are useful, but sometimes you need a team.
 MindRoom supports two collaboration modes:
@@ -205,7 +223,7 @@ In practice, you might have a research team where one agent searches academic pa
      research, another analyzes, a third summarizes). Shows the coordinate or collaborate
      mode producing a unified result. -->
 
-## 7. Hot-reload: change config without downtime
+## 8. Hot-reload: change config without downtime
 
 One detail I'm particularly happy with (and spent way too long perfecting): `config.yaml` is watched at runtime.
 When you edit it—add an agent, change a model, update instructions—MindRoom diffs the old and new config, gracefully restarts only the affected agents, and has them rejoin their rooms.
@@ -218,7 +236,7 @@ This sounds minor, but when you're iterating on agent behavior, being able to tw
      the terminal logs detecting the change and the agent appearing in the Matrix room
      within seconds. ~10 seconds is enough to show the feedback loop. -->
 
-## 8. Voice, scheduling, and other features
+## 9. Voice, scheduling, and other features
 
 Some features I built purely because I wanted them for myself (a recurring theme in my projects, as anyone who's read my [local AI journey]({{< ref "/post/local-ai-journey" >}}) can attest).
 I even built [Matty](https://github.com/basnijholt/matty), a Matrix CLI client, from bed at midnight because I needed a way to interact with my agents from the terminal:
@@ -235,7 +253,7 @@ I even built [Matty](https://github.com/basnijholt/matty), a Matrix CLI client, 
 The voice feature pairs nicely with my [`agent-cli`](https://github.com/basnijholt/agent-cli) tool—local Whisper transcription on my RTX 3090 means I can talk to my Matrix agents without any cloud dependency.
 {{% /callout %}}
 
-## 9. The obsession, the SaaS dream, and the burnout
+## 10. The obsession, the SaaS dream, and the burnout
 
 I need to be honest about what actually happened with MindRoom, because "life got in the way" is a sanitized version of the story.
 
@@ -267,7 +285,7 @@ The gap between "I can build this" and "I can maintain and ship this as a produc
      instance management UI, even if it's half-built. Gives readers a sense of the
      vision for a hosted product. -->
 
-## 10. OpenClaw and why it matters
+## 11. OpenClaw and why it matters
 
 [OpenClaw](https://openclaw.ai) takes a different approach to the same core problem.
 Where MindRoom builds on Matrix federation as the backbone, OpenClaw runs a local Gateway on your machine and connects to messaging platforms directly (WhatsApp via Baileys, Telegram via grammY, Discord via discord.js, and so on).
@@ -291,7 +309,7 @@ The federation angle is something OpenClaw doesn't have: the ability for agents 
      OpenClaw: User → Local Gateway → Direct connectors → Slack/Telegram/Discord/etc.
      A simple SVG or drawn diagram highlighting the federation vs local-first difference. -->
 
-## 11. What's next
+## 12. What's next
 
 After stepping away for a while, I'm picking MindRoom back up—but with a healthier relationship this time.
 The codebase supports 8+ AI model providers ([OpenAI](https://openai.com/), [Anthropic](https://www.anthropic.com/), [Ollama](https://ollama.com/), [Groq](https://groq.com/), [Google](https://ai.google.dev/), [OpenRouter](https://openrouter.ai/), [DeepSeek](https://www.deepseek.com/), [Cerebras](https://cerebras.ai/)), and the core architecture is solid.
@@ -317,6 +335,7 @@ _Are you running AI agents on any messaging platforms? Have you tried Matrix for
 ## Links and resources
 
 - [MindRoom on GitHub](https://github.com/basnijholt/mindroom)
+- [MindRoom Stack (starter repository)](https://github.com/basnijholt/mindroom-stack)
 - [Matrix protocol](https://matrix.org/)
 - [OpenClaw](https://openclaw.ai)
 - [Mem0 (memory system inspiration)](https://mem0.ai/)
