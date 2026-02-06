@@ -263,7 +263,7 @@ Agentic coding makes it so easy to *start* things that you can build yourself in
 The gap between "I can build this" and "I can maintain and ship this as a product" is larger than the tools make it feel.
 {{% /callout %}}
 
-> **TODO:** Screenshot of the SaaS platform dashboard (Next.js frontend) — showing the instance management UI, even if it's half-built.
+> **TODO:** Screenshot of the SaaS platform dashboard (Next.js frontend) — showing the instance management UI.
 
 ## 11. OpenClaw and why it matters
 
