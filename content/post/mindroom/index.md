@@ -27,9 +27,11 @@ categories:
 
 ## 1. The problem: your AI is trapped in apps
 
-I've been obsessed with AI agents for a while now.
-As I wrote about in my [agentic coding post]({{< ref "/post/agentic-coding" >}}), AI has completely transformed how I work.
-I regularly build full features or entire projects [from my phone]({{< ref "/post/agentic-mobile-workflow" >}})—including [Matty](https://github.com/basnijholt/matty), a Matrix CLI client I built from bed at midnight because I needed a way for my agents to communicate.
+Programming is my biggest passion in life.
+I've been actively involved in open source for over ten years now, maintaining [40+ installable packages](https://github.com/basnijholt) across Rust, Python, and JavaScript.
+Some of these have over 100,000 users; others have exactly one—me.
+I mention this because it matters for what comes next: when AI coding tools arrived, I didn't start from zero.
+As I wrote about in my [agentic coding post]({{< ref "/post/agentic-coding" >}}), AI has completely transformed how I work—I regularly build full features or entire projects [from my phone]({{< ref "/post/agentic-mobile-workflow" >}}).
 
 But one thing kept bugging me: every AI tool is a silo.
 ChatGPT knows you in one tab, Claude knows you in another, your Slack bot knows you in a third.
@@ -216,7 +218,8 @@ This sounds minor, but when you're iterating on agent behavior, being able to tw
 
 ## 8. Voice, scheduling, and other features
 
-Some features I built purely because I wanted them for myself (a recurring theme in my projects, as anyone who's read my [local AI journey]({{< ref "/post/local-ai-journey" >}}) can attest):
+Some features I built purely because I wanted them for myself (a recurring theme in my projects, as anyone who's read my [local AI journey]({{< ref "/post/local-ai-journey" >}}) can attest).
+I even built [Matty](https://github.com/basnijholt/matty), a Matrix CLI client, from bed at midnight because I needed a way to interact with my agents from the terminal:
 
 - **Voice messages**: Audio messages in Matrix are auto-transcribed via Whisper and treated as regular text input.
   You can talk to your agents.
