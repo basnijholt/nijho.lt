@@ -38,10 +38,11 @@ Not just a useful tool for programmers—a fundamental shift in how *everyone* w
 
 But if that's true, then the way agents work today is broken.
 
-They live in isolated silos.
+We've built artificial barriers between artificial intelligences.
 ChatGPT knows you in one tab, Claude knows you in another, your Slack bot knows you in a third.
+Your email AI can't tell your calendar AI about that meeting invitation.
+Your coding assistant has no idea about the project specs sitting in your document AI.
 Switch platforms, and your AI starts from scratch.
-You repeat yourself constantly, re-explain your preferences, re-describe your projects.
 
 Most agent frameworks require you to *program* them.
 That works for developers like me, but if agents are truly the future, they need to work for everyone.
@@ -53,11 +54,10 @@ But do I want to send my financial data, my health records, or my personal notes
 Not really.
 I'd rather use a local model for sensitive tasks and pick the best, cheapest Chinese model for general-purpose deep research.
 
-That's why I built MindRoom on a *chat protocol*.
-The interface is just chatting—everyone already knows how to do that.
-The bridges solve the silo problem.
-And the model flexibility means you choose where your data goes.
-I called it **MindRoom**—and then I got so obsessed with it that I eventually burned out and had to step away completely.
+The most natural interface for AI is simply conversation.
+It's how humans already organize thoughts, make decisions, and collaborate.
+So I built **MindRoom** on a chat protocol—one where agents live in the same rooms as you, collaborate in threads, and follow you across every platform.
+And then I got so obsessed with it that I eventually burned out and had to step away completely.
 
 Recently, [OpenClaw](https://openclaw.ai) gained a lot of traction (171K GitHub stars and counting), solving a similar problem from a different angle.
 Seeing its success reminded me that the idea I'd been working on wasn't just a niche obsession.
