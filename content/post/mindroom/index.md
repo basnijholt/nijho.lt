@@ -28,7 +28,8 @@ categories:
 ## 1. The problem: your AI is trapped in apps
 
 I've been obsessed with AI agents for a while now.
-As I wrote about in my [agentic coding post]({{< ref "/post/agentic-coding" >}}), AI has completely transformed how I work—I even built [Matty](https://github.com/basnijholt/matty) (a Matrix CLI client) from my phone in bed at midnight because I needed a way for my agents to communicate.
+As I wrote about in my [agentic coding post]({{< ref "/post/agentic-coding" >}}), AI has completely transformed how I work.
+I regularly build full features or entire projects [from my phone]({{< ref "/post/agentic-mobile-workflow" >}})—including [Matty](https://github.com/basnijholt/matty), a Matrix CLI client I built from bed at midnight because I needed a way for my agents to communicate.
 
 But one thing kept bugging me: every AI tool is a silo.
 ChatGPT knows you in one tab, Claude knows you in another, your Slack bot knows you in a third.
