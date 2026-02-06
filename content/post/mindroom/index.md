@@ -37,7 +37,7 @@ Switch platforms, and your AI starts from scratch.
 You repeat yourself constantly, re-explain your preferences, re-describe your projects.
 
 This bothered me enough that I spent months building something to fix it.
-I called it **MindRoom**—and then, as side projects often go, life got in the way and my attention drifted.
+I called it **MindRoom**—and then I got so obsessed with it that I eventually burned out and had to step away completely.
 
 Recently, [OpenClaw](https://openclaw.ai) gained a lot of traction (171K GitHub stars and counting), solving a similar problem from a different angle.
 Seeing its success reminded me that the idea I'd been working on wasn't just a niche obsession.
@@ -230,13 +230,33 @@ Some features I built purely because I wanted them for myself (a recurring theme
 The voice feature pairs nicely with my [`agent-cli`](https://github.com/basnijholt/agent-cli) tool—local Whisper transcription on my RTX 3090 means I can talk to my Matrix agents without any cloud dependency.
 {{% /callout %}}
 
-## 9. The SaaS platform (half-built)
+## 9. The obsession, the SaaS dream, and the burnout
 
-Because apparently building the core system wasn't enough scope creep, I also started building a hosted version—a Kubernetes-based SaaS platform where people could spin up MindRoom instances without managing infrastructure.
-The platform backend is FastAPI, the frontend is Next.js 15, and each customer gets isolated deployments via Helm charts on Hetzner Cloud.
+I need to be honest about what actually happened with MindRoom, because "life got in the way" is a sanitized version of the story.
 
-It's functional but unfinished.
-Another artifact of attention drifting elsewhere—sound familiar? (See: every side project ever.)
+What really happened is that I got completely, utterly obsessed.
+Every single second I wasn't working at my day job or sleeping, I was working on MindRoom.
+Many hundreds of hours went into it.
+I seriously considered quitting my job and starting an AI startup around it.
+
+If you've read Armin Ronacher's post [Agent Psychosis: Are We Going Insane?](https://lucumr.pocoo.org/2026/1/18/agent-psychosis/), you'll know exactly what I'm talking about.
+The dopamine hit from building with AI agents is incredibly real.
+As Armin writes: "You feel productive, you feel like everything is amazing, and if you hang out just with people that are into that stuff too, without any checks, you go deeper and deeper into the belief that this all makes perfect sense."
+
+That was me.
+I was building and building, shipping feature after feature, and it felt incredible.
+The codebase grew to over 1,000 commits.
+I built the core system, then a React dashboard, then I started on a full SaaS platform—Kubernetes deployments on Hetzner Cloud, a FastAPI backend, a Next.js 15 frontend, Stripe integration, Supabase auth, Helm charts for multi-tenant isolation.
+
+And that's where the enthusiasm started to erode.
+Not because the core idea was bad, but because the work shifted from building interesting things (agent orchestration, memory systems, routing intelligence) to grinding through SaaS boilerplate: GDPR compliance, payment processing, automated Kubernetes deployments, terms of service, cookie banners.
+The dopamine loop that kept me going at 2 AM broke when the work stopped being creative and started being compliance paperwork.
+
+{{% callout note %}}
+Looking back, I think this is a pattern worth recognizing.
+Agentic coding makes it so easy to *start* things that you can build yourself into a scope that would normally require a team.
+The gap between "I can build this" and "I can maintain and ship this as a product" is larger than the tools make it feel.
+{{% /callout %}}
 
 <!-- TODO: Screenshot of the SaaS platform dashboard (Next.js frontend) — showing the
      instance management UI, even if it's half-built. Gives readers a sense of the
@@ -268,19 +288,23 @@ The federation angle is something OpenClaw doesn't have: the ability for agents 
 
 ## 11. What's next
 
-I'm picking MindRoom back up.
-The codebase has over 1,000 commits, supports 8+ AI model providers ([OpenAI](https://openai.com/), [Anthropic](https://www.anthropic.com/), [Ollama](https://ollama.com/), [Groq](https://groq.com/), [Google](https://ai.google.dev/), [OpenRouter](https://openrouter.ai/), [DeepSeek](https://www.deepseek.com/), [Cerebras](https://cerebras.ai/)), and the core architecture is solid.
+After stepping away for a while, I'm picking MindRoom back up—but with a healthier relationship this time.
+The codebase supports 8+ AI model providers ([OpenAI](https://openai.com/), [Anthropic](https://www.anthropic.com/), [Ollama](https://ollama.com/), [Groq](https://groq.com/), [Google](https://ai.google.dev/), [OpenRouter](https://openrouter.ai/), [DeepSeek](https://www.deepseek.com/), [Cerebras](https://cerebras.ai/)), and the core architecture is solid.
 That said, it's still very much a personal project—the documentation is thin, onboarding is rough, and there are plenty of rough edges.
 
 What I want to focus on:
 - **Skills system**: Building an ecosystem of reusable agent behaviors (already partially implemented with OpenClaw-compatible format)
 - **Better onboarding**: Right now setup requires some technical knowledge—I want a wizard that gets you from zero to working agents in minutes
-- **The SaaS platform**: Finishing what I started so non-technical users can try MindRoom
 - **Community**: The codebase is open-source but I haven't promoted it at all
+- **Not burning out again**: Working on this at a sustainable pace, not the obsessive 2 AM marathon from before
+
+I'm deliberately leaving the SaaS ambitions aside for now.
+The core system is what matters, and that's where I want to spend my energy.
 
 If you're interested in AI agents that live in Matrix and work everywhere, check out [MindRoom on GitHub](https://github.com/basnijholt/mindroom).
 
 Sometimes all it takes is seeing someone else succeed with a similar idea to remember why you started building in the first place.
+And sometimes the most important lesson from a project isn't technical—it's learning when to step away and when to come back.
 
 _Are you running AI agents on any messaging platforms? Have you tried Matrix for anything beyond regular chat? I'd love to hear about your setups!_
 
@@ -292,5 +316,7 @@ _Are you running AI agents on any messaging platforms? Have you tried Matrix for
 - [Mem0 (memory system inspiration)](https://mem0.ai/)
 - [Agno framework](https://github.com/agno-agi/agno)
 - [Matty (Matrix CLI client)](https://github.com/basnijholt/matty)
+- [Agent Psychosis: Are We Going Insane?](https://lucumr.pocoo.org/2026/1/18/agent-psychosis/) by Armin Ronacher
 - [My agentic coding post]({{< ref "/post/agentic-coding" >}})
 - [My local AI journey]({{< ref "/post/local-ai-journey" >}})
+- [Coding from my phone]({{< ref "/post/agentic-mobile-workflow" >}})
