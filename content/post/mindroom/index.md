@@ -295,11 +295,12 @@ The federation angle is something OpenClaw doesn't have: the ability for agents 
 
 After stepping away for a while, I'm picking MindRoom back up—but with a healthier relationship this time.
 The codebase supports 8+ AI model providers ([OpenAI](https://openai.com/), [Anthropic](https://www.anthropic.com/), [Ollama](https://ollama.com/), [Groq](https://groq.com/), [Google](https://ai.google.dev/), [OpenRouter](https://openrouter.ai/), [DeepSeek](https://www.deepseek.com/), [Cerebras](https://cerebras.ai/)), and the core architecture is solid.
-That said, it's still very much a personal project—the documentation is thin, onboarding is rough, and there are plenty of rough edges.
+That said, few people besides me have actually tried it so far—and I'd like to change that.
+There's already a Docker Compose file and an [example repository](https://github.com/basnijholt/mindroom) to get started, but I want to make it even simpler.
 
 What I want to focus on:
 - **Skills system**: Building an ecosystem of reusable agent behaviors (already partially implemented with OpenClaw-compatible format)
-- **Better onboarding**: Right now setup requires some technical knowledge—I want a wizard that gets you from zero to working agents in minutes
+- **Even easier onboarding**: A `docker compose up` gets you running today, but I want a wizard that gets you from zero to working agents without touching a YAML file
 - **Community**: The codebase is open-source but I haven't promoted it at all
 - **Not burning out again**: Working on this at a sustainable pace, not the obsessive 2 AM marathon from before
 
