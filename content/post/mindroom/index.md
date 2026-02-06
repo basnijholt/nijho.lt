@@ -34,24 +34,29 @@ I mention this because it matters for what comes next: when AI coding tools arri
 As I wrote about in my [agentic coding post]({{< ref "/post/agentic-coding" >}}), AI has completely transformed how I work—when I'm AFK, I regularly build full features or entire projects by [dictating to my phone]({{< ref "/post/agentic-mobile-workflow" >}}) and routing it through my own [transcription software](https://github.com/basnijholt/agent-cli).
 
 Through all of this, I became deeply convinced that AI agents are the future.
-But the more I used them, the more problems I noticed with how they work today.
+Not just a useful tool for programmers—a fundamental shift in how *everyone* will interact with computers.
 
-First, every AI tool is a silo.
+But if that's true, then the way agents work today is broken.
+
+They live in isolated silos.
 ChatGPT knows you in one tab, Claude knows you in another, your Slack bot knows you in a third.
 Switch platforms, and your AI starts from scratch.
 You repeat yourself constantly, re-explain your preferences, re-describe your projects.
 
-Second, most AI agent frameworks require you to *program* them.
-That works for developers like me, but it excludes most of the world.
+Most agent frameworks require you to *program* them.
+That works for developers like me, but if agents are truly the future, they need to work for everyone.
 Non-programmers don't want to write code—they just want a chat.
 
-And third, there's the privacy problem.
+And then there's privacy.
 I'm fine sharing my email with Gemini—Google already owns my Gmail.
 But do I want to send my financial data, my health records, or my personal notes to a cloud provider?
 Not really.
 I'd rather use a local model for sensitive tasks and pick the best, cheapest Chinese model for general-purpose deep research.
 
-These three problems—silos, accessibility, and privacy—bothered me enough that I spent months building something to fix them.
+That's why I built MindRoom on a *chat protocol*.
+The interface is just chatting—everyone already knows how to do that.
+The bridges solve the silo problem.
+And the model flexibility means you choose where your data goes.
 I called it **MindRoom**—and then I got so obsessed with it that I eventually burned out and had to step away completely.
 
 Recently, [OpenClaw](https://openclaw.ai) gained a lot of traction (171K GitHub stars and counting), solving a similar problem from a different angle.
