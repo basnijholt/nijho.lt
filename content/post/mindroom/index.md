@@ -28,7 +28,7 @@ categories:
 ## 1. The problem: your AI is trapped in apps
 
 Programming is my biggest passion in life.
-I've been actively involved in open source for over ten years now, maintaining [40+ installable packages](https://github.com/basnijholt) across Rust, Python, and JavaScript.
+I've been actively involved in open source for over ten years now, maintaining [40+ installable packages](https://github.com/basnijholt) across Python, JavaScript, and Rust.
 Some of these have over 100,000 users; others have exactly one—me.
 I mention this because it matters for what comes next: when AI coding tools arrived, I didn't start from zero.
 As I wrote about in my [agentic coding post]({{< ref "/post/agentic-coding" >}}), AI has completely transformed how I work—when I'm AFK, I regularly build full features or entire projects by [dictating to my phone]({{< ref "/post/agentic-mobile-workflow" >}}) and routing it through my own [transcription software](https://github.com/basnijholt/agent-cli).
