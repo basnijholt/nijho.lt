@@ -54,9 +54,8 @@ But do I want to send my financial data, my health records, or my personal notes
 Not really.
 I'd rather use a local model for sensitive tasks and pick the best, cheapest Chinese model for general-purpose deep research.
 
-The most natural interface for AI is simply conversation.
-It's how humans already organize thoughts, make decisions, and collaborate.
-So I built **MindRoom** on a chat protocol—one where agents live in the same rooms as you, collaborate in threads, and follow you across every platform.
+So I built **MindRoom** on a chat protocol—if people just want a chat, give them a chat.
+Agents live in the same rooms as you, collaborate in threads, and follow you across every platform.
 And then I got so obsessed with it that I eventually burned out and had to step away completely.
 
 Recently, [OpenClaw](https://openclaw.ai) gained a lot of traction (171K GitHub stars and counting), solving a similar problem from a different angle.
