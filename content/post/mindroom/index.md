@@ -49,7 +49,7 @@ And third, there's the privacy problem.
 I'm fine sharing my email with Gemini—Google already owns my Gmail.
 But do I want to send my financial data, my health records, or my personal notes to a cloud provider?
 Not really.
-I'd rather use a local model for sensitive tasks and pick the best, cheapest cloud model for everything else.
+I'd rather use a local model for sensitive tasks and pick the best, cheapest Chinese model for general-purpose deep research.
 
 These three problems—silos, accessibility, and privacy—bothered me enough that I spent months building something to fix them.
 I called it **MindRoom**—and then I got so obsessed with it that I eventually burned out and had to step away completely.
