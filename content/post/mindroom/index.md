@@ -132,7 +132,9 @@ You see tool calls happening live:
 [results here]
 ```
 
-The streaming uses an `⋯` marker while the agent is still thinking—a small detail, but it makes the experience feel responsive and alive.
+Here's a fun detail: the Matrix protocol doesn't actually support streaming.
+I hacked it in by rapidly editing the same message as new tokens arrive, so it *appears* as if the response streams in.
+An `⋯` marker shows while the agent is still thinking—a small touch, but it makes the experience feel responsive and alive.
 
 <!-- TODO: Screen recording (short video/GIF) of an agent responding in real-time —
      showing the streaming text appearing incrementally, the ⋯ marker while thinking,
