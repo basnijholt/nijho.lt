@@ -58,10 +58,7 @@ So I built **MindRoom** on a chat protocol—if people just want a chat, give th
 Agents live in the same rooms as you, collaborate in threads, and follow you across every platform.
 And then I got so obsessed with it that I eventually burned out and had to step away completely.
 
-Recently, [OpenClaw](https://openclaw.ai) gained a lot of traction (171K GitHub stars and counting), solving a similar problem from a different angle.
-Seeing its success reminded me that the idea I'd been working on wasn't just a niche obsession.
-People genuinely want AI assistants that aren't locked into a single app.
-
+Recently, seeing [OpenClaw](https://openclaw.ai) gain massive traction solving a similar problem reminded me that what I'd been building wasn't just a niche obsession.
 So here I am, dusting off MindRoom and writing about what it is, how it works, and why I think the approach still matters.
 
 {{% callout note %}}
@@ -78,8 +75,7 @@ MindRoom is an open-source system that creates AI agents living inside the [Matr
 If you're not familiar with Matrix—it's a federated, end-to-end encrypted communication standard.
 The same protocol used by the French government for 5.5 million civil servants, by German healthcare for 150K+ organizations, and by the Element app that millions of people use daily.
 
-The key insight: Matrix has [bridges](https://matrix.org/ecosystem/bridges/) to *everything*.
-Slack, Telegram, Discord, WhatsApp, IRC, email—you name it, there's a Matrix bridge for it.
+The key insight: Matrix has [bridges](https://matrix.org/ecosystem/bridges/) to many major platforms—Slack, Telegram, Discord, WhatsApp, IRC, email, even SMS.
 
 So if your AI agent lives in Matrix, it can reach you on any platform.
 One agent, every platform, continuous memory.
@@ -115,14 +111,12 @@ teams:
     mode: collaborate
 ```
 
-That's it.
 Define your agents, give them tools and rooms, and they show up in Matrix as real users—with avatars, typing indicators, and online status.
 
 > **TODO:** Screenshot of the Element client's member list showing MindRoom agents as Matrix users — each with their own avatar, display name (e.g., CodeAgent, ResearchAgent), and "Online" presence status.
 
 ## 3. How it actually works
 
-The architecture is something I iterated on quite a bit, and I think it turned out well.
 At the core sits what I call the **MultiAgentOrchestrator**—a class in `bot.py` that boots every configured entity (router, agents, teams), provisions Matrix user accounts for each one via [matrix-nio](https://github.com/matrix-nio/matrix-nio), and keeps sync loops alive.
 The agents themselves are powered by the [Agno](https://github.com/agno-agi/agno) framework, which provides a unified interface across AI model providers.
 
@@ -148,7 +142,7 @@ You see tool calls happening live:
 ## 4. Building on Matrix: the good and the tricky
 
 One of the best things about building on Matrix is what you get for free.
-End-to-end encryption (Olm/Megolm), a fully bridged chat platform that just works, a choice of clients, federation between organizations—all of that comes with the protocol.
+End-to-end encryption, a deeply interoperable chat protocol with bridges to many platforms, a choice of clients, federation between organizations—all of that comes with the protocol.
 You don't have to build any of it yourself.
 
 But because Matrix has such a tight specification, it also brings challenges.
@@ -169,7 +163,6 @@ Matrix gives you an incredible foundation, but making it work well for AI requir
 
 ## 5. Memory that follows you
 
-This is where things get really interesting—and it's the feature that made me most excited when I first got it working.
 MindRoom implements a dual memory system inspired by [Mem0](https://mem0.ai/):
 
 - **Agent memory** (`agent_code`): What a specific agent knows about you—your coding style, your preferences, your tech stack.
@@ -187,7 +180,6 @@ The implementation uses [Mem0](https://mem0.ai/)'s `AsyncMemory` with configurab
 
 ## 6. 80+ tool integrations
 
-One of the more fun parts of building MindRoom was the tool ecosystem—I may have gotten a bit carried away here.
 Agents can use over 80 integrations:
 
 | Category | Examples |
@@ -202,13 +194,6 @@ Agents can use over 80 integrations:
 | **Web** | Firecrawl, Crawl4ai, Browser automation |
 
 Tools are lazy-loaded and credential-managed, so an agent only loads what it needs.
-The registration system is clean:
-
-```python
-@register_tool("github")
-def get_github_toolkit() -> type[Toolkit]:
-    return GithubToolkit
-```
 
 ## 7. Teams: agents that collaborate
 
@@ -227,7 +212,7 @@ In practice, you might have a research team where one agent searches academic pa
 
 ## 8. Hot-reload: change config without downtime
 
-One detail I'm particularly happy with (and spent way too long perfecting): `config.yaml` is watched at runtime.
+`config.yaml` is watched at runtime.
 When you edit it—add an agent, change a model, update instructions—MindRoom diffs the old and new config, gracefully restarts only the affected agents, and has them rejoin their rooms.
 No downtime, no restart required.
 
@@ -245,8 +230,7 @@ I even built [Matty](https://github.com/basnijholt/matty), a Matrix CLI client, 
 - **Scheduled tasks**: Natural language scheduling (`!schedule "check my email every morning at 9 AM"`) backed by cron jobs.
   Agents can run tasks in the background and escalate to you when needed.
 - **DM support**: Agents respond naturally in 1:1 conversations without needing mentions.
-- **Cross-organization federation**: Because Matrix is federated, two companies' AI agents can collaborate in a shared room.
-  This is something no proprietary platform can do.
+- **Cross-organization federation**: Because Matrix is federated, two companies' AI agents can collaborate in a shared room—something that's hard to do on proprietary platforms.
 
 {{% callout note %}}
 The voice feature pairs nicely with my [`agent-cli`](https://github.com/basnijholt/agent-cli) tool—local Whisper transcription on my RTX 3090 means I can talk to my Matrix agents without any cloud dependency.
@@ -308,14 +292,14 @@ I'm not personally convinced it's the next big thing, but what caught my attenti
 Matrix is already federated—agents on different servers can already interact, join shared rooms, and collaborate across organizational boundaries.
 A bridge from a Reddit-like platform to Matrix and your agents could participate without any special integration.
 
-Moltbook has also been getting criticism for security issues, which is what happens when you build agent-to-agent infrastructure from scratch.
-Matrix has spent years hardening its E2E encryption (Olm/Megolm), and it's already deployed by governments and healthcare organizations at scale.
+Building agent-to-agent infrastructure from scratch also means building security from scratch—and that's where new platforms tend to struggle.
+Matrix has spent years hardening its E2E encryption, and it's already deployed by governments and healthcare organizations at scale.
 Building on that foundation means you inherit those security properties rather than hoping to get them right yourself.
 
 ## 12. What's next
 
 After stepping away for a while, I'm picking MindRoom back up—but with a healthier relationship this time.
-The codebase supports 8+ AI model providers ([OpenAI](https://openai.com/), [Anthropic](https://www.anthropic.com/), [Ollama](https://ollama.com/), [Groq](https://groq.com/), [Google](https://ai.google.dev/), [OpenRouter](https://openrouter.ai/), [DeepSeek](https://www.deepseek.com/), [Cerebras](https://cerebras.ai/)), and the core architecture is solid.
+The codebase supports 8+ AI model providers—OpenAI, Anthropic, Ollama, Groq, Google, OpenRouter, DeepSeek, Cerebras—and the core architecture is solid.
 That said, few people besides me have actually tried it so far—and I'd like to change that.
 There's already a Docker Compose file and a [starter repository](https://github.com/basnijholt/mindroom-stack) to get started, but I want to make it even simpler.
 
