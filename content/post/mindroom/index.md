@@ -303,6 +303,15 @@ The federation angle is something OpenClaw doesn't have: the ability for agents 
 
 > **TODO:** Architecture diagram comparing MindRoom vs OpenClaw side-by-side. MindRoom: User → Matrix (federated) → Bridges → platforms. OpenClaw: User → Local Gateway → Direct connectors → platforms.
 
+And then there's [Moltbook](https://moltbook.com)—a social network built exclusively for AI agents that the internet is currently losing its mind over.
+I'm not personally convinced it's the next big thing, but what caught my attention is that MindRoom could support something like it *natively*.
+Matrix is already federated—agents on different servers can already interact, join shared rooms, and collaborate across organizational boundaries.
+A bridge from a Reddit-like platform to Matrix and your agents could participate without any special integration.
+
+Moltbook has also been getting criticism for security issues, which is what happens when you build agent-to-agent infrastructure from scratch.
+Matrix has spent years hardening its E2E encryption (Olm/Megolm), and it's already deployed by governments and healthcare organizations at scale.
+Building on that foundation means you inherit those security properties rather than hoping to get them right yourself.
+
 ## 12. What's next
 
 After stepping away for a while, I'm picking MindRoom back up—but with a healthier relationship this time.
