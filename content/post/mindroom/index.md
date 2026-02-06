@@ -1,7 +1,7 @@
 ---
 title: "MindRoom: AI agents that live in Matrix and work everywhere 🧠"
-subtitle: "How OpenClaw's success reminded me why I built this"
-summary: "I spent months building MindRoom—an open-source system that gives AI agents a home in Matrix so they can follow you across Slack, Telegram, Discord, and anywhere else. Then life happened and I got distracted. OpenClaw's explosive success reminded me why this idea matters."
+subtitle: "Cross-platform AI agents with Matrix, Python, persistent memory, and 80+ tool integrations"
+summary: "MindRoom is an open-source system I built that creates AI agents living in Matrix. Because Matrix bridges to Slack, Telegram, Discord, and more, your agents follow you everywhere—with persistent memory, multi-agent collaboration, and 80+ tool integrations."
 date: 2026-02-06
 draft: false
 featured: true
@@ -38,8 +38,8 @@ You repeat yourself constantly, re-explain your preferences, re-describe your pr
 This bothered me enough that I spent months building something to fix it.
 I called it **MindRoom**—and then, as side projects often go, life got in the way and my attention drifted.
 
-Recently, [OpenClaw](https://openclaw.ai) exploded onto the scene (171K GitHub stars and counting), solving a similar problem from a different angle.
-Seeing its success was a wake-up call: the idea I'd been working on wasn't just a niche obsession.
+Recently, [OpenClaw](https://openclaw.ai) gained a lot of traction (171K GitHub stars and counting), solving a similar problem from a different angle.
+Seeing its success reminded me that the idea I'd been working on wasn't just a niche obsession.
 People genuinely want AI assistants that aren't locked into a single app.
 
 So here I am, dusting off MindRoom and writing about what it is, how it works, and why I think the approach still matters.
@@ -61,11 +61,15 @@ MindRoom is an open-source system that creates AI agents living inside the [Matr
 If you're not familiar with Matrix—it's a federated, end-to-end encrypted communication standard.
 The same protocol used by the French government for 5.5 million civil servants, by German healthcare for 150K+ organizations, and by the Element app that millions of people use daily.
 
-The key insight: Matrix has bridges to *everything*.
+The key insight: Matrix has [bridges](https://matrix.org/ecosystem/bridges/) to *everything*.
 Slack, Telegram, Discord, WhatsApp, IRC, email—you name it, there's a Matrix bridge for it.
 
 So if your AI agent lives in Matrix, it can reach you on any platform.
 One agent, every platform, continuous memory.
+
+{{% callout warning %}}
+**Fair warning:** Matrix bridges vary in maturity. Some (like the [Telegram bridge](https://github.com/mautrix/telegram)) work very well, while others can be finicky. Your mileage may vary depending on which platforms you need.
+{{% /callout %}}
 
 Here's what a typical setup looks like in `config.yaml`:
 
@@ -104,8 +108,9 @@ Define your agents, give them tools and rooms, and they show up in Matrix as rea
 
 ## 3. How it actually works
 
-I'm not going to lie—the architecture of MindRoom is something I'm pretty proud of.
-At the core sits the **MultiAgentOrchestrator** (in `bot.py`), which boots every configured entity—router, agents, teams—provisions Matrix user accounts for each one, and keeps sync loops alive.
+The architecture is something I iterated on quite a bit, and I think it turned out well.
+At the core sits what I call the **MultiAgentOrchestrator**—a class in `bot.py` that boots every configured entity (router, agents, teams), provisions Matrix user accounts for each one via [matrix-nio](https://github.com/matrix-nio/matrix-nio), and keeps sync loops alive.
+The agents themselves are powered by the [Agno](https://github.com/agno-agi/agno) framework, which provides a unified interface across AI model providers.
 
 When someone sends a message in a Matrix room:
 
@@ -141,9 +146,11 @@ MindRoom implements a dual memory system inspired by [Mem0](https://mem0.ai/):
 - **Room memory** (`room_dev`): Project-specific knowledge tied to a room—architectural decisions, constraints, team conventions.
 - **Team memory**: Shared context when agents collaborate—joint decisions, consensus, shared insights.
 
-Memories are stored in ChromaDB and searched semantically.
+Memories are stored in [ChromaDB](https://www.trychroma.com/) and searched semantically.
 When you talk to your code agent on Tuesday in Matrix and then on Wednesday via the Slack bridge, it remembers everything.
 You don't have to re-explain yourself.
+
+The implementation uses [Mem0](https://mem0.ai/)'s `AsyncMemory` with configurable embedding providers ([OpenAI](https://platform.openai.com/docs/guides/embeddings), [Ollama](https://ollama.com/), or HuggingFace), so you can keep it fully local if privacy matters to you.
 
 <!-- TODO: Screenshot showing a conversation where the agent references something the
      user told it in a previous session or different room — demonstrating persistent
@@ -199,7 +206,7 @@ One detail I'm particularly happy with (and spent way too long perfecting): `con
 When you edit it—add an agent, change a model, update instructions—MindRoom diffs the old and new config, gracefully restarts only the affected agents, and has them rejoin their rooms.
 No downtime, no restart required.
 
-This sounds minor, but when you're iterating on agent behavior, being able to tweak a system prompt and see results in seconds makes a huge difference.
+This sounds minor, but when you're iterating on agent behavior, being able to tweak a system prompt and see results in seconds significantly improves the development loop.
 
 <!-- TODO: Screen recording (short video/GIF) of the hot-reload flow — edit config.yaml
      in an editor (e.g., add a new agent or change instructions), save, and then show
@@ -251,7 +258,7 @@ OpenClaw is local-first and TypeScript-based with 171K stars and a massive commu
 MindRoom is Python-based, federation-first, and... well, let's just say my GitHub star count is a few orders of magnitude lower.
 
 But seeing OpenClaw validate the core idea—that people want AI assistants that aren't trapped in apps—reminded me that what I'd been building matters.
-The federation angle is something OpenClaw doesn't have: the ability for agents from different organizations to collaborate natively, with military-grade E2E encryption, on a protocol that governments trust.
+The federation angle is something OpenClaw doesn't have: the ability for agents from different organizations to collaborate natively, with end-to-end encryption (Olm/Megolm), on a protocol that governments already trust and deploy at scale.
 
 <!-- TODO: Architecture diagram comparing MindRoom vs OpenClaw side-by-side.
      MindRoom: User → Matrix (federated) → Bridges → Slack/Telegram/Discord/etc.
@@ -261,7 +268,8 @@ The federation angle is something OpenClaw doesn't have: the ability for agents 
 ## 11. What's next
 
 I'm picking MindRoom back up.
-The codebase has over 1,000 commits, supports 8+ AI model providers (OpenAI, Anthropic, Ollama, Groq, Google, OpenRouter, DeepSeek, Cerebras), and the core architecture is solid.
+The codebase has over 1,000 commits, supports 8+ AI model providers ([OpenAI](https://openai.com/), [Anthropic](https://www.anthropic.com/), [Ollama](https://ollama.com/), [Groq](https://groq.com/), [Google](https://ai.google.dev/), [OpenRouter](https://openrouter.ai/), [DeepSeek](https://www.deepseek.com/), [Cerebras](https://cerebras.ai/)), and the core architecture is solid.
+That said, it's still very much a personal project—the documentation is thin, onboarding is rough, and there are plenty of rough edges.
 
 What I want to focus on:
 - **Skills system**: Building an ecosystem of reusable agent behaviors (already partially implemented with OpenClaw-compatible format)
