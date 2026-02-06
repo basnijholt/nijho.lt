@@ -33,12 +33,25 @@ Some of these have over 100,000 users; others have exactly one—me.
 I mention this because it matters for what comes next: when AI coding tools arrived, I didn't start from zero.
 As I wrote about in my [agentic coding post]({{< ref "/post/agentic-coding" >}}), AI has completely transformed how I work—when I'm AFK, I regularly build full features or entire projects by [dictating to my phone]({{< ref "/post/agentic-mobile-workflow" >}}) and routing it through my own [transcription software](https://github.com/basnijholt/agent-cli).
 
-But one thing kept bugging me: every AI tool is a silo.
+Through all of this, I became deeply convinced that AI agents are the future.
+But the more I used them, the more problems I noticed with how they work today.
+
+First, every AI tool is a silo.
 ChatGPT knows you in one tab, Claude knows you in another, your Slack bot knows you in a third.
 Switch platforms, and your AI starts from scratch.
 You repeat yourself constantly, re-explain your preferences, re-describe your projects.
 
-This bothered me enough that I spent months building something to fix it.
+Second, the current approach doesn't scale to normal people.
+If you have to *program* your AI agents, you've already excluded most of the world.
+Non-programmers don't want to write code—they just want a chat.
+
+And third, there's the privacy problem.
+I'm fine sharing my email with Gemini—Google already owns my Gmail.
+But do I want to send my financial data, my health records, or my personal notes to a cloud provider?
+Not really.
+I'd rather use a local model for sensitive tasks and pick the best, cheapest cloud model for everything else.
+
+These three problems—silos, accessibility, and privacy—bothered me enough that I spent months building something to fix them.
 I called it **MindRoom**—and then I got so obsessed with it that I eventually burned out and had to step away completely.
 
 Recently, [OpenClaw](https://openclaw.ai) gained a lot of traction (171K GitHub stars and counting), solving a similar problem from a different angle.
