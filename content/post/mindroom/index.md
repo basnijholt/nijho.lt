@@ -41,8 +41,8 @@ ChatGPT knows you in one tab, Claude knows you in another, your Slack bot knows 
 Switch platforms, and your AI starts from scratch.
 You repeat yourself constantly, re-explain your preferences, re-describe your projects.
 
-Second, the current approach doesn't scale to normal people.
-If you have to *program* your AI agents, you've already excluded most of the world.
+Second, most AI agent frameworks require you to *program* them.
+That works for developers like me, but it excludes most of the world.
 Non-programmers don't want to write code—they just want a chat.
 
 And third, there's the privacy problem.
