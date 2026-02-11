@@ -184,7 +184,7 @@ It doesn't, so the mapping table is the least-bad option I found.
 
 ## 6. Three environments, three strategies
 
-The hard part is that people run `agent-cli` in at least three different ways, and each needs a different installation strategy.
+The hard part is that people run `agent-cli` in several different ways, and each needs a different installation strategy.
 
 ### A) `uv tool install` — the persistent environment
 
@@ -194,9 +194,11 @@ This environment has a `uv-receipt.toml` file that tracks which extras are insta
 When auto-install triggers, the system reads the current extras from that receipt, merges in the new ones, and reinstalls:
 
 ```python
-current_extras = _get_current_uv_tool_extras()
-new_extras = sorted(set(current_extras) | set(extras))
-success = _install_via_uv_tool(new_extras, quiet=quiet)
+def install_extras_impl(extras, *, quiet=False):
+    if is_uv_tool_install():
+        current_extras = _get_current_uv_tool_extras()
+        new_extras = sorted(set(current_extras) | set(extras))
+        return _install_via_uv_tool(new_extras, quiet=quiet)
 ```
 
 So if you already had `audio` installed and now run a command that needs `llm`, it becomes `uv tool install agent-cli[audio,llm] --force`.
@@ -218,25 +220,53 @@ No `uv-receipt.toml` to update, no virtualenv that survives the invocation.
 The solution is one of my favorite tricks in this system: re-execute the entire command with the extras baked into the `uvx` invocation itself:
 
 ```python
-extras_str = ",".join(extras)
-cmd = [uvx_path, "--python", "3.13", f"agent-cli[{extras_str}]", *sys.argv[1:]]
-_maybe_exec_with_marker(cmd, f"Re-running with extras: {extras_str}")
+def _maybe_reexec_with_uvx(extras):
+    if os.environ.get(_REEXEC_MARKER) or not _is_uvx_cache():
+        return
+    uvx_path = shutil.which("uvx")
+    if not uvx_path:
+        return
+    extras_str = ",".join(extras)
+    cmd = [uvx_path, "--python", "3.13",
+           f"agent-cli[{extras_str}]", *sys.argv[1:]]
+    _maybe_exec_with_marker(cmd, f"Re-running with extras: {extras_str}")
 ```
 
 So `uvx agent-cli transcribe` transparently becomes `uvx agent-cli[audio,llm] transcribe`.
 The user sees a brief "Re-running with extras: audio, llm" message, and then the command works.
 
-Environment detection is straightforward—`uvx` environments live under the uv cache directory, so `agent-cli` can detect ephemeral vs persistent installs and choose the right path.
+Environment detection is straightforward—`uvx` environments live under the uv cache directory:
+
+```python
+def _is_uvx_cache():
+    prefix_str = Path(sys.prefix).resolve().as_posix()
+    return "/cache/uv/" in prefix_str or "/archive-v" in prefix_str
+```
 
 ([Full implementation](https://github.com/basnijholt/agent-cli/blob/c9a67b484331b64733edba8d72d20523699c5a72/agent_cli/core/deps.py#L287-L301))
 
-### C) Regular virtualenv or system install
+### C) Regular virtualenv, `pipx`, or system install
 
-For plain `pip install agent-cli` or virtualenv installs, the system falls back to direct installation from pinned requirements files.
-Each extra has a pre-generated requirements file with pinned versions (e.g., `_requirements/audio.txt`), and the installer chooses `uv pip` when available, otherwise regular `pip`.
+For plain `pip install agent-cli`, `pipx`, or virtualenv installs, the system falls back to direct installation.
+Each extra has a pre-generated requirements file with pinned versions (e.g., `_requirements/audio.txt`), and the install command adapts to whatever's available:
+
+```python
+def _install_cmd():
+    in_venv = sys.prefix != sys.base_prefix
+    if shutil.which("uv"):
+        cmd = ["uv", "pip", "install", "--python", sys.executable]
+        if not in_venv:
+            cmd.append("--system")
+        return cmd
+    cmd = [sys.executable, "-m", "pip", "install"]
+    if not in_venv:
+        cmd.append("--user")
+    return cmd
+```
 
 Prefers `uv pip` when available (fast), falls back to regular pip.
 Uses `--system` or `--user` as appropriate when not in a virtualenv.
+This is also the path that `pipx` installations take—`pipx` creates a regular virtualenv under the hood, so the auto-installer detects it as a venv and installs directly into it.
 
 ([Full implementation](https://github.com/basnijholt/agent-cli/blob/c9a67b484331b64733edba8d72d20523699c5a72/agent_cli/core/deps.py#L215-L248))
 
@@ -249,9 +279,12 @@ The fix is a simple environment variable marker:
 
 ```python
 _REEXEC_MARKER = "_AGENT_CLI_REEXEC"
-already_reexeced = os.environ.get(_REEXEC_MARKER)
-if not already_reexeced:
-    new_env = {**os.environ, _REEXEC_MARKER: "1"}
+
+def _maybe_exec_with_marker(cmd, message):
+    if os.environ.get(_REEXEC_MARKER):
+        return  # Already re-executed once, don't loop
+    new_env = os.environ.copy()
+    new_env[_REEXEC_MARKER] = "1"
     os.execvpe(cmd[0], cmd, new_env)
 ```
 
