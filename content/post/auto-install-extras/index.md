@@ -32,20 +32,20 @@ image:
 
 ## 1. From one command to a dependency maze
 
-[`agent-cli`](https://github.com/basnijholt/agent-cli) started as a pretty simple thing.
+[`agent-cli`](https://github.com/basnijholt/agent-cli) started as a simple thing.
 Voice in, text out.
-It connected to a [Wyoming](https://github.com/rhasspy/wyoming) Whisper server for speech-to-text and a Piper server for text-to-speech—basically a local, open-source Siri that I could trigger from terminal hotkeys.
+It connected to a [Wyoming](https://github.com/rhasspy/wyoming) Whisper server for speech-to-text and a Piper server for text-to-speech, basically a local, open-source Siri triggered from terminal hotkeys.
 I wrote about the early version in my [local AI journey]({{< ref "/post/local-ai-journey" >}}) post.
 
-And then, as tends to happen with side projects I actually use every day, I kept adding things.
+And then, as tends to happen with side projects I use every day, I kept adding things.
 
 First a RAG proxy with ChromaDB, so I could chat with my documents.
 Then a long-term memory system, so conversations could remember context across sessions.
-LLM integration via pydantic-ai.
 Server commands that run Kokoro TTS or Whisper locally, optimized for whatever hardware you have—Apple Silicon gets MLX, NVIDIA gets CTranslate2.
 Voice activity detection with Silero VAD.
 Audio speed adjustment.
-An agent orchestration system.
+An [agent orchestration system]({{< ref "/post/parallel-agentic-coding" >}}).
+`systemd`/`launchd` service management for running background daemons.
 
 Each of these features pulled in wildly different dependency trees.
 `torch` and `transformers` for GPU-accelerated Whisper.
@@ -54,7 +54,7 @@ Each of these features pulled in wildly different dependency trees.
 `kokoro` with its entire spacy pipeline for neural TTS.
 
 Today the project has **13 optional extras**.
-The tool became much more useful, but the dependency UX got progressively worse with every feature I added.
+The tool became much more useful, but dependency UX got progressively worse with every feature.
 
 {{% callout note %}}
 **TL;DR:** I moved from "users choose extras upfront" to **runtime optional dependency resolution**.
@@ -66,7 +66,7 @@ The user just types `agent-cli transcribe` and everything works.
 
 Python's `optional-dependencies` in `pyproject.toml` is the standard mechanism for this, and it's the right packaging primitive.
 You define groups, users install with `pip install agent-cli[rag]`.
-On paper, this is fine.
+On paper, this is perfectly reasonable.
 
 In practice, it falls apart when you have 13 of them:
 
@@ -84,7 +84,7 @@ piper = ["piper-tts>=1.2.0"]
 # ... and more
 ```
 
-The user experience problem is obvious.
+The UX problem is obvious.
 If I want to transcribe voice to text, do I need `audio`? `llm`? `vad`? All three?
 What if I want the Whisper server to run locally—is that `faster-whisper` or `mlx-whisper`?
 Do I also need `server` for that?
@@ -98,7 +98,7 @@ I wanted three things:
 
 ## 3. The decorator
 
-The core idea is dead simple.
+The core idea is simple.
 Each CLI command declares what it needs, and the decorator handles the rest:
 
 ```python
@@ -147,7 +147,7 @@ def requires_extras(*extras: str) -> Callable[[F], F]:
     return decorator
 ```
 
-The real complexity lives in [`_check_and_install_extras`](https://github.com/basnijholt/agent-cli/blob/c9a67b484331b64733edba8d72d20523699c5a72/agent_cli/core/deps.py#L321-L359), which handles five different installation scenarios.
+The real complexity lives in [`_check_and_install_extras`](https://github.com/basnijholt/agent-cli/blob/c9a67b484331b64733edba8d72d20523699c5a72/agent_cli/core/deps.py#L321-L359), which handles several installation scenarios.
 But the interface for command authors is always a single line.
 
 ## 4. Checking without importing
@@ -184,8 +184,7 @@ It doesn't, so the mapping table is the least-bad option I found.
 
 ## 6. Three environments, three strategies
 
-Here's where it gets interesting.
-Users run `agent-cli` in at least three different ways, and each requires a completely different installation strategy.
+The hard part is that people run `agent-cli` in at least three different ways, and each needs a different installation strategy.
 
 ### A) `uv tool install` — the persistent environment
 
@@ -215,7 +214,7 @@ You never have to install it again.
 `uvx` is uv's tool for running packages in temporary, disposable environments.
 Running `uvx agent-cli transcribe` creates a fresh environment, installs `agent-cli`, runs the command, and throws the environment away.
 
-The problem: there's nothing to persist extras *to*.
+The problem: there's nowhere to persist extras.
 No `uv-receipt.toml` to update, no virtualenv that survives the invocation.
 
 The solution is one of my favorite tricks in this system: re-execute the entire command with the extras baked into the `uvx` invocation itself:
@@ -228,8 +227,7 @@ def _maybe_reexec_with_uvx(extras):
     if not uvx_path:
         return
     extras_str = ",".join(extras)
-    cmd = [uvx_path, "--python", "3.13",
-           f"agent-cli[{extras_str}]", *sys.argv[1:]]
+    cmd = [uvx_path, "--python", "3.13", f"agent-cli[{extras_str}]", *sys.argv[1:]]
     _maybe_exec_with_marker(cmd, f"Re-running with extras: {extras_str}")
 ```
 
@@ -248,7 +246,7 @@ def _is_uvx_cache():
 
 ### C) Regular virtualenv or system install
 
-For plain `pip install agent-cli` or virtualenv installs, the system falls back to direct installation.
+For plain `pip install agent-cli` or virtualenv installs, the system falls back to direct installation from pinned requirements files.
 Each extra has a pre-generated requirements file with pinned versions (e.g., `_requirements/audio.txt`), and the install command adapts to whatever's available:
 
 ```python
@@ -317,7 +315,7 @@ Install with:
   agent-cli install-extras audio
 ```
 
-There's also a manual [`install-extras`](https://github.com/basnijholt/agent-cli/blob/c9a67b484331b64733edba8d72d20523699c5a72/agent_cli/install/extras.py#L24-L104) command for when you want explicit control:
+If you prefer explicit control, there's also a manual [`install-extras`](https://github.com/basnijholt/agent-cli/blob/c9a67b484331b64733edba8d72d20523699c5a72/agent_cli/install/extras.py#L24-L104) command:
 
 ```bash
 agent-cli install-extras rag memory    # Install specific extras
@@ -325,7 +323,7 @@ agent-cli install-extras --all         # Install everything
 agent-cli install-extras --list        # Show available extras with descriptions
 ```
 
-Users can opt out via environment variable or config file:
+You can opt out via environment variable or config file:
 
 ```bash
 export AGENT_CLI_NO_AUTO_INSTALL=1
