@@ -3,7 +3,7 @@ title: "Auto-installing extras at runtime so users never have to think about dep
 subtitle: "How I used uv, uvx, and a tiny decorator to make optional dependencies mostly disappear"
 summary: "`agent-cli` grew from a voice helper into a local AI toolbox with 13 optional extras. Asking users to pick the right extras upfront became impossible, so I switched to runtime optional dependency resolution: commands declare what they need, missing extras are installed automatically in the correct environment, and the command re-runs transparently."
 date: 2026-02-11
-draft: true
+draft: false
 featured: true
 authors:
   - admin
@@ -328,7 +328,7 @@ I want to be clear: this system would be *much* harder without [uv](https://docs
 - **`uv export`** for generating pinned requirements files from `uv.lock`
 
 With traditional pip, auto-installing at runtime would take 30-60 seconds and feel terrible.
-With uv, it typically takes a few seconds.
+With uv, it typically takes a second.
 That's the difference between "annoying" and "barely noticeable."
 
 ## 11. Tradeoffs
@@ -369,7 +369,7 @@ Pre-commit hooks made it maintainable.
 And three environment-detection strategies made it work regardless of how the user installed the tool.
 
 If you're building a Python CLI with optional features that keep growing, consider this pattern.
-Your users will thank you—mostly by never having to ask "which extras do I need?"
+Your users will thank you, mostly by never having to ask "which extras do I need?"
 
 ---
 
