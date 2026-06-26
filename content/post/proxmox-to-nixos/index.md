@@ -18,6 +18,13 @@ tags: ["nixos", "proxmox", "incus", "homelab", "migration", "agentic-ai"]
 I have officially decommissioned my Proxmox cluster.
 After years of running my homelab on Proxmox, starting with a single NUC and expanding to a multi-node cluster, I have migrated everything to NixOS running Incus.
 
+> **Update 2026-06-26:** This post reached the front page of [Hacker News](https://news.ycombinator.com/item?id=48679385), and several readers correctly pointed out that Proxmox is not limited to clicking around in the web UI.
+> It has `qm`, `pct`, config files, a REST API, Terraform providers, and Ansible workflows.
+> My point is not that Proxmox cannot be automated.
+> It is that state drift can still creep in when debugging means running one quick command, especially if an agent is allowed to execute imperative fixes that never make it back into the automation framework.
+> It is that, for my setup, I wanted the reproducible configuration itself to be the source of truth.
+> The thing I care about is not buttons versus commands, but whether I can rebuild the host from version-controlled text files and know that every important change is captured there.
+
 ## From Skeptic to Believer
 
 I wasn't always a Nix evangelist.
