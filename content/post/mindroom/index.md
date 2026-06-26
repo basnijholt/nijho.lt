@@ -91,7 +91,7 @@ agents:
   code:
     display_name: CodeAgent
     role: Generate code, manage files, execute shell commands
-    model: opus-4-6
+    model: opus-4.8
     tools: [file, shell, github]
     instructions:
       - Always read files before modifying them.
@@ -100,7 +100,7 @@ agents:
   research:
     display_name: ResearchAgent
     role: Search the web, summarize papers, find information
-    model: gpt-5.2
+    model: gpt-5.5
     tools: [tavily, arxiv, wikipedia]
     rooms: [lobby, research]
 
