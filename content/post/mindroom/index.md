@@ -1,7 +1,7 @@
 ---
 title: "MindRoom: AI agents that live in Matrix and work everywhere 🧠"
-subtitle: "Cross-platform AI agents with Matrix, Python, persistent memory, and 80+ tool integrations"
-summary: "MindRoom is an open-source system I built that creates AI agents living in Matrix. Because Matrix bridges to Slack, Telegram, Discord, and more, your agents follow you everywhere—with persistent memory, multi-agent collaboration, and 80+ tool integrations."
+subtitle: "Cross-platform AI agents with Matrix, Python, persistent memory, and 100+ built-in tool integrations"
+summary: "MindRoom is an open-source system I built that creates AI agents living in Matrix. Because Matrix bridges to Slack, Telegram, Discord, and more, your agents follow you everywhere—with persistent memory, multi-agent collaboration, and 100+ built-in tool integrations."
 date: 2026-06-26
 draft: false
 featured: true
@@ -63,7 +63,7 @@ So here I am, dusting off MindRoom and writing about what it is, how it works, a
 
 {{% callout note %}}
 **TL;DR:** MindRoom is an open-source system that creates AI agents living inside the [Matrix protocol](https://matrix.org/).
-Because Matrix has bridges to Slack, Telegram, Discord, WhatsApp, and everything else, your agents can follow you across every platform—with persistent memory, 80+ tool integrations, and multi-agent collaboration.
+Because Matrix has bridges to Slack, Telegram, Discord, WhatsApp, and everything else, your agents can follow you across every platform—with persistent memory, 100+ built-in tool integrations, and multi-agent collaboration.
 Think of it as "your AI assistant, but it lives in Matrix and works everywhere."
 {{% /callout %}}
 
@@ -80,9 +80,7 @@ The key insight: Matrix has [bridges](https://matrix.org/ecosystem/bridges/) to 
 So if your AI agent lives in Matrix, it can reach you on any platform.
 One agent, every platform, continuous memory.
 
-{{% callout warning %}}
-**Fair warning:** Matrix bridges vary in maturity. Some (like the [Telegram bridge](https://github.com/mautrix/telegram)) work very well, while others can be finicky. Your mileage may vary depending on which platforms you need.
-{{% /callout %}}
+One practical caveat: Matrix bridges vary in maturity. Some, like the [Telegram bridge](https://github.com/mautrix/telegram), work very well, while others can be finicky. Your mileage may vary depending on which platforms you need.
 
 Here's what a typical setup looks like in `config.yaml`:
 
@@ -156,7 +154,7 @@ An `⋯` marker shows while the agent is still thinking—a small touch, but it 
 There's also a size limit on message content.
 That's fine for human chat, but AI responses can get long—especially when tool calls and their results are included.
 I worked around this by using Matrix's attachment feature: when a response exceeds the limit, the content continues in an attachment that gets updated as the message keeps streaming in.
-This required forking the [Element](https://element.io/) chat client so that attachments display inline rather than as downloadable files, making the whole thing seamless.
+This required forking the [Cinny](https://cinny.in/) chat client so that attachments display inline rather than as downloadable files, making the whole thing seamless.
 
 {{% callout note %}}
 These workarounds are the kind of thing you don't anticipate when you pick a protocol.
@@ -180,9 +178,9 @@ The implementation uses [Mem0](https://mem0.ai/)'s `AsyncMemory` with configurab
 
 {{< figure src="mindroom-memory.png" caption="A live Personal room memory thread: MindRoom stores a harmless preference in one turn and retrieves it later from the same Matrix room." alt="Live MindRoom memory thread showing the generated agent avatars and a public demo where the agent remembers teal as the blog demo accent color." >}}
 
-## 6. 80+ tool integrations
+## 6. 100+ built-in tool integrations
 
-Agents can use over 80 integrations:
+Agents can use over 100 built-in integrations:
 
 | Category | Examples |
 |----------|----------|
