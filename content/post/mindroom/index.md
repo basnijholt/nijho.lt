@@ -206,9 +206,9 @@ You ask a question, the lead delegates subtasks, collects results, and synthesiz
 The system then merges their responses with a consensus summary.
 
 In practice, you might have a research team where one agent searches academic papers, another checks industry news, and a third validates claims—all triggered by a single message.
-The live room view below is the same Matrix thread surface those team runs use: threads, routed agents, and room history are all first-class chat objects rather than a separate dashboard.
+The live room view below shows a real team response in the same Matrix thread surface normal agents use: threads, routed agents, and room history are all first-class chat objects rather than a separate dashboard.
 
-{{< figure src="mindroom-team.png" caption="Live Personal room thread list and thread surface from chat.mindroom.chat. Team collaboration uses this same Matrix-native interface, with routed agents and shared history living in the room instead of a separate workflow UI." alt="Live MindRoom Personal room showing the Explain how MindRoom thread, routed agent activity, recent threads, and the room member list." >}}
+{{< figure src="mindroom-team.png" caption="Live Lobby thread in chat.mindroom.chat showing a real Team Response from HomeAssistant and AgentBuilder. Team collaboration uses the same Matrix-native interface as regular agent chats, with routed agents and room membership visible beside the conversation." alt="Live MindRoom Lobby thread showing a Team Response from HomeAssistant and AgentBuilder, with the member list showing Super Team and other agents." >}}
 
 ## 8. Hot-reload: change config and plugins without downtime
 
