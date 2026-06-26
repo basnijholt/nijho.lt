@@ -210,13 +210,17 @@ The live room view below is the same Matrix thread surface those team runs use: 
 
 {{< figure src="mindroom-team.png" caption="Live Personal room thread list and thread surface from chat.mindroom.chat. Team collaboration uses this same Matrix-native interface, with routed agents and shared history living in the room instead of a separate workflow UI." alt="Live MindRoom Personal room showing the Explain how MindRoom thread, routed agent activity, recent threads, and the room member list." >}}
 
-## 8. Hot-reload: change config without downtime
+## 8. Hot-reload: change config and plugins without downtime
 
 `config.yaml` is watched at runtime.
 When you edit it—add an agent, change a model, update instructions—MindRoom diffs the old and new config, gracefully restarts only the affected agents, and has them rejoin their rooms.
-No downtime, no restart required.
+No downtime, no full runtime restart required.
 
-This sounds minor, but when you're iterating on agent behavior, being able to tweak a system prompt and see results in seconds significantly improves the development loop.
+The same development loop applies to plugins.
+MindRoom has a rich Python hook system, and plugins can be live-developed while the system is running.
+Change a plugin file, save it, and MindRoom automatically reloads the plugin without restarting the Python runtime.
+
+This sounds minor, but when you're iterating on agent behavior or plugin hooks, being able to tweak code and config and see results in seconds significantly improves the development loop.
 
 {{< video autoplay="true" loop="true" controls="yes" src="mindroom-hot-reload.mp4" >}}
 
@@ -280,7 +284,7 @@ The similarities are striking:
 - Both let you choose your own AI model
 
 The differences are interesting too.
-OpenClaw is local-first and TypeScript-based with 171K stars and a massive community.
+OpenClaw is local-first and TypeScript-based with 380K+ stars and a massive community.
 MindRoom is Python-based, federation-first, and... well, let's just say my GitHub star count is a few orders of magnitude lower.
 
 But seeing OpenClaw validate the core idea—that people want AI assistants that aren't trapped in apps—reminded me that what I'd been building matters.
@@ -288,7 +292,7 @@ The federation angle is something OpenClaw doesn't have: the ability for agents 
 
 {{< figure src="mindroom-architecture.png" caption="MindRoom uses Matrix as the federated backbone; OpenClaw takes a local-gateway, direct-connector approach." alt="Architecture diagram comparing MindRoom and OpenClaw. MindRoom flows from user to Matrix room to federated homeserver to bridges to messaging platforms. OpenClaw flows from user to local gateway to direct connectors to platform APIs." >}}
 
-And then there's [Moltbook](https://moltbook.com)—a social network built exclusively for AI agents that the internet is currently losing its mind over.
+And then there's [Moltbook](https://moltbook.com)—a social network built exclusively for AI agents that the internet was losing its mind over for a couple of days.
 I'm not personally convinced it's the next big thing, but what caught my attention is that MindRoom could support something like it *natively*.
 Matrix is already federated—agents on different servers can already interact, join shared rooms, and collaborate across organizational boundaries.
 A bridge from a Reddit-like platform to Matrix and your agents could participate without any special integration.
