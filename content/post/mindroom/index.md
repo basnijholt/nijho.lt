@@ -1,7 +1,7 @@
 ---
 title: "MindRoom: AI agents that live in Matrix and work everywhere 🧠"
-subtitle: "Cross-platform AI agents with Matrix, Python, persistent memory, and 80+ tool integrations"
-summary: "MindRoom is an open-source system I built that creates AI agents living in Matrix. Because Matrix bridges to Slack, Telegram, Discord, and more, your agents follow you everywhere—with persistent memory, multi-agent collaboration, and 80+ tool integrations."
+subtitle: "Cross-platform AI agents with Matrix, Python, persistent memory, and 100+ built-in tool integrations"
+summary: "MindRoom is an open-source system I built that creates AI agents living in Matrix. Because Matrix bridges to Slack, Telegram, Discord, and more, your agents follow you everywhere—with persistent memory, multi-agent collaboration, and 100+ built-in tool integrations."
 date: 2026-06-26
 draft: false
 featured: true
@@ -63,7 +63,7 @@ So here I am, dusting off MindRoom and writing about what it is, how it works, a
 
 {{% callout note %}}
 **TL;DR:** MindRoom is an open-source system that creates AI agents living inside the [Matrix protocol](https://matrix.org/).
-Because Matrix has bridges to Slack, Telegram, Discord, WhatsApp, and everything else, your agents can follow you across every platform—with persistent memory, 80+ tool integrations, and multi-agent collaboration.
+Because Matrix has bridges to Slack, Telegram, Discord, WhatsApp, and everything else, your agents can follow you across every platform—with persistent memory, 100+ built-in tool integrations, and multi-agent collaboration.
 Think of it as "your AI assistant, but it lives in Matrix and works everywhere."
 {{% /callout %}}
 
@@ -80,9 +80,7 @@ The key insight: Matrix has [bridges](https://matrix.org/ecosystem/bridges/) to 
 So if your AI agent lives in Matrix, it can reach you on any platform.
 One agent, every platform, continuous memory.
 
-{{% callout warning %}}
-**Fair warning:** Matrix bridges vary in maturity. Some (like the [Telegram bridge](https://github.com/mautrix/telegram)) work very well, while others can be finicky. Your mileage may vary depending on which platforms you need.
-{{% /callout %}}
+One practical caveat: Matrix bridges vary in maturity. Some, like the [Telegram bridge](https://github.com/mautrix/telegram), work very well, while others can be finicky. Your mileage may vary depending on which platforms you need.
 
 Here's what a typical setup looks like in `config.yaml`:
 
@@ -91,7 +89,7 @@ agents:
   code:
     display_name: CodeAgent
     role: Generate code, manage files, execute shell commands
-    model: opus-4-6
+    model: opus-4.8
     tools: [file, shell, github]
     instructions:
       - Always read files before modifying them.
@@ -100,7 +98,7 @@ agents:
   research:
     display_name: ResearchAgent
     role: Search the web, summarize papers, find information
-    model: gpt-5.2
+    model: gpt-5.5
     tools: [tavily, arxiv, wikipedia]
     rooms: [lobby, research]
 
@@ -156,7 +154,7 @@ An `⋯` marker shows while the agent is still thinking—a small touch, but it 
 There's also a size limit on message content.
 That's fine for human chat, but AI responses can get long—especially when tool calls and their results are included.
 I worked around this by using Matrix's attachment feature: when a response exceeds the limit, the content continues in an attachment that gets updated as the message keeps streaming in.
-This required forking the [Element](https://element.io/) chat client so that attachments display inline rather than as downloadable files, making the whole thing seamless.
+This required forking the [Cinny](https://cinny.in/) chat client so that attachments display inline rather than as downloadable files, making the whole thing seamless.
 
 {{% callout note %}}
 These workarounds are the kind of thing you don't anticipate when you pick a protocol.
@@ -165,24 +163,23 @@ Matrix gives you an incredible foundation, but making it work well for AI requir
 
 ## 5. Memory that follows you
 
-MindRoom implements a dual memory system inspired by [Mem0](https://mem0.ai/):
+MindRoom currently supports two memory implementations.
 
-- **Agent memory** (`agent_code`): What a specific agent knows about you—your coding style, your preferences, your tech stack.
-  This persists across all rooms and platforms.
-- **Room memory** (`room_dev`): Project-specific knowledge tied to a room—architectural decisions, constraints, team conventions.
-- **Team memory**: Shared context when agents collaborate—joint decisions, consensus, shared insights.
+The first is the more traditional semantic memory system built on [Mem0](https://mem0.ai/)'s `AsyncMemory`, with configurable embedding providers ([OpenAI](https://platform.openai.com/docs/guides/embeddings), [Ollama](https://ollama.com/), or HuggingFace) and vector storage via [ChromaDB](https://www.trychroma.com/).
+This gives agents searchable memory for preferences, project context, decisions, and recurring facts.
 
-Memories are stored in [ChromaDB](https://www.trychroma.com/) and searched semantically.
-When you talk to your code agent on Tuesday in Matrix and then on Wednesday via the Slack bridge, it remembers everything.
-You don't have to re-explain yourself.
+The second is a file-based memory system inspired by the simplicity of OpenClaw-style agent files.
+Instead of burying identity in a database, durable context can live in plain Markdown files that travel with the agent.
+That portability matters: I can move the same agent identity from OpenClaw to Hermes to MindRoom without starting from scratch.
 
-The implementation uses [Mem0](https://mem0.ai/)'s `AsyncMemory` with configurable embedding providers ([OpenAI](https://platform.openai.com/docs/guides/embeddings), [Ollama](https://ollama.com/), or HuggingFace), so you can keep it fully local if privacy matters to you.
+MindRoom also has a memory flush step that periodically extracts durable facts from conversations and writes them back into memory.
+So the chat transcript remains chat, while stable preferences, decisions, and identity details become reusable context for future turns.
 
-{{< figure src="mindroom-memory.png" caption="A live Personal room memory thread: MindRoom stores a harmless preference in one turn and retrieves it later from the same Matrix room." alt="Live MindRoom memory thread showing the generated agent avatars and a public demo where the agent remembers teal as the blog demo accent color." >}}
+{{< figure src="mindroom-memory.png" caption="A live Personal memory demo: MindRoom stores a harmless preference in one turn and retrieves it later from the same Matrix conversation." alt="Live MindRoom memory thread showing the generated agent avatars and a public demo where the agent remembers teal as the blog demo accent color." >}}
 
-## 6. 80+ tool integrations
+## 6. 100+ built-in tool integrations
 
-Agents can use over 80 integrations:
+Agents can use over 100 built-in integrations:
 
 | Category | Examples |
 |----------|----------|
@@ -213,13 +210,17 @@ The live room view below is the same Matrix thread surface those team runs use: 
 
 {{< figure src="mindroom-team.png" caption="Live Personal room thread list and thread surface from chat.mindroom.chat. Team collaboration uses this same Matrix-native interface, with routed agents and shared history living in the room instead of a separate workflow UI." alt="Live MindRoom Personal room showing the Explain how MindRoom thread, routed agent activity, recent threads, and the room member list." >}}
 
-## 8. Hot-reload: change config without downtime
+## 8. Hot-reload: change config and plugins without downtime
 
 `config.yaml` is watched at runtime.
 When you edit it—add an agent, change a model, update instructions—MindRoom diffs the old and new config, gracefully restarts only the affected agents, and has them rejoin their rooms.
-No downtime, no restart required.
+No downtime, no full runtime restart required.
 
-This sounds minor, but when you're iterating on agent behavior, being able to tweak a system prompt and see results in seconds significantly improves the development loop.
+The same development loop applies to plugins.
+MindRoom has a rich Python hook system, and plugins can be live-developed while the system is running.
+Change a plugin file, save it, and MindRoom automatically reloads the plugin without restarting the Python runtime.
+
+This sounds minor, but when you're iterating on agent behavior or plugin hooks, being able to tweak code and config and see results in seconds significantly improves the development loop.
 
 {{< video autoplay="true" loop="true" controls="yes" src="mindroom-hot-reload.mp4" >}}
 
@@ -283,7 +284,7 @@ The similarities are striking:
 - Both let you choose your own AI model
 
 The differences are interesting too.
-OpenClaw is local-first and TypeScript-based with 171K stars and a massive community.
+OpenClaw is local-first and TypeScript-based with 380K+ stars and a massive community.
 MindRoom is Python-based, federation-first, and... well, let's just say my GitHub star count is a few orders of magnitude lower.
 
 But seeing OpenClaw validate the core idea—that people want AI assistants that aren't trapped in apps—reminded me that what I'd been building matters.
@@ -291,7 +292,7 @@ The federation angle is something OpenClaw doesn't have: the ability for agents 
 
 {{< figure src="mindroom-architecture.png" caption="MindRoom uses Matrix as the federated backbone; OpenClaw takes a local-gateway, direct-connector approach." alt="Architecture diagram comparing MindRoom and OpenClaw. MindRoom flows from user to Matrix room to federated homeserver to bridges to messaging platforms. OpenClaw flows from user to local gateway to direct connectors to platform APIs." >}}
 
-And then there's [Moltbook](https://moltbook.com)—a social network built exclusively for AI agents that the internet is currently losing its mind over.
+And then there's [Moltbook](https://moltbook.com)—a social network built exclusively for AI agents that the internet was losing its mind over for a couple of days.
 I'm not personally convinced it's the next big thing, but what caught my attention is that MindRoom could support something like it *natively*.
 Matrix is already federated—agents on different servers can already interact, join shared rooms, and collaborate across organizational boundaries.
 A bridge from a Reddit-like platform to Matrix and your agents could participate without any special integration.
@@ -302,31 +303,34 @@ Building on that foundation means you inherit those security properties rather t
 
 ## 12. What's next
 
-After stepping away for a while, I'm picking MindRoom back up—but with a healthier relationship this time.
+I first drafted this post a couple of months ago, when MindRoom was still something I was trying to come back to.
+That part is already out of date.
+Since January I've been spending nearly every free hour on it again, and since March it has effectively been my full-time work.
 The codebase supports 8+ AI model providers—OpenAI, Anthropic, Ollama, Groq, Google, OpenRouter, DeepSeek, Cerebras—and the core architecture is solid.
-That said, few people besides me have actually tried it so far—and I'd like to change that.
-There's already a Docker Compose file and a [starter repository](https://github.com/basnijholt/mindroom-stack) to get started, but I want to make it even simpler.
+It also has real users now.
+My rough guess is that something like 30-100 people have tried MindRoom in one form or another, which is still early, but meaningfully different from "only I have touched this."
+There's already a Docker Compose file and a [starter repository](https://github.com/mindroom-ai/mindroom-stack) to get started, but I want to make it even simpler.
 
-What I want to focus on:
+What I'm focusing on now:
 - **Skills system**: Building an ecosystem of reusable agent behaviors (already partially implemented with OpenClaw-compatible format)
 - **Even easier onboarding**: A `docker compose up` gets you running today, but I want a wizard that gets you from zero to working agents without touching a YAML file
-- **Community**: The codebase is open-source but I haven't promoted it at all
-- **Not burning out again**: Working on this at a sustainable pace, not the obsessive 2 AM marathon from before
+- **Community**: Turning the small group of early users into a real operator and contributor community
+- **Scope discipline**: Keeping the work sustainable now that MindRoom is effectively full-time, not slipping back into the obsessive 2 AM marathon from before
 
 I'm deliberately leaving the SaaS ambitions aside for now.
-The core system is what matters, and that's where I want to spend my energy.
+The core system is what matters, and that's where the energy is going.
 
-If you're interested in AI agents that live in Matrix and work everywhere, check out [MindRoom on GitHub](https://github.com/basnijholt/mindroom).
+If you're interested in AI agents that live in Matrix and work everywhere, check out [MindRoom on GitHub](https://github.com/mindroom-ai/mindroom).
 
-Sometimes all it takes is seeing someone else succeed with a similar idea to remember why you started building in the first place.
+Sometimes seeing someone else succeed with a similar idea is enough to remember why you started building in the first place.
 And sometimes the most important lesson from a project isn't technical—it's learning when to step away and when to come back.
 
 _Are you running AI agents on any messaging platforms? Have you tried Matrix for anything beyond regular chat? I'd love to hear about your setups!_
 
 ## Links and resources
 
-- [MindRoom on GitHub](https://github.com/basnijholt/mindroom)
-- [MindRoom Stack (starter repository)](https://github.com/basnijholt/mindroom-stack)
+- [MindRoom on GitHub](https://github.com/mindroom-ai/mindroom)
+- [MindRoom Stack (starter repository)](https://github.com/mindroom-ai/mindroom-stack)
 - [Matrix protocol](https://matrix.org/)
 - [OpenClaw](https://openclaw.ai)
 - [Mem0 (memory system inspiration)](https://mem0.ai/)
