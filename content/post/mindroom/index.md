@@ -2,7 +2,7 @@
 title: "MindRoom: AI agents that live in Matrix and work everywhere 🧠"
 subtitle: "Cross-platform AI agents with Matrix, Python, persistent memory, and 80+ tool integrations"
 summary: "MindRoom is an open-source system I built that creates AI agents living in Matrix. Because Matrix bridges to Slack, Telegram, Discord, and more, your agents follow you everywhere—with persistent memory, multi-agent collaboration, and 80+ tool integrations."
-date: 2026-02-06
+date: 2026-06-26
 draft: false
 featured: true
 authors:
