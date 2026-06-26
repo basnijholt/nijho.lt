@@ -67,7 +67,7 @@ Because Matrix has bridges to Slack, Telegram, Discord, WhatsApp, and everything
 Think of it as "your AI assistant, but it lives in Matrix and works everywhere."
 {{% /callout %}}
 
-> **TODO:** Screenshot of MindRoom in action — a Matrix room (e.g., Element client) showing multiple agents listed as users in the sidebar, with a conversation thread open where an agent is responding with streaming output and tool call indicators.
+{{< figure src="mindroom-in-action.png" caption="Live chat.mindroom.chat Personal thread with the prompt: “Explain how MindRoom and what you can do.” Mind answers in the real Matrix room, using tool calls and the Codex-backed local MindRoom runtime." alt="Live MindRoom Personal thread showing the prompt Explain how MindRoom and what you can do, followed by Mind explaining Matrix agents, tools, memory, and skills." >}}
 
 ## 2. What is MindRoom?
 
@@ -113,7 +113,7 @@ teams:
 
 Define your agents, give them tools and rooms, and they show up in Matrix as real users—with avatars, typing indicators, and online status.
 
-> **TODO:** Screenshot of the Element client's member list showing MindRoom agents as Matrix users — each with their own avatar, display name (e.g., CodeAgent, ResearchAgent), and "Online" presence status.
+{{< figure src="mindroom-members.png" caption="MindRoom agents are real Matrix users with their own accounts, generated avatars, display names, room memberships, and online presence." alt="Live MindRoom room showing RouterAgent, Mind, and Bas as Matrix users with generated avatars." >}}
 
 ## 3. How it actually works
 
@@ -137,7 +137,9 @@ You see tool calls happening live:
 [results here]
 ```
 
-> **TODO:** Screen recording (short video/GIF) of an agent responding in real-time — showing the streaming text appearing incrementally, the `⋯` marker while thinking, and tool call/result blocks appearing mid-response.
+The recording below starts in the main Personal room, sends the prompt `Explain how MindRoom and what you can do.`, and then follows MindRoom as it opens the new thread and streams the reply to completion. It is sped up 2.5x to keep the flow skimmable.
+
+{{< video autoplay="true" loop="true" controls="yes" src="mindroom-agent-response.mp4" >}}
 
 ## 4. Building on Matrix: the good and the tricky
 
@@ -176,7 +178,7 @@ You don't have to re-explain yourself.
 
 The implementation uses [Mem0](https://mem0.ai/)'s `AsyncMemory` with configurable embedding providers ([OpenAI](https://platform.openai.com/docs/guides/embeddings), [Ollama](https://ollama.com/), or HuggingFace), so you can keep it fully local if privacy matters to you.
 
-> **TODO:** Screenshot showing a conversation where the agent references something the user told it in a previous session or different room — demonstrating persistent memory in action. Alternatively, a side-by-side of two platforms (Matrix native + Slack/Telegram bridge) showing the same agent maintaining context.
+{{< figure src="mindroom-memory.png" caption="A live Personal room memory thread: MindRoom stores a harmless preference in one turn and retrieves it later from the same Matrix room." alt="Live MindRoom memory thread showing the generated agent avatars and a public demo where the agent remembers teal as the blog demo accent color." >}}
 
 ## 6. 80+ tool integrations
 
@@ -207,8 +209,9 @@ You ask a question, the lead delegates subtasks, collects results, and synthesiz
 The system then merges their responses with a consensus summary.
 
 In practice, you might have a research team where one agent searches academic papers, another checks industry news, and a third validates claims—all triggered by a single message.
+The live room view below is the same Matrix thread surface those team runs use: threads, routed agents, and room history are all first-class chat objects rather than a separate dashboard.
 
-> **TODO:** Screenshot of a team collaboration in action — a thread where multiple agents respond to a single question, each contributing their specialty (e.g., one does research, another analyzes, a third summarizes).
+{{< figure src="mindroom-team.png" caption="Live Personal room thread list and thread surface from chat.mindroom.chat. Team collaboration uses this same Matrix-native interface, with routed agents and shared history living in the room instead of a separate workflow UI." alt="Live MindRoom Personal room showing the Explain how MindRoom thread, routed agent activity, recent threads, and the room member list." >}}
 
 ## 8. Hot-reload: change config without downtime
 
@@ -218,7 +221,7 @@ No downtime, no restart required.
 
 This sounds minor, but when you're iterating on agent behavior, being able to tweak a system prompt and see results in seconds significantly improves the development loop.
 
-> **TODO:** Screen recording (short video/GIF) of the hot-reload flow — edit config.yaml in an editor, save, and show the terminal logs detecting the change and the agent appearing in the Matrix room within seconds.
+{{< video autoplay="true" loop="true" controls="yes" src="mindroom-hot-reload.mp4" >}}
 
 ## 9. Voice, scheduling, and other features
 
@@ -264,7 +267,8 @@ Agentic coding makes it so easy to *start* things that you can build yourself in
 The gap between "I can build this" and "I can maintain and ship this as a product" is larger than the tools make it feel.
 {{% /callout %}}
 
-> **TODO:** Screenshot of the SaaS platform dashboard (Next.js frontend) — showing the instance management UI.
+The hosted control plane lives at [app.mindroom.chat](https://app.mindroom.chat).
+I am deliberately not turning this section into a dashboard tour; the interesting part, and the part I still care about most, is the Matrix-native runtime underneath it.
 
 ## 11. OpenClaw and why it matters
 
@@ -285,7 +289,7 @@ MindRoom is Python-based, federation-first, and... well, let's just say my GitHu
 But seeing OpenClaw validate the core idea—that people want AI assistants that aren't trapped in apps—reminded me that what I'd been building matters.
 The federation angle is something OpenClaw doesn't have: the ability for agents from different organizations to collaborate natively, with end-to-end encryption (Olm/Megolm), on a protocol that governments already trust and deploy at scale.
 
-> **TODO:** Architecture diagram comparing MindRoom vs OpenClaw side-by-side. MindRoom: User → Matrix (federated) → Bridges → platforms. OpenClaw: User → Local Gateway → Direct connectors → platforms.
+{{< figure src="mindroom-architecture.png" caption="MindRoom uses Matrix as the federated backbone; OpenClaw takes a local-gateway, direct-connector approach." alt="Architecture diagram comparing MindRoom and OpenClaw. MindRoom flows from user to Matrix room to federated homeserver to bridges to messaging platforms. OpenClaw flows from user to local gateway to direct connectors to platform APIs." >}}
 
 And then there's [Moltbook](https://moltbook.com)—a social network built exclusively for AI agents that the internet is currently losing its mind over.
 I'm not personally convinced it's the next big thing, but what caught my attention is that MindRoom could support something like it *natively*.
