@@ -303,31 +303,34 @@ Building on that foundation means you inherit those security properties rather t
 
 ## 12. What's next
 
-After stepping away for a while, I'm picking MindRoom back up—but with a healthier relationship this time.
+I first drafted this post a couple of months ago, when MindRoom was still something I was trying to come back to.
+That part is already out of date.
+Since January I've been spending nearly every free hour on it again, and since March it has effectively been my full-time work.
 The codebase supports 8+ AI model providers—OpenAI, Anthropic, Ollama, Groq, Google, OpenRouter, DeepSeek, Cerebras—and the core architecture is solid.
-That said, few people besides me have actually tried it so far—and I'd like to change that.
-There's already a Docker Compose file and a [starter repository](https://github.com/basnijholt/mindroom-stack) to get started, but I want to make it even simpler.
+It also has real users now.
+My rough guess is that something like 30-100 people have tried MindRoom in one form or another, which is still early, but meaningfully different from "only I have touched this."
+There's already a Docker Compose file and a [starter repository](https://github.com/mindroom-ai/mindroom-stack) to get started, but I want to make it even simpler.
 
-What I want to focus on:
+What I'm focusing on now:
 - **Skills system**: Building an ecosystem of reusable agent behaviors (already partially implemented with OpenClaw-compatible format)
 - **Even easier onboarding**: A `docker compose up` gets you running today, but I want a wizard that gets you from zero to working agents without touching a YAML file
-- **Community**: The codebase is open-source but I haven't promoted it at all
-- **Not burning out again**: Working on this at a sustainable pace, not the obsessive 2 AM marathon from before
+- **Community**: Turning the small group of early users into a real operator and contributor community
+- **Scope discipline**: Keeping the work sustainable now that MindRoom is effectively full-time, not slipping back into the obsessive 2 AM marathon from before
 
 I'm deliberately leaving the SaaS ambitions aside for now.
-The core system is what matters, and that's where I want to spend my energy.
+The core system is what matters, and that's where the energy is going.
 
-If you're interested in AI agents that live in Matrix and work everywhere, check out [MindRoom on GitHub](https://github.com/basnijholt/mindroom).
+If you're interested in AI agents that live in Matrix and work everywhere, check out [MindRoom on GitHub](https://github.com/mindroom-ai/mindroom).
 
-Sometimes all it takes is seeing someone else succeed with a similar idea to remember why you started building in the first place.
+Sometimes seeing someone else succeed with a similar idea is enough to remember why you started building in the first place.
 And sometimes the most important lesson from a project isn't technical—it's learning when to step away and when to come back.
 
 _Are you running AI agents on any messaging platforms? Have you tried Matrix for anything beyond regular chat? I'd love to hear about your setups!_
 
 ## Links and resources
 
-- [MindRoom on GitHub](https://github.com/basnijholt/mindroom)
-- [MindRoom Stack (starter repository)](https://github.com/basnijholt/mindroom-stack)
+- [MindRoom on GitHub](https://github.com/mindroom-ai/mindroom)
+- [MindRoom Stack (starter repository)](https://github.com/mindroom-ai/mindroom-stack)
 - [Matrix protocol](https://matrix.org/)
 - [OpenClaw](https://openclaw.ai)
 - [Mem0 (memory system inspiration)](https://mem0.ai/)
