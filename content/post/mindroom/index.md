@@ -163,20 +163,19 @@ Matrix gives you an incredible foundation, but making it work well for AI requir
 
 ## 5. Memory that follows you
 
-MindRoom implements a dual memory system inspired by [Mem0](https://mem0.ai/):
+MindRoom currently supports two memory implementations.
 
-- **Agent memory** (`agent_code`): What a specific agent knows about you—your coding style, your preferences, your tech stack.
-  This persists across all rooms and platforms.
-- **Room memory** (`room_dev`): Project-specific knowledge tied to a room—architectural decisions, constraints, team conventions.
-- **Team memory**: Shared context when agents collaborate—joint decisions, consensus, shared insights.
+The first is the more traditional semantic memory system built on [Mem0](https://mem0.ai/)'s `AsyncMemory`, with configurable embedding providers ([OpenAI](https://platform.openai.com/docs/guides/embeddings), [Ollama](https://ollama.com/), or HuggingFace) and vector storage via [ChromaDB](https://www.trychroma.com/).
+This gives agents searchable memory for preferences, project context, decisions, and recurring facts.
 
-Memories are stored in [ChromaDB](https://www.trychroma.com/) and searched semantically.
-When you talk to your code agent on Tuesday in Matrix and then on Wednesday via the Slack bridge, it remembers everything.
-You don't have to re-explain yourself.
+The second is a file-based memory system inspired by the simplicity of OpenClaw-style agent files.
+Instead of burying identity in a database, durable context can live in plain Markdown files that travel with the agent.
+That portability matters: I can move the same agent identity from OpenClaw to Hermes to MindRoom without starting from scratch.
 
-The implementation uses [Mem0](https://mem0.ai/)'s `AsyncMemory` with configurable embedding providers ([OpenAI](https://platform.openai.com/docs/guides/embeddings), [Ollama](https://ollama.com/), or HuggingFace), so you can keep it fully local if privacy matters to you.
+MindRoom also has a memory flush step that periodically extracts durable facts from conversations and writes them back into memory.
+So the chat transcript remains chat, while stable preferences, decisions, and identity details become reusable context for future turns.
 
-{{< figure src="mindroom-memory.png" caption="A live Personal room memory thread: MindRoom stores a harmless preference in one turn and retrieves it later from the same Matrix room." alt="Live MindRoom memory thread showing the generated agent avatars and a public demo where the agent remembers teal as the blog demo accent color." >}}
+{{< figure src="mindroom-memory.png" caption="A live Personal memory demo: MindRoom stores a harmless preference in one turn and retrieves it later from the same Matrix conversation." alt="Live MindRoom memory thread showing the generated agent avatars and a public demo where the agent remembers teal as the blog demo accent color." >}}
 
 ## 6. 100+ built-in tool integrations
 
