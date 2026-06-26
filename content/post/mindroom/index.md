@@ -56,7 +56,8 @@ I'd rather use a local model for sensitive tasks and pick the best, cheapest Chi
 
 So I built **MindRoom** on a chat protocol—if people just want a chat, give them a chat.
 Agents live in the same rooms as you, collaborate in threads, and follow you across every platform.
-And then I got so obsessed with it that I eventually burned out and had to step away completely.
+The first commit landed on July 29, 2025 (four months before OpenClaw's first commit 😅), so by the time I'm publishing this MindRoom has been with me for nearly eleven months: first as an obsessive side project, then, since March, with much more sustained focus.
+At first I got so obsessed with it that I eventually burned out and had to step away completely.
 
 Recently, seeing [OpenClaw](https://openclaw.ai) gain massive traction solving a similar problem reminded me that what I'd been building wasn't just a niche obsession.
 So here I am, dusting off MindRoom and writing about what it is, how it works, and why I think the approach still matters.
