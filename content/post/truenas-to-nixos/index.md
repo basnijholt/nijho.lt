@@ -247,7 +247,7 @@ hosts/nas/
 ```
 
 This is exactly why I like NixOS.
-The migration stopped being a pile of screenshots and became a pull request.
+The migration stopped being a list of steps I needed to follow and became a pull request.
 
 The important storage boundary is:
 
