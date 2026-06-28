@@ -24,7 +24,8 @@ categories:
 
 TrueNAS was the last non-NixOS machine in my home lab.
 
-Not because I loved having one appliance OS left, but because migrating something with ~100 TiB of data feels scary.
+I did not keep it around because I loved having one appliance OS left.
+I kept postponing the migration because moving something with ~100 TiB of data feels scary.
 My NAS holds the big ZFS pools.
 It has the SMB shares, NFS exports, snapshots, replication tasks, encrypted datasets, Incus state, Docker workloads, and all the boring-but-important health checks that are easy to take for granted until something fails.
 
@@ -120,7 +121,7 @@ Community reactions, for example [this TechEnclave thread](https://techenclave.c
 Would I ever have built TrueNAS from source myself?
 Almost certainly not.
 
-But that is not the point.
+That misses the point.
 I also rarely compile my Linux kernel manually, yet I care deeply that the ecosystem is open enough that I *could* understand, rebuild, inspect, and fork the pieces if necessary.
 For a storage appliance, trust matters more than convenience.
 The NAS is not a toy VM.
@@ -200,11 +201,10 @@ This was not one neat two-agent pass.
 It was many independent rounds of review: build a scaffold, ask a model to attack it, compare that against the live TrueNAS state, refine the scaffold, and repeat.
 ChatGPT 5.5 did most of the initial construction.
 Claude Opus 4.8 on max effort did one of the later independent cross-checks against the live system.
-By the end, the point was not that I had manually rederived every TrueNAS setting myself.
-The point was that multiple independent reviews had converged on the same assumptions and the remaining differences were things I understood.
+By the end, I trusted the result because multiple independent reviews had converged on the same assumptions, and I understood the remaining differences.
 
-The goal was not to clone TrueNAS byte for byte.
-The goal was to make every important behavior explicit: storage import, shares, snapshots, replication, Incus recovery, monitoring, and the few places where NixOS intentionally differs from the old appliance.
+Byte-for-byte TrueNAS cloning was never the target.
+I wanted every important behavior explicit: storage import, shares, snapshots, replication, Incus recovery, monitoring, and the few places where NixOS intentionally differs from the old appliance.
 By the end, the NixOS config reproduced the parts of TrueNAS I actually depended on, and the remaining differences were deliberate.
 
 The agent was excellent at inventory:
@@ -373,11 +373,12 @@ But when I originally bought and configured this machine, it became the most pow
 So it naturally started attracting the Docker workloads too.
 Most of those workloads are not resource intensive, and keeping them close to the data is genuinely convenient.
 At one point I was running more than a hundred containers on that machine and it barely made a dent.
-They were not running directly on the TrueNAS host, but virtualized in containers, which made it feel like a reasonable compromise for a long time.
+They ran inside containers rather than directly on the TrueNAS host, which made it feel like a reasonable compromise for a long time.
 
 The migration also became a chance to fix a real operational problem.
 My worst TrueNAS incident was a long OOM death spiral: no swap, too many unbounded containers, and services repeatedly getting killed and restarted.
-This was not the philosophical reason I decided to leave TrueNAS, but it was a very practical reminder that the NAS had become a general-purpose compute host.
+The philosophy came from Nix and open infrastructure.
+The OOM incident was the practical reminder that the NAS had become a general-purpose compute host.
 In the NixOS version, container memory limits, zram, earlyoom, and an explicit ZFS ARC cap are part of the configuration instead of being tribal knowledge or post-incident notes.
 
 ## Secrets stay out of the repo
