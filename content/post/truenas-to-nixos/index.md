@@ -199,11 +199,12 @@ I asked it to inspect the current system, summarize the live state, compare that
 Then I reviewed the diffs.
 Then I asked for another review.
 Then another.
-This was not one neat two-agent pass.
-It was many independent rounds of review: build a scaffold, ask a model to attack it, compare that against the live TrueNAS state, refine the scaffold, and repeat.
+The process was messier than one neat two-agent pass: build a scaffold, ask a model to attack it, compare that against the live TrueNAS state, refine the scaffold, and repeat.
 GPT 5.5 did most of the initial construction.
 Claude Opus 4.8 on max effort did one of the later independent cross-checks against the live system.
 By the end, I trusted the result because multiple independent reviews had converged on the same assumptions, and I understood the remaining differences.
+The loop felt like code review: inspect live state, turn the desired parts into Nix, review the diff, and ask another model to attack it.
+The scariest assumption got a VM test, and the destructive step stayed small.
 
 Byte-for-byte TrueNAS cloning was never the target.
 I wanted every important behavior explicit: storage import, shares, snapshots, replication, Incus recovery, monitoring, and the few places where NixOS intentionally differs from the old appliance.
@@ -222,8 +223,8 @@ The agent was excellent at inventory:
 - What host ID ZFS expects
 - Which disk is the current boot pool
 
-But the job was not to blindly preserve everything.
-The job was to convert the useful parts into code and make the dangerous parts explicit.
+Preserving everything blindly would have been wrong.
+The useful parts became code, and the dangerous parts became explicit.
 
 ## The NixOS scaffold
 
@@ -348,8 +349,7 @@ Incus is another subtle one.
 The storage pool lives on a data pool, so disko will not touch it.
 But a fresh NixOS install has a fresh Incus database.
 The plan is to run `incus admin recover`, then apply a small declarative reconciler for the known instances.
-Again, the point is not to pretend there is no state.
-The point is to make the state boundary explicit.
+The state boundary has to be clear: preserve the storage dataset, recover the Incus database, then reconcile the instance config.
 
 Health monitoring is also declared:
 
@@ -401,38 +401,6 @@ In practice, it gives me a lightweight hardware/network-presence factor: the NAS
 That changes the migration footgun.
 The off-box unlock path has to survive the cutover, and I still want an independent passphrase recovery path for manual unlocks.
 
-## What I like about this workflow
-
-This migration is the clearest example yet of why I want infrastructure in text.
-
-An AI agent inspected the live TrueNAS box.
-It produced a NixOS scaffold.
-Another review pass found missing replication behavior, SMB differences, Incus recovery gaps, and monitoring regressions.
-The human-intent parts stayed explicit instead of being blindly copied from the live system.
-Then we encoded the dangerous storage assumption as a VM test.
-
-This is not "vibe sysadmin."
-
-It is closer to code review:
-
-1. Inspect the current system.
-2. Convert the desired parts to code.
-3. Review the diff.
-4. Ask another model to review the diff.
-5. Add tests for the scariest assumption.
-6. Write the cutover runbook.
-7. Keep the actual destructive step small and explicit.
-
-The agent is useful because the system is textual.
-It can read Nix files.
-It can generate a patch.
-It can run `nix build`.
-It can run the VM test.
-It can inspect the generated disko script.
-It can update the PR body.
-
-Try doing that with a web UI full of hidden state.
-
 ## Where this leaves TrueNAS
 
 I still like TrueNAS.
@@ -442,14 +410,9 @@ It gave me a good NAS UI when I wanted a NAS UI.
 And if you want an appliance that mostly owns storage for you, it is still a very compelling project.
 
 I like NixOS more for my own infrastructure.
-
-I do not want the most important machine in my house to be an appliance I configure through a UI.
-I do not want the build system for that appliance to move behind closed doors and have to decide whether I am still comfortable with the governance model.
-I do not want AI agents poking at mutable state they cannot fully represent.
-
-Without AI, I probably would never have dared to attempt this migration.
-With AI and NixOS together, the risk profile changes.
-I can describe messy infrastructure intent in imprecise English, let the agent turn that into exact Nix code, and then review the diff before it becomes system state.
+The most important machine in my house should live in reviewable code instead of mutable appliance state spread across a UI, a database, and old debugging decisions.
+NixOS and AI are a particularly good match for that.
+I can describe messy infrastructure intent in imprecise English, let the agent turn that into exact Nix code, and review the diff before it becomes system state.
 The prompt stays fuzzy.
 The machine state does not.
 
@@ -464,21 +427,7 @@ At the time of writing, the NixOS `nas` scaffold builds, the VM disko rehearsal 
 The real machine has not been declared "done" until the installer preflight and client validation have completed.
 {{% /callout %}}
 
-What is already validated locally:
-
-- The `nas` NixOS system builds.
-- The generated disko script targets only the configured boot disk.
-- The VM disko rehearsal passes.
-- The fake data pools survive the rehearsal and re-import with sentinel files intact.
-- ZFS data pools are imported by name, not described in disko.
-- Force import is disabled.
-- Boot-time encryption prompts are disabled.
-- SMB config parses with `testparm`.
-- Replication scripts pass syntax checks.
-- Incus preseed evaluates.
-- The cutover docs explicitly call out the remote-only disk identity preflight.
-
-What still must happen during the real cutover:
+The remaining work is the actual cutover:
 
 - Confirm encrypted dataset passphrases are recorded/backed up off-box.
 - Cleanly shut down TrueNAS.
@@ -492,10 +441,8 @@ What still must happen during the real cutover:
 - Recover Incus state.
 - Verify replication and monitoring.
 
-That sounds like a lot, because it is.
-But the important thing is that the risk has been decomposed.
-The scary part is no longer "replace TrueNAS somehow."
-It is a checklist of explicit assumptions, most of which are now encoded in Nix or tested in a VM.
+That is still a real migration.
+The difference is that the vague fear of "replace TrueNAS somehow" has become a small destructive step surrounded by reviewable config, a VM rehearsal, and an explicit cutover checklist.
 
 ## References
 
