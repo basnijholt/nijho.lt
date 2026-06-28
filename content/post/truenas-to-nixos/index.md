@@ -159,8 +159,8 @@ This is the part where many migration guides become hand-wavy:
 3. Good luck.
 
 That is not enough for me.
-I do not have physical access to the machine.
-I cannot unplug the data disks before running the installer.
+I could physically access the machine, but unplugging the relevant NVMe hardware would mean taking apart more of the box than I wanted to touch.
+So I treated the cutover as if the disks had to stay connected.
 And I absolutely do not want one typo in a disk path to become a very expensive lesson in humility.
 
 ## Giving an agent the keys, carefully
