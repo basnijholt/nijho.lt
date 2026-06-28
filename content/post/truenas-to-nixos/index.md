@@ -172,9 +172,9 @@ And I absolutely did not want one typo in a disk path to become yet another meme
 
 Without AI this would probably have become a week-long project that I would forever postpone.
 With AI, it felt plausible to get the first serious version done in a single sitting.
-My approach was to give ChatGPT 5.5 in xhigh mode SSH access to the live TrueNAS box and tell it, repeatedly and very explicitly, not to change anything.
-To be clear, this was not technically sandboxed read-only access.
-It had root power.
+My approach was to give GPT 5.5 in xhigh mode SSH access to the live TrueNAS box and tell it, repeatedly and very explicitly, not to change anything.
+To be clear, it had root access.
+At this point these models have become powerful enough that I trust them to follow explicit instructions.
 The safety boundary was instruction-following, narrow scope, and review.
 
 Not "please be careful."
@@ -200,7 +200,7 @@ Then I asked for another review.
 Then another.
 This was not one neat two-agent pass.
 It was many independent rounds of review: build a scaffold, ask a model to attack it, compare that against the live TrueNAS state, refine the scaffold, and repeat.
-ChatGPT 5.5 did most of the initial construction.
+GPT 5.5 did most of the initial construction.
 Claude Opus 4.8 on max effort did one of the later independent cross-checks against the live system.
 By the end, I trusted the result because multiple independent reviews had converged on the same assumptions, and I understood the remaining differences.
 
