@@ -165,7 +165,7 @@ And I absolutely did not want one typo in a disk path to become yet another meme
 
 ## Giving an agent the keys, carefully
 
-At this point I did the most 2026 version of infrastructure work imaginable: I gave ChatGPT 5.5 in high-reasoning mode SSH access to the live TrueNAS box and told it, repeatedly and very explicitly, not to change anything.
+At this point I did the most 2026 version of infrastructure work imaginable: I gave ChatGPT 5.5 in xhigh mode SSH access to the live TrueNAS box and told it, repeatedly and very explicitly, not to change anything.
 To be clear, this was not technically sandboxed read-only access.
 It had root power.
 The safety boundary was instruction-following, narrow scope, and review.
