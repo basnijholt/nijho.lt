@@ -191,10 +191,11 @@ Then I reviewed the diffs.
 Then I asked for another review.
 Then another.
 This was not one neat two-agent pass.
-It was many independent rounds of review: build a scaffold, ask a model to attack it, compare that against the live TrueNAS state, correct the assumptions, and repeat.
+It was many independent rounds of review: build a scaffold, ask a model to attack it, compare that against the live TrueNAS state, refine the scaffold, and repeat.
 ChatGPT 5.5 did most of the initial construction.
 Claude Opus 4.8 on max effort did one of the later independent cross-checks against the live system.
-Then I corrected things the agents got wrong.
+By the end, the point was not that I had manually rederived every TrueNAS setting myself.
+The point was that multiple independent reviews had converged on the same assumptions and the remaining differences were things I understood.
 
 For example, it initially treated some user cleanup as accidental.
 It wanted to preserve old account names and retired identities because it saw them in the live system.
@@ -404,7 +405,7 @@ This migration is the clearest example yet of why I want infrastructure in text.
 An AI agent inspected the live TrueNAS box.
 It produced a NixOS scaffold.
 Another review pass found missing replication behavior, SMB differences, Incus recovery gaps, and monitoring regressions.
-I corrected the human-intent parts.
+The human-intent parts stayed explicit instead of being blindly copied from the live system.
 Then we encoded the dangerous storage assumption as a VM test.
 
 This is not "vibe sysadmin."
