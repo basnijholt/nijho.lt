@@ -189,7 +189,7 @@ I asked it to inspect the current system, summarize the live state, compare that
 
 Then I reviewed the diffs.
 Then I asked for another review.
-Then I asked another agent to review the first agent's work.
+Then I asked Claude Opus 4.8 on max effort to review the first agent's work and cross-check the live TrueNAS assumptions.
 Then I corrected things the agent got wrong.
 
 For example, it initially treated some user cleanup as accidental.
@@ -358,6 +358,17 @@ Health monitoring is also declared:
 TrueNAS gives you many of these things in the UI.
 NixOS gives them to me as code.
 
+I know using your NAS for other services is a bit of an anti-pattern.
+In an ideal world, the storage box just stores data and stays boring.
+But when I originally bought and configured this machine, it became the most powerful machine in my home lab.
+So it naturally started attracting the Docker workloads too.
+Not directly on the TrueNAS host, but virtualized in containers, which made it feel like a reasonable compromise for a long time.
+
+The migration also became a chance to fix a real operational problem.
+My worst TrueNAS incident was a long OOM death spiral: no swap, too many unbounded containers, and services repeatedly getting killed and restarted.
+This was not the philosophical reason I decided to leave TrueNAS, but it was a very practical reminder that the NAS had become a general-purpose compute host.
+In the NixOS version, container memory limits, zram, earlyoom, and an explicit ZFS ARC cap are part of the configuration instead of being tribal knowledge or post-incident notes.
+
 ## Secrets stay out of the repo
 
 My dotfiles are public.
@@ -368,7 +379,7 @@ But the plan deliberately keeps secrets and sensitive cutover material out of gi
 
 For this migration, that means:
 
-- ZFS dataset passphrases are exported before shutdown and stored outside the repo.
+- ZFS dataset passphrases are recorded/backed up off-box before shutdown and stored outside the repo.
 - Replication private keys are installed manually under `/etc/ssh`.
 - Inbound authorized keys for backup senders are installed during cutover.
 - Alerting secrets live in a runtime env file.
@@ -378,7 +389,7 @@ One important discovery: the encrypted datasets use passphrase keys.
 That is good.
 It means the data is recoverable with the passphrases.
 But TrueNAS's auto-unlock copy lives in TrueNAS state on the boot pool.
-If I destroy the boot pool without exporting those passphrases, I can strand encrypted datasets even though the ZFS pools themselves survived.
+If I destroy the boot pool without having those passphrases recorded somewhere else, I can strand encrypted datasets even though the ZFS pools themselves survived.
 
 That is exactly the kind of migration footgun I want written down before the cutover, not rediscovered afterward.
 
@@ -457,7 +468,7 @@ What is already validated locally:
 
 What still must happen during the real cutover:
 
-- Export and store encrypted dataset passphrases.
+- Confirm encrypted dataset passphrases are recorded/backed up off-box.
 - Cleanly shut down TrueNAS.
 - Boot the NixOS installer.
 - Run the remote-only disko preflight on the actual hardware.
@@ -489,4 +500,4 @@ It is a checklist of explicit assumptions, most of which are now encoded in Nix 
 - [TrueNAS 25.04.2 release announcement](https://forums.truenas.com/t/truenas-25-04-2-is-now-available/49165)
 - [Linux Jails with Incus forum thread](https://forums.truenas.com/t/linux-jails-containers-vms-with-incus/23599?page=21)
 - [Jailmaker](https://github.com/Jip-Hop/jailmaker)
-- [My NixOS configuration](https://github.com/basnijholt/dotfiles/tree/main/configs/nixos)
+- [The NAS NixOS scaffold PR](https://github.com/basnijholt/dotfiles/pull/61)
