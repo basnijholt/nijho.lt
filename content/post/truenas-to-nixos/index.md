@@ -198,11 +198,9 @@ Claude Opus 4.8 on max effort did one of the later independent cross-checks agai
 By the end, the point was not that I had manually rederived every TrueNAS setting myself.
 The point was that multiple independent reviews had converged on the same assumptions and the remaining differences were things I understood.
 
-For example, it initially treated some user cleanup as accidental.
-It wanted to preserve old account names and retired identities because it saw them in the live system.
-That was exactly the sort of thing where human intent matters.
-The live system is not automatically the desired system.
-The migration was also a cleanup.
+The goal was not to clone TrueNAS byte for byte.
+The goal was to make every important behavior explicit: storage import, shares, snapshots, replication, Incus recovery, monitoring, and the few places where NixOS intentionally differs from the old appliance.
+By the end, the NixOS config reproduced the parts of TrueNAS I actually depended on, and the remaining differences were deliberate.
 
 The agent was excellent at inventory:
 
