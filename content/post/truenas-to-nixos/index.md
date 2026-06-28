@@ -24,8 +24,7 @@ categories:
 
 TrueNAS was the last non-NixOS machine in my home lab.
 
-I did not keep it around because I loved having one appliance OS left.
-I kept postponing the migration because moving something with ~100 TiB of data feels scary.
+I kept postponing it for a simpler reason: moving something with ~100 TiB of data feels scary.
 My NAS holds the big ZFS pools.
 It has the SMB shares, NFS exports, snapshots, replication tasks, encrypted datasets, Incus state, Docker workloads, and all the boring-but-important health checks that are easy to take for granted until something fails.
 
@@ -205,7 +204,7 @@ By the end, I trusted the result because multiple independent reviews had conver
 
 Byte-for-byte TrueNAS cloning was never the target.
 I wanted every important behavior explicit: storage import, shares, snapshots, replication, Incus recovery, monitoring, and the few places where NixOS intentionally differs from the old appliance.
-By the end, the NixOS config reproduced the parts of TrueNAS I actually depended on, and the remaining differences were deliberate.
+At that point, the NixOS config reproduced the parts of TrueNAS I actually depended on, and the remaining differences were deliberate.
 
 The agent was excellent at inventory:
 
