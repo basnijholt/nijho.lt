@@ -72,6 +72,11 @@ That is genuinely useful.
 But a database export is not the same thing as a configuration I can comfortably review.
 When I look at a TrueNAS backup, it is not obvious to me which settings I intentionally changed, which settings are defaults, which settings are historical leftovers, and which settings only exist because I clicked something while debugging two years ago.
 
+One concrete example was NFS.
+I had a periodic root cron job patching `/etc/exports` to add `crossmnt` to one export, so child datasets would show up correctly inside the Docker container host.
+It worked, but it was exactly the kind of small appliance hack that made me uneasy: partly outside the UI, partly outside the exported configuration, and very easy to forget during a migration.
+In NixOS, that behavior is just part of the export line.
+
 That is the exact discomfort that pushed me away from Proxmox.
 I do not want to remember what I clicked.
 I want the system to remember it as code.
