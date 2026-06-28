@@ -380,7 +380,7 @@ But when I originally bought and configured this machine, it became the most pow
 So it naturally started attracting the Docker workloads too.
 Most of those workloads are not resource intensive, and keeping them close to the data is genuinely convenient.
 At one point I was running more than a hundred containers on that machine and it barely made a dent.
-They ran inside containers rather than directly on the TrueNAS host, which made it feel like a reasonable compromise for a long time.
+They ran inside LXC containers on Incus rather than directly on the TrueNAS host, which made it feel like a reasonable compromise for a long time.
 
 The migration also became a chance to fix a real operational problem.
 My worst TrueNAS incident was a long OOM death spiral: no swap, too many unbounded containers, and services repeatedly getting killed and restarted.
