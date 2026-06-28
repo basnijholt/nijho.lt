@@ -189,8 +189,12 @@ I asked it to inspect the current system, summarize the live state, compare that
 
 Then I reviewed the diffs.
 Then I asked for another review.
-Then I asked Claude Opus 4.8 on max effort to review the first agent's work and cross-check the live TrueNAS assumptions.
-Then I corrected things the agent got wrong.
+Then another.
+This was not one neat two-agent pass.
+It was many independent rounds of review: build a scaffold, ask a model to attack it, compare that against the live TrueNAS state, correct the assumptions, and repeat.
+ChatGPT 5.5 did most of the initial construction.
+Claude Opus 4.8 on max effort did one of the later independent cross-checks against the live system.
+Then I corrected things the agents got wrong.
 
 For example, it initially treated some user cleanup as accidental.
 It wanted to preserve old account names and retired identities because it saw them in the live system.
