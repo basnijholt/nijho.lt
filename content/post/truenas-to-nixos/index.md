@@ -24,7 +24,7 @@ categories:
 
 TrueNAS was the last non-NixOS machine in my home lab.
 
-Not because I loved having one appliance OS left, but because storage is scary.
+Not because I loved having one appliance OS left, but because migrating something with 136 terabytes of data feels scary.
 My NAS holds the big ZFS pools.
 It has the SMB shares, NFS exports, snapshots, replication tasks, encrypted datasets, Incus state, Docker workloads, and all the boring-but-important health checks that are easy to take for granted until something fails.
 
