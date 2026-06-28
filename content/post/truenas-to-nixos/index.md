@@ -317,24 +317,13 @@ nix build .#checks.x86_64-linux.nas-disko-safety
 
 It passed.
 
-That does not prove the real cutover is risk-free.
-Nothing can prove that from my desk, because the remaining risk is physical identity:
+Passing that VM test gives me confidence in the generated Nix/disko logic.
+The real cutover still has one hardware-identity question:
 
 > Does the by-id path in the Nix config resolve to the current boot-pool disk on the real machine?
 
-The VM test proves the generated Nix/disko logic only formats the configured boot target.
-It does not prove that the real boot target is what I think it is.
-
-That is why the cutover runbook also contains a remote-only installer preflight:
-
-- Evaluate the disko target from the flake.
-- Resolve it with `readlink -f`.
-- Print `lsblk`.
-- List importable ZFS pools.
-- Run `zdb -l` on the target and its partitions.
-- Abort if `tank` or `ssd` labels appear on the target.
-- Abort if the target is data-disk-sized.
-- Run `wipefs --no-act` before doing anything destructive.
+So the cutover runbook has one final preflight from the installer ISO: resolve the disk path, print `lsblk`, inspect ZFS labels with `zdb -l`, check the target size, and run `wipefs --no-act`.
+If the target shows `tank` or `ssd` labels, or looks like a data disk, the runbook stops before anything destructive happens.
 
 This is the level of paranoia I want around storage migrations.
 
