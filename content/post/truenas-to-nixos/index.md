@@ -274,6 +274,11 @@ NixOS becomes the new one, while preserving the services and data I actually nee
 It lets you describe disks declaratively and then formats/partitions/mounts them.
 For a fresh NixOS install, it is exactly what I want.
 
+This also fits how I install NixOS machines.
+I build a custom [installer ISO](https://github.com/basnijholt/dotfiles/blob/main/configs/nixos/installers/iso.nix), put it on a USB stick, and boot from it.
+The image already has SSH enabled with my keys, flakes enabled, and the tooling needed to run the repo-defined `disko` and `nixos-install` flow.
+That turns the installer environment into part of the reviewed configuration, instead of another place where I have to remember which choices to make.
+
 It is also exactly the tool that can ruin your day if pointed at the wrong disk.
 
 My requirement was:
