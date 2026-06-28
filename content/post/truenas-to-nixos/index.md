@@ -1,7 +1,7 @@
 ---
 title: "Migrating from TrueNAS to NixOS without losing data after the build-system rug pull"
-subtitle: "How I used an AI agent, read-only inspection, disko, and a VM rehearsal to replace my last appliance OS without letting it near my ZFS data pools"
-summary: "TrueNAS was the last appliance OS in my homelab. The build-system change was the last straw, but the itch had been building for a while: too much UI state, unclear defaults, and virtualization churn around Incus. This is the story of how I used an AI agent with read-only SSH access to inspect the live machine, recreate the config declaratively, and build a VM rehearsal to prove disko would only wipe the boot disk."
+subtitle: "How I used an AI agent with root-capable SSH, strict no-change instructions, disko, and a VM rehearsal to replace my last appliance OS without letting it near my ZFS data pools"
+summary: "TrueNAS was the last appliance OS in my homelab. The build-system change was the last straw, but the itch had been building for a while: too much UI state, unclear defaults, and virtualization churn around Incus. This is the story of how I gave an AI agent root-capable SSH access with strict instructions not to change anything, used it to inspect the live machine, recreated the config declaratively, and built a VM rehearsal to prove disko would only wipe the boot disk."
 date: 2026-06-28
 draft: true
 featured: false
@@ -22,7 +22,7 @@ categories:
   - level:intermediate
 ---
 
-I thought TrueNAS would be the last non-NixOS machine in my homelab.
+TrueNAS was the last non-NixOS machine in my home lab.
 
 Not because I loved having one appliance OS left, but because storage is scary.
 My NAS holds the big ZFS pools.
@@ -165,6 +165,9 @@ And I absolutely do not want one typo in a disk path to become a very expensive 
 ## Giving an agent the keys, carefully
 
 At this point I did the most 2026 version of infrastructure work imaginable: I gave ChatGPT 5.5 in high-reasoning mode SSH access to the live TrueNAS box and told it, repeatedly and very explicitly, not to change anything.
+To be clear, this was not technically sandboxed read-only access.
+It had root power.
+The safety boundary was instruction-following, narrow scope, and review.
 
 Not "please be careful."
 More like:
