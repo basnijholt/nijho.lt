@@ -263,9 +263,9 @@ The data pools are intentionally *not* in disko.
 That is the entire point.
 
 {{% callout note %}}
-This is also why the host is called `nas`, not `truenas`.
-The goal is not to recreate TrueNAS on NixOS.
-The goal is to make the NAS a NixOS machine that preserves the services and data I actually need.
+The host is called `nas` because that is the role I want to keep.
+TrueNAS was the old implementation.
+NixOS becomes the new one, while preserving the services and data I actually need.
 {{% /callout %}}
 
 ## The disko problem
