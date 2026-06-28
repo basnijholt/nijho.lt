@@ -435,19 +435,23 @@ Try doing that with a web UI full of hidden state.
 
 ## Where this leaves TrueNAS
 
-I do not hate TrueNAS.
+I still like TrueNAS.
 It got me very far.
 It made ZFS approachable.
 It gave me a good NAS UI when I wanted a NAS UI.
 And if you want an appliance that mostly owns storage for you, it is still a very compelling project.
 
-But for my own infrastructure, the direction is clear.
+I like NixOS more for my own infrastructure.
 
 I do not want the most important machine in my house to be an appliance I configure through a UI.
 I do not want the build system for that appliance to move behind closed doors and have to decide whether I am still comfortable with the governance model.
 I do not want AI agents poking at mutable state they cannot fully represent.
 
-I want a git diff.
+Without AI, I probably would never have dared to attempt this migration.
+With AI and NixOS together, the risk profile changes.
+I can describe messy infrastructure intent in imprecise English, let the agent turn that into exact Nix code, and then review the diff before it becomes system state.
+The prompt stays fuzzy.
+The machine state does not.
 
 After the Proxmox migration, TrueNAS was the last major exception.
 This migration removes that exception.
