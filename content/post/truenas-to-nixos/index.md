@@ -387,19 +387,19 @@ But the plan deliberately keeps secrets and sensitive cutover material out of gi
 
 For this migration, that means:
 
-- ZFS dataset passphrases are recorded/backed up off-box before shutdown and stored outside the repo.
+- ZFS dataset passphrases and unlock material stay off-box and outside the repo.
 - Replication private keys are installed manually under `/etc/ssh`.
 - Inbound authorized keys for backup senders are installed during cutover.
 - Alerting secrets live in a runtime env file.
 - A local `~/nas-cutover/` staging directory can exist, but it is explicitly not part of the repo and should not be casually read by agents.
 
-One important discovery: the encrypted datasets use passphrase keys.
-That is good.
-It means the data is recoverable with the passphrases.
-But TrueNAS's auto-unlock copy lives in TrueNAS state on the boot pool.
-If I destroy the boot pool without having those passphrases recorded somewhere else, I can strand encrypted datasets even though the ZFS pools themselves survived.
+One important detail: the encrypted datasets use passphrase keys, and I already handle that with [truenas-unlock](https://github.com/basnijholt/truenas-unlock), a small tool I wrote for this exact problem.
+The unlock material lives on another device.
+When that device is on the same network, it can unlock the datasets through the TrueNAS API.
+In practice, it gives me a lightweight hardware/network-presence factor: the NAS can boot, and the encrypted datasets only unlock when the separate unlock device is present too.
 
-That is exactly the kind of migration footgun I want written down before the cutover, not rediscovered afterward.
+That changes the migration footgun.
+The off-box unlock path has to survive the cutover, and I still want an independent passphrase recovery path for manual unlocks.
 
 ## What I like about this workflow
 
