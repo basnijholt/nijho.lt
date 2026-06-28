@@ -24,7 +24,7 @@ categories:
 
 TrueNAS was the last non-NixOS machine in my home lab.
 
-Not because I loved having one appliance OS left, but because migrating something with 136 terabytes of data feels scary.
+Not because I loved having one appliance OS left, but because migrating something with ~100 TiB of data feels scary.
 My NAS holds the big ZFS pools.
 It has the SMB shares, NFS exports, snapshots, replication tasks, encrypted datasets, Incus state, Docker workloads, and all the boring-but-important health checks that are easy to take for granted until something fails.
 
@@ -33,6 +33,7 @@ That migration made me increasingly intolerant of appliance-style infrastructure
 If the important state lives in a database behind a web UI, I cannot review it in a pull request.
 If I change something while debugging, I cannot guarantee the change made it back into the source of truth.
 And if I let an AI agent help me, imperative systems become even more uncomfortable: an agent can run a hundred commands, succeed, and leave behind a system that nobody can reproduce.
+For the NAS specifically, that basically meant I did not dare touch the machine with an AI agent at all.
 
 NixOS is different.
 The diff is the state.
@@ -42,7 +43,7 @@ If it works, I can commit it.
 
 TrueNAS was the last holdout.
 It had been itching for a while.
-Then the build-system rug pull made the decision easy.
+Then the [build-system rug pull](https://forums.truenas.com/t/clearing-the-air-on-build-scripts/64357) made the decision easy.
 
 {{< toc >}}
 
@@ -367,7 +368,9 @@ I know using your NAS for other services is a bit of an anti-pattern.
 In an ideal world, the storage box just stores data and stays boring.
 But when I originally bought and configured this machine, it became the most powerful machine in my home lab.
 So it naturally started attracting the Docker workloads too.
-Not directly on the TrueNAS host, but virtualized in containers, which made it feel like a reasonable compromise for a long time.
+Most of those workloads are not resource intensive, and keeping them close to the data is genuinely convenient.
+At one point I was running more than a hundred containers on that machine and it barely made a dent.
+They were not running directly on the TrueNAS host, but virtualized in containers, which made it feel like a reasonable compromise for a long time.
 
 The migration also became a chance to fix a real operational problem.
 My worst TrueNAS incident was a long OOM death spiral: no swap, too many unbounded containers, and services repeatedly getting killed and restarted.
