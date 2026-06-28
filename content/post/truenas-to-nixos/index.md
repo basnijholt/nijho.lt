@@ -107,7 +107,7 @@ I did not want to do it again for the most important machine in my house.
 Then I saw Jeff Geerling mention TrueNAS's recent shady behavior in a video, and I started looking into what had actually changed.
 
 The short version is that iXsystems made part of the TrueNAS ecosystem closed source.
-The specific part that mattered to me was the build system: iXsystems moved the TrueNAS build scripts and related build infrastructure internal for the TrueNAS 27 line.
+Specifically, iXsystems moved the TrueNAS build scripts and related build infrastructure internal for the TrueNAS 27 line.
 Their forum post, [Clearing the Air on Build Scripts](https://forums.truenas.com/t/clearing-the-air-on-build-scripts/64357), frames this as a practical build-system decision and says normal installation and updates remain unaffected.
 The old [`truenas/scale-build`](https://github.com/truenas/scale-build) repository now says it is preserved historically and is no longer the maintained build system.
 Community reactions, for example [this TechEnclave thread](https://techenclave.com/t/truenas-has-gone-closed-source/420208), understandably read this as a meaningful step away from fully open development.
