@@ -170,7 +170,9 @@ And I absolutely did not want one typo in a disk path to become yet another meme
 
 ## Giving an agent the keys, carefully
 
-At this point I did the most 2026 version of infrastructure work imaginable: I gave ChatGPT 5.5 in xhigh mode SSH access to the live TrueNAS box and told it, repeatedly and very explicitly, not to change anything.
+Without AI, this probably would have become a week-long project that I kept postponing.
+With AI, it felt plausible to get the first serious version done in a single sitting.
+My approach was to give ChatGPT 5.5 in xhigh mode SSH access to the live TrueNAS box and tell it, repeatedly and very explicitly, not to change anything.
 To be clear, this was not technically sandboxed read-only access.
 It had root power.
 The safety boundary was instruction-following, narrow scope, and review.
