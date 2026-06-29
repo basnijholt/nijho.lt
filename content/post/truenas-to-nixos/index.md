@@ -319,14 +319,8 @@ nix build .#checks.x86_64-linux.nas-disko-safety
 It passed.
 
 Passing that VM test gives me confidence in the generated Nix/disko logic.
-After that, I also checked the real TrueNAS machine while it was still running TrueNAS.
-The configured by-id path resolves to the Samsung 970 EVO 500 GB device, and `zdb -l` on that target shows `boot-pool`.
-The `tank` and `ssd` labels are on different devices.
-
-That means the config is correct before cutover.
-
-The cutover runbook still repeats the same check from the installer ISO: resolve the disk path, print `lsblk`, inspect ZFS labels with `zdb -l`, check the target size, and run `wipefs --no-act`.
-If the target shows `tank` or `ssd` labels, or looks like a data disk, the runbook stops before anything destructive happens.
+The read-only check on the live TrueNAS box gives me confidence in the configured disk target: the by-id path resolves to the 500 GB `boot-pool` disk, and `tank` and `ssd` live on different devices.
+The installer preflight repeats that same check immediately before the destructive step.
 
 This is the level of paranoia I want around storage migrations.
 
@@ -435,7 +429,7 @@ The remaining work is the actual cutover:
 - Cleanly shut down TrueNAS.
 - Boot the NixOS installer.
 - Run the remote-only disko preflight on the actual hardware.
-- Confirm the disko target is the old boot-pool disk and has no data-pool labels.
+- Re-confirm the disko target is still the boot-pool disk with no data-pool labels (guards against a disk swap or failure since the pre-cutover check).
 - Run disko and `nixos-install`.
 - Import pools.
 - Unlock encrypted datasets.
