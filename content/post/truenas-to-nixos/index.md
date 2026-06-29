@@ -110,7 +110,7 @@ I did not want to do it again for the most important machine in my house.
 
 ## The last straw
 
-Then I saw Jeff Geerling mention TrueNAS's recent shady behavior in a video, and I started looking into what had actually changed.
+Then I saw Jeff Geerling mention TrueNAS's recent "shady behavior" in a video, and I started looking into what had actually changed.
 
 The short version is that iXsystems made part of the TrueNAS ecosystem closed source.
 Specifically, iXsystems moved the TrueNAS build scripts and related build infrastructure internal for the TrueNAS 27 line.
