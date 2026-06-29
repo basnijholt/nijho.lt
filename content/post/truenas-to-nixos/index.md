@@ -331,8 +331,8 @@ Still annoying, but normal.
 
 SMB was not a byte-for-byte port.
 TrueNAS ships private Samba VFS modules and has its own ACL/middleware behavior.
-Stock NixOS Samba can get close with `fruit`, `streams_xattr`, `shadow_copy2`, and sensible share definitions, but it is not literally the same stack.
-So the plan calls out what must be tested from real clients: Time Machine, guest access, photo/media access, and previous versions.
+Stock NixOS Samba covers the parts I need with `fruit`, `streams_xattr`, and sensible share definitions, but it is not literally the same stack.
+So the plan calls out what must be tested from real clients: Time Machine, guest access, and photo/media access.
 
 Snapshots and replication also changed.
 TrueNAS snapshot tasks become Sanoid policy.
@@ -453,7 +453,7 @@ The slow work was making the cutover boring.
 </details>
 
 At the end of the cutover, the machine was `nas`, the ZFS pools were healthy, the NFS mounts worked from my PC, the Incus containers were recovered, and the Docker workloads were running again.
-SMB still deserves real client testing, especially Time Machine and Previous Versions, but the scary storage part is done.
+SMB still deserves real client testing, especially Time Machine and normal authenticated photo/media access, but the scary storage part is done.
 
 ## References
 
@@ -469,5 +469,6 @@ SMB still deserves real client testing, especially Time Machine and Previous Ver
 - [TrueNAS 25.04.2 release announcement](https://forums.truenas.com/t/truenas-25-04-2-is-now-available/49165)
 - [Linux Jails with Incus forum thread](https://forums.truenas.com/t/linux-jails-containers-vms-with-incus/23599?page=21)
 - [Jailmaker](https://github.com/Jip-Hop/jailmaker)
+- [truenas-unlock](https://github.com/basnijholt/truenas-unlock)
 - [zfs-unlock](https://github.com/basnijholt/zfs-unlock)
 - [The NAS NixOS scaffold PR](https://github.com/basnijholt/dotfiles/pull/61)
