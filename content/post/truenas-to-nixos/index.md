@@ -319,11 +319,13 @@ nix build .#checks.x86_64-linux.nas-disko-safety
 It passed.
 
 Passing that VM test gives me confidence in the generated Nix/disko logic.
-The real cutover still has one hardware-identity question:
+After that, I also checked the real TrueNAS machine while it was still running TrueNAS.
+The configured by-id path resolves to the Samsung 970 EVO 500 GB device, and `zdb -l` on that target shows `boot-pool`.
+The `tank` and `ssd` labels are on different devices.
 
-> Does the by-id path in the Nix config resolve to the current boot-pool disk on the real machine?
+That means the config is correct before cutover.
 
-So the cutover runbook has one final preflight from the installer ISO: resolve the disk path, print `lsblk`, inspect ZFS labels with `zdb -l`, check the target size, and run `wipefs --no-act`.
+The cutover runbook still repeats the same check from the installer ISO: resolve the disk path, print `lsblk`, inspect ZFS labels with `zdb -l`, check the target size, and run `wipefs --no-act`.
 If the target shows `tank` or `ssd` labels, or looks like a data disk, the runbook stops before anything destructive happens.
 
 This is the level of paranoia I want around storage migrations.
