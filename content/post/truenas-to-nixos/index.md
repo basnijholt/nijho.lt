@@ -116,7 +116,7 @@ The short version is that iXsystems made part of the TrueNAS ecosystem closed so
 Specifically, iXsystems moved the TrueNAS build scripts and related build infrastructure internal for the TrueNAS 27 line.
 Their forum post, [Clearing the Air on Build Scripts](https://forums.truenas.com/t/clearing-the-air-on-build-scripts/64357), frames this as a practical build-system decision and says normal installation and updates remain unaffected.
 The old [`truenas/scale-build`](https://github.com/truenas/scale-build) repository now says it is preserved historically and is no longer the maintained build system.
-Community reactions, for example [this TechEnclave thread](https://techenclave.com/t/truenas-has-gone-closed-source/420208), understandably read this as a meaningful step away from fully open development.
+Community reactions, for example [this TrueNAS forum thread](https://forums.truenas.com/t/truenas-closing-its-build-system-has-sparked-a-significant-trust-crisis-in-the-self-hosted-and-engineering-communities/64549), understandably read this as a meaningful step away from fully open development.
 
 Would I ever have built TrueNAS from source myself?
 Almost certainly not.
@@ -447,7 +447,7 @@ The difference is that the vague fear of "replace TrueNAS somehow" has become a 
 - [On agentic coding]({{< ref "/post/agentic-coding" >}})
 - [TrueNAS forum: Clearing the Air on Build Scripts](https://forums.truenas.com/t/clearing-the-air-on-build-scripts/64357)
 - [`truenas/scale-build` on GitHub](https://github.com/truenas/scale-build)
-- [TechEnclave discussion: TrueNAS has gone closed source?](https://techenclave.com/t/truenas-has-gone-closed-source/420208)
+- [TrueNAS forum: build-system trust crisis discussion](https://forums.truenas.com/t/truenas-closing-its-build-system-has-sparked-a-significant-trust-crisis-in-the-self-hosted-and-engineering-communities/64549)
 - [TrueNAS 25.04 documentation](https://www.truenas.com/docs/scale/25.04/)
 - [TrueNAS 25.04.1: Fangtooth Unification Gains Momentum](https://www.truenas.com/blog/truenas-fangtooth-25-04-1/)
 - [TrueNAS Virtualization Plans for 25.04.2](https://forums.truenas.com/t/truenas-virtualization-plans-for-25-04-2/46236)
