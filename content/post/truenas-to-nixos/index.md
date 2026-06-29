@@ -389,13 +389,14 @@ For this migration, that means:
 - Alerting secrets live in a runtime env file.
 - A local `~/nas-cutover/` staging directory can exist, but it is explicitly not part of the repo and should not be casually read by agents.
 
-One important detail: the encrypted datasets use passphrase keys, and I already handle that with [truenas-unlock](https://github.com/basnijholt/truenas-unlock), a small tool I wrote for this exact problem.
-The unlock material lives on another device.
-When that device is on the same network, it can unlock the datasets through the TrueNAS API.
-In practice, it gives me a lightweight hardware/network-presence factor: the NAS can boot, and the encrypted datasets only unlock when the separate unlock device is present too.
+One important detail: the encrypted datasets use passphrase keys.
+In the TrueNAS setup I handled that with [truenas-unlock](https://github.com/basnijholt/truenas-unlock), a small tool I wrote for this exact problem.
+The unlock material lives on another device; when that device is on the same network, it can unlock the datasets through the TrueNAS API.
+That gave me a lightweight hardware/network-presence factor: the NAS could boot, and the encrypted datasets only unlocked when the separate unlock device was present too.
 
 That changes the migration footgun.
-The off-box unlock path has to survive the cutover, and I still want an independent passphrase recovery path for manual unlocks.
+The TrueNAS API path does not survive the cutover as-is, so I split the same idea out into [zfs-unlock](https://github.com/basnijholt/zfs-unlock): the NixOS/OpenZFS version that talks to a restricted SSH receiver instead.
+During the migration I still kept an independent manual passphrase recovery path, because I do not want the automatic unlock mechanism to be the only way back into my data.
 
 ## Where this leaves TrueNAS
 
@@ -439,7 +440,7 @@ The slow work was making the cutover boring.
 
 <ul>
   <li>imported data-pool mountpoints needed to be reconciled to the <code>/mnt/...</code> paths my clients and services already used;</li>
-  <li>encrypted datasets needed a better manual post-boot unlock helper;</li>
+  <li>encrypted datasets needed a better manual post-boot unlock helper, and the old TrueNAS API unlock flow needed a NixOS/OpenZFS successor;</li>
   <li>Incus needed <code>incus admin recover</code> because the storage pool survived but the new OS had a fresh Incus database;</li>
   <li>one unprivileged recovered container needed the matching subordinate UID/GID ranges declared for its passthrough idmap;</li>
   <li><code>nas.local</code> needed an explicit DNS record so my wildcard did not send it to a workload container;</li>
@@ -468,4 +469,5 @@ SMB still deserves real client testing, especially Time Machine and Previous Ver
 - [TrueNAS 25.04.2 release announcement](https://forums.truenas.com/t/truenas-25-04-2-is-now-available/49165)
 - [Linux Jails with Incus forum thread](https://forums.truenas.com/t/linux-jails-containers-vms-with-incus/23599?page=21)
 - [Jailmaker](https://github.com/Jip-Hop/jailmaker)
+- [zfs-unlock](https://github.com/basnijholt/zfs-unlock)
 - [The NAS NixOS scaffold PR](https://github.com/basnijholt/dotfiles/pull/61)
