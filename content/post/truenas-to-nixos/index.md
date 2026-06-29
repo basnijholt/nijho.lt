@@ -429,7 +429,7 @@ The real machine has not been declared "done" until the installer preflight and 
 
 The remaining work is the actual cutover:
 
-- Confirm encrypted dataset passphrases are recorded/backed up off-box.
+- Keep the off-box unlock and manual recovery path available during cutover.
 - Cleanly shut down TrueNAS.
 - Boot the NixOS installer.
 - Run the remote-only disko preflight on the actual hardware.
