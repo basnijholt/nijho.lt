@@ -422,21 +422,35 @@ The important safety property stayed the same: first kexec into a temporary NixO
 Before the destructive phase, the box was running the installer in RAM and the disks had not been intentionally modified yet.
 That gave me a real checkpoint where aborting was still cheap.
 
+I kept my hands on the few commands that actually changed the machine.
+I ran the `nixos-anywhere` phases and the later `nixos-rebuild` commands myself.
+The agent stayed next to it, reading the outputs, checking the assumptions, SSHing in to verify pool health, services, mounts, Incus state, NFS clients, and then turning any findings back into code or documentation.
+That split felt right to me: I pressed enter on the small number of irreversible commands, and the AI did the tedious verification work that I would otherwise be tempted to rush.
+
 The actual migration was almost anticlimactic compared to the preparation.
 From the moment TrueNAS stopped being the running OS to having the Incus containers back with my hundred-plus services running again took less than 20 minutes.
 The slow work was not the cutover.
 The slow work was making the cutover boring.
 
-There were a few small first-boot reconciliations, exactly the kind of things I wanted written down rather than discovered in a panic:
+<details>
+<summary>The small things that still needed fixing during cutover</summary>
 
-- imported data-pool mountpoints needed to be reconciled to the `/mnt/...` paths my clients and services already used;
-- encrypted datasets needed a manual post-boot unlock path;
-- Incus needed `incus admin recover` because the storage pool survived but the new OS had a fresh Incus database;
-- one unprivileged recovered container needed the matching subordinate UID/GID ranges declared for its passthrough idmap;
-- the PC NFS mounts, Nix cache endpoints, and recovered Docker workload container all needed client-side validation.
+<p>There were a few small first-boot reconciliations, exactly the kind of things I wanted written down rather than discovered in a panic:</p>
 
-Those findings went back into the cutover runbooks and the Nix config.
-That is the part I like most: even the live migration notes became code or documentation, not folklore.
+<ul>
+  <li>imported data-pool mountpoints needed to be reconciled to the <code>/mnt/...</code> paths my clients and services already used;</li>
+  <li>encrypted datasets needed a better manual post-boot unlock helper;</li>
+  <li>Incus needed <code>incus admin recover</code> because the storage pool survived but the new OS had a fresh Incus database;</li>
+  <li>one unprivileged recovered container needed the matching subordinate UID/GID ranges declared for its passthrough idmap;</li>
+  <li><code>nas.local</code> needed an explicit DNS record so my wildcard did not send it to a workload container;</li>
+  <li>the old PC job that backed up the TrueNAS API config needed to be removed;</li>
+  <li>the PC NFS mounts, Nix cache endpoints, and recovered Docker workload container all needed client-side validation.</li>
+</ul>
+
+<p>Those findings went back into the cutover runbooks and the Nix config.
+That is the part I like most: even the live migration notes became code or documentation, not folklore.</p>
+
+</details>
 
 At the end of the cutover, the machine was `nas`, the ZFS pools were healthy, the NFS mounts worked from my PC, the Incus containers were recovered, and the Docker workloads were running again.
 SMB still deserves real client testing, especially Time Machine and Previous Versions, but the scary storage part is done.
