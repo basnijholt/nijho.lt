@@ -3,7 +3,7 @@ title: "Migrating from TrueNAS to NixOS without losing data after the build-syst
 subtitle: "How I used an AI agent with root-capable SSH, strict no-change instructions, disko, and a VM rehearsal to replace my last appliance OS without letting it near my ZFS data pools"
 summary: "TrueNAS was the last appliance OS in my homelab. The build-system change was the last straw, but the itch had been building for a while: too much UI state, unclear defaults, and virtualization churn around Incus. This is the story of how I gave an AI agent root-capable SSH access with strict instructions not to change anything, used it to inspect the live machine, recreated the config declaratively, and built a VM rehearsal to prove disko would only wipe the boot disk."
 date: 2026-06-28
-draft: true
+draft: false
 featured: false
 authors:
   - admin
