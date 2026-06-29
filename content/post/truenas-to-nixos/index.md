@@ -448,13 +448,13 @@ The slow work was making the cutover boring.
   <li>the PC NFS mounts, Nix cache endpoints, and recovered Docker workload container all needed client-side validation.</li>
 </ul>
 
-<p>Those findings went back into the cutover runbooks and the Nix config, so the notes are available for anyone who might benefit from them later.</p>
+<p>Those findings went back into the cutover runbooks and the Nix config in a <a href="https://github.com/basnijholt/dotfiles/pull/62">follow-up PR</a>, so the notes are available for anyone who might benefit from them later.</p>
 
 </details>
 
 At the end of the cutover, the machine was `nas`, the ZFS pools were healthy, the NFS mounts worked from my PC, the Incus containers were recovered, and the Docker workloads were running again.
-SMB authentication, guest access, and Time Machine worked after one final share-root permission fix.
-Normal authenticated media access still deserves the usual client check, but the scary storage part is done.
+SMB authentication, guest access, Time Machine, and normal media browsing from macOS Finder worked after one final share-root permission fix.
+At that point the migration was working end to end: the pools were healthy and the services I actually use were back.
 
 ## References
 
