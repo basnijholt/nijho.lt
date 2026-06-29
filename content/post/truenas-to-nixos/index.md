@@ -447,7 +447,6 @@ The difference is that the vague fear of "replace TrueNAS somehow" has become a 
 ## References
 
 - [I've gone full Nix: Proxmox to NixOS + Incus]({{< ref "/post/proxmox-to-nixos" >}})
-- [Why NixOS lets me sleep at night]({{< ref "/post/why-nixos-lets-me-sleep" >}})
 - [My homelab: from a single Raspberry Pi to a Proxmox cluster and a dedicated NAS]({{< ref "/post/homelab" >}})
 - [On agentic coding]({{< ref "/post/agentic-coding" >}})
 - [TrueNAS forum: Clearing the Air on Build Scripts](https://forums.truenas.com/t/clearing-the-air-on-build-scripts/64357)
