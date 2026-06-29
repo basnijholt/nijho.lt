@@ -435,7 +435,7 @@ The slow work was making the cutover boring.
 <details>
 <summary>The small things that still needed fixing during cutover</summary>
 
-<p>There were a few small first-boot reconciliations, exactly the kind of things I wanted written down rather than discovered in a panic:</p>
+<p>There were a few small first-boot reconciliations. I am writing them down mostly for future readers who want to follow a similar path:</p>
 
 <ul>
   <li>imported data-pool mountpoints needed to be reconciled to the <code>/mnt/...</code> paths my clients and services already used;</li>
@@ -447,8 +447,7 @@ The slow work was making the cutover boring.
   <li>the PC NFS mounts, Nix cache endpoints, and recovered Docker workload container all needed client-side validation.</li>
 </ul>
 
-<p>Those findings went back into the cutover runbooks and the Nix config.
-That is the part I like most: even the live migration notes became code or documentation, not folklore.</p>
+<p>Those findings went back into the cutover runbooks and the Nix config, so the notes are available for anyone who might benefit from them later.</p>
 
 </details>
 
