@@ -453,7 +453,8 @@ The slow work was making the cutover boring.
 </details>
 
 At the end of the cutover, the machine was `nas`, the ZFS pools were healthy, the NFS mounts worked from my PC, the Incus containers were recovered, and the Docker workloads were running again.
-SMB still deserves real client testing, especially Time Machine and normal authenticated photo/media access, but the scary storage part is done.
+SMB authentication, guest access, and Time Machine worked after one final share-root permission fix.
+Normal authenticated media access still deserves the usual client check, but the scary storage part is done.
 
 ## References
 
