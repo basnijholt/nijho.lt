@@ -45,6 +45,8 @@ The filesystem was not, and that turned out to matter more than I expected.
 The real trigger was that I got increasingly paranoid about an AI agent messing up my system.
 I run agentic AI in YOLO mode, exclusively.
 All day, every day, agents execute commands on this machine without asking me first.
+YOLO does not mean root, though: the agents run as my regular user, and the backup credentials live where only root can read them.
+An agent that could destroy the backup itself would make everything else in this post pointless.
 Meanwhile the stories keep coming in about even the most frontier models wiping someone's home directory:
 
 > GPT-5.6-Sol just accidentally deleted almost ALL of my Mac's files. And this is why I trust Fable 1000x more.
