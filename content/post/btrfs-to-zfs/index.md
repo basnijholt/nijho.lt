@@ -66,7 +66,7 @@ I want to be able to answer four questions about any machine I own:
 
 Asking question 1 delivered an unpleasant answer within the hour: the backups did not exist.
 Two boring causes had stacked up: a stale repository lock from a crashed run, and a repository URL still pointing at `truenas.local`, a name that stopped resolving along the way.
-The last successful backup ran at 07:00 on March 22; the next one at 07:16 on July 22, after the fix.
+The last successful backup ran at 07:00 on March 22; the next one at 07:16 on July 22, after [the fix](https://github.com/basnijholt/dotfiles/commit/4d2a75efcb503b9ca2aabcbe8339be3e5a62d0ce).
 Four months, almost to the minute.
 systemd logged the failure on every single run, nobody read it, and nothing escalated.
 I found out because I asked the question, not because anything told me.
@@ -80,14 +80,14 @@ When your storage layer gives you three sizes for the same data, you do not real
 You have a backup, and you have hope.
 
 Question 4 was no better.
-Because the PC was my only btrfs machine, it could not join the ZFS snapshot replication the rest of the fleet uses, so its backups relied entirely on restic pushing to the NAS.
+Because the PC was my only btrfs machine, it could not join [the ZFS snapshot replication the rest of the fleet uses](https://github.com/basnijholt/dotfiles/blob/0d6101c8e3f91a0845cb41adb3cda216f50917c8/configs/nixos/hosts/nas/replication.nix), so its backups relied entirely on restic pushing to the NAS.
 Off-machine, note, but not off-site; question 2 turned out to apply to locations too, and closing that gap is its own project.
 restic is file-based: every run visits the metadata of every single file to find what changed.
 On this machine that meant close to a hundred million files per scan, which turned out to include some 600 GB of git worktrees stuffed with virtual environments and `node_modules`.
 Each run took about an hour and a half, even when almost nothing had changed.
 
 That scan time dictated my backup cadence.
-The timer ran hourly, which in practice meant back-to-back scanning all day to move a couple hundred megabytes of real changes, and I recently dropped it to every six hours to stop the madness.
+The timer ran hourly, which in practice meant back-to-back scanning all day to move a couple hundred megabytes of real changes, and I recently [dropped it to every six hours](https://github.com/basnijholt/dotfiles/commit/4f2401de725d5201d4daca0e67505ad2e6f6691a) to stop the madness.
 Either way, my most recent work existed only on the machine an agent was busy poking at.
 
 The scanning is also not free for the hardware.
@@ -101,7 +101,7 @@ A hundred million files cost nothing when nobody has to visit them.
 
 ZFS does not magically collapse those numbers into one.
 But it gives me the same semantics everywhere, including on the NAS pools that hold the backups themselves.
-Eight of my machines already share a single ZFS disk layout, defined in one shared disko module.
+Eight of my machines already share a single ZFS disk layout, defined in [one shared disko module](https://github.com/basnijholt/dotfiles/blob/0d6101c8e3f91a0845cb41adb3cda216f50917c8/configs/nixos/common/disko-zfs.nix).
 The PC was the odd one out.
 This migration makes it nine machines with the exact same strategy, and one backup story to audit instead of one per machine.
 
@@ -110,7 +110,7 @@ This migration makes it nine machines with the exact same strategy, and one back
 The Nix side was the easy part.
 The PC now imports the same shared disko module as the other eight machines, with one addition: a `swapSize` parameter, because ZFS has no reliable swapfile story and the PC actually needs its 96 GB of swap.
 
-The disk is pinned by ID, not by device name:
+The disk is [pinned by ID](https://github.com/basnijholt/dotfiles/blob/8c0bc5faded40362ac01347682aaf2089562047d/configs/nixos/hosts/pc/disko.nix), not by device name:
 
 ```nix
 device = "/dev/disk/by-id/nvme-Samsung_SSD_990_EVO_Plus_4TB_...";
@@ -129,11 +129,11 @@ That sentence is the reason most of this post is about verification.
 
 The road back also has to survive the same agents that motivated all of this.
 The PC pushes its backups over sftp as a user that owns every file in the repository, which means a compromised PC could delete or encrypt its own safety net.
-So the NAS snapshots the repository dataset on its own side, where the PC's credentials cannot reach: two days of hourly ZFS snapshots and two weeks of dailies that only root on the NAS can destroy.
+So the NAS [snapshots the repository dataset on its own side](https://github.com/basnijholt/dotfiles/blob/0d6101c8e3f91a0845cb41adb3cda216f50917c8/configs/nixos/hosts/nas/storage.nix#L128-L143), where the PC's credentials cannot reach: two days of hourly ZFS snapshots and two weeks of dailies that only root on the NAS can destroy.
 
 ## Rehearsing in a VM, again
 
-The [NAS migration]({{< ref "/post/truenas-to-nixos" >}}) taught me to rehearse the destructive step in a VM, so the flake grew a `pc-vmtest` target and I ran the whole install through `nixos-anywhere --vm-test`.
+The [NAS migration]({{< ref "/post/truenas-to-nixos" >}}) taught me to rehearse the destructive step in a VM, so the flake grew a [`pc-vmtest` target](https://github.com/basnijholt/dotfiles/blob/8c0bc5faded40362ac01347682aaf2089562047d/configs/nixos/flake.nix#L110) and I ran the whole install through `nixos-anywhere --vm-test`.
 Disko formatted a virtual disk, created the pool, installed the system, and booted it with swap active.
 
 Passing that test proves the generated logic.
@@ -170,11 +170,11 @@ When the backup is the only rollback, I want its bits read back at least once.
 
 The outage taught me a fifth question: how do I find out when any of this stops working?
 All three checks above are point-in-time, and verification rots.
-So the NAS now re-verifies daily, from its own side of the sftp connection, that the newest snapshot in the repository is fresh, and pushes an alert to my phone when it is not.
+So the NAS now [re-verifies daily](https://github.com/basnijholt/dotfiles/blob/0d6101c8e3f91a0845cb41adb3cda216f50917c8/configs/nixos/hosts/nas/replication.nix#L263-L285), from its own side of the sftp connection, that the newest snapshot in the repository is fresh, and pushes an alert to my phone when it is not.
 That catches every failure mode on the PC side, including "the timer is simply disabled."
-The watcher itself is watched: the NAS pings an external dead-man's switch every five minutes, so if the machine holding my only road back goes dark, the alert comes from outside the house.
+The watcher itself is watched: the NAS pings an [external dead-man's switch](https://github.com/basnijholt/dotfiles/blob/0d6101c8e3f91a0845cb41adb3cda216f50917c8/configs/nixos/hosts/nas/health.nix#L252-L280) every five minutes, so if the machine holding my only road back goes dark, the alert comes from outside the house.
 
-While wiring this up we discovered that months of earlier NAS alerts had never arrived, because ntfy silently rejects message bodies over 4 KB.
+While wiring this up we discovered that months of earlier NAS alerts had never arrived, because [ntfy silently rejects message bodies over 4 KB](https://github.com/basnijholt/dotfiles/blob/0d6101c8e3f91a0845cb41adb3cda216f50917c8/configs/nixos/hosts/nas/health.nix#L60-L67).
 A notification you have never received is also a hypothesis.
 
 ## Restoring in stages
