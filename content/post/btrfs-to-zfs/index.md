@@ -131,7 +131,7 @@ It does not prove the backup, which is where the real risk lives.
 
 My recovery story has two layers.
 NixOS makes the *system* disposable: every service, driver fix, and firewall rule is in git, so no agent can leave the machine in a state I cannot rebuild.
-Verified backups make the *data* recoverable, where "verified" means the restore has actually been executed, hashed, and timed.
+Verified backups make the *data* recoverable.
 This migration is the voluntary version of the tweets above: I am about to delete all of my PC's files on purpose.
 
 I did three verifications, each one converting an assumption into a fact.
