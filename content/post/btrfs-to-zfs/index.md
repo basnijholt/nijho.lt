@@ -139,8 +139,7 @@ An AI agent did the tedious sweeps; I reviewed the evidence.
 
 The first check was completeness.
 We walked everything on the machine *outside* the backup paths, until every byte was accounted for.
-The result was reassuring and slightly funny: the biggest mysteries were a 39 GB vLLM model cache that re-downloads itself, some speech-model caches, and, my favorite, half a gigabyte in `/root/.cache` that turned out to be restic's own local cache.
-The backup tool itself was the largest unexplained thing outside the backup.
+It was all re-downloadable caches, and the largest unexplained thing turned out to be restic's own local cache.
 Everything outside the backup set is now *known* disposable instead of *assumed* disposable.
 
 The second check was the restore path.
