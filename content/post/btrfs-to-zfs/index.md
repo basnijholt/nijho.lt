@@ -24,7 +24,7 @@ categories:
 ---
 
 My GPU machine was the last machine in my fleet still running btrfs.
-I [bought it for gaming]({{< ref "/post/local-ai-journey" >}}), but these days its dual RTX 3090s almost exclusively run [local AI models]({{< ref "/post/llama-nixos" >}}).
+I [bought it for gaming]({{< ref "/post/local-ai-journey" >}}) (which never happened), and these days its dual RTX 3090s almost exclusively run [local AI models]({{< ref "/post/llama-nixos" >}}).
 
 btrfs itself never failed me.
 When I set up NixOS on this machine for the first time, I had read enough forum threads to become convinced that ZFS and NixOS were a troublesome combination, so I picked btrfs to be safe.
@@ -64,12 +64,16 @@ I want to be able to answer four questions about any machine I own:
 3. How big is a restore?
 4. How long will it take?
 
+## The backup that wasn't
+
 Asking question 1 delivered an unpleasant answer within the hour: the backups did not exist.
 Two boring causes had stacked up: an interrupted prune left a stale repository lock, which the job could never clear because its own unlock step only ran *after* a successful backup, and the repository URL still pointed at `truenas.local`, a name that had stopped resolving along the way.
 The last successful backup ran at 07:00 on March 22; the next one at 07:16 on July 22, after [the fix](https://github.com/basnijholt/dotfiles/commit/4d2a75efcb503b9ca2aabcbe8339be3e5a62d0ce).
 Four months, almost to the minute.
 systemd logged the failure on every single run, nobody read it, and nothing escalated.
 I found out because I asked the question, not because anything told me.
+
+## What the audit found
 
 On the btrfs box, question 3 alone had three different answers depending on which tool I asked.
 `du` counted reflinked copies at full size, so directories reported terabytes that physically did not exist.
