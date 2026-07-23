@@ -1,2 +1,62 @@
-{{- /* Hover tooltip using the native title attribute; wrap the visible text, pass the hover text via text="...". */ -}}
-<span title="{{ .Get "text" }}" style="text-decoration: underline dotted; text-underline-offset: 2px; cursor: help;">{{- .Inner -}}</span>
+{{- /* Hover tooltip; wrap the visible text, pass the hover text via text="...". CSS-only: styled bubble on hover or keyboard/tap focus. */ -}}
+{{- if not (.Page.Store.Get "tooltip-css") -}}
+{{- .Page.Store.Set "tooltip-css" true -}}
+<style>
+.hover-tip {
+  position: relative;
+  text-decoration: underline dotted;
+  text-underline-offset: 2px;
+  cursor: help;
+}
+.hover-tip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  transform: translateX(-50%) translateY(4px);
+  background: rgba(25, 25, 28, 0.95);
+  color: #fff;
+  padding: 0.4em 0.75em;
+  border-radius: 6px;
+  font-size: 0.85em;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1.35;
+  white-space: normal;
+  width: max-content;
+  max-width: 280px;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  pointer-events: none;
+  z-index: 100;
+}
+.hover-tip::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 2px);
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: rgba(25, 25, 28, 0.95);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+  z-index: 100;
+}
+.hover-tip:hover::after,
+.hover-tip:focus::after,
+.hover-tip:hover::before,
+.hover-tip:focus::before {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+.hover-tip:focus {
+  outline: none;
+}
+</style>
+{{- end -}}
+<span class="hover-tip" data-tooltip="{{ .Get "text" }}" tabindex="0">{{- .Inner -}}</span>
