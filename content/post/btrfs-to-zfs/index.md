@@ -95,7 +95,7 @@ The timer ran hourly, which in practice meant back-to-back scanning all day to m
 Either way, my most recent work existed only on the machine an agent was busy poking at.
 
 The scanning is also not free for the hardware.
-Reads are gentle on an SSD compared to writes, so it probably wears out nothing, but hourly scans of an hour and a half each kept the drive at full duty cycle and elevated temperature for most of every day.
+Reads are gentle on an SSD compared to writes, but hourly scans of an hour and a half each kept the drive at full duty cycle and elevated temperature for most of every day.
 And drives stopped being cheap: I paid $227 for [a 4 TB NVMe drive]({{< ref "/post/homelab" >}}) in 2024, and the same drive lists for around $800 today.
 I would rather not run the experiment of what years of continuous scanning do to a drive I can no longer afford to replace.
 
