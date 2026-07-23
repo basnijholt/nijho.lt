@@ -67,7 +67,7 @@ I want to be able to answer four questions about any machine I own:
 ## The backup that wasn't
 
 Asking {{< tooltip text="What exactly is in the backup?" >}}question 1{{< /tooltip >}} delivered an unpleasant answer within the hour: the backups did not exist.
-Two boring causes had stacked up: an interrupted prune left a stale repository lock, which the job could never clear because its own unlock step only ran *after* a successful backup, and the repository URL still pointed at `truenas.local`, a name that had stopped resolving along the way.
+Two boring causes had stacked up: an interrupted prune left a stale repository lock, which the job could never clear because its own unlock step only ran *after* a successful backup, and the repository URL still pointed at `truenas.local`, a name that had stopped resolving [along the way]({{< ref "/post/truenas-to-nixos" >}}).
 The last successful backup ran at 07:00 on March 22; the next one at 07:16 on July 22, after [the fix](https://github.com/basnijholt/dotfiles/commit/4d2a75efcb503b9ca2aabcbe8339be3e5a62d0ce).
 Four months, almost to the minute.
 systemd logged the failure on every single run, nobody read it, and nothing escalated.
@@ -143,6 +143,13 @@ Disko formatted a virtual disk, created the pool, installed the system, and boot
 Passing that test proves the generated logic.
 It does not prove the backup, which is where the real risk lives.
 
+## The recovery kit
+
+A restore that starts with "first, log in to the dead machine and fetch the credentials" is not a restore plan.
+So everything a bare reinstall needs lives in a small recovery kit on two other machines in the house, permissions locked down: the restic password and SSH key that reach the repository, the staged restore script, a couple of verification scripts, and the PC's SSH host keys.
+The host keys matter more than they look: the reinstalled machine comes back with its old identity, so no client complains and nothing in the fleet needs to be taught to trust a new machine.
+A munge key and a README round it out.
+
 ## Trusting the backup enough to wipe the disk
 
 My recovery story has two layers.
@@ -163,7 +170,7 @@ A backup you have never restored from is a hypothesis.
 On a different machine, using only the recovery kit and no access to the PC at all, we restored a sample from the latest snapshot and compared hashes against the live system.
 The hashes matched byte for byte, and even the symlinks came back pointing at the right targets.
 A sample proves the path works, from credentials to symlink handling; reading back every byte is the third check's job.
-The kit (restic credentials, SSH host keys, restore script) lives on two other machines, so recovery does not depend on the machine being recovered.
+The machine running the rehearsal had the kit and nothing else, so recovery provably does not depend on the machine being recovered.
 
 The third check is the data itself.
 `restic check` validates the repository structure without reading back the actual data blobs.
