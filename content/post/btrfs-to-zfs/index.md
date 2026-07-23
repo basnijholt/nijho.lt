@@ -68,7 +68,7 @@ I want to be able to answer four questions about any machine I own:
 
 ## The backup that wasn't
 
-Asking {{< tooltip text="What exactly is in the backup?" >}}question 1{{< /tooltip >}} delivered an unpleasant answer within the hour: the backups did not exist.
+Asking {{< tooltip text="What exactly is in the backup?" >}}question 1{{< /tooltip >}} delivered an unpleasant answer within the hour: the backups had quietly stopped four months earlier.
 Two boring causes had stacked up: an interrupted prune left a stale repository lock, which the job could never clear because its own unlock step only ran *after* a successful backup, and the repository URL still pointed at `truenas.local`, a name that had stopped resolving [along the way]({{< ref "/post/truenas-to-nixos" >}}).
 The last successful backup ran at 07:00 on March 22; the next one at 07:16 on July 22, after [the fix](https://github.com/basnijholt/dotfiles/commit/4d2a75efcb503b9ca2aabcbe8339be3e5a62d0ce).
 Four months, almost to the minute.
