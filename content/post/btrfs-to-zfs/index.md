@@ -65,7 +65,7 @@ I want to be able to answer four questions about any machine I own:
 4. How long will it take?
 
 Asking question 1 delivered an unpleasant answer within the hour: the backups did not exist.
-Two boring causes had stacked up: a stale repository lock from a crashed run, and a repository URL still pointing at `truenas.local`, a name that stopped resolving along the way.
+Two boring causes had stacked up: an interrupted prune left a stale repository lock, which the job could never clear because its own unlock step only ran *after* a successful backup, and the repository URL still pointed at `truenas.local`, a name that had stopped resolving along the way.
 The last successful backup ran at 07:00 on March 22; the next one at 07:16 on July 22, after [the fix](https://github.com/basnijholt/dotfiles/commit/4d2a75efcb503b9ca2aabcbe8339be3e5a62d0ce).
 Four months, almost to the minute.
 systemd logged the failure on every single run, nobody read it, and nothing escalated.
@@ -170,7 +170,7 @@ When the backup is the only rollback, I want its bits read back at least once.
 
 The outage taught me a fifth question: how do I find out when any of this stops working?
 All three checks above are point-in-time, and verification rots.
-So the NAS now [re-verifies daily](https://github.com/basnijholt/dotfiles/blob/0d6101c8e3f91a0845cb41adb3cda216f50917c8/configs/nixos/hosts/nas/replication.nix#L263-L285), from its own side of the sftp connection, that the newest snapshot in the repository is fresh, and pushes an alert to my phone when it is not.
+So the NAS now [re-verifies every hour](https://github.com/basnijholt/dotfiles/blob/0d6101c8e3f91a0845cb41adb3cda216f50917c8/configs/nixos/hosts/nas/replication.nix#L263-L285), from its own side of the sftp connection, that the newest snapshot in the repository is less than a day old, and pushes an alert to my phone when it is not.
 That catches every failure mode on the PC side, including "the timer is simply disabled."
 The watcher itself is watched: the NAS pings an [external dead-man's switch](https://github.com/basnijholt/dotfiles/blob/0d6101c8e3f91a0845cb41adb3cda216f50917c8/configs/nixos/hosts/nas/health.nix#L252-L280) every five minutes, so if the machine holding my only road back goes dark, the alert comes from outside the house.
 
@@ -234,6 +234,7 @@ The slow work was making the cutover boring.
 - [Migrating from TrueNAS to NixOS]({{< ref "/post/truenas-to-nixos" >}})
 - [My homelab]({{< ref "/post/homelab" >}})
 - [The btrfs→ZFS migration PR](https://github.com/basnijholt/dotfiles/pull/16)
+- [The PR that closed the silent backup-monitoring failure modes](https://github.com/basnijholt/dotfiles/pull/67)
 - [disko](https://github.com/nix-community/disko)
 - [nixos-anywhere](https://github.com/nix-community/nixos-anywhere)
 - [restic](https://restic.net/)
