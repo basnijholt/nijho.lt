@@ -66,7 +66,7 @@ I want to be able to answer four questions about any machine I own:
 
 ## The backup that wasn't
 
-Asking question 1 delivered an unpleasant answer within the hour: the backups did not exist.
+Asking {{< tooltip text="What exactly is in the backup?" >}}question 1{{< /tooltip >}} delivered an unpleasant answer within the hour: the backups did not exist.
 Two boring causes had stacked up: an interrupted prune left a stale repository lock, which the job could never clear because its own unlock step only ran *after* a successful backup, and the repository URL still pointed at `truenas.local`, a name that had stopped resolving along the way.
 The last successful backup ran at 07:00 on March 22; the next one at 07:16 on July 22, after [the fix](https://github.com/basnijholt/dotfiles/commit/4d2a75efcb503b9ca2aabcbe8339be3e5a62d0ce).
 Four months, almost to the minute.
@@ -75,7 +75,7 @@ I found out because I asked the question, not because anything told me.
 
 ## What the audit found
 
-On the btrfs box, question 3 alone had three different answers depending on which tool I asked.
+On the btrfs box, {{< tooltip text="How big is a restore?" >}}question 3{{< /tooltip >}} alone had three different answers depending on which tool I asked.
 `du` counted reflinked copies at full size, so directories reported terabytes that physically did not exist.
 `df` counted physical extents, which is honest about disk usage but tells you nothing about what a file-based restore will write.
 And restic reported the *apparent* size of sparse VM images, which inflated the restore estimate to several times the disk.
@@ -83,9 +83,9 @@ And restic reported the *apparent* size of sparse VM images, which inflated the 
 When your storage layer gives you three sizes for the same data, you do not really understand your backup.
 You have a backup, and you have hope.
 
-Question 4 was no better.
+{{< tooltip text="How long will it take?" >}}Question 4{{< /tooltip >}} was no better.
 Because the PC was my only btrfs machine, it could not join [the ZFS snapshot replication the rest of the fleet uses](https://github.com/basnijholt/dotfiles/blob/0d6101c8e3f91a0845cb41adb3cda216f50917c8/configs/nixos/hosts/nas/replication.nix), so its backups relied entirely on restic pushing to the NAS.
-Off-machine, note, but not off-site; question 2 turned out to apply to locations too, and closing that gap is its own project.
+Off-machine, note, but not off-site; {{< tooltip text="What is not in the backup, and did I choose that deliberately?" >}}question 2{{< /tooltip >}} turned out to apply to locations too, and closing that gap is its own project.
 restic is file-based: every run visits the metadata of every single file to find what changed.
 On this machine that meant close to a hundred million files per scan, which turned out to include some 600 GB of git worktrees stuffed with virtual environments and `node_modules`.
 Each run took about an hour and a half, even when almost nothing had changed.

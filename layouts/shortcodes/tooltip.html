@@ -1,0 +1,2 @@
+{{- /* Hover tooltip using the native title attribute; wrap the visible text, pass the hover text via text="...". */ -}}
+<span title="{{ .Get "text" }}" style="text-decoration: underline dotted; text-underline-offset: 2px; cursor: help;">{{- .Inner -}}</span>
