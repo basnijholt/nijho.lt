@@ -181,7 +181,7 @@ When the backup is the only rollback, I want its bits read back at least once.
 
 ## The fifth question
 
-The outage taught me a fifth question: how do I find out when any of this stops working?
+The outage taught me a {{< tooltip text="How do I find out when any of this stops working?" >}}fifth question{{< /tooltip >}}: how do I find out when any of this stops working?
 All three checks above are point-in-time, and verification rots.
 So the NAS now [re-verifies every hour](https://github.com/basnijholt/dotfiles/blob/0d6101c8e3f91a0845cb41adb3cda216f50917c8/configs/nixos/hosts/nas/replication.nix#L263-L285), from its own side of the sftp connection, that the newest snapshot in the repository is less than a day old, and pushes an alert to my phone when it is not.
 That catches every failure mode on the PC side, including "the timer is simply disabled."
