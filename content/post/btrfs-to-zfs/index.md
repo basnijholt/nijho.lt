@@ -1,7 +1,7 @@
 ---
 title: "The last btrfs machine: migrating my PC to ZFS"
 subtitle: "Why uniformity in my backup situation was worth wiping my daily driver, and how I made the restore boring before touching the disk"
-summary: "After replacing Proxmox and TrueNAS with NixOS, my GPU machine was the last one still on btrfs, picked years ago because forum threads had me convinced that ZFS and NixOS were a bad combination. What finally pushed me to fix it: I run AI agents in YOLO mode all day, the stories about frontier models wiping home directories kept coming, and my restic backups needed an hour and a half just to scan a hundred million files. This is the story of auditing my backups, verifying the restore path end-to-end, and wiping my daily driver so that nine machines share the exact same ZFS setup."
+summary: "After replacing Proxmox and TrueNAS with NixOS, my GPU machine was the last one still on btrfs, picked years ago because forum threads had me convinced that ZFS and NixOS were a bad combination. What finally pushed me to fix it: I run AI agents in YOLO mode all day, the stories about frontier models wiping home directories kept coming, and my restic backups needed an hour and a half just to scan a hundred million files. The audit's first finding: the backups had been silently dead for four months. This is the story of auditing my backups, verifying the restore path end-to-end, and wiping my daily driver so that nine machines share the exact same ZFS setup."
 date: 2026-07-23
 draft: true
 featured: false
@@ -64,6 +64,13 @@ I want to be able to answer four questions about any machine I own:
 3. How big is a restore?
 4. How long will it take?
 
+Asking question 1 delivered an unpleasant answer within the hour: the backups did not exist.
+Two boring causes had stacked up: a stale repository lock from a crashed run, and a repository URL still pointing at `truenas.local`, a name that stopped resolving along the way.
+The last successful backup ran at 07:00 on March 22; the next one at 07:16 on July 22, after the fix.
+Four months, almost to the minute.
+systemd logged the failure on every single run, nobody read it, and nothing escalated.
+I found out because I asked the question, not because anything told me.
+
 On the btrfs box, question 3 alone had three different answers depending on which tool I asked.
 `du` counted reflinked copies at full size, so directories reported terabytes that physically did not exist.
 `df` counted physical extents, which is honest about disk usage but tells you nothing about what a file-based restore will write.
@@ -73,8 +80,9 @@ When your storage layer gives you three sizes for the same data, you do not real
 You have a backup, and you have hope.
 
 Question 4 was no better.
-Because the PC was my only btrfs machine, it could not join the ZFS snapshot replication the rest of the fleet uses, so its off-site backups relied entirely on restic.
-restic is file-based: every run walks the whole tree to find changes, essentially an rsync over every single file.
+Because the PC was my only btrfs machine, it could not join the ZFS snapshot replication the rest of the fleet uses, so its backups relied entirely on restic pushing to the NAS.
+Off-machine, note, but not off-site; question 2 turned out to apply to locations too, and closing that gap is its own project.
+restic is file-based: every run visits the metadata of every single file to find what changed.
 On this machine that meant close to a hundred million files per scan, which turned out to include some 600 GB of git worktrees stuffed with virtual environments and `node_modules`.
 Each run took about an hour and a half, even when almost nothing had changed.
 
@@ -119,6 +127,10 @@ From the moment disko runs, the restic repository on the NAS is the only road ba
 
 That sentence is the reason most of this post is about verification.
 
+The road back also has to survive the same agents that motivated all of this.
+The PC pushes its backups over sftp as a user that owns every file in the repository, which means a compromised PC could delete or encrypt its own safety net.
+So the NAS snapshots the repository dataset on its own side, where the PC's credentials cannot reach: two days of hourly ZFS snapshots and two weeks of dailies that only root on the NAS can destroy.
+
 ## Rehearsing in a VM, again
 
 The [NAS migration]({{< ref "/post/truenas-to-nixos" >}}) taught me to rehearse the destructive step in a VM, so the flake grew a `pc-vmtest` target and I ran the whole install through `nixos-anywhere --vm-test`.
@@ -146,12 +158,24 @@ The second check was the restore path.
 A backup you have never restored from is a hypothesis.
 On a different machine, using only the recovery kit and no access to the PC at all, we restored a sample from the latest snapshot and compared hashes against the live system.
 The hashes matched byte for byte, and even the symlinks came back pointing at the right targets.
+A sample proves the path works, from credentials to symlink handling; reading back every byte is the third check's job.
 The kit (restic credentials, SSH host keys, restore script) lives on two other machines, so recovery does not depend on the machine being recovered.
 
 The third check is the data itself.
 `restic check` validates the repository structure without reading back the actual data blobs.
 Before the wipe, a `--read-data` pass runs on the NAS, where the repository sits on local disk instead of behind the network.
 When the backup is the only rollback, I want its bits read back at least once.
+
+## The fifth question
+
+The outage taught me a fifth question: how do I find out when any of this stops working?
+All three checks above are point-in-time, and verification rots.
+So the NAS now re-verifies daily, from its own side of the sftp connection, that the newest snapshot in the repository is fresh, and pushes an alert to my phone when it is not.
+That catches every failure mode on the PC side, including "the timer is simply disabled."
+The watcher itself is watched: the NAS pings an external dead-man's switch every five minutes, so if the machine holding my only road back goes dark, the alert comes from outside the house.
+
+While wiring this up we discovered that months of earlier NAS alerts had never arrived, because ntfy silently rejects message bodies over 4 KB.
+A notification you have never received is also a hypothesis.
 
 ## Restoring in stages
 
@@ -191,7 +215,8 @@ That kind of confusion is part of why this migration exists.
 
 ## The cutover
 
-<!-- TODO(after migration day): fill in actual timings and surprises. -->
+<!-- TODO(after migration day): fill in actual timings and surprises; sweep pre-wipe steps to past tense. -->
+<!-- TODO: say what happens to restic after the migration (kept for file-level restores? retired for sanoid+syncoid?). -->
 
 The install follows the same phased `nixos-anywhere` pattern as the NAS cutover, driven from another machine on the LAN: kexec into an installer running in RAM, stop, re-verify the target disk from inside the installer, and only then run the destructive disko/install phase.
 That checkpoint is the whole point: right up to the destructive phase, aborting is still cheap.
