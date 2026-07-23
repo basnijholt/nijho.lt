@@ -29,7 +29,7 @@ I [bought it for gaming]({{< ref "/post/local-ai-journey" >}}), but these days i
 btrfs itself never failed me.
 When I set up NixOS on this machine for the first time, I had read enough forum threads to become convinced that ZFS and NixOS were a troublesome combination, so I picked btrfs to be safe.
 That belief was simply wrong.
-As I [went full Nix]({{< ref "/post/proxmox-to-nixos" >}}) and eventually [moved even my NAS to NixOS]({{< ref "/post/truenas-to-nixos" >}}), I learned there was no issue at all.
+As I [went full Nix]({{< ref "/post/proxmox-to-nixos" >}}) and eventually [moved even my TrueNAS to NixOS]({{< ref "/post/truenas-to-nixos" >}}), I learned there was no issue at all.
 I just had to figure out the right incantation to make ZFS work with boot drives, [disko](https://github.com/nix-community/disko), and [nixos-anywhere](https://github.com/nix-community/nixos-anywhere).
 My HP got ZFS first, that config grew into a shared disko module, and soon the whole fleet ran one pattern: NixOS on ZFS, snapshots and replication declared in code, and backups I can reason about.
 
