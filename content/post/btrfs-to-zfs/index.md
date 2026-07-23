@@ -1,7 +1,7 @@
 ---
 title: "The last btrfs machine: migrating my PC to ZFS"
 subtitle: "Why uniformity in my backup situation was worth wiping my daily driver, and how I made the restore boring before touching the disk"
-summary: "After replacing Proxmox and TrueNAS with NixOS, one exception remained: my GPU machine still ran btrfs. This is why I decided to wipe my daily driver for ZFS uniformity, how three different tools gave me three different sizes for the same data, and how I verified the restore path end-to-end, including a staged restore that gets me a working machine in an hour. Because I run AI agents in YOLO mode all day, tweets about agents wiping someone's laptop read to me as arguments for tested restores."
+summary: "After replacing Proxmox and TrueNAS with NixOS, my GPU machine was the last one still on btrfs, picked years ago because forum threads had me convinced that ZFS and NixOS were a bad combination. What finally pushed me to fix it: I run AI agents in YOLO mode all day, the stories about frontier models wiping home directories kept coming, and my restic backups needed an hour and a half just to scan a hundred million files. This is the story of auditing my backups, verifying the restore path end-to-end, and wiping my daily driver so that nine machines share the exact same ZFS setup."
 date: 2026-07-23
 draft: true
 featured: false
