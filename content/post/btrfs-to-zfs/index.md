@@ -176,7 +176,7 @@ The machine running the rehearsal had the kit and nothing else, so recovery prov
 
 The third check is the data itself.
 `restic check` validates the repository structure without reading back the actual data blobs.
-Before the wipe, a `--read-data` pass runs on the NAS, where the repository sits on local disk instead of behind the network.
+Before the wipe, a `--read-data` pass ran on the NAS, where the repository sits on local disk instead of behind the network.
 When the backup is the only rollback, I want its bits read back at least once.
 
 ## The fifth question
@@ -199,11 +199,11 @@ I do not need either of those to have a working machine.
 So the restore script now runs in stages:
 
 ```bash
-sudo ./restore_from_backup.sh stage1   # ~370 GB → a fully working machine
+sudo ./restore_from_backup.sh stage1   # everything else → a fully working machine
 sudo ./restore_from_backup.sh stage2   # Steam + models, whenever
 ```
 
-Stage 1 restores everything except the deferred paths, plus the system identity (host keys), and takes about an hour on a wired connection.
+Stage 1 restores everything except the deferred paths, plus the system identity (host keys).
 Stage 2 can run days later, from the rebooted system, while I am already using the machine.
 
 One detail I care about: stage 1 resolves `latest` to a concrete snapshot ID and pins it to a file.
@@ -228,15 +228,26 @@ That kind of confusion is part of why this migration exists.
 
 ## The cutover
 
-<!-- TODO(after migration day): fill in actual timings and surprises; sweep pre-wipe steps to past tense. -->
-<!-- TODO: say what happens to restic after the migration (kept for file-level restores? retired for sanoid+syncoid?). -->
+The install followed the same phased `nixos-anywhere` pattern as the NAS cutover, driven from another machine on the LAN: kexec into an installer running in RAM, stop, re-verify the target disk from inside the installer, and only then run the destructive disko/install phase.
+That checkpoint is the whole point: right up to the destructive phase, aborting was still cheap.
+The destructive part turned out to be the trivial part: from wiping the disk to booting the new system took less than twenty minutes.
 
-The install follows the same phased `nixos-anywhere` pattern as the NAS cutover, driven from another machine on the LAN: kexec into an installer running in RAM, stop, re-verify the target disk from inside the installer, and only then run the destructive disko/install phase.
-That checkpoint is the whole point: right up to the destructive phase, aborting is still cheap.
+The one surprise of the day was in the restore, and it was exactly the kind rehearsal is supposed to catch.
+Stage 1 would not start: the restore script runs restic as root, and a freshly installed root has no SSH identity and no known_hosts.
+The key it needed sat in the recovery kit inside my home directory.
+The rehearsal never hit this, because the rehearsal machine's root had already talked to the NAS.
+A verified restore path can still depend on state you forgot you had.
 
-<!-- TODO: stage1 restore duration, first-boot fixes, when stage2 actually ran. -->
+Stage 1 restored 534 GiB across 4.5 million files in just over an hour and a half, at wire speed.
+The machine rebooted with its old host keys and its old `/home`, and stage 2 started immediately.
+The plan said stage 2 could wait for days; it started the minute the machine was back, because once the machine works there is no reason left to wait.
+The deferred 648 GiB of games and models took six more hours in the background.
 
-Aftercare is a short list, and it is written down instead of remembered: revert the temporary root-SSH commit that the installer needed, and let Sanoid take over snapshotting on the new pool.
+With that, the PC finally joins the fleet pattern it was locked out of: sanoid snapshots the pool every hour, so a tired `rm -rf`, mine or an agent's, now costs at most an hour of work and a rollback, and a daily syncoid run sends the changed blocks to the NAS.
+restic is on borrowed time.
+Its six-hour timer keeps running until I trust the new path, and then it stops: the repository stays on the NAS as the last file-level snapshots of the machine, but nothing will be added to it.
+
+Aftercare was the same short list, written down instead of remembered: revert the temporary root-SSH commit the installer needed, and put the restic password back where the backup service expects it.
 
 The slow work, as always, was not the cutover.
 The slow work was making the cutover boring.
