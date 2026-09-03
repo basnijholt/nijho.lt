@@ -28,7 +28,7 @@ image:
 ---
 
 [Diction](https://apps.apple.com/app/id6759807364) has quickly become my favorite app while on vacation and away from my laptop.
-It adds a voice keyboard to iOS, so I can dictate into any app without recording audio, running a Shortcut, waiting, copying, and pasting.
+It adds a voice keyboard to iOS, so I can dictate into any app without manually recording an audio clip, running a Shortcut, waiting, copying, and pasting.
 It is the next iteration of [my mobile coding workflow]({{< ref "/post/agentic-mobile-workflow" >}}), replacing its iOS Shortcut and clipboard dance with a keyboard that is always available.
 
 I self-host its [open-source gateway](https://github.com/DictionLabs/Diction) on my home machine in the U.S.
@@ -52,7 +52,7 @@ I maintain Agent CLI and have [written about how it grew from a voice helper int
 
 ## 2. The recipe
 
-You need an NVIDIA GPU with the [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html), Docker Compose, and a private route from your iPhone to the server.
+You need an NVIDIA GPU with the [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html), Docker Compose 2.30 or newer, and a private route from your iPhone to the server.
 I use a Headscale-managed network, but Tailscale or plain WireGuard works just as well.
 
 Create an empty directory for the stack:
@@ -141,19 +141,27 @@ Build the images, start both services, and check the gateway:
 
 ```bash
 docker compose up -d --build
-docker compose logs -f
 curl http://localhost:8080/health
 ```
 
-The first start downloads Qwen into the `model-cache` volume.
-Once the model is ready, open Diction and go to **Preferences → Mode → Self-Hosted**, enter `http://<private-server-ip>:8080`, and tap **Test connection**.
+The health check only confirms that the gateway is running.
+The first real transcription downloads Qwen into the `model-cache` volume and loads it, so that request can take a few minutes.
+I watch its progress in a second terminal; later transcriptions reuse the warm model:
+
+```bash
+docker compose logs -f
+```
+
+On a fresh iPhone installation, first go to **Settings → General → Keyboard → Keyboards → Add New Keyboard → Diction**.
+Tap Diction in the keyboard list, enable **Allow Full Access**, and grant microphone access when prompted.
+Then open Diction, go to **Preferences → Mode → Self-Hosted**, enter `http://<private-server-ip>:8080`, and tap **Test connection**.
 
 I route this endpoint through my existing reverse proxy, but only clients on my private network can reach it.
 Do not put it directly on the public internet; use something like Tailscale, Headscale, or WireGuard, or protect it at your reverse proxy.
 
 The pinned gateway build above includes [Diction PR #20](https://github.com/DictionLabs/Diction/pull/20), which forwards the app's **My Words** list during streaming.
 That made package names such as `PipeFunc` and `MindRoom` come back with the correct spelling and capitalization in my live test.
-Once the fix is part of an official Diction release, the custom build can be replaced by `dictionlabs/gateway:latest`.
+Once the fix is part of an official Diction release, delete the gateway's entire `build:` section and replace its custom `image:` value with `dictionlabs/gateway:latest`.
 
 On my machine, Qwen3-ASR 1.7B uses about **4.7 GiB of GPU memory** and roughly **3 GiB of system memory** while loaded.
 Keeping the model warm makes the interaction feel immediate.
