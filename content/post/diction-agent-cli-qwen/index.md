@@ -32,7 +32,7 @@ It adds a voice keyboard to iOS, so I can dictate into any app without manually 
 It is the next iteration of [my mobile coding workflow]({{< ref "/post/agentic-mobile-workflow" >}}), replacing its iOS Shortcut and clipboard dance with a keyboard that is always available.
 
 I self-host its [open-source gateway](https://github.com/DictionLabs/Diction) on my home machine in the U.S.
-The gateway streams audio to [`agent-cli`](https://github.com/basnijholt/agent-cli), which exposes an OpenAI-compatible transcription endpoint backed by [Qwen3-ASR 1.7B](https://huggingface.co/Qwen/Qwen3-ASR-1.7B-hf).
+The gateway streams audio to [`agent-cli`](https://github.com/basnijholt/agent-cli), which exposes an OpenAI-compatible transcription endpoint backed by Alibaba's [`Qwen/Qwen3-ASR-1.7B-hf`](https://huggingface.co/Qwen/Qwen3-ASR-1.7B-hf)—Qwen, spelled Q-W-E-N.
 There is no LLM cleanup step: Qwen's raw transcription is already good enough for me.
 
 {{% callout note %}}
@@ -77,9 +77,7 @@ ARG AGENT_CLI_VERSION=0.103.0
 RUN uv pip install \
       --python /app/.venv/bin/python \
       --upgrade \
-      "agent-cli[whisper-transformers]==${AGENT_CLI_VERSION}" \
-    && /app/.venv/bin/python -c \
-      "import importlib.metadata as m; import librosa, torch, transformers; assert m.version('agent-cli') == '${AGENT_CLI_VERSION}'"
+      "agent-cli[whisper-transformers]==${AGENT_CLI_VERSION}"
 
 RUN apt-get update \
     && apt-get install --yes --no-install-recommends gcc libc6-dev \
@@ -115,11 +113,11 @@ services:
     restart: unless-stopped
 
   gateway:
-    image: diction-gateway:streaming-custom-words-66227175
+    image: diction-gateway:streaming-custom-words-a40384f
     build:
-      context: https://github.com/basnijholt/Diction.git#596573529f0d291c7845447e4eb061c2db2532d6:gateway
+      context: https://github.com/DictionLabs/Diction.git#a40384f7444961e1e293f88d42d05062c01ce33c:gateway
       args:
-        IMAGE_REF: pr-20-5965735
+        IMAGE_REF: a40384f
     depends_on:
       - asr
     environment:
@@ -159,9 +157,12 @@ Then open Diction, go to **Preferences → Mode → Self-Hosted**, enter `http:/
 I route this endpoint through my existing reverse proxy, but only clients on my private network can reach it.
 Do not put it directly on the public internet; use something like Tailscale, Headscale, or WireGuard, or protect it at your reverse proxy.
 
-The pinned gateway build above includes [Diction PR #20](https://github.com/DictionLabs/Diction/pull/20), which forwards the app's **My Words** list during streaming.
-That made package names such as `PipeFunc` and `MindRoom` come back with the correct spelling and capitalization in my live test.
-Once the fix is part of an official Diction release, delete the gateway's entire `build:` section and replace its custom `image:` value with `dictionlabs/gateway:latest`.
+{{% callout note %}}
+**A small upstream detour:** Diction's **My Words** feature was not reaching the ASR backend during streaming, so I opened [Diction PR #20](https://github.com/DictionLabs/Diction/pull/20) to forward those words as the transcription prompt.
+The fix has now been merged, and package names such as `PipeFunc` and `MindRoom` came back with the correct spelling and capitalization in my live test.
+At the time of writing, the latest gateway release still predates the fix, which is why the Compose file builds the pinned upstream merge commit.
+Once an official release includes it, delete the gateway's entire `build:` section and replace its custom `image:` value with `dictionlabs/gateway:latest`.
+{{% /callout %}}
 
 On my machine, Qwen3-ASR 1.7B uses about **4.7 GiB of GPU memory** and roughly **3 GiB of system memory** while loaded.
 Keeping the model warm makes the interaction feel immediate.
