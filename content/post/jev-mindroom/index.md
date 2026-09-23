@@ -131,7 +131,7 @@ Once I implemented Jev for one decision, I came up with use case after use case.
 One I already built is a plugin, [Response Audit JEV](https://github.com/mindroom-ai/response-audit-jev-plugin).
 Right after an agent replies, Jev checks the answer against the request and the tool calls the agent actually made, for example whether things are properly cited.
 If a check flags a problem, the plugin posts one follow-up in the thread that tags the agent and asks for a correction.
-Because Jev is so fast and cheap, running this after every reply costs almost nothing.
+Because Jev is so fast and cheap, running this after each reply costs almost nothing.
 
 Right now I am full of ideas.
 For example, a model router.
