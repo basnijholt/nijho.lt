@@ -1,5 +1,5 @@
 ---
-title: "Self-hosting Diction with Agent CLI and Qwen"
+title: "Frontier-level dictation on your iPhone keyboard, self-hosted"
 subtitle: "Fast, private iPhone dictation from my home GPU, even from a bar in the Netherlands"
 summary: "A small Docker recipe for running Diction's streaming gateway against Qwen3-ASR through Agent CLI, plus a test from a bar in the Netherlands, an ocean away from the GPU."
 date: 2026-09-22
@@ -44,7 +44,26 @@ I tried some of them, including NVIDIA's [Parakeet](https://huggingface.co/nvidi
 Parakeet is fast, but it cannot take custom instructions.
 Those instructions are how Diction's **My Words** feature biases a transcription toward specialized names.
 
-At the start of September, I checked the [Hugging Face Open ASR Leaderboard](https://huggingface.co/spaces/hf-audio/open_asr_leaderboard), where Qwen3-ASR caught my attention.
+At the start of September, I looked at the [Hugging Face Open ASR Leaderboard](https://huggingface.co/spaces/hf-audio/open_asr_leaderboard), which tests speech-to-text models on the same recordings and ranks them.
+The score is the word error rate (WER): the share of words a model gets wrong, counting words it swaps, drops, or makes up.
+Lower is better, and a WER of 4% means about one wrong word in every 25.
+The test recordings range from audiobooks and podcasts to meetings and earnings calls, so the average says more than any single clean benchmark.
+
+These are the averages on the public English test sets as of September 19, 2026:
+
+| Model | WER | Can I run it at home? |
+|---|---|---|
+| Zoom Scribe v2 Pro | 3.6% | No, paid API (#1 overall) |
+| ElevenLabs Scribe v2 | 4.0% | No, paid API |
+| **Qwen3-ASR 1.7B** | **4.3%** | **Yes, Apache-2.0** |
+| AssemblyAI Universal-3.5 Pro | 4.3% | No, paid API |
+| NVIDIA Parakeet TDT 0.6B v3 | 4.9% | Yes |
+| OpenAI Whisper large-v3 | 5.8% | Yes |
+
+I picked the best model on the board whose weights you can download: Qwen3-ASR 1.7B.
+The best paid API gets about one word in 28 wrong; Qwen gets about one in 23.
+It edges out AssemblyAI's paid model and makes about a quarter fewer mistakes than Whisper large-v3.
+That is what I mean by frontier-level: within a point of first place, running on my own GPU.
 Since I maintain Agent CLI, I told an agent to add a Qwen backend, and shortly afterward [it had landed](https://github.com/basnijholt/agent-cli/pull/636) and was running on my server.
 
 Agent CLI's transcription server loads a model on the first request and unloads it after an idle timeout, so the model only takes VRAM while I use it.
