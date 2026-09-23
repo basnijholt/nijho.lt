@@ -29,7 +29,9 @@ image:
 
 On a recent vacation, I did a lot of work from my phone.
 The built-in iOS dictation is garbage for that.
-I had an iOS Shortcut that sent recordings to my Agent CLI setup at home, part of [my mobile coding workflow]({{< ref "/post/agentic-mobile-workflow" >}}), but recording, waiting, copying, and pasting got old quickly.
+I had an iOS Shortcut that sent recordings to my Agent CLI setup at home, part of [my mobile coding workflow]({{< ref "/post/agentic-mobile-workflow" >}}).
+The problem was that the recording screen takes over the whole display, so I could not see the thing I was commenting on.
+The transcript then landed in my clipboard, and I had to paste it myself.
 
 So I threw my principles overboard and installed [Wispr Flow](https://wisprflow.ai), a voice keyboard for iOS.
 I loved it instantly.
