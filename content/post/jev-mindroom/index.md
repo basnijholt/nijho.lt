@@ -24,16 +24,16 @@ categories:
 Last week, every AI newsletter I get was full of [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev), a new model from TypeSafe.
 So were several subreddits.
 I am a permanent lurker on [r/LocalLLaMA](https://www.reddit.com/r/LocalLLaMA/), and even though it is about local models, every other post seemed to be about Jev.
-There were local clones, benchmarks, CLI wrappers, and even someone claiming [they had built the same thing a year earlier](https://laya.convaiinnovations.com/).
+There were local clones like [mini-jev](https://github.com/r-ms/mini-jev) and [von](https://github.com/wfzyx/von), CLI wrappers like [jev-cli](https://github.com/joshLong145/jev-cli), and even someone claiming [they had built the same thing a year earlier](https://laya.convaiinnovations.com/) ([HN discussion](https://news.ycombinator.com/item?id=49765348)).
 
 I have no connection to TypeSafe.
-I tried Jev in [MindRoom]({{< ref "/post/mindroom" >}}), and less than two days later it was making three decisions there.
+I tried Jev in [MindRoom]({{< ref "/post/mindroom" >}}), my [open-source](https://github.com/mindroom-ai/mindroom) agent platform on [Matrix](https://matrix.org), and less than two days later it was making three decisions there ([issue #2156](https://github.com/mindroom-ai/mindroom/issues/2156)).
 
 ## What a System One model is
 
-The name comes from Daniel Kahneman's *Thinking, Fast and Slow*, where System 1 is fast, intuitive thinking and System 2 is slow and deliberate.
+The [name comes](https://docs.typesafe.ai/concepts/system-one) from Daniel Kahneman's [*Thinking, Fast and Slow*](https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow), where System 1 is fast, intuitive thinking and System 2 is slow and deliberate.
 A System One model does not generate text.
-You send it a state, for example a chat log, plus typed questions, and it returns probabilities:
+You send it a state, for example a chat log, plus typed questions, and it returns [probabilities](https://docs.typesafe.ai/api):
 
 | Type | Question | Answer |
 |---|---|---|
@@ -41,7 +41,7 @@ You send it a state, for example a chat log, plus typed questions, and it return
 | Choice | Pick one of up to 255 options | Chosen option plus the full distribution |
 | Score | Rate against a rubric of 2 to 10 levels | Probability-weighted value |
 
-TypeSafe claims 70 to 500 ms end to end and $0.042 per million input tokens, with output tokens free.
+[TypeSafe claims](https://typesafe.ai/blog/introducing-system-one-models-and-jev) 70 to 500 ms end to end and $0.042 per million input tokens, with output tokens free.
 They also write "we can't prove it isn't subsidized."
 Either way, it is incredibly cheap and incredibly fast.
 
@@ -53,9 +53,9 @@ Once another human joins and writes something, the agent cannot tell whether the
 Nothing decided that, so the agent stayed quiet unless explicitly tagged.
 That confused several users.
 
-So I recently added adaptive participation: an agent that has already replied in a thread decides on its own whether to answer an untagged message.
+So I recently added [adaptive participation](https://docs.mindroom.chat/configuration/#adaptive-agent-participation): an agent that has already replied in a thread decides on its own whether to answer an untagged message.
 I first used an LLM as the judge, GPT-5.6 Luna on low reasoning.
-A yes-or-no question like "should this agent respond?" is exactly what Jev is for, so it became the second backend.
+A yes-or-no question like "should this agent respond?" is exactly what Jev is for, so it became the second backend ([PR #2169](https://github.com/mindroom-ai/mindroom/pull/2169)).
 
 ## "Thanks" should not stop the agent
 
@@ -64,12 +64,12 @@ When you send a message while an agent is still replying, MindRoom injects a not
 What people actually did was watch the agent start working and then write "looks good" or "thanks."
 The agent would stop early and continue in the next turn, which is both wasteful and counterintuitive.
 
-Now a judgment decides whether the new message needs the interruption.
+Now a judgment decides whether the new message needs the interruption ([mid-turn coalescing](https://docs.mindroom.chat/configuration/#mid-turn-coalescing), [PR #2193](https://github.com/mindroom-ai/mindroom/pull/2193)).
 If it does not, the agent reacts with 👀, finishes its reply, and handles the message afterwards.
 
 My first implementation worked at the code level but not functionally.
 My evals, based on real attempts inside MindRoom that had all failed plus synthetic cases from GPT-6 Astra, passed 5 out of 40 with Jev.
-[The fix](https://github.com/mindroom-ai/mindroom/pull/2244) changed the prompt slightly and formatted the context differently, and it went to 40 out of 40.
+[The fix](https://github.com/mindroom-ai/mindroom/pull/2244) changed the question and gave the judge more context, and it went to 40 out of 40.
 
 | | Before: 5/40 | After: 40/40 |
 |---|---|---|
@@ -78,14 +78,14 @@ My evals, based on real attempts inside MindRoom that had all failed plus synthe
 | Context | The request and the new messages | The same, plus the preceding conversation |
 
 The old question treated anything unclear as a reason to interrupt, and a bare "thanks" without the conversation around it always looks unclear.
-The information was all there; asking about interruption instead of permission to finish, and showing the preceding messages, is what changed.
+The model was the same; context and prompting made the difference.
 
 ## Picking the responder
 
 The third decision is routing.
 When a message in a room with many agents does not mention anyone, MindRoom's router picks who should answer.
 That used to be a free-text LLM prompt, "choose the most appropriate agent."
-It is now a Jev Choice over the eligible agents, plus a `no_fit` option.
+It is now a Jev Choice over the eligible agents, plus a `no_fit` option ([router docs](https://docs.mindroom.chat/configuration/router/), [PR #2238](https://github.com/mindroom-ai/mindroom/pull/2238)).
 A confident `no_fit` asks the user to mention an agent instead of guessing, and anything uncertain falls back to the existing LLM router.
 
 ## One config line to switch
@@ -117,10 +117,11 @@ agents:
 ```
 
 Both backends log the decision, latency, and token usage, so I can compare them on real traffic.
-The code is in [`src/mindroom/judgment/`](https://github.com/mindroom-ai/mindroom/tree/main/src/mindroom/judgment).
+The code is in [`src/mindroom/judgment/`](https://github.com/mindroom-ai/mindroom/tree/main/src/mindroom/judgment), and the backends are documented under [participation judgment backends](https://docs.mindroom.chat/configuration/#participation-judgment-backends).
 
 ## Named after Jevons
 
 Only after building all this did I read [why TypeSafe named it Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev): after William Stanley Jevons, who noticed that as steam engines burned coal more efficiently, demand for coal went up instead of down.
+Today that is called the [Jevons paradox](https://en.wikipedia.org/wiki/Jevons_paradox).
 That was literally my experience.
 Once I implemented it for one decision, I came up with use case after use case, and I keep thinking of more.
