@@ -55,6 +55,7 @@ That confused several users.
 So I recently added [adaptive participation](https://docs.mindroom.chat/configuration/#adaptive-agent-participation): an agent that has already replied in a thread decides on its own whether to answer an untagged message.
 I first used an LLM as the judge, GPT-5.6 Luna on low reasoning.
 A yes-or-no question like "should this agent respond?" is exactly what Jev is for, so it [became the second backend](https://github.com/mindroom-ai/mindroom/pull/2169).
+Compared with Luna, it is about ten times cheaper and ten times faster, and if I believe the benchmarks, you also get more intelligence.
 
 ## "Thanks" should not stop the agent
 
@@ -124,3 +125,8 @@ I only read [why TypeSafe named it Jev](https://typesafe.ai/blog/introducing-sys
 Today that is called the [Jevons paradox](https://en.wikipedia.org/wiki/Jevons_paradox).
 That was literally my experience.
 Once I implemented it for one decision, I came up with use case after use case, and I keep thinking of more.
+
+The latest is a plugin, [Response Audit JEV](https://github.com/mindroom-ai/response-audit-jev-plugin).
+Right after an agent replies, Jev checks the answer against the request and the tool calls the agent actually made, for example whether things are properly cited.
+If a check flags a problem, the plugin posts one follow-up in the thread that tags the agent and asks for a correction.
+Because Jev is so fast and cheap, running this after every reply costs almost nothing.
