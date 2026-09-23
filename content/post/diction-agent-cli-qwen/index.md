@@ -75,9 +75,7 @@ These are the averages on the public English test sets as of September 19, 2026:
 | OpenAI Whisper large-v3 | 5.8% | Yes |
 
 I picked the best model on the board whose weights you can download: Qwen3-ASR 1.7B.
-The best paid API gets about one word in 28 wrong; Qwen gets about one in 23.
-It edges out AssemblyAI's paid model and makes about a quarter fewer mistakes than Whisper large-v3.
-That is what I mean by frontier-level: within a point of first place, running on my own GPU.
+It lands within a point of the best paid API, which is what I mean by frontier-level.
 Since I maintain Agent CLI, I told an agent to add a Qwen backend, and shortly afterward [it had landed](https://github.com/basnijholt/agent-cli/pull/636) and was running on my server.
 
 Agent CLI's transcription server loads a model on the first request and unloads it after an idle timeout, so the model only takes VRAM while I use it.
