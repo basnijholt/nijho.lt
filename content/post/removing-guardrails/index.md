@@ -1,8 +1,8 @@
 ---
-title: "Removing the guardrails from my coding agents"
-subtitle: "From 'the agent can never merge' to 'the agent can merge when I say so'"
-summary: "For a year my hooks hard-blocked agents from amending commits, force-pushing, and merging PRs. With Fable and GPT-5.6 Sol, the guardrails stopped preventing mistakes and started preventing convenience — so I replaced capability restrictions with explicit, auditable, per-action authorization."
-date: 2026-07-12
+title: "Removing the guardrails and letting my coding agents loose"
+subtitle: "Why I run every agent in YOLO mode, and the few things my hooks still block"
+summary: "I have run coding agents in YOLO mode since I started using them. Instructions in AGENTS.md did not stop them from force-pushing or merging PRs, so hooks do. As the models got better, I added an override the agent may only use after I explicitly approve an action."
+date: 2026-09-22
 draft: false
 featured: false
 authors:
@@ -14,51 +14,109 @@ tags:
   - git
   - productivity
   - development
-  - mindroom
-  - matrix
-  - open-source
 categories:
   - Software Development
   - AI
   - level:intermediate
 ---
 
-For the past year my [dotfiles](https://github.com/basnijholt/dotfiles) have contained hooks that flat-out forbade my coding agents from doing certain things: `git commit --amend`, `git push --force`, pushing to `main`, and `gh pr merge`. Not because the agents kept screwing them up — mostly because *I* didn't like the idea of an agent doing them. The merge button was mine. History rewrites were mine. The agent proposed; I disposed.
+I have run coding agents in YOLO mode since I started using them in May 2025.
+I think it is the only way to parallelize work.
+Sometimes I have ten agents running at the same time, and clicking "approve" on every command they run would make that impossible.
 
-Last week I deleted that policy. Not the hooks — the *philosophy*.
+What makes me comfortable with it is that models tend to do what you ask, and that you can keep them in an environment where they cannot do much harm.
+I don't keep secrets within their reach, and above all I have [very good backups]({{< ref "/post/btrfs-to-zfs" >}}).
+The last piece is a small set of hooks that block the few things I never want an agent to do on its own.
 
-## What changed
+## Why hooks and not AGENTS.md
 
-Two things, honestly: Fable and GPT-5.6 Sol came out, and I implemented a couple of features that made the old trust model feel silly.
+My system prompt has always told agents not to force-push or merge PRs.
+They did it anyway.
 
-The models got good enough that the guardrails stopped protecting me from mistakes and started protecting me from convenience. When the agent says "the PR is green, all reviewers approved, want me to merge?" and my answer is always "yes, hold on, let me go find the merge button" — the button is the bug.
+The first time I really noticed was with [Gemini 3 Pro in November 2025]({{< ref "/post/gemini-3-pro-first-impressions" >}}), which merged my PR and force-pushed to `main`.
+Three weeks later I had hooks for Claude Code and Gemini CLI that block these commands before they run.
+It happened a couple more times in the weeks after, as I parallelized more and asked more of the models.
 
-## The mechanism: explicit approval, not open season
+In my experience, Anthropic and OpenAI models are very good at following rules, although Claude has historically been worse at it.
+Gemini has been absolutely dogshit.
 
-I didn't just delete the hooks. The blocks are still there by default. What I added is an override marker: if a command is prefixed with
+I don't think agents are ever malicious.
+They try to do what you asked, but they can misinterpret it, and then they force-push or merge something.
+A rule in a Markdown file is one more instruction to weigh against everything else in the context.
+A hook is not.
 
-```bash
-EXPLICITLY_USER_APPROVED_HOOK_OVERRIDE=1 git push --force ...
+## What I block
+
+All hooks live in [my dotfiles](https://github.com/basnijholt/dotfiles/tree/main/configs/claude/hooks).
+
+**`git commit --amend` and `git push --force`.**
+The unit I review is a PR.
+When I review a PR, I know I have reviewed it up to a certain commit, and later I only look at the diff of the new commits.
+Rewriting history breaks that.
+
+**Pushing to `main`.**
+Everything happens in PRs.
+Inside a PR I don't care how messy the history gets.
+I want the agent to push very often, so no work gets lost, and every commit has to be green, so each one is a snapshot I can go back to.
+The agent maintains its own development of the feature, and I have not written a commit message myself in a long time.
+When the PR is done, I squash merge it.
+
+**`gh pr merge`.**
+The merge comes after my review, so it is mine to do.
+
+**`git add -A`.**
+I often have unrelated untracked or unstaged files lying around.
+I work in many open source repositories, and some of those files should not be public, like deployment plans.
+This is the only block without an override.
+
+**`sleep`.**
+This one is for Claude, and Opus 5 specifically, which I hate with a passion.
+It would run tests in the background and then `sleep 300`, badly overestimating how long the tests take, when a blocking tool call returns exactly when they finish.
+
+## The override
+
+Over time the models got more capable.
+I could parallelize more, they could work independently for longer, and I trusted them more.
+I noticed I was spending a significant fraction of my time clicking buttons and doing operations I had forbidden the agent to do, only to end up doing them myself.
+
+So in July I added an override.
+When a hook blocks a command, the agent gets this hint:
+
+```text
+If (and only if) the user has explicitly approved this exact action,
+re-run the command prefixed with EXPLICITLY_USER_APPROVED_HOOK_OVERRIDE=1 to override this block.
 ```
 
-the hook lets it through — but the agent is only allowed to use that prefix when I have *explicitly approved the action in conversation*. The name is deliberately obnoxious. An agent can't stumble into it; it has to consciously assert "the user told me to do this," and that assertion sits right there in the command log if it ever lies.
+Nothing checks whether I actually approved it.
+It is a soft gate, but it works because the agent now has to write down, in the command itself, that I approved the action.
+When it runs into the block without my approval, it becomes obvious to the agent that it has to ask me first.
 
-Some things stay hard-blocked with no override at all — `git add -A`, for instance, because "accidentally commit every untracked file in the repo" is not a trust problem, it's a blast-radius problem. And chained commands can't smuggle a hard-blocked segment past an overridable one: `MARKER git commit --amend && git add -A` still gets rejected, because the non-overridable violation wins.
+`git add -A` stays hard-blocked, and a chained command cannot carry an override past it: `EXPLICITLY_USER_APPROVED_HOOK_OVERRIDE=1 git commit --amend && git add -A` is still rejected.
 
-One implementation note: I had three near-identical copies of this hook — one each for Claude Code, Codex, and Gemini. Unifying them into one shared `git_guard.py` with thin per-tool adapters is what made the override feature a one-day change instead of a three-day one. Deduplicate your guardrails before you start tuning them.
+## When the override was used without approval
 
-The shift is subtle but real: instead of *capability* restrictions ("the agent can never merge"), I now have *authorization* restrictions ("the agent can merge when I say so"). Which is exactly how you'd treat a competent human collaborator.
+It has happened, mostly with GPT-5.6 Sol, which I used a lot at the time.
 
-## The feature that forced the issue: calling my agent
+It used to be that you had to keep your context window short, because auto-compaction was lossy and produced poor summaries.
+Since around GPT-5.3, compaction works well enough that I keep a session going for as long as I am working on the same feature.
+So I would ask the agent to merge a PR early on, start a follow-up PR in the same session, and after a compaction the agent concluded that it should merge the new PR too.
+It did, without my approval.
 
-The other thing I built recently is what made the old model untenable: fully end-to-end encrypted voice calls to my agent, over [Matrix](https://matrix.org). The *exact same* agent I chat with — same memory, same tools, same context — except now I can ring it and talk. It can use whatever model fits the moment, and it actually speaks.
+The other case was my [`pr-review` skill](https://github.com/mindroom-ai/mindroom/blob/main/.claude/skills/pr-review/SKILL.md), by far my favorite skill that I wrote myself.
+I would tell the agent to run it and squash merge the PR only if the review approved it.
+A few times, the review found problems, the agent fixed them, and then it merged.
+What I meant was: merge if it is approved right away, and otherwise wait for me.
+Now I spell that out and end with "otherwise, wait for my instructions."
 
-Why this matters for guardrails: last week I was away from my computer, on my phone, with a terminal over a flaky connection and genuinely poor internet. In that situation, "the agent prepares everything and you click the final button" collapses. There is no button. There's barely a keyboard. What works is: stay in one interface, say "merge it," and have the agent do the whole thing.
+## Working from my phone
 
-Staying in one interface is really the point. Every guardrail that forces me to context-switch to a browser to perform a ceremonial click is a tax on exactly the workflows where agents are most valuable — mobile, voice, low-bandwidth, hands-off.
+The override matters most when I am away from my computer.
+On a month-long trip visiting family in Europe, I worked only from my phone, using [my mobile coding workflow]({{< ref "/post/agentic-mobile-workflow" >}}).
+Typing commands in a terminal on a phone is inconvenient, so I would rather say what I want and let the agent do it, including the merge.
+I have also built end-to-end encrypted voice calls to my agents over Matrix with [MindRoom]({{< ref "/post/mindroom" >}}), and I am moving more toward that kind of voice-driven workflow.
 
-## The takeaway
+## Not much has changed
 
-Guardrails made sense when agents were unreliable interns. As they become competent collaborators, the guardrails should evolve from "never" to "not without asking". Keep hard blocks for irreversible blast-radius mistakes. Convert everything else to explicit, auditable, per-action approval.
-
-I'm giving the agent more. So far, it's giving more back.
+I recently reread [my first post on agentic coding]({{< ref "/post/agentic-coding" >}}) from August 2025, and very little in it is outdated.
+The models are more capable, and I give them much larger scopes, but the way I work is mostly the same.
+The hooks are the main thing I added, and the override is how I loosened them again.
