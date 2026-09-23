@@ -30,7 +30,7 @@ image:
 On a recent month-long trip visiting family in Europe, I did a lot of work from my phone, using [my mobile coding workflow]({{< ref "/post/agentic-mobile-workflow" >}}).
 It still boggles my mind that real, productive work from a phone is possible now.
 Most of that work is talking to coding agents, and the built-in iOS dictation is garbage for that.
-I had an iOS Shortcut that sent recordings to my Agent CLI setup at home instead.
+I had an iOS Shortcut that sent recordings to [Agent CLI](https://github.com/basnijholt/agent-cli), [my local AI toolbox]({{< ref "/post/auto-install-extras" >}}), running at home instead.
 The problem was that the recording screen takes over the whole display, so I could not see the thing I was commenting on.
 The transcript then landed in my clipboard, and I had to paste it myself.
 
@@ -46,7 +46,7 @@ It works the same way, background recording included.
 The difference is that it has a self-hosted mode with an open-source gateway, so my voice goes to a machine I own instead of their servers.
 
 I run the [gateway](https://github.com/DictionLabs/Diction) on my home machine in the U.S., reachable only over my private network.
-The gateway streams audio to [`agent-cli`](https://github.com/basnijholt/agent-cli), [my local AI toolbox]({{< ref "/post/auto-install-extras" >}}), which runs Alibaba's [`Qwen/Qwen3-ASR-1.7B-hf`](https://huggingface.co/Qwen/Qwen3-ASR-1.7B-hf) on an RTX 3090 behind an OpenAI-compatible transcription endpoint.
+The gateway streams audio to Agent CLI, which runs Alibaba's [`Qwen/Qwen3-ASR-1.7B-hf`](https://huggingface.co/Qwen/Qwen3-ASR-1.7B-hf) on an RTX 3090 behind an OpenAI-compatible transcription endpoint.
 There is no LLM cleanup step, so Diction's Writing Style and Tones features do not work with this setup.
 I don't miss them: Qwen's raw transcription is already good enough for me.
 
