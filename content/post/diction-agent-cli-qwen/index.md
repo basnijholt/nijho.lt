@@ -1,5 +1,5 @@
 ---
-title: "Self-hosting Diction with Agent CLI and Qwen"
+title: "Frontier-level dictation on your iPhone keyboard, self-hosted"
 subtitle: "Fast, private iPhone dictation from my home GPU, even from a bar in the Netherlands"
 summary: "A small Docker recipe for running Diction's streaming gateway against Qwen3-ASR through Agent CLI, plus a test from a bar in the Netherlands, an ocean away from the GPU."
 date: 2026-09-22
@@ -27,12 +27,26 @@ image:
   preview_only: false
 ---
 
-[Diction](https://apps.apple.com/app/id6759807364) has quickly become my favorite app while on vacation and away from my laptop.
-It adds a voice keyboard to iOS, so I can dictate into any app.
-That replaces the record, run a Shortcut, copy, and paste routine from [my mobile coding workflow]({{< ref "/post/agentic-mobile-workflow" >}}).
+On a recent month-long trip visiting family in Europe, I did a lot of work from my phone, using [my mobile coding workflow]({{< ref "/post/agentic-mobile-workflow" >}}).
+It still boggles my mind that real, productive work from a phone is possible now.
+Most of that work is talking to coding agents, and the built-in iOS dictation is garbage for that.
+I had an iOS Shortcut that sent recordings to [Agent CLI](https://github.com/basnijholt/agent-cli), [my local AI toolbox]({{< ref "/post/auto-install-extras" >}}), running at home instead.
+The problem was that the recording screen takes over the whole display, so I could not see the thing I was commenting on.
+The transcript then landed in my clipboard, and I had to paste it myself.
 
-I self-host its [open-source gateway](https://github.com/DictionLabs/Diction) on my home machine in the U.S., reachable only over my private network.
-The gateway streams audio to [`agent-cli`](https://github.com/basnijholt/agent-cli), [my local AI toolbox]({{< ref "/post/auto-install-extras" >}}), which runs Alibaba's [`Qwen/Qwen3-ASR-1.7B-hf`](https://huggingface.co/Qwen/Qwen3-ASR-1.7B-hf) on an RTX 3090 behind an OpenAI-compatible transcription endpoint.
+So I threw my principles overboard and installed [Wispr Flow](https://wisprflow.ai), a voice keyboard for iOS.
+I loved it instantly.
+iOS does not let keyboards use the microphone, so the keyboard's button hands off to the Wispr Flow app, which keeps recording in the background.
+I was less happy about that, since it meant a closed-source app always had the microphone open and sent my voice to their servers.
+I was on the free plan, so I was probably the product.
+I also hit the free weekly word limit very quickly, and started looking for an alternative.
+
+That is how I found [Diction](https://apps.apple.com/app/id6759807364), which has since become my favorite app when I'm away from my laptop.
+It works the same way, background recording included.
+The difference is that it has a self-hosted mode with an open-source gateway, so my voice goes to a machine I own instead of their servers.
+
+I run the [gateway](https://github.com/DictionLabs/Diction) on my home machine in the U.S., reachable only over my private network.
+The gateway streams audio to Agent CLI, which runs Alibaba's [`Qwen/Qwen3-ASR-1.7B-hf`](https://huggingface.co/Qwen/Qwen3-ASR-1.7B-hf) on an RTX 3090 behind an OpenAI-compatible transcription endpoint.
 There is no LLM cleanup step, so Diction's Writing Style and Tones features do not work with this setup.
 I don't miss them: Qwen's raw transcription is already good enough for me.
 
@@ -44,7 +58,24 @@ I tried some of them, including NVIDIA's [Parakeet](https://huggingface.co/nvidi
 Parakeet is fast, but it cannot take custom instructions.
 Those instructions are how Diction's **My Words** feature biases a transcription toward specialized names.
 
-At the start of September, I checked the [Hugging Face Open ASR Leaderboard](https://huggingface.co/spaces/hf-audio/open_asr_leaderboard), where Qwen3-ASR caught my attention.
+At the start of September, I looked at the [Hugging Face Open ASR Leaderboard](https://huggingface.co/spaces/hf-audio/open_asr_leaderboard), which tests speech-to-text models on the same recordings and ranks them.
+The score is the word error rate (WER): the share of words a model gets wrong, counting words it swaps, drops, or makes up.
+Lower is better, and a WER of 4% means about one wrong word in every 25.
+The test recordings range from audiobooks and podcasts to meetings and earnings calls, so the average says more than any single clean benchmark.
+
+These are the averages on the public English test sets as of September 19, 2026:
+
+| Model | WER | Can I run it at home? |
+|---|---|---|
+| Zoom Scribe v2 Pro | 3.6% | No, paid API (#1 overall) |
+| ElevenLabs Scribe v2 | 4.0% | No, paid API |
+| **Qwen3-ASR 1.7B** | **4.3%** | **Yes, Apache-2.0** |
+| AssemblyAI Universal-3.5 Pro | 4.3% | No, paid API |
+| NVIDIA Parakeet TDT 0.6B v3 | 4.9% | Yes |
+| OpenAI Whisper large-v3 | 5.8% | Yes |
+
+I picked the best model on the board whose weights you can download: Qwen3-ASR 1.7B.
+It lands within a point of the best paid API, which is what I mean by frontier-level.
 Since I maintain Agent CLI, I told an agent to add a Qwen backend, and shortly afterward [it had landed](https://github.com/basnijholt/agent-cli/pull/636) and was running on my server.
 
 Agent CLI's transcription server loads a model on the first request and unloads it after an idle timeout, so the model only takes VRAM while I use it.
