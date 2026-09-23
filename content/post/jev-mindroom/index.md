@@ -139,3 +139,7 @@ In MindRoom, an agent can switch to a different model mid-conversation with a to
 Agents rarely do that without being told, though.
 So I default to a very expensive model, and I only save money when I remember to switch to a cheap one for something simple.
 Jev could run on every message and decide whether it needs the capable model or not.
+That works in both directions, up to a capable model or down to a cheap one.
+The perfect moment to switch is when the prompt cache has expired.
+A prompt cache belongs to one model, so switching normally means sending the entire context again at full price.
+Once the cache has expired, I pay that price anyway, so switching costs nothing extra.
