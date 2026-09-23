@@ -88,7 +88,7 @@ It would run tests in the background and then `sleep 300`, badly overestimating 
 ## The override
 
 Over time the models got more capable.
-I could parallelize more, they could work independently for longer, and I trusted them more.
+I could parallelize more, and I trusted them to work on their own for longer.
 I noticed I was spending a significant fraction of my time clicking buttons and doing operations I had forbidden the agent to do, only to end up doing them myself.
 
 So in July I added an override.
