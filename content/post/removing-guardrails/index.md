@@ -51,7 +51,8 @@ A hook is not.
 
 ## What I block
 
-All hooks live in [my dotfiles](https://github.com/basnijholt/dotfiles/tree/main/configs/claude/hooks).
+All hooks live in [my dotfiles](https://github.com/basnijholt/dotfiles/tree/main/configs/claude/hooks), and I deliberately kept them simple.
+The detection logic is one Python module, [`git_guard.py`](https://github.com/basnijholt/dotfiles/blob/main/configs/claude/hooks/git_guard.py), and the Claude Code, Codex, and Gemini CLI hooks all import it.
 
 **`git commit --amend` and `git push --force`.**
 The unit I review is a PR.
