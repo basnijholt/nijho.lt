@@ -1,7 +1,7 @@
 ---
 title: "Exploring the Jev hype in MindRoom"
 subtitle: "A System One model for the small yes-or-no decisions in a multi-agent chat"
-summary: "TypeSafe's Jev was all over r/LocalLLaMA, so I tried it in MindRoom. It now decides whether an agent joins a conversation, whether a follow-up message should interrupt a running reply, and which agent should answer. One eval went from 5 out of 40 to 40 out of 40 by changing the question, not the model."
+summary: "TypeSafe's Jev was everywhere, so I tried it in MindRoom. It now decides whether an agent joins a conversation, whether a follow-up message should interrupt a running reply, and which agent should answer. One eval went from 5 out of 40 to 40 out of 40 by changing the question, not the model."
 date: 2026-09-23
 draft: false
 featured: false
@@ -21,8 +21,9 @@ categories:
   - level:intermediate
 ---
 
-I am a permanent lurker on [r/LocalLLaMA](https://www.reddit.com/r/LocalLLaMA/).
-Last week, even though the subreddit is about local models, every other post seemed to be about [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev), a new model from TypeSafe.
+Last week, every AI newsletter I get was full of [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev), a new model from TypeSafe.
+So were several subreddits.
+I am a permanent lurker on [r/LocalLLaMA](https://www.reddit.com/r/LocalLLaMA/), and even though it is about local models, every other post seemed to be about Jev.
 There were local clones, benchmarks, CLI wrappers, and even someone claiming [they had built the same thing a year earlier](https://laya.convaiinnovations.com/).
 
 I have no connection to TypeSafe.
