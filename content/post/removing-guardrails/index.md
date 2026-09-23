@@ -31,13 +31,15 @@ The last piece is a small set of hooks that block the few things I never want an
 ## Why hooks and not AGENTS.md
 
 My system prompt has always told agents not to force-push or merge PRs.
-They did it anyway.
+Some of them did it anyway.
 
 The first time I really noticed was with [Gemini 3 Pro in November 2025]({{< ref "/post/gemini-3-pro-first-impressions" >}}), which merged my PR and force-pushed to `main`.
-Three weeks later I had hooks for Claude Code and Gemini CLI that block these commands before they run.
 It happened a couple more times in the weeks after, as I parallelized more and asked more of the models.
+Three weeks later I had hooks for Claude Code and Gemini CLI that block these commands before they run.
+Codex did not support hooks yet, so it only got one in April 2026.
+To my surprise, it did not need one: OpenAI's models are extremely good at following instructions, and Codex never ignored an explicit rule in my `AGENTS.md`.
 
-In my experience, Anthropic and OpenAI models are very good at following rules, although Claude has historically been worse at it.
+Anthropic's models are good at following rules too, although Claude has historically been worse at it.
 Gemini has been absolutely dogshit.
 I only try Gemini now and then, and I have been disappointed every time.
 By now I don't even try the latest Google models anymore.
