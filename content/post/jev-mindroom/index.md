@@ -47,26 +47,27 @@ Either way, it is incredibly cheap and incredibly fast.
 ## Adaptive participation
 
 In MindRoom, a conversation can have several humans, several agents, or both.
-When you talk to a single agent, it simply replies, and you don't need to tag it.
-Once another human joins and writes something, the agent cannot tell whether the message was meant for it or for the other person.
+When I talk to a single agent, it simply replies, and I don't need to tag it.
+Once another person joins and writes something, the agent cannot tell whether the message was meant for it or for the other person.
 Nothing decided that, so the agent stayed quiet unless explicitly tagged.
 That confused several users.
 
 So I recently added [adaptive participation](https://docs.mindroom.chat/configuration/#adaptive-agent-participation): an agent that has already replied in a thread decides on its own whether to answer an untagged message.
 I first used an LLM as the judge, GPT-5.6 Luna on low reasoning.
 A yes-or-no question like "should this agent respond?" is exactly what Jev is for, so it [became the second backend](https://github.com/mindroom-ai/mindroom/pull/2169).
-Compared with Luna, it is about ten times cheaper and ten times faster, and if I believe the benchmarks, you also get more intelligence.
+Compared with Luna, it is about ten times cheaper and ten times faster, and if I believe the benchmarks, it is also smarter.
 
 ## "Thanks" should not stop the agent
 
-The second decision taught me something about evals.
-When you send a message while an agent is still replying, MindRoom injects a notice at the next tool call telling the agent to stop and wrap up, because there is a new message.
-What people actually did was watch the agent start working and then write "looks good" or "thanks."
+The next thing I used Jev for was interruptions.
+When I send a message while an agent is still replying, MindRoom injects a notice at the next tool call telling the agent to stop and wrap up, because there is a new message.
+But often I, and other users, would watch the agent start working and then write "looks good" or "thanks."
 The agent would stop early and continue in the next turn, which is both wasteful and counterintuitive.
 
 Now [a judgment](https://github.com/mindroom-ai/mindroom/pull/2193) decides whether the new message needs the interruption, which the docs call [mid-turn coalescing](https://docs.mindroom.chat/configuration/#mid-turn-coalescing).
 If it does not, the agent reacts with 👀, finishes its reply, and handles the message afterwards.
 
+This is also where I learned a lesson about evals.
 My first implementation worked at the code level but not functionally.
 My evals, based on real attempts inside MindRoom that had all failed plus synthetic cases from GPT-6 Astra, passed 5 out of 40 with Jev.
 [The fix](https://github.com/mindroom-ai/mindroom/pull/2244) changed the question and gave the judge more context, and it went to 40 out of 40.
