@@ -124,7 +124,9 @@ The code is in [`src/mindroom/judgment/`](https://github.com/mindroom-ai/mindroo
 I only read [why TypeSafe named it Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev) after building all this: they named it after William Stanley Jevons, who noticed that as steam engines burned coal more efficiently, demand for coal went up instead of down.
 This is known as the [Jevons paradox](https://en.wikipedia.org/wiki/Jevons_paradox).
 That was literally my experience.
-Once I implemented it for one decision, I came up with use case after use case.
+Most of what I built was perfectly possible with an LLM.
+I just never built it, because I am somewhat cost- and latency-minded.
+Once I implemented Jev for one decision, I came up with use case after use case.
 
 One I already built is a plugin, [Response Audit JEV](https://github.com/mindroom-ai/response-audit-jev-plugin).
 Right after an agent replies, Jev checks the answer against the request and the tool calls the agent actually made, for example whether things are properly cited.
