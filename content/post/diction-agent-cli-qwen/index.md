@@ -27,11 +27,20 @@ image:
   preview_only: false
 ---
 
-[Diction](https://apps.apple.com/app/id6759807364) has quickly become my favorite app while on vacation and away from my laptop.
-It adds a voice keyboard to iOS, so I can dictate into any app.
-That replaces the record, run a Shortcut, copy, and paste routine from [my mobile coding workflow]({{< ref "/post/agentic-mobile-workflow" >}}).
+On a recent vacation, I did a lot of work from my phone.
+The built-in iOS dictation is garbage for that.
+I had an iOS Shortcut that sent recordings to my Agent CLI setup at home, part of [my mobile coding workflow]({{< ref "/post/agentic-mobile-workflow" >}}), but recording, waiting, copying, and pasting got old quickly.
 
-I self-host its [open-source gateway](https://github.com/DictionLabs/Diction) on my home machine in the U.S., reachable only over my private network.
+So I threw my principles overboard and installed [Wispr Flow](https://wisprflow.ai), a voice keyboard for iOS.
+I loved it instantly.
+I was less happy that it is closed source and that my voice went to their servers.
+I was on the free plan, so I was probably the product.
+I also hit the free weekly word limit very quickly, and started looking for an alternative.
+
+That is how I found [Diction](https://apps.apple.com/app/id6759807364), which has since become my favorite app when I'm away from my laptop.
+It is also a voice keyboard, but it has a self-hosted mode with an open-source gateway, so my audio goes to a machine I own.
+
+I run the [gateway](https://github.com/DictionLabs/Diction) on my home machine in the U.S., reachable only over my private network.
 The gateway streams audio to [`agent-cli`](https://github.com/basnijholt/agent-cli), [my local AI toolbox]({{< ref "/post/auto-install-extras" >}}), which runs Alibaba's [`Qwen/Qwen3-ASR-1.7B-hf`](https://huggingface.co/Qwen/Qwen3-ASR-1.7B-hf) on an RTX 3090 behind an OpenAI-compatible transcription endpoint.
 There is no LLM cleanup step, so Diction's Writing Style and Tones features do not work with this setup.
 I don't miss them: Qwen's raw transcription is already good enough for me.
