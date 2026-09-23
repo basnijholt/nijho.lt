@@ -46,8 +46,15 @@ By now I don't even try the latest Google models anymore.
 
 I don't think agents are ever purposely malicious.
 They try to do what you asked, but they can misinterpret it, and then they force-push or merge something.
-A rule in a Markdown file is one more instruction to weigh against everything else in the context.
-A hook is not.
+A rule in a Markdown file is a hope; a hook actually stops the command.
+Not that a hook would stop a malicious agent: it could put the blocked command in a Bash script and run that instead.
+What the hook does is tell the agent why I don't want it, because every block comes with a short explanation:
+
+```text
+git add -A is not allowed - add files explicitly to avoid adding unrelated untracked files
+```
+
+The models are well aligned, so once they know my intention, they respect it.
 
 ## What I block
 
