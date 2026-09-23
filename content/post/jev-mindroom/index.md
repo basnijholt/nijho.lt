@@ -130,3 +130,9 @@ The latest is a plugin, [Response Audit JEV](https://github.com/mindroom-ai/resp
 Right after an agent replies, Jev checks the answer against the request and the tool calls the agent actually made, for example whether things are properly cited.
 If a check flags a problem, the plugin posts one follow-up in the thread that tags the agent and asks for a correction.
 Because Jev is so fast and cheap, running this after every reply costs almost nothing.
+
+Next on my list is a model router.
+In MindRoom, an agent can switch to a different model mid-conversation with a tool call, and I can do the same with `!model`.
+Agents rarely do that without being told, though.
+So I default to a very expensive model, and I only save money when I remember to switch to a cheap one for something simple.
+Jev could run on every message and decide whether it needs the capable model or not.
