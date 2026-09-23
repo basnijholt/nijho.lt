@@ -47,6 +47,9 @@ Those instructions are how Diction's **My Words** feature biases a transcription
 At the start of September, I checked the [Hugging Face Open ASR Leaderboard](https://huggingface.co/spaces/hf-audio/open_asr_leaderboard), where Qwen3-ASR caught my attention.
 Since I maintain Agent CLI, I told an agent to add a Qwen backend, and shortly afterward [it had landed](https://github.com/basnijholt/agent-cli/pull/636) and was running on my server.
 
+Agent CLI's transcription server loads a model on the first request and unloads it after an idle timeout, so the model only takes VRAM while I use it.
+The same process serves an OpenAI-compatible API, which the Diction gateway talks to, and the [Wyoming protocol](https://www.home-assistant.io/integrations/wyoming/) that Home Assistant uses for local voice.
+
 ## 2. The recipe
 
 You need an NVIDIA GPU with the [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html), Docker Compose 2.30 or newer, and a private route from your iPhone to the server.
@@ -81,7 +84,7 @@ USER whisper
 
 Save this as `compose.yaml` next to the Dockerfile.
 It points Diction's gateway at Agent CLI's transcription port.
-`WHISPER_TTL` keeps the model loaded for a day after the last request, so dictation does not wait for a reload:
+`WHISPER_TTL` raises the idle timeout from the default five minutes to a day, so dictation rarely waits for a reload:
 
 ```yaml
 services:
