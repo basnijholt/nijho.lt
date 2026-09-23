@@ -33,12 +33,14 @@ I had an iOS Shortcut that sent recordings to my Agent CLI setup at home, part o
 
 So I threw my principles overboard and installed [Wispr Flow](https://wisprflow.ai), a voice keyboard for iOS.
 I loved it instantly.
-I was less happy that it is closed source and that my voice went to their servers.
+iOS does not let keyboards use the microphone, so the keyboard's button hands off to the Wispr Flow app, which keeps recording in the background.
+I was less happy about that, since it meant a closed-source app always had the microphone open and sent my voice to their servers.
 I was on the free plan, so I was probably the product.
 I also hit the free weekly word limit very quickly, and started looking for an alternative.
 
 That is how I found [Diction](https://apps.apple.com/app/id6759807364), which has since become my favorite app when I'm away from my laptop.
-It is also a voice keyboard, but it has a self-hosted mode with an open-source gateway, so my audio goes to a machine I own.
+It works the same way, background recording included.
+The difference is that it has a self-hosted mode with an open-source gateway, so my voice goes to a machine I own instead of their servers.
 
 I run the [gateway](https://github.com/DictionLabs/Diction) on my home machine in the U.S., reachable only over my private network.
 The gateway streams audio to [`agent-cli`](https://github.com/basnijholt/agent-cli), [my local AI toolbox]({{< ref "/post/auto-install-extras" >}}), which runs Alibaba's [`Qwen/Qwen3-ASR-1.7B-hf`](https://huggingface.co/Qwen/Qwen3-ASR-1.7B-hf) on an RTX 3090 behind an OpenAI-compatible transcription endpoint.
