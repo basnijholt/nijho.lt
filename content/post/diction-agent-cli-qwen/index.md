@@ -27,7 +27,7 @@ image:
   preview_only: false
 ---
 
-On a recent vacation, I did a lot of work from my phone.
+On a recent month-long trip visiting family in Europe, I did a lot of work from my phone.
 The built-in iOS dictation is garbage for that.
 I had an iOS Shortcut that sent recordings to my Agent CLI setup at home, part of [my mobile coding workflow]({{< ref "/post/agentic-mobile-workflow" >}}).
 The problem was that the recording screen takes over the whole display, so I could not see the thing I was commenting on.
