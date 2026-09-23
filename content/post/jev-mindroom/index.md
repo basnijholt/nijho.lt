@@ -1,7 +1,7 @@
 ---
 title: "Exploring the Jev hype in MindRoom"
 subtitle: "A System One model for the small yes-or-no decisions in a multi-agent chat"
-summary: "TypeSafe's Jev was everywhere, so I tried it in MindRoom. It now decides whether an agent joins a conversation, whether a follow-up message should interrupt a running reply, and which agent should answer. One eval went from 5 out of 40 to 40 out of 40 by changing the question, not the model."
+summary: "TypeSafe's Jev, a new fast and cheap classifier model that doesn't require fine-tuning, was suddenly, literally everywhere I looked, so I tried it in MindRoom. I now use it for small decisions I would never have spent an LLM call on, like whether a \"thanks\" should interrupt an agent that is still working."
 date: 2026-09-23
 draft: false
 featured: false
