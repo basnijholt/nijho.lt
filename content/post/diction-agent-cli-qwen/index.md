@@ -1,8 +1,8 @@
 ---
 title: "Self-hosting Diction with Agent CLI and Qwen"
-subtitle: "Fast, private iPhone dictation from my home GPU—even from a bar in the Netherlands"
+subtitle: "Fast, private iPhone dictation from my home GPU, even from a bar in the Netherlands"
 summary: "A small Docker recipe for running Diction's streaming gateway against Qwen3-ASR through Agent CLI, plus the moment it proved itself while I was away from my laptop."
-date: 2026-09-03
+date: 2026-09-22
 draft: false
 featured: false
 authors:
@@ -29,10 +29,10 @@ image:
 
 [Diction](https://apps.apple.com/app/id6759807364) has quickly become my favorite app while on vacation and away from my laptop.
 It adds a voice keyboard to iOS, so I can dictate into any app without manually recording an audio clip, running a Shortcut, waiting, copying, and pasting.
-It is the next iteration of [my mobile coding workflow]({{< ref "/post/agentic-mobile-workflow" >}}), replacing its iOS Shortcut and clipboard dance with a keyboard that is always available.
+It replaces the iOS Shortcut and clipboard dance from [my mobile coding workflow]({{< ref "/post/agentic-mobile-workflow" >}}) with a keyboard that is always there.
 
 I self-host its [open-source gateway](https://github.com/DictionLabs/Diction) on my home machine in the U.S.
-The gateway streams audio to [`agent-cli`](https://github.com/basnijholt/agent-cli), which exposes an OpenAI-compatible transcription endpoint backed by Alibaba's [`Qwen/Qwen3-ASR-1.7B-hf`](https://huggingface.co/Qwen/Qwen3-ASR-1.7B-hf)—Qwen, spelled Q-W-E-N.
+The gateway streams audio to [`agent-cli`](https://github.com/basnijholt/agent-cli), which exposes an OpenAI-compatible transcription endpoint backed by Alibaba's [`Qwen/Qwen3-ASR-1.7B-hf`](https://huggingface.co/Qwen/Qwen3-ASR-1.7B-hf).
 There is no LLM cleanup step: Qwen's raw transcription is already good enough for me.
 
 {{% callout note %}}
@@ -46,7 +46,7 @@ I also experimented with other speech models, including NVIDIA's [Parakeet](http
 Parakeet is fast, but it cannot take custom instructions.
 Those instructions are how Diction's **My Words** feature biases a transcription toward specialized names.
 
-Two days before writing this, I checked the [Hugging Face Open ASR Leaderboard](https://huggingface.co/spaces/hf-audio/open_asr_leaderboard), where Qwen3-ASR caught my attention.
+At the start of September, I checked the [Hugging Face Open ASR Leaderboard](https://huggingface.co/spaces/hf-audio/open_asr_leaderboard), where Qwen3-ASR caught my attention.
 I told an agent to implement support for it in Agent CLI, and shortly afterward [the new backend had landed](https://github.com/basnijholt/agent-cli/pull/636) and was running on my server.
 I maintain Agent CLI and have [written about how it grew from a voice helper into a local AI toolbox]({{< ref "/post/auto-install-extras" >}}), so adding a Transformers-based ASR backend was a natural fit.
 
@@ -164,22 +164,22 @@ At the time of writing, the latest gateway release still predates the fix, which
 Once an official release includes it, delete the gateway's entire `build:` section and replace its custom `image:` value with `dictionlabs/gateway:latest`.
 {{% /callout %}}
 
-On my machine, Qwen3-ASR 1.7B uses about **4.7 GiB of GPU memory** and roughly **3 GiB of system memory** while loaded.
+On my machine, Qwen3-ASR 1.7B uses about 4.7 GiB of GPU memory and roughly 3 GiB of system memory while loaded.
 Keeping the model warm makes the interaction feel immediate.
 
 ## 3. The bar test
 
-Yesterday I met a friend in a bar in the Netherlands and wanted to let him try it.
-My server—and the RTX 3090 doing the transcription—was at home in the U.S.
+A day later, I met a friend in a bar in the Netherlands and wanted to let him try it.
+My server, and the RTX 3090 doing the transcription, was at home in the U.S.
 
 I opened the terminal app on my phone, connected to an agent, and dictated an instruction to update the network ACLs so his phone could reach the gateway.
-In literally less than a minute, Diction was connected and working on his phone.
-His speech crossed the Atlantic, was transcribed by Qwen on my home GPU, and appeared back in the app with incredibly low latency.
+In less than a minute, Diction was connected and working on his phone.
+His speech crossed the Atlantic, was transcribed by Qwen on my home GPU, and appeared back in the app with barely any delay.
 
 That moment sold the whole setup to me.
-It was not a carefully prepared demo: I was in a bar, had no laptop, and used dictation itself to grant access to the dictation service.
+I was in a bar without a laptop, and I used dictation to grant access to the dictation service.
 
-Diction behaves like a normal keyboard, while I retain control over where the audio goes and which model handles it.
+Diction behaves like a normal keyboard, but I decide where the audio goes and which model handles it.
 
 The only feature I intentionally leave out is AI rewriting.
 Writing Style and Tones need a generative LLM cleanup stage, which this minimal setup does not run.
