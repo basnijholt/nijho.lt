@@ -26,7 +26,6 @@ So were several subreddits.
 I am a permanent lurker on [r/LocalLLaMA](https://www.reddit.com/r/LocalLLaMA/), and even though it is about local models, every other post seemed to be about Jev.
 There were local clones like [mini-jev](https://github.com/r-ms/mini-jev) and [von](https://github.com/wfzyx/von), CLI wrappers like [jev-cli](https://github.com/joshLong145/jev-cli), and even [someone on Hacker News](https://news.ycombinator.com/item?id=49765348) claiming [they had built the same thing a year earlier](https://laya.convaiinnovations.com/).
 
-I have no connection to TypeSafe.
 I tried Jev in [MindRoom]({{< ref "/post/mindroom" >}}), my [open-source](https://github.com/mindroom-ai/mindroom) agent platform on [Matrix](https://matrix.org), and less than two days later it was making [three decisions](https://github.com/mindroom-ai/mindroom/issues/2156) there.
 
 ## What a System One model is
