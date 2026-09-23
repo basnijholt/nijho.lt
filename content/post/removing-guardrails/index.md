@@ -36,8 +36,9 @@ Some of them did it anyway.
 The first time I really noticed was with [Gemini 3 Pro in November 2025]({{< ref "/post/gemini-3-pro-first-impressions" >}}), which merged my PR and force-pushed to `main`.
 It happened a couple more times in the weeks after, as I parallelized more and asked more of the models.
 Three weeks later I had hooks for Claude Code and Gemini CLI that block these commands before they run.
-Codex did not support hooks yet, so it only got one in April 2026.
-To my surprise, it did not need one: OpenAI's models are extremely good at following instructions, and Codex never ignored an explicit rule in my `AGENTS.md`.
+Codex did not support hooks yet.
+To my surprise, it did not need them: OpenAI's models are extremely good at following instructions, and Codex never ignored an explicit rule in my `AGENTS.md`.
+Codex supports hooks by now, so it runs the same ones as the others.
 
 Anthropic's models are good at following rules too, although Claude has historically been worse at it.
 Gemini has been absolutely dogshit.
