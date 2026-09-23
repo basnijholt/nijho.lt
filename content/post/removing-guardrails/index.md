@@ -44,7 +44,7 @@ Claude has been worse at following rules, and Gemini far worse still: absolutely
 I only try Gemini now and then, and I have been disappointed every time.
 By now I don't even try the latest Google models anymore.
 
-I don't think agents are ever malicious.
+I don't think agents are ever purposely malicious.
 They try to do what you asked, but they can misinterpret it, and then they force-push or merge something.
 A rule in a Markdown file is one more instruction to weigh against everything else in the context.
 A hook is not.
