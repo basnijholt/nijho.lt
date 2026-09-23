@@ -79,7 +79,6 @@ My evals, based on real attempts inside MindRoom that had all failed plus synthe
 | Context | The request and the new messages | The same, plus the preceding conversation |
 
 The old question treated anything unclear as a reason to interrupt, and a bare "thanks" without the conversation around it always looks unclear.
-Jev did not change, only the question and the context it got.
 
 ## Picking the responder
 
