@@ -24,10 +24,10 @@ categories:
 Last week, every AI newsletter I get was full of [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev), a new model from TypeSafe.
 So were several subreddits.
 I am a permanent lurker on [r/LocalLLaMA](https://www.reddit.com/r/LocalLLaMA/), and even though it is about local models, every other post seemed to be about Jev.
-There were local clones like [mini-jev](https://github.com/r-ms/mini-jev) and [von](https://github.com/wfzyx/von), CLI wrappers like [jev-cli](https://github.com/joshLong145/jev-cli), and even someone claiming [they had built the same thing a year earlier](https://laya.convaiinnovations.com/) ([HN discussion](https://news.ycombinator.com/item?id=49765348)).
+There were local clones like [mini-jev](https://github.com/r-ms/mini-jev) and [von](https://github.com/wfzyx/von), CLI wrappers like [jev-cli](https://github.com/joshLong145/jev-cli), and even [someone on Hacker News](https://news.ycombinator.com/item?id=49765348) claiming [they had built the same thing a year earlier](https://laya.convaiinnovations.com/).
 
 I have no connection to TypeSafe.
-I tried Jev in [MindRoom]({{< ref "/post/mindroom" >}}), my [open-source](https://github.com/mindroom-ai/mindroom) agent platform on [Matrix](https://matrix.org), and less than two days later it was making three decisions there ([issue #2156](https://github.com/mindroom-ai/mindroom/issues/2156)).
+I tried Jev in [MindRoom]({{< ref "/post/mindroom" >}}), my [open-source](https://github.com/mindroom-ai/mindroom) agent platform on [Matrix](https://matrix.org), and less than two days later it was making [three decisions](https://github.com/mindroom-ai/mindroom/issues/2156) there.
 
 ## What a System One model is
 
@@ -48,23 +48,23 @@ Either way, it is incredibly cheap and incredibly fast.
 ## Adaptive participation
 
 In MindRoom, a conversation can have several humans, several agents, or both.
-When you talk to a single agent, it simply replies; you don't need to tag it.
+When you talk to a single agent, it simply replies, and you don't need to tag it.
 Once another human joins and writes something, the agent cannot tell whether the message was meant for it or for the other person.
 Nothing decided that, so the agent stayed quiet unless explicitly tagged.
 That confused several users.
 
 So I recently added [adaptive participation](https://docs.mindroom.chat/configuration/#adaptive-agent-participation): an agent that has already replied in a thread decides on its own whether to answer an untagged message.
 I first used an LLM as the judge, GPT-5.6 Luna on low reasoning.
-A yes-or-no question like "should this agent respond?" is exactly what Jev is for, so it became the second backend ([PR #2169](https://github.com/mindroom-ai/mindroom/pull/2169)).
+A yes-or-no question like "should this agent respond?" is exactly what Jev is for, so it [became the second backend](https://github.com/mindroom-ai/mindroom/pull/2169).
 
 ## "Thanks" should not stop the agent
 
-The eval lesson came from a different feature.
+The second decision taught me something about evals.
 When you send a message while an agent is still replying, MindRoom injects a notice at the next tool call telling the agent to stop and wrap up, because there is a new message.
 What people actually did was watch the agent start working and then write "looks good" or "thanks."
 The agent would stop early and continue in the next turn, which is both wasteful and counterintuitive.
 
-Now a judgment decides whether the new message needs the interruption ([mid-turn coalescing](https://docs.mindroom.chat/configuration/#mid-turn-coalescing), [PR #2193](https://github.com/mindroom-ai/mindroom/pull/2193)).
+Now [a judgment](https://github.com/mindroom-ai/mindroom/pull/2193) decides whether the new message needs the interruption, which the docs call [mid-turn coalescing](https://docs.mindroom.chat/configuration/#mid-turn-coalescing).
 If it does not, the agent reacts with 👀, finishes its reply, and handles the message afterwards.
 
 My first implementation worked at the code level but not functionally.
@@ -78,14 +78,14 @@ My evals, based on real attempts inside MindRoom that had all failed plus synthe
 | Context | The request and the new messages | The same, plus the preceding conversation |
 
 The old question treated anything unclear as a reason to interrupt, and a bare "thanks" without the conversation around it always looks unclear.
-The model was the same; context and prompting made the difference.
+Jev did not change, only the question and the context it got.
 
 ## Picking the responder
 
 The third decision is routing.
 When a message in a room with many agents does not mention anyone, MindRoom's router picks who should answer.
 That used to be a free-text LLM prompt, "choose the most appropriate agent."
-It is now a Jev Choice over the eligible agents, plus a `no_fit` option ([router docs](https://docs.mindroom.chat/configuration/router/), [PR #2238](https://github.com/mindroom-ai/mindroom/pull/2238)).
+It is [now a Jev Choice](https://github.com/mindroom-ai/mindroom/pull/2238) over the eligible agents, plus a `no_fit` option, as described in the [router docs](https://docs.mindroom.chat/configuration/router/).
 A confident `no_fit` asks the user to mention an agent instead of guessing, and anything uncertain falls back to the existing LLM router.
 
 ## One config line to switch
@@ -116,12 +116,12 @@ agents:
         threshold: 0.8
 ```
 
-Both backends log the decision, latency, and token usage, so I can compare them on real traffic.
+Both backends log their decisions and latency, so I can compare them on real traffic.
 The code is in [`src/mindroom/judgment/`](https://github.com/mindroom-ai/mindroom/tree/main/src/mindroom/judgment), and the backends are documented under [participation judgment backends](https://docs.mindroom.chat/configuration/#participation-judgment-backends).
 
 ## Named after Jevons
 
-Only after building all this did I read [why TypeSafe named it Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev): after William Stanley Jevons, who noticed that as steam engines burned coal more efficiently, demand for coal went up instead of down.
+I only read [why TypeSafe named it Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev) after building all this: they named it after William Stanley Jevons, who noticed that as steam engines burned coal more efficiently, demand for coal went up instead of down.
 Today that is called the [Jevons paradox](https://en.wikipedia.org/wiki/Jevons_paradox).
 That was literally my experience.
 Once I implemented it for one decision, I came up with use case after use case, and I keep thinking of more.
