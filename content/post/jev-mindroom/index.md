@@ -124,14 +124,15 @@ The code is in [`src/mindroom/judgment/`](https://github.com/mindroom-ai/mindroo
 I only read [why TypeSafe named it Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev) after building all this: they named it after William Stanley Jevons, who noticed that as steam engines burned coal more efficiently, demand for coal went up instead of down.
 Today that is called the [Jevons paradox](https://en.wikipedia.org/wiki/Jevons_paradox).
 That was literally my experience.
-Once I implemented it for one decision, I came up with use case after use case, and I keep thinking of more.
+Once I implemented it for one decision, I came up with use case after use case.
 
-The latest is a plugin, [Response Audit JEV](https://github.com/mindroom-ai/response-audit-jev-plugin).
+One I already built is a plugin, [Response Audit JEV](https://github.com/mindroom-ai/response-audit-jev-plugin).
 Right after an agent replies, Jev checks the answer against the request and the tool calls the agent actually made, for example whether things are properly cited.
 If a check flags a problem, the plugin posts one follow-up in the thread that tags the agent and asks for a correction.
 Because Jev is so fast and cheap, running this after every reply costs almost nothing.
 
-Next on my list is a model router.
+Right now I am full of ideas.
+For example, a model router.
 In MindRoom, an agent can switch to a different model mid-conversation with a tool call, and I can do the same with `!model`.
 Agents rarely do that without being told, though.
 So I default to a very expensive model, and I only save money when I remember to switch to a cheap one for something simple.
