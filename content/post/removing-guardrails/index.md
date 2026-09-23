@@ -39,6 +39,8 @@ It happened a couple more times in the weeks after, as I parallelized more and a
 
 In my experience, Anthropic and OpenAI models are very good at following rules, although Claude has historically been worse at it.
 Gemini has been absolutely dogshit.
+I only try Gemini now and then, and I have been disappointed every time.
+By now I don't even try the latest Google models anymore.
 
 I don't think agents are ever malicious.
 They try to do what you asked, but they can misinterpret it, and then they force-push or merge something.
