@@ -40,8 +40,7 @@ Codex did not support hooks yet.
 To my surprise, it did not need them: OpenAI's models are extremely good at following instructions, and Codex never ignored an explicit rule in my `AGENTS.md`.
 Codex supports hooks by now, so it runs the same ones as the others.
 
-Anthropic's models are good at following rules too, although Claude has historically been worse at it.
-Gemini has been absolutely dogshit.
+Claude has been worse at following rules, and Gemini far worse still: absolutely dogshit.
 I only try Gemini now and then, and I have been disappointed every time.
 By now I don't even try the latest Google models anymore.
 
