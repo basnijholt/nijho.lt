@@ -121,8 +121,7 @@ The code is in [`src/mindroom/judgment/`](https://github.com/mindroom-ai/mindroo
 
 ## Named after Jevons
 
-I only read [why TypeSafe named it Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev) after building all this: they named it after William Stanley Jevons, who noticed that as steam engines burned coal more efficiently, demand for coal went up instead of down.
-Today that is called the [Jevons paradox](https://en.wikipedia.org/wiki/Jevons_paradox).
+I only read [why TypeSafe named it Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev) after building all this: they named it after William Stanley Jevons, known for the [Jevons paradox](https://en.wikipedia.org/wiki/Jevons_paradox): as steam engines burned coal more efficiently, demand for coal went up instead of down.
 That was literally my experience.
 Once I implemented it for one decision, I came up with use case after use case.
 
