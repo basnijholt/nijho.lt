@@ -694,8 +694,9 @@ In Traefik, Forgejo simply has two HTTPS routes: the usual `git.lab.nijho.lt` be
       - traefik.http.routers.forgejo-public.entrypoints=websecure
 ```
 
-Git over SSH doesn't go through Traefik; it uses port 222 on the NAS directly.
+Git over SSH doesn't go through Traefik; the router forwards a second port, 222, straight to Forgejo on the NAS.
 That is also why this DNS record is "DNS-only": Cloudflare's proxy only handles web traffic.
+Without the allowlist, Forgejo has to guard its own door: sign-ups are off, you have to log in to see anything, and SSH only accepts keys.
 
 The Headscale coordination server is public too, at `headscale.nijho.lt`, and it *has* to be: a laptop on hotel Wi-Fi needs to reach it to log in and find the other devices before any tunnel exists.
 That record goes through Cloudflare's proxy, which hides my home IP behind Cloudflare's.
@@ -744,7 +745,7 @@ http:
           - "192.168.1.0/24"  # home network
           - "100.64.0.0/24"   # Tailscale devices
           - "10.6.0.0/24"     # WireGuard clients
-          - "172.20.0.1/32"   # Docker's own network (see below)
+          - "172.20.0.1/32"   # the NAS itself (see below)
           - "127.0.0.1/32"    # localhost
 ```
 
@@ -753,8 +754,17 @@ A request from any other address gets `403 Forbidden` before it gets anywhere ne
 For the `.local` names, the same middleware sits on the whole plain-HTTP entrypoint.
 
 The odd one, `172.20.0.1`, is the gateway of my Docker network.
-Tailscale traffic that arrives through Docker's port forwarding can show up with that address instead of its real one, so it needs to be on the list.
-That kind of thing only shows up when you test from every way in, not just from home.
+Requests that start on the NAS itself, like a container calling another service by its lab name, show up with that address.
+
+Tailscale requests keep their real `100.64.0.x` address thanks to one line in the NixOS config of [`docker-lxc`](https://github.com/basnijholt/dotfiles/tree/main/configs/nixos/hosts/docker-lxc):
+
+```nix
+services.tailscale.extraSetFlags = [ "--snat-subnet-routes=false" ];
+```
+
+Without it, Tailscale replaces the source address of traffic it passes on to another network, like Docker's internal one, and every Tailscale request would look like it came from `172.20.0.1`.
+
+To check all of this, I test from every way in.
 
 {{< detail-tag "How I test it (click to unfold)" >}}
 ```bash
@@ -778,6 +788,25 @@ The weak spot is that the allowlist is opt-*out* per service.
 Forget the middleware label and a service is public.
 So every now and then I list all HTTPS routes without the middleware and check that each one belongs there.
 If I started over, I would put the allowlist on all HTTPS traffic by default and give public services their own entrypoint, so a forgotten label fails closed instead of open.
+
+### Trusting my own network
+
+For most services, the allowlist is the only lock in front.
+Anything on my home network or on WireGuard, and any of my own devices on Tailscale, can reach them without an extra login.
+
+I could add one.
+[Authelia](https://www.authelia.com/) runs next to Traefik, and putting its login page in front of a service is as simple as adding it to the same middlewares label the allowlist uses.
+For Traefik's own dashboard, that looks like this:
+
+```yaml
+      - traefik.http.routers.traefik-lab.middlewares=local-ips-only@file,authelia@docker
+```
+
+I don't do that for most services, because a login page in front of an app sometimes breaks things, like mobile apps that talk to the app directly.
+
+Most apps have their own login, and I trust that enough on my own network.
+I also trust the people on it.
+If your home network has guests or devices you don't trust, the trade-off looks different.
 
 ## Sharing with friends and family
 
@@ -812,6 +841,11 @@ A simplified version of those rules:
 Friends reach their service directly on its port, not through Traefik.
 They can't even reach port 443 on the NAS, so Traefik never sees them.
 My own devices can reach everything.
+
+That also means friends don't use my lab names.
+I give them the machine's tailnet address and the port, like `http://100.64.0.28:9925`, and that's it.
+A device keeps its tailnet address, so it can go in a bookmark, and one friend points a name in their own homelab's DNS at it.
+It is plain HTTP, but between their network and mine it travels inside the encrypted tunnel.
 
 Because the ACL is a file in my stacks repo, sharing one more service with someone is a one-line diff and a `cf restart headscale`.
 The commit history doubles as a log of who got access to what, and when.
@@ -936,7 +970,7 @@ In practice, I describe the service to an agent and review what it did.
 - **DNS is not a security boundary.** Anyone can send any name to your IP. The check has to happen at the front door.
 - **Point DNS at the front door, not at the service.** Traefik knows where things run, so moving a service never touches DNS.
 - **Keep one way in that doesn't depend on the homelab.** For me that's WireGuard on the router. The NAS holds the data and runs Traefik, so when it is down, everything is, and I still need a way in to fix it.
-- **Test from every way in.** Some problems, like the Docker gateway address, only show up on one path.
+- **Test from every way in.** Some problems only show up on one path, like a new name that works at home but not over Tailscale.
 - **Two layers for sharing.** Headscale ACLs decide who reaches what; Traefik's allowlist decides what the internet sees.
 - **Opt-out exposure needs audits.** Better yet, make private the default.
 - **Generate what you can.** A generated list can't drift.
