@@ -1,5 +1,5 @@
 ---
-title: "My homelab, explained: many machines, one front door, reachable from anywhere"
+title: "My declarative homelab, explained"
 subtitle: "How I reach my self-hosted services from anywhere without putting them on the internet, explained from scratch: reverse proxy, certificates, DNS, WireGuard, Tailscale, Headscale, compose-farm, NixOS, and Terraform"
 summary: "Friends keep asking how my homelab works, so this is the long answer, written for people who have never touched a reverse proxy. Four NixOS machines run containers managed by compose-farm. One Traefik instance is the front door for all of them, with real HTTPS certificates even for private services. The same name gets a different DNS answer depending on where I am. There are four ways in: my home network, WireGuard on my router, Tailscale via my own Headscale server, and the open internet. One IP allowlist decides who gets through, and Headscale ACLs let me share specific services with friends and family. Almost all of it lives in git as NixOS, Compose, and Terraform files, which is exactly what makes it easy to work on with AI agents."
 date: 2026-09-25
