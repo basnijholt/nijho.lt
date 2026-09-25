@@ -32,7 +32,7 @@ When I wrote [about my homelab]({{< ref "/post/homelab" >}}) in 2024, it was a s
 Almost everything in that post has since been replaced.
 Proxmox and TrueNAS are gone, and [every machine runs NixOS]({{< ref "/post/proxmox-to-nixos" >}}), [including the NAS]({{< ref "/post/truenas-to-nixos" >}}).
 
-The part I think is the coolest is the balance I found: everything is declarative, without more machinery than I need.
+The part I think is the coolest is the balance I found: everything is declarative, but with as little machinery as possible.
 One extreme is what I had before, clicking through web UIs and running one-off install scripts.
 The other is Kubernetes, which many self-hosted projects don't support and which is a lot to babysit at home, or running every app as a NixOS module, which often lags behind upstream.[^nix-lag]
 I landed in between: NixOS declares the machines, each project's own Compose file declares its app, and [compose-farm](https://github.com/basnijholt/compose-farm), a thin tool I wrote, decides which machine runs what, which is all the multi-host orchestration I need.
