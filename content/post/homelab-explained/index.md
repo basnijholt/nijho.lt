@@ -236,9 +236,9 @@ Back when I ran Proxmox, I was a big fan of the [Proxmox VE Helper-Scripts](http
 Each one is a one-liner that creates an LXC container with an app installed inside, and they are how I [got into self-hosting]({{< ref "/post/homelab" >}}) and set up almost everything at first.
 
 The catch is that they are a community effort, and the way they install an app is usually not a way the app's own developers support.
-[Immich](https://immich.app/) is a good example: its docs say it requires Docker with Docker Compose, while the helper script builds Immich from source and installs PostgreSQL, Redis, and the image libraries directly into the container.
-It is effectively a mirror of the official setup, maintained by someone else, so every Immich release meant hoping the script had caught up with whatever changed upstream.
-Upgrades became painful and stressful.
+[Immich](https://immich.app/) shows the problem well: its docs say it requires Docker with the Docker Compose plugin, while today's helper script builds Immich from source, installs PostgreSQL and Redis, and compiles six image-processing libraries directly in the container.
+That is effectively a mirror of the official setup, maintained by someone else; the script even pins the Immich version and only bumps it after testing each release.
+Every upgrade depends on a second set of maintainers keeping up with upstream, and for my containers that made upgrades painful and stressful.
 
 Nowadays almost every project publishes a Docker Compose file, so that's what I use, nearly unmodified.
 When upstream changes something, they change their Compose file, and I copy the change.
