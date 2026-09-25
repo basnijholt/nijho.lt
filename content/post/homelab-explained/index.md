@@ -83,7 +83,7 @@ flowchart LR
     home --> traefik
     wg --> wgs --> traefik
     ts -- "encrypted tunnel<br/>straight to the NAS" --> traefik
-    net --> fwd --> traefik
+    net --> fwd -- "wan entrypoint:<br/>public routes only" --> traefik
 
     traefik{{"Traefik<br/>reverse proxy<br/>+ IP allowlist"}}
     traefik --> nas["Containers on nas"]
@@ -103,7 +103,7 @@ In short:
 4. **Let's Encrypt certificates** give every service real HTTPS, including the private ones.
 5. **DNS** turns names like `mealie.lab.nijho.lt` into addresses, and gives a *different* answer depending on where I am.
 6. There are **four ways in**: my home network, WireGuard on my router, Tailscale coordinated by my own Headscale server, and the open internet.
-7. **One allowlist** in Traefik decides which of those four each service accepts. Almost everything accepts only the first three.
+7. **One allowlist** in Traefik limits every service to the first three by default. A service reaches the internet only if its config asks for it.
 8. **Headscale ACLs** decide which of my friends and family can reach which service.
 9. **NixOS, Compose files, and Terraform** describe nearly all of it in git, so I rarely click a button, and AI agents can work on it the same way I do.
 
@@ -120,7 +120,7 @@ To make the list concrete, this is what happens when I open Mealie in three situ
 
 - **At home,** my phone asks my home DNS server for `mealie.lab.nijho.lt` and gets `192.168.1.6`, the NAS. Traefik sees a request from `192.168.1.x`, which is on the allowlist, and passes it to the Mealie container.
 - **On hotel Wi-Fi that blocks WireGuard,** my laptop uses Tailscale instead. It asks Headscale's DNS for the same name and gets `100.64.0.28`, the address of the NAS *inside* my Tailscale network. The request travels through an encrypted tunnel straight to the NAS. Traefik sees a `100.64.0.x` address, also on the allowlist, and passes it on.
-- **A stranger on the internet** gets `192.168.1.6` from public DNS, which is a private address that leads nowhere outside my home. If they find my home IP and connect to it directly, Traefik sees their real address, which is *not* on the allowlist, and answers `403 Forbidden`.
+- **A stranger on the internet** gets `192.168.1.6` from public DNS, which is a private address that leads nowhere outside my home. If they find my home IP and connect to it directly, the router hands them to Traefik's separate door for the internet, where Mealie doesn't exist, and they get `404 Not Found`.
 
 Same name, same padlock, three paths, and only the stranger is refused.
 
@@ -390,18 +390,18 @@ These are Mealie's:
       - traefik.enable=true
       # https://mealie.lab.nijho.lt, only for trusted networks
       - traefik.http.routers.mealie.rule=Host(`mealie.${DOMAIN}`)
-      - traefik.http.routers.mealie.entrypoints=websecure
-      - traefik.http.routers.mealie.middlewares=local-ips-only@file
       # http://mealie.local, plain HTTP at home
       - traefik.http.routers.mealie-local.rule=Host(`mealie.local`)
       - traefik.http.routers.mealie-local.entrypoints=web
       - traefik.http.services.mealie.loadbalancer.server.port=9000
 ```
 
-In words: if someone asks for `mealie.lab.nijho.lt` over HTTPS and passes the `local-ips-only` check, send them to port 9000 of this container.
+In words: if someone asks for `mealie.lab.nijho.lt` or `mealie.local`, send them to port 9000 of this container.
 Every service gets two names by convention: an HTTPS name under `lab.nijho.lt` that works everywhere, and a short `.local` name for quick access at home.
+The HTTPS route doesn't mention HTTPS, a certificate, or who is allowed in; Traefik's defaults cover all three.
 
-Traefik reads those labels by watching Docker on its own machine, and ignores any container that doesn't opt in with `traefik.enable=true`:
+Traefik reads those labels by watching Docker on its own machine, and ignores any container that doesn't opt in with `traefik.enable=true`.
+Its own config sets the defaults:
 
 ```yaml
 command:
@@ -411,8 +411,17 @@ command:
   - --entrypoints.web.address=:80
   - --entrypoints.web.http.middlewares=local-ips-only@file
   - --entrypoints.websecure.address=:443
+  - --entrypoints.websecure.asDefault=true
+  - --entrypoints.websecure.http.middlewares=local-ips-only@file
   - --entrypoints.websecure.http.tls.certresolver=le
+  - --entrypoints.wan.address=:4443
+  - --entrypoints.wan.http.tls.certresolver=le
 ```
+
+An **entrypoint** is a port Traefik listens on.
+`web` and `websecure` are for home, WireGuard, and Tailscale, and a route that doesn't name an entrypoint lands on `websecure`.
+`local-ips-only` is the allowlist, more on that in [Keeping it safe](#keeping-it-safe-one-allowlist).
+`wan` is for the internet, more on that in [The internet](#4-the-internet).
 
 ### Services on other machines
 
@@ -430,10 +439,6 @@ http:
   routers:
     ntfy:
       rule: Host(`ntfy.lab.nijho.lt`)
-      middlewares:
-      - local-ips-only@file
-      entrypoints:
-      - websecure
       service: ntfy
   services:
     ntfy:
@@ -680,7 +685,8 @@ The result is that one name works everywhere I am.
 ### 4. The internet
 
 The last way in is the open internet.
-My router forwards TCP port 443, HTTPS, to Traefik on the NAS.
+My router forwards TCP port 443, HTTPS, to Traefik on the NAS, but to its own entrypoint, `wan` on port 4443, not to the `websecure` one that everything else uses.
+Only routes that list `wan` answer there.
 
 A few services are public on purpose.
 The clearest example is my git server, [Forgejo](https://forgejo.org/), at `git.nijho.lt`.
@@ -699,13 +705,12 @@ resource "cloudflare_record" "git" {
 }
 ```
 
-In Traefik, Forgejo simply has two HTTPS routes: the usual `git.lab.nijho.lt` behind the allowlist, and `git.nijho.lt` without it.
+In Traefik, Forgejo simply has two HTTPS routes: the usual `git.lab.nijho.lt`, private like everything else, and `git.nijho.lt`, which also listens on `wan`.
 
 ```yaml
       - traefik.http.routers.forgejo.rule=Host(`git.${DOMAIN}`)
-      - traefik.http.routers.forgejo.middlewares=local-ips-only@file
       - traefik.http.routers.forgejo-public.rule=Host(`git.nijho.lt`)
-      - traefik.http.routers.forgejo-public.entrypoints=websecure
+      - traefik.http.routers.forgejo-public.entrypoints=websecure,wan
 ```
 
 Git over SSH doesn't go through Traefik; the router forwards a second port, 222, straight to Forgejo on the NAS.
@@ -718,7 +723,7 @@ Only the part the Tailscale apps talk to is public; the Headplane admin UI and H
 Headscale doesn't run its own relay server either; the tailnet uses Tailscale's public relays when a direct connection isn't possible.
 
 Forwarding port 443 sounds scary if you assume it means everything is on the internet now.
-It doesn't, because of the allowlist.
+It doesn't: the internet only reaches `wan`, and a route has to ask for that.
 
 ## Keeping it safe: one allowlist
 
@@ -739,7 +744,7 @@ The names aren't secret either, because they're easy to guess.
 The wildcard certificate keeps the individual names out of the public [certificate transparency logs](https://certificate.transparency.dev/), which is nice, but that is hiding, not locking.
 
 So the DNS setup is there for convenience: one name that works everywhere.
-The security boundary is Traefik, which checks where every request actually comes from.
+The security boundary is Traefik, which knows how every request actually arrived.
 
 ### Who is knocking
 
@@ -766,9 +771,10 @@ http:
 `/24` means the first three numbers are fixed and the last can be anything, so `192.168.1.0/24` covers `192.168.1.0` through `192.168.1.255`.
 `/32` means exactly one address.
 
-Every private service has `middlewares=local-ips-only@file` in its labels, like Mealie above.
+The middleware sits on the whole `websecure` entrypoint, so every HTTPS route there gets the check without a word in its labels.
 A request from any other address gets `403 Forbidden` before it gets anywhere near the service.
-For the `.local` names, the same middleware sits on the whole plain-HTTP entrypoint.
+For the `.local` names, the same middleware sits on the plain-HTTP entrypoint.
+Internet traffic doesn't arrive on `websecure` at all, so this is the second lock: if I ever point the port forward at the wrong port, strangers get `403` instead of my services.
 
 The odd one, `172.20.0.1`, is the gateway of my Docker network.
 Requests that start on the NAS itself, like a container calling another service by its lab name, show up with that address.
@@ -789,24 +795,31 @@ To check all of this, I test from every way in.
 ```bash
 # From home, WireGuard, or Tailscale: expect 200
 curl -s -o /dev/null -w '%{http_code}\n' https://mealie.lab.nijho.lt
-# From outside (phone hotspot, VPNs off), skipping DNS: expect 403
+# Through the router's port forward, skipping DNS: expect 404
 curl -s -o /dev/null -w '%{http_code}\n' --resolve mealie.lab.nijho.lt:443:<my home IP> https://mealie.lab.nijho.lt
 # A public service, from anywhere: expect 200
 curl -s -o /dev/null -w '%{http_code}\n' https://git.nijho.lt
 ```
 
-The second one has to run from outside my network.
-From inside, the router forwards the request back in with its own home address as the source, so it passes the allowlist.
+The second one works from inside too: the router sends the request back in through the same port forward, so it lands on `wan` like a stranger's would.
 {{< /detail-tag >}}
 
-### Opt-out, so audit
+### Private by default
 
-Out of roughly a hundred HTTPS routes, only a handful skip the allowlist, and each of those is a deliberate decision.
+Out of roughly a hundred HTTPS routes, only a handful are public, and each of those is a deliberate decision.
 
-The weak spot is that the allowlist is opt-*out* per service.
-Forget the middleware label and a service is public.
-So every now and then I list all HTTPS routes without the middleware and check that each one belongs there.
-If I started over, I would put the allowlist on all HTTPS traffic by default and give public services their own entrypoint, so a forgotten label fails closed instead of open.
+A route is public only if it lists the `wan` entrypoint and has no allowlist of its own.
+A private service needs nothing in its labels: it lands on `websecure`, where the allowlist guards the whole entrypoint.
+Forget a label and a service ends up private, not public.
+The one change that publishes something is typing `wan`, which stands out in a diff and is easy to list:
+
+```bash
+grep -rnw wan /opt/stacks/*/compose.yaml /opt/stacks/traefik/dynamic.d/
+```
+
+One wrinkle: devices at home that use a public name, like `git.nijho.lt`, also come in through the port forward, because DNS points that name at my home IP.
+For public routes that changes nothing.
+A couple of private services that I reach by a public name list `wan` too, and keep the allowlist on the route itself.
 
 ### Trusting my own network
 
@@ -814,11 +827,11 @@ For most services, the allowlist is the only lock in front.
 Anything on my home network or on WireGuard, and any of my own devices on Tailscale, can reach them without an extra login.
 
 I could add one.
-[Authelia](https://www.authelia.com/) runs next to Traefik, and putting its login page in front of a service is as simple as adding it to the same middlewares label the allowlist uses.
+[Authelia](https://www.authelia.com/) runs next to Traefik, and putting its login page in front of a service takes one label.
 For Traefik's own dashboard, that looks like this:
 
 ```yaml
-      - traefik.http.routers.traefik-lab.middlewares=local-ips-only@file,authelia@docker
+      - traefik.http.routers.traefik-lab.middlewares=authelia@docker
 ```
 
 I do that for some services, but not all, because a login page in front of an app sometimes breaks things, like mobile apps that talk to the app directly.
@@ -963,7 +976,7 @@ Hand-maintained lists drift; generated ones don't.
 
 This is everything it takes to add a new service, say ntfy on the NUC:
 
-1. Create `/opt/stacks/ntfy/compose.yaml` with the container and its Traefik labels: an HTTPS name with `local-ips-only`, and a `.local` name, like Mealie.
+1. Create `/opt/stacks/ntfy/compose.yaml` with the container and its Traefik labels: an HTTPS name and a `.local` name, like Mealie.
 2. Add `ntfy: nuc` to `compose-farm.yaml`.
 3. Run `cf up ntfy`. compose-farm starts it on the NUC and writes its route into Traefik's file, and Traefik picks it up immediately.
 4. Run the Headscale DNS script and `cf restart headscale`, so the name also works over Tailscale.
@@ -973,9 +986,9 @@ After that:
 
 - `https://ntfy.lab.nijho.lt` works at home, over WireGuard, and over Tailscale, with a valid certificate I never requested.
 - `http://ntfy.local` works at home.
-- From the internet, it answers `403 Forbidden`.
+- Sent to my home IP from the internet, it answers `404 Not Found`.
 
-To make it public like `git.nijho.lt`, I would add a Terraform record and a second route without the middleware.
+To make it public like `git.nijho.lt`, I would add a Terraform record and a second route that also listens on `wan`.
 To share it with a friend, one line in the ACL.
 
 In practice, I describe the service to an agent and review what it did.
@@ -983,14 +996,14 @@ In practice, I describe the service to an agent and review what it did.
 ## Lessons learned
 
 - **Use the DNS-01 challenge.** You get real certificates for private services and one wildcard for everything, and the internet never needs to reach you.
-- **One front door, one allowlist.** Knowing that the internet's default answer is `403` is what made forwarding port 443 feel fine.
+- **One front door, private by default.** Knowing that a route has to ask to be on the internet is what made forwarding port 443 feel fine.
 - **A private address in public DNS is a great trick** for home and WireGuard. A mesh VPN like Tailscale needs its own answer.
 - **DNS is not a security boundary.** Anyone can send any name to your IP. The check has to happen at the front door.
 - **Point DNS at the front door, not at the service.** Traefik knows where things run, so moving a service never touches DNS.
 - **Keep one way in that doesn't depend on the homelab.** For me that's WireGuard on the router. The NAS holds the data and runs Traefik, so when it is down, everything is, and I still need a way in to fix it.
 - **Test from every way in.** Some problems only show up on one path, like a new name that works at home but not over Tailscale.
-- **Two layers for sharing.** Headscale ACLs decide who reaches what; Traefik's allowlist decides what the internet sees.
-- **Opt-out exposure needs audits.** Better yet, make private the default.
+- **Two layers for sharing.** Headscale ACLs decide who reaches what; Traefik's `wan` entrypoint decides what the internet sees.
+- **Make private the default.** Public should take an extra word in the config, so a forgotten label fails closed.
 - **Generate what you can.** A generated list can't drift.
 - **Make everything a file.** It's better for future me, and it's the difference between an AI agent that can help and one that can only give advice.
 
