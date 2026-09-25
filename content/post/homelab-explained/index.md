@@ -733,7 +733,7 @@ Anyone can skip DNS and send a request for `mealie.lab.nijho.lt` straight to my 
 curl --resolve mealie.lab.nijho.lt:443:<my home IP> https://mealie.lab.nijho.lt
 ```
 
-My home IP is no secret; `git.nijho.lt` resolves to it.
+A home IP is not a secret: any public service at home points to it, and scanners sweep every address on the internet anyway.
 That request reaches the router, gets forwarded to Traefik like any other HTTPS request, and asks for Mealie by name.
 The names aren't secret either, because they're easy to guess.
 The wildcard certificate keeps the individual names out of the public [certificate transparency logs](https://certificate.transparency.dev/), which is nice, but that is hiding, not locking.
