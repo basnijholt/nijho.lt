@@ -787,7 +787,7 @@ I [run my agents in YOLO mode]({{< ref "/post/removing-guardrails" >}}), and dec
 Every change is a reviewable diff, and every mistake is a `git revert` away.
 It's the same reason I [prefer plain files over databases]({{< ref "/post/file-based-rag-memory" >}}) for AI memory.
 
-The stacks repo has an [`AGENTS.md`](https://agents.md/) that captures the conventions and the sharp edges (`CLAUDE.md` is a symlink to it, so Claude Code reads the same file):
+The stacks repo has an [`AGENTS.md`](https://agents.md/) that captures the conventions and the sharp edges (a symlink to `CLAUDE.md`, so Claude Code and other agents read the same file):
 
 > **⚠️ IMPORTANT: NEVER run `docker compose` directly!**
 >
