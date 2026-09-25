@@ -241,7 +241,14 @@ That is effectively a mirror of the official setup, maintained by someone else; 
 Every upgrade depends on a second set of maintainers keeping up with upstream, and for my containers that made upgrades painful and stressful.
 
 Nowadays almost every project publishes a Docker Compose file, so that's what I use, nearly unmodified.
-When upstream changes something, they change their Compose file, and I copy the change.
+After the first setup, the Compose file almost never changes; the image does.
+Most of my services use the `latest` tag, and upgrading is `cf update <stack>` (or `--all`), which pulls the newest image and recreates the container.
+
+That is YOLOing it a bit.
+In the beginning I pinned every image to an exact digest, because I was afraid a new version would break something.
+Bumping all those pins became its own chore, so I switched almost everything to `latest`.
+I only still pin the pieces where a surprise would really hurt: Traefik, Headscale, Forgejo, and databases, which stay on a major version like `postgres:16` because moving to a new major version of PostgreSQL needs a manual migration.
+Since the switch I haven't had real problems, and the rare breakage took a five-word prompt to an AI agent to fix.
 
 The one thing I do change is where the data goes.
 Many Compose files keep data in named Docker volumes, which Docker manages somewhere under `/var/lib/docker/volumes`.
