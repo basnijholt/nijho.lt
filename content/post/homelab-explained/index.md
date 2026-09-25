@@ -33,12 +33,13 @@ Almost everything in that post has since been replaced.
 Proxmox and TrueNAS are gone, and [every machine runs NixOS]({{< ref "/post/proxmox-to-nixos" >}}), [including the NAS]({{< ref "/post/truenas-to-nixos" >}}).
 Dockge is gone too; I replaced it with a tool I wrote myself.
 
-The part I'm most excited about is how the two layers fit together.
-The machines run NixOS, so the operating system, Docker, the VPNs, and the network mounts are declared in a config file.
-The apps run in Docker, from the Compose file each project publishes, which is the way most projects support and test.
-[compose-farm](https://github.com/basnijholt/compose-farm), the tool that replaced Dockge, spreads those stacks over four machines, so I get multi-host Docker without the complexity of Kubernetes.
-NixOS can run many of these apps natively too, but even its unstable channel is often a little behind, and I like being on the bleeding edge.
-This way both layers are declarative and live in git, and I still get new releases as soon as upstream ships them.
+The part I'm most excited about is the balance I found: everything is declarative, without more machinery than I need.
+One extreme is what I had before, clicking through web UIs and running one-off install scripts.
+The other is Kubernetes, which many self-hosted projects don't support and which is a lot to babysit at home, or running every app as a NixOS module, which often lags behind upstream.[^nix-lag]
+I landed in between: NixOS declares the machines, each project's own Compose file declares its app, and [compose-farm](https://github.com/basnijholt/compose-farm), the tool that replaced Dockge, decides which machine runs what, which is all the multi-host orchestration I need.
+Every layer is a text file in git, each uses the simplest tool that keeps it that way, and I still get new app releases as soon as upstream ships them.
+
+[^nix-lag]: Yes, [nixpkgs is the largest and most up-to-date package repository](https://repology.org/repositories/graphs) there is. Even so, I follow `nixos-unstable`, and a new version only reaches me once it is merged, built, and tested, and the channel moves forward, which usually takes a couple of days. Updates that trigger large rebuilds go through a staging branch first and take longer, and not every package gets updated as quickly as the popular ones. With Docker, I can run a release the day upstream publishes it.
 
 What that post never explained is the thing friends actually ask me about: how do I reach all of it?
 I open `https://mealie.lab.nijho.lt` on my phone to look up a recipe, and it works the same at home, on a train, or on hotel Wi-Fi in another country, with a valid padlock in the address bar.
