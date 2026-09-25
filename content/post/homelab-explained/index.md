@@ -326,7 +326,10 @@ If the NUC died, I would point its name at the HP:
 
 ```yaml
 hosts:
-  nuc: { address: 192.168.1.3 }   # the NUC is dead; the HP takes over its stacks
+  nas: { address: 192.168.1.6 }
+  nuc: { address: 192.168.1.3 }   # was 192.168.1.2; the NUC is dead, so the HP takes over
+  hp:  { address: 192.168.1.3 }
+  pc:  { address: 192.168.1.5 }
 ```
 
 Then `cf up --host nuc` starts every NUC stack on the HP and updates Traefik's routes, and I can clean up the names later.
