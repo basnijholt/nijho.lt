@@ -749,7 +749,7 @@ There are a few places where I still lean on someone else, and each one is repla
 
 ## Declarative everything
 
-One idea runs through all of this: nearly every piece is a **text file in git**, not a setting I clicked somewhere.
+One idea runs through all of this: every piece of configuration is a **text file in git**, not a setting I clicked somewhere.
 That's what people mean by **declarative**: you describe the end state, and a tool makes reality match it.
 The opposite is running commands and clicking buttons until things look right, and then hoping you remember what you did.
 
@@ -764,9 +764,25 @@ The opposite is running commands and clicking buttons until things look right, a
 | Tailnet DNS records | Generated from Traefik rules into Headscale's config | `cf restart headscale` |
 | Who may reach what on the tailnet | Headscale ACL file | `cf restart headscale` |
 | Router: WireGuard, port forward, DDNS | The router's web UI | ❌ Clicked |
+| Which devices are on the tailnet | Headscale's database | Enrolled once per device; state, not configuration |
 
-The only thing left that I click is the router, and those settings change maybe once a year.
+The only configuration I still click is the router, and those settings change maybe once a year.
 Everything that changes weekly is a file.
+What isn't configuration, like which devices are enrolled in my tailnet and the data inside each app, lives on ZFS and is backed up like any other data.
+
+It wasn't always like this.
+My previous setup was built from four good products that are all configured by clicking through a web UI:
+
+| Job | Before: clicked in a web UI | Now: a text file in git |
+| --- | --------------------------- | ----------------------- |
+| Virtualization | [Proxmox](https://www.proxmox.com/) | [NixOS and Incus]({{< ref "/post/proxmox-to-nixos" >}}) |
+| NAS | [TrueNAS](https://www.truenas.com/) | [NixOS with ZFS]({{< ref "/post/truenas-to-nixos" >}}) |
+| DNS | [Technitium](https://technitium.com/dns/) | CoreDNS in my NixOS config |
+| Reverse proxy | [Nginx Proxy Manager](https://github.com/NginxProxyManager/nginx-proxy-manager) | Traefik labels in each `compose.yaml` |
+
+Yes, all four have APIs, but that is not how most people use them, me included.
+The configuration lived in each product's database, and the reasons behind each setting lived in my head.
+Now both live in git.
 
 ### Why it matters
 
