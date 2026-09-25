@@ -59,7 +59,8 @@ Every box gets its own section below.
 flowchart LR
     home["At home<br/>(home network)"]
     wg["Away<br/>(WireGuard)"]
-    ts["Away, or friends<br/>(Tailscale)"]
+    ts["Away<br/>(Tailscale)"]
+    friends["Friends and family<br/>(Tailscale)"]
     net["Anyone<br/>(internet)"]
 
     subgraph router["Home router"]
@@ -77,6 +78,9 @@ flowchart LR
     traefik --> nuc["Containers on nuc"]
     traefik --> hp["Containers on hp"]
     traefik --> pc["Containers on pc"]
+
+    friends -. "ACL: only the ports<br/>shared with them" .-> nas
+    friends -.-> pc
 ```
 
 In short:
@@ -479,7 +483,7 @@ resource "cloudflare_record" "lab_wildcard" {
   content = "192.168.1.6"
   type    = "A"
   ttl     = 10800
-  proxied = false # Wildcards on free plan must be DNS-only
+  proxied = false # Private IP: Cloudflare can't proxy to it
 }
 ```
 
@@ -498,6 +502,11 @@ labNijholtZone = pkgs.writeText "lab.nijho.lt.zone" ''
 ```
 
 Without them, `.local` names wouldn't work at all, since public DNS knows nothing about them.
+
+Strictly speaking, `.local` is reserved for multicast DNS, the protocol printers and AirPlay speakers use to announce themselves, and [Apple warns](https://support.apple.com/en-us/101903) that its devices might not resolve `.local` names served by a regular DNS server.
+I know, and I have rarely run into it.
+The official name for home networks is `home.arpa`, but browsers don't treat it as a domain: when I typed a `home.arpa` name into Chrome on my phone, it searched Google for it instead of opening the page.
+The `.local` names are a shortcut anyway; the `lab.nijho.lt` names are the ones that work everywhere.
 They also keep lab names working when my internet connection is down.
 There are two so that one can reboot without taking name resolution with it.
 
