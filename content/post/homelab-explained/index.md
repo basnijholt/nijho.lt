@@ -3,7 +3,7 @@ title: "My declarative multi-machine homelab, explained"
 subtitle: "How I reach my self-hosted services from anywhere without putting them on the internet"
 summary: "Friends keep asking how my homelab works, so I wrote it all down, starting from zero. Four NixOS machines share one Traefik front door, and with WireGuard and my own Headscale server I reach my self-hosted services from anywhere with a valid padlock, while strangers on the internet get nothing. The part I think is the coolest is the balance: everything is declarative and lives in git, but with as little machinery as possible."
 date: 2026-09-25
-draft: true
+draft: false
 featured: false
 authors:
   - admin
@@ -802,7 +802,7 @@ For Traefik's own dashboard, that looks like this:
       - traefik.http.routers.traefik-lab.middlewares=local-ips-only@file,authelia@docker
 ```
 
-I don't do that for most services, because a login page in front of an app sometimes breaks things, like mobile apps that talk to the app directly.
+I do that for some services, but not all, because a login page in front of an app sometimes breaks things, like mobile apps that talk to the app directly.
 
 Most apps have their own login, and I trust that enough on my own network.
 I also trust the people on it.
