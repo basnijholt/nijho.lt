@@ -771,7 +771,7 @@ Everything that changes weekly is a file.
 What isn't configuration, like which devices are enrolled in my tailnet and the data inside each app, lives on ZFS and is backed up like any other data.
 
 It wasn't always like this.
-My previous setup was built from four good products that are all configured by clicking through a web UI:
+My previous setup was built from good products that are all driven by clicking through a web UI:
 
 | Job | Before: clicked in a web UI | Now: a text file in git |
 | --- | --------------------------- | ----------------------- |
@@ -779,9 +779,10 @@ My previous setup was built from four good products that are all configured by c
 | NAS | [TrueNAS](https://www.truenas.com/) | [NixOS with ZFS]({{< ref "/post/truenas-to-nixos" >}}) |
 | DNS | [Technitium](https://technitium.com/dns/) | CoreDNS in my NixOS config |
 | Reverse proxy | [Nginx Proxy Manager](https://github.com/NginxProxyManager/nginx-proxy-manager) | Traefik labels in each `compose.yaml` |
+| Containers | [Dockge](https://github.com/louislam/dockge), one machine at a time | [compose-farm](https://github.com/basnijholt/compose-farm), all machines from one file |
 
-Yes, all four have APIs, but that is not how most people use them, me included.
-The configuration lived in each product's database, and the reasons behind each setting lived in my head.
+Yes, most of them have APIs, but that is not how most people use them, me included.
+Most of the configuration lived in each product's database, and the reasons behind each setting lived in my head.
 Now both live in git.
 
 ### Why it matters
