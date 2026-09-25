@@ -31,12 +31,11 @@ categories:
 When I wrote [about my homelab]({{< ref "/post/homelab" >}}) in 2024, it was a story about hardware: a NUC, an HP EliteDesk, a TrueNAS box, and a lot of trial and error.
 Almost everything in that post has since been replaced.
 Proxmox and TrueNAS are gone, and [every machine runs NixOS]({{< ref "/post/proxmox-to-nixos" >}}), [including the NAS]({{< ref "/post/truenas-to-nixos" >}}).
-Dockge is gone too; I replaced it with a tool I wrote myself.
 
 The part I'm most excited about is the balance I found: everything is declarative, without more machinery than I need.
 One extreme is what I had before, clicking through web UIs and running one-off install scripts.
 The other is Kubernetes, which many self-hosted projects don't support and which is a lot to babysit at home, or running every app as a NixOS module, which often lags behind upstream.[^nix-lag]
-I landed in between: NixOS declares the machines, each project's own Compose file declares its app, and [compose-farm](https://github.com/basnijholt/compose-farm), the tool that replaced Dockge, decides which machine runs what, which is all the multi-host orchestration I need.
+I landed in between: NixOS declares the machines, each project's own Compose file declares its app, and [compose-farm](https://github.com/basnijholt/compose-farm), a thin tool I wrote, decides which machine runs what, which is all the multi-host orchestration I need.
 Every layer is a text file in git, each uses the simplest tool that keeps it that way, and I still get new app releases as soon as upstream ships them.
 
 [^nix-lag]: Yes, [nixpkgs is the largest and most up-to-date package repository](https://repology.org/repositories/graphs) there is. Even so, I follow `nixos-unstable`, and a new version only reaches me once it is merged, built, and tested, and the channel moves forward, which usually takes a couple of days. Updates that trigger large rebuilds go through a staging branch first and take longer, and not every package gets updated as quickly as the popular ones. With Docker, I can run a release the day upstream publishes it.
