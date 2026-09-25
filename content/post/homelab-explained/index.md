@@ -28,11 +28,16 @@ categories:
   - level:beginner
 ---
 
-When I wrote [about my homelab]({{< ref "/post/homelab" >}}) in 2024, it was a story about hardware: a NUC, an HP EliteDesk, a TrueNAS box, and a lot of trial and error.
-Almost everything in that post has since been replaced.
+I open `https://mealie.lab.nijho.lt` on my phone to look up a recipe, and it works the same at home, on a train, or on hotel Wi-Fi in another country, with a valid padlock in the address bar.
+If a stranger on the internet tries the same address, they get nothing.
+How that works is the thing friends actually ask me about, and it is what my [2024 homelab post]({{< ref "/post/homelab" >}}) never explained.
+
+That post was a story about hardware: a NUC, an HP EliteDesk, a TrueNAS box, and a lot of trial and error.
+Almost everything in it has since been replaced.
 Proxmox and TrueNAS are gone, and [every machine runs NixOS]({{< ref "/post/proxmox-to-nixos" >}}), [including the NAS]({{< ref "/post/truenas-to-nixos" >}}).
 
 The part I think is the coolest is the balance I found: everything is declarative, but with as little machinery as possible.
+**Declarative** means I describe the end result in text files, and a tool makes reality match it.
 One extreme is what I had before, clicking through web UIs and running one-off install scripts.
 The other is Kubernetes, which many self-hosted projects don't support and which is a lot to babysit at home, or running every app as a NixOS module, which often lags behind upstream.[^nix-lag]
 I landed in between: NixOS declares the machines, each project's own Compose file declares its app, and [compose-farm](https://github.com/basnijholt/compose-farm), a thin tool I wrote, decides which machine runs what, which is all the multi-host orchestration I need.
@@ -41,13 +46,9 @@ The price is that nothing fails over automatically, but because every machine se
 
 [^nix-lag]: Yes, [nixpkgs is the largest and most up-to-date package repository](https://repology.org/repositories/graphs) there is. Even so, I follow `nixos-unstable`, and a new version only reaches me once it is merged, built, and tested, and the channel moves forward, which usually takes a couple of days. Updates that trigger large rebuilds go through a staging branch first and take longer, and not every package gets updated as quickly as the popular ones. With Docker, I can run a release the day upstream publishes it.
 
-What my 2024 hardware post never explained is the thing friends actually ask me about: how do I reach all of it?
-I open `https://mealie.lab.nijho.lt` on my phone to look up a recipe, and it works the same at home, on a train, or on hotel Wi-Fi in another country, with a valid padlock in the address bar.
-If a stranger on the internet tries the same address, they get nothing.
-
 This post tries to explain it all.
 I wrote it for people who have never set up a reverse proxy or a VPN, so every piece gets a short explanation before I show how I configured it.
-I deliberately made it comprehensive, with enough detail that you could reproduce the whole setup.
+I deliberately made it comprehensive, with enough detail to build something similar yourself.
 That also makes it long, so read the parts you find interesting and skip the rest; if you already know what DNS or WireGuard is, skip ahead.
 
 If it is too long, send it to your AI agent, discuss it, and figure out together which parts make sense for your own network.
@@ -109,10 +110,8 @@ If that list looks overwhelming, I get it.
 A reverse proxy, Let's Encrypt, DNS, an allowlist, ACLs, NixOS, compose-farm, Terraform: that is a lot of moving parts for something that serves recipes.
 What lets me sleep at night is the last point (9).
 Apart from a handful of router settings, every piece of configuration is declarative and lives in git, so the whole setup is reproducible.
-If a machine dies, I install NixOS on a new one and get the same machine back.
 If I break something, or more likely, an AI agent breaks something, `git log` tells me what changed and `git revert` undoes it.
 And the NAS takes a ZFS snapshot of all app data every 10 minutes, so even if something goes badly wrong, I lose at most ten minutes of data.
-Nothing depends on me remembering which buttons I clicked two years ago.
 You don't need to understand every piece at once, either; each one is a file you can read when you get to it.
 I come back to this in [Declarative everything](#declarative-everything).
 
@@ -138,10 +137,13 @@ Four machines run my services:
 Each name links to that machine's NixOS configuration.
 The hardware of the NUC, the HP, and the NAS is in [my original homelab post]({{< ref "/post/homelab" >}}).
 
-On the NAS, the containers don't run on the [host itself](https://github.com/basnijholt/dotfiles/tree/main/configs/nixos/hosts/nas).
-They run inside an [Incus](https://linuxcontainers.org/incus/) system container called [`docker-lxc`](https://github.com/basnijholt/dotfiles/tree/main/configs/nixos/hosts/docker-lxc), which keeps the machine that stores my data a little apart from the machine that runs a hundred containers.
+In the rest of this post, "nas" means [`docker-lxc`](https://github.com/basnijholt/dotfiles/tree/main/configs/nixos/hosts/docker-lxc), a system container on the NAS that runs my Docker containers.
+
+{{< detail-tag "Why the NAS runs its containers inside another container (click to unfold)" >}}
+The containers don't run on the [NAS host itself](https://github.com/basnijholt/dotfiles/tree/main/configs/nixos/hosts/nas).
+They run inside an [Incus](https://linuxcontainers.org/incus/) system container, which keeps the machine that stores my data a little apart from the machine that runs a hundred containers.
 That container is a full NixOS system of its own, configured like the other machines.
-In the rest of this post, "nas" means that container.
+{{< /detail-tag >}}
 
 ### What NixOS brings
 
@@ -159,7 +161,11 @@ Every machine joins my Tailscale network with one line in [`common/services.nix`
 services.tailscale.enable = true;
 ```
 
-The NUC, the HP, and the PC mount the same shared folders from the NAS over NFS, a protocol for sharing folders over the network, in [`optional/nfs-docker.nix`](https://github.com/basnijholt/dotfiles/blob/main/configs/nixos/optional/nfs-docker.nix):
+The NUC, the HP, and the PC mount the same shared folders from the NAS over NFS, a protocol for sharing folders over the network.
+That shared folder, `/opt/stacks`, is what makes the next section work: every machine sees the same service definitions at the same path.
+
+{{< detail-tag "The NFS mount in NixOS (click to unfold)" >}}
+From [`optional/nfs-docker.nix`](https://github.com/basnijholt/dotfiles/blob/main/configs/nixos/optional/nfs-docker.nix):
 
 ```nix
 fileSystems."/opt/stacks" = {
@@ -170,7 +176,7 @@ fileSystems."/opt/stacks" = {
 ```
 
 `docker-lxc` doesn't need NFS; the NAS hands it the same folders directly from its disks ([`hosts/nas/virtualization.nix`](https://github.com/basnijholt/dotfiles/blob/main/configs/nixos/hosts/nas/virtualization.nix)).
-That shared folder, `/opt/stacks`, is what makes the next section work: every machine sees the same service definitions at the same path.
+{{< /detail-tag >}}
 
 ### Deploying NixOS with comin
 
@@ -179,6 +185,10 @@ I don't do that anymore.
 Every machine runs [comin](https://github.com/nlewo/comin), a small GitOps agent.
 It watches my dotfiles on GitHub, and when a new commit lands on `main`, each machine pulls it, builds its own configuration, and switches to it.
 The heavy builds come from [my local build cache]({{< ref "/post/nixos-cache" >}}), so the machines themselves rarely compile anything.
+comin only deploys commits signed with my SSH key, so being able to push to the repo is not enough to take over my machines.
+comin originally only understood GPG signatures, so I [added support for SSH-signed commits](https://github.com/nlewo/comin/pull/171) upstream.
+
+{{< detail-tag "The comin config (click to unfold)" >}}
 The core of [`common/comin.nix`](https://github.com/basnijholt/dotfiles/blob/main/configs/nixos/common/comin.nix):
 
 ```nix
@@ -194,9 +204,8 @@ services.comin = {
 };
 ```
 
-The last line matters.
-comin only deploys commits signed with my SSH key, so being able to push to the repo is not enough to take over my machines.
-comin originally only understood GPG signatures, so I [added support for SSH-signed commits](https://github.com/nlewo/comin/pull/171) upstream.
+The last line points comin at the list of keys whose signatures it accepts.
+{{< /detail-tag >}}
 
 Changing a machine means pushing a signed commit.
 That comes back at the end of this post.
@@ -242,6 +251,9 @@ services:
       BASE_URL: https://mealie.${DOMAIN}
     restart: unless-stopped
 ```
+
+A **port** is a number that tells apart the network services on one machine, so one address can serve many apps.
+Under `ports`, `9925:9000` means that port 9925 on the machine leads to port 9000 inside the container, where Mealie listens.
 
 Every service ("stack") gets its own folder with a `compose.yaml` in one git repo, mounted at `/opt/stacks` on every machine.
 
@@ -325,6 +337,9 @@ Because every machine sees the same `/opt/stacks` and `/mnt/data`, the service f
 That is also my answer to "what if a machine dies?"
 There is no automatic failover: nothing notices and reschedules the services for me, the way Kubernetes would.
 But because no stack is tied to a machine, recovering by hand takes a minute.
+The NAS is the exception: it holds the data and runs Traefik, so if it dies, nothing else can take over.
+
+{{< detail-tag "Moving a dead machine's services by hand (click to unfold)" >}}
 If the NUC died, I would point its name at the HP:
 
 ```yaml
@@ -338,7 +353,7 @@ hosts:
 Then `cf up --host nuc` starts every NUC stack on the HP and updates Traefik's routes, and I can clean up the names later.
 (Not `cf apply`: while two names point at the same machine, it sees every stack there running twice and stops the "extra" copy.)
 This works for the NUC, the HP, and the PC, as long as the published ports don't clash and a service doesn't need the PC's GPUs.
-The NAS is the exception: it holds the data and runs Traefik, so if it dies, nothing else can take over.
+{{< /detail-tag >}}
 
 There is no cluster, no database, and no agent running on each machine.
 If compose-farm disappeared tomorrow, every stack would still be a normal Compose folder I could start by hand.
@@ -440,6 +455,8 @@ When you visit an `https://` address, your browser checks the server's **certifi
 The certificate is also what makes the encryption between you and the server possible.
 Without a valid one you get a scary warning, and many apps refuse to connect at all.
 
+{{< figure src="padlock.png" caption="A private service with a real certificate" alt="Screenshot of Firefox showing https://mealie.lab.nijho.lt/login with the connection panel open. It says 'You are securely connected to this site' and 'Verified by Let's Encrypt'. The Mealie login page is partly visible behind the panel." >}}
+
 [Let's Encrypt](https://letsencrypt.org/) hands out certificates for free, automatically, to anyone who can prove they control a domain.
 
 ### Proving I own the domain without opening my network
@@ -448,7 +465,7 @@ The usual proof is for Let's Encrypt to *connect to your server* and fetch a fil
 That doesn't work for private services, because the whole point is that the internet can't connect to them.
 
 So I use the **DNS-01 challenge** instead.
-Let's Encrypt asks me to publish a specific text record in my domain's DNS.
+Let's Encrypt asks me to publish a specific text record in my domain's DNS, the internet's phone book that turns names into addresses (more on that [below](#dns-the-phone-book)).
 My DNS is hosted at [Cloudflare](https://www.cloudflare.com/), so Traefik creates that record through the Cloudflare API, waits for Let's Encrypt to see it, and removes it again.
 Let's Encrypt never has to reach my network.
 
@@ -575,9 +592,6 @@ To find my router, the phone needs my home's public IP address.
 My internet provider can change that address whenever it likes, so the router also runs **dynamic DNS (DDNS)**: it keeps a public hostname pointed at whatever my current IP is.
 The WireGuard client connects to that hostname.
 
-The reason I keep WireGuard on the router is that it doesn't depend on anything in my homelab.
-If the NAS is down, or I broke something, WireGuard still gets me onto my home network so I can fix it.
-
 ### 3. Tailscale, via my own Headscale
 
 [Tailscale](https://tailscale.com/) is a VPN built on WireGuard, but organized differently.
@@ -603,16 +617,15 @@ Two VPNs look redundant, but they are good at different things.
 **WireGuard on the router puts a device on my home network.**
 Adding a client is one entry in the router's settings.
 That device can then reach everything at home, from the NAS to the printer to the router itself, at the same addresses and with the same DNS answers as on my home Wi-Fi.
-Strictly speaking it gets its own `10.6.0.x` address and the router routes between that and my home network, but for everything I do, it's as if I never left.
-Nothing needs to be installed on the machines at home, and nothing depends on my homelab.
+Nothing needs to be installed on the machines at home, and nothing depends on my homelab: if the NAS is down, or I broke something, WireGuard still gets me home so I can fix it.
 So my own devices use WireGuard: my iPhone, my laptop, and my travel router, which brings every device connected to it along.
 
 **Tailscale puts a device on a separate, virtual network.**
-Every device on the tailnet gets its own address in `100.64.x.x` and can only reach other devices that run Tailscale themselves.
+A device on the tailnet can only reach other devices that run Tailscale themselves.
 My home network isn't part of it, which is why the DNS trick below is needed.
 In return, it works almost everywhere.
 WireGuard to my router only works if the network I'm on lets UDP traffic out to my router's port, and some hotel, airport, and office networks don't.
-Tailscale gets through NAT without opening ports on either side, and when nothing else works, it relays the traffic over HTTPS, which nearly every network allows.
+Tailscale doesn't need an open port, and its relays speak HTTPS, which nearly every network allows.
 It also connects machines that are all away from home, like my laptop and a cloud VM, directly, without a detour through my house.
 
 **Tailscale also has fine-grained access control.**
@@ -749,6 +762,9 @@ http:
           - "127.0.0.1/32"    # localhost
 ```
 
+`/24` means the first three numbers are fixed and the last can be anything, so `192.168.1.0/24` covers `192.168.1.0` through `192.168.1.255`.
+`/32` means exactly one address.
+
 Every private service has `middlewares=local-ips-only@file` in its labels, like Mealie above.
 A request from any other address gets `403 Forbidden` before it gets anywhere near the service.
 For the `.local` names, the same middleware sits on the whole plain-HTTP entrypoint.
@@ -756,6 +772,7 @@ For the `.local` names, the same middleware sits on the whole plain-HTTP entrypo
 The odd one, `172.20.0.1`, is the gateway of my Docker network.
 Requests that start on the NAS itself, like a container calling another service by its lab name, show up with that address.
 
+{{< detail-tag "Keeping real Tailscale addresses (click to unfold)" >}}
 Tailscale requests keep their real `100.64.0.x` address thanks to one line in the NixOS config of [`docker-lxc`](https://github.com/basnijholt/dotfiles/tree/main/configs/nixos/hosts/docker-lxc):
 
 ```nix
@@ -763,6 +780,7 @@ services.tailscale.extraSetFlags = [ "--snat-subnet-routes=false" ];
 ```
 
 Without it, Tailscale replaces the source address of traffic it passes on to another network, like Docker's internal one, and every Tailscale request would look like it came from `172.20.0.1`.
+{{< /detail-tag >}}
 
 To check all of this, I test from every way in.
 
@@ -874,7 +892,6 @@ There are a few places where I still lean on someone else, and each one is repla
 ## Declarative everything
 
 One idea runs through all of this: every piece of configuration is a **text file in git**, not a setting I clicked somewhere.
-That's what people mean by **declarative**: you describe the end state, and a tool makes reality match it.
 The opposite is running commands and clicking buttons until things look right, and then hoping you remember what you did.
 
 | Piece | Where it's defined | How it's applied |
@@ -911,16 +928,12 @@ Now both live in git.
 
 ### Why it matters
 
-The classic benefits are real:
+The classic benefits are real: git history is my changelog, rebuilding a dead machine is boring, and nothing lives only in my head.
 
-- **Git history is my changelog.** When something breaks, `git log` tells me what changed and when, and `git revert` undoes it.
-- **Rebuilding is boring.** A dead machine is a fresh NixOS install and a pointer to the same config.
-- **Nothing lives only in my head.** Four machines, a hundred services, and three DNS setups is more than I can remember, so the files remember for me.
-
-But the benefit that matters most to me now is a newer one: **this is the easiest possible setup to work on with AI.**
+But the benefit that matters most to me now is a newer one: **this setup is easy to work on with AI.**
 
 Coding agents are very good at reading and editing text files, running commands, and checking the result.
-They are hopeless at clicking through a web dashboard.
+They are much worse at clicking through a web dashboard.
 Because almost everything here is files and CLI commands, an agent can do exactly what I do: add a service, move it to another machine, find out why a route returns `403`, add a DNS record, write the NixOS change, and show me the diff.
 Terraform is a good example of why this is safe: the agent edits the record, runs `terraform plan`, and I see exactly what will change at Cloudflare before anything does.
 
