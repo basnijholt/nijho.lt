@@ -93,7 +93,7 @@ In short:
 If that list looks overwhelming, I get it.
 A reverse proxy, Let's Encrypt, DNS, an allowlist, ACLs, NixOS, compose-farm, Terraform: that is a lot of moving parts for something that serves recipes.
 What lets me sleep at night is the last point.
-Apart from a handful of router settings, every piece is declarative and lives in git, so the whole setup is reproducible.
+Apart from a handful of router settings, every piece of configuration is declarative and lives in git, so the whole setup is reproducible.
 If a machine dies, I install NixOS on a new one and get the same machine back.
 If I break something, `git log` tells me what changed and `git revert` undoes it.
 Nothing depends on me remembering which buttons I clicked two years ago.
