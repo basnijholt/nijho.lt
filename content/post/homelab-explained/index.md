@@ -1,7 +1,7 @@
 ---
 title: "My declarative multi-machine homelab, explained"
-subtitle: "How I reach my self-hosted services from anywhere without putting them on the internet, explained from scratch: reverse proxy, certificates, DNS, WireGuard, Tailscale, Headscale, compose-farm, NixOS, and Terraform"
-summary: "Friends keep asking how my homelab works, so this is the long answer, written for people who have never touched a reverse proxy. Four NixOS machines run containers managed by compose-farm. One Traefik instance is the front door for all of them, with real HTTPS certificates even for private services. The same name gets a different DNS answer depending on where I am. There are four ways in: my home network, WireGuard on my router, Tailscale via my own Headscale server, and the open internet. One IP allowlist decides who gets through, and Headscale ACLs let me share specific services with friends and family. Almost all of it lives in git as NixOS, Compose, and Terraform files, which is exactly what makes it easy to work on with AI agents."
+subtitle: "How I reach my self-hosted services from anywhere without putting them on the internet"
+summary: "Friends keep asking how my homelab works, so I wrote it all down, starting from zero. Four NixOS machines share one Traefik front door, and with WireGuard and my own Headscale server I reach my self-hosted services from anywhere with a valid padlock, while strangers on the internet get nothing. The part I think is the coolest is the balance: everything is declarative and lives in git, but with as little machinery as possible."
 date: 2026-09-25
 draft: true
 featured: false
@@ -425,6 +425,7 @@ http:
         - url: http://192.168.1.2:8089
 ```
 
+Note the ports: on its own machine, Traefik talks to a container directly on its internal port (9000 for Mealie), but a route to another machine has to use the port that machine publishes (8089 for ntfy).
 I never edit that file.
 I write labels the same way no matter where a service runs, and when a service moves, its route moves with it.
 
@@ -517,6 +518,7 @@ resource "cloudflare_record" "lab_wildcard" {
 }
 ```
 
+(This is the syntax of version 4 of Cloudflare's Terraform provider, which I still use; version 5 renamed `cloudflare_record` to `cloudflare_dns_record`.)
 `terraform plan` shows exactly which records will be added, changed, or removed before anything happens, and `terraform apply` makes the change.
 The Terraform files live in a private repo, next to my other secrets, because they need a Cloudflare API token.
 
@@ -753,6 +755,20 @@ The odd one, `172.20.0.1`, is the gateway of my Docker network.
 Tailscale traffic that arrives through Docker's port forwarding can show up with that address instead of its real one, so it needs to be on the list.
 That kind of thing only shows up when you test from every way in, not just from home.
 
+{{< detail-tag "How I test it (click to unfold)" >}}
+```bash
+# From home, WireGuard, or Tailscale: expect 200
+curl -s -o /dev/null -w '%{http_code}\n' https://mealie.lab.nijho.lt
+# From outside (phone hotspot, VPNs off), skipping DNS: expect 403
+curl -s -o /dev/null -w '%{http_code}\n' --resolve mealie.lab.nijho.lt:443:<my home IP> https://mealie.lab.nijho.lt
+# A public service, from anywhere: expect 200
+curl -s -o /dev/null -w '%{http_code}\n' https://git.nijho.lt
+```
+
+The second one has to run from outside my network.
+From inside, the router forwards the request back in with its own home address as the source, so it passes the allowlist.
+{{< /detail-tag >}}
+
 ### Opt-out, so audit
 
 Out of roughly a hundred HTTPS routes, only a handful skip the allowlist, and each of those is a deliberate decision.
@@ -918,7 +934,7 @@ In practice, I describe the service to an agent and review what it did.
 - **A private address in public DNS is a great trick** for home and WireGuard. A mesh VPN like Tailscale needs its own answer.
 - **DNS is not a security boundary.** Anyone can send any name to your IP. The check has to happen at the front door.
 - **Point DNS at the front door, not at the service.** Traefik knows where things run, so moving a service never touches DNS.
-- **Keep one way in that doesn't depend on the homelab.** For me that's WireGuard on the router.
+- **Keep one way in that doesn't depend on the homelab.** For me that's WireGuard on the router. The NAS holds the data and runs Traefik, so when it is down, everything is, and I still need a way in to fix it.
 - **Test from every way in.** Some problems, like the Docker gateway address, only show up on one path.
 - **Two layers for sharing.** Headscale ACLs decide who reaches what; Traefik's allowlist decides what the internet sees.
 - **Opt-out exposure needs audits.** Better yet, make private the default.
