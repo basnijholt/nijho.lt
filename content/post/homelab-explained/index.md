@@ -1,5 +1,5 @@
 ---
-title: "My declarative homelab, explained"
+title: "My declarative multi-machine homelab, explained"
 subtitle: "How I reach my self-hosted services from anywhere without putting them on the internet, explained from scratch: reverse proxy, certificates, DNS, WireGuard, Tailscale, Headscale, compose-farm, NixOS, and Terraform"
 summary: "Friends keep asking how my homelab works, so this is the long answer, written for people who have never touched a reverse proxy. Four NixOS machines run containers managed by compose-farm. One Traefik instance is the front door for all of them, with real HTTPS certificates even for private services. The same name gets a different DNS answer depending on where I am. There are four ways in: my home network, WireGuard on my router, Tailscale via my own Headscale server, and the open internet. One IP allowlist decides who gets through, and Headscale ACLs let me share specific services with friends and family. Almost all of it lives in git as NixOS, Compose, and Terraform files, which is exactly what makes it easy to work on with AI agents."
 date: 2026-09-25
@@ -51,8 +51,10 @@ I deliberately made it comprehensive, with enough detail that you could reproduc
 That also makes it long, so read the parts you find interesting and skip the rest; if you already know what DNS or WireGuard is, skip ahead.
 
 If it is too long, send it to your AI agent, discuss it, and figure out together which parts make sense for your own network.
-My setup spans four machines, but most of the pieces are just as useful on one.
-For example, compose-farm works just as well with a single host; it just gives you the flexibility to fan out later.
+
+If you have a single machine that already runs NixOS, you probably don't need Docker or compose-farm at all: adding your services as NixOS modules is simpler, and that is what I recommend to friends in that situation.
+If you would rather use Docker, which is usually the path a project officially supports, compose-farm works just as well on a single host and lets you fan out later.
+The multi-machine part is where my setup really pays off, but the rest of this post, from the reverse proxy to the VPNs, is just as useful on one machine.
 
 Throughout the post I use a few services as running examples: [Mealie](https://mealie.io/) for recipes, [ntfy](https://ntfy.sh/) for push notifications, and my git server at `git.nijho.lt`.
 
