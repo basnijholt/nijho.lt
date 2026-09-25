@@ -36,6 +36,7 @@ Dockge is gone too; I replaced it with a tool I wrote myself.
 The part I'm most excited about is how the two layers fit together.
 The machines run NixOS, so the operating system, Docker, the VPNs, and the network mounts are declared in a config file.
 The apps run in Docker, from the Compose file each project publishes, which is the way most projects support and test.
+[compose-farm](https://github.com/basnijholt/compose-farm), the tool that replaced Dockge, spreads those stacks over four machines, so I get multi-host Docker without the complexity of Kubernetes.
 NixOS can run many of these apps natively too, but even its unstable channel is often a little behind, and I like being on the bleeding edge.
 This way both layers are declarative and live in git, and I still get new releases as soon as upstream ships them.
 
