@@ -37,6 +37,7 @@ One extreme is what I had before, clicking through web UIs and running one-off i
 The other is Kubernetes, which many self-hosted projects don't support and which is a lot to babysit at home, or running every app as a NixOS module, which often lags behind upstream.[^nix-lag]
 I landed in between: NixOS declares the machines, each project's own Compose file declares its app, and [compose-farm](https://github.com/basnijholt/compose-farm), a thin tool I wrote, decides which machine runs what, which is all the multi-host orchestration I need.
 Every layer is a text file in git, each uses the simplest tool that keeps it that way, and I still get new app releases as soon as upstream ships them.
+The price is that nothing fails over automatically, but because every machine sees the same files and data, moving services to another machine is a one-line change and one command.
 
 [^nix-lag]: Yes, [nixpkgs is the largest and most up-to-date package repository](https://repology.org/repositories/graphs) there is. Even so, I follow `nixos-unstable`, and a new version only reaches me once it is merged, built, and tested, and the channel moves forward, which usually takes a couple of days. Updates that trigger large rebuilds go through a staging branch first and take longer, and not every package gets updated as quickly as the popular ones. With Docker, I can run a release the day upstream publishes it.
 
@@ -317,6 +318,21 @@ cf apply           # make reality match the config: start, move, and stop stacks
 Moving a service to another machine is a one-line change.
 I edit `mealie: nas` to `mealie: hp` and run `cf up mealie`, and compose-farm stops it on the old machine and starts it on the new one.
 Because every machine sees the same `/opt/stacks` and `/mnt/data`, the service finds its configuration and data waiting for it.
+
+That is also my answer to "what if a machine dies?"
+There is no automatic failover: nothing notices and reschedules the services for me, the way Kubernetes would.
+But because no stack is tied to a machine, recovering by hand takes a minute.
+If the NUC died, I would point its name at the HP:
+
+```yaml
+hosts:
+  nuc: { address: 192.168.1.3 }   # the NUC is dead; the HP takes over its stacks
+```
+
+Then `cf up --host nuc` starts every NUC stack on the HP and updates Traefik's routes, and I can clean up the names later.
+(Not `cf apply`: while two names point at the same machine, it sees every stack there running twice and stops the "extra" copy.)
+This works for the NUC, the HP, and the PC, as long as the published ports don't clash and a service doesn't need the PC's GPUs.
+The NAS is the exception: it holds the data and runs Traefik, so if it dies, nothing else can take over.
 
 There is no cluster, no database, and no agent running on each machine.
 If compose-farm disappeared tomorrow, every stack would still be a normal Compose folder I could start by hand.
