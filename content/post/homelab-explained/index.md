@@ -265,7 +265,10 @@ The Mealie example above shows the swap: upstream's file uses a volume called `m
 
 Docker Compose manages containers on *one* machine, and I have four.
 The usual answers are Kubernetes or Docker Swarm.
-Both are far more machinery than I want to babysit at home.
+
+Kubernetes feels like overkill for a homelab, and many projects don't support it: they publish a Compose file, not a Helm chart (Kubernetes' package format), so I would end up writing and maintaining my own charts.
+That's the helper-script problem again.
+Docker Swarm would meet my needs almost perfectly, but it is effectively in maintenance mode: it still ships with Docker, but Docker no longer invests in it.
 
 So I wrote [compose-farm](https://github.com/basnijholt/compose-farm).
 It is deliberately thin: one YAML file says which stack runs on which machine, and the `cf` command SSHes to that machine and runs plain `docker compose` there.
