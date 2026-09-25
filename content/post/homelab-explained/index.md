@@ -573,7 +573,7 @@ ntfy points at the NAS too, even though it runs on the NUC.
 These records don't point at *services*; they point at *the front door*, and Traefik forwards the request to the right machine as usual.
 
 I don't maintain that list by hand.
-A small script collects every `Host(...)` rule from my Traefik labels and route files and rewrites the block between the `BEGIN` and `END` markers:
+A [small script](https://gist.github.com/basnijholt/144eea772149f3d503bd1cd27fd72b45) collects every `Host(...)` rule from my Traefik labels and route files and rewrites the block between the `BEGIN` and `END` markers:
 
 ```bash
 python3 scripts/sync-headscale-lab-dns.py --dry-run   # preview
@@ -582,7 +582,7 @@ cf restart headscale                                  # Headscale doesn't hot-re
 ```
 
 Forgetting this step is sneaky: the new service works perfectly at home and silently fails over Tailscale.
-That's why it is written down in the instructions for my AI agents, with the exact commands.
+That's why it is written down in `AGENTS.md`, the instruction file my AI agents read, with the exact commands.
 
 The result is that one name works everywhere I am.
 `https://mealie.lab.nijho.lt` reaches the same Mealie, with the same certificate, whether my phone is at home, on WireGuard, or on Tailscale; only the path underneath differs.
@@ -787,7 +787,7 @@ I [run my agents in YOLO mode]({{< ref "/post/removing-guardrails" >}}), and dec
 Every change is a reviewable diff, and every mistake is a `git revert` away.
 It's the same reason I [prefer plain files over databases]({{< ref "/post/file-based-rag-memory" >}}) for AI memory.
 
-The stacks repo has an instruction file for agents that captures the conventions and the sharp edges:
+The stacks repo has an [`AGENTS.md`](https://agents.md/) that captures the conventions and the sharp edges (`CLAUDE.md` is a symlink to it, so Claude Code reads the same file):
 
 > **⚠️ IMPORTANT: NEVER run `docker compose` directly!**
 >
