@@ -90,6 +90,16 @@ In short:
 8. **Headscale ACLs** decide which of my friends and family can reach which service.
 9. **NixOS, Compose files, and Terraform** describe nearly all of it in git, so I rarely click a button, and AI agents can work on it the same way I do.
 
+If that list looks overwhelming, I get it.
+A reverse proxy, Let's Encrypt, DNS, an allowlist, ACLs, NixOS, compose-farm, Terraform: that is a lot of moving parts for something that serves recipes.
+What lets me sleep at night is the last point.
+Apart from a handful of router settings, every piece is declarative and lives in git, so the whole setup is reproducible.
+If a machine dies, I install NixOS on a new one and get the same machine back.
+If I break something, `git log` tells me what changed and `git revert` undoes it.
+Nothing depends on me remembering which buttons I clicked two years ago.
+You don't need to understand every piece at once, either; each one is a file you can read when you get to it.
+I come back to this in [Declarative everything](#declarative-everything).
+
 To make that concrete, this is what happens when I open Mealie in three situations:
 
 - **At home,** my phone asks my home DNS server for `mealie.lab.nijho.lt` and gets `192.168.1.6`, the NAS. Traefik sees a request from `192.168.1.x`, which is on the allowlist, and passes it to the Mealie container.
