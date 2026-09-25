@@ -41,7 +41,7 @@ The price is that nothing fails over automatically, but because every machine se
 
 [^nix-lag]: Yes, [nixpkgs is the largest and most up-to-date package repository](https://repology.org/repositories/graphs) there is. Even so, I follow `nixos-unstable`, and a new version only reaches me once it is merged, built, and tested, and the channel moves forward, which usually takes a couple of days. Updates that trigger large rebuilds go through a staging branch first and take longer, and not every package gets updated as quickly as the popular ones. With Docker, I can run a release the day upstream publishes it.
 
-What that post never explained is the thing friends actually ask me about: how do I reach all of it?
+What my 2024 hardware post never explained is the thing friends actually ask me about: how do I reach all of it?
 I open `https://mealie.lab.nijho.lt` on my phone to look up a recipe, and it works the same at home, on a train, or on hotel Wi-Fi in another country, with a valid padlock in the address bar.
 If a stranger on the internet tries the same address, they get nothing.
 
@@ -53,7 +53,7 @@ That also makes it long, so read the parts you find interesting and skip the res
 If it is too long, send it to your AI agent, discuss it, and figure out together which parts make sense for your own network.
 
 If you have a single machine that already runs NixOS, you probably don't need Docker or compose-farm at all: adding your services as NixOS modules is simpler, and that is what I recommend to friends in that situation.
-If you would rather use Docker, which is usually the path a project officially supports, compose-farm works just as well on a single host and lets you fan out later.
+If you would rather use Docker, which is usually the path a project officially supports, I recommend compose-farm: it works just as well on a single host and lets you fan out later.
 The multi-machine part is where my setup really pays off, but the rest of this post, from the reverse proxy to the VPNs, is just as useful on one machine.
 
 Throughout the post I use a few services as running examples: [Mealie](https://mealie.io/) for recipes, [ntfy](https://ntfy.sh/) for push notifications, and my git server at `git.nijho.lt`.
@@ -107,10 +107,11 @@ In short:
 
 If that list looks overwhelming, I get it.
 A reverse proxy, Let's Encrypt, DNS, an allowlist, ACLs, NixOS, compose-farm, Terraform: that is a lot of moving parts for something that serves recipes.
-What lets me sleep at night is the last point.
+What lets me sleep at night is the last point (9).
 Apart from a handful of router settings, every piece of configuration is declarative and lives in git, so the whole setup is reproducible.
 If a machine dies, I install NixOS on a new one and get the same machine back.
-If I break something, `git log` tells me what changed and `git revert` undoes it.
+If I break something, or more likely, an AI agent breaks something, `git log` tells me what changed and `git revert` undoes it.
+And the NAS takes a ZFS snapshot of all app data every 10 minutes, so even if something goes badly wrong, I lose at most ten minutes of data.
 Nothing depends on me remembering which buttons I clicked two years ago.
 You don't need to understand every piece at once, either; each one is a file you can read when you get to it.
 I come back to this in [Declarative everything](#declarative-everything).
@@ -138,7 +139,7 @@ Each name links to that machine's NixOS configuration.
 The hardware of the NUC, the HP, and the NAS is in [my original homelab post]({{< ref "/post/homelab" >}}).
 
 On the NAS, the containers don't run on the [host itself](https://github.com/basnijholt/dotfiles/tree/main/configs/nixos/hosts/nas).
-They run inside an [Incus](https://linuxcontainers.org/incus/) system container called `docker-lxc`, which keeps the machine that stores my data a little apart from the machine that runs a hundred containers.
+They run inside an [Incus](https://linuxcontainers.org/incus/) system container called [`docker-lxc`](https://github.com/basnijholt/dotfiles/tree/main/configs/nixos/hosts/docker-lxc), which keeps the machine that stores my data a little apart from the machine that runs a hundred containers.
 That container is a full NixOS system of its own, configured like the other machines.
 In the rest of this post, "nas" means that container.
 
@@ -202,7 +203,7 @@ That comes back at the end of this post.
 
 ## What runs on it
 
-Some of what runs on these four machines:
+As I write this, the four machines run 138 containers. A small selection:
 
 | Area | Services |
 | ---- | -------- |
