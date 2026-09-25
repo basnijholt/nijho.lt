@@ -228,7 +228,30 @@ services:
 ```
 
 Every service ("stack") gets its own folder with a `compose.yaml` in one git repo, mounted at `/opt/stacks` on every machine.
-The app's data lives separately in `/mnt/data/mealie`, which is its own ZFS dataset on the NAS, snapshotted and [backed up]({{< ref "/post/btrfs-to-zfs" >}}) like everything else.
+
+### Upstream's Compose file, my folders
+
+Back when I ran Proxmox, I was a big fan of the [Proxmox VE Helper-Scripts](https://community-scripts.github.io/ProxmoxVE/), started by tteck and now maintained by the community.
+Each one is a one-liner that creates an LXC container with an app installed inside, and they are how I [got into self-hosting]({{< ref "/post/homelab" >}}) and set up almost everything at first.
+
+The catch is that they are a community effort, and the way they install an app is usually not a way the app's own developers support.
+[Immich](https://immich.app/) is a good example: its docs say it requires Docker with Docker Compose, while the helper script builds Immich from source and installs PostgreSQL, Redis, and the image libraries directly into the container.
+It is effectively a mirror of the official setup, maintained by someone else, so every Immich release meant hoping the script had caught up with whatever changed upstream.
+Upgrades became painful and stressful.
+
+Nowadays almost every project publishes a Docker Compose file, so that's what I use, nearly unmodified.
+When upstream changes something, they change their Compose file, and I copy the change.
+
+The one thing I do change is where the data goes.
+Many Compose files keep data in named Docker volumes, which Docker manages somewhere under `/var/lib/docker/volumes`.
+I stopped using them: too many times I deleted a volume by accident (`docker compose down -v` and `docker volume prune` make that easy), and I never had a good view of what was inside.
+Instead, every stack gets plain folders, which Docker calls bind mounts, in two fixed places:
+
+- `/opt/stacks/<stack>/` holds the `compose.yaml` and its `.env`, in git.
+- `/mnt/data/<stack>/` holds the app's data.
+
+Each `/mnt/data/<stack>` is its own ZFS dataset on the NAS, with frequent snapshots and [backups]({{< ref "/post/btrfs-to-zfs" >}}).
+The Mealie example above shows the swap: upstream's file uses a volume called `mealie-data`, and mine says `/mnt/data/mealie:/app/data/`.
 
 ### Why I wrote compose-farm
 
