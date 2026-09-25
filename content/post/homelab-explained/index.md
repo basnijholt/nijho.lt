@@ -33,6 +33,12 @@ Almost everything in that post has since been replaced.
 Proxmox and TrueNAS are gone, and [every machine runs NixOS]({{< ref "/post/proxmox-to-nixos" >}}), [including the NAS]({{< ref "/post/truenas-to-nixos" >}}).
 Dockge is gone too; I replaced it with a tool I wrote myself.
 
+The part I'm proudest of is how the two layers fit together.
+The machines run NixOS, so the operating system, Docker, the VPNs, and the network mounts are declared in a config file.
+The apps run in Docker, from the Compose file each project publishes, which is the way most projects support and test.
+NixOS can run many of these apps natively too, but even its unstable channel is often a little behind, and I like being on the bleeding edge.
+This way both layers are declarative and live in git, and I still get new releases as soon as upstream ships them.
+
 What that post never explained is the thing friends actually ask me about: how do I reach all of it?
 I open `https://mealie.lab.nijho.lt` on my phone to look up a recipe, and it works the same at home, on a train, or on hotel Wi-Fi in another country, with a valid padlock in the address bar.
 If a stranger on the internet tries the same address, they get nothing.
