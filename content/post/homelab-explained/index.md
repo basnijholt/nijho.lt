@@ -236,7 +236,7 @@ Every service ("stack") gets its own folder with a `compose.yaml` in one git rep
 
 ### Upstream's Compose file, my folders
 
-Back when I ran Proxmox, I was a big fan of the [Proxmox VE Helper-Scripts](https://community-scripts.github.io/ProxmoxVE/), started by tteck and now maintained by the community.
+Back when I ran Proxmox, I was a big fan of the [Proxmox VE Helper-Scripts](https://community-scripts.github.io/ProxmoxVE/), started by tteck ([RIP](https://github.com/community-scripts/ProxmoxVE/discussions/237)) and now maintained by the community.
 Each one is a one-liner that creates an LXC container with an app installed inside, and they are how I [got into self-hosting]({{< ref "/post/homelab" >}}) and set up almost everything at first.
 
 The catch is that they are a community effort, and the way they install an app is usually not a way the app's own developers support.
