@@ -700,6 +700,25 @@ The commit history doubles as a log of who got access to what, and when.
 
 This is also how friend-to-friend setups like [my remote TrueNAS backups]({{< ref "/post/truenas-remote-backups" >}}) work: a tailnet is a private network you can extend to exactly the people you trust.
 
+## Why not Cloudflare Tunnel or Tailscale's own server?
+
+This is usually the next question.
+[Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/) publishes services without forwarding any ports: a small daemon at home keeps an outbound connection open to Cloudflare, and Cloudflare serves your sites to the world.
+Tailscale runs the coordination server for you, for free, so you don't need Headscale at all.
+Both are great products, and both are easier than what I do.
+
+The reason I don't use them is simple: I don't want to depend on a third-party company for any of this.
+The plumbing in this post is open source and runs on my own machines, so if one of these companies disappears or changes its terms tomorrow, everything keeps working.
+With Cloudflare Tunnel, every request to my services would pass through Cloudflare, which decrypts it on the way.
+With Tailscale's hosted server, a company would decide which devices are part of my network.
+
+There are a few places where I still lean on someone else, and each one is replaceable:
+
+- **Cloudflare hosts my public DNS.** The records are a Terraform file, so moving to another provider means rewriting that file for a different provider. The same goes for the certificate challenge, which Traefik supports for dozens of DNS providers, and for the few names that go through Cloudflare's proxy.
+- **Tailscale's public relays** carry traffic when two devices can't connect directly. Headscale has a relay server built in, which I can turn on in its config.
+- **Let's Encrypt** issues my certificates, but it speaks a standard protocol, ACME, that other certificate authorities speak too.
+- **Terraform** moved to a source-available license in 2023. [OpenTofu](https://opentofu.org/) is the open-source fork, and it reads the same files.
+
 ## Declarative everything
 
 One idea runs through all of this: nearly every piece is a **text file in git**, not a setting I clicked somewhere.
