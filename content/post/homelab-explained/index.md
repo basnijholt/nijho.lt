@@ -100,7 +100,7 @@ Nothing depends on me remembering which buttons I clicked two years ago.
 You don't need to understand every piece at once, either; each one is a file you can read when you get to it.
 I come back to this in [Declarative everything](#declarative-everything).
 
-To make that concrete, this is what happens when I open Mealie in three situations:
+Back to the list: this is what happens when I open Mealie in three situations.
 
 - **At home,** my phone asks my home DNS server for `mealie.lab.nijho.lt` and gets `192.168.1.6`, the NAS. Traefik sees a request from `192.168.1.x`, which is on the allowlist, and passes it to the Mealie container.
 - **On hotel Wi-Fi that blocks WireGuard,** my laptop uses Tailscale instead. It asks Headscale's DNS for the same name and gets `100.64.0.28`, the address of the NAS *inside* my Tailscale network. The request travels through an encrypted tunnel straight to the NAS. Traefik sees a `100.64.0.x` address, also on the allowlist, and passes it on.
