@@ -39,9 +39,10 @@ If a stranger on the internet tries the same address, they get nothing.
 
 This post tries to explain it all.
 I wrote it for people who have never set up a reverse proxy or a VPN, so every piece gets a short explanation before I show how I configured it.
-If you already know what DNS or WireGuard is, skip ahead.
+I deliberately made it comprehensive, with enough detail that you could reproduce the whole setup.
+That also makes it long, so read the parts you find interesting and skip the rest; if you already know what DNS or WireGuard is, skip ahead.
 
-I recommend sending this post to your AI agent, discussing it, and figuring out together which parts make sense for your own network.
+If it is too long, send it to your AI agent, discuss it, and figure out together which parts make sense for your own network.
 My setup spans four machines, but most of the pieces are just as useful on one.
 For example, compose-farm works just as well with a single host; it just gives you the flexibility to fan out later.
 
