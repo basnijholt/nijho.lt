@@ -93,7 +93,7 @@ In short:
 To make that concrete, this is what happens when I open Mealie in three situations:
 
 - **At home,** my phone asks my home DNS server for `mealie.lab.nijho.lt` and gets `192.168.1.6`, the NAS. Traefik sees a request from `192.168.1.x`, which is on the allowlist, and passes it to the Mealie container.
-- **At a café on Tailscale,** my phone asks Headscale's DNS for the same name and gets `100.64.0.28`, the address of the NAS *inside* my Tailscale network. The request travels through an encrypted tunnel straight to the NAS. Traefik sees a `100.64.0.x` address, also on the allowlist, and passes it on.
+- **On hotel Wi-Fi that blocks WireGuard,** my laptop uses Tailscale instead. It asks Headscale's DNS for the same name and gets `100.64.0.28`, the address of the NAS *inside* my Tailscale network. The request travels through an encrypted tunnel straight to the NAS. Traefik sees a `100.64.0.x` address, also on the allowlist, and passes it on.
 - **A stranger on the internet** gets `192.168.1.6` from public DNS, which is a private address that leads nowhere outside my home. If they find my home IP and connect to it directly, Traefik sees their real address, which is *not* on the allowlist, and answers `403 Forbidden`.
 
 Same name, same padlock, three paths, and only the stranger is refused.
@@ -466,8 +466,8 @@ There are four ways a request can reach Traefik:
 | Way in | When I use it | Address Traefik sees |
 | ------ | ------------- | -------------------- |
 | Home network | At home, on Wi-Fi or a cable | `192.168.1.x` |
-| WireGuard on the router | My phone and laptop when I'm away | `10.6.0.x` |
-| Tailscale, via Headscale | My laptop, remote machines, cloud VMs, friends and family | `100.64.0.x` |
+| WireGuard on the router | My phone, laptop, and travel router when I'm away | `10.6.0.x` |
+| Tailscale, via Headscale | Friends and family, cloud VMs, and my own devices when WireGuard can't get through | `100.64.0.x` |
 | The internet | Anyone, for the few public services | Any public address |
 
 ### 1. The home network
@@ -510,11 +510,29 @@ The coordination server only *introduces* devices to each other.
 My actual traffic flows directly between devices and never passes through it.
 Its configuration, the list of who may reach what, and its DNS records are all files in my stacks repo.
 
-Why run both WireGuard and Tailscale?
-They solve different problems:
+### Why both?
 
-- **WireGuard on the router** gets *me* onto my home network, and keeps working even when the homelab is broken.
-- **Tailscale** connects machines that are *all* away from home, like my laptop to a cloud VM, without routing anything through my house. It gives every device a stable address, and it lets me share specific services with specific people, which I get to below.
+Two VPNs look redundant, but they are good at different things.
+
+**WireGuard on the router puts a device on my home network.**
+Adding a client is one entry in the router's settings.
+That device can then reach everything at home, from the NAS to the printer to the router itself, at the same addresses and with the same DNS answers as on my home Wi-Fi.
+Strictly speaking it gets its own `10.6.0.x` address and the router routes between that and my home network, but for everything I do, it's as if I never left.
+Nothing needs to be installed on the machines at home, and nothing depends on my homelab.
+So my own devices use WireGuard: my iPhone, my laptop, and my travel router, which brings every device connected to it along.
+
+**Tailscale puts a device on a separate, virtual network.**
+Every device on the tailnet gets its own address in `100.64.x.x` and can only reach other devices that run Tailscale themselves.
+My home network isn't part of it, which is why the DNS trick below is needed.
+In return, it works almost everywhere.
+WireGuard to my router only works if the network I'm on lets UDP traffic out to my router's port, and some hotel, airport, and office networks don't.
+Tailscale gets through NAT without opening ports on either side, and when nothing else works, it relays the traffic over HTTPS, which nearly every network allows.
+It also connects machines that are all away from home, like my laptop and a cloud VM, directly, without a detour through my house.
+
+**Tailscale also has fine-grained access control.**
+On my router, every WireGuard client gets my whole home network.
+On the tailnet, Headscale's ACL decides per person and per device what they can reach.
+So everything that isn't one of my own devices goes on the tailnet: friends, family, and cloud VMs.
 
 ### The Tailscale DNS problem
 
