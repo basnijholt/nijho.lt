@@ -944,9 +944,13 @@ It's the same reason I [prefer plain files over databases]({{< ref "/post/file-b
 
 The stacks repo has an [`AGENTS.md`](https://agents.md/) that captures the conventions and the sharp edges (a symlink to `CLAUDE.md`, so Claude Code and other agents read the same file):
 
+```markdown
 > **⚠️ IMPORTANT: NEVER run `docker compose` directly!**
 >
-> Always use `cf` (compose-farm) for ALL compose operations. Running `docker compose` directly bypasses host routing, state tracking, and Traefik config generation.
+> Always use `cf` (compose-farm) for ALL compose operations.
+> Running `docker compose` directly bypasses host routing,
+> state tracking, and Traefik config generation.
+```
 
 The Tailscale DNS step from earlier lives there too, with the exact commands.
 Whenever something bites me once, it goes into that file, so it doesn't bite an agent twice.
