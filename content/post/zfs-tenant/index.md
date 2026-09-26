@@ -64,7 +64,11 @@ And an SSH account for replication is, by default, also a shell.
 
 There are tools that would sidestep some of this.
 [zrepl](https://zrepl.github.io/) has a sink mode with a subtree per client, but it replaces sanoid and syncoid on both sides and runs as root on the receiver.
-restic or borg to a friend's box would also work, but they back up files instead of snapshots and have to scan for changes, while `zfs send` already knows which blocks changed.
+restic or borg to a friend's box would also work, but everything else on my network is ZFS: my machines replicate to the NAS with syncoid, and a restore is `zfs send` and `zfs receive`.
+Adding another backup format means one more thing to understand when something breaks.
+My current off-site copy goes to Backblaze B2 with rclone.
+Ideally that would be ZFS as well, and some hosting services accept `zfs send`, but they cost far more than object storage.
+A friend with a ZFS box costs nothing.
 
 ## Rehearsing the permissions in a VM
 
