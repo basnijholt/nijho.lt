@@ -35,6 +35,8 @@ I agreed, on one condition: neither of us should be able to destroy the other's 
 
 The result is [zfs-tenant](https://github.com/basnijholt/zfs-tenant), which is now [on PyPI](https://pypi.org/project/zfs-tenant/) and has [documentation](https://zfs-tenant.nijho.lt).
 
+{{< figure src="logo.svg" alt="The zfs-tenant logo: a storage pool with two dim compartments for the host and one locked amber compartment for a friend, filled up to a dashed quota line" width="220" >}}
+
 {{< toc >}}
 
 ## What we wanted
@@ -130,7 +132,7 @@ Joining a user namespace grants every capability inside it, so the gate drops th
 And with `zoned=on`, delegated writes from outside the namespace fail too: a process that escaped the zone could still not change anything.
 
 OpenZFS master can attach datasets to a uid instead of a single namespace, which would make the holder service unnecessary.
-Once that lands in a release, it can go.
+Once that lands in a release and keeps `zfs allow` in charge, the holder can go; [issue #6](https://github.com/basnijholt/zfs-tenant/issues/6) tracks it.
 
 ## What it cannot hide
 
@@ -191,7 +193,15 @@ services.syncoid = {
 
 For his TrueNAS box there is a single `zfs-tenant.pyz` on every [release](https://github.com/basnijholt/zfs-tenant/releases), which runs with the Python that TrueNAS already ships, plus a `setup --dry-run` command that prints the exact `zfs` commands to run.
 The [getting started guide](https://zfs-tenant.nijho.lt/getting-started/) walks through both.
+Hosting on TrueNAS has only run in VMs so far; [issue #4](https://github.com/basnijholt/zfs-tenant/issues/4) is open for anyone who wants to try it on a real TrueNAS host.
 Sending from TrueNAS is where its built-in tools stop working: replication tasks wrap every remote command in `sh -c`, which the gate refuses, so he pushes with `zfs send` or syncoid instead.
+
+## Knowing when it stops working
+
+The [last btrfs machine]({{< ref "/post/btrfs-to-zfs" >}}) taught me a fifth question for any backup: how do I find out when it stops working?
+A failed push shows up in `systemctl status` on the sending side, which nobody reads.
+The check belongs on the receiving side, and it has to look at every pushed dataset separately, because one healthy dataset can hide another that stopped replicating.
+zfs-tenant does not alert yet; [issue #3](https://github.com/basnijholt/zfs-tenant/issues/3) tracks it.
 
 ## Restoring
 
@@ -235,14 +245,20 @@ The only readable text in the raw stream was ZFS property names and the snapshot
 
 ## Tested like everything else
 
-Every security claim in this post is also checked by a two-node NixOS VM test: one machine pushes with real syncoid 2.3.0, through real sshd and the gate, into real OpenZFS 2.4.4 on the other.
-It covers the pushes and pruning, the zone hiding my datasets, the gate failing closed, the delegation limits with and without the gate, a plaintext stream being refused, interrupted receives and restores resuming, and the quota.
+Every security claim in this post is also checked by a VM test: two NixOS machines back each other up, the way my friend and I do, with real sanoid and syncoid 2.3.0, through real sshd and the gate, into real OpenZFS 2.4.4.
+Its 29 subtests cover the zone hiding my datasets, the gate failing closed, and the delegation limits with and without the gate.
+They also cover what happens over time: pruning, retention gaps, interrupted transfers and restores, the quota and dataset limits, and both machines rebooting.
 It runs on every push in GitHub Actions, next to the unit tests.
 
 The VM test earned its keep while I was building this.
 It found that incremental sends need `hold` on the sending side, and that syncoid only prunes after it has sent something new.
+Later it caught two bugs that only show up once a setup has been running for a while.
+After a reboot, setup failed on a tenant root that already held data, because OpenZFS rejects even a redundant `mountpoint` write once zoned children inherit it.
+And syncoid stopped replicating after sanoid's retention had removed the newest snapshot both sides shared.
+To continue from an older common snapshot, syncoid rolls the target back with `zfs receive -F`, and the gate used to drop that flag.
+It now passes `-F` through, still only below the tenant root, and the test pins that libzfs refuses to replace an encrypted dataset that way.
 
-The whole thing is about 770 lines of Python, not counting comments and docstrings, with no dependencies.
+The whole thing is about 780 lines of Python, not counting comments and docstrings, with no dependencies.
 The kernel does the actual enforcing: delegation, the quota, and the zone.
 The gate only removes the shell, and it is small enough to read in one sitting.
 
