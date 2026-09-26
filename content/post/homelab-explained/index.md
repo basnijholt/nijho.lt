@@ -1,7 +1,7 @@
 ---
 title: "My declarative multi-machine homelab, explained"
 subtitle: "How I reach my self-hosted services from anywhere without putting them on the internet"
-summary: "Friends keep asking how my homelab works, so I wrote it all down, starting from zero. Four NixOS machines share one Traefik front door, and with WireGuard and my own Headscale server I reach my self-hosted services from anywhere with a valid padlock, while strangers on the internet get nothing. The part I think is the coolest is the balance: everything is declarative and lives in git, but with as little machinery as possible."
+summary: "Friends keep asking how my homelab works, so I wrote it all down, starting from zero. Four NixOS machines run about 150 containers behind one Traefik front door, and with WireGuard and my own Headscale server I reach my self-hosted services from anywhere with a valid padlock, while strangers on the internet get nothing. The part I think is the coolest is the balance: everything is declarative and lives in git, but with as little machinery as possible."
 date: 2026-09-25
 draft: false
 featured: false
@@ -30,6 +30,7 @@ categories:
 
 I open `https://mealie.lab.nijho.lt` on my phone to look up a recipe, and it works the same at home, on a train, or on hotel Wi-Fi in another country, with a valid padlock in the address bar.
 If a stranger on the internet tries the same address, they get nothing.
+Nearly everything I run works this way: about 150 containers on four machines, used every day by seven people besides me.
 How that works is the thing friends actually ask me about, and it is what my [2024 homelab post]({{< ref "/post/homelab" >}}) never explained.
 
 That post was a story about hardware: a NUC, an HP EliteDesk, a TrueNAS box, and a lot of trial and error.
@@ -47,7 +48,6 @@ The price is that nothing fails over automatically, but because every machine se
 [^nix-lag]: Yes, [nixpkgs is the largest and most up-to-date package repository](https://repology.org/repositories/graphs) there is. Even so, I follow `nixos-unstable`, and a new version only reaches me once it is merged, built, and tested, and the channel moves forward, which usually takes a couple of days. Updates that trigger large rebuilds go through a staging branch first and take longer, and not every package gets updated as quickly as the popular ones. With Docker, I can run a release the day upstream publishes it.
 
 It took me several years and many iterations to get here, and this is the first version I would recommend to friends.
-Today it runs nearly 150 containers on four machines, about a hundred of them with their own web address, and seven family members and friends outside my house use it too.
 This post tries to explain it all.
 I wrote it for people who have never set up a reverse proxy or a VPN, so every piece gets a short explanation before I show how I configured it.
 I deliberately made it comprehensive, with enough detail to build something similar yourself.
