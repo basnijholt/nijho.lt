@@ -47,6 +47,7 @@ The price is that nothing fails over automatically, but because every machine se
 [^nix-lag]: Yes, [nixpkgs is the largest and most up-to-date package repository](https://repology.org/repositories/graphs) there is. Even so, I follow `nixos-unstable`, and a new version only reaches me once it is merged, built, and tested, and the channel moves forward, which usually takes a couple of days. Updates that trigger large rebuilds go through a staging branch first and take longer, and not every package gets updated as quickly as the popular ones. With Docker, I can run a release the day upstream publishes it.
 
 It took me several years and many iterations to get here, and this is the first version I would recommend to friends.
+Today it runs nearly 150 containers on four machines, about a hundred of them with their own web address, and seven family members and friends outside my house use it too.
 This post tries to explain it all.
 I wrote it for people who have never set up a reverse proxy or a VPN, so every piece gets a short explanation before I show how I configured it.
 I deliberately made it comprehensive, with enough detail to build something similar yourself.
