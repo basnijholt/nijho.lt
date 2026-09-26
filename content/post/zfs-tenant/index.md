@@ -28,7 +28,7 @@ TrueNAS's replication tasks wanted root on the receiving system, and neither of 
 So each of us ran a TrueNAS VM on a hypervisor, backed by an iSCSI zvol on the real NAS, and gave the other person root inside that VM instead.
 
 It worked, but it meant running ZFS on a zvol on ZFS, inside a VM that each of us had to keep updated.
-Since then I [replaced TrueNAS with NixOS]({{< ref "/post/truenas-to-nixos" >}}), and my friend moved his machines to NixOS too.
+Since then I [replaced TrueNAS with NixOS]({{< ref "/post/truenas-to-nixos" >}}), and my friend plans to move his machines to NixOS too.
 When we talked about setting the backups up again, his first message was that he had found our old setup complicated.
 He wanted plain `zfs send` and `zfs receive`, with his data still encrypted and his keys never on my server.
 I agreed, on one condition: neither of us should be able to destroy the other's datasets.
@@ -48,7 +48,7 @@ We wrote down the rules before anything else:
 5. That dataset has a size limit.
 6. Both of us keep using sanoid and syncoid.
 
-He is trying TrueNAS on his NAS again, so whatever I built also had to work on a machine without NixOS.
+Until then his NAS runs TrueNAS, so whatever I built also had to work on a machine without NixOS.
 
 ## ZFS already had most of it
 
@@ -164,7 +164,7 @@ services.zfs-tenant = {
 ```
 
 That creates the user, pins the key to the gate, applies the dataset, properties, and delegation on every boot, and runs the zone service.
-My friend pushes with nixpkgs' own module:
+Once my friend is on NixOS, he can push with nixpkgs' own module:
 
 ```nix
 programs.ssh.knownHosts.bas-nas.publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAA...";
