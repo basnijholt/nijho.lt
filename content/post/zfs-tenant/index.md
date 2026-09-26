@@ -1,7 +1,7 @@
 ---
 title: "Friend-to-friend ZFS backups, version two"
 subtitle: "Giving a friend a quota-capped corner of my pool, without a VM or a shell"
-summary: "Two years ago, a friend and I backed each other up through a TrueNAS VM on an iSCSI zvol. Now that we have both moved to NixOS, I replaced that machinery with zfs-tenant: OpenZFS delegation and a quota keep him inside one dataset, and a small SSH forced command plus zfs zone make sure he sees nothing else of my pool. His keys never leave his house, and a VM test checks each of those claims."
+summary: "Two years ago, a friend and I backed each other up through a TrueNAS VM on an iSCSI zvol. Now that I run NixOS, I replaced that machinery with zfs-tenant: OpenZFS delegation and a quota keep him inside one dataset, and a small SSH forced command plus zfs zone make sure he sees nothing else of my pool. His keys never leave his house, and a VM test checks each of those claims."
 date: 2026-09-26
 draft: true
 featured: false
@@ -48,7 +48,7 @@ We wrote down the rules before anything else:
 5. That dataset has a size limit.
 6. Both of us keep using sanoid and syncoid.
 
-His NAS still runs TrueNAS, so whatever I built also had to work on a machine without NixOS.
+He is trying TrueNAS on his NAS again, so whatever I built also had to work on a machine without NixOS.
 
 ## ZFS already had most of it
 
@@ -189,12 +189,37 @@ services.syncoid = {
 
 For his TrueNAS box there is a single `zfs-tenant.pyz` on every [release](https://github.com/basnijholt/zfs-tenant/releases), which runs with the Python that TrueNAS already ships, plus a `setup --dry-run` command that prints the exact `zfs` commands to run.
 The [getting started guide](https://zfs-tenant.nijho.lt/getting-started/) walks through both.
+Sending from TrueNAS is where its built-in tools stop working: replication tasks wrap every remote command in `sh -c`, which the gate refuses, so he pushes with `zfs send` or syncoid instead.
+
+## The first real push
+
+Once my side was deployed, Joe tried it from his TrueNAS box.
+His first move was to see what else his key could do.
+The gate logged every attempt on my NAS:
+
+```
+root=tank/friends/joe denied interactive session
+root=tank/friends/joe denied 'ls': only zfs commands and syncoid's probes are allowed
+root=tank/friends/joe denied '/usr/bin/bash': only zfs commands and syncoid's probes are allowed
+root=tank/friends/joe denied '/bin/bash': only zfs commands and syncoid's probes are allowed
+root=tank/friends/joe allowed 'zfs receive -s -u tank/friends/joe/zt-test'
+```
+
+The last line is a small encrypted test dataset, sent with `zfs send -w` piped into `ssh`, without syncoid.
+It arrived with `keystatus` set to `unavailable`.
+Then I tried to read it as root on my own machine.
+`zfs mount` answered `cannot mount 'tank/friends/joe/zt-test': dataset is exported to a local zone`, and `zfs load-key` with a guessed passphrase gave `Key load error: Incorrect key provided`.
+The only readable text in the raw stream was ZFS property names and the snapshot name, which is the metadata ZFS leaves unencrypted, as described above.
+
+One thing confused him.
+A bare `zfs list` through the gate shows only his root, because the gate fills in the root as the dataset and ZFS does not recurse without `-r`.
+He thought the send had failed until he ran `zfs list -r`.
 
 ## Tested like everything else
 
-Every claim above comes from a two-node NixOS VM test: one machine pushes with real syncoid 2.3.0, through real sshd and the gate, into real OpenZFS 2.4.4 on the other.
+Every security claim in this post is also checked by a two-node NixOS VM test: one machine pushes with real syncoid 2.3.0, through real sshd and the gate, into real OpenZFS 2.4.4 on the other.
 Its 17 subtests cover the pushes and pruning, the zone hiding my datasets, the gate failing closed, the delegation limits with and without the gate, a plaintext stream being refused, interrupted receives and restores resuming, and the quota.
-It runs on every push in GitHub Actions, next to 186 unit tests.
+It runs on every push in GitHub Actions, next to 193 unit tests.
 
 The VM test earned its keep while I was building this.
 It found that incremental sends need `hold` on the sending side, that syncoid only prunes after it has sent something new, and that `sharenfs` cannot be set once a dataset is zoned.
