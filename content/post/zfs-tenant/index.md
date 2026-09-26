@@ -105,10 +105,14 @@ Two of the probes deserve an answer of nothing.
 `command -v mbuffer` gets the answer that means it is not installed, so syncoid skips mbuffer and compression on my side, which raw encrypted data does not benefit from anyway.
 `ps -Ao args=` gets an empty process list, because the real one would show my friend everything running on my NAS.
 
-Reading syncoid that closely also turned up a bug in version 2.3.0:
-syncoid pastes the resume token it gets from the receiving host unescaped into a shell on the sending machine, so a malicious receiver can run commands on the sender.
-<!-- TODO: report this to syncoid upstream and link the issue BEFORE publishing; do not publish an unreported RCE -->
-That is why the sending side should run syncoid as an unprivileged user that may only `send` and `hold`.
+Reading syncoid that closely also turned up a bug in version 2.3.0, outside zfs-tenant itself.
+In push mode, syncoid asks the receiving host for a ZFS resume token.
+It passed that answer unescaped into shell commands for estimating and resuming the send, which run on the source machine.
+A malicious or compromised backup host could therefore return shell syntax instead of a token and execute arbitrary commands on the sender with the privileges of the syncoid process.
+
+I reproduced this in two isolated NixOS VMs using real ZFS and SSH: a harmless command embedded in the receiver's answer created a marker file on the sender.
+I reported it to the maintainer and opened [sanoid PR #1114](https://github.com/jimsalterjrs/sanoid/pull/1114) with a small fix that shell-quotes the token at both uses.
+Even with that fix, the sending side should run syncoid as an unprivileged user that may only `send` and `hold`.
 nixpkgs' `services.syncoid` already works that way, so my friend needs nothing from zfs-tenant at all.
 
 ## Zones, and the setup that would have made things worse
@@ -256,6 +260,12 @@ After a reboot, setup failed on a tenant root that already held data, because Op
 And syncoid stopped replicating after sanoid's retention had removed the newest snapshot both sides shared.
 To continue from an older common snapshot, syncoid rolls the target back with `zfs receive -F`, and the gate used to drop that flag.
 It now passes `-F` through, still only below the tenant root, and the test pins that libzfs refuses to replace an encrypted dataset that way.
+
+The route to the syncoid finding was slightly absurd.
+I built much of zfs-tenant through coding agents, often literally from the bathtub, and then asked several frontier models to review the security boundary independently.
+One of them followed receiver-controlled data beyond my new code and into syncoid.
+A model's suspicion is not evidence, so I turned it into the two-VM reproduction above: it failed on unpatched syncoid 2.3.0 and passed after the seven-line fix.
+The most consequential result of reviewing my small new project was a command-injection bug in the mature tool next to it.
 
 The whole thing is about 780 lines of Python, not counting comments and docstrings, with no dependencies.
 The kernel does the actual enforcing: delegation, the quota, and the zone.
