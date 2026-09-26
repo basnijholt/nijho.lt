@@ -46,7 +46,7 @@ We wrote down the rules before anything else:
 3. I cannot read his data, because his keys stay at his house.
 4. He gets one dataset where he can create and remove nested datasets as he likes.
 5. That dataset has a size limit.
-6. Both of us keep using sanoid and syncoid.
+6. No new replication tool on either side: plain `zfs send` or syncoid.
 
 Until then his NAS runs TrueNAS, so whatever I built also had to work on a machine without NixOS.
 
@@ -61,6 +61,10 @@ On paper, that covers five of the six rules.
 The gap is visibility.
 Any local user can run `zfs list` and see every dataset on the machine, with names, sizes, and properties.
 And an SSH account for replication is, by default, also a shell.
+
+There are tools that would sidestep some of this.
+[zrepl](https://zrepl.github.io/) has a sink mode with a subtree per client, but it replaces sanoid and syncoid on both sides and runs as root on the receiver.
+restic or borg to a friend's box would also work, but they back up files instead of snapshots and have to scan for changes, while `zfs send` already knows which blocks changed.
 
 ## Rehearsing the permissions in a VM
 
@@ -89,16 +93,15 @@ It tokenizes the request, accepts only the handful of command shapes a backup ne
 It never starts a shell, so there is nothing to inject into.
 
 The hard part was knowing exactly which commands syncoid sends.
-An agent read all 2,444 lines of syncoid's Perl and ran about twenty scenarios against a fake `ssh` that logged every remote command.
+An agent read syncoid's Perl and ran about twenty scenarios against a fake `ssh` that logged every remote command.
 The list is short: a few probes, five forms of `zfs get`, the receive itself, and snapshot pruning.
 Two of the probes deserve an answer of nothing.
 `command -v mbuffer` gets the answer that means it is not installed, so syncoid skips mbuffer and compression on my side, which raw encrypted data does not benefit from anyway.
 `ps -Ao args=` gets an empty process list, because the real one would show my friend everything running on my NAS.
 
-Reading syncoid that closely also turned up two bugs in version 2.3.0.
-`--no-command-checks` does nothing, because the option is stored under a different key than the one the code checks.
-The more serious one: syncoid pastes the resume token it gets from the receiving host unescaped into a shell on the sending machine, so a malicious receiver can run commands on the sender.
-<!-- TODO: link the upstream syncoid issue once it is filed, before publishing -->
+Reading syncoid that closely also turned up a bug in version 2.3.0:
+syncoid pastes the resume token it gets from the receiving host unescaped into a shell on the sending machine, so a malicious receiver can run commands on the sender.
+<!-- TODO: report this to syncoid upstream and link the issue BEFORE publishing; do not publish an unreported RCE -->
 That is why the sending side should run syncoid as an unprivileged user that may only `send` and `hold`.
 nixpkgs' `services.syncoid` already works that way, so my friend needs nothing from zfs-tenant at all.
 
@@ -125,18 +128,6 @@ And with `zoned=on`, delegated writes from outside the namespace fail too: a pro
 OpenZFS master can attach datasets to a uid instead of a single namespace, which would make the holder service unnecessary.
 Once that lands in a release, it can go.
 
-## The feature nobody asked for
-
-One part of this project I did not see coming was a feature I never requested.
-The first version also had *grace holds*: every day, the host put a hold on the newest snapshot of each of my friend's datasets and released it 14 days later, so a compromised machine on his side could not wipe his recent backups on mine.
-It is not a bad idea, but it was on none of our lists.
-When the agent compared the zone setups, its main argument against the usual one was that namespace root could release those holds.
-
-I asked whether it was defending the design with a reason I had never included in it.
-It was.
-We removed the holds, judged the zones against the six rules above, and the argument changed completely.
-The agent had not hidden anything; it had just made a scope decision without flagging it, and then reasoned from its own decision as if it were mine.
-
 ## What it cannot hide
 
 ZFS encryption protects file contents, not structure.
@@ -146,6 +137,12 @@ Boring dataset names help, and sending without `-p` keeps properties out of the 
 
 I can also always delete his copy, because I am root on my own machine.
 What I can never do is read it.
+My monthly scrubs still verify his data without his key, because ZFS checksums the encrypted blocks.
+
+What we protect against is a dead machine: a failed pool, a fire, a flood.
+His key may destroy anything below his root, which is what lets syncoid mirror his snapshot retention, so someone who steals that key can also delete his backups on my NAS.
+We talked about that and left it out on purpose.
+Covering it would take holds that I place as root and release on a schedule, and it was not a threat either of us wanted to design for.
 
 ## Setting it up
 
@@ -164,6 +161,7 @@ services.zfs-tenant = {
 ```
 
 That creates the user, pins the key to the gate, applies the dataset, properties, and delegation on every boot, and runs the zone service.
+The network does its part as well: on our tailnet, only his router may reach port 22 on my NAS, and `from=` in `authorized_keys` only accepts his key from that address.
 Once my friend is on NixOS, he can push with nixpkgs' own module:
 
 ```nix
@@ -191,6 +189,26 @@ For his TrueNAS box there is a single `zfs-tenant.pyz` on every [release](https:
 The [getting started guide](https://zfs-tenant.nijho.lt/getting-started/) walks through both.
 Sending from TrueNAS is where its built-in tools stop working: replication tasks wrap every remote command in `sh -c`, which the gate refuses, so he pushes with `zfs send` or syncoid instead.
 
+## Restoring
+
+The gate also allows `zfs send` of his own snapshots, so getting data back is one pipe, run at his house:
+
+```bash
+ssh zfs-tenant-joe@bas-nas zfs send -w tank/friends/joe/offsite/photos@autosnap_2026-09-25_00:00:01_daily \
+  | zfs receive -u tank/photos
+zfs load-key tank/photos
+zfs mount tank/photos
+```
+
+That raised a question on my side.
+My photos are a child dataset that inherits its key from an encryption root, and I only push the child.
+If my NAS dies and I pull the child back, can I still unlock it without the root?
+A throwaway VM says yes.
+Every dataset has its own master key, stored wrapped by the key derived from the passphrase, and a raw send carries that wrapped key together with the salt and iteration count.
+The child arrives as its own encryption root and opens with the same passphrase.
+The one catch: after a `zfs change-key`, the next incremental carries the new wrapping, and in the VM the old passphrase no longer worked.
+So the passphrase that matters is the one at the time of the last push, and it has to live somewhere other than the NAS.
+
 ## The first real push
 
 Once my side was deployed, Joe tried it from his TrueNAS box.
@@ -211,22 +229,25 @@ Then I tried to read it as root on my own machine.
 `zfs mount` answered `cannot mount 'tank/friends/joe/zt-test': dataset is exported to a local zone`, and `zfs load-key` with a guessed passphrase gave `Key load error: Incorrect key provided`.
 The only readable text in the raw stream was ZFS property names and the snapshot name, which is the metadata ZFS leaves unencrypted, as described above.
 
-One thing confused him.
-A bare `zfs list` through the gate shows only his root, because the gate fills in the root as the dataset and ZFS does not recurse without `-r`.
-He thought the send had failed until he ran `zfs list -r`.
-
 ## Tested like everything else
 
 Every security claim in this post is also checked by a two-node NixOS VM test: one machine pushes with real syncoid 2.3.0, through real sshd and the gate, into real OpenZFS 2.4.4 on the other.
-Its 17 subtests cover the pushes and pruning, the zone hiding my datasets, the gate failing closed, the delegation limits with and without the gate, a plaintext stream being refused, interrupted receives and restores resuming, and the quota.
-It runs on every push in GitHub Actions, next to 193 unit tests.
+It covers the pushes and pruning, the zone hiding my datasets, the gate failing closed, the delegation limits with and without the gate, a plaintext stream being refused, interrupted receives and restores resuming, and the quota.
+It runs on every push in GitHub Actions, next to the unit tests.
 
 The VM test earned its keep while I was building this.
-It found that incremental sends need `hold` on the sending side, that syncoid only prunes after it has sent something new, and that `sharenfs` cannot be set once a dataset is zoned.
+It found that incremental sends need `hold` on the sending side, and that syncoid only prunes after it has sent something new.
 
 The whole thing is about 770 lines of Python, not counting comments and docstrings, with no dependencies.
 The kernel does the actual enforcing: delegation, the quota, and the zone.
 The gate only removes the shell, and it is small enough to read in one sitting.
+
+## The feature nobody asked for
+
+The first version had *grace holds*: every day, the host held the newest snapshot of each of my friend's datasets for 14 days.
+It was on none of our lists, and when the agent later argued against the usual zone setup, its main reason was that namespace root could release those holds.
+I asked whether it was defending the design with a reason I had never included in it, and it was.
+It had made a scope decision without flagging it, and then reasoned from that decision as if it were mine.
 
 ## References
 
