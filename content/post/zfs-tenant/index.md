@@ -250,8 +250,7 @@ Its 29 subtests cover the zone hiding my datasets, the gate failing closed, and 
 They also cover what happens over time: pruning, retention gaps, interrupted transfers and restores, the quota and dataset limits, and both machines rebooting.
 It runs on every push in GitHub Actions, next to the unit tests.
 
-The VM test earned its keep while I was building this.
-It found that incremental sends need `hold` on the sending side, and that syncoid only prunes after it has sent something new.
+While I was building this, the VM test found that incremental sends need `hold` on the sending side, and that syncoid only prunes after it has sent something new.
 Later it caught two bugs that only show up once a setup has been running for a while.
 After a reboot, setup failed on a tenant root that already held data, because OpenZFS rejects even a redundant `mountpoint` write once zoned children inherit it.
 And syncoid stopped replicating after sanoid's retention had removed the newest snapshot both sides shared.
