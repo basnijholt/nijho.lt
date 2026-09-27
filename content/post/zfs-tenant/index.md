@@ -66,9 +66,9 @@ And an SSH account for replication is, by default, also a shell.
 
 There are tools that would sidestep some of this.
 [zrepl](https://zrepl.github.io/) has a sink mode with a subtree per client, but it replaces sanoid and syncoid on both sides and runs as root on the receiver.
-restic or borg to a friend's box would also work, but everything else on my network is ZFS: my machines replicate to the NAS with syncoid, and a restore is `zfs send` and `zfs receive`.
+restic or borg to a friend's box would also work, but everything else on my network is ZFS: my machines [replicate to the NAS with syncoid](https://github.com/basnijholt/dotfiles/blob/6526b50e9bae1449a915239491099ef71528f10c/configs/nixos/hosts/nas/replication.nix#L40-L49), and a restore is `zfs send` and `zfs receive`.
 Adding another backup format means one more thing to understand when something breaks.
-My current off-site copy goes to Backblaze B2 with rclone.
+My current off-site copy goes to [Backblaze B2 with rclone](https://github.com/basnijholt/dotfiles/blob/6526b50e9bae1449a915239491099ef71528f10c/configs/nixos/hosts/docker-lxc/rclone-b2-backup.nix).
 Ideally that would be ZFS as well, and some hosting services accept `zfs send`, but they cost far more than object storage.
 A friend with a ZFS box costs nothing.
 
@@ -146,7 +146,7 @@ Boring dataset names help, and sending without `-p` keeps properties out of the 
 
 I can also always delete his copy, because I am root on my own machine.
 What I can never do is read it.
-My monthly scrubs still verify his data without his key, because ZFS checksums the encrypted blocks.
+My [monthly scrubs](https://github.com/basnijholt/dotfiles/blob/6526b50e9bae1449a915239491099ef71528f10c/configs/nixos/hosts/nas/storage.nix#L71-L81) still verify his data without his key, because ZFS checksums the encrypted blocks.
 
 What we protect against is a dead machine: a failed pool, a fire, a flood.
 His key may destroy anything below his root, which is what lets syncoid mirror his snapshot retention, so someone who steals that key can also delete his backups on my NAS.
@@ -170,6 +170,8 @@ services.zfs-tenant = {
 ```
 
 That creates the user, pins the key to the gate, applies the dataset, properties, and delegation on every boot, and runs the zone service.
+My own setup is in [`friend-backups.nix`](https://github.com/basnijholt/dotfiles/blob/6526b50e9bae1449a915239491099ef71528f10c/configs/nixos/hosts/nas/friend-backups.nix#L43-L50), with his real key and address.
+If your sanoid snapshots the whole pool, [exclude the tenant tree](https://github.com/basnijholt/dotfiles/blob/6526b50e9bae1449a915239491099ef71528f10c/configs/nixos/hosts/nas/friend-backups.nix#L52-L59): your sanoid must neither snapshot nor prune it, or his next incremental push finds snapshots on the target that he never sent.
 The network does its part as well: on our tailnet, only his router may reach port 22 on my NAS, and `from=` in `authorized_keys` only accepts his key from that address.
 Once my friend is on NixOS, he can push with nixpkgs' own module:
 
@@ -194,6 +196,8 @@ services.syncoid = {
 };
 ```
 
+My NAS will push to his with the [same configuration](https://github.com/basnijholt/dotfiles/blob/6526b50e9bae1449a915239491099ef71528f10c/configs/nixos/hosts/nas/friend-backups.nix#L66-L91) once he hosts a root for me.
+
 For his TrueNAS box there is a single `zfs-tenant.pyz` on every [release](https://github.com/basnijholt/zfs-tenant/releases), which runs with the Python that TrueNAS already ships, plus a `setup --dry-run` command that prints the exact `zfs` commands to run.
 The [getting started guide](https://zfs-tenant.nijho.lt/getting-started/) walks through both.
 Hosting on TrueNAS has only run in VMs so far; [issue #4](https://github.com/basnijholt/zfs-tenant/issues/4) is open for anyone who wants to try it on a real TrueNAS host.
@@ -204,6 +208,7 @@ Sending from TrueNAS is where its built-in tools stop working: replication tasks
 The [last btrfs machine]({{< ref "/post/btrfs-to-zfs" >}}) taught me a fifth question for any backup: how do I find out when it stops working?
 A failed push shows up in `systemctl status` on the sending side, which nobody reads.
 The check belongs on the receiving side, and it has to look at every pushed dataset separately, because one healthy dataset can hide another that stopped replicating.
+That is how I watch my own machines: the NAS [checks the newest snapshot of every dataset it replicates](https://github.com/basnijholt/dotfiles/blob/6526b50e9bae1449a915239491099ef71528f10c/configs/nixos/hosts/nas/replication.nix#L332-L352) every hour and alerts my phone when one is too old.
 zfs-tenant does not alert yet; [issue #3](https://github.com/basnijholt/zfs-tenant/issues/3) tracks it.
 
 ## Restoring
@@ -225,10 +230,11 @@ Every dataset has its own master key, stored wrapped by the key derived from the
 The child arrives as its own encryption root and opens with the same passphrase.
 The one catch: after a `zfs change-key`, the next incremental carries the new wrapping, and in the VM the old passphrase no longer worked.
 So the passphrase that matters is the one at the time of the last push, and it has to live somewhere other than the NAS.
+Mine does: [zfs-unlock](https://github.com/basnijholt/zfs-unlock) keeps the passphrases on a separate device and [unlocks the NAS](https://github.com/basnijholt/dotfiles/blob/6526b50e9bae1449a915239491099ef71528f10c/configs/nixos/hosts/nas/zfs-unlock.nix) after every boot.
 
 ## The first real push
 
-Once my side was deployed, Joe tried it from his TrueNAS box.
+Once [my side was deployed](https://github.com/basnijholt/dotfiles/blob/6526b50e9bae1449a915239491099ef71528f10c/configs/nixos/hosts/nas/friend-backups.nix), Joe tried it from his TrueNAS box.
 His first move was to see what else his key could do.
 The gate logged every attempt on my NAS:
 
