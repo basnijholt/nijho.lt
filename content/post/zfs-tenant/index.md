@@ -83,12 +83,11 @@ Delegated rights apply to the dataset itself as well as everything below it, unl
 The fix is to split them: on the root itself only `create,mount,receive` with `zfs allow -l`, and the full set only for descendants with `zfs allow -d`.
 After that change, destroying, snapshotting, re-delegating, or changing the quota of the root all failed with `permission denied`.
 
-The second finding was a pleasant one.
 A send stream can carry properties, and a hostile one could carry `mountpoint=/etc`.
 Receiving it as the delegated user gave `cannot receive mountpoint property on tank/friends/joe/evil: permission denied`, and the dataset kept the `mountpoint=none` it inherited from the root.
 ZFS applies received properties with the receiving user's rights, so a property you never delegated cannot arrive through a stream.
 
-The probes also confirmed the gap: the delegated user saw my `tank/host` dataset in `zfs list`, and `zfs get used tank/host` answered happily.
+The probes also confirmed the gap: the delegated user saw my `tank/host` dataset in `zfs list`, and `zfs get used tank/host` returned its size.
 
 ## A gate that speaks syncoid
 
@@ -101,7 +100,7 @@ It never starts a shell, so there is nothing to inject into.
 The hard part was knowing exactly which commands syncoid sends.
 An agent read syncoid's Perl and ran about twenty scenarios against a fake `ssh` that logged every remote command.
 The list is short: a few probes, five forms of `zfs get`, the receive itself, and snapshot pruning.
-Two of the probes deserve an answer of nothing.
+The gate answers two of the probes without running anything.
 `command -v mbuffer` gets the answer that means it is not installed, so syncoid skips mbuffer and compression on my side, which raw encrypted data does not benefit from anyway.
 `ps -Ao args=` gets an empty process list, because the real one would show my friend everything running on my NAS.
 
@@ -123,7 +122,7 @@ Then my friend sent me a message: ZFS has a feature called zones, which restrict
 [`zfs zone`](https://openzfs.github.io/openzfs-docs/man/master/8/zfs-zone.8.html) attaches a dataset to one user namespace, and inside that namespace the ZFS kernel module answers `dataset does not exist` for everything that is not attached.
 Even if my gate had a bug that let arbitrary `zfs` commands through, `tank/host` would stay invisible.
 
-The VM test showed a catch that the usual setup walks right into.
+The VM test also showed a problem with the usual setup.
 Containers typically map the user to root inside the namespace.
 ZFS treats root in the namespace as the zone's administrator, and that bypasses `zfs allow`.
 In the test, the tenant could destroy the root dataset I had created for it.
