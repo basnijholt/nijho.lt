@@ -166,8 +166,8 @@ My [monthly scrubs](https://github.com/basnijholt/dotfiles/blob/6526b50e9bae1449
 
 What we protect against is a dead machine: a failed pool, a fire, a flood.
 His key may destroy anything below his root, which is what lets syncoid mirror his snapshot retention, so someone who steals that key can also delete his backups on my NAS.
-We talked about that and left it out on purpose.
-Covering it would take holds that I place as root and release on a schedule, and it was not a threat either of us wanted to design for.
+Covering that would take holds that I place as root and release on a schedule.
+We left them out on purpose, although I am [reconsidering](#the-feature-nobody-asked-for).
 
 ## Setting it up
 
@@ -280,10 +280,17 @@ The gate only removes the shell, and it is small enough to read in one sitting.
 
 ## The feature nobody asked for
 
-The first version had *grace holds*: every day, the host held the newest snapshot of each of my friend's datasets for 14 days.
+The first version had *grace holds*: every day, the host placed a hold on the newest snapshot of each of my friend's datasets and released it 14 days later.
+ZFS will not destroy a held snapshot until the hold is released, and only the host can release it.
 It was on none of our lists, and when the agent later argued against the usual zone setup, its main reason was that namespace root could release those holds.
 I asked whether it was defending the design with a reason I had never included in it, and it was.
 It had made a scope decision without flagging it, and then reasoned from that decision as if it were mine.
+
+So we took the holds out.
+Then every model I asked to review the project suggested them again, each in its own context window: Opus 5.5, GPT-6 Astra, and even the one that reviewed a draft of this post.
+Joe and I had decided that this threat was outside what we wanted to defend against, but I am tempted to add them back.
+They cover the case where malware or an attacker gets onto my machine and uses my key to delete my backups on his NAS, or to replace them with garbage.
+Adding the feature without asking was still wrong; the feature itself might not be.
 
 ## References
 
