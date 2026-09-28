@@ -157,7 +157,7 @@ The gate joins that namespace before it looks at the command, drops the capabili
 
 ## Who stops what
 
-It took me a while to keep straight which part protects against what, so here is the whole picture.
+When Joe and I talked it through, I found it hard to say clearly which part protects against what, so I made this diagram.
 
 {{< figure src="layers.svg" alt="Diagram of seven things Joe's key tries and the layer that stops each one: the network, the SSH gate, the zone, and zfs allow with the quota. Only his raw encrypted backup reaches my pool, where it stays unreadable to me." >}}
 
