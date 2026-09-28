@@ -748,8 +748,9 @@ It doesn't: the internet only reaches `wan`, and a route has to ask for that.
 
 ### DNS is not a lock
 
-It is tempting to think the private address in public DNS is what keeps strangers out.
-It isn't.
+Remember [the public DNS record from earlier](#three-answers-for-the-same-name): `*.lab.nijho.lt` points to `192.168.1.6`, a private IP address on my home network.
+I made this mistake myself: I thought pointing DNS at a private address was enough to keep my services off the internet.
+It wasn't.
 DNS only tells a client where to go, and nothing forces a client to ask.
 Anyone can skip DNS and send a request for `mealie.lab.nijho.lt` straight to my home IP:
 
