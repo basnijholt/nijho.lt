@@ -104,9 +104,8 @@ Delegated rights apply to the dataset itself as well as everything below it, unl
 The fix is to split them: on the root itself only `create,mount,receive` with `zfs allow -l`, and the full set only for descendants with `zfs allow -d`.
 After that change, destroying, snapshotting, re-delegating, or changing the quota of the root all failed with `permission denied`.
 
-A send stream can carry properties, and a hostile one could carry `mountpoint=/etc`.
-Receiving it as the delegated user gave `cannot receive mountpoint property on tank/friends/joe/evil: permission denied`, and the dataset kept the `mountpoint=none` it inherited from the root.
-ZFS applies received properties with the receiving user's rights, so a property you never delegated cannot arrive through a stream.
+A send stream can carry properties too, such as a hostile `mountpoint=/etc`.
+ZFS applies them with the receiving user's rights, so in the VM that property failed with `permission denied`.
 
 The probes also confirmed the gap: the delegated user saw my `tank/host` dataset in `zfs list`, and `zfs get used tank/host` returned its size.
 
@@ -148,19 +147,11 @@ ZFS treats root in the namespace as the zone's administrator, and that bypasses 
 In the test, the tenant could destroy the root dataset I had created for it.
 Mapping the tenant to its own uid instead keeps it without capabilities inside the namespace, and then delegation applies exactly as before, while the kernel still hides everything else.
 
-Root inside a user namespace also turned up in a real OpenZFS bug in August.
-Before 2.4.4, 2.3.9, and 2.2.11, several pool operations, such as destroying a pool, accepted `CAP_SYS_ADMIN` inside a user namespace the caller had created as if it were host root ([CVE-2026-79619](https://github.com/openzfs/zfs/security/advisories/GHSA-mhf5-q8gw-qg9v)).
-Any local user who can open `/dev/zfs` and create a user namespace could use it, and zfs-tenant needs both to be allowed.
-Joe cannot reach it through the gate, but a host running zfs-tenant should load a patched module: `cat /sys/module/zfs/version` shows the loaded one, which only changes after a reboot.
+Root inside a user namespace also turned up in a real OpenZFS bug in August: before 2.4.4, 2.3.9, and 2.2.11, several pool operations, such as destroying a pool, accepted it as host root ([CVE-2026-79619](https://github.com/openzfs/zfs/security/advisories/GHSA-mhf5-q8gw-qg9v)).
+Joe cannot reach that through the gate, but zfs-tenant needs unprivileged user namespaces, so a host running it should load a patched module: `cat /sys/module/zfs/version` shows the loaded one, which only changes after a reboot.
 
 A zone needs a running namespace to attach to, so zfs-tenant runs a small service per friend that holds one.
-The gate joins that namespace before it looks at the command, and refuses to run if the service is down.
-Two details only showed up while building it.
-Joining a user namespace grants every capability inside it, so the gate drops them right away and checks `/proc/self/status` before it does anything else.
-And with `zoned=on`, delegated writes from outside the namespace fail too: a process that escaped the zone could still not change anything.
-
-OpenZFS master can attach datasets to a uid instead of a single namespace, which would make the holder service unnecessary.
-Once that lands in a release and keeps `zfs allow` in charge, the holder can go; [issue #6](https://github.com/basnijholt/zfs-tenant/issues/6) tracks it.
+The gate joins that namespace before it looks at the command, drops the capabilities that joining grants, and refuses to run if the service is down.
 
 ## What it cannot hide
 
@@ -223,9 +214,8 @@ services.syncoid = {
 
 My NAS will push to his with the [same configuration](https://github.com/basnijholt/dotfiles/blob/6526b50e9bae1449a915239491099ef71528f10c/configs/nixos/hosts/nas/friend-backups.nix#L66-L91) once he hosts a root for me.
 
-For his TrueNAS box there is a single `zfs-tenant.pyz` on every [release](https://github.com/basnijholt/zfs-tenant/releases), which runs with the Python that TrueNAS already ships, plus a `setup --dry-run` command that prints the exact `zfs` commands to run.
-The [getting started guide](https://zfs-tenant.nijho.lt/getting-started/) walks through both.
-Hosting on TrueNAS has only run in VMs so far; [issue #4](https://github.com/basnijholt/zfs-tenant/issues/4) is open for anyone who wants to try it on a real TrueNAS host.
+For his TrueNAS box, every [release](https://github.com/basnijholt/zfs-tenant/releases) has a single `zfs-tenant.pyz` that runs with the Python TrueNAS already ships, and the [getting started guide](https://zfs-tenant.nijho.lt/getting-started/) covers both setups.
+Hosting on TrueNAS has only run in VMs so far ([issue #4](https://github.com/basnijholt/zfs-tenant/issues/4)).
 Sending from TrueNAS is where its built-in tools stop working: replication tasks wrap every remote command in `sh -c`, which the gate refuses, so he pushes with `zfs send` or syncoid instead.
 
 ## Knowing when it stops working
@@ -247,14 +237,10 @@ zfs load-key tank/photos
 zfs mount tank/photos
 ```
 
-That raised a question on my side.
 My photos are a child dataset that inherits its key from an encryption root, and I only push the child.
 If my NAS dies and I pull the child back, can I still unlock it without the root?
-A throwaway VM says yes.
-Every dataset has its own master key, stored wrapped by the key derived from the passphrase, and a raw send carries that wrapped key together with the salt and iteration count.
-The child arrives as its own encryption root and opens with the same passphrase.
-The one catch: after a `zfs change-key`, the next incremental carries the new wrapping, and in the VM the old passphrase no longer worked.
-So the passphrase that matters is the one at the time of the last push, and it has to live somewhere other than the NAS.
+A throwaway VM says yes: a raw send carries the dataset's own wrapped key, so the child arrives as its own encryption root and opens with the same passphrase.
+The one catch: after a `zfs change-key`, the next push carries the new wrapping, so the passphrase that matters is the one at the time of the last push, and it has to live somewhere other than the NAS.
 Mine does: [zfs-unlock](https://github.com/basnijholt/zfs-unlock) keeps the passphrases on a separate device and [unlocks the NAS](https://github.com/basnijholt/dotfiles/blob/6526b50e9bae1449a915239491099ef71528f10c/configs/nixos/hosts/nas/zfs-unlock.nix) after every boot.
 
 ## The first real push
@@ -280,27 +266,13 @@ The only readable text in the raw stream was ZFS property names and the snapshot
 ## Tested like everything else
 
 Every security claim in this post is also checked by a VM test: two NixOS machines back each other up, the way my friend and I do, with real sanoid and syncoid 2.3.0, through real sshd and the gate, into real OpenZFS 2.4.4.
-Its 34 subtests cover the zone hiding my datasets, the gate failing closed, and the delegation limits with and without the gate.
-They also cover what happens over time: pruning, retention gaps, interrupted transfers and restores, the quota and dataset limits, and both machines rebooting.
-It runs on every push in GitHub Actions, next to the unit tests.
-
-While I was building this, the VM test found that incremental sends need `hold` on the sending side, and that syncoid only prunes after it has sent something new.
-Later it caught two bugs that only show up once a setup has been running for a while.
-After a reboot, setup failed on a tenant root that already held data, because OpenZFS rejects even a redundant `mountpoint` write once zoned children inherit it.
-And syncoid stopped replicating after sanoid's retention had removed the newest snapshot both sides shared.
-To continue from an older common snapshot, syncoid rolls the target back with `zfs receive -F`, and the gate used to drop that flag.
-It now passes `-F` through, still only below the tenant root, and the test pins that libzfs refuses to replace an encrypted dataset that way.
+It also checks what happens over time, such as snapshot retention and both machines rebooting, and it runs on every push in GitHub Actions.
 
 The route to the syncoid finding was slightly absurd.
 I built the initial version of zfs-tenant through coding agents, literally from the bathtub, and then asked several frontier models to review the security boundary independently.
 One of them followed receiver-controlled data beyond my new code and into syncoid.
 A model's suspicion is not evidence, so I turned it into the two-VM reproduction above: it failed on unpatched syncoid 2.3.0 and passed after the seven-line fix.
 The most consequential result of reviewing my small new project was a command-injection bug in the mature tool next to it.
-
-A second round of review found two gaps in my own code.
-Setup reset my friend's own grants on his root but kept any others it found in his tree, so a leftover `zfs allow everyone destroy` on his root would have let him delete it.
-It now refuses a tree with grants it did not make, and leaves removing them to me.
-And the quota capped disk space, not the processes a push starts on my NAS; on NixOS, every SSH session now runs in a systemd slice limited to 512 MB of memory and one CPU core.
 
 The whole thing is about 930 lines of Python, not counting comments and docstrings, with no dependencies.
 The kernel does the actual enforcing: delegation, the quota, and the zone.
