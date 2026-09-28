@@ -133,7 +133,7 @@ I reported it to the maintainer and opened [sanoid PR #1114](https://github.com/
 Even with that fix, the sending side should run syncoid as an unprivileged user that may only `send` and `hold`.
 nixpkgs' `services.syncoid` already works that way, so my friend needs nothing from zfs-tenant at all.
 
-## Zones, and the setup that would have made things worse
+## Zones: a second wall in the kernel
 
 At that point the gate was the only thing hiding my datasets.
 Then my friend sent me a message: ZFS has a feature called zones, which restricts a dataset tree to a Linux user namespace.
