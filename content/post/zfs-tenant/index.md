@@ -124,7 +124,7 @@ One surprise: before each receive, syncoid runs `ps -Ao args=` on the receiving 
 That command prints every running process with its full command line.
 On my NAS, it would show my friend everything I run, so the gate answers with an empty list.
 
-Reading syncoid that closely also turned up a bug in version 2.3.0, outside zfs-tenant itself.
+Reading syncoid that closely also turned up a remote code execution (RCE) bug in version 2.3.0, outside zfs-tenant itself.
 In push mode, syncoid asks the receiving host for a ZFS resume token.
 It passed that answer unescaped into shell commands for estimating and resuming the send, which run on the source machine.
 A malicious or compromised backup host could therefore return shell syntax instead of a token and execute arbitrary commands on the sender with the privileges of the syncoid process.
