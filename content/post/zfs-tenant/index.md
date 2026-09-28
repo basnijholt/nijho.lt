@@ -141,11 +141,11 @@ Then my friend sent me a message: ZFS has a feature called zones, which restrict
 [`zfs zone`](https://openzfs.github.io/openzfs-docs/man/master/8/zfs-zone.8.html) attaches a dataset to one user namespace, and inside that namespace the ZFS kernel module answers `dataset does not exist` for everything that is not attached.
 Even if my gate had a bug that let arbitrary `zfs` commands through, `tank/host` would stay invisible.
 
-The VM test also showed a problem with the usual setup.
-Containers typically map the user to root inside the namespace.
-ZFS treats root in the namespace as the zone's administrator, and that bypasses `zfs allow`.
-In the test, the tenant could destroy the root dataset I had created for it.
-Mapping the tenant to its own uid instead keeps it without capabilities inside the namespace, and then delegation applies exactly as before, while the kernel still hides everything else.
+A user namespace can give its processes different user IDs than they have outside.
+Containers usually use that to make the user root inside the namespace, while it stays an ordinary user outside.
+ZFS treats root inside a zone as the zone's administrator, allowed to do anything to the attached datasets, whatever `zfs allow` says.
+In the VM test, that let the friend destroy the dataset I had created for him.
+So zfs-tenant keeps him as his own ordinary user inside the namespace: he has no special rights there, `zfs allow` decides what he may do, and the kernel still hides everything else.
 
 Root inside a user namespace also turned up in a real OpenZFS bug in August: before 2.4.4, 2.3.9, and 2.2.11, several pool operations, such as destroying a pool, accepted it as host root ([CVE-2026-79619](https://github.com/openzfs/zfs/security/advisories/GHSA-mhf5-q8gw-qg9v)).
 Joe cannot reach that through the gate, but zfs-tenant needs unprivileged user namespaces, so a host running it should load a patched module: `cat /sys/module/zfs/version` shows the loaded one, which only changes after a reboot.
