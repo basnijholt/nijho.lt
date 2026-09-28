@@ -292,7 +292,7 @@ The only readable text in the raw stream was ZFS property names and the snapshot
 Every security claim in this post is also checked by a VM test: two NixOS machines back each other up, the way my friend and I do, with real sanoid and syncoid 2.3.0, through real sshd and the gate, into real OpenZFS 2.4.4.
 It also checks what happens over time, such as snapshot retention and both machines rebooting, and it runs on every push in GitHub Actions.
 
-The route to the syncoid finding was slightly absurd.
+The route to the [syncoid finding](https://github.com/jimsalterjrs/sanoid/pull/1114) was slightly absurd.
 I built the initial version of zfs-tenant through coding agents, literally from the bathtub, and then asked several frontier models to review the security boundary independently.
 One of them followed receiver-controlled data beyond my new code and into syncoid.
 A model's suspicion is not evidence, so I turned it into the two-VM reproduction above: it failed on unpatched syncoid 2.3.0 and passed after the seven-line fix.
