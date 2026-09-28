@@ -119,7 +119,7 @@ It tokenizes the request, accepts only the handful of command shapes a backup ne
 It never starts a shell, so there is nothing to inject into.
 
 The hard part was knowing exactly which commands syncoid sends.
-An agent read syncoid's Perl and ran about twenty scenarios against a fake `ssh` that logged every remote command.
+An agent read [syncoid's Perl](https://github.com/jimsalterjrs/sanoid/blob/v2.3.0/syncoid) and ran about twenty scenarios against a fake `ssh` that logged every remote command.
 The list is short: a few probes, five forms of `zfs get`, the receive itself, and snapshot pruning.
 The gate answers two of the probes without running anything.
 `command -v mbuffer` gets the answer that means it is not installed, so syncoid skips mbuffer and compression on my side, which raw encrypted data does not benefit from anyway.
