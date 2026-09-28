@@ -1,7 +1,7 @@
 ---
 title: "My declarative multi-machine homelab, explained"
 subtitle: "How I reach my self-hosted services from anywhere without putting them on the internet"
-summary: "Friends keep asking how my homelab works, so I wrote it all down, starting from zero. Four NixOS machines run about 150 containers behind one Traefik front door, and with WireGuard and my own Headscale server I reach my self-hosted services from anywhere with a valid padlock, while strangers on the internet get nothing. The part I think is the coolest is the balance: everything is declarative and lives in git, but with as little machinery as possible."
+summary: "Friends keep asking how my homelab works, so I wrote it all down, starting from zero. Four NixOS machines run about 150 containers behind one Traefik front door, and with WireGuard and my own Headscale server I reach my self-hosted services from anywhere over encrypted HTTPS connections, while strangers on the internet get nothing. The part I think is the coolest is the balance: everything is declarative and lives in git, but with as little machinery as possible."
 date: 2026-09-25
 draft: false
 featured: false
@@ -28,34 +28,38 @@ categories:
   - level:beginner
 ---
 
-I open `https://mealie.lab.nijho.lt` on my phone to look up a recipe, and it works the same at home, on a train, or on hotel Wi-Fi in another country, with a valid padlock in the address bar.
+I open `https://mealie.lab.nijho.lt` on my phone to look up a recipe.
+It works at home, on a train, or on hotel Wi-Fi in another country, over an encrypted HTTPS connection.
 If a stranger on the internet tries the same address, they get nothing.
 Nearly everything I run works this way: about 150 containers on four machines, used every day by seven people besides me.
 How that works is the thing friends actually ask me about, and it is what my [2024 homelab post]({{< ref "/post/homelab" >}}) never explained.
 
-That post was a story about hardware: a NUC, an HP EliteDesk, a TrueNAS box, and a lot of trial and error.
+That post was a story about hardware: a NUC, an HP EliteDesk, a [TrueNAS](https://www.truenas.com/) box, and a lot of trial and error.
 Almost everything in it has since been replaced.
-Proxmox and TrueNAS are gone, and [every machine runs NixOS]({{< ref "/post/proxmox-to-nixos" >}}), [including the NAS]({{< ref "/post/truenas-to-nixos" >}}).
+[Proxmox](https://www.proxmox.com/) and TrueNAS are gone, and every machine runs [NixOS](https://nixos.org/), [including the NAS]({{< ref "/post/truenas-to-nixos" >}}).
 
 The part I think is the coolest is the balance I found: everything is declarative, but with as little machinery as possible.
 **Declarative** means I describe the end result in text files, and a tool makes reality match it.
 One extreme is what I had before, clicking through web UIs and running one-off install scripts.
-The other is Kubernetes, which many self-hosted projects don't support and which is a lot to babysit at home, or running every app as a NixOS module, which often lags behind upstream.[^nix-lag]
-I landed in between: NixOS declares the machines, each project's own Compose file declares its app, and [compose-farm](https://github.com/basnijholt/compose-farm), a thin tool I wrote, decides which machine runs what, which is all the multi-host orchestration I need.
-Every layer is a text file in git, each uses the simplest tool that keeps it that way, and I still get new app releases as soon as upstream ships them.
+The other is [Kubernetes](https://kubernetes.io/), which many self-hosted projects don't support and which is a lot to babysit at home, or running every app as a NixOS module, which often lags behind upstream.[^nix-lag]
+I landed in between: NixOS declares the machines, each project's own [Compose](https://docs.docker.com/compose/) file declares its app, and [compose-farm](https://github.com/basnijholt/compose-farm), a thin tool I wrote, decides which machine runs what, which is all the multi-host orchestration I need.
+Every layer is a text file in [git](https://git-scm.com/), each uses the simplest tool that keeps it that way, and I still get new app releases as soon as upstream ships them.
 The price is that nothing fails over automatically, but because every machine sees the same files and data, moving services to another machine is a one-line change and one command.
 
-[^nix-lag]: Yes, [nixpkgs is the largest and most up-to-date package repository](https://repology.org/repositories/graphs) there is. Even so, I follow `nixos-unstable`, and a new version only reaches me once it is merged, built, and tested, and the channel moves forward, which usually takes a couple of days. Updates that trigger large rebuilds go through a staging branch first and take longer, and not every package gets updated as quickly as the popular ones. With Docker, I can run a release the day upstream publishes it.
+[^nix-lag]: Yes, [nixpkgs is the largest and most up-to-date package repository](https://repology.org/repositories/graphs) there is. Even so, I follow `nixos-unstable`, and a new version only reaches me once it is merged, built, and tested, and the channel moves forward, which usually takes a couple of days. Updates that trigger large rebuilds go through a staging branch first and take longer, and not every package gets updated as quickly as the popular ones. With [Docker](https://www.docker.com/), I can run a release the day upstream publishes it.
 
-It took me several years and many iterations to get here, and this is the first version I would recommend to friends.
+It took me several years and many iterations to get here.
+This is the first version I would recommend to friends, because its declarative configuration makes changes auditable, reproducible, and reversible.
+That is what makes me comfortable managing it with AI: I can review the diff, rebuild the same configuration, and revert a change if needed.
+
 This post tries to explain it all.
 I wrote it for people who have never set up a reverse proxy or a VPN, so every piece gets a short explanation before I show how I configured it.
 I deliberately made it comprehensive, with enough detail to build something similar yourself.
-That also makes it long, so read the parts you find interesting and skip the rest; if you already know what DNS or WireGuard is, skip ahead.
+That also makes it long, so read the parts you find interesting and skip the rest.
 
 If it is too long, send it to your AI agent, discuss it, and figure out together which parts make sense for your own network.
 
-If you have a single machine that already runs NixOS, you probably don't need Docker or compose-farm at all: adding your services as NixOS modules is simpler, and that is what I recommend to friends in that situation.
+If you have a single machine that already runs NixOS, you probably don't need [Docker](https://www.docker.com/) or compose-farm at all: adding your services as NixOS modules is simpler, and that is what I recommend to friends in that situation.
 If you would rather use Docker, which is usually the path a project officially supports, I recommend compose-farm: it works just as well on a single host and lets you fan out later.
 The multi-machine part is where my setup really pays off, but the rest of this post, from the reverse proxy to the VPNs, is just as useful on one machine.
 
@@ -64,6 +68,16 @@ Throughout the post I use a few services as running examples: [Mealie](https://m
 {{< toc >}}
 
 ## The big picture
+
+To reach my services away from home, I use a **VPN** (virtual private network): an encrypted connection that lets my devices communicate across the internet as part of a private network.
+Three projects fit together here:
+
+- **[WireGuard](https://www.wireguard.com/)** provides the encrypted tunnels. I use it directly between my devices and my home router.
+- **[Tailscale](https://tailscale.com/)** builds a private network using WireGuard tunnels. Its apps handle finding and connecting to the other devices.
+- **[Headscale](https://headscale.net/)** replaces the coordination server that Tailscale normally hosts. I run that server myself, while my devices run the normal Tailscale apps. Headscale distributes device information and access rules; the apps carry the traffic.
+
+That gives me two VPN options: WireGuard to my router for access to my home network, or Tailscale coordinated by Headscale for sharing selected services and connecting from networks that block direct WireGuard.
+Both use WireGuard encryption.
 
 This is the whole setup in one diagram.
 Every box gets its own section below.
@@ -100,20 +114,20 @@ In short:
 
 1. **Four machines** run all my services as containers.
 2. **compose-farm** decides which service runs on which machine.
-3. **One reverse proxy, Traefik,** is the front door for every service on every machine.
-4. **Let's Encrypt certificates** give every service real HTTPS, including the private ones.
+3. **One reverse proxy, [Traefik](https://traefik.io/traefik/),** is the front door for every service on every machine.
+4. **[Let's Encrypt](https://letsencrypt.org/) certificates** give every service real HTTPS, including the private ones.
 5. **DNS** turns names like `mealie.lab.nijho.lt` into addresses, and gives a *different* answer depending on where I am.
 6. There are **four ways in**: my home network, WireGuard on my router, Tailscale coordinated by my own Headscale server, and the open internet.
 7. **One allowlist** in Traefik limits every service to the first three by default. A service reaches the internet only if its config asks for it.
 8. **Headscale ACLs** decide which of my friends and family can reach which service.
-9. **NixOS, Compose files, and Terraform** describe nearly all of it in git, so I rarely click a button, and AI agents can work on it the same way I do.
+9. **NixOS, Compose files, and [Terraform](https://www.terraform.io/)** describe nearly all of it in git, so I rarely click a button, and AI agents can work on it the same way I do.
 
 If that list looks overwhelming, I get it.
 A reverse proxy, Let's Encrypt, DNS, an allowlist, ACLs, NixOS, compose-farm, Terraform: that is a lot of moving parts for something that serves recipes.
 What lets me sleep at night is the last point (9).
 Apart from a handful of router settings, every piece of configuration is declarative and lives in git, so the whole setup is reproducible.
 If I break something, or more likely, an AI agent breaks something, `git log` tells me what changed and `git revert` undoes it.
-And the NAS takes a ZFS snapshot of all app data every 10 minutes, so even if something goes badly wrong, I lose at most ten minutes of data.
+And the NAS takes a [ZFS](https://openzfs.org/) snapshot of all app data every 10 minutes, so even if something goes badly wrong, I lose at most ten minutes of data.
 You don't need to understand every piece at once, either; each one is a file you can read when you get to it.
 I come back to this in [Declarative everything](#declarative-everything).
 
@@ -123,7 +137,7 @@ To make the list concrete, this is what happens when I open Mealie in three situ
 - **On hotel Wi-Fi that blocks WireGuard,** my laptop uses Tailscale instead. It asks Headscale's DNS for the same name and gets `100.64.0.28`, the address of the NAS *inside* my Tailscale network. The request travels through an encrypted tunnel straight to the NAS. Traefik sees a `100.64.0.x` address, also on the allowlist, and passes it on.
 - **A stranger on the internet** gets `192.168.1.6` from public DNS, which is a private address that leads nowhere outside my home. If they find my home IP and connect to it directly, the router hands them to Traefik's separate door for the internet, where Mealie doesn't exist, and they get `404 Not Found`.
 
-Same name, same padlock, three paths, and only the stranger is refused.
+Same name, HTTPS on all three paths, and only the stranger is refused.
 
 ## The machines, and NixOS
 
@@ -131,7 +145,7 @@ Four machines run my services:
 
 | Machine | What it is | What it does |
 | ------- | ---------- | ------------ |
-| [`nas`](https://github.com/basnijholt/dotfiles/tree/main/configs/nixos/hosts/docker-lxc) | A container on the NAS with all the disks | The front door (Traefik) and most services, close to the data |
+| [`nas`](https://github.com/basnijholt/dotfiles/tree/main/configs/nixos/hosts/nas) | The physical NAS with all the disks | Traefik and most services run in an [Incus](https://linuxcontainers.org/incus/) system container, close to the data |
 | [`nuc`](https://github.com/basnijholt/dotfiles/tree/main/configs/nixos/hosts/nuc) | A small, always-on Intel NUC | Home DNS server and a few lightweight services |
 | [`hp`](https://github.com/basnijholt/dotfiles/tree/main/configs/nixos/hosts/hp) | An HP EliteDesk | Second home DNS server and a mix of services |
 | [`pc`](https://github.com/basnijholt/dotfiles/tree/main/configs/nixos/hosts/pc) | My desktop with two RTX 3090s | [Local AI]({{< ref "/post/llama-nixos" >}}), including my dictation server |
@@ -139,17 +153,19 @@ Four machines run my services:
 Each name links to that machine's NixOS configuration.
 The hardware of the NUC, the HP, and the NAS is in [my original homelab post]({{< ref "/post/homelab" >}}).
 
-In the rest of this post, "nas" means [`docker-lxc`](https://github.com/basnijholt/dotfiles/tree/main/configs/nixos/hosts/docker-lxc), a system container on the NAS that runs my Docker containers.
+That system container is called [`docker-lxc`](https://github.com/basnijholt/dotfiles/tree/main/configs/nixos/hosts/docker-lxc).
+It holds my Docker stack files and runs my Docker containers.
+In compose-farm, I call it `nas`, so deployment commands using that name target the container on the physical NAS.
 
 {{< detail-tag "Why the NAS runs its containers inside another container (click to unfold)" >}}
-The containers don't run on the [NAS host itself](https://github.com/basnijholt/dotfiles/tree/main/configs/nixos/hosts/nas).
-They run inside an [Incus](https://linuxcontainers.org/incus/) system container, which keeps the machine that stores my data a little apart from the machine that runs a hundred containers.
+Incus uses [LXC](https://linuxcontainers.org/lxc/) to run system containers.
+This keeps Docker and its services separate from the NAS host that manages my disks.
 That container is a full NixOS system of its own, configured like the other machines.
 {{< /detail-tag >}}
 
 ### What NixOS brings
 
-All four machines run [NixOS](https://nixos.org/), and so does the NAS host underneath `docker-lxc`.
+All four physical machines run [NixOS](https://nixos.org/), and so does the `docker-lxc` container.
 In NixOS, the *entire* operating system is described in text files: which packages are installed, which services run, which disks get mounted, which firewall ports are open.
 You don't install things by typing commands and hoping you remember them later.
 You write down what the machine should look like, and NixOS makes it so.
@@ -188,7 +204,7 @@ Every machine runs [comin](https://github.com/nlewo/comin), a small GitOps agent
 It watches my dotfiles on GitHub, and when a new commit lands on `main`, each machine pulls it, builds its own configuration, and switches to it.
 The heavy builds come from [my local build cache]({{< ref "/post/nixos-cache" >}}), so the machines themselves rarely compile anything.
 comin only deploys commits signed with my SSH key, so being able to push to the repo is not enough to take over my machines.
-comin originally only understood GPG signatures, so I [added support for SSH-signed commits](https://github.com/nlewo/comin/pull/171) upstream.
+comin originally only understood [GPG](https://gnupg.org/) signatures, so I [added support for SSH-signed commits](https://github.com/nlewo/comin/pull/171) upstream.
 
 {{< detail-tag "The comin config (click to unfold)" >}}
 The core of [`common/comin.nix`](https://github.com/basnijholt/dotfiles/blob/main/configs/nixos/common/comin.nix):
@@ -218,12 +234,12 @@ As I write this, the four machines run 138 containers. A small selection:
 
 | Area | Services |
 | ---- | -------- |
-| **Infrastructure** | [Traefik](https://traefik.io/traefik/) (reverse proxy), [Headscale](https://headscale.net/) and [Headplane](https://github.com/tale/headplane) (my tailnet), [Forgejo](https://forgejo.org/) (git), the [compose-farm](https://github.com/basnijholt/compose-farm) web UI, [Homepage](https://gethomepage.dev/) (dashboard), [code-server](https://github.com/coder/code-server) (VS Code in the browser) |
+| **Infrastructure** | [Traefik](https://traefik.io/traefik/) (reverse proxy), [Headscale](https://headscale.net/) and [Headplane](https://github.com/tale/headplane) (my tailnet), [Forgejo](https://forgejo.org/) (git), the [compose-farm](https://github.com/basnijholt/compose-farm) web UI, [Homepage](https://gethomepage.dev/) (dashboard), [code-server](https://github.com/coder/code-server) ([VS Code](https://code.visualstudio.com/) in the browser) |
 | **Monitoring** | [Uptime Kuma](https://github.com/louislam/uptime-kuma), [Glances](https://nicolargo.github.io/glances/), [Netdata](https://www.netdata.cloud/), [Prometheus](https://prometheus.io/) and [Grafana](https://grafana.com/), [Dozzle](https://dozzle.dev/) (container logs), [Diun](https://crazymax.dev/diun/) and [What's Up Docker](https://getwud.github.io/wud/) (image updates), [LibreSpeed](https://github.com/librespeed/speedtest) |
 | **Tools** | [ntfy](https://ntfy.sh/) (push notifications), [Syncthing](https://syncthing.net/) (file sync), [Atuin](https://atuin.sh/) (shell history sync), [Wakapi](https://wakapi.dev/) (coding stats) |
 | **AI** | [agent-cli](https://github.com/basnijholt/agent-cli) and [Diction]({{< ref "/post/diction-agent-cli-qwen" >}}) (dictation), [Speaches](https://speaches.ai/) (speech-to-text), [Kokoro](https://github.com/remsky/Kokoro-FastAPI) (text-to-speech), [Ollama](https://ollama.com/), [LiteLLM](https://www.litellm.ai/) (one API in front of all models), [Open WebUI](https://openwebui.com/), [LibreChat](https://www.librechat.ai/), [LobeChat](https://lobehub.com/), [Khoj](https://khoj.dev/), [SearXNG](https://docs.searxng.org/) (private metasearch), [Unsloth](https://unsloth.ai/) (fine-tuning) |
-| **Home and documents** | [Mealie](https://mealie.io/) (recipes), [Grocy](https://grocy.info/) (household inventory), [Paperless-ngx](https://docs.paperless-ngx.com/) with paperless-ai and paperless-gpt, [Immich](https://immich.app/) (photos), [Nextcloud](https://nextcloud.com/), [Hoarder](https://karakeep.app/) (bookmarks), [Home Assistant](https://www.home-assistant.io/) |
-| **Chat** | [Cinny](https://cinny.in/) (Matrix client for [MindRoom]({{< ref "/post/mindroom" >}})), [The Lounge](https://thelounge.chat/) (IRC) |
+| **Home and documents** | [Mealie](https://mealie.io/) (recipes), [Grocy](https://grocy.info/) (household inventory), [Paperless-ngx](https://docs.paperless-ngx.com/) with [paperless-ai](https://github.com/clusterzx/paperless-ai) and [paperless-gpt](https://github.com/icereed/paperless-gpt), [Immich](https://immich.app/) (photos), [Nextcloud](https://nextcloud.com/), [Hoarder](https://karakeep.app/) (bookmarks), [Home Assistant](https://www.home-assistant.io/) |
+| **Chat** | [Cinny](https://cinny.in/) ([Matrix](https://matrix.org/) client for [MindRoom]({{< ref "/post/mindroom" >}})), [The Lounge](https://thelounge.chat/) (IRC) |
 
 The GPU-heavy AI services, like dictation, text-to-speech, and fine-tuning, run on `pc`; the [local AI post]({{< ref "/post/local-ai-journey" >}}) covers that side.
 Home Assistant runs as a virtual machine in Incus on the HP; everything else in the table is a container.
@@ -265,7 +281,7 @@ Back when I ran Proxmox, I was a big fan of the [Proxmox VE Helper-Scripts](http
 Each one is a one-liner that creates an LXC container with an app installed inside, and they are how I [got into self-hosting]({{< ref "/post/homelab" >}}) and set up almost everything at first.
 
 The catch is that they are a community effort, and the way they install an app is usually not a way the app's own developers support.
-[Immich](https://immich.app/) shows the problem well: its docs say it requires Docker with the Docker Compose plugin, while today's helper script builds Immich from source, installs PostgreSQL and Redis, and compiles six image-processing libraries directly in the container.
+[Immich](https://immich.app/) shows the problem well: its docs say it requires Docker with the Docker Compose plugin, while today's helper script builds Immich from source, installs [PostgreSQL](https://www.postgresql.org/) and [Redis](https://redis.io/), and compiles six image-processing libraries directly in the container.
 That is effectively a mirror of the official setup, maintained by someone else; the script even pins the Immich version and only bumps it after testing each release.
 Every upgrade depends on a second set of maintainers keeping up with upstream, and for my containers that made upgrades painful and stressful.
 
@@ -292,10 +308,12 @@ The Mealie example above shows the swap: upstream's file uses a volume called `m
 
 ### Why I wrote compose-farm
 
-Docker Compose manages containers on *one* machine, and I have four.
-The usual answers are Kubernetes or Docker Swarm.
+{{< figure src="compose-farm.svg" alt="Animated compose-farm logo" width="420" >}}
 
-Kubernetes feels like overkill for a homelab, and many projects don't support it: they publish a Compose file, not a Helm chart (Kubernetes' package format), so I would end up writing and maintaining my own charts.
+Docker Compose manages containers on *one* machine, and I have four.
+The usual answers are Kubernetes or [Docker Swarm](https://docs.docker.com/engine/swarm/).
+
+Kubernetes feels like overkill for a homelab, and many projects don't support it: they publish a Compose file, not a [Helm](https://helm.sh/) chart (Kubernetes' package format), so I would end up writing and maintaining my own charts.
 That's the helper-script problem again.
 Docker Swarm would meet my needs almost perfectly, but it is effectively in maintenance mode: it still ships with Docker, but Docker no longer invests in it.
 
@@ -367,7 +385,7 @@ The last line of that config, `traefik_file`, is where compose-farm connects to 
 ### What a reverse proxy brings
 
 Every service listens on its own port on its own machine: Mealie on port 9925 of the NAS, ntfy on port 8089 of the NUC, and so on.
-I could bookmark `http://192.168.1.2:8089`, but that gets old fast, it is unencrypted, and every service would need its own security.
+I could bookmark `http://192.168.1.2:8089`, but that gets annoying fast, it is unencrypted, and every service would need its own security.
 
 A **reverse proxy** is a receptionist in front of all of them.
 Every request arrives there first.
@@ -454,7 +472,7 @@ I write labels the same way no matter where a service runs, and when a service m
 
 Things that don't run in Docker, like [Home Assistant](https://www.home-assistant.io/) in its own virtual machine, get hand-written routes in a second file in the same folder.
 
-## Certificates: the padlock
+## HTTPS and certificates
 
 ### What a certificate is
 
@@ -956,7 +974,7 @@ I [run my agents in YOLO mode]({{< ref "/post/removing-guardrails" >}}), and dec
 Every change is a reviewable diff, and every mistake is a `git revert` away.
 It's the same reason I [prefer plain files over databases]({{< ref "/post/file-based-rag-memory" >}}) for AI memory.
 
-The stacks repo has an [`AGENTS.md`](https://agents.md/) that captures the conventions and the sharp edges (a symlink to `CLAUDE.md`, so Claude Code and other agents read the same file):
+The stacks repo has an [`AGENTS.md`](https://agents.md/) that captures the conventions and the sharp edges (a symlink to `CLAUDE.md`, so [Claude Code](https://code.claude.com/docs/en/overview) and other agents read the same file):
 
 ```markdown
 > **⚠️ IMPORTANT: NEVER run `docker compose` directly!**
