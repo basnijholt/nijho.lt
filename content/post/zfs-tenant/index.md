@@ -120,7 +120,7 @@ It never starts a shell, so there is nothing to inject into.
 
 The hard part was knowing exactly which commands syncoid sends, so an agent read [syncoid's Perl](https://github.com/jimsalterjrs/sanoid/blob/v2.3.0/syncoid) and logged every remote command it ran.
 Most are the `zfs` commands you would expect.
-One surprise: before each receive, syncoid asks the receiving machine for its full process list, to check that no other transfer is already writing to the same dataset.
+One surprise: before each receive, syncoid runs `ps -Ao args=` on the receiving machine, which lists every running process with its full command line, to check that no other transfer is already writing to the same dataset.
 That list would show my friend everything running on my NAS, so the gate answers with an empty one.
 
 Reading syncoid that closely also turned up a bug in version 2.3.0, outside zfs-tenant itself.
