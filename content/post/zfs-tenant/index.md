@@ -41,6 +41,25 @@ The result is [zfs-tenant](https://github.com/basnijholt/zfs-tenant), which is n
 
 {{< toc >}}
 
+## Why ZFS
+
+[OpenZFS](https://openzfs.org/) is a filesystem and a volume manager in one.
+You add disks to a pool, and it behaves like one large partition: every dataset you create draws from the same free space, and each can still have its own quota and encryption.
+ZFS checksums every block it writes, so it notices when a disk hands back something else, and with a mirror or RAIDZ it repairs the block from a good copy.
+That protection costs disk space: a mirror of two disks holds one disk's worth of data.
+
+Snapshots are the part I would not give up.
+ZFS never overwrites data in place, so a snapshot only has to hold on to the blocks that existed at that moment.
+Taking one is instant, and it costs no space until the data changes.
+[`zfs send`](https://openzfs.github.io/openzfs-docs/man/master/8/zfs-send.8.html) turns a snapshot, or the difference between two snapshots, into a stream that `zfs receive` writes into a pool on another machine, usually piped through SSH.
+It moves blocks, not files: an incremental send contains only the blocks that changed, and ZFS knows which ones those are without visiting a single file.
+A bajillion one-kilobyte files do not slow it down, because nothing has to look at them one by one.
+For comparison, restic on my PC needed [an hour and a half per run]({{< ref "/post/btrfs-to-zfs" >}}) just to check close to a hundred million files for changes.
+
+Two tools from the same project automate this.
+[sanoid](https://github.com/jimsalterjrs/sanoid) takes snapshots on a schedule and prunes them by policy, for example hourly ones for a day and daily ones for a month.
+syncoid wraps `zfs send` and `zfs receive` over SSH: it finds the newest snapshot both sides share and sends everything after it.
+
 ## What we wanted
 
 We wrote down the rules before anything else:
