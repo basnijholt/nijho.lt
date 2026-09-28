@@ -48,7 +48,7 @@ You add disks to a pool, and it behaves like one large partition: every dataset 
 ZFS checksums every block it writes, so it notices when a disk hands back something else, and with a mirror or RAIDZ it repairs the block from a good copy.
 That protection costs disk space: a mirror of two disks holds one disk's worth of data.
 
-Snapshots are the part I would not give up.
+For me, snapshots are one of the coolest parts.
 ZFS never overwrites data in place, so a snapshot only has to hold on to the blocks that existed at that moment.
 Taking one is instant, and it costs no space until the data changes.
 [`zfs send`](https://openzfs.github.io/openzfs-docs/man/master/8/zfs-send.8.html) turns a snapshot, or the difference between two snapshots, into a stream that `zfs receive` writes into a pool on another machine, usually piped through SSH.
