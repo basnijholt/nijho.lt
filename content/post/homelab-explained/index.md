@@ -943,6 +943,7 @@ The opposite is running commands and clicking buttons until things look right, a
 
 The only configuration I still click is the router, and those settings change maybe once a year.
 Everything that changes weekly is a file.
+The next step in project "overengineered homelab" is a router running NixOS, but that's for another time.
 What isn't configuration, like which devices are enrolled in my tailnet and the data inside each app, lives on ZFS and is backed up like any other data.
 
 It wasn't always like this.
