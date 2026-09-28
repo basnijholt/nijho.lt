@@ -2,8 +2,8 @@
 title: "Friend-to-friend ZFS backups, version two"
 subtitle: "Giving a friend a quota-capped corner of my pool, without a VM or a shell"
 summary: "Two years ago, a friend and I backed each other up through a TrueNAS VM on an iSCSI zvol. Now that I run NixOS, I replaced that machinery with zfs-tenant: OpenZFS delegation and a quota keep him inside one dataset, and a small SSH forced command plus zfs zone make sure he sees nothing else of my pool. His keys never leave his house, and a VM test checks each of those claims."
-date: 2026-09-26
-draft: true
+date: 2026-09-28
+draft: false
 featured: false
 authors:
   - admin
