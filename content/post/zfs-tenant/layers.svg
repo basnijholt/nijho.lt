@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 612" width="1000" height="612" role="img" aria-labelledby="layers-title layers-desc">
+  <title id="layers-title">Which layer stops what</title>
+  <desc id="layers-desc">Seven things Joe's key might try, and the layer that stops each one. The network refuses other devices and keys. The SSH gate refuses a shell, ls, and zpool status, answers syncoid's ps check with an empty list, and refuses zfs list of a dataset outside his root; if the gate had a bug, the zone would still answer that the dataset does not exist. zfs allow refuses a hostile mountpoint property in a push, and the quota refuses a push beyond 2 TB. Only his raw encrypted backup reaches the pool, where it lands in his compartment and stays unreadable to me.</desc>
+  <defs>
+    <linearGradient id="amber" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbbf24"/>
+      <stop offset="1" stop-color="#d97706"/>
+    </linearGradient>
+    <pattern id="blocks" width="12" height="11" patternUnits="userSpaceOnUse">
+      <rect x="1" y="1" width="10" height="9" rx="1.5" fill="#000" fill-opacity="0.18"/>
+      <rect x="3" y="3" width="3" height="2" rx="0.5" fill="#fff" fill-opacity="0.25"/>
+    </pattern>
+    <g id="stop">
+      <circle r="12" fill="#0f172a" stroke="#f87171" stroke-width="2.5"/>
+      <path d="M-4.5 -4.5L4.5 4.5M4.5 -4.5L-4.5 4.5" stroke="#f87171" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <g id="second">
+      <circle r="12" fill="#0f172a" stroke="#f87171" stroke-width="2" stroke-dasharray="4 3" opacity="0.85"/>
+      <path d="M-4.5 -4.5L4.5 4.5M4.5 -4.5L-4.5 4.5" stroke="#f87171" stroke-width="2" stroke-linecap="round" opacity="0.85"/>
+    </g>
+    <g id="answer">
+      <circle r="12" fill="#0f172a" stroke="#38bdf8" stroke-width="2.5"/>
+      <path d="M-5 -2.5h5.5a3.5 3.5 0 0 1 0 7h-3M-5 -2.5l3 -3M-5 -2.5l3 3" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g id="stored">
+      <circle r="12" fill="#0f172a" stroke="#4ade80" stroke-width="2.5"/>
+      <path d="M-5 0.5L-1.5 4L5 -3.5" fill="none" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="999" height="611" rx="18" fill="#0f172a" stroke="#334155"/>
+
+  <!-- column headers -->
+  <g font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" text-anchor="middle">
+    <text x="24" y="66" text-anchor="start" font-size="13" font-weight="600" letter-spacing="1.2" fill="#94a3b8">WHAT JOE'S KEY TRIES</text>
+    <g font-size="15" font-weight="700" fill="#e2e8f0">
+      <text x="350" y="52">network</text>
+      <text x="480" y="52">SSH gate</text>
+      <text x="610" y="52">zone</text>
+      <text x="740" y="52">zfs allow, quota</text>
+      <text x="897" y="52">my pool</text>
+    </g>
+    <g font-size="13" fill="#94a3b8">
+      <text x="350" y="72">who can connect</text>
+      <text x="480" y="72">what he can run</text>
+      <text x="610" y="72">what ZFS shows</text>
+      <text x="740" y="72">what he can change</text>
+      <text x="897" y="72">tank</text>
+    </g>
+  </g>
+
+  <!-- the four layers -->
+  <g fill="#1e293b" fill-opacity="0.6" stroke="#334155">
+    <rect x="290" y="92" width="120" height="468" rx="10"/>
+    <rect x="420" y="92" width="120" height="468" rx="10"/>
+    <rect x="550" y="92" width="120" height="468" rx="10"/>
+    <rect x="680" y="92" width="120" height="468" rx="10"/>
+  </g>
+
+  <!-- my pool -->
+  <rect x="815" y="92" width="165" height="468" rx="12" fill="#0b1220" stroke="#334155" stroke-width="1.5"/>
+  <rect x="828" y="108" width="139" height="222" rx="8" fill="#1e293b" stroke="#334155"/>
+  <text x="897" y="132" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#94a3b8">tank/host</text>
+  <g fill="#475569" fill-opacity="0.55">
+    <rect x="842" y="150" width="111" height="12" rx="3"/>
+    <rect x="842" y="168" width="80" height="12" rx="3"/>
+    <rect x="842" y="186" width="111" height="12" rx="3"/>
+    <rect x="842" y="204" width="95" height="12" rx="3"/>
+    <rect x="842" y="222" width="111" height="12" rx="3"/>
+    <rect x="842" y="240" width="60" height="12" rx="3"/>
+    <rect x="842" y="258" width="111" height="12" rx="3"/>
+  </g>
+  <text x="897" y="310" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12.5" fill="#94a3b8">hidden from him</text>
+
+  <rect x="828" y="352" width="139" height="194" rx="8" fill="#1c1408"/>
+  <rect x="828" y="424" width="139" height="122" fill="url(#amber)"/>
+  <rect x="828" y="424" width="139" height="122" fill="url(#blocks)"/>
+  <line x1="834" y1="404" x2="961" y2="404" stroke="#fef3c7" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round"/>
+  <text x="961" y="397" text-anchor="end" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11.5" fill="#fef3c7">2 TB quota</text>
+  <rect x="828" y="352" width="139" height="194" rx="8" fill="none" stroke="#f59e0b" stroke-width="2"/>
+  <text x="897" y="376" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" fill="#fbbf24">tank/friends/joe</text>
+  <rect x="833" y="516" width="129" height="22" rx="11" fill="#0f172a" fill-opacity="0.85"/>
+  <text x="897" y="531.5" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="600" fill="#fef3c7">unreadable to me</text>
+
+  <!-- attempts: labels -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#e2e8f0">
+    <text x="24" y="133" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">another device or key</text>
+    <text x="24" y="193">bash, ls, zpool status</text>
+    <text x="24" y="253">ps -Ao args=</text>
+    <text x="24" y="313">zfs list tank/host</text>
+    <text x="24" y="373">mountpoint=/etc</text>
+    <text x="24" y="433" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">a push over 2 TB</text>
+    <text x="24" y="493">zfs send -w</text>
+  </g>
+  <g font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="14" fill="#94a3b8">
+    <text x="24" y="153">anyone but his router</text>
+    <text x="24" y="213">a shell, a look around</text>
+    <text x="24" y="273">syncoid's process check</text>
+    <text x="24" y="333">a peek at my datasets</text>
+    <text x="24" y="393">a hostile property in a push</text>
+    <text x="24" y="453">more than we agreed</text>
+    <text x="24" y="513">his encrypted backup</text>
+  </g>
+
+  <!-- attempts: paths -->
+  <g stroke="#64748b" stroke-width="2.5" stroke-linecap="round" fill="none">
+    <path d="M272 136H338"/>
+    <path d="M272 196H468"/>
+    <path d="M272 256H468"/>
+    <path d="M272 316H468"/>
+    <path d="M272 376H728"/>
+    <path d="M272 436H728"/>
+    <path d="M272 496H885"/>
+  </g>
+  <path d="M494 316H596" stroke="#f87171" stroke-width="2" stroke-dasharray="5 5" stroke-linecap="round" opacity="0.7"/>
+
+  <!-- where each attempt ends -->
+  <use href="#stop" x="350" y="136"/>
+  <use href="#stop" x="480" y="196"/>
+  <use href="#answer" x="480" y="256"/>
+  <use href="#stop" x="480" y="316"/>
+  <use href="#second" x="610" y="316"/>
+  <use href="#stop" x="740" y="376"/>
+  <use href="#stop" x="740" y="436"/>
+  <use href="#stored" x="897" y="496"/>
+
+  <g font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12.5" text-anchor="middle">
+    <text x="350" y="164" fill="#fca5a5">refused</text>
+    <text x="480" y="224" fill="#fca5a5">not allowed</text>
+    <text x="480" y="284" fill="#7dd3fc">empty answer</text>
+    <text x="480" y="344" fill="#fca5a5">outside his root</text>
+    <text x="610" y="344" fill="#fca5a5" opacity="0.85">does not exist</text>
+    <text x="740" y="404" fill="#fca5a5">permission denied</text>
+    <text x="740" y="464" fill="#fca5a5">over quota</text>
+  </g>
+
+  <!-- legend -->
+  <g font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="14" fill="#94a3b8">
+    <use href="#stop" transform="translate(36 588) scale(0.75)"/>
+    <text x="54" y="593">stopped</text>
+    <use href="#answer" transform="translate(146 588) scale(0.75)"/>
+    <text x="164" y="593">answered by the gate</text>
+    <use href="#second" transform="translate(344 588) scale(0.75)"/>
+    <text x="362" y="593">second wall, only needed if the gate has a bug</text>
+    <use href="#stored" transform="translate(724 588) scale(0.75)"/>
+    <text x="742" y="593">stored, still encrypted</text>
+  </g>
+</svg>
