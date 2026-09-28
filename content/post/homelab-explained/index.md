@@ -2,7 +2,7 @@
 title: "My declarative multi-machine homelab, explained"
 subtitle: "How I reach my self-hosted services from anywhere without putting them on the internet"
 summary: "Friends keep asking how my homelab works, so I wrote it all down, starting from zero. Four NixOS machines run about 150 containers behind one Traefik front door, and with WireGuard and my own Headscale server I reach my self-hosted services from anywhere over encrypted HTTPS connections, while strangers on the internet get nothing. The part I think is the coolest is the balance: everything is declarative and lives in git, but with as little machinery as possible."
-date: 2026-09-25
+date: 2026-09-28
 draft: false
 featured: false
 authors:
