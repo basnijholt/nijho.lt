@@ -149,6 +149,11 @@ ZFS treats root in the namespace as the zone's administrator, and that bypasses 
 In the test, the tenant could destroy the root dataset I had created for it.
 Mapping the tenant to its own uid instead keeps it without capabilities inside the namespace, and then delegation applies exactly as before, while the kernel still hides everything else.
 
+Root inside a user namespace also turned up in a real OpenZFS bug in August.
+Before 2.4.4, 2.3.9, and 2.2.11, several pool operations, such as destroying a pool, accepted `CAP_SYS_ADMIN` inside a user namespace the caller had created as if it were host root ([CVE-2026-79619](https://github.com/openzfs/zfs/security/advisories/GHSA-mhf5-q8gw-qg9v)).
+Any local user who can open `/dev/zfs` and create a user namespace could use it, and zfs-tenant needs both to be allowed.
+Joe cannot reach it through the gate, but a host running zfs-tenant should load a patched module: `cat /sys/module/zfs/version` shows the loaded one, which only changes after a reboot.
+
 A zone needs a running namespace to attach to, so zfs-tenant runs a small service per friend that holds one.
 The gate joins that namespace before it looks at the command, and refuses to run if the service is down.
 Two details only showed up while building it.
@@ -276,7 +281,7 @@ The only readable text in the raw stream was ZFS property names and the snapshot
 ## Tested like everything else
 
 Every security claim in this post is also checked by a VM test: two NixOS machines back each other up, the way my friend and I do, with real sanoid and syncoid 2.3.0, through real sshd and the gate, into real OpenZFS 2.4.4.
-Its 29 subtests cover the zone hiding my datasets, the gate failing closed, and the delegation limits with and without the gate.
+Its 34 subtests cover the zone hiding my datasets, the gate failing closed, and the delegation limits with and without the gate.
 They also cover what happens over time: pruning, retention gaps, interrupted transfers and restores, the quota and dataset limits, and both machines rebooting.
 It runs on every push in GitHub Actions, next to the unit tests.
 
@@ -293,7 +298,12 @@ One of them followed receiver-controlled data beyond my new code and into syncoi
 A model's suspicion is not evidence, so I turned it into the two-VM reproduction above: it failed on unpatched syncoid 2.3.0 and passed after the seven-line fix.
 The most consequential result of reviewing my small new project was a command-injection bug in the mature tool next to it.
 
-The whole thing is about 780 lines of Python, not counting comments and docstrings, with no dependencies.
+A second round of review found two gaps in my own code.
+Setup reset my friend's own grants on his root but kept any others it found in his tree, so a leftover `zfs allow everyone destroy` on his root would have let him delete it.
+It now refuses a tree with grants it did not make, and leaves removing them to me.
+And the quota capped disk space, not the processes a push starts on my NAS; on NixOS, every SSH session now runs in a systemd slice limited to 512 MB of memory and one CPU core.
+
+The whole thing is about 930 lines of Python, not counting comments and docstrings, with no dependencies.
 The kernel does the actual enforcing: delegation, the quota, and the zone.
 The gate only removes the shell, and it is small enough to read in one sitting.
 
