@@ -113,7 +113,7 @@ The probes also confirmed the gap: the delegated user saw my `tank/host` dataset
 
 The shell part has a standard answer.
 An `authorized_keys` line with `restrict,command="..."` runs one fixed program for every login, and passes whatever the client asked for in `SSH_ORIGINAL_COMMAND`.
-zfs-tenant's gate is that program.
+`zfs-tenant gate` is that program.
 It tokenizes the request, accepts only the handful of command shapes a backup needs, checks that every dataset name is inside the friend's dataset, and runs `zfs` with an argument list it builds itself.
 It never starts a shell, so there is nothing to inject into.
 
