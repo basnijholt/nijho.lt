@@ -309,7 +309,8 @@ ZFS will not destroy a held snapshot until the hold is released, and only the ho
 The agent built it without me asking for it, so I removed it right away as scope creep.
 
 Then every model I asked to review the project suggested them again, each in its own context window: Opus 5.5, GPT-6 Astra, and even the one that reviewed a draft of this post.
-Joe and I had decided that this threat was outside what we wanted to defend against, but I am tempted to add them back.
+Joe and I had set out to protect against a machine dying (a fire or a flood), not against one of our own machines being hacked.
+But I am tempted to add the holds back.
 They cover the case where malware or an attacker gets onto my machine and uses my key to delete my backups on his NAS, or to replace them with garbage.
 Adding the feature without asking was still wrong; the feature itself might not be.
 
