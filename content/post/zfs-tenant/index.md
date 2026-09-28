@@ -292,7 +292,7 @@ To continue from an older common snapshot, syncoid rolls the target back with `z
 It now passes `-F` through, still only below the tenant root, and the test pins that libzfs refuses to replace an encrypted dataset that way.
 
 The route to the syncoid finding was slightly absurd.
-I built much of zfs-tenant through coding agents, often literally from the bathtub, and then asked several frontier models to review the security boundary independently.
+I built the initial version of zfs-tenant through coding agents, literally from the bathtub, and then asked several frontier models to review the security boundary independently.
 One of them followed receiver-controlled data beyond my new code and into syncoid.
 A model's suspicion is not evidence, so I turned it into the two-VM reproduction above: it failed on unpatched syncoid 2.3.0 and passed after the seven-line fix.
 The most consequential result of reviewing my small new project was a command-injection bug in the mature tool next to it.
