@@ -192,7 +192,7 @@ My [monthly scrubs](https://github.com/basnijholt/dotfiles/blob/6526b50e9bae1449
 What we protect against is a dead machine: a failed pool, a fire, a flood.
 His key may destroy anything below his root, which is what lets syncoid mirror his snapshot retention, so someone who steals that key can also delete his backups on my NAS.
 Covering that would take holds that I place as root and release on a schedule.
-We left them out on purpose, although I am [reconsidering](#the-feature-nobody-asked-for).
+We left them out on purpose, although I am [reconsidering](#ai-scope-creep-or-useful).
 
 ## Setting it up
 
@@ -302,7 +302,7 @@ The whole thing is about 930 lines of Python, not counting comments and docstrin
 The kernel does the actual enforcing: delegation, the quota, and the zone.
 The gate only removes the shell, and it is small enough to read in one sitting.
 
-## The feature nobody asked for
+## AI scope creep or useful?
 
 The first version had *grace holds*: every day, the host placed a hold on the newest snapshot of each of my friend's datasets and released it 14 days later.
 ZFS will not destroy a held snapshot until the hold is released, and only the host can release it.
