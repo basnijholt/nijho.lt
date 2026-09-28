@@ -140,6 +140,8 @@ Then my friend sent me a message: ZFS has a feature called zones, which restrict
 
 [`zfs zone`](https://openzfs.github.io/openzfs-docs/man/master/8/zfs-zone.8.html) attaches a dataset to one user namespace, and inside that namespace the ZFS kernel module answers `dataset does not exist` for everything that is not attached.
 Even if my gate had a bug that let arbitrary `zfs` commands through, `tank/host` would stay invisible.
+The zone does not replace the gate, though: it only filters ZFS, and it only applies once the gate has put the SSH session inside it.
+[Who stops what](#who-stops-what) shows how the two divide the work.
 
 A user namespace can give its processes different user IDs than they have outside.
 Containers usually use that to make the user root inside the namespace, while it stays an ordinary user outside.
