@@ -113,7 +113,7 @@ The probes also confirmed the gap: the delegated user saw my `tank/host` dataset
 
 The shell part has a standard answer.
 An `authorized_keys` line with `restrict,command="..."` runs one fixed program for every login, and passes whatever the client asked for in `SSH_ORIGINAL_COMMAND`.
-zfs-tenant's gate is that program.
+`zfs-tenant gate` is that program.
 It tokenizes the request, accepts only the handful of command shapes a backup needs, checks that every dataset name is inside the friend's dataset, and runs `zfs` with an argument list it builds itself.
 It never starts a shell, so there is nothing to inject into.
 
@@ -133,19 +133,21 @@ I reported it to the maintainer and opened [sanoid PR #1114](https://github.com/
 Even with that fix, the sending side should run syncoid as an unprivileged user that may only `send` and `hold`.
 nixpkgs' `services.syncoid` already works that way, so my friend needs nothing from zfs-tenant at all.
 
-## Zones, and the setup that would have made things worse
+## Zones: a second wall in the kernel
 
 At that point the gate was the only thing hiding my datasets.
 Then my friend sent me a message: ZFS has a feature called zones, which restricts a dataset tree to a Linux user namespace.
 
 [`zfs zone`](https://openzfs.github.io/openzfs-docs/man/master/8/zfs-zone.8.html) attaches a dataset to one user namespace, and inside that namespace the ZFS kernel module answers `dataset does not exist` for everything that is not attached.
 Even if my gate had a bug that let arbitrary `zfs` commands through, `tank/host` would stay invisible.
+The zone does not replace the gate, though: it only filters ZFS, and it only applies once the gate has put the SSH session inside it.
+[Who stops what](#who-stops-what) shows how the two divide the work.
 
-The VM test also showed a problem with the usual setup.
-Containers typically map the user to root inside the namespace.
-ZFS treats root in the namespace as the zone's administrator, and that bypasses `zfs allow`.
-In the test, the tenant could destroy the root dataset I had created for it.
-Mapping the tenant to its own uid instead keeps it without capabilities inside the namespace, and then delegation applies exactly as before, while the kernel still hides everything else.
+A user namespace can give its processes different user IDs than they have outside.
+Containers usually use that to make the user root inside the namespace, while it stays an ordinary user outside.
+ZFS treats root inside a zone as the zone's administrator, allowed to do anything to the attached datasets, whatever `zfs allow` says.
+In the VM test, that let the friend destroy the dataset I had created for him.
+So zfs-tenant keeps him as his own ordinary user inside the namespace: he has no special rights there, `zfs allow` decides what he may do, and the kernel still hides everything else.
 
 Root inside a user namespace also turned up in a real OpenZFS bug in August: before 2.4.4, 2.3.9, and 2.2.11, several pool operations, such as destroying a pool, accepted it as host root ([CVE-2026-79619](https://github.com/openzfs/zfs/security/advisories/GHSA-mhf5-q8gw-qg9v)).
 Joe cannot reach that through the gate, but zfs-tenant needs unprivileged user namespaces, so a host running it should load a patched module: `cat /sys/module/zfs/version` shows the loaded one, which only changes after a reboot.
@@ -155,7 +157,7 @@ The gate joins that namespace before it looks at the command, drops the capabili
 
 ## Who stops what
 
-It took me a while to keep straight which part protects against what, so here is the whole picture.
+When Joe and I talked it through, I found it hard to say clearly which part protects against what, so I made this diagram.
 
 {{< figure src="layers.svg" alt="Diagram of seven things Joe's key tries and the layer that stops each one: the network, the SSH gate, the zone, and zfs allow with the quota. Only his raw encrypted backup reaches my pool, where it stays unreadable to me." >}}
 
@@ -190,7 +192,7 @@ My [monthly scrubs](https://github.com/basnijholt/dotfiles/blob/6526b50e9bae1449
 What we protect against is a dead machine: a failed pool, a fire, a flood.
 His key may destroy anything below his root, which is what lets syncoid mirror his snapshot retention, so someone who steals that key can also delete his backups on my NAS.
 Covering that would take holds that I place as root and release on a schedule.
-We left them out on purpose, although I am [reconsidering](#the-feature-nobody-asked-for).
+We left them out on purpose, although I am [reconsidering](#ai-scope-creep-or-useful).
 
 ## Setting it up
 
@@ -290,7 +292,7 @@ The only readable text in the raw stream was ZFS property names and the snapshot
 Every security claim in this post is also checked by a VM test: two NixOS machines back each other up, the way my friend and I do, with real sanoid and syncoid 2.3.0, through real sshd and the gate, into real OpenZFS 2.4.4.
 It also checks what happens over time, such as snapshot retention and both machines rebooting, and it runs on every push in GitHub Actions.
 
-The route to the syncoid finding was slightly absurd.
+The route to the [remote code execution bug in syncoid](https://github.com/jimsalterjrs/sanoid/pull/1114) was slightly absurd.
 I built the initial version of zfs-tenant through coding agents, literally from the bathtub, and then asked several frontier models to review the security boundary independently.
 One of them followed receiver-controlled data beyond my new code and into syncoid.
 A model's suspicion is not evidence, so I turned it into the two-VM reproduction above: it failed on unpatched syncoid 2.3.0 and passed after the seven-line fix.
@@ -300,14 +302,15 @@ The whole thing is about 930 lines of Python, not counting comments and docstrin
 The kernel does the actual enforcing: delegation, the quota, and the zone.
 The gate only removes the shell, and it is small enough to read in one sitting.
 
-## The feature nobody asked for
+## AI scope creep or useful?
 
 The first version had *grace holds*: every day, the host placed a hold on the newest snapshot of each of my friend's datasets and released it 14 days later.
 ZFS will not destroy a held snapshot until the hold is released, and only the host can release it.
 The agent built it without me asking for it, so I removed it right away as scope creep.
 
 Then every model I asked to review the project suggested them again, each in its own context window: Opus 5.5, GPT-6 Astra, and even the one that reviewed a draft of this post.
-Joe and I had decided that this threat was outside what we wanted to defend against, but I am tempted to add them back.
+Joe and I had set out to protect against a machine dying (a fire or a flood), not against one of our own machines being hacked.
+But I am tempted to add the holds back.
 They cover the case where malware or an attacker gets onto my machine and uses my key to delete my backups on his NAS, or to replace them with garbage.
 Adding the feature without asking was still wrong; the feature itself might not be.
 
