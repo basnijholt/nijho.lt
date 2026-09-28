@@ -315,6 +315,8 @@ The usual answers are Kubernetes or [Docker Swarm](https://docs.docker.com/engin
 
 Kubernetes feels like overkill for a homelab, and many projects don't support it: they publish a Compose file, not a [Helm](https://helm.sh/) chart (Kubernetes' package format), so I would end up writing and maintaining my own charts.
 That's the helper-script problem again.
+
+I also [experimented with Docker Swarm](https://github.com/basnijholt/dotfiles/pull/21), writing a NixOS configuration for a three-manager cluster.
 Docker Swarm would meet my needs almost perfectly, but it is effectively in maintenance mode: it still ships with Docker, but Docker no longer invests in it.
 
 So I wrote [compose-farm](https://github.com/basnijholt/compose-farm).
