@@ -153,6 +153,29 @@ Joe cannot reach that through the gate, but zfs-tenant needs unprivileged user n
 A zone needs a running namespace to attach to, so zfs-tenant runs a small service per friend that holds one.
 The gate joins that namespace before it looks at the command, drops the capabilities that joining grants, and refuses to run if the service is down.
 
+## Who stops what
+
+It took me a while to keep straight which part protects against what, so here is the whole picture.
+
+{{< figure src="layers.svg" alt="Diagram of seven things Joe's key tries and the layer that stops each one: the network, the SSH gate, the zone, and zfs allow with the quota. Only his raw encrypted backup reaches my pool, where it stays unreadable to me." >}}
+
+Each column answers one question: who can connect, what he can run, what ZFS shows him, and what he can change.
+For the network, our tailnet only lets his router reach port 22 on my NAS, and `from=` in `authorized_keys` only accepts his key from that address.
+Raw sends then keep whatever reaches my pool unreadable to me.
+
+The gate and the zone overlap in one job: hiding my other datasets.
+The gate does it first, by refusing any name outside his root before `zfs` runs.
+The zone repeats that check in the kernel, so hiding my datasets would take a bug in both.
+Everything else the gate does, the zone cannot:
+
+- Without the gate, his key would be a normal account on my NAS. The zone only filters ZFS; it would not stop him from reading `/etc` or running programs.
+- An SSH login does not start inside a user namespace. The gate joins the zone before it runs anything, so without the gate the zone would never apply.
+- The zone leaves some things visible: `zpool status` still shows my disks and how full the pool is, and the datasets above his root still show their sizes. User namespaces do not hide processes either, hence the empty answer to `ps`.
+- It deletes any unencrypted dataset he pushes by mistake, so I never keep his plaintext.
+- It logs every command, which is how I saw Joe try `bash` below.
+
+The [security model](https://zfs-tenant.nijho.lt/security/) in the documentation lists every promise with the mechanism behind it.
+
 ## What it cannot hide
 
 ZFS encryption protects file contents, not structure.
@@ -188,7 +211,6 @@ services.zfs-tenant = {
 That creates the user, pins the key to the gate, applies the dataset, properties, and delegation on every boot, and runs the zone service.
 My own setup is in [`friend-backups.nix`](https://github.com/basnijholt/dotfiles/blob/6526b50e9bae1449a915239491099ef71528f10c/configs/nixos/hosts/nas/friend-backups.nix#L43-L50), with his real key and address.
 If your sanoid snapshots the whole pool, [exclude the tenant tree](https://github.com/basnijholt/dotfiles/blob/6526b50e9bae1449a915239491099ef71528f10c/configs/nixos/hosts/nas/friend-backups.nix#L52-L59): your sanoid must neither snapshot nor prune it, or his next incremental push finds snapshots on the target that he never sent.
-The network does its part as well: on our tailnet, only his router may reach port 22 on my NAS, and `from=` in `authorized_keys` only accepts his key from that address.
 Once my friend is on NixOS, he can push with nixpkgs' own module:
 
 ```nix
