@@ -551,9 +551,9 @@ All my public DNS is [Terraform](https://www.terraform.io/): a text file that li
 These are the lab records:
 
 ```hcl
-resource "cloudflare_record" "lab_wildcard" {
+resource "cloudflare_dns_record" "lab_wildcard" {
   zone_id = var.cloudflare_zone_id
-  name    = "*.lab"
+  name    = "*.lab.nijho.lt"
   content = "192.168.1.6"
   type    = "A"
   ttl     = 10800
@@ -561,7 +561,6 @@ resource "cloudflare_record" "lab_wildcard" {
 }
 ```
 
-(This is the syntax of version 4 of Cloudflare's Terraform provider, which I still use; version 5 renamed `cloudflare_record` to `cloudflare_dns_record`.)
 `terraform plan` shows exactly which records will be added, changed, or removed before anything happens, and `terraform apply` makes the change.
 The Terraform files live in a private repo, next to my other secrets, because they need a Cloudflare API token.
 
@@ -580,7 +579,8 @@ Without them, `.local` names wouldn't work at all, since public DNS knows nothin
 
 Strictly speaking, `.local` is reserved for multicast DNS, the protocol printers and AirPlay speakers use to announce themselves, and [Apple warns](https://support.apple.com/en-us/101903) that its devices might not resolve `.local` names served by a regular DNS server.
 I know, and I have rarely run into it.
-The official name for home networks is `home.arpa`, but browsers don't treat it as a domain: when I typed a `home.arpa` name into Chrome on my phone, it searched Google for it instead of opening the page.
+The official name for home networks is `home.arpa`, but some browsers treat a name like `example.home.arpa` as a search term: Chrome on my phone searched Google instead of opening the site.
+I had to type the full address, `https://example.home.arpa`, every time.
 The `.local` names are a shortcut anyway; the `lab.nijho.lt` names are the ones that work everywhere.
 They also keep lab names working when my internet connection is down.
 There are two so that one can reboot without taking name resolution with it.
@@ -714,9 +714,9 @@ A git server is only useful if the people and machines I work with can reach it,
 Its public name is a Terraform record that points at the router's DDNS hostname, so it follows my home IP around automatically:
 
 ```hcl
-resource "cloudflare_record" "git" {
+resource "cloudflare_dns_record" "git" {
   zone_id = var.cloudflare_zone_id
-  name    = "git"
+  name    = "git.nijho.lt"
   content = "<my router's DDNS hostname>"
   type    = "CNAME"
   ttl     = 10800
