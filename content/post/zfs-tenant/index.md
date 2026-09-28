@@ -26,10 +26,12 @@ Two years ago I wrote about [friend-to-friend backups with TrueNAS]({{< ref "/po
 A friend and I store each other's ZFS snapshots, which is the cheapest off-site backup there is.
 TrueNAS's replication tasks wanted root on the receiving system, and neither of us wanted to give the other root on the machine that holds our family photos.
 So each of us ran a TrueNAS VM on a hypervisor, backed by an iSCSI zvol on the real NAS, and gave the other person root inside that VM instead.
-
+Sounds complicated?
+It was.
 It worked, but it meant running ZFS on a zvol on ZFS, inside a VM that each of us had to keep updated.
+
 Since then I [replaced TrueNAS with NixOS]({{< ref "/post/truenas-to-nixos" >}}), and my friend plans to move his machines to NixOS too.
-When we talked about setting the backups up again, his first message was that he had found our old setup complicated.
+This time we looked for the simplest solution, built from standard Linux and ZFS features wherever possible.
 He wanted plain `zfs send` and `zfs receive`, with his data still encrypted and his keys never on my server.
 I agreed, on one condition: neither of us should be able to destroy the other's datasets.
 
