@@ -59,6 +59,8 @@ I compare both models at xhigh, the highest setting Qwen offers, and count the t
 The extra tokens Qwen needs are part of what I am measuring.
 There, Qwen scores 33.7 on the Artificial Analysis Intelligence Index and Luna scores 34.6.
 For reference, Claude Opus 4.6, a frontier model from February, scores 31.9.
+That is an amazing feat in itself.
+When Opus 4.6 was the best model we had, I never thought that within the same year I could run essentially that level of intelligence in my own house.
 
 Artificial Analysis also publishes how many tokens each model used to run the index, and what that cost.
 So the question is simple: what does it cost to run the whole benchmark once?
