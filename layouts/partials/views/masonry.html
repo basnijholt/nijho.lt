@@ -20,15 +20,18 @@
 
 {{ $resource := partial "blox-core/functions/get_featured_image.html" $item }}
 
-{{/* Override of the theme's masonry view: an `animated.svg` in the page bundle is shown on the card as-is,
-     because Hugo cannot resize SVGs. The featured image stays the fallback and supplies the aspect ratio. */}}
+{{/* Override of the theme's masonry view:
+     - an `animated.svg` in the page bundle is shown on the card as-is, because Hugo cannot resize SVGs;
+       the featured image stays the fallback and supplies the aspect ratio
+     - square and portrait images are logos and get the `card-image-logo` frame (see custom.scss) */}}
 {{ $animated := $item.Resources.GetMatch "animated.svg" }}
 
 <div class="card">
   {{ with $resource }}
   {{ $image := .Resize "550x" }}
   {{ if ne $image.MediaType.SubType "gif" }}{{ $image = $image.Process "webp" }}{{ end }}
-  <a href="{{ $link }}" {{ $target | safeHTMLAttr }} class="card-image hover-overlay">
+  {{ $is_logo := ge (div (float $image.Height) $image.Width) 0.9 }}
+  <a href="{{ $link }}" {{ $target | safeHTMLAttr }} class="card-image hover-overlay{{ if $is_logo }} card-image-logo{{ end }}">
     <img src="{{ with $animated }}{{ .RelPermalink }}{{ else }}{{ $image.RelPermalink }}{{ end }}" height="{{ $image.Height }}" width="{{ $image.Width }}"
          alt="{{ $item.Title }}" class="img-responsive" loading="lazy">
   </a>
