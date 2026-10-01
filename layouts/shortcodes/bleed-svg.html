@@ -2,3 +2,20 @@
 {{- $file := path.Join "content" .Page.File.Dir (.Get "src") -}}
 {{- if not (fileExists $file) -}}{{ errorf "bleed-svg: %q not found in %s" (.Get "src") .Page.File.Path }}{{- end -}}
 <div class="svg-bleed" role="img" aria-label="{{ .Get "alt" }}"><div class="svg-bleed-stage">{{ readFile $file | safeHTML }}</div></div>
+<script>
+  {
+    // Pause the animation while it is off screen. On resume, line the CSS glow animations up with the SVG's clock again.
+    const stage = document.currentScript.previousElementSibling.querySelector(".svg-bleed-stage")
+    const svg = stage.querySelector("svg")
+    const css = () => stage.getAnimations({ subtree: true })
+    new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        svg.unpauseAnimations()
+        css().forEach((animation) => { animation.currentTime = svg.getCurrentTime() * 1000; animation.play() })
+      } else {
+        svg.pauseAnimations()
+        css().forEach((animation) => animation.pause())
+      }
+    }).observe(stage)
+  }
+</script>
