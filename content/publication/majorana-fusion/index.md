@@ -166,10 +166,10 @@ authors:
 - Guoji Zheng
 - Justin Zilke
 
-publication_types: ["paper"]  # Preprint / Working Paper
+publication_types: ["article-journal"]  # Journal article
 
-publication: "In *Nature* (Nat)."
-publication_short: "In *Nat*"
+publication: "In *Nature*."
+publication_short: "In *Nature*"
 abstract: "The fusion of non-Abelian anyons or topological defects is a fundamental operation in measurement-only topological quantum computation. In topological superconductors, this operation amounts to a determination of the shared fermion parity of Majorana zero modes. As a step towards this, we implement a single-shot interferometric measurement of fermion parity in an indium arsenide-aluminum heterostructure with a gate-defined nanowire. The interferometer is formed by tunnel-coupling the proximitized nanowire to quantum dots. The nanowire causes a state-dependent shift of these quantum dots' quantum capacitance of up to 1 fF. Our quantum capacitance measurements show flux h/2e-periodic bimodality with a signal-to-noise ratio of 1 in 3.7 μs at optimal flux values. From the time traces of the quantum capacitance measurements, we extract a dwell time in the two associated states that is longer than 1 ms at in-plane magnetic fields of approximately 2 T. These results are consistent with a measurement of the fermion parity encoded in a pair of Majorana zero modes that are separated by approximately 3 μm and subjected to a low rate of poisoning by non-equilibrium quasiparticles. The large capacitance shift and long poisoning time enable a minimum measurement error probability of 1%."
 
 summary: "The fusion of non-Abelian anyons or topological defects is a fundamental operation in measurement-only topological quantum computation."
