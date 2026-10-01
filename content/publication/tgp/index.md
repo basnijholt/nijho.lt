@@ -73,7 +73,7 @@ authors:
 - Chetan Nayak
 - Bas Nijholt
 - Morten Hannibal Madsen
-- Signe Markussen
+- Signe Brynold Markussen
 - Esteban A. Martinez
 - Robert McNeil
 - Andrew Mullally

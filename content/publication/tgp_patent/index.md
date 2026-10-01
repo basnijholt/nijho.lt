@@ -18,8 +18,8 @@ authors:
 
 publication_types: ["patent"]
 
-publication: "In *Physical Review B* (PRB)."
-publication_short: "In *PRB*"
+publication: "US Patent 11,808,796 B2."
+publication_short: "US Patent 11,808,796 B2"
 abstract: "A method to evaluate a semiconductor-superconductor heterojunction for use in a qubit register of a topological quantum computer includes (a) measuring one or both of a radio-frequency (RF) junction admittance of the semiconductor-superconductor heterojunction and a sub-RF conductance including a non-local conductance of the semiconductor-superconductor heterojunction, to obtain mapping data and refinement data;(b) finding by analysis of the mapping data one or more regions of a parameter space consistent with an unbroken topological phase of the semiconductor-superconductor heterojunction; and (c) finding by analysis of the refinement data a boundary of the unbroken topological phase in the parameter space and a topological gap of the semiconductor-superconductor heterojunction for at least one of the one or more regions of the parameter space."
 
 summary: "A method to evaluate a semiconductor-superconductor heterojunction for use in a qubit register of a topological quantum computer."

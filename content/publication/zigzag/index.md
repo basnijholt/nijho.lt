@@ -10,8 +10,8 @@ authors:
 
 publication_types: ["article-journal"]  # Journal article
 
-publication: "In *Physical Review L* (PRL)."
-publication_short: "In *PRL*."
+publication: "In *Physical Review Letters* (PRL)."
+publication_short: "In *PRL*"
 
 abstract: "High density superconductor-semiconductor-superconductor junctions have a small induced superconducting gap due to the quasiparticle trajectories with a large momentum parallel to the junction having a very long flight time. Because a large induced gap protects Majorana modes, these long trajectories constrain Majorana devices to a low electron density. We show that a zigzag-shaped geometry eliminates these trajectories, allowing the robust creation of Majorana states with both the induced gap  and the Majorana size  improved by more than an order of magnitude for realistic parameters. In addition to the improved robustness of Majoranas, this new zigzag geometry is insensitive to the geometric details and the device tuning."
 

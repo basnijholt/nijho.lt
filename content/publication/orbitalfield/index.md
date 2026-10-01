@@ -21,7 +21,7 @@ selected: true
 
 url_pdf: "https://arxiv.org/pdf/1509.02675.pdf"
 url_code: "https://github.com/basnijholt/orbitalfield"
-url_dataset: "https://data.4tu.nl/repository/uuid:20f1c784-1143-4c61-a03d-7a3454914abb"
+url_dataset: "https://doi.org/10.4121/uuid:20f1c784-1143-4c61-a03d-7a3454914abb"
 links: [{name: "arXiv:1509.02675", url: "http://arxiv.org/abs/1509.02675"}, {name: "10.1103/PhysRevB.93.235434", url: "https://journals.aps.org/prb/abstract/10.1103/PhysRevB.93.235434"}]
 
 ---
