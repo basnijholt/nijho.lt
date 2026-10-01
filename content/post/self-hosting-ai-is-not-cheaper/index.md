@@ -51,7 +51,7 @@ Qwen on low already writes more tokens than Luna on xhigh.
 
 So the name of a setting says little on its own.
 I compare both models at xhigh, the highest setting Qwen offers, and count the tokens each one actually uses.
-There, Qwen scores 33.7 on the Artificial Analysis Intelligence Index and Luna scores 34.6.
+There, Qwen scores 33.7 on the Artificial Analysis Intelligence Index and Luna scores 34.6.[^benchmarks]
 For reference, Claude Opus 4.6, a frontier model from February, scores 31.9.
 
 Artificial Analysis also publishes how many tokens each model used to run the index, and what that cost.
@@ -216,6 +216,8 @@ That is what [my local AI projects]({{< ref "/post/local-ai-journey" >}}) are fo
 
 Those are good reasons.
 Saving money is not one of them.
+
+[^benchmarks]: Benchmarks are not everything, and a high score does not reliably predict how a model does on real work. They are still the best we have. All models are benchmaxed, tuned to do well on the popular benchmarks, so the scores at least work as a reference frame for comparing models with each other.
 
 [^setup]: Artificial Analysis measured 151 tokens per second for Qwen3.8 27B in Q4_K_M on an RTX 5090, using llama.cpp with MTP. A 3090 has about half the memory bandwidth of a 5090, so I assume about 75 tokens per second per card. With a single 3090 and no MTP, you get about 30 tokens per second; the pile of work then takes 88 days, and the electricity alone costs more than Luna above 8 cents per kWh.
 
