@@ -20,6 +20,46 @@ const QWEN_KWH = 357; // Qwen3.8 27B, one Intelligence Index run, on two 3090s a
 const usd = (d) => (d >= 100 ? `$${Math.round(d).toLocaleString("en-US")}` : `$${Math.round(d)}`);
 
 export default {
+  effortTokens: ({ Plot, width }) => {
+    const levels = ["low", "medium", "high", "xhigh", "max"];
+    const models = ["GPT-6 Luna", "Qwen3.8 27B"];
+    // Output tokens per Intelligence Index task and score, per reasoning setting.
+    const data = [
+      { model: models[0], level: "low", tokens: 2086, score: 21.5 },
+      { model: models[0], level: "medium", tokens: 11456, score: 29.9 },
+      { model: models[0], level: "high", tokens: 19693, score: 32.9 },
+      { model: models[0], level: "xhigh", tokens: 27487, score: 34.6 },
+      { model: models[0], level: "max", tokens: 49956, score: 38.1 },
+      { model: models[1], level: "low", tokens: 45426, score: 26.2 },
+      { model: models[1], level: "medium", tokens: 51943, score: 27.6 },
+      { model: models[1], level: "xhigh", tokens: 66797, score: 33.7 },
+    ];
+    const last = models.map((m) => data.filter((d) => d.model === m).at(-1));
+    return Plot.plot({
+      width,
+      height: Math.min(340, Math.max(260, width * 0.45)),
+      marginRight: width < 600 ? 90 : 110,
+      marginBottom: 52,
+      style: STYLE,
+      x: { domain: levels, label: "Reasoning setting", padding: 0.3, ...X_LABEL },
+      y: { domain: [0, 70000], label: "Output tokens per task", labelArrow: "none", grid: true, tickFormat: (d) => `${d / 1000}k` },
+      color: { domain: models, range: [COLORS.closed, COLORS.open] },
+      marks: [
+        Plot.line(data, { x: "level", y: "tokens", stroke: "model", strokeWidth: 2.5 }),
+        Plot.dot(data, { x: "level", y: "tokens", fill: "model", r: 5 }),
+        Plot.text(last, { x: "level", y: "tokens", text: "model", fill: "model", textAnchor: "start", dx: 10, fontWeight: "bold" }),
+        Plot.tip(
+          data,
+          Plot.pointer({
+            x: "level",
+            y: "tokens",
+            title: (d) => `${d.model}, ${d.level}\n${(d.tokens / 1000).toFixed(1)}k tokens per task\nScore ${d.score}`,
+          })
+        ),
+      ],
+    });
+  },
+
   runCost: ({ Plot, width }) => {
     const narrow = width < 600;
     const groups = ["Closed model via API", "Open model on my 3090s (electricity only)", "Open model via API"];

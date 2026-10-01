@@ -43,7 +43,14 @@ My favorite local model right now is [Qwen3.8 27B](https://artificialanalysis.ai
 It came out in August, it is Apache-2.0, and in Q4_K_M it fits on a single 24 GB card.
 
 I compare it with OpenAI's GPT-6 Luna, the cheap tier released on September 22.
-Both models let you choose how long they think, and I use the xhigh setting for both, the highest one Qwen offers.
+Both models let you choose how long they think, but the settings do not mean the same thing for both.
+Luna's token use grows more than 20 times from its lowest setting to its highest, while Qwen's barely changes.
+Qwen on low already writes more tokens than Luna on xhigh.
+
+{{< plot name="effortTokens" caption="Average output tokens per Intelligence Index task at each reasoning setting. Qwen3.8 27B has no high or max setting. Hover for scores." >}}
+
+So the name of a setting says little on its own.
+I compare both models at xhigh, the highest setting Qwen offers, and count the tokens each one actually uses.
 There, Qwen scores 33.7 on the Artificial Analysis Intelligence Index and Luna scores 34.6.
 For reference, Claude Opus 4.6, a frontier model from February, scores 31.9.
 
