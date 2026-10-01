@@ -117,6 +117,7 @@ Five hours a day sounds like a lot, but I run agents for longer than that, just 
 When Claude Opus 4.6 came out in February, I was perfectly happy with it.
 Qwen3.8 27B now scores about the same, and I would no longer accept it for coding.
 Until GPT-6 Astra came out at the start of September, my go-to was GPT-5.6 Sol, which scores ten points higher than Qwen.
+I then used Astra until Claude Opus 5.5 came out less than three weeks later.
 Now I don't even accept what was considered the best model a month ago.
 
 {{< plot name="frontierGap" caption="Intelligence Index of the best model available on each date, of the models I used as my go-to, and of Qwen's 27B models, which fit on a single 3090. Scores use the xhigh reasoning setting where a model has it." >}}

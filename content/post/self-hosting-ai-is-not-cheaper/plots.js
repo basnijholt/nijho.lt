@@ -169,6 +169,7 @@ export default {
       { model: "Opus 4.6", date: day("2026-02-05"), score: 31.9 },
       { model: "GPT-5.6 Sol", date: day("2026-07-09"), score: 44.0 },
       { model: "GPT-6 Astra", date: day("2026-09-03"), score: 52.4 },
+      { model: "Opus 5.5", date: day("2026-09-22"), score: 56.0 },
     ];
     // Extend both step lines to today.
     const toToday = (points) => [...points, { ...points.at(-1), date: today }];
@@ -204,7 +205,8 @@ export default {
         Plot.dot(goTo, { x: "date", y: "score", fill: () => series[1], r: 6, stroke: "var(--plot-background)" }),
         Plot.text(goTo.slice(0, 1), { x: "date", y: "score", text: "model", textAnchor: "start", lineAnchor: "top", dx: 4, dy: 8 }),
         Plot.text(goTo.slice(1, 2), { x: "date", y: "score", text: "model", textAnchor: "start", dx: 10 }),
-        Plot.text(goTo.slice(2), { x: "date", y: "score", text: "model", textAnchor: "end", dx: -10 }),
+        Plot.text(goTo.slice(2, 3), { x: "date", y: "score", text: "model", textAnchor: "end", dx: -10 }),
+        Plot.text(goTo.slice(3), { x: "date", y: "score", text: "model", textAnchor: "end", lineAnchor: "bottom", dx: -4, dy: -8 }),
         Plot.tip(
           [...frontier.map((d) => ({ ...d, series: series[0] })), ...qwen.map((d) => ({ ...d, series: series[2] }))],
           Plot.pointer({ x: "date", y: "score", title: (d) => `${d.model}\n${d.series}\nScore ${d.score}` })
