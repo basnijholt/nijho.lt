@@ -16,6 +16,7 @@ const X_LABEL = { labelAnchor: "center", labelArrow: "none", labelOffset: 42 };
 
 const LUNA_COST = 66.81; // GPT-6 Luna (xhigh), one Intelligence Index run, via API
 const QWEN_KWH = 357; // Qwen3.8 27B, one Intelligence Index run, on two 3090s at 700 W
+const PRO6000_KWH = 760; // Same run at full precision on one RTX PRO 6000 (~48 tok/s) at 600 W
 
 const usd = (d) => (d >= 100 ? `$${Math.round(d).toLocaleString("en-US")}` : `$${Math.round(d)}`);
 
@@ -62,10 +63,11 @@ export default {
 
   runCost: ({ Plot, width }) => {
     const narrow = width < 600;
-    const groups = ["Closed model via API", "Open model on my 3090s (electricity only)", "Open model via API"];
+    const groups = ["Closed model via API", "Open model at home (electricity only)", "Open model via API"];
     const data = [
       { label: "GPT-6 Luna via API", cost: LUNA_COST, group: groups[0] },
       { label: narrow ? "Qwen3.8 27B, quantized, on my 3090s" : "Qwen3.8 27B, quantized, on my two 3090s: electricity at 18 cents/kWh", cost: QWEN_KWH * 0.18, group: groups[1] },
+      { label: narrow ? "Qwen3.8 27B, full precision, RTX PRO 6000" : "Qwen3.8 27B, full precision, on an RTX PRO 6000: electricity at 18 cents/kWh", cost: PRO6000_KWH * 0.18, group: groups[1] },
       { label: narrow ? "Qwen3.8 27B, full precision, ZDR API" : "Qwen3.8 27B, full precision, via the cheapest ZDR API", cost: 619, group: groups[2] },
     ];
     // Horizontal bars drawn as thick rules, with the label above each bar so it fits on phones.

@@ -65,13 +65,19 @@ When Opus 4.6 was the best model we had, I never thought that within the same ye
 Artificial Analysis also publishes how many tokens each model used to run the index, and what that cost.
 So the question is simple: what does it cost to run the whole benchmark once?
 
-{{< plot name="runCost" caption="Cost of one run of the Artificial Analysis Intelligence Index. The middle bar is electricity only, with the assumptions from section 2." >}}
+{{< plot name="runCost" caption="Cost of one run of the Artificial Analysis Intelligence Index. The two bars for hardware at home are electricity only, with the assumptions from section 2 and the footnotes." >}}
 
 Luna runs the whole benchmark for $67.
 Qwen at full precision, through the cheapest provider that does not keep your data (ZDR), costs $619.
 Two things cause that gap: providers charge almost four times as much per output token for Qwen, and Qwen generates almost three times as many tokens to get the same work done.
 
-The middle bar is my own machine: running Qwen on my GPUs costs about as much in electricity alone as Luna's entire bill.
+The second bar is my own machine: running Qwen on my GPUs costs about as much in electricity alone as Luna's entire bill.
+
+The third bar is what it takes to match the API's full precision at home: an RTX PRO 6000, a workstation card with 96 GB of memory, enough for the full model.[^pro6000]
+Its electricity alone costs twice Luna's bill, and one run takes more than seven weeks.
+The card by itself sells for $10,000 to $15,000, so with a computer around it, you are paying for a car.
+Buy a few of them to run agents in parallel, and you are building a small data center of your own.
+
 What I care about is the cheapest way to get answers of Qwen's quality, from whichever model gives them.
 
 ## 2. "But my GPUs are already paid for"
@@ -235,6 +241,8 @@ That is what [my local AI projects]({{< ref "/post/local-ai-journey" >}}) are fo
 
 Those are good reasons.
 Saving money is not one of them.
+
+[^pro6000]: The RTX PRO 6000 has the same memory bandwidth as an RTX 5090, and at full precision every token reads three times as many bytes as in Q4_K_M. Scaling Artificial Analysis's 5090 measurement gives about 48 tokens per second. I assume 600 W for the whole machine.
 
 [^setup]: Artificial Analysis measured 151 tokens per second for Qwen3.8 27B in Q4_K_M on an RTX 5090, using llama.cpp with MTP. A 3090 has about half the memory bandwidth of a 5090, so I assume about 75 tokens per second per card. With a single 3090 and no MTP, you get about 30 tokens per second; one benchmark run then takes 88 days, and the electricity alone costs more than Luna above 8 cents per kWh.
 
