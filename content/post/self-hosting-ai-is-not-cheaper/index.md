@@ -78,6 +78,8 @@ Its electricity alone costs twice Luna's bill, and one run takes more than seven
 The card by itself sells for $10,000 to $15,000, so with a computer around it, you are paying for a car.
 Buy a few of them to run agents in parallel, and you are building a small data center of your own.
 
+The bars for hardware at home are electricity only, so they are the lowest these runs can cost: the cards come on top, and how much depends on how busy you keep them, which is what section 4 is about.
+
 What I care about is the cheapest way to get answers of Qwen's quality, from whichever model gives them.
 
 ## 2. "But my GPUs are already paid for"
