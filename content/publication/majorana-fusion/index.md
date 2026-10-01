@@ -137,7 +137,7 @@ authors:
 - Sarat Sinha
 - Thomas Soerensen
 - Patrick Sohr
-- Tomas Stankevic
+- Tomaš Stankevič
 - Lieuwe Stek
 - Eric Stuppard
 - Henri Suominen

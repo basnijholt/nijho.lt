@@ -12,7 +12,7 @@ authors:
 - Jun Chen
 - Viacheslav P. Ostroukh
 - Anton R. Akhmerov
-- Sebastién R. Plissard
+- Sébastien R. Plissard
 - Diana Car
 - Erik P. A. M. Bakkers
 - Dmitry I. Pikulin
