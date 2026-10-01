@@ -1,0 +1,7 @@
+{{- /* One MindRoom demo recording, light and dark, inside demo-clips; assets/scss/custom.scss shows the version matching the page theme. */ -}}
+{{- $caption := .Get "caption" -}}
+<figure>
+  <video class="demo-clip-light" muted loop playsinline preload="metadata" controls aria-label="{{ $caption }}"><source src="{{ .Get "light" }}#t=0.1" type="video/mp4"></video>
+  <video class="demo-clip-dark" muted loop playsinline preload="metadata" controls aria-label="{{ $caption }}"><source src="{{ .Get "dark" }}#t=0.1" type="video/mp4"></video>
+  <figcaption>{{ $caption }}</figcaption>
+</figure>
