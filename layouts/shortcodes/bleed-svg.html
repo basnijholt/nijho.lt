@@ -1,0 +1,2 @@
+{{- /* Inline an SVG from the page bundle so its glow can bleed past the content column. The SVG's viewBox must be padded to match the negative margins in assets/scss/custom.scss (.svg-bleed). */ -}}
+{{- with .Page.Resources.Get (.Get "src") -}}<div class="svg-bleed" role="img" aria-label="{{ $.Get "alt" }}">{{ .Content | safeHTML }}</div>{{- else -}}{{ errorf "bleed-svg: %q not found in %s" ($.Get "src") $.Page.File.Path }}{{- end -}}

@@ -63,3 +63,35 @@
   visibility: visible;
   transform: translateX(-50%);
 }
+
+// Inline SVG whose glow bleeds past the content column (bleed-svg shortcode).
+// The SVG's viewBox is padded by 22.5% on each side, which the negative margins cancel.
+html:has(.svg-bleed),
+body:has(.svg-bleed) {
+  overflow-x: clip;
+}
+// The theme clips .article-style; flow-root keeps containing floats without clipping the glow.
+.article-style:has(.svg-bleed) {
+  overflow: visible;
+  display: flow-root;
+}
+.svg-bleed {
+  position: relative;
+  z-index: 10;
+  pointer-events: none;
+  display: flow-root;
+  margin: 2rem 0;
+}
+.svg-bleed svg {
+  display: block;
+  width: 145%;
+  height: auto;
+  margin: -22.5%;
+  overflow: visible;
+}
+.svg-bleed .bleed-ink {
+  fill: #0d1b2a;
+}
+body.dark .svg-bleed .bleed-ink {
+  fill: #e8eef4;
+}
