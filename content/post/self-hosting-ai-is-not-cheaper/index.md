@@ -136,6 +136,7 @@ If it halves twice, the API costs less than my electricity alone.
 
 Five hours a day sounds like a lot, but I run agents for longer than that, just not on Qwen.
 When Claude Opus 4.6 came out in February, I was perfectly happy with it.
+I probably thought it was all I would ever need, and I could not have imagined how much better models would get in half a year.
 Qwen3.8 27B now scores about the same, and I would no longer accept it for coding.
 Until GPT-6 Astra came out at the start of September, my go-to was GPT-5.6 Sol, which scores ten points higher than Qwen.
 I then used Astra until Claude Opus 5.5 came out less than three weeks later.
