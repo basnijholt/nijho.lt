@@ -156,18 +156,30 @@ body:not(.dark) .demo-clip-dark {
   margin: 0 auto;
 }
 
-// Square photo thumbnails on the homepage (photo-grid shortcode), each linking to its Instagram post.
+// Photos in justified rows on the homepage (photo-grid shortcode): each row fills the width and its photos share one height.
+// The shortcode's script groups the photos into .photo-row elements; without it, they wrap at roughly 12rem tall.
 .photo-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
   margin: 1.5rem 0 1rem;
+  a {
+    flex: var(--ratio) 1 calc(var(--ratio) * 12rem);
+    min-width: 0;
+  }
+  // Growing from zero in proportion to the aspect ratio gives every photo in a row the same height.
+  .photo-row {
+    display: flex;
+    flex-basis: 100%;
+    gap: inherit;
+    a {
+      flex-basis: 0;
+    }
+  }
   img {
     display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 1;
-    object-fit: cover;
     border-radius: 4px;
     transition: opacity 0.2s;
   }
