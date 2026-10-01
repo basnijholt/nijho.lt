@@ -1,7 +1,10 @@
-{{- /* One MindRoom demo recording, light and dark, inside demo-clips; assets/scss/custom.scss shows the version matching the page theme. */ -}}
+{{- /* One MindRoom demo recording, light and dark, inside demo-clips; assets/scss/custom.scss shows the version matching the page theme.
+     The page plays a small `light_preview`/`dark_preview` encode inline, and demo-clips switches to the full-resolution `light`/`dark` file in fullscreen. */ -}}
 {{- $caption := .Get "caption" -}}
 <figure>
-  <video class="demo-clip-light" muted loop playsinline preload="metadata" controls aria-label="{{ $caption }}"><source src="{{ .Get "light" }}#t=0.1" type="video/mp4"></video>
-  <video class="demo-clip-dark" muted loop playsinline preload="metadata" controls aria-label="{{ $caption }}"><source src="{{ .Get "dark" }}#t=0.1" type="video/mp4"></video>
-  <figcaption>{{ $caption }}</figcaption>
+{{- range slice "light" "dark" -}}
+{{- $full := $.Get . -}}
+<video class="demo-clip-{{ . }}" muted loop playsinline preload="metadata" controls aria-label="{{ $caption }}" data-full="{{ $full }}" src="{{ $.Get (printf "%s_preview" .) | default $full }}#t=0.1"></video>
+{{- end }}
+<figcaption>{{ $caption }}</figcaption>
 </figure>

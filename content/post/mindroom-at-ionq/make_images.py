@@ -107,10 +107,18 @@ def anim(attr, vals):
 QC_X, QC_Y = 1200 + 104.5 * 1.3, 300 + 120.7 * 1.3  # center of the Q
 
 
-def build(tall=False, with_glow=True):
+def wave(wave_at=""):
+    """The wave's gradient and its two animated paths: the |psi|^2 cloud and the wave itself."""
+    return f"""
+<linearGradient id="wg" x1="{X0}" x2="{X1}" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffd86b"/><stop offset="1" stop-color="#F58220"/></linearGradient>
+<path d="{frames_prob[0]}" fill="url(#wg)" opacity=".18"{wave_at}>{anim("d", frames_prob)}</path>
+<path d="{frames_psi[0]}" fill="none" stroke="url(#wg)" stroke-width="3.5" stroke-linecap="round"{wave_at}>{anim("d", frames_psi)}</path>"""
+
+
+def build(tall=False, logos_only=False):
     """The wide layout puts the Q right of the M; the tall one stacks M, wave, Q, and wordmark.
 
-    Without with_glow, the SVG has only the logos and the wave, for pages that draw the glow with glow_overlay().
+    With logos_only, the SVG has only the logos, for pages that draw the wave and glow with wave_overlay() and glow_overlay().
     """
     ionq, ionq_at, wave_at, q_at = IONQ, "", "", ""
     if tall:
@@ -123,22 +131,39 @@ def build(tall=False, with_glow=True):
     q_glow = f' transform="{q_at}"' if q_at else ""
     gold = 'cx="472" cy="454" rx="210" ry="250" fill="url(#gold)"'
     orange = f'cx="{QC_X:.1f}" cy="{QC_Y:.1f}" rx="170" ry="190" fill="url(#orange)"'
-    return f"""{DEFS}
-<linearGradient id="wg" x1="{X0}" x2="{X1}" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffd86b"/><stop offset="1" stop-color="#F58220"/></linearGradient>
+    logos = f"""{DEFS}
 <g transform="translate(-40,0)">{FRAME}{CORE}</g>
-<g transform="{ionq_at}translate(1200,300) scale(1.3)">{ionq}</g>
-<path d="{frames_prob[0]}" fill="url(#wg)" opacity=".18"{wave_at}>{anim("d", frames_prob)}</path>
-<path d="{frames_psi[0]}" fill="none" stroke="url(#wg)" stroke-width="3.5" stroke-linecap="round"{wave_at}>{anim("d", frames_psi)}</path>""" + (f"""
+<g transform="{ionq_at}translate(1200,300) scale(1.3)">{ionq}</g>"""
+    if logos_only:
+        return logos
+    return logos + wave(wave_at) + f"""
 <g style="mix-blend-mode:screen">
 <ellipse {gold}>{anim("opacity", [f"{g:.3f}" for g in glow])}</ellipse>
 <ellipse{q_glow} {orange}>{anim("opacity", [f"{g:.3f}" for g in glow])}</ellipse>
 <ellipse {gold}>{anim("opacity", [f"{v:.3f}" for v in flash])}{anim("rx", [f"{210 + 390 * v:.0f}" for v in flash])}{anim("ry", [f"{250 + 410 * v:.0f}" for v in flash])}</ellipse>
 <ellipse{q_glow} {orange}>{anim("opacity", [f"{v:.3f}" for v in flash])}{anim("rx", [f"{170 + 330 * v:.0f}" for v in flash])}{anim("ry", [f"{190 + 350 * v:.0f}" for v in flash])}</ellipse>
-</g>""" if with_glow else "")
+</g>"""
 
 
 def svg(body, attrs):
     return f'<svg {attrs}xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"{body[0]}><title>{TITLE}</title>{body[1]}</svg>'
+
+
+def place(viewbox, x, y, w, h):
+    """CSS that positions an overlay over the region (x, y, w, h) of an SVG with this viewBox."""
+    x0, y0, vw, vh = viewbox
+    return f"left:{(x - x0) / vw * 100:.3f}%;top:{(y - y0) / vh * 100:.3f}%;width:{w / vw * 100:.3f}%;height:{h / vh * 100:.3f}%"
+
+
+def wave_overlay(viewbox):
+    """The wave in its own small SVG, positioned over the logos.
+
+    In the same SVG as the masked logos, every frame of the wave made Chromium on macOS repaint the logos too,
+    which made the animation stutter. In its own layer, only the wave repaints.
+    """
+    region = (790, 290, 450, 330)
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{" ".join(map(str, region))}" aria-hidden="true" '
+            f'style="position:absolute;{place(viewbox, *region)};overflow:visible;will-change:transform">{wave()}</svg>')
 
 
 def glow_overlay(viewbox):
@@ -147,10 +172,9 @@ def glow_overlay(viewbox):
     Animating the glows inside the SVG made the browser repaint these large blended gradients on every frame,
     which made the wave stutter and scrolling slow. Opacity and transform animations on HTML elements run on the GPU.
     """
-    x0, y0, w, h = viewbox
 
     def box(cx, cy, rx, ry):
-        return f"left:{(cx - rx - x0) / w * 100:.3f}%;top:{(cy - ry - y0) / h * 100:.3f}%;width:{2 * rx / w * 100:.3f}%;height:{2 * ry / h * 100:.3f}%"
+        return place(viewbox, cx - rx, cy - ry, 2 * rx, 2 * ry)
 
     def keyframes(name, values):
         return f"@keyframes {name}{{" + "".join(f"{k * 100:.2f}%{{{v}}}" for k, v in zip(keys2, values)) + "}"
@@ -198,8 +222,8 @@ def render(body, viewbox, size, t, out):
 # The page bleeds the glow past the text column, so the viewBox is padded to match the negative margins
 # in assets/scss/custom.scss (.svg-bleed-stage).
 PAGE_VIEWBOX = (-338, -338, 2900, 1620)
-page_svg = svg((f' viewBox="{" ".join(map(str, PAGE_VIEWBOX))}"', build(with_glow=False)), "")
-(HERE / "entangled-cores.html").write_text(page_svg + glow_overlay(PAGE_VIEWBOX) + "\n")
+page_svg = svg((f' viewBox="{" ".join(map(str, PAGE_VIEWBOX))}"', build(logos_only=True)), "")
+(HERE / "entangled-cores.html").write_text(page_svg + wave_overlay(PAGE_VIEWBOX) + glow_overlay(PAGE_VIEWBOX) + "\n")
 render(build(), "70 -70 2084 1091", (1200, 628), 4.8, "featured.png")
 render(build(tall=True), "42 90 860 1530", (430, 765), 4.5, "thumbnail.png")
 print("wrote entangled-cores.html, featured.png, thumbnail.png")
