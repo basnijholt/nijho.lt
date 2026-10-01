@@ -1,7 +1,7 @@
 """Generate the MindRoom x IonQ animation and its preview images.
 
 Run from this directory: `python make_images.py`
-Writes entangled-cores.svg (the animation inlined by the bleed-svg shortcode),
+Writes entangled-cores.html (the animation inlined by the bleed-svg shortcode),
 featured.png (wide, for social previews), and thumbnail.png (vertical, for post lists).
 The PNGs are frozen frames of the animation, rendered with headless Chromium.
 """
@@ -107,8 +107,11 @@ def anim(attr, vals):
 QC_X, QC_Y = 1200 + 104.5 * 1.3, 300 + 120.7 * 1.3  # center of the Q
 
 
-def build(tall=False):
-    """The wide layout puts the Q right of the M; the tall one stacks M, wave, Q, and wordmark."""
+def build(tall=False, with_glow=True):
+    """The wide layout puts the Q right of the M; the tall one stacks M, wave, Q, and wordmark.
+
+    Without with_glow, the SVG has only the logos and the wave, for pages that draw the glow with glow_overlay().
+    """
     ionq, ionq_at, wave_at, q_at = IONQ, "", "", ""
     if tall:
         # Move the Q under the M, wave vertical from the cube's bottom tip to the Q's top tip, wordmark under the Q.
@@ -125,17 +128,52 @@ def build(tall=False):
 <g transform="translate(-40,0)">{FRAME}{CORE}</g>
 <g transform="{ionq_at}translate(1200,300) scale(1.3)">{ionq}</g>
 <path d="{frames_prob[0]}" fill="url(#wg)" opacity=".18"{wave_at}>{anim("d", frames_prob)}</path>
-<path d="{frames_psi[0]}" fill="none" stroke="url(#wg)" stroke-width="3.5" stroke-linecap="round"{wave_at}>{anim("d", frames_psi)}</path>
+<path d="{frames_psi[0]}" fill="none" stroke="url(#wg)" stroke-width="3.5" stroke-linecap="round"{wave_at}>{anim("d", frames_psi)}</path>""" + (f"""
 <g style="mix-blend-mode:screen">
 <ellipse {gold}>{anim("opacity", [f"{g:.3f}" for g in glow])}</ellipse>
 <ellipse{q_glow} {orange}>{anim("opacity", [f"{g:.3f}" for g in glow])}</ellipse>
 <ellipse {gold}>{anim("opacity", [f"{v:.3f}" for v in flash])}{anim("rx", [f"{210 + 390 * v:.0f}" for v in flash])}{anim("ry", [f"{250 + 410 * v:.0f}" for v in flash])}</ellipse>
 <ellipse{q_glow} {orange}>{anim("opacity", [f"{v:.3f}" for v in flash])}{anim("rx", [f"{170 + 330 * v:.0f}" for v in flash])}{anim("ry", [f"{190 + 350 * v:.0f}" for v in flash])}</ellipse>
-</g>"""
+</g>""" if with_glow else "")
 
 
 def svg(body, attrs):
     return f'<svg {attrs}xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"{body[0]}><title>{TITLE}</title>{body[1]}</svg>'
+
+
+def glow_overlay(viewbox):
+    """The same four glows as HTML elements with CSS animations, positioned over an SVG with this viewBox.
+
+    Animating the glows inside the SVG made the browser repaint these large blended gradients on every frame,
+    which made the wave stutter and scrolling slow. Opacity and transform animations on HTML elements run on the GPU.
+    """
+    x0, y0, w, h = viewbox
+
+    def box(cx, cy, rx, ry):
+        return f"left:{(cx - rx - x0) / w * 100:.3f}%;top:{(cy - ry - y0) / h * 100:.3f}%;width:{2 * rx / w * 100:.3f}%;height:{2 * ry / h * 100:.3f}%"
+
+    def keyframes(name, values):
+        return f"@keyframes {name}{{" + "".join(f"{k * 100:.2f}%{{{v}}}" for k, v in zip(keys2, values)) + "}"
+
+    # The flash glows are sized at their largest and scaled down, matching the rx/ry animation in build().
+    css = "".join([
+        f".ec-glow{{position:absolute;border-radius:50%;mix-blend-mode:screen;will-change:transform,opacity;animation:{DUR}s linear infinite}}",
+        ".ec-gold{background:radial-gradient(closest-side,#fff6c8,rgba(255,216,107,.55) 45%,rgba(255,176,0,0))}",
+        ".ec-orange{background:radial-gradient(closest-side,#fff1e0,rgba(245,130,32,.55) 45%,rgba(240,83,35,0))}",
+        keyframes("ec-glow", [f"opacity:{g:.3f}" for g in glow]),
+        keyframes("ec-flash-m", [f"opacity:{v:.3f};transform:scale({(210 + 390 * v) / 600:.4f},{(250 + 410 * v) / 660:.4f})" for v in flash]),
+        keyframes("ec-flash-q", [f"opacity:{v:.3f};transform:scale({(170 + 330 * v) / 500:.4f},{(190 + 350 * v) / 540:.4f})" for v in flash]),
+    ])
+    divs = "".join(
+        f'<div class="ec-glow {cls}" style="{box(cx, cy, rx, ry)};animation-name:{name}"></div>'
+        for cls, cx, cy, rx, ry, name in [
+            ("ec-gold", 472, 454, 210, 250, "ec-glow"),
+            ("ec-orange", QC_X, QC_Y, 170, 190, "ec-glow"),
+            ("ec-gold", 472, 454, 600, 660, "ec-flash-m"),
+            ("ec-orange", QC_X, QC_Y, 500, 540, "ec-flash-q"),
+        ]
+    )
+    return f"<style>{css}</style>{divs}"
 
 
 def render(body, viewbox, size, t, out):
@@ -157,10 +195,11 @@ def render(body, viewbox, size, t, out):
         Path(f.name).unlink()
 
 
-wide = build()
 # The page bleeds the glow past the text column, so the viewBox is padded to match the negative margins
-# in assets/scss/custom.scss (.svg-bleed).
-(HERE / "entangled-cores.svg").write_text(svg((' viewBox="-338 -338 2900 1620"', wide), 'class="bleed" '))
-render(wide, "70 -70 2084 1091", (1200, 628), 4.8, "featured.png")
+# in assets/scss/custom.scss (.svg-bleed-stage).
+PAGE_VIEWBOX = (-338, -338, 2900, 1620)
+page_svg = svg((f' viewBox="{" ".join(map(str, PAGE_VIEWBOX))}"', build(with_glow=False)), "")
+(HERE / "entangled-cores.html").write_text(page_svg + glow_overlay(PAGE_VIEWBOX) + "\n")
+render(build(), "70 -70 2084 1091", (1200, 628), 4.8, "featured.png")
 render(build(tall=True), "42 90 860 1530", (430, 765), 4.5, "thumbnail.png")
-print("wrote entangled-cores.svg, featured.png, thumbnail.png")
+print("wrote entangled-cores.html, featured.png, thumbnail.png")
