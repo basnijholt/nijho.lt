@@ -6,7 +6,7 @@ title: Bas Nijholt
 superuser: true
 
 # Role/position
-role: Staff Engineer
+role: Senior Staff Engineer
 
 # Organizations/Affiliations
 organizations:
