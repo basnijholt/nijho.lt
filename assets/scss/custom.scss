@@ -96,6 +96,53 @@ body.dark .svg-bleed .bleed-ink {
   fill: #e8eef4;
 }
 
+// A row of demo recordings (demo-clips shortcode), as wide as the bleed-svg artwork on large screens.
+html:has(.demo-clips),
+body:has(.demo-clips) {
+  overflow-x: clip;
+}
+.article-style:has(.demo-clips) {
+  overflow: visible;
+  display: flow-root;
+}
+.demo-clips {
+  margin: 1.5rem 0;
+}
+.demo-clips-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  @media (min-width: 1200px) {
+    margin-inline: -22.5%;
+  }
+  figure {
+    margin: 0;
+  }
+  // The theme spaces article videos and captions apart; the row keeps each caption with its video.
+  video {
+    display: block;
+    width: 100%;
+    margin: 0;
+    border-radius: 6px;
+  }
+  figcaption {
+    margin: 0.4rem 0 0;
+    font-size: 0.85em;
+    text-align: center;
+  }
+}
+.demo-clips-note {
+  margin-top: 0.75rem;
+  font-size: 0.85em;
+  font-style: italic;
+  text-align: center;
+}
+// Each recording has a light and a dark version; show the one matching the page theme.
+body.dark .demo-clip-light,
+body:not(.dark) .demo-clip-dark {
+  display: none;
+}
+
 /* Logos on project cards (layouts/partials/views/masonry.html): keep them at a fixed size with some room
    around them instead of stretching them to the card width, which on a phone made every card a full screen. */
 .project-card .card-image-logo {

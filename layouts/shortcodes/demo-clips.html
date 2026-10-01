@@ -1,0 +1,17 @@
+{{- /* A row of demo-clip recordings that play while on screen; styles in assets/scss/custom.scss (.demo-clips). */ -}}
+<div class="demo-clips">
+  <div class="demo-clips-row">{{ .Inner }}</div>
+  <p class="demo-clips-note">Demo recordings with a fictional company and scripted responses.{{ with .Get "more" }} {{ . | markdownify }}{{ end }}</p>
+  <script>
+    {
+      // Play each recording while at least half of it is on screen, and pause it once it scrolls away or a theme switch hides it.
+      const onScreen = new IntersectionObserver((entries) => {
+        for (const { target, isIntersecting } of entries) {
+          // play() rejects when a quick scroll pauses the video before it starts; there is nothing to recover.
+          isIntersecting ? target.play().catch(() => {}) : target.pause()
+        }
+      }, { threshold: 0.5 })
+      document.currentScript.parentElement.querySelectorAll("video").forEach((video) => onScreen.observe(video))
+    }
+  </script>
+</div>
