@@ -28,6 +28,8 @@ If you want the real picture, somebody has to read all of it, or you ask a colle
 And as IonQ grows, everybody is new to something.
 Someone who just joined through an acquisition is new to all of it, and after three years here, I still could not explain what half of our programs do.
 
+{{< bleed-svg src="entangled-cores.svg" alt="The MindRoom cube and the IonQ logo, connected by a wave that collapses and lights up both at once" >}}
+
 ## Why I built MindRoom
 
 Programming has always been my biggest passion, and when AI coding agents suddenly became extremely good, the jump in what I could do in a single day was the biggest I had ever seen.
