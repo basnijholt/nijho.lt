@@ -5,14 +5,14 @@ authors:
 - Jakob Kammhuber
 - Maja C. Cassidy
 - Hao Zhang
-- Önder Gül
+- Önder Gül
 - Fei Pei
 - Michiel W. A. de Moor
 - Bas Nijholt
 - Kenji Watanabe
 - Takashi Taniguchi
 - Diana Car
-- Sébastien R. Plissard
+- Sébastien R. Plissard
 - Erik P. A. M. Bakkers
 - Leo P. Kouwenhoven
 
