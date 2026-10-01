@@ -54,6 +54,7 @@ Qwen on low already writes more tokens than Luna on xhigh.
 
 So the name of a setting says little on its own.
 I compare both models at xhigh, the highest setting Qwen offers, and count the tokens each one actually uses.
+The extra tokens Qwen needs are part of what I am measuring.
 There, Qwen scores 33.7 on the Artificial Analysis Intelligence Index and Luna scores 34.6.
 For reference, Claude Opus 4.6, a frontier model from February, scores 31.9.
 
@@ -67,6 +68,7 @@ Qwen through the cheapest provider that does not keep your data (ZDR) costs $619
 Two things cause that gap: providers charge almost four times as much per output token for Qwen, and Qwen generates almost three times as many tokens to get the same work done.
 
 The middle bar is my own machine: running Qwen on my GPUs costs about as much in electricity alone as Luna's entire bill.
+What I care about is the cheapest way to get answers of Qwen's quality, from whichever model gives them.
 
 ## 2. "But my GPUs are already paid for"
 
@@ -75,6 +77,8 @@ This is the argument I hear most, so assume the hardware is free and only the el
 I assume the best case for my machine.
 Both 3090s run their own copy of Qwen with multi-token prediction (MTP), for about 150 tokens per second together, while the machine draws 700 W.[^setup]
 My machine then needs three weeks, running day and night, to get through the benchmark once.
+I also give my Q4_K_M copy the score Artificial Analysis measured through an API.
+I have not rerun the benchmark on it, and anything lost to quantization makes my machine look worse.
 
 {{< plot name="electricityCost" caption="Electricity for one benchmark run of Qwen3.8 27B on my two 3090s, by electricity price. The dashed line is what Luna charges for the same work, with OpenAI's hardware and margin included. Hover for values." >}}
 
@@ -94,15 +98,16 @@ It counts how many agents a system can serve while each one still gets at least 
 {{< plot name="agentsPerKw" caption="Coding agents served per kW of accelerator power, each getting at least 60 tokens per second, from AgentPerf. The datacenter systems all run DeepSeek V4 Pro. The 3090 bar is my estimate for Qwen3.8 27B, a much smaller model, so the comparison favors my machine." >}}
 
 The rack of 36 GB300s serves 20 times more agents per kW than the 8-GPU H200 server.
-Newer chips explain part of that, but the B300 and the GB300 are the same generation of chip.
-The gap between those two bars is scale alone: the rack splits the work across its GPUs and keeps more than a thousand agents in flight at once.
+Part of that is newer chips, and part is software: NVIDIA tuned the B300 and GB300 setups itself, while Artificial Analysis configured the H200 one.
+The B300 and the GB300 share both the chip generation and the software.
+Most of the gap between those two bars comes from the rack itself: 36 GPUs on one fast interconnect keep more than a thousand agents in flight at once.
 My two 3090s serve one conversation each.
 
 ## 4. "But I have solar panels"
 
 Solar power is not free.
 With net metering, every kWh my GPUs burn is a kWh that does not get credited at the retail price.
-Without net metering, it is a kWh I do not sell.
+Without net metering, it is a kWh I do not sell, unless the surplus would go to waste anyway, which is the free-power case below.
 And the GPUs also run at night.
 
 But fine, say the electricity is free and the only cost is the hardware.
@@ -116,6 +121,7 @@ To make this fair to open models, imagine an open model that is exactly as effic
 
 With free power, the GPUs pay for themselves if they are busy 3 hours a day, every day for three years.
 At 18 cents per kWh, they need 5.
+That uses what I paid for the cards; at today's price of about $1,500 each, the 5 hours become 9.
 
 And API prices keep falling.
 GPT-6 Luna costs 58% less per output token than GPT-5.6 Luna did in July.
@@ -140,13 +146,14 @@ The models that fit on my 3090s keep improving, but they stay about half a year 
 For me, this is a hobby, and a hobby is allowed to be inefficient.
 It gets worse once you try to use self-hosted models seriously, say for a team of ten developers.
 
-You have to buy hardware for the busiest hour of the year, not for the average one.
+If you stay fully self-hosted and want fast responses at peak, you have to buy hardware for the busiest hour of the year, not for the average one.
 The rest of the time, it sits idle.
 
 {{< plot name="peakLoad" caption="An illustrative week of coding agents for a ten-person team. The hardware has to cover the busiest hour of the year, but a typical week uses only a fraction of it." >}}
 
 In this made-up but realistic week, the team uses 17% of what it paid for, so every token costs about six times more than it would at full load.
 You also need a spare GPU for when one dies, and someone who gets paged when it does.
+You could queue work or send the peaks to an API, but then you are paying for an API anyway.
 
 An API provider has the opposite situation.
 It serves thousands of customers across every time zone, so its load curve is much flatter than yours.
@@ -163,6 +170,7 @@ Take DeepSeek V4 Pro on the GB300 rack at its list price, and assume the worst c
 Each GPU still earns about as much per hour as it costs to rent a B200 from a smaller cloud provider, and that rent already includes the cloud provider's margin.
 If even 5% of the input tokens miss the cache, it earns three times that.
 A lab that owns its GPUs pays less than rent.
+This leaves out costs like staff and idle hardware, so it does not tell you whether a provider is profitable overall, only that today's prices cover the hardware that serves the tokens.
 
 The money goes to training, research, free users, and flat-rate subscriptions for heavy users like me.
 When I wrote that I used [$10,000 worth of API tokens for $200]({{< ref "/post/agentic-coding" >}}), that was list price, not what those tokens cost to serve.
@@ -201,7 +209,8 @@ DeepInfra, the cheapest full-precision ZDR provider, charges $619 for one benchm
 My machine pays for itself if it is busy 1.6 hours a day, or about an hour with free power (the first group in the chart in section 4).
 
 Providers charge a lot for a dense 27B model, because every token runs through all 27 billion parameters.
-So if you specifically need Qwen and use it heavily, self-hosting it pays off.
+Sparse open models, which use only a small part of their weights for each token, can be much cheaper to serve.
+If you specifically need Qwen and use it heavily, self-hosting it pays off.
 But you don't need Qwen to get answers of Qwen's quality.
 Luna gives you those for $67, with zero data retention.
 
