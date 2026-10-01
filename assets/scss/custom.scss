@@ -95,3 +95,16 @@ body:has(.svg-bleed) {
 body.dark .svg-bleed .bleed-ink {
   fill: #e8eef4;
 }
+
+/* Logos on project cards (layouts/partials/views/masonry.html): keep them at a fixed size with some room
+   around them instead of stretching them to the card width, which on a phone made every card a full screen. */
+.project-card .card-image-logo {
+  display: block;
+  padding: 1.25rem 1.25rem 0;
+}
+.project-card .card-image-logo img {
+  display: block;
+  width: 100%;
+  max-width: 220px;
+  margin: 0 auto;
+}
