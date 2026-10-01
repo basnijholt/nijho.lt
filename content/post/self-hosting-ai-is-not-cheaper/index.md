@@ -35,6 +35,9 @@ I don't pretend it saves money.
 All benchmark numbers and prices below come from [Artificial Analysis](https://artificialanalysis.ai/) and [OpenRouter](https://openrouter.ai/) as of September 30, 2026.
 I did the math for the hardware I own, and for the counterarguments I hear most.
 
+Benchmarks are not everything, and a high score does not reliably predict how a model does on real work.
+They are still the best we have: all models are benchmaxed, tuned to do well on the popular benchmarks, so the scores at least work as a reference frame for comparing them with each other.
+
 {{< toc >}}
 
 ## 1. The model I love, and the one that beats it on price
@@ -51,7 +54,7 @@ Qwen on low already writes more tokens than Luna on xhigh.
 
 So the name of a setting says little on its own.
 I compare both models at xhigh, the highest setting Qwen offers, and count the tokens each one actually uses.
-There, Qwen scores 33.7 on the Artificial Analysis Intelligence Index and Luna scores 34.6.[^benchmarks]
+There, Qwen scores 33.7 on the Artificial Analysis Intelligence Index and Luna scores 34.6.
 For reference, Claude Opus 4.6, a frontier model from February, scores 31.9.
 
 Artificial Analysis also publishes how many tokens each model used to run the index, and what that cost.
@@ -60,7 +63,7 @@ So I treat one run of the benchmark as a fixed pile of work, and ask what it cos
 {{< plot name="runCost" caption="Cost of one run of the Artificial Analysis Intelligence Index. The middle bar is electricity only, with the assumptions from section 2." >}}
 
 Luna does the whole pile for $67.
-Qwen through the cheapest provider that does not keep your data costs $619.
+Qwen through the cheapest provider that does not keep your data (ZDR) costs $619.
 Two things cause that gap: providers charge almost four times as much per output token for Qwen, and Qwen generates almost three times as many tokens to get the same work done.
 
 The middle bar is my own machine: running Qwen on my GPUs costs about as much in electricity alone as Luna's entire bill.
@@ -216,8 +219,6 @@ That is what [my local AI projects]({{< ref "/post/local-ai-journey" >}}) are fo
 
 Those are good reasons.
 Saving money is not one of them.
-
-[^benchmarks]: Benchmarks are not everything, and a high score does not reliably predict how a model does on real work. They are still the best we have. All models are benchmaxed, tuned to do well on the popular benchmarks, so the scores at least work as a reference frame for comparing models with each other.
 
 [^setup]: Artificial Analysis measured 151 tokens per second for Qwen3.8 27B in Q4_K_M on an RTX 5090, using llama.cpp with MTP. A 3090 has about half the memory bandwidth of a 5090, so I assume about 75 tokens per second per card. With a single 3090 and no MTP, you get about 30 tokens per second; the pile of work then takes 88 days, and the electricity alone costs more than Luna above 8 cents per kWh.
 
