@@ -173,7 +173,7 @@ export default {
       style: STYLE,
       fy: { domain: scenarios, axis: null, padding: 0.45 },
       y: { domain: rates, label: null, tickSize: 0 },
-      x: { domain: [0, 24], label: "Hours of nonstop generation per day", ticks: [0, 4, 8, 12, 16, 20, 24], grid: true, ...X_LABEL },
+      x: { domain: [0, 24], label: "Hours per day the GPUs are busy", ticks: [0, 4, 8, 12, 16, 20, 24], grid: true, ...X_LABEL },
       color: { domain: rates, range: [COLORS.local, COLORS.paid] },
       marks: [
         Plot.text(scenarios, { fy: (d) => d, text: (d) => d, frameAnchor: "top-left", lineAnchor: "bottom", dy: -8, dx: -100, fontWeight: "bold" }),

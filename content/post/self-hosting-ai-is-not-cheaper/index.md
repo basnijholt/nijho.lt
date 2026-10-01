@@ -1,7 +1,7 @@
 ---
 title: "Self-hosting AI does not save money, and I do it anyway"
 subtitle: "I run open-weight models on two RTX 3090s and love it. The math still says an API is cheaper, even with solar panels and zero-data-retention providers."
-summary: "Whenever I say that self-hosting AI is not economical, people hear that I am against self-hosting. I am not: I run Qwen3.8 27B at home and think open-weight models are great. This post compares it with GPT-6 Luna on the same pile of work, and explains why batching makes datacenters win."
+summary: "Whenever I say that self-hosting AI is not economical, people hear that I am against self-hosting. I am not: I run Qwen3.8 27B at home and think open-weight models are great. This post compares it with GPT-6 Luna on the same benchmark, and explains why batching makes datacenters win."
 date: 2026-09-30
 draft: true
 featured: false
@@ -58,11 +58,11 @@ There, Qwen scores 33.7 on the Artificial Analysis Intelligence Index and Luna s
 For reference, Claude Opus 4.6, a frontier model from February, scores 31.9.
 
 Artificial Analysis also publishes how many tokens each model used to run the index, and what that cost.
-So I treat one run of the benchmark as a fixed pile of work, and ask what it costs to get it done.
+So the question is simple: what does it cost to run the whole benchmark once?
 
 {{< plot name="runCost" caption="Cost of one run of the Artificial Analysis Intelligence Index. The middle bar is electricity only, with the assumptions from section 2." >}}
 
-Luna does the whole pile for $67.
+Luna runs the whole benchmark for $67.
 Qwen through the cheapest provider that does not keep your data (ZDR) costs $619.
 Two things cause that gap: providers charge almost four times as much per output token for Qwen, and Qwen generates almost three times as many tokens to get the same work done.
 
@@ -74,7 +74,7 @@ This is the argument I hear most, so assume the hardware is free and only the el
 
 I assume the best case for my machine.
 Both 3090s run their own copy of Qwen with multi-token prediction (MTP), for about 150 tokens per second together, while the machine draws 700 W.[^setup]
-The pile of work then takes 21 days of nonstop generation.
+My machine then needs three weeks, running day and night, to get through the benchmark once.
 
 {{< plot name="electricityCost" caption="Electricity for one benchmark run of Qwen3.8 27B on my two 3090s, by electricity price. The dashed line is what Luna charges for the same work, with OpenAI's hardware and margin included. Hover for values." >}}
 
@@ -107,14 +107,15 @@ And the GPUs also run at night.
 
 But fine, say the electricity is free and the only cost is the hardware.
 I was lucky and bought my two 3090s for about $750 each,[^3090] and I write them off over three years.
-How many hours a day does the machine then have to generate tokens, nonstop, before it beats the API?
+The GPUs only save money while they do work I would otherwise pay an API for, and while they sit idle they save nothing.
+So the question is how many hours a day they have to be busy before they pay for themselves.
 
 To make this fair to open models, imagine an open model that is exactly as efficient as Luna: the same quality from the same number of tokens, sold at Luna's price.
 
-{{< plot name="breakEven" caption="Hours per day of nonstop generation, every day for three years, before two $750 RTX 3090s beat a zero-data-retention API. The host PC is not counted." >}}
+{{< plot name="breakEven" caption="How many hours a day my two $750 RTX 3090s have to be busy, every day for three years, before they cost less than a ZDR API. The host PC is not counted." >}}
 
-With free power, that open model needs 3 hours of nonstop generation a day, every day for three years.
-At 18 cents per kWh, it needs 5.
+With free power, the GPUs pay for themselves if they are busy 3 hours a day, every day for three years.
+At 18 cents per kWh, they need 5.
 
 And API prices keep falling.
 GPT-6 Luna costs 58% less per output token than GPT-5.6 Luna did in July.
@@ -196,8 +197,8 @@ The `:free` tier is where you pay with your data.
 
 If you compare running Qwen3.8 27B yourself with paying for Qwen3.8 27B through an API, self-hosting wins.
 
-DeepInfra, the cheapest full-precision ZDR provider, charges $619 for the pile of work, while my electricity costs $64.
-My machine beats it after 1.6 hours of generation a day, or about an hour with free power (the first group in the chart in section 4).
+DeepInfra, the cheapest full-precision ZDR provider, charges $619 for one benchmark run, while my electricity costs $64.
+My machine pays for itself if it is busy 1.6 hours a day, or about an hour with free power (the first group in the chart in section 4).
 
 Providers charge a lot for a dense 27B model, because every token runs through all 27 billion parameters.
 So if you specifically need Qwen and use it heavily, self-hosting it pays off.
@@ -220,6 +221,6 @@ That is what [my local AI projects]({{< ref "/post/local-ai-journey" >}}) are fo
 Those are good reasons.
 Saving money is not one of them.
 
-[^setup]: Artificial Analysis measured 151 tokens per second for Qwen3.8 27B in Q4_K_M on an RTX 5090, using llama.cpp with MTP. A 3090 has about half the memory bandwidth of a 5090, so I assume about 75 tokens per second per card. With a single 3090 and no MTP, you get about 30 tokens per second; the pile of work then takes 88 days, and the electricity alone costs more than Luna above 8 cents per kWh.
+[^setup]: Artificial Analysis measured 151 tokens per second for Qwen3.8 27B in Q4_K_M on an RTX 5090, using llama.cpp with MTP. A 3090 has about half the memory bandwidth of a 5090, so I assume about 75 tokens per second per card. With a single 3090 and no MTP, you get about 30 tokens per second; one benchmark run then takes 88 days, and the electricity alone costs more than Luna above 8 cents per kWh.
 
 [^3090]: The 3090 is still the value king for VRAM per dollar, and $750 badly understates what mine are worth. That is what I paid more than a year ago; today a used 3090 sells for about $1,500. Even at that price it costs $62.50 per GB of VRAM, the same as an RTX 5090 at its $2,000 launch price, which is not what a 5090 sells for today. The right number for this calculation is what I could sell my cards for, and at $1,500 each the break-even points roughly double: at 18 cents per kWh, the same-model case moves from 1.6 to 2.9 hours per day, and the Luna-efficient case from 5.2 to 9.2 hours per day.
