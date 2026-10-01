@@ -1,0 +1,16 @@
+{{/* Isotope positions the project cards once. Re-run its layout whenever the grid changes width, because
+     Safari's page zoom changes the card widths without a resize event and leaves the old positions behind. */}}
+{{ if .Page.Store.Get "has_isotope" }}
+<script>
+  window.addEventListener('load', () => {
+    document.querySelectorAll('.projects-container').forEach((grid) => {
+      let width = grid.offsetWidth;
+      new ResizeObserver(() => {
+        if (grid.offsetWidth === width) return;
+        width = grid.offsetWidth;
+        Isotope.data(grid)?.layout();
+      }).observe(grid);
+    });
+  });
+</script>
+{{ end }}
