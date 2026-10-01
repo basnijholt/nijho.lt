@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-labelledby="title desc">
+  <title id="title">pytest-shm</title>
+  <desc id="desc">A memory module whose chips light up green one after another, like passing tests.</desc>
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="board" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#14b8a6"/>
+      <stop offset="1" stop-color="#0f766e"/>
+    </linearGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="contacts" x="0" y="0" width="7" height="12" patternUnits="userSpaceOnUse">
+      <rect width="4" height="12" rx="1" fill="#fbbf24"/>
+    </pattern>
+    <clipPath id="module">
+      <path id="outline" d="M36 76H204a8 8 0 0 1 8 8V158H125v-9h-10v9H28V84a8 8 0 0 1 8-8Z"/>
+    </clipPath>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <style>
+    .led {
+      fill: #22c55e;
+      opacity: 0.22;
+      animation: pass 2.8s ease-in-out infinite;
+    }
+    .led:nth-of-type(2) { animation-delay: 0.35s; }
+    .led:nth-of-type(3) { animation-delay: 0.7s; }
+    .led:nth-of-type(4) { animation-delay: 1.05s; }
+    @keyframes pass {
+      0%, 100% { opacity: 0.22; }
+      12%, 55% { opacity: 1; }
+      75% { opacity: 0.22; }
+    }
+    .sheen { animation: sweep 5.6s ease-in-out infinite; }
+    @keyframes sweep {
+      0% { transform: translateX(-90px); }
+      45%, 100% { transform: translateX(260px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .led, .sheen { animation: none; }
+      .led { opacity: 1; }
+      .sheen { display: none; }
+    }
+  </style>
+
+  <rect x="0.5" y="0.5" width="239" height="239" rx="51.5" fill="url(#tile)" stroke="#334155"/>
+
+  <g transform="translate(0 -16)">
+    <use href="#outline" fill="url(#board)"/>
+    <g fill="#0b1220" stroke="#1e3a44" stroke-width="1.5">
+      <rect x="40" y="88" width="34" height="42" rx="3"/>
+      <rect x="83" y="88" width="34" height="42" rx="3"/>
+      <rect x="126" y="88" width="34" height="42" rx="3"/>
+      <rect x="169" y="88" width="34" height="42" rx="3"/>
+    </g>
+    <g filter="url(#glow)">
+      <circle class="led" cx="57" cy="109" r="5"/>
+      <circle class="led" cx="100" cy="109" r="5"/>
+      <circle class="led" cx="143" cy="109" r="5"/>
+      <circle class="led" cx="186" cy="109" r="5"/>
+    </g>
+    <rect x="35" y="142" width="74" height="12" fill="url(#contacts)"/>
+    <rect x="133" y="142" width="74" height="12" fill="url(#contacts)"/>
+    <g clip-path="url(#module)">
+      <rect class="sheen" x="0" y="70" width="70" height="95" fill="url(#sheen)"/>
+    </g>
+
+    <text x="120" y="200" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="26" font-weight="600" fill="#e2e8f0">pytest<tspan fill="#2dd4bf">-shm</tspan></text>
+  </g>
+</svg>
