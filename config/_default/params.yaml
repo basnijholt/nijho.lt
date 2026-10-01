@@ -64,7 +64,9 @@ features:
     extra_languages:
       - python
   math:
-    enable: true
+    # Off site-wide: MathJax treats any two dollar signs in a paragraph as inline math,
+    # which breaks prices in posts. Pages with LaTeX opt in with `math: true`.
+    enable: false
   privacy_pack:
     enable: false
   repository:
