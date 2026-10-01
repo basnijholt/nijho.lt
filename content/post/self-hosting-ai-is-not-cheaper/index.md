@@ -43,7 +43,9 @@ They are still the best we have: all models are benchmaxed, tuned to do well on 
 ## 1. The model I love, and the one that beats it on price
 
 My favorite local model right now is [Qwen3.8 27B](https://artificialanalysis.ai/models/qwen3-8-27b).
-It came out in August, it is Apache-2.0, and in Q4_K_M it fits on a single 24 GB card.
+It came out in August and it is Apache-2.0.
+People often say models like this run on a single gaming GPU, but that is only true after quantizing them.
+At full precision, Qwen3.8 27B needs about 54 GB of memory; in Q4_K_M, about 5 bits per weight, it fits on one 24 GB card, at some cost in quality.
 
 I compare it with OpenAI's GPT-6 Luna, the cheap tier released on September 22.
 Both models let you choose how long they think, but the settings do not mean the same thing for both.
@@ -64,7 +66,7 @@ So the question is simple: what does it cost to run the whole benchmark once?
 {{< plot name="runCost" caption="Cost of one run of the Artificial Analysis Intelligence Index. The middle bar is electricity only, with the assumptions from section 2." >}}
 
 Luna runs the whole benchmark for $67.
-Qwen through the cheapest provider that does not keep your data (ZDR) costs $619.
+Qwen at full precision, through the cheapest provider that does not keep your data (ZDR), costs $619.
 Two things cause that gap: providers charge almost four times as much per output token for Qwen, and Qwen generates almost three times as many tokens to get the same work done.
 
 The middle bar is my own machine: running Qwen on my GPUs costs about as much in electricity alone as Luna's entire bill.
@@ -77,7 +79,7 @@ This is the argument I hear most, so assume the hardware is free and only the el
 I assume the best case for my machine.
 Both 3090s run their own copy of Qwen with multi-token prediction (MTP), for about 150 tokens per second together, while the machine draws 700 W.[^setup]
 My machine then needs three weeks, running day and night, to get through the benchmark once.
-I also give my Q4_K_M copy the score Artificial Analysis measured through an API.
+I also give my quantized copy the score Artificial Analysis measured through Alibaba's API.
 I have not rerun the benchmark on it, and anything lost to quantization makes my machine look worse.
 
 {{< plot name="electricityCost" caption="Electricity for one benchmark run of Qwen3.8 27B on my two 3090s, by electricity price. The dashed line is what Luna charges for the same work, with OpenAI's hardware and margin included. Hover for values." >}}
@@ -192,8 +194,8 @@ That is why I only used prices from providers that OpenRouter lists as zero data
 |---|---|---|---|
 | GPT-6 Luna | OpenAI | no | 0.50 |
 | GPT-6 Luna | Azure | yes | 0.50 |
-| Qwen3.8 27B | AkashML | yes | 1.78 |
-| Qwen3.8 27B | DeepInfra | yes | 1.88 |
+| Qwen3.8 27B | AkashML (FP8) | yes | 1.78 |
+| Qwen3.8 27B | DeepInfra (full precision) | yes | 1.88 |
 | Qwen3.8 27B | Alibaba | no | 2.55 |
 | Qwen3.8 27B | Cloudflare | no | 3.20 |
 
@@ -206,6 +208,7 @@ The `:free` tier is where you pay with your data.
 If you compare running Qwen3.8 27B yourself with paying for Qwen3.8 27B through an API, self-hosting wins.
 
 DeepInfra, the cheapest full-precision ZDR provider, charges $619 for one benchmark run, while my electricity costs $64.
+That compares the full model with my quantized copy, so the gap overstates my advantage by whatever quantization costs in quality.
 My machine pays for itself if it is busy 1.6 hours a day, or about an hour with free power (the first group in the chart in section 4).
 
 Providers charge a lot for a dense 27B model, because every token runs through all 27 billion parameters.

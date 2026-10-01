@@ -65,8 +65,8 @@ export default {
     const groups = ["Closed model via API", "Open model on my 3090s (electricity only)", "Open model via API"];
     const data = [
       { label: "GPT-6 Luna via API", cost: LUNA_COST, group: groups[0] },
-      { label: narrow ? "Qwen3.8 27B on my 3090s, electricity" : "Qwen3.8 27B on my two 3090s, electricity at 18 cents/kWh", cost: QWEN_KWH * 0.18, group: groups[1] },
-      { label: narrow ? "Qwen3.8 27B via the cheapest ZDR API" : "Qwen3.8 27B via the cheapest zero-data-retention API", cost: 619, group: groups[2] },
+      { label: narrow ? "Qwen3.8 27B, quantized, on my 3090s" : "Qwen3.8 27B, quantized, on my two 3090s: electricity at 18 cents/kWh", cost: QWEN_KWH * 0.18, group: groups[1] },
+      { label: narrow ? "Qwen3.8 27B, full precision, ZDR API" : "Qwen3.8 27B, full precision, via the cheapest ZDR API", cost: 619, group: groups[2] },
     ];
     // Horizontal bars drawn as thick rules, with the label above each bar so it fits on phones.
     return Plot.plot({
