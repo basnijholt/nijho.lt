@@ -65,7 +65,7 @@
 }
 
 // Inline SVG whose glow bleeds past the content column (bleed-svg shortcode).
-// The SVG's viewBox is padded by 22.5% on each side, which the negative margins cancel.
+// The SVG's viewBox is padded by 22.5% on each side, which the stage's negative margins cancel.
 html:has(.svg-bleed),
 body:has(.svg-bleed) {
   overflow-x: clip;
@@ -82,11 +82,16 @@ body:has(.svg-bleed) {
   display: flow-root;
   margin: 2rem 0;
 }
-.svg-bleed svg {
-  display: block;
+// The stage is the SVG's box, so glow elements drawn over it can be positioned in percentages of the viewBox.
+.svg-bleed-stage {
+  position: relative;
   width: 145%;
-  height: auto;
   margin: -22.5%;
+}
+.svg-bleed-stage svg {
+  display: block;
+  width: 100%;
+  height: auto;
   overflow: visible;
 }
 .svg-bleed .bleed-ink {
