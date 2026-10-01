@@ -5,6 +5,10 @@ summary: "MindRoom grew one small group at a time at IonQ, until a company-wide 
 date: 2026-09-30
 draft: false
 featured: false
+image:
+  caption: "The MindRoom cube and the IonQ logo, connected by a collapsing wave"
+  focal_point: ""
+  preview_only: true
 authors:
   - admin
 tags:
