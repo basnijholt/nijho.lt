@@ -155,3 +155,23 @@ body:not(.dark) .demo-clip-dark {
   max-width: 220px;
   margin: 0 auto;
 }
+
+// Square photo thumbnails on the homepage (photo-grid shortcode), each linking to its Instagram post.
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin: 1.5rem 0 1rem;
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 4px;
+    transition: opacity 0.2s;
+  }
+  a:hover img {
+    opacity: 0.85;
+  }
+}

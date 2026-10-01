@@ -1,0 +1,17 @@
+{{- /* A grid of photos that link to their Instagram posts; styles in assets/scss/custom.scss (.photo-grid).
+  Each inner line is "<post id> | <alt text>", with the photo stored at assets/media/photography/<post id>.jpg. */ -}}
+<div class="photo-grid">
+  {{- range split (trim .Inner "\n") "\n" }}
+    {{- $parts := split . "|" }}
+    {{- $id := trim (index $parts 0) " " }}
+    {{- $alt := trim (index $parts 1) " " }}
+    {{- with resources.Get (printf "media/photography/%s.jpg" $id) }}
+      {{- $image := .Process "webp" }}
+  <a href="https://www.instagram.com/p/{{ $id }}/" target="_blank" rel="noopener">
+    <img src="{{ $image.RelPermalink }}" width="{{ $image.Width }}" height="{{ $image.Height }}" alt="{{ $alt }}" loading="lazy">
+  </a>
+    {{- else }}
+      {{- errorf "photo-grid: no assets/media/photography/%s.jpg (%s)" $id $.Position }}
+    {{- end }}
+  {{- end }}
+</div>
