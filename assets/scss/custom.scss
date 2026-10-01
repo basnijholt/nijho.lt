@@ -187,3 +187,23 @@ body:not(.dark) .demo-clip-dark {
     opacity: 0.85;
   }
 }
+
+/* Observable Plot charts (layouts/shortcodes/plot.html). */
+.plot-figure {
+  margin: 2rem 0;
+}
+.plot-figure svg {
+  overflow: visible;
+}
+.dark .plot-figure svg {
+  /* Background of Plot's tooltips; its default is white. */
+  --plot-background: #1e1f24;
+}
+.plot-figure figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.85em;
+  opacity: 0.8;
+}
+.plot-figure [class$="-swatches"] {
+  font-size: 13px;
+}
