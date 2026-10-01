@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-labelledby="title desc">
+  <title id="title">zfs-tenant</title>
+  <desc id="desc">A storage pool with two dim compartments that belong to the host and one locked amber compartment that belongs to a friend. The friend's encrypted blocks fill their compartment up to a dashed quota line and stop there.</desc>
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="fill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbbf24"/>
+      <stop offset="1" stop-color="#d97706"/>
+    </linearGradient>
+    <pattern id="cipher" x="148" y="0" width="11" height="10" patternUnits="userSpaceOnUse">
+      <rect x="1" y="1" width="9" height="8" rx="1.5" fill="#000" fill-opacity="0.18"/>
+      <rect x="3" y="3" width="3" height="2" rx="0.5" fill="#fff" fill-opacity="0.25"/>
+    </pattern>
+    <clipPath id="tenant">
+      <rect x="148" y="68" width="44" height="80" rx="6"/>
+    </clipPath>
+  </defs>
+  <style>
+    .level { animation: rise 6s ease-in-out infinite; }
+    @keyframes rise {
+      0% { transform: translateY(80px); }
+      45%, 80% { transform: translateY(26px); }
+      95%, 100% { transform: translateY(80px); }
+    }
+    .quota { animation: bump 6s ease-in-out infinite; }
+    @keyframes bump {
+      0%, 40% { stroke-opacity: 0.55; }
+      46%, 60% { stroke-opacity: 1; }
+      80%, 100% { stroke-opacity: 0.55; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .level, .quota { animation: none; }
+      .level { transform: translateY(26px); }
+      .quota { stroke-opacity: 1; }
+    }
+  </style>
+
+  <rect x="0.5" y="0.5" width="239" height="239" rx="51.5" fill="url(#tile)" stroke="#334155"/>
+
+  <g transform="translate(0 -12)">
+    <rect x="36" y="56" width="168" height="104" rx="12" fill="#0b1220" stroke="#334155" stroke-width="1.5"/>
+
+    <g fill="#1e293b" stroke="#334155">
+      <rect x="48" y="68" width="44" height="80" rx="6"/>
+      <rect x="100" y="68" width="44" height="80" rx="6"/>
+    </g>
+    <g fill="#475569" fill-opacity="0.55">
+      <rect x="54" y="118" width="32" height="8" rx="2"/>
+      <rect x="54" y="130" width="32" height="8" rx="2"/>
+      <rect x="54" y="106" width="20" height="8" rx="2"/>
+      <rect x="106" y="94" width="32" height="8" rx="2"/>
+      <rect x="106" y="106" width="32" height="8" rx="2"/>
+      <rect x="106" y="118" width="32" height="8" rx="2"/>
+      <rect x="106" y="130" width="32" height="8" rx="2"/>
+    </g>
+
+    <rect x="148" y="68" width="44" height="80" rx="6" fill="#1c1408"/>
+    <g clip-path="url(#tenant)">
+      <g class="level">
+        <rect x="148" y="68" width="44" height="80" fill="url(#fill)"/>
+        <rect x="148" y="68" width="44" height="80" fill="url(#cipher)"/>
+      </g>
+    </g>
+    <line class="quota" x1="151" y1="85" x2="189" y2="85" stroke="#fef3c7" stroke-width="2.5" stroke-dasharray="4 3" stroke-linecap="round"/>
+    <rect x="148" y="68" width="44" height="80" rx="6" fill="none" stroke="#f59e0b" stroke-width="2"/>
+
+    <g transform="translate(183 60)">
+      <circle r="13" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+      <path d="M-4.5 -1.5v-3a4.5 4.5 0 0 1 9 0v3" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+      <rect x="-6.5" y="-1.5" width="13" height="9.5" rx="2" fill="#fbbf24"/>
+      <circle cy="3" r="1.6" fill="#0f172a"/>
+    </g>
+
+    <text x="120" y="200" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="26" font-weight="600" fill="#e2e8f0">zfs<tspan fill="#fbbf24">-tenant</tspan></text>
+  </g>
+</svg>
