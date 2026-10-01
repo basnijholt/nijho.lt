@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120" width="100" height="120">
+  <defs>
+    <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3B82F6"/>
+      <stop offset="100%" style="stop-color:#1D4ED8"/>
+    </linearGradient>
+  </defs>
+
+  <style>
+    @keyframes ring-progress {
+      0%, 100% { stroke-dasharray: 168 240; }
+      25% { stroke-dasharray: 192 240; }
+      50% { stroke-dasharray: 144 240; }
+      75% { stroke-dasharray: 180 240; }
+    }
+    @keyframes bar1 {
+      0%, 100% { height: 20px; y: 40px; }
+      50% { height: 28px; y: 32px; }
+    }
+    @keyframes bar2 {
+      0%, 100% { height: 30px; y: 35px; }
+      50% { height: 22px; y: 43px; }
+    }
+    @keyframes bar3 {
+      0%, 100% { height: 24px; y: 38px; }
+      50% { height: 32px; y: 30px; }
+    }
+    .ring-animated { animation: ring-progress 4s ease-in-out infinite; }
+    .bar1 { animation: bar1 3s ease-in-out infinite; }
+    .bar2 { animation: bar2 3.5s ease-in-out infinite; }
+    .bar3 { animation: bar3 2.8s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) {
+      .ring-animated, .bar1, .bar2, .bar3 { animation: none; }
+    }
+  </style>
+
+  <!-- Outer ring (background) -->
+  <circle cx="50" cy="50" r="38" fill="none" stroke="#E5E7EB" stroke-width="8"/>
+
+  <!-- Usage arc (animated) -->
+  <circle class="ring-animated" cx="50" cy="50" r="38" fill="none" stroke="url(#ringGradient)" stroke-width="8"
+          stroke-dasharray="168 240" stroke-dashoffset="-36" stroke-linecap="round"/>
+
+  <!-- Center display -->
+  <circle cx="50" cy="50" r="26" fill="#F8FAFC"/>
+
+  <!-- Bar chart in center (centered) -->
+  <rect class="bar1" x="36" y="40" width="7" height="20" rx="2" fill="#10B981"/>
+  <rect class="bar2" x="46" y="35" width="7" height="30" rx="2" fill="#3B82F6"/>
+  <rect class="bar3" x="56" y="38" width="7" height="24" rx="2" fill="#8B5CF6"/>
+
+  <!-- Text "slurm-usage" -->
+  <text x="50" y="110" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#3B82F6">slurm-usage</text>
+</svg>
