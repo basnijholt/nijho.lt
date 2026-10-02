@@ -189,12 +189,17 @@ And more concurrent requests mean bigger batches, which is where the efficiency 
 Another argument I hear is that API prices are subsidized by investors and will go up once those investors want their money back.
 I don't think that holds for inference.
 
-AgentPerf also reports how many tokens each GPU serves per hour, and Artificial Analysis lists API prices and GPU rental prices.
-Take DeepSeek V4 Pro on the GB300 rack at its list price, and assume the worst case for the provider: every input token is billed at the cheap cache-hit rate.
-Each GPU still earns about as much per hour as it costs to rent a B200 from a smaller cloud provider, and that rent already includes the cloud provider's margin.
-If even 5% of the input tokens miss the cache, it earns three times that.
-A lab that owns its GPUs pays less than rent.
-This leaves out costs like staff and idle hardware, so it does not tell you whether a provider is profitable overall, only that today's prices cover the hardware that serves the tokens.
+AgentPerf also reports how many tokens each GPU serves.
+On the GB300 rack, one GPU serving DeepSeek V4 Pro handles about 4 million output tokens and 530 million input tokens per hour.
+Most of that input is conversation history that coding agents send again with every step.
+Providers keep it in a cache and charge less than 1% of the normal input price for it.
+
+At DeepSeek V4 Pro's list prices, that GPU brings in at least $5.70 per hour, even if every input token is billed at the cache price.
+If 5% of the input misses the cache, it brings in about $17.
+Renting a B200, the closest GPU with a published rental price, costs $3.50 to $5.90 per hour from smaller cloud providers, and that price already includes their profit.
+
+So the tokens pay for the hardware that serves them, even in the worst case.
+This leaves out costs like staff and training, so it does not tell you whether a lab makes money overall.
 
 The money goes to training, research, free users, and flat-rate subscriptions for heavy users like me.
 When I wrote that I used [$10,000 worth of API tokens for $200]({{< ref "/post/agentic-coding" >}}), that was list price, not what those tokens cost to serve.
