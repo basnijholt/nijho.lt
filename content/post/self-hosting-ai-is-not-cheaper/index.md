@@ -2,8 +2,8 @@
 title: "Self-hosting AI does not save money, and I do it anyway"
 subtitle: "I run open-weight models on two RTX 3090s and love it. The math still says an API is cheaper, even with solar panels and zero-data-retention providers."
 summary: "Whenever I say that self-hosting AI is not economical, people hear that I am against self-hosting. I am not: I run Qwen3.8 27B at home and think open-weight models are great. This post compares it with GPT-6 Luna on the same benchmark, and explains why batching makes datacenters win."
-date: 2026-09-30
-draft: true
+date: 2026-10-02
+draft: false
 featured: false
 authors:
   - admin
