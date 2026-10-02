@@ -233,11 +233,11 @@ export default {
     // Years of nonstop generation before the hardware is paid off; null = never.
     // Savings per year = runs per year x (API cost per run - electricity per run). See the footnote for inputs.
     const machines = [
-      { machine: "2× RTX 3090 ($1,500)", model: "Qwen3.8 27B INT4 vs Luna xhigh", years: [1.7, null] },
-      { machine: "AMD Ryzen AI Max+ 395 ($4,000)", model: "Qwen3.8-Flash-Next Q4 vs Luna max", years: [6.1, 8.5] },
-      { machine: "DGX Spark ($6,950)", model: "Qwen3.8-Flash-Next Q4 vs Luna max", years: [8.5, 12.0] },
-      { machine: "M5 Max 128 GB ($7,000)", model: "Qwen3.8-Flash-Next Q2 vs Luna max", years: [10.4, 13.2] },
-      { machine: "RTX PRO 6000 (~$15,000)", model: "Qwen3.8-Flash-Next Q3 vs Luna max", years: [3.4, 4.4] },
+      { machine: "2× RTX 3090, 48 GB ($1,500)", model: "Qwen3.8 27B INT4 vs Luna xhigh", years: [1.7, null] },
+      { machine: "AMD Ryzen AI Max+ 395, 128 GB ($4,000)", model: "Qwen3.8-Flash-Next Q4 vs Luna max", years: [6.1, 8.5] },
+      { machine: "DGX Spark, 128 GB ($6,950)", model: "Qwen3.8-Flash-Next Q4 vs Luna max", years: [8.5, 12.0] },
+      { machine: "M5 Max, 128 GB ($7,000)", model: "Qwen3.8-Flash-Next Q2 vs Luna max", years: [10.4, 13.2] },
+      { machine: "RTX PRO 6000, 96 GB (~$15,000)", model: "Qwen3.8-Flash-Next Q3 vs Luna max", years: [3.4, 4.4] },
     ].map((m) => ({ ...m, name: narrow ? `${m.machine}\n${m.model}` : `${m.machine}, ${m.model}` }));
     const rates = ["Free (solar)", "18 cents/kWh"];
     const data = machines.flatMap((m) => rates.map((rate, j) => ({ machine: m.name, rate, years: m.years[j] })));

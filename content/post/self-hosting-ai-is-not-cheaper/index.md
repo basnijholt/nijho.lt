@@ -35,6 +35,7 @@ I do it for fun, for sovereignty, and for privacy, which I come back to at the e
 
 All benchmark numbers and prices below come from [Artificial Analysis](https://artificialanalysis.ai/) and [OpenRouter](https://openrouter.ai/) as of September 30, 2026.
 I did the math for the hardware I own, and for the counterarguments I hear most.
+All assumptions are listed [at the end](#appendix-all-assumptions).
 
 Benchmarks are not everything, and a high score does not reliably predict how a model does on real work.
 They are still the best we have: all models are benchmaxed, tuned to do well on the popular benchmarks, so the scores at least work as a reference frame for comparing them with each other.
@@ -170,7 +171,7 @@ So how many years would each machine have to run nonstop before it pays for itse
 Even with free power, the 128 GB machines need six to ten years.
 The AMD machine draws only about 120 W, but it is slow too: one benchmark run of Qwen3.8 27B takes it four and a half months, and almost as much energy as my 3090s.
 The RTX PRO 6000 runs the same model several times faster and pays off in three to four and a half years.
-My 3090s pay off in under two years with free power, which is why the 3090 is still the value king, but at 18 cents per kWh they never do.
+My 3090s pay off in under two years with free power, which is why the 3090 is still the value king, but at 18 cents per kWh they never do: the electricity for one run already costs more than Luna charges for it.
 
 Ten years is a long time in AI.
 Better and more efficient open models will run on the same machines, but the frontier moves at the same pace, and API prices keep falling.
@@ -286,6 +287,39 @@ That is what [my local AI projects]({{< ref "/post/local-ai-journey" >}}) are fo
 Those are good reasons.
 Saving money is not one of them.
 
+## Appendix: all assumptions
+
+{{< detail-tag "Show all assumptions, and which side each one favors" >}}
+
+**Assumptions that favor self-hosting**
+
+- The host PC around the GPUs is not counted, and my 3090s count at the $750 each I paid, not the $1,500 they sell for today.
+- Quantized local copies get the score Artificial Analysis measured through an API, with no penalty for quantization.
+- The payback chart assumes each machine is busy 24 hours a day, with no idle time.
+- API prices stay where they are, although GPT-6 Luna's output price is 58% lower than GPT-5.6 Luna's, two and a half months earlier.
+- My time to set up and maintain the machine is not counted.
+- Every machine also gets a case with free electricity.
+
+**Assumptions that favor the API**
+
+- The example electricity price is 18 cents per kWh, and some people pay less.
+- My machine serves one request at a time; batching several requests could raise its total throughput.
+- The hardware has no resale value at the end.
+- Waste heat that replaces heating in winter is not counted.
+- API outages, rate limits, and deprecated models are not counted.
+
+**Inputs**
+
+- Benchmark: the Artificial Analysis Intelligence Index on September 30, 2026, at the xhigh reasoning setting, or the highest setting where noted. Its token counts per model are the unit of work.
+- API prices: the cheapest zero-data-retention endpoints on OpenRouter, with cached input billed at the cache price.
+- My machine: two RTX 3090s capped at 270 W, running Qwen3.8 27B in vLLM with AutoRound INT4 and DFlash2. Measured: 107 tokens per second, 1,600 tokens per second of prefill, and 540 W for both GPUs. Estimated: about 700 W for the whole machine under load and 150 W idle.
+- Break-even: the cards are written off over three years; busy hours save what the API would charge minus the electricity, and idle hours cost the idle power.
+- Other machines: prices, power, and speeds as in the footnotes. The M5 Max numbers come from a reader, and the DGX Spark, AMD Ryzen AI Max+ 395, and RTX PRO 6000 speeds are estimated from Artificial Analysis measurements.
+- Datacenter: AgentPerf measures accelerator power only, and the B200 rental price stands in for the GB300, which has no published rental price.
+- Small company: the peak-load week is made up.
+
+{{< /detail-tag >}}
+
 [^method]: For each model, Artificial Analysis publishes how many input and output tokens the whole index took, and how many of the input tokens were read from a cache. I multiplied those by each provider's prices, with cached input at the cache price. For Qwen that is 198 million output tokens and 820 million input tokens that miss the cache. For the bars at home, the same tokens divided by the machine's speed give the run time, with the uncached input processed at the 1,600 tokens per second I measured on my 3090s and an estimated 2,000 on the RTX PRO 6000, and the run time times the machine's power and the price per kWh gives the electricity.
 
 [^breakeven]: While the cards are busy, they save what the API would have charged for the same work, minus the electricity at 700 W. While they are idle, the machine still draws about 150 W, of which the two GPUs with the model loaded take 85 W. The break-even point is the number of busy hours per day at which those savings cover the price of the cards, written off over three years, plus the idle power.
@@ -296,6 +330,6 @@ Saving money is not one of them.
 
 [^powercap]: The stock limit is 350 W. My cards sit in a [normal desktop case with normal fans]({{< ref "/post/local-ai-journey" >}}), and I worry that running both at full power for hours would shorten their life. The cap is [a few lines in my NixOS configuration](https://github.com/basnijholt/dotfiles/blob/e63a3f341ff36b7b57bf31361c2844e1d8b78e95/configs/nixos/hosts/pc/nvidia-undervolt.nix#L1-L7), and measurements from Puget Systems and r/LocalLLaMA put a 3090 at about 95% of its speed at 270 W. That is 77% of the power for 95% of the speed, so the cap also lowers my electricity cost per token.
 
-[^macspark]: The M5 Max numbers come from the reader: Qwen3.8-Flash-Next at Q2 (about 2.7 bits per weight), about 45 tokens per second, 1,250 tokens per second of prefill, and about 90 W, on a $7,000 laptop. The other machines run it at about 4.5 bits, except the RTX PRO 6000, which needs about 3.5 bits (79 GB) to fit in 96 GB. For their speed, I took Artificial Analysis's measurements of Qwen3.8 27B on each machine (for the RTX PRO 6000, on an RTX 5090, which has the same chip and memory bandwidth) and doubled them, because the owner of the AMD machine finds Qwen3.8-Flash-Next about twice as fast as Qwen3.8 27B. That gives about 55 tokens per second on the DGX Spark ($6,950, about 150 W), 47 on the AMD Ryzen AI Max+ 395 ($4,000, the price Artificial Analysis lists, about 120 W), and 300 on the RTX PRO 6000 ($15,000, the middle of its price range, about 600 W). All of them are compared with GPT-6 Luna on its highest setting, which runs the whole benchmark for $122. The 3090s run Qwen3.8 27B, as in the rest of this post, and are compared with Luna on xhigh. Artificial Analysis measured Qwen3.8 27B on the AMD machine at 23 tokens per second, so one benchmark run takes it 134 days and about 390 kWh, against about 460 kWh on my 3090s.
+[^macspark]: The M5 Max numbers come from the reader: Qwen3.8-Flash-Next at Q2 (about 2.7 bits per weight), about 45 tokens per second, 1,250 tokens per second of prefill, and about 90 W, on a $7,000 laptop. The other machines run it at about 4.5 bits, except the RTX PRO 6000, which needs about 3.5 bits (79 GB) to fit in 96 GB. For their speed, I took Artificial Analysis's measurements of Qwen3.8 27B on each machine (for the RTX PRO 6000, on an RTX 5090, which has the same chip and memory bandwidth) and doubled them, because the owner of the AMD machine finds Qwen3.8-Flash-Next about twice as fast as Qwen3.8 27B. That gives about 55 tokens per second on the DGX Spark ($6,950, about 150 W), 47 on the AMD Ryzen AI Max+ 395 ($4,000, the price Artificial Analysis lists, about 120 W), and 300 on the RTX PRO 6000 ($15,000, the middle of its price range, about 600 W). All of them are compared with GPT-6 Luna on its highest setting, which runs the whole benchmark for $122. The 3090s run Qwen3.8 27B, as in the rest of this post, and are compared with Luna on xhigh. Artificial Analysis measured Qwen3.8 27B on the AMD machine at 23 tokens per second, so one benchmark run takes it 134 days and about 390 kWh, against about 460 kWh on my 3090s. Running Qwen3.8-Flash-Next on the 3090s with CPU expert offload, which club-3090 measured at 37 tokens per second, does not change their result: one run then takes 82 days, and at 18 cents per kWh its electricity costs more than Luna's $122 unless the whole machine draws less than about 350 W.
 
 [^3090]: The 3090 is still the value king for VRAM per dollar, and $750 badly understates what mine are worth. That is what I paid more than a year ago; today a used 3090 sells for about $1,500. Even at that price it costs $62.50 per GB of VRAM, the same as an RTX 5090 at its $2,000 launch price, which is not what a 5090 sells for today. The right number for this calculation is what I could sell my cards for, and at $1,500 each the break-even points rise by about two thirds: at 18 cents per kWh, the same-model case moves from 2.4 to 4.0 hours per day, and the Luna-efficient case from 8.5 to 14.2 hours per day.
