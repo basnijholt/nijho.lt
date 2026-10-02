@@ -246,12 +246,24 @@ export default {
       { model: "Qwen3.6 27B", date: day("2026-04-22"), score: 21.4 },
       { model: "Qwen3.8 27B", date: day("2026-08-14"), score: 33.7 },
     ];
+    // My go-to coding models; `place` keeps their labels clear of the lines and of each other.
     const goTo = [
-      { model: "Opus 4.6", date: day("2026-02-05"), score: 31.9 },
-      { model: "GPT-5.6 Sol", date: day("2026-07-09"), score: 44.0 },
-      { model: "GPT-6 Astra", date: day("2026-09-03"), score: 52.4 },
-      { model: "Opus 5.5", date: day("2026-09-22"), score: 56.0 },
+      { model: "Opus 4.6", date: day("2026-02-05"), score: 31.9, place: "below-right" },
+      { model: "GPT-5.4", date: day("2026-03-05"), score: 39.0, place: "above" },
+      { model: "GPT-5.5", date: day("2026-04-23"), score: 38.4, place: "below" },
+      { model: "Fable 5", date: day("2026-06-09"), score: 49.6, place: "above-left" },
+      { model: "GPT-5.6 Sol", date: day("2026-07-09"), score: 44.0, place: "right" },
+      { model: "GPT-6 Astra", date: day("2026-09-03"), score: 52.4, place: "left" },
+      { model: "Opus 5.5", date: day("2026-09-22"), score: 56.0, place: "above-left" },
     ];
+    const placements = {
+      "below-right": { textAnchor: "start", lineAnchor: "top", dx: 4, dy: 8 },
+      below: { lineAnchor: "top", dy: 9 },
+      above: { lineAnchor: "bottom", dy: -9 },
+      "above-left": { textAnchor: "end", lineAnchor: "bottom", dx: -4, dy: -8 },
+      right: { textAnchor: "start", dx: 10 },
+      left: { textAnchor: "end", dx: -10 },
+    };
     // Extend both step lines to today.
     const toToday = (points) => [...points, { ...points.at(-1), date: today }];
     return Plot.plot({
@@ -284,12 +296,11 @@ export default {
           fontStyle: "italic",
         }),
         Plot.dot(goTo, { x: "date", y: "score", fill: () => series[1], r: 6, stroke: "var(--plot-background)" }),
-        Plot.text(goTo.slice(0, 1), { x: "date", y: "score", text: "model", textAnchor: "start", lineAnchor: "top", dx: 4, dy: 8 }),
-        Plot.text(goTo.slice(1, 2), { x: "date", y: "score", text: "model", textAnchor: "start", dx: 10 }),
-        Plot.text(goTo.slice(2, 3), { x: "date", y: "score", text: "model", textAnchor: "end", dx: -10 }),
-        Plot.text(goTo.slice(3), { x: "date", y: "score", text: "model", textAnchor: "end", lineAnchor: "bottom", dx: -4, dy: -8 }),
+        ...Object.entries(placements).map(([place, options]) =>
+          Plot.text(goTo.filter((d) => d.place === place), { x: "date", y: "score", text: "model", fontSize: narrow ? 11 : 13, ...options })
+        ),
         Plot.tip(
-          [...frontier.map((d) => ({ ...d, series: series[0] })), ...qwen.map((d) => ({ ...d, series: series[2] }))],
+          [...frontier.map((d) => ({ ...d, series: series[0] })), ...goTo.map((d) => ({ ...d, series: series[1] })), ...qwen.map((d) => ({ ...d, series: series[2] }))],
           Plot.pointer({ x: "date", y: "score", title: (d) => `${d.model}\n${d.series}\nScore ${d.score}` })
         ),
       ],
