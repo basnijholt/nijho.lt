@@ -45,7 +45,9 @@ They are still the best we have: all models are benchmaxed, tuned to do well on 
 My favorite local model right now is [Qwen3.8 27B](https://artificialanalysis.ai/models/qwen3-8-27b).
 It came out in August and it is Apache-2.0.
 People often say models like this run on a single gaming GPU, but that is only true after quantizing them.
-At full precision, Qwen3.8 27B needs about 54 GB of memory; in Q4_K_M, about 5 bits per weight, it fits on one 24 GB card, at some cost in quality.
+At full precision, Qwen3.8 27B needs about 54 GB of memory.
+Quantized to 5 or 6 bits per weight, it fits on one 24 GB card, at some cost in quality.
+I still [split it across both of my 3090s](https://github.com/basnijholt/dotfiles/blob/e63a3f341ff36b7b57bf31361c2844e1d8b78e95/configs/nixos/hosts/pc/ai.nix#L101-L131), because the second card leaves room for a larger context window.
 
 I compare it with OpenAI's GPT-6 Luna, the cheap tier released on September 22.
 Both models let you choose how long they think, but the settings do not mean the same thing for both.
@@ -87,7 +89,7 @@ What I care about is the cheapest way to get answers of Qwen's quality, from whi
 This is the argument I hear most, so assume the hardware is free and only the electricity counts.
 
 I assume the best case for my machine.
-Both 3090s run their own copy of Qwen with multi-token prediction (MTP), for about 150 tokens per second together, while the machine draws 700 W.[^setup]
+Instead of splitting one copy across both cards, as I normally do, each 3090 runs its own copy of Qwen with multi-token prediction (MTP), for about 150 tokens per second together, while the machine draws 700 W.[^setup]
 My machine then needs three weeks, running day and night, to get through the benchmark once.
 I also give my quantized copy the score Artificial Analysis measured through Alibaba's API.
 I have not rerun the benchmark on it, and anything lost to quantization makes my machine look worse.
@@ -246,6 +248,6 @@ Saving money is not one of them.
 
 [^pro6000]: The RTX PRO 6000 has the same memory bandwidth as an RTX 5090, and at full precision every token reads three times as many bytes as in Q4_K_M. Scaling Artificial Analysis's 5090 measurement gives about 48 tokens per second. I assume 600 W for the whole machine.
 
-[^setup]: Artificial Analysis measured 151 tokens per second for Qwen3.8 27B in Q4_K_M on an RTX 5090, using llama.cpp with MTP. A 3090 has about half the memory bandwidth of a 5090, so I assume about 75 tokens per second per card. With a single 3090 and no MTP, you get about 30 tokens per second; one benchmark run then takes 88 days, and the electricity alone costs more than Luna above 8 cents per kWh.
+[^setup]: Artificial Analysis measured 151 tokens per second for Qwen3.8 27B in Q4_K_M on an RTX 5090, using llama.cpp with MTP. A 3090 has about half the memory bandwidth of a 5090, so I assume about 75 tokens per second per card. The UD-Q5_K_XL quant I actually run is a bit bigger, so a bit slower. With a single 3090 and no MTP, you get about 30 tokens per second; one benchmark run then takes 88 days, and the electricity alone costs more than Luna above 8 cents per kWh.
 
 [^3090]: The 3090 is still the value king for VRAM per dollar, and $750 badly understates what mine are worth. That is what I paid more than a year ago; today a used 3090 sells for about $1,500. Even at that price it costs $62.50 per GB of VRAM, the same as an RTX 5090 at its $2,000 launch price, which is not what a 5090 sells for today. The right number for this calculation is what I could sell my cards for, and at $1,500 each the break-even points roughly double: at 18 cents per kWh, the same-model case moves from 1.6 to 2.9 hours per day, and the Luna-efficient case from 5.2 to 9.2 hours per day.
