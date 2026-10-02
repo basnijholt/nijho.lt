@@ -228,6 +228,80 @@ export default {
     });
   },
 
+  paybackYears: ({ Plot, width }) => {
+    const narrow = width < 600;
+    // Years of nonstop generation before the hardware is paid off; null = never.
+    // Savings per year = runs per year x (API cost per run - electricity per run). See the footnote for inputs.
+    const machines = [
+      { name: narrow ? "2× RTX 3090, $1,500" : "2× RTX 3090 ($1,500), Qwen3.8 27B vs Luna xhigh", years: [1.7, null] },
+      { name: narrow ? "M5 Max 128 GB, $7,000" : "M5 Max 128 GB ($7,000), Qwen3.8-Flash-Next vs Luna max", years: [10.4, 13.2] },
+      { name: narrow ? "DGX Spark, $6,950" : "DGX Spark ($6,950), Qwen3.8-Flash-Next vs Luna max", years: [9.0, 13.0] },
+      { name: narrow ? "RTX PRO 6000, ~$15,000" : "RTX PRO 6000 (~$15,000), Qwen3.8 27B vs Luna xhigh", years: [32.5, null] },
+    ];
+    const rates = ["Free (solar)", "18 cents/kWh"];
+    const data = machines.flatMap((m) => rates.map((rate, j) => ({ machine: m.name, rate, years: m.years[j] })));
+    const possible = data.filter((d) => d.years !== null);
+    const never = data.filter((d) => d.years === null);
+    return Plot.plot({
+      width,
+      height: 420,
+      marginLeft: 108,
+      marginRight: narrow ? 76 : 56,
+      marginTop: 34,
+      marginBottom: 52,
+      style: STYLE,
+      fy: { domain: machines.map((m) => m.name), axis: null, padding: 0.45 },
+      y: { domain: rates, label: null, tickSize: 0 },
+      x: { domain: [0, 35], label: narrow ? "Years to pay off the hardware" : "Years of nonstop generation to pay off the hardware", ticks: [0, 5, 10, 15, 20, 25, 30, 35], grid: true, ...X_LABEL },
+      color: { domain: rates, range: [COLORS.local, COLORS.paid] },
+      marks: [
+        Plot.text(machines, { fy: (d) => d.name, text: (d) => d.name, frameAnchor: "top-left", lineAnchor: "bottom", dy: -8, dx: -100, fontWeight: "bold" }),
+        Plot.barX(never, { fy: "machine", y: "rate", x1: 0, x2: 35, fill: "rate", fillOpacity: 0.12 }),
+        Plot.text(never, { fy: "machine", y: "rate", x: 17.5, text: () => "never", fontStyle: "italic" }),
+        Plot.barX(possible, { fy: "machine", y: "rate", x: "years", fill: "rate" }),
+        Plot.text(possible, { fy: "machine", y: "rate", x: "years", text: (d) => `${d.years.toFixed(1)} years`, textAnchor: "start", dx: 5 }),
+      ],
+    });
+  },
+
+  paybackCurve: ({ Plot, width }) => {
+    const narrow = width < 600;
+    // Net position after t years of nonstop generation with free power: savings per year x t - hardware price.
+    const machines = [
+      { name: "2× RTX 3090", hw: 1500, perYear: 889, color: COLORS.local, place: { dy: -12 } },
+      { name: "DGX Spark", hw: 6950, perYear: 771, color: "#9c6b4e", place: { textAnchor: "end", dx: -6, dy: -12 } },
+      { name: "M5 Max", hw: 7000, perYear: 674, color: COLORS.closed, place: { textAnchor: "start", dx: 6, dy: 14 } },
+      { name: "RTX PRO 6000", hw: 15000, perYear: 462, color: COLORS.open, place: {} },
+    ];
+    const maxYears = 15;
+    const data = machines.flatMap((m) =>
+      Array.from({ length: maxYears * 4 + 1 }, (_, i) => ({ machine: m.name, years: i / 4, net: m.perYear * (i / 4) - m.hw }))
+    );
+    const crossings = machines
+      .map((m) => ({ machine: m.name, years: m.hw / m.perYear, net: 0, place: m.place }))
+      .filter((d) => d.years <= maxYears);
+    const ends = machines.map((m) => ({ machine: m.name, years: maxYears, net: m.perYear * maxYears - m.hw }));
+    return Plot.plot({
+      width,
+      height: Math.min(420, Math.max(300, width * 0.6)),
+      marginLeft: 56,
+      marginRight: narrow ? 104 : 112,
+      marginBottom: 52,
+      style: STYLE,
+      x: { domain: [0, maxYears], label: "Years of nonstop generation, with free power", ...X_LABEL },
+      y: { label: "Saved minus hardware price (USD)", labelArrow: "none", grid: true, tickFormat: (d) => (d < 0 ? `−$${Math.abs(d / 1000)}k` : `$${d / 1000}k`) },
+      color: { domain: machines.map((m) => m.name), range: machines.map((m) => m.color) },
+      marks: [
+        Plot.ruleY([0], { stroke: "currentColor", strokeOpacity: 0.6 }),
+        Plot.lineY(data, { x: "years", y: "net", stroke: "machine", strokeWidth: 2.5 }),
+        Plot.dot(crossings, { x: "years", y: "net", fill: "machine", r: 5 }),
+        ...crossings.map((d) => Plot.text([d], { x: "years", y: "net", text: (d) => `${d.years.toFixed(1)} yr`, fill: "machine", fontWeight: "bold", ...d.place })),
+        Plot.text(ends, { x: "years", y: "net", text: "machine", fill: "machine", textAnchor: "start", dx: 6 }),
+        Plot.tip(data, Plot.pointer({ x: "years", y: "net", title: (d) => `${d.machine}, after ${d.years} years\n${d.net < 0 ? "−" : ""}$${Math.abs(Math.round(d.net)).toLocaleString("en-US")}` })),
+      ],
+    });
+  },
+
   frontierGap: ({ Plot, width }) => {
     const narrow = width < 600;
     const day = (s) => new Date(s);

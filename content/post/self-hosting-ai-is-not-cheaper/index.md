@@ -153,9 +153,30 @@ GPT-6 Luna costs 58% less per output token than GPT-5.6 Luna did in July.
 If the price halves again, no amount of use pays off at 18 cents per kWh.
 If it halves twice, the API costs less than my electricity alone.
 
-## 5. The bar keeps moving
+## 5. "What about a Mac or a DGX Spark?"
 
-Eight and a half hours a day sounds like a lot, but I run agents for longer than that, just not on Qwen.
+After I shared this post, people asked me about these two machines in particular.
+A MacBook Pro with an M5 Max or an NVIDIA DGX Spark, both with 128 GB of memory, can hold a better model than my 3090s: Qwen3.8-Flash-Next, a sparse model with 180 billion parameters, of which only 6 billion work on each token.
+It scores 39.8, close to GPT-6 Luna on its highest setting (38.1).
+A reader on r/LocalLLaMA runs it on an M5 Max at Q2, about 2.7 bits per weight, which probably costs a few points, although nobody has measured how many.
+For the Spark, I estimated the speed from Artificial Analysis's measurement of a similar model on it.[^macspark]
+
+Hours a day for three years, as in section 4, comes out as "never" for these machines, so here is a different question: how many years would each one have to run nonstop before it pays for itself?
+
+{{< plot name="paybackYears" caption="Years of nonstop generation before each machine pays for itself, compared with the most efficient API model at a similar score. Each machine runs the best model it can hold." >}}
+
+Even with free power, the Mac and the Spark need about a decade.
+My 3090s pay for themselves in under two years with free power, which is why the 3090 is still the value king, but at 18 cents per kWh they never do.
+The RTX PRO 6000 never really does either.
+
+{{< plot name="paybackCurve" caption="Money saved compared with the API, minus the price of the hardware, for each year of nonstop generation, with free power. A line crossing zero is where the machine has paid for itself." >}}
+
+Ten years is a long time in AI.
+Better models will run on the same machines, and API models will keep getting cheaper and more efficient, so these numbers only show how far apart the two sides start.
+
+## 6. The bar keeps moving
+
+Back to the eight and a half hours a day from section 4: that sounds like a lot, but I run agents for longer than that, just not on Qwen.
 When Claude Opus 4.6 came out in February, I was perfectly happy with it.
 I thought it was all I would ever need, and I could not have imagined how much better models would get in half a year.
 Qwen3.8 27B now scores about the same as Opus 4.6, and I would no longer accept it for coding.
@@ -167,7 +188,7 @@ Now I don't even accept what was considered the best model a month ago.
 
 The models that fit on my 3090s keep improving, but they stay about half a year behind the frontier, and my standard moves with the frontier.
 
-## 6. A small company has it worse
+## 7. A small company has it worse
 
 For me, this is a hobby, and a hobby is allowed to be inefficient.
 It gets worse once you try to use self-hosted models seriously, say for a team of ten developers.
@@ -186,7 +207,7 @@ It serves thousands of customers across every time zone, so its load curve is mu
 It fills the nights with discounted batch jobs (Luna's batch tier is half price) and training runs.
 And more concurrent requests mean bigger batches, which is where the efficiency from section 3 comes from.
 
-## 7. "They lose money on inference, so prices will go up"
+## 8. "They lose money on inference, so prices will go up"
 
 Another argument I hear is that API prices are subsidized by investors and will go up once those investors want their money back.
 I don't think that holds for inference.
@@ -214,7 +235,7 @@ This is what the same level of intelligence has cost this year:
 From Claude Opus 4.6 in February to GPT-6 Luna in September, the output price for this level of intelligence dropped by a factor of 50.
 Labs are in a race to the bottom on price.
 
-## 8. "But they sell your data"
+## 9. "But they sell your data"
 
 Some people say APIs are cheap because the provider trains on your data or sells it.
 That is why I only used prices from providers that OpenRouter lists as [zero data retention](https://openrouter.ai/docs/features/zdr) (ZDR).
@@ -232,7 +253,7 @@ Azure serves GPT-6 Luna with zero data retention at the same price as OpenAI.
 For Qwen3.8 27B, the cheapest endpoints are all ZDR, and the endpoints without ZDR cost more.
 The `:free` tier is where you pay with your data.
 
-## 9. Where self-hosting does win: the same model
+## 10. Where self-hosting does win: the same model
 
 If you compare running Qwen3.8 27B yourself with paying for Qwen3.8 27B through an API, self-hosting wins.
 
@@ -246,7 +267,7 @@ If you specifically need Qwen and use it heavily, self-hosting it pays off.
 But you don't need Qwen to get answers of Qwen's quality.
 Luna gives you those for $67, with zero data retention.
 
-## 10. So why do I do it?
+## 11. So why do I do it?
 
 First, it is fun.
 I like knowing how the whole stack works, from the drivers in [my NixOS configuration]({{< ref "/post/llama-nixos" >}}) to how the layers are split between my two GPUs.
@@ -271,5 +292,7 @@ Saving money is not one of them.
 [^setup]: I measured the model as I normally run it: vLLM with an AutoRound INT4 quant and DFlash2 speculative decoding, split across both cards. Single 1,500-token answers came out at 105 to 109 tokens per second, and reading a 22,000-token prompt ran at 1,600 tokens per second. Sending 2, 4, or 8 requests at once did not raise the total above about 110 tokens per second. The two GPUs drew 540 W together, each at its 270 W power limit; the 700 W adds my estimate for the rest of the machine, since I could not measure the CPU. The setup follows the recipes from [club-3090](https://github.com/noonghunna/club-3090), a community project that tunes LLM serving for RTX 3090s and publishes measured numbers, so I think it is about as fast as these cards get. Its benchmarks for this configuration at a similar power limit match mine: about 110 tokens per second for prose, and up to about 195 for code, where speculative decoding guesses more tokens right. Most of Qwen's output on the benchmark is reasoning, which runs at the prose speed.
 
 [^powercap]: The stock limit is 350 W. My cards sit in a [normal desktop case with normal fans]({{< ref "/post/local-ai-journey" >}}), and I worry that running both at full power for hours would shorten their life. The cap is [a few lines in my NixOS configuration](https://github.com/basnijholt/dotfiles/blob/e63a3f341ff36b7b57bf31361c2844e1d8b78e95/configs/nixos/hosts/pc/nvidia-undervolt.nix#L1-L7), and measurements from Puget Systems and r/LocalLLaMA put a 3090 at about 95% of its speed at 270 W. That is 77% of the power for 95% of the speed, so the cap also lowers my electricity cost per token.
+
+[^macspark]: The M5 Max runs Qwen3.8-Flash-Next at Q2 at about 45 tokens per second, with 1,250 tokens per second of prefill and about 90 W, on a $7,000 laptop. For the DGX Spark ($6,950) I assume about 55 tokens per second and 600 tokens per second of prefill, scaled from Artificial Analysis's measurements of Ling 3.0 Flash and Qwen3.6 35B on it, at about 150 W. Both are compared with GPT-6 Luna on its highest setting, which runs the whole benchmark for $122. The 3090s and the RTX PRO 6000 run Qwen3.8 27B, as in the rest of this post, and are compared with Luna on xhigh. For the RTX PRO 6000 I use $15,000, the middle of its price range.
 
 [^3090]: The 3090 is still the value king for VRAM per dollar, and $750 badly understates what mine are worth. That is what I paid more than a year ago; today a used 3090 sells for about $1,500. Even at that price it costs $62.50 per GB of VRAM, the same as an RTX 5090 at its $2,000 launch price, which is not what a 5090 sells for today. The right number for this calculation is what I could sell my cards for, and at $1,500 each the break-even points rise by about two thirds: at 18 cents per kWh, the same-model case moves from 2.4 to 4.0 hours per day, and the Luna-efficient case from 8.5 to 14.2 hours per day.
