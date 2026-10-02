@@ -233,25 +233,25 @@ export default {
     // Years of nonstop generation before the hardware is paid off; null = never.
     // Savings per year = runs per year x (API cost per run - electricity per run). See the footnote for inputs.
     const machines = [
-      { name: narrow ? "2× RTX 3090 ($1,500), 27B INT4" : "2× RTX 3090 ($1,500), Qwen3.8 27B INT4 vs Luna xhigh", years: [1.7, null] },
-      { name: narrow ? "AMD AI Max+ 395 ($4,000), Q4" : "AMD Ryzen AI Max+ 395 ($4,000), Qwen3.8-Flash-Next Q4 vs Luna max", years: [7.4, 11.5] },
-      { name: narrow ? "DGX Spark ($6,950), Q4" : "DGX Spark ($6,950), Qwen3.8-Flash-Next Q4 vs Luna max", years: [7.9, 10.7] },
-      { name: narrow ? "M5 Max 128 GB ($7,000), Q2" : "M5 Max 128 GB ($7,000), Qwen3.8-Flash-Next Q2 vs Luna max", years: [10.4, 13.2] },
-      { name: narrow ? "RTX PRO 6000 ($15,000), Q3" : "RTX PRO 6000 (~$15,000), Qwen3.8-Flash-Next Q3 vs Luna max", years: [4.1, 5.6] },
-    ];
+      { machine: "2× RTX 3090 ($1,500)", model: "Qwen3.8 27B INT4 vs Luna xhigh", years: [1.7, null] },
+      { machine: "AMD Ryzen AI Max+ 395 ($4,000)", model: "Qwen3.8-Flash-Next Q4 vs Luna max", years: [6.1, 8.5] },
+      { machine: "DGX Spark ($6,950)", model: "Qwen3.8-Flash-Next Q4 vs Luna max", years: [8.5, 12.0] },
+      { machine: "M5 Max 128 GB ($7,000)", model: "Qwen3.8-Flash-Next Q2 vs Luna max", years: [10.4, 13.2] },
+      { machine: "RTX PRO 6000 (~$15,000)", model: "Qwen3.8-Flash-Next Q3 vs Luna max", years: [3.4, 4.4] },
+    ].map((m) => ({ ...m, name: narrow ? `${m.machine}\n${m.model}` : `${m.machine}, ${m.model}` }));
     const rates = ["Free (solar)", "18 cents/kWh"];
     const data = machines.flatMap((m) => rates.map((rate, j) => ({ machine: m.name, rate, years: m.years[j] })));
     const possible = data.filter((d) => d.years !== null);
     const never = data.filter((d) => d.years === null);
     return Plot.plot({
       width,
-      height: 520,
+      height: narrow ? 640 : 520,
       marginLeft: 108,
       marginRight: narrow ? 76 : 56,
-      marginTop: 34,
+      marginTop: narrow ? 50 : 34,
       marginBottom: 52,
       style: STYLE,
-      fy: { domain: machines.map((m) => m.name), axis: null, padding: 0.45 },
+      fy: { domain: machines.map((m) => m.name), axis: null, padding: narrow ? 0.62 : 0.45 },
       y: { domain: rates, label: null, tickSize: 0 },
       x: { domain: [0, 15], label: narrow ? "Years to pay off the hardware" : "Years of nonstop generation to pay off the hardware", ticks: [0, 3, 6, 9, 12, 15], grid: true, ...X_LABEL },
       color: { domain: rates, range: [COLORS.local, COLORS.paid] },
