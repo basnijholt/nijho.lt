@@ -31,6 +31,7 @@ Qwen3.8 27B runs on two RTX 3090s at home, and my phone dictation goes to [Qwen3
 I think open-source AI is the best thing since sliced bread.
 
 I don't pretend it saves money.
+I do it for fun, for sovereignty, and for privacy, which I come back to at the end.
 
 All benchmark numbers and prices below come from [Artificial Analysis](https://artificialanalysis.ai/) and [OpenRouter](https://openrouter.ai/) as of September 30, 2026.
 I did the math for the hardware I own, and for the counterarguments I hear most.
