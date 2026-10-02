@@ -15,7 +15,7 @@ const STYLE = { fontSize: "13px", fontFamily: "system-ui, sans-serif", backgroun
 const X_LABEL = { labelAnchor: "center", labelArrow: "none", labelOffset: 42 };
 
 const LUNA_COST = 66.81; // GPT-6 Luna (xhigh), one Intelligence Index run, via API
-const QWEN_KWH = 357; // Qwen3.8 27B, one Intelligence Index run, on two 3090s at 700 W
+const QWEN_KWH = 461; // Qwen3.8 27B, one Intelligence Index run, on two 3090s: measured 107 tok/s and 1,587 tok/s prefill, at 700 W
 const PRO6000_KWH = 760; // Same run at full precision on one RTX PRO 6000 (~48 tok/s) at 600 W
 
 const usd = (d) => (d >= 100 ? `$${Math.round(d).toLocaleString("en-US")}` : `$${Math.round(d)}`);
@@ -102,7 +102,7 @@ export default {
       marginBottom: 52,
       style: STYLE,
       x: { domain: [0, 0.4], label: "Electricity price (USD per kWh)", tickFormat: (d) => `$${d.toFixed(2)}`, ...X_LABEL },
-      y: { domain: [0, 150], label: "Cost of one benchmark run (USD)", labelArrow: "none", grid: true, tickFormat: (d) => `$${d}` },
+      y: { domain: [0, 200], label: "Cost of one benchmark run (USD)", labelArrow: "none", grid: true, tickFormat: (d) => `$${d}` },
       marks: [
         Plot.ruleY([LUNA_COST], { stroke: COLORS.closed, strokeDasharray: "5 4" }),
         Plot.text([width < 600 ? `Luna: ${usd(LUNA_COST)}` : `GPT-6 Luna via API: ${usd(LUNA_COST)}`], { x: 0.4, y: LUNA_COST, textAnchor: "end", dy: 12, fill: COLORS.closed }),
@@ -115,7 +115,7 @@ export default {
           fill: COLORS.local,
         }),
         Plot.dot([{ rate: breakEven, cost: LUNA_COST }], { x: "rate", y: "cost", fill: COLORS.local, r: 5 }),
-        Plot.text([`${Math.round(breakEven * 100)} cents/kWh`], { x: breakEven, y: LUNA_COST, textAnchor: "end", dx: -8, dy: -12, fontWeight: "bold" }),
+        Plot.text([`${(breakEven * 100).toFixed(1)} cents/kWh`], { x: breakEven, y: LUNA_COST, textAnchor: "end", dx: -8, dy: -12, fontWeight: "bold" }),
         Plot.tip(
           data,
           Plot.pointer({ x: "rate", y: "cost", title: (d) => `At $${d.rate.toFixed(2)}/kWh: ${usd(d.cost)} of electricity per run` })
@@ -130,7 +130,7 @@ export default {
     const data = [
       { label: narrow ? "Luna via API, 100 requests at once" : "GPT-6 Luna via API, 100 requests at once", hours: 1.5, color: COLORS.closed },
       { label: narrow ? "Luna via API, one request at a time" : "GPT-6 Luna via API, one request at a time", hours: 145, color: COLORS.closed },
-      { label: narrow ? "Qwen3.8 27B on my two 3090s" : "Qwen3.8 27B, quantized, on my two 3090s", hours: 510, color: COLORS.local },
+      { label: narrow ? "Qwen3.8 27B on my two 3090s" : "Qwen3.8 27B, quantized, on my two 3090s", hours: 658, color: COLORS.local },
       { label: narrow ? "Qwen3.8 27B on an RTX PRO 6000" : "Qwen3.8 27B, full precision, on an RTX PRO 6000", hours: 1266, color: COLORS.local },
     ];
     const ticks = [
@@ -167,7 +167,7 @@ export default {
     const narrow = width < 600;
     const data = [
       { label: "8× H200 server", agents: 1.8, color: COLORS.closed },
-      { label: narrow ? "My two 3090s (estimate)" : "My two RTX 3090s (estimate, much smaller model)", agents: 2.9, color: COLORS.local },
+      { label: narrow ? "My two 3090s (measured)" : "My two RTX 3090s (measured, much smaller model)", agents: 1.9, color: COLORS.local },
       { label: "8× B300 server", agents: 6.9, color: COLORS.closed },
       { label: narrow ? "36× GB300 rack" : "Rack of 36 GB300s, prefill and decode on separate GPUs", agents: 35.8, color: COLORS.closed },
     ];
@@ -199,11 +199,13 @@ export default {
     ];
     const rates = ["Free (solar)", "18 cents/kWh"];
     const hours = [
-      [1.1, 1.6],
-      [3.0, 5.2],
-      [6.0, 15.1],
+      [1.5, 2.4],
+      [4.1, 8.5],
+      [8.1, null], // never: the savings do not cover the cards and the idle power
     ];
     const data = scenarios.flatMap((scenario, i) => rates.map((rate, j) => ({ scenario, rate, hours: hours[i][j] })));
+    const possible = data.filter((d) => d.hours !== null);
+    const never = data.filter((d) => d.hours === null);
     return Plot.plot({
       width,
       height: 330,
@@ -218,8 +220,10 @@ export default {
       color: { domain: rates, range: [COLORS.local, COLORS.paid] },
       marks: [
         Plot.text(scenarios, { fy: (d) => d, text: (d) => d, frameAnchor: "top-left", lineAnchor: "bottom", dy: -8, dx: -100, fontWeight: "bold" }),
-        Plot.barX(data, { fy: "scenario", y: "rate", x: "hours", fill: "rate" }),
-        Plot.text(data, { fy: "scenario", y: "rate", x: "hours", text: (d) => `${d.hours.toFixed(1)} h`, textAnchor: "start", dx: 5 }),
+        Plot.barX(never, { fy: "scenario", y: "rate", x1: 0, x2: 24, fill: "rate", fillOpacity: 0.12 }),
+        Plot.text(never, { fy: "scenario", y: "rate", x: 12, text: () => "never", fontStyle: "italic" }),
+        Plot.barX(possible, { fy: "scenario", y: "rate", x: "hours", fill: "rate" }),
+        Plot.text(possible, { fy: "scenario", y: "rate", x: "hours", text: (d) => `${d.hours.toFixed(1)} h`, textAnchor: "start", dx: 5 }),
       ],
     });
   },
