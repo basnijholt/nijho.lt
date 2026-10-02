@@ -77,7 +77,7 @@ The second bar is my own machine: running Qwen on my GPUs costs about as much in
 
 The third bar is what it takes to match the API's full precision at home: an RTX PRO 6000, a workstation card with 96 GB of memory, enough for the full model.[^pro6000]
 Its electricity alone costs twice Luna's bill, and one run takes more than seven weeks.
-The card by itself sells for $10,000 to $20,000, so with a computer around it, you are paying for a car.
+The card by itself sells for $10,000 to $20,000, so with a computer around it, you are paying for a pretty nice car.
 Buy a few of them to run agents in parallel, and you are building a small data center of your own.
 
 The bars for hardware at home are electricity only, so they are the lowest these runs can cost: the cards come on top, and how much depends on how busy you keep them, which is what section 4 is about.
@@ -98,6 +98,15 @@ I have not rerun the benchmark on it, and anything lost to quantization makes my
 
 Above 19 cents per kWh, my electricity alone costs more than Luna's API bill.
 Below it, I save a few dollars per run and wait three weeks instead of a few hours.
+
+Those three weeks matter more than the few dollars.
+An API takes hundreds of requests at once, so even one benchmark run can finish in an hour or two.
+My GPUs work on two conversations at a time, and batching more of them on the same cards makes each one slower.
+
+{{< plot name="wallClock" caption="Wall-clock time for one benchmark run. The API times use Artificial Analysis's measured time per task for Luna; the parallel case assumes 100 requests at once. Log scale." >}}
+
+This is one more reason my coding agents run on APIs.
+When I [run several agents in parallel]({{< ref "/post/parallel-agentic-coding" >}}), each of them should be as fast as if it were alone.
 
 ## 3. Why datacenters are so much better at this
 

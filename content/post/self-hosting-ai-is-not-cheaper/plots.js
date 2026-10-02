@@ -124,6 +124,45 @@ export default {
     });
   },
 
+  wallClock: ({ Plot, width }) => {
+    const narrow = width < 600;
+    // Hours for one Intelligence Index run. API: AA's 210 s per task for Luna (xhigh) over ~2,500 tasks.
+    const data = [
+      { label: narrow ? "Luna via API, 100 requests at once" : "GPT-6 Luna via API, 100 requests at once", hours: 1.5, color: COLORS.closed },
+      { label: narrow ? "Luna via API, one request at a time" : "GPT-6 Luna via API, one request at a time", hours: 145, color: COLORS.closed },
+      { label: narrow ? "Qwen3.8 27B on my two 3090s" : "Qwen3.8 27B, quantized, on my two 3090s", hours: 510, color: COLORS.local },
+      { label: narrow ? "Qwen3.8 27B on an RTX PRO 6000" : "Qwen3.8 27B, full precision, on an RTX PRO 6000", hours: 1266, color: COLORS.local },
+    ];
+    const ticks = [
+      { hours: 1, label: narrow ? "hour" : "1 hour" },
+      { hours: 24, label: narrow ? "day" : "1 day" },
+      { hours: 168, label: narrow ? "week" : "1 week" },
+      { hours: 720, label: narrow ? "month" : "1 month" },
+    ];
+    const duration = (h) => (h < 24 ? `${h} hours` : h < 24 * 14 ? `${Math.round(h / 24)} days` : `${Math.round((h / 24 / 7) * 2) / 2} weeks`);
+    // Horizontal bars drawn as thick rules, with the label above each bar so it fits on phones.
+    return Plot.plot({
+      width,
+      height: 56 * data.length + 72,
+      marginLeft: 16,
+      marginRight: 72,
+      marginTop: 10,
+      marginBottom: 52,
+      style: STYLE,
+      // d3 hides log-scale tick labels like 720 (7.2e2), so the axis is drawn by hand.
+      x: { type: "log", domain: [0.5, 2500], axis: null },
+      y: { axis: null, domain: data.map((d) => d.label), inset: 24 },
+      marks: [
+        Plot.ruleX(ticks, { x: "hours", strokeOpacity: 0.1 }),
+        Plot.text(ticks, { x: "hours", text: "label", frameAnchor: "bottom", lineAnchor: "top", dy: 8 }),
+        Plot.text(["Time for one benchmark run (log scale)"], { frameAnchor: "bottom", lineAnchor: "top", dy: 30 }),
+        Plot.ruleY(data, { y: "label", x1: 0.5, x2: "hours", stroke: "color", strokeWidth: 14 }),
+        Plot.text(data, { y: "label", x: 0.5, text: "label", textAnchor: "start", dy: -17 }),
+        Plot.text(data, { y: "label", x: "hours", text: (d) => duration(d.hours), textAnchor: "start", dx: 6, fontWeight: "bold" }),
+      ],
+    });
+  },
+
   agentsPerKw: ({ Plot, width }) => {
     const narrow = width < 600;
     const data = [
