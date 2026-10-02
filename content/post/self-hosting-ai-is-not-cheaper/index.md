@@ -27,7 +27,7 @@ I have had this debate many times, so I am finally writing it down.
 Whenever I say that self-hosting AI does not save money, people hear that I am against self-hosting.
 That is not the point at all.
 I am a massive fan of open-weight models.
-Qwen3.8 27B runs on two RTX 3090s at home, and my phone dictation goes to [Qwen3-ASR on the same machine]({{< ref "/post/diction-agent-cli-qwen" >}}).
+[Qwen3.8 27B runs on two RTX 3090s at home](https://github.com/basnijholt/dotfiles/blob/e63a3f341ff36b7b57bf31361c2844e1d8b78e95/configs/nixos/hosts/pc/ai.nix#L43) (and 15 more models, like Gemma 4 and gpt-oss), and my phone dictation goes to [Qwen3-ASR on the same machine]({{< ref "/post/diction-agent-cli-qwen" >}}).
 I think open-source AI is the best thing since sliced bread.
 
 I don't pretend it saves money.
