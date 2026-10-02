@@ -39,6 +39,8 @@ I did the math for the hardware I own, and for the counterarguments I hear most.
 Benchmarks are not everything, and a high score does not reliably predict how a model does on real work.
 They are still the best we have: all models are benchmaxed, tuned to do well on the popular benchmarks, so the scores at least work as a reference frame for comparing them with each other.
 
+*Update, October 2, 2026: after the discussion on r/LocalLLaMA, I added [section 5](#5-but-my-mac-dgx-spark-or-ai-max-does-save-money) on Macs, DGX Sparks, and AMD AI Max machines.*
+
 {{< toc >}}
 
 ## 1. The model I love, and the one that beats it on price
@@ -155,7 +157,7 @@ If it halves twice, the API costs less than my electricity alone.
 
 ## 5. "But my Mac, DGX Spark, or AI Max does save money"
 
-After I shared this post, several people told me their machines do save them money: a MacBook Pro with an M5 Max, an NVIDIA DGX Spark, and a computer with AMD's Ryzen AI Max+ 395.
+Several readers told me their machines do save them money: a MacBook Pro with an M5 Max, an NVIDIA DGX Spark, and a computer with AMD's Ryzen AI Max+ 395.
 If you would have bought the machine anyway, that is true, for the reason in section 2: their electricity costs little compared with the API.
 Counting the hardware is a different story.
 
@@ -177,7 +179,7 @@ These numbers only show how far apart the two sides start.
 
 ## 6. The bar keeps moving
 
-Back to the eight and a half hours a day from section 4: that sounds like a lot, but I run agents for longer than that, just not on Qwen.
+Section 4's eight and a half hours a day would be easy for me: I run agents for longer than that, just not on Qwen.
 When Claude Opus 4.6 came out in February, I was perfectly happy with it.
 I thought it was all I would ever need, and I could not have imagined how much better models would get in half a year.
 Qwen3.8 27B now scores about the same as Opus 4.6, and I would no longer accept it for coding.
