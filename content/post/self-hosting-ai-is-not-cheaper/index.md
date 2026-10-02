@@ -77,7 +77,7 @@ The second bar is my own machine: running Qwen on my GPUs costs about as much in
 
 The third bar is what it takes to match the API's full precision at home: an RTX PRO 6000, a workstation card with 96 GB of memory, enough for the full model.[^pro6000]
 Its electricity alone costs twice Luna's bill, and one run takes more than seven weeks.
-The card by itself sells for $10,000 to $15,000, so with a computer around it, you are paying for a car.
+The card by itself sells for $10,000 to $20,000, so with a computer around it, you are paying for a car.
 Buy a few of them to run agents in parallel, and you are building a small data center of your own.
 
 The bars for hardware at home are electricity only, so they are the lowest these runs can cost: the cards come on top, and how much depends on how busy you keep them, which is what section 4 is about.
