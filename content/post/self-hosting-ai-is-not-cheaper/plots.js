@@ -236,7 +236,7 @@ export default {
       { name: narrow ? "2× RTX 3090, $1,500" : "2× RTX 3090 ($1,500), Qwen3.8 27B vs Luna xhigh", years: [1.7, null] },
       { name: narrow ? "M5 Max 128 GB, $7,000" : "M5 Max 128 GB ($7,000), Qwen3.8-Flash-Next vs Luna max", years: [10.4, 13.2] },
       { name: narrow ? "DGX Spark, $6,950" : "DGX Spark ($6,950), Qwen3.8-Flash-Next vs Luna max", years: [9.0, 13.0] },
-      { name: narrow ? "RTX PRO 6000, ~$15,000" : "RTX PRO 6000 (~$15,000), Qwen3.8 27B vs Luna xhigh", years: [32.5, null] },
+      { name: narrow ? "RTX PRO 6000, ~$15,000" : "RTX PRO 6000 (~$15,000), Qwen3.8-Flash-Next vs Luna max", years: [4.1, 5.6] },
     ];
     const rates = ["Free (solar)", "18 cents/kWh"];
     const data = machines.flatMap((m) => rates.map((rate, j) => ({ machine: m.name, rate, years: m.years[j] })));
@@ -252,12 +252,12 @@ export default {
       style: STYLE,
       fy: { domain: machines.map((m) => m.name), axis: null, padding: 0.45 },
       y: { domain: rates, label: null, tickSize: 0 },
-      x: { domain: [0, 35], label: narrow ? "Years to pay off the hardware" : "Years of nonstop generation to pay off the hardware", ticks: [0, 5, 10, 15, 20, 25, 30, 35], grid: true, ...X_LABEL },
+      x: { domain: [0, 15], label: narrow ? "Years to pay off the hardware" : "Years of nonstop generation to pay off the hardware", ticks: [0, 3, 6, 9, 12, 15], grid: true, ...X_LABEL },
       color: { domain: rates, range: [COLORS.local, COLORS.paid] },
       marks: [
         Plot.text(machines, { fy: (d) => d.name, text: (d) => d.name, frameAnchor: "top-left", lineAnchor: "bottom", dy: -8, dx: -100, fontWeight: "bold" }),
-        Plot.barX(never, { fy: "machine", y: "rate", x1: 0, x2: 35, fill: "rate", fillOpacity: 0.12 }),
-        Plot.text(never, { fy: "machine", y: "rate", x: 17.5, text: () => "never", fontStyle: "italic" }),
+        Plot.barX(never, { fy: "machine", y: "rate", x1: 0, x2: 15, fill: "rate", fillOpacity: 0.12 }),
+        Plot.text(never, { fy: "machine", y: "rate", x: 7.5, text: () => "never", fontStyle: "italic" }),
         Plot.barX(possible, { fy: "machine", y: "rate", x: "years", fill: "rate" }),
         Plot.text(possible, { fy: "machine", y: "rate", x: "years", text: (d) => `${d.years.toFixed(1)} years`, textAnchor: "start", dx: 5 }),
       ],
@@ -268,10 +268,10 @@ export default {
     const narrow = width < 600;
     // Net position after t years of nonstop generation with free power: savings per year x t - hardware price.
     const machines = [
-      { name: "2× RTX 3090", hw: 1500, perYear: 889, color: COLORS.local, place: { dy: -12 } },
-      { name: "DGX Spark", hw: 6950, perYear: 771, color: "#9c6b4e", place: { textAnchor: "end", dx: -6, dy: -12 } },
-      { name: "M5 Max", hw: 7000, perYear: 674, color: COLORS.closed, place: { textAnchor: "start", dx: 6, dy: 14 } },
-      { name: "RTX PRO 6000", hw: 15000, perYear: 462, color: COLORS.open, place: {} },
+      { name: "2× RTX 3090", hw: 1500, perYear: 889, color: COLORS.local, place: { dy: -12 }, endDy: 0 },
+      { name: "DGX Spark", hw: 6950, perYear: 771, color: "#9c6b4e", place: { textAnchor: "end", dx: -6, dy: -12 }, endDy: -7 },
+      { name: "M5 Max", hw: 7000, perYear: 674, color: COLORS.closed, place: { textAnchor: "start", dx: 6, dy: 14 }, endDy: 7 },
+      { name: "RTX PRO 6000", hw: 15000, perYear: 3622, color: COLORS.open, place: { textAnchor: "end", dx: -6, dy: 14 }, endDy: 0 },
     ];
     const maxYears = 15;
     const data = machines.flatMap((m) =>
@@ -280,7 +280,7 @@ export default {
     const crossings = machines
       .map((m) => ({ machine: m.name, years: m.hw / m.perYear, net: 0, place: m.place }))
       .filter((d) => d.years <= maxYears);
-    const ends = machines.map((m) => ({ machine: m.name, years: maxYears, net: m.perYear * maxYears - m.hw }));
+    const ends = machines.map((m) => ({ machine: m.name, years: maxYears, net: m.perYear * maxYears - m.hw, endDy: m.endDy }));
     return Plot.plot({
       width,
       height: Math.min(420, Math.max(300, width * 0.6)),
@@ -296,7 +296,7 @@ export default {
         Plot.lineY(data, { x: "years", y: "net", stroke: "machine", strokeWidth: 2.5 }),
         Plot.dot(crossings, { x: "years", y: "net", fill: "machine", r: 5 }),
         ...crossings.map((d) => Plot.text([d], { x: "years", y: "net", text: (d) => `${d.years.toFixed(1)} yr`, fill: "machine", fontWeight: "bold", ...d.place })),
-        Plot.text(ends, { x: "years", y: "net", text: "machine", fill: "machine", textAnchor: "start", dx: 6 }),
+        ...ends.map((d) => Plot.text([d], { x: "years", y: "net", text: "machine", fill: "machine", textAnchor: "start", dx: 6, dy: d.endDy })),
         Plot.tip(data, Plot.pointer({ x: "years", y: "net", title: (d) => `${d.machine}, after ${d.years} years\n${d.net < 0 ? "−" : ""}$${Math.abs(Math.round(d.net)).toLocaleString("en-US")}` })),
       ],
     });
