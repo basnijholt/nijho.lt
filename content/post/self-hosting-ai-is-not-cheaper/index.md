@@ -153,10 +153,12 @@ GPT-6 Luna costs 58% less per output token than GPT-5.6 Luna did in July.
 If the price halves again, no amount of use pays off at 18 cents per kWh.
 If it halves twice, the API costs less than my electricity alone.
 
-## 5. "What about a Mac or a DGX Spark?"
+## 5. "But my Mac or DGX Spark does save money"
 
-After I shared this post, people asked me about these two machines in particular.
-A MacBook Pro with an M5 Max or an NVIDIA DGX Spark, both with 128 GB of memory, can hold a better model than my 3090s: Qwen3.8-Flash-Next, a sparse model with 180 billion parameters, of which only 6 billion work on each token.
+After I shared this post, two people told me their machines do save them money: a MacBook Pro with an M5 Max and an NVIDIA DGX Spark.
+If you would have bought the machine anyway, that is true, for the reason in section 2: their electricity costs little compared with the API.
+Counting the hardware is a different story.
+Both have 128 GB of memory, so they can hold a better model than my 3090s: Qwen3.8-Flash-Next, a sparse model with 180 billion parameters, of which only 6 billion work on each token.
 It scores 39.8, close to GPT-6 Luna on its highest setting (38.1).
 A reader on r/LocalLLaMA runs it on an M5 Max at Q2, about 2.7 bits per weight, which probably costs a few points, although nobody has measured how many.
 For the Spark, I estimated the speed from Artificial Analysis's measurement of a similar model on it.[^macspark]
