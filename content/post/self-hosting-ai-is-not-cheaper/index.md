@@ -49,7 +49,7 @@ At full precision, Qwen3.8 27B needs about 54 GB of memory.
 Quantized to 5 or 6 bits per weight, it fits on one 24 GB card, at some cost in quality.
 I still [split it across both of my 3090s](https://github.com/basnijholt/dotfiles/blob/e63a3f341ff36b7b57bf31361c2844e1d8b78e95/configs/nixos/hosts/pc/ai.nix#L101-L131), because the second card leaves room for a larger context window.
 
-I compare it with OpenAI's GPT-6 Luna, the cheap tier released on September 22.
+I compare it with OpenAI's [GPT-6 Luna](https://artificialanalysis.ai/models/gpt-6-luna), the cheap tier released on September 22.
 Both models let you choose how long they think, but the settings do not mean the same thing for both.
 Luna's token use grows more than 20 times from its lowest setting to its highest, while Qwen's barely changes.
 Qwen on low already writes more tokens than Luna on xhigh.
@@ -59,18 +59,18 @@ Qwen on low already writes more tokens than Luna on xhigh.
 So the name of a setting says little on its own.
 I compare both models at xhigh, the highest setting Qwen offers, and count the tokens each one actually uses.
 The extra tokens Qwen needs are part of what I am measuring.
-There, Qwen scores 33.7 on the Artificial Analysis Intelligence Index and Luna scores 34.6.
+There, Qwen scores 33.7 on the [Artificial Analysis Intelligence Index](https://artificialanalysis.ai/methodology/intelligence-benchmarking) and Luna scores 34.6.
 For reference, Claude Opus 4.6, a frontier model from February, scores 31.9.
 That is an amazing feat in itself.
 When Opus 4.6 was the best model we had, I never thought that within the same year I could run essentially that level of intelligence in my own house.
 
-Artificial Analysis also publishes how many tokens each model used to run the index, and what that cost.
-So the question is simple: what does it cost to run the whole benchmark once?
+Artificial Analysis also [publishes](https://artificialanalysis.ai/leaderboards/models) how many tokens each model used to run the index, and what that cost.
+So the question is simple: what does it cost to run the whole benchmark once?[^method]
 
 {{< plot name="runCost" caption="Cost of one run of the Artificial Analysis Intelligence Index. The two bars for hardware at home are electricity only, with the assumptions from section 2 and the footnotes." >}}
 
 Luna runs the whole benchmark for $67.
-Qwen at full precision, through the cheapest provider that does not keep your data (ZDR), costs $619.
+Qwen at full precision, through the [cheapest provider](https://openrouter.ai/qwen/qwen3.8-27b/providers) that does not keep your data (ZDR), costs $619.
 Two things cause that gap: providers charge almost four times as much per output token for Qwen, and Qwen generates almost three times as many tokens to get the same work done.
 
 The second bar is my own machine: running Qwen on my GPUs costs about as much in electricity alone as Luna's entire bill.
@@ -110,7 +110,7 @@ When I [run several agents in parallel]({{< ref "/post/parallel-agentic-coding" 
 
 ## 3. Why datacenters are so much better at this
 
-When my 3090 generates a token, it reads all 17 GB of weights from memory to produce one token for one conversation.
+When my 3090 generates a token, it reads all 20 GB of weights from memory to produce one token for one conversation.
 Most of the chip's compute sits idle while it waits for memory.
 A datacenter GPU reads the same weights once and produces a token for hundreds of conversations at the same time.
 This is called batching, and it is where most of the efficiency comes from.
@@ -136,7 +136,7 @@ And the GPUs also run at night.
 But fine, say the electricity is free and the only cost is the hardware.
 I was lucky and bought my two 3090s for about $750 each,[^3090] and I write them off over three years.
 The GPUs only save money while they do work I would otherwise pay an API for, and while they sit idle they save nothing.
-So the question is how many hours a day they have to be busy before they pay for themselves.
+So the question is how many hours a day they have to be busy before they pay for themselves.[^breakeven]
 
 To make this fair to open models, imagine an open model that is exactly as efficient as Luna: the same quality from the same number of tokens, sold at Luna's price.
 
@@ -194,9 +194,9 @@ On the GB300 rack, one GPU serving DeepSeek V4 Pro handles about 4 million outpu
 Most of that input is conversation history that coding agents send again with every step.
 Providers keep it in a cache and charge less than 1% of the normal input price for it.
 
-At DeepSeek V4 Pro's list prices, that GPU brings in at least $5.70 per hour, even if every input token is billed at the cache price.
+At [DeepSeek V4 Pro's list prices](https://artificialanalysis.ai/models/deepseek-v4-pro-0424), that GPU brings in at least $5.70 per hour, even if every input token is billed at the cache price.
 If 5% of the input misses the cache, it brings in about $17.
-Renting a B200, the closest GPU with a published rental price, costs $3.50 to $5.90 per hour from smaller cloud providers, and that price already includes their profit.
+Renting a B200, the closest GPU with a [published rental price](https://artificialanalysis.ai/hardware-inference-stack/datacenter), costs $3.50 to $5.90 per hour from smaller cloud providers, and that price already includes their profit.
 
 So the tokens pay for the hardware that serves them, even in the worst case.
 This leaves out costs like staff and training, so it does not tell you whether a lab makes money overall.
@@ -215,7 +215,7 @@ Labs are in a race to the bottom on price.
 ## 8. "But they sell your data"
 
 Some people say APIs are cheap because the provider trains on your data or sells it.
-That is why I only used prices from providers that OpenRouter lists as zero data retention (ZDR).
+That is why I only used prices from providers that OpenRouter lists as [zero data retention](https://openrouter.ai/docs/features/zdr) (ZDR).
 
 | Model | Provider | ZDR | Output ($ per million tokens) |
 |---|---|---|---|
@@ -259,6 +259,10 @@ That is what [my local AI projects]({{< ref "/post/local-ai-journey" >}}) are fo
 
 Those are good reasons.
 Saving money is not one of them.
+
+[^method]: For each model, Artificial Analysis publishes how many input and output tokens the whole index took, and how many of the input tokens were read from a cache. I multiplied those by each provider's prices, with cached input at the cache price. For Qwen that is 198 million output tokens and 820 million input tokens that miss the cache. For the bars at home, the same tokens divided by the machine's speed give the run time, with the uncached input processed at about 800 tokens per second per 3090 and 2,000 on the RTX PRO 6000, and the run time times the machine's power and the price per kWh gives the electricity.
+
+[^breakeven]: While the cards are busy, they save what the API would have charged for the same work, minus the electricity at 700 W. While they are idle, the machine still draws about 100 W. The break-even point is the number of busy hours per day at which those savings cover the price of the cards, written off over three years, plus the idle power.
 
 [^pro6000]: The RTX PRO 6000 has the same memory bandwidth as an RTX 5090, and at full precision every token reads three times as many bytes as in Q4_K_M. Scaling Artificial Analysis's 5090 measurement gives about 48 tokens per second. I assume 600 W for the whole machine.
 
