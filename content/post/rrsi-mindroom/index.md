@@ -1,7 +1,7 @@
 ---
 title: "Trying RRSI's self-improving agent harnesses on MindRoom"
-subtitle: "Two days of automated harness search on MindRoom: better shell instructions, two bug fixes, and a CLI that wasted a third of its calls"
-summary: "Google's RRSI evolves an agent's harness (prompts, tools, config) against a benchmark while guarding against overfitting. I pointed it at MindRoom agents. It did find better instructions, but the most valuable results were the bugs and the CLI friction that the evaluation exposed, and the fixes went into MindRoom itself."
+subtitle: "I let an optimizer rewrite my agents' instructions. It worked, but watching the agents struggle taught me more."
+summary: "Google's RRSI lets LLMs rewrite an agent's prompts, tools, and config, and keeps only the changes that hold up on a benchmark. I tried it on MindRoom agents. It found good working habits, but the bigger wins came from building an honest benchmark and watching where the agents got stuck."
 date: 2026-10-02
 draft: true
 featured: false
@@ -14,278 +14,128 @@ tags:
   - rrsi
   - evaluation
   - agentic-coding
-  - claude-code
-  - codex
-  - gpt-6
   - open-source
 categories:
   - AI
   - open-source
-  - level:advanced
+  - level:intermediate
 ---
 
-On September 21, Google Research published [RRSI: Regularized Recursive Self-Improvement of Agent Harnesses](https://arxiv.org/abs/2609.24972), with [code on GitHub](https://github.com/google-research/rrsi).
-The idea is simple and appealing.
-An agent's capability depends not only on the model but on its harness: the prompts, tools, control flow, memory, and context management around a frozen model.
-RRSI lets LLMs edit that harness, evaluates every edit on a benchmark, and keeps only the edits that survive a set of statistical guardrails.
+Google Research recently published [RRSI](https://github.com/google-research/rrsi), short for Regularized Recursive Self-Improvement of Agent Harnesses.
+The harness is everything around the model: the prompts, the tools, the config.
+RRSI lets LLMs propose changes to that harness, tests each change on a benchmark, and keeps only the changes that survive some strict statistical checks.
 
-I build [MindRoom]({{< ref "/post/mindroom" >}}), where every agent is defined by a block of YAML: its role, instructions, tools, and a few settings.
-That YAML is exactly a harness.
-So I pasted the RRSI link into Claude Code and asked: "how to use this with MindRoom?"
+In [MindRoom]({{< ref "/post/mindroom" >}}), every agent is a few lines of YAML: a role, instructions, and a list of tools.
+That is exactly a harness, so I wanted to know what RRSI would do with it.
+I gave my coding agent the link and asked how to use it with MindRoom.
+Two days later I had an answer, and it was not the one I expected.
 
-Two days, several thousand agent trials, and four merged pull requests later, I have a clear answer.
-RRSI works, and it found real improvements.
-But the improvements it found in the prompt were the smallest part of the value.
-The evaluation harness I had to build for it turned out to be a microscope, and most of what it showed me was wrong with MindRoom itself.
+## The optimizer works
 
-{{< toc >}}
+The first useful benchmark was a set of small terminal jobs: clean up a messy CSV, find a commit in git history, fix a package until its tests pass, change one value in a config file without touching anything else.
+Each job has a hidden check that runs after the agent finishes, so the agent can't talk its way to a pass.
 
-## 1. What RRSI does
+RRSI took the agent from mostly right to almost always right, including on new instances of the jobs it had never seen.
+It did that without adding a single tool.
+It only rewrote the instructions, and what it wrote reads like advice a senior engineer gives a junior:
 
-RRSI runs a loop of rounds.
-In each round, an analyst model reads the failing trajectories and ranks failure modes.
-A proposer model drafts two candidate harnesses, each a small set of edits in its own git worktree.
-A critic model screens each candidate for anything that smells like memorizing the benchmark: task IDs, specific answers, references to the grader.
-Then both candidates are evaluated on the full evolve set, and at most one replaces the incumbent.
+- filter on the field you care about, not on the whole line;
+- look at a sample of a big output, but compute over all of it;
+- don't glue files together blindly, because one might not end with a newline;
+- when only one value should change, change only that value;
+- afterwards, check your work: search for the old name after a rename and run the tests.
 
-What makes it "regularized" is how strict the selection is:
+Almost all of the gain came in the first round.
+After that, RRSI mostly rejected its own proposals, which is what it is supposed to do.
 
-- **A noise floor.** A candidate only counts as better if it beats the incumbent by more than the measured noise of the evaluation, called δ.
-- **A cost rule.** If a candidate uses more tokens, the score gain has to pay for them.
-- **A shaped rule inside the noise band.** A candidate that is not measurably better survives only by cutting tokens or by adding a new kind of mechanism.
-- **An edit budget** that shrinks over time, and **pruning** of components that stop helping.
+It also refused ideas that sounded good.
+Giving the agent a Python tool cost more tokens and helped nothing, since the shell can already run Python.
+Compressing tool output cost more than it saved.
+I liked that a lot: the optimizer has to pay for every token it adds.
 
-The paper's point is that unregularized harness search overfits: it memorizes the training tasks, and the gains vanish on new ones.
-So every run ends with a held-out set (new instances of the same kinds of task) and, ideally, an out-of-distribution set (new kinds of task).
+## Start with work that matters
 
-To plug MindRoom in, I wrote an RRSI `Domain` adapter.
-Each candidate harness is merged into a frozen `config.yaml` (the model stays fixed), a fresh MindRoom instance boots per job, and every trial gets fresh storage so memory cannot leak between tasks.
-I ran RRSI's own three roles on GPT-6 Astra through my Codex login, and the agent being evolved on GPT-6 Luna.[^setup]
+My first attempt was a mistake.
+I started with arithmetic puzzles and MindRoom's calculator tool, because that was quick to set up.
+The scores were so noisy that the same agent scored a few points apart on two identical runs, and nothing RRSI proposed beat that noise.
 
-## 2. A toy benchmark finds bugs, not learnings
-
-The first run used 36 small arithmetic and counting tasks, with MindRoom's calculator tool available.
-It was quick to build, and it was a mistake.
-
-Evaluating the unchanged harness twice gave 0.833 and 0.875.
-That 4-point swing on identical inputs set the noise band at about 0.08, and nothing RRSI proposed beat it.
-Six rounds and eleven candidates later, the only accepted change was `markdown: false`, which saved a few percent of tokens.
-RRSI did its job: every expensive candidate got rejected, and every "best" evolve score shrank back on the held-out set.
-
-But the run surfaced four MindRoom bugs:
-
-- The calculator silently turned large integers into floats: `multiply(9734184429, 764243911)` came back as `7.439291178414262e+18`.
-- The calculator could only do one operation per model round trip, so summing 31 numbers took 31 requests and about 25,000 tokens instead of 684.
-- MindRoom's OpenAI-compatible `/v1` endpoint always reported `usage` as zero, which is a problem when RRSI's cost rule runs on token counts.
-- Tool-call markers like `🔧 multiply [1]` landed in `/v1` replies and broke clients that expect strict JSON.
-
-When I read this summary, my reaction was: the calculator is a toy tool, why are we optimizing that?
+When I saw the results, my reaction was: why are we optimizing a calculator?
 Nobody needs an agent that multiplies.
-What MindRoom agents actually do all day is run shell commands.
-So we dropped the calculator and moved to the shell.
+MindRoom agents spend their days in a shell, so that is what the benchmark had to be.
 
-**Lesson: benchmark the work your agents actually do.**
-A toy benchmark is fine as a smoke test of the pipeline, but it will not teach the harness anything useful.
+Measure the noise first, though.
+If two runs of the same agent disagree by four points, a three-point improvement means nothing.
 
-## 3. The shell benchmark
+## The benchmark was the useful part
 
-The second benchmark had 12 families of small terminal jobs, each with a hidden check that runs in a throwaway container with no network after the agent finishes:
-summarizing a messy CSV, counting errors in a web log, fixing a Python package until its tests pass, finding a commit with `git bisect`, renaming a function across a package, extracting values from JSON, finding files by size, digging through nested archives, writing a small script, changing one value in a config file without touching any other byte, extracting a count from a command that prints megabytes of output, and merging two CSVs.
+Building an honest benchmark meant running MindRoom the way it runs in production, with each agent's shell in an isolated container.
+Watching the agents work exposed things no unit test had caught.
+Inside the container, the home directory pointed at the host's home, so `cd ~` failed.
+MindRoom's OpenAI-compatible API reported every request as using zero tokens.
+The calculator quietly turned large integers into floats.
 
-The agent's shell ran in MindRoom's Docker workers, the same isolation boundary production uses.
-That immediately found a fifth bug: in a dedicated worker, `HOME` still pointed at the primary's host home directory, so `cd ~` failed, `git config --global` failed, and the host path leaked into the sandbox.
+None of those are things an optimizer can fix.
+I only found them because I had to look at hundreds of trajectories to understand what was going on.
 
-The first version of the suite was too easy: the unchanged agent passed 97% of trials, leaving nothing to optimize.
-I made the tasks harder in the ways real data is hard (inconsistent case and whitespace, quoted fields, files without a trailing newline, comments that look like settings) until the baseline dropped to about 0.9.
+## Put the lesson in the tool
 
-Then RRSI ran six rounds.
+The improved instructions lived in one agent's config.
+That helps nobody else, so I moved a short version of them into the description of MindRoom's shell tool itself.
+Now every agent with a shell sees them, without changing anything in its config.
 
-| Harness | Evolve set (36 tasks × 4 trials) | Held-out set (12 tasks × 4 trials) | Tokens per held-out trial |
-|---|---|---|---|
-| Original | 0.896 | 0.938 | 8,100 |
-| After round 0 | 0.993 | 1.000 | 10,357 |
-| After six rounds | 0.986 | 1.000 | 10,221 |
+I also tested it on kinds of jobs the optimizer had never seen.
+It helped a little there, and not at all on new instances of the original jobs.
+That is an honest, modest result, and I'm fine with it: the habits are generally sensible, but they are not magic.
 
-Almost all of the gain came in round 0, from instructions alone.
-RRSI kept the same tools and added six general working rules, which read like advice from a careful senior engineer:
+## The comparison that didn't test anything
 
-- compute relative paths with a path API, not by slicing strings;
-- apply filters to the extracted field, not the whole line, and check them on sample records;
-- sample large outputs with `head` or `grep`, but compute over the full input;
-- keep file boundaries when combining inputs, because a file may lack its final newline;
-- when every other byte must stay, replace only the value and read the file back;
-- after a rename, search for the old name and run the tests.
+MindRoom also has a minimal mode.
+Instead of dozens of tool definitions, the model sees a single `bash` tool, and it finds and calls every other tool through a small command-line program.
+The point is to keep prompts small when an agent has many tools.
 
-What RRSI refused was just as interesting.
-Adding the `python` tool cost 21% more tokens for no gain, since the shell already runs Python.
-Turning on `compress_tool_results` cost 18 to 21% more, because compressing tool results takes extra model calls, which is more than it saves on short shell output.
-The cost rule caught both.
+I compared both modes on the same terminal jobs, and minimal mode looked great: the same accuracy for about a quarter of the tokens.
+I was ready to make it the default for shell-heavy agents.
 
-I also made a configuration mistake.
-I had set the weight on in-band score changes (`w_s`) to 100, so a 0.7-point "gain", about one trial, outweighed a 4% token increase, and RRSI accepted a change on noise.
-RRSI's own coding instance sets that weight to 0 for exactly this reason: inside the noise band, only a cheaper or structurally new harness should win.
+Then I asked: but did it ever use anything other than the shell?
+It had not.
+Not once.
+The comparison showed that a small prompt beats a big prompt when the job only needs a shell, and nothing about the part that makes minimal mode different.
 
-## 4. Putting the learnings into the product
+So we built a benchmark where the shell is useless on its own: react to a specific message, reply in the right thread, schedule a reminder, send a file as an attachment.
+Minimal mode found the right tools almost every time, and its accuracy matched standard mode.
+But it was three times slower, and about a third of its shell commands were wasted.
 
-The evolved harness is one agent's YAML.
-Copying six instructions into every agent would help nobody who writes their own config.
+## When the agent works around your interface, fix the interface
 
-So I distilled the rules into a 140-word "working method" at the end of the description of MindRoom's `run_shell_command` tool.
-Every agent with the shell toolkit now sees it whenever the tool schema is sent, with no configuration.[^note]
+Most of the waste came from the command-line program itself.
+Calling a tool returned "queued" straight away, so the model always needed a second command to wait for the result.
+A wrong function name came back as "Tool is unavailable or arguments are invalid", which tells you nothing, and in one trial the agent tried three times and then gave up.
+And the model kept writing calls in a natural form the program didn't accept.
 
-Then I built eight new kinds of terminal job the search had never seen (SQLite queries, dependency ordering, regex extraction, splitting files, Markdown tables, debugging environment variables, applying diffs, syncing directories) to test whether the note transfers.
+The obvious next step was to let RRSI optimize minimal mode's instructions.
+It would probably have learned to work around all of this.
+But that teaches one agent to cope with a clumsy tool, and every other agent keeps paying for it.
 
-| Harness | Out-of-distribution set (24 tasks × 4 trials) | Tokens per trial |
-|---|---|---|
-| MindRoom before the note | 0.979 | 5,980 |
-| With the note | 1.000 | 7,155 |
-| Full evolved harness | 0.990 | 8,340 |
+So I fixed the tool instead: calls now wait for their result, a wrong name lists the right ones, and the natural forms just work.
+Minimal mode then needed a third fewer tokens, with the extra wait commands gone entirely.
 
-The note did not hurt on new kinds of work, and the full evolved harness did not beat it.
-On the held-out set it did not help either: 0.938 before and after, because it fixed the config-edit failures but a JSON extraction task started failing twice.
-That is the honest result: a modest, general improvement, not a breakthrough.
+The rerun also caught a confusing error that my own fix had introduced.
+Measure again after you fix something.
 
-A rerun with `w_s` set to 0 and a larger set (60 tasks × 3 trials) showed the same shape: a real early gain from instructions (0.928 to 0.989 in two rounds), then three rounds of rejections.
-It rediscovered the same rules, plus one more: decode a field's syntax (quotes, case, `yes`/`no` and null sentinels) before filtering on it.
+## Who did the work
 
-**Lesson: harness search front-loads its gains.**
-Both runs got nearly everything in the first two rounds, from general working habits.
-After that, RRSI mostly rejects candidates, which is exactly what its guardrails are for.
+My coding agent did almost all of it: the benchmarks, the hidden checks, the runs, and the pull requests.
+Every pull request was reviewed by two other models before I merged it, and they kept catching mistakes the other one missed, including a regression in one of my fixes.
+My own contribution was mostly a few questions at the right moments: why a calculator, did it ever use anything but the shell, and please don't overcorrect.
+Each of those changed the direction more than any round of the optimizer did.
 
-## 5. Minimal mode, and the question I should have asked
+## What I would tell someone trying this
 
-MindRoom has a minimal mode: instead of dozens of tool schemas, the model sees one `bash` tool and a short system message.
-Every other toolkit is still available through a `mindroom-agent` CLI inside the shell: `tools search`, `tools describe`, `tools call`.
-It exists to keep prompts small for agents with many tools.
+- **Benchmark the work your agents actually do,** and grade it with checks the agent can't see.
+- **Measure the noise before you believe any improvement.**
+- **Expect the first round to do most of the work.** The gains are general habits, and they show up early.
+- **Read the trajectories.** The bugs and the bad interfaces are in there, and no optimizer will fix those for you.
+- **Ask what your comparison does not test.**
 
-`/v1` cannot reach minimal mode, so I drove MindRoom through Matrix instead: a local homeserver, one room per trial, `!mode coder minimal`, the task, and the hidden check after the reply finished.
-Getting minimal mode to run on my machine took some plumbing.
-The host firewall blocks containers from reaching host ports, so worker traffic to MindRoom went through a relay container and Unix sockets.
-My first gateway proxy exposed FastAPI's default `/docs` page, and the worker's isolation probe refused to install the CLI, which is exactly what it should do.
-
-On the 96 shell tasks, the result looked like a clean win for minimal mode:
-
-| | Standard mode | Minimal mode |
-|---|---|---|
-| Pass rate (216 trials) | 0.944 | 0.958 |
-| Tokens per trial | 15,962 | 4,317 |
-| Median seconds per trial | 18.7 | 23.2 |
-
-The same accuracy at 27% of the tokens.
-I was ready to recommend minimal mode as the default for shell-heavy agents.
-
-Then I asked: "But you said it never used anything else than the shell tool, anyway?"
-Right.
-Minimal mode's `mindroom-agent` CLI was called zero times in 216 trials.
-The comparison showed that a small prompt beats a large prompt for shell-only work, and nothing about the part that makes minimal mode different.
-
-## 6. A benchmark for tools the shell cannot reach
-
-So we built a third benchmark: 48 jobs that each need a MindRoom toolkit running outside the worker, where the shell cannot do the job.
-React to a specific earlier message.
-Start a thread, or reply inside an existing one.
-Read a build number from a thread or a codename from the room's state.
-Schedule a one-time or weekly task.
-Compute a CSV report and send it as an attachment.
-Two toolkits, todo lists and thread tags, appear only in the out-of-distribution set, so the agent has to discover tools it has never needed.
-
-The grader checks the Matrix room, the room state, and MindRoom's stored state, so writing "done" in the reply does not count.
-
-| | Standard mode | Minimal mode |
-|---|---|---|
-| Pass rate (128 trials) | 0.930 | 0.922 |
-| Tokens per trial | 26.9k | 31.5k |
-| Uncached input tokens per trial | 4.2k | 12.1k |
-| Median seconds per trial | 14 | 46 |
-| Tool calls per trial | 2.5 | 9.8 (all `bash`) |
-
-Minimal mode reached a toolkit through the CLI in 126 of 128 trials, including the two toolkits the other tasks never needed.
-But it was three times slower and used three times the uncached input.
-
-The interesting part was where those extra calls went.
-Of 1,254 `bash` calls, 36% were CLI overhead:
-
-| Overhead | Calls |
-|---|---|
-| `tools call` returned `queued`, so the model needed a separate `calls wait` | 244 |
-| `toolkit.function` names rejected as invalid arguments | 54 |
-| `tools describe` called with only a toolkit name | 38 |
-| JSON arguments passed without `--json` | 35 |
-| `mindroom-agent tools` without an action | 27 |
-| Wrong function or argument names, answered with "Tool is unavailable or arguments are invalid" or "Invalid Agent CLI operation" | 51 |
-
-That last row cost real failures: in one trial the model guessed `send` instead of `matrix_message`, got the same vague error three times, and gave up on attaching the file it had computed correctly.
-
-## 7. Fix the product, not the prompt
-
-The obvious next step was to run RRSI on `minimal_instructions`, the text minimal mode puts in the system message.
-It would probably have found something like "always wait on the call ID in the same command."
-But that would teach one agent to work around a clumsy CLI, and every other agent would keep paying for it.
-
-So I fixed the CLI instead, highest impact first and nothing else:[^pr]
-
-1. `tools call` now waits up to 30 seconds for the result, so a normal call takes one command; `--timeout 0` keeps the old behavior for scripts that submit several calls at once.
-2. A wrong function name now says what the toolkit does contain: `Toolkit 'matrix_message' has no function 'send'; its functions: matrix_message`.
-3. `toolkit.function` names and a trailing JSON argument are accepted, since that is how models naturally write the call.
-
-Then I reran all 128 minimal-mode trials:
-
-| Minimal mode | Before | After |
-|---|---|---|
-| Pass rate | 0.922 | 0.930 |
-| Tokens per trial | 31.5k | 21.1k |
-| `bash` calls per trial | 9.8 | 7.3 |
-| Separate `calls wait` round trips | 240 | 0 |
-
-A third fewer tokens, and minimal mode now uses fewer tokens in total than standard mode on tool work too, though still more uncached input.
-It is still slower, because every call still goes through the shell.
-
-The rerun also caught a regression from my own fix.
-Accepting `toolkit.function` turned an old mistake, `tools call matrix_room.matrix_room '{...}'`, into a misleading error, `No toolkit 'matrix_room.matrix_room'`, 18 times.
-Measuring again after fixing turned that into one more small commit.
-
-**Lesson: count the failure classes before choosing a fix.**
-The table above is just `grep` over trajectories, and it made the priorities obvious.
-
-## 8. Who did what
-
-Claude Code with Opus 5.5 did nearly all of the work: the domain adapters, the three benchmarks with validated reference solutions, the Matrix driver, every run, and the pull requests.
-Each PR was reviewed by two independent models before I merged it: GPT-6 Astra running in a separate worktree through [`agent-cli dev`]({{< ref "/post/parallel-agentic-coding" >}}), and a fresh Opus agent that had not seen the implementation.
-
-They caught real problems that the other one missed.
-In the `HOME` fix, both found that my first version broke `HOME` for agents that do have a workspace.
-In the usage fix, Opus found that cached input was missing for Claude providers after Astra had already approved it.
-In the CLI fix, both found that the friendlier error never reached `tools describe` in production, because the authorization step looks up the name first.
-A third bot reviewer on GitHub found one more edge case and also made a claim that was wrong, which is why every review comment gets verified before it gets fixed.
-
-My own contribution was mostly three sentences at the right moments: the calculator is a toy, the comparison never used anything but the shell, and don't overcorrect.
-Each of them changed the direction of the work more than any single RRSI round did.
-
-## 9. What I took away
-
-**Measure the noise first.**
-Two evaluations of the same harness differed by 4 points on 36 tasks.
-Below a few hundred trials, most "improvements" are noise, and RRSI's noise floor is the most important guardrail it has.
-
-**Use tasks that look like the real work, and hide the checks.**
-The calculator benchmark taught the harness nothing.
-The shell benchmark taught it habits that transferred to new kinds of jobs.
-
-**Expect the first round to do most of the work.**
-In both shell runs, general working habits gave nearly all of the gain, and later rounds mostly confirmed that there was nothing left within the noise.
-
-**The evaluation harness is the product.**
-Four merged MindRoom PRs came out of this: zero `/v1` usage, the worker `HOME`, the shell working method, and the minimal-mode CLI fixes in [#2530](https://github.com/mindroom-ai/mindroom/pull/2530).[^prs]
-None of them was an evolved prompt.
-All of them came from building an honest benchmark, running it, and reading the trajectories.
-
-**Ask what a comparison does not test.**
-Minimal mode looked four times cheaper until I noticed that the benchmark never exercised the one thing that makes it different.
-
-[^setup]: The frozen policy was GPT-6 Luna (`gpt-6-luna`) through MindRoom's `codex` provider, and RRSI's analyst, proposer, and critic ran on GPT-6 Astra (`gpt-6-astra`) through the same Codex login, which needed a small backend added to RRSI's LLM client. For the shell runs, each candidate was evaluated with 3 or 4 trials per task, and the noise band δ came either from a bootstrap over the trials of one baseline evaluation or from repeated baseline evaluations. One lesson there: two repeated baselines that happen to agree give a δ that is too small. In the 60-task rerun, two baselines landed 0.006 apart and gave δ = 0.011, while the bootstrap on the same data suggested about 0.046.
-
-[^note]: The note ends the `run_shell_command` description: "Working method: inspect inputs first, sampling large files or outputs with head, tail, grep, or wc instead of printing everything, but compute results over the full input. Match filters against the extracted field value, not the whole line, and check them on a few sample records. When combining the lines or words of several text files, do not concatenate them raw [...] When only one value must change, replace just that span and keep every other byte, including comments and spacing. Afterwards verify the result: read outputs back, search for leftover old names after a rename, run available tests, and recheck suspicious results such as a zero count." The first draft said "never concatenate files raw", and both reviewers pointed out that this would discourage legitimate joins of a split file, so the rule now covers only text files. See [#2518](https://github.com/mindroom-ai/mindroom/pull/2518).
-
-[^pr]: The rule I gave was to do the highest-impact fixes first and not to overcorrect. Left out on purpose: listing a toolkit's functions from `tools describe TOOLKIT`, schema details in "Invalid tool arguments" (two occurrences in 128 trials), and a case where redirecting a tool's output to a file hid its error (one occurrence). The most common remaining failure, posting in the wrong thread, happened equally in both modes; it is a model weakness, not a CLI problem.
-
-[^prs]: [#2491](https://github.com/mindroom-ai/mindroom/pull/2491) reports real token usage from `/v1`, [#2493](https://github.com/mindroom-ai/mindroom/pull/2493) keeps the worker's own `HOME`, [#2518](https://github.com/mindroom-ai/mindroom/pull/2518) adds the shell working method, and [#2530](https://github.com/mindroom-ai/mindroom/pull/2530) makes the minimal-mode CLI wait for calls and name a toolkit's functions. The calculator bugs I left alone, since nobody should be using MindRoom's calculator for arithmetic anyway.
+RRSI is a nice piece of work, and I will keep the setup around to score agent configs.
+But the most valuable thing it gave me was a reason to watch my agents closely, and that turned out to be worth more than the instructions it wrote.
