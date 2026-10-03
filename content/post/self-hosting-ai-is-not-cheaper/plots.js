@@ -237,7 +237,7 @@ export default {
       { machine: "AMD Ryzen AI Max+ 395, 128 GB ($4,000)", model: "Qwen3.8-Flash-Next Q4 vs Luna max", years: [6.1, 8.5] },
       { machine: "DGX Spark, 128 GB ($6,950)", model: "Qwen3.8-Flash-Next Q4 vs Luna max", years: [8.5, 12.0] },
       { machine: "M5 Max, 128 GB ($7,000)", model: "Qwen3.8-Flash-Next Q2 vs Luna max", years: [10.4, 13.2] },
-      { machine: "RTX PRO 6000, 96 GB (~$15,000)", model: "Qwen3.8-Flash-Next Q3 vs Luna max", years: [3.4, 4.4] },
+      { machine: "RTX PRO 6000, 96 GB (~$15,000)", model: "Qwen3.8-Flash-Next NVFP4 vs Luna max", years: [6.5, 9.2] },
     ].map((m) => ({ ...m, name: narrow ? `${m.machine}\n${m.model}` : `${m.machine}, ${m.model}` }));
     const rates = ["Free (solar)", "18 cents/kWh"];
     const data = machines.flatMap((m) => rates.map((rate, j) => ({ machine: m.name, rate, years: m.years[j] })));
