@@ -237,7 +237,7 @@ export default {
       { machine: "AMD Ryzen AI Max+ 395, 128 GB ($4,000)", model: "Qwen3.8-Flash-Next Q4 vs Luna max", years: [6.1, 8.5] },
       { machine: "DGX Spark, 128 GB ($6,950)", model: "Qwen3.8-Flash-Next Q4 vs Luna max", years: [8.5, 12.0] },
       { machine: "M5 Max, 128 GB ($7,000)", model: "Qwen3.8-Flash-Next Q2 vs Luna max", years: [10.4, 13.2] },
-      { machine: "RTX PRO 6000, 96 GB (~$15,000)", model: "Qwen3.8-Flash-Next NVFP4 vs Luna max", years: [10.6, 20.3] },
+      { machine: "RTX PRO 6000, 96 GB (~$15,000)", model: "Qwen3.8-Flash-Next NVFP4 vs Luna max", years: [6.5, 9.2] },
     ].map((m) => ({ ...m, name: narrow ? `${m.machine}\n${m.model}` : `${m.machine}, ${m.model}` }));
     const rates = ["Free (solar)", "18 cents/kWh"];
     const data = machines.flatMap((m) => rates.map((rate, j) => ({ machine: m.name, rate, years: m.years[j] })));
@@ -253,12 +253,12 @@ export default {
       style: STYLE,
       fy: { domain: machines.map((m) => m.name), axis: null, padding: narrow ? 0.62 : 0.45 },
       y: { domain: rates, label: null, tickSize: 0 },
-      x: { domain: [0, 21], label: narrow ? "Years to pay off the hardware" : "Years of nonstop generation to pay off the hardware", ticks: [0, 3, 6, 9, 12, 15, 18, 21], grid: true, ...X_LABEL },
+      x: { domain: [0, 15], label: narrow ? "Years to pay off the hardware" : "Years of nonstop generation to pay off the hardware", ticks: [0, 3, 6, 9, 12, 15], grid: true, ...X_LABEL },
       color: { domain: rates, range: [COLORS.local, COLORS.paid] },
       marks: [
         Plot.text(machines, { fy: (d) => d.name, text: (d) => d.name, frameAnchor: "top-left", lineAnchor: "bottom", dy: -8, dx: -100, fontWeight: "bold" }),
-        Plot.barX(never, { fy: "machine", y: "rate", x1: 0, x2: 21, fill: "rate", fillOpacity: 0.12 }),
-        Plot.text(never, { fy: "machine", y: "rate", x: 10.5, text: () => "never", fontStyle: "italic" }),
+        Plot.barX(never, { fy: "machine", y: "rate", x1: 0, x2: 15, fill: "rate", fillOpacity: 0.12 }),
+        Plot.text(never, { fy: "machine", y: "rate", x: 7.5, text: () => "never", fontStyle: "italic" }),
         Plot.barX(possible, { fy: "machine", y: "rate", x: "years", fill: "rate" }),
         Plot.text(possible, { fy: "machine", y: "rate", x: "years", text: (d) => `${d.years.toFixed(1)} years`, textAnchor: "start", dx: 5 }),
       ],
