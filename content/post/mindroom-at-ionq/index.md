@@ -133,7 +133,7 @@ Features that could take a large organization months often take me days:
 
 - Agents can open a real browser on their own remote computer, not on your laptop, and you can [watch it live and take over](https://docs.mindroom.chat/tools/worker-computer/#watch-take-control-and-resume), for example to log in somewhere, before handing control back.
 - An [MCP](https://modelcontextprotocol.io) [gateway](https://docs.mindroom.chat/deployment/mcp-gateway/) lets people connect their local tools, like Claude Code or Codex, to every agent they have access to and all of those agents' tools, so they benefit from what the agents have collected even outside MindRoom.
-- A day after OpenAI released [GPT-Live-1 in its API](https://openai.com/index/introducing-gpt-live-1-in-the-api/), you could [call your MindRoom agent](https://docs.mindroom.chat/voice-calls/#openai-live-with-agent-delegation): the same agent, with the same memory, which hands longer tasks to a background process while you keep talking. On my commute, I talk to my agent to plan my day and get things started.
+- A day after OpenAI released [GPT-Live-1 in its API](https://openai.com/index/introducing-gpt-live-1-in-the-api/), you could [call your MindRoom agent](https://docs.mindroom.chat/voice-calls/#live-with-agent-delegation): the same agent, with the same memory, which hands longer tasks to a background process while you keep talking. On my commute, I talk to my agent to plan my day and get things started.
 - Agents can [host small sites](https://docs.mindroom.chat/tools/agent-orchestration/#report_publishing), much like [ChatGPT Sites](https://help.openai.com/en/articles/20001339-creating-and-managing-chatgpt-sites), behind a temporary link with access control. That is how an agent can answer a question with an interactive presentation or a dashboard instead of a wall of text.
 
 ## What it takes to run this at a company
@@ -148,7 +148,7 @@ Every agent runs in its own [sandboxed container](https://docs.mindroom.chat/dep
 Credentials are injected from outside, so the agent never sees a token.
 Agents also cannot reach arbitrary websites: [outbound traffic is denied by default](https://docs.mindroom.chat/deployment/approved-egress/), and a new domain needs a person's time-limited approval.
 
-Reading is free, but anything that sends or changes something on your behalf, like an email, shows an [approval card](https://docs.mindroom.chat/authorization/#tool-approval-and-resource-ownership) with exactly what will be sent and to whom.
+Reading is free, but anything that sends or changes something on your behalf, like an email, shows an [approval card](https://docs.mindroom.chat/tool-approval/#approval-card-contents) with exactly what will be sent and to whom.
 A shared agent [only answers the people](https://docs.mindroom.chat/authorization/) who work on that program, and it only reaches the systems it was granted.
 
 It runs in IonQ's own cloud environment, and a security review ran alongside the rollout.
