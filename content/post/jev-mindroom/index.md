@@ -52,7 +52,7 @@ Once another person joins and writes something, the agent cannot tell whether th
 Nothing decided that, so the agent stayed quiet unless explicitly tagged.
 That confused several users.
 
-So I recently added [adaptive participation](https://docs.mindroom.chat/configuration/#adaptive-agent-participation): an agent that has already replied in a thread decides on its own whether to answer an untagged message.
+So I recently added [adaptive participation](https://docs.mindroom.chat/configuration/threads/#adaptive-participation): an agent that has already replied in a thread decides on its own whether to answer an untagged message.
 I first used an LLM as the judge, GPT-5.6 Luna on low reasoning.
 A yes-or-no question like "should this agent respond?" is exactly what Jev is for, so it [became the second backend](https://github.com/mindroom-ai/mindroom/pull/2169).
 Compared with Luna, it is about ten times cheaper and ten times faster, and if I believe the benchmarks, it is also smarter.
@@ -64,7 +64,7 @@ When I send a message while an agent is still replying, MindRoom injects a notic
 But often I, and other users, would watch the agent start working and then write "looks good" or "thanks."
 The agent would stop early and continue in the next turn, which is both wasteful and counterintuitive.
 
-Now [a judgment](https://github.com/mindroom-ai/mindroom/pull/2193) decides whether the new message needs the interruption, which the docs call [mid-turn coalescing](https://docs.mindroom.chat/configuration/#mid-turn-coalescing).
+Now [a judgment](https://github.com/mindroom-ai/mindroom/pull/2193) decides whether the new message needs the interruption, which the docs call [mid-turn coalescing](https://docs.mindroom.chat/configuration/threads/#mid-turn-coalescing).
 If it does not, the agent reacts with 👀, finishes its reply, and handles the message afterwards.
 
 This is also where I learned a lesson about evals.
@@ -117,7 +117,7 @@ agents:
 ```
 
 Both backends log their decisions and latency, so I can compare them on real traffic.
-The code is in [`src/mindroom/judgment/`](https://github.com/mindroom-ai/mindroom/tree/main/src/mindroom/judgment), and the backends are documented under [participation judgment backends](https://docs.mindroom.chat/configuration/#participation-judgment-backends).
+The code is in [`src/mindroom/judgment/`](https://github.com/mindroom-ai/mindroom/tree/main/src/mindroom/judgment), and the backends are documented under [participation judgment backends](https://docs.mindroom.chat/configuration/threads/#judgment-backends).
 
 ## Named after Jevons
 
