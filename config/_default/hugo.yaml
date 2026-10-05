@@ -55,6 +55,11 @@ imaging:
   quality: 90
   anchor: smart
 timeout: 600000
+caches:
+  # Remote resources (the GitHub star counts on the project cards) otherwise stay cached forever in Netlify's
+  # persistent HUGO_CACHEDIR; refetch them after an hour.
+  getresource:
+    maxAge: 1h
 taxonomies:
   tag: tags
   category: categories

@@ -161,6 +161,37 @@ body:not(.dark) .demo-clip-dark {
   margin: 0 auto;
 }
 
+// Project toolbar (layouts/partials/blocks/v1/portfolio.html): a search box and sort menu below the tag buttons.
+.project-search {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  .custom-select {
+    width: auto;
+  }
+}
+.project-none {
+  text-align: center;
+}
+// GitHub star count next to a project's title (layouts/partials/views/masonry.html).
+.project-title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  h4 {
+    flex: 1;
+  }
+  .project-stars {
+    font-size: 0.9rem;
+    white-space: nowrap;
+    color: inherit;
+    opacity: 0.7;
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
 // Photos in justified rows on the homepage (photo-grid shortcode): each row fills the width and its photos share one height.
 // The shortcode's script groups the photos into .photo-row elements; without it, they wrap at roughly 12rem tall.
 .photo-grid {
