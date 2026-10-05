@@ -1,0 +1,149 @@
+{{/* Override of the theme's Portfolio block:
+     - projects are sorted by their GitHub stars (functions/github_stars), newest first among equal counts
+     - the toolbar has a search box and a sort menu next to the tag buttons. The script at the bottom drives all
+       three through Isotope; the buttons skip the theme's `.project-filters` click handler, which would drop the search.
+     Styles are in assets/scss/custom.scss (.project-search, .project-none). */}}
+
+{{/* Initialise */}}
+{{ $page := .wcPage }}
+{{ $block := .wcBlock }}
+{{ $columns := $block.Params.design.columns | default "2" }}
+{{ $view := $block.Params.design.view | default "masonry" }}
+
+{{/* Require Isotope */}}
+{{ $page.Page.Store.Set "has_isotope" true }}
+
+<div class="col-12 {{if eq $columns "2"}}col-lg-8{{end}}">
+
+  {{ with $block.Content }}{{ . }}{{ end }}
+
+  <div class="project-toolbar">
+    {{ with $block.Params.content.filter_button }}
+    {{ $filter_default := default (int $block.Params.content.filter_default) 0 }}
+    <div class="btn-toolbar {{if eq $columns "1"}}d-flex justify-content-center{{end}}">
+      <div class="btn-group flex-wrap project-tags">
+        {{ range $idx, $item := . }}
+          {{/* Parse filter tag from front matter in the form of either tag name or CSS class name. */}}
+          {{ $data_filter := "" }}
+          {{ with .filter }}
+            {{ $data_filter = . }}
+          {{ else }}
+            {{ if or (eq (substr .tag 0 1) "*") (eq (substr .tag 0 1) ".") }}
+              {{ $data_filter = .tag }}
+            {{ else }}
+              {{ $data_filter = printf ".js-id-%s" (lower (replace .tag " " "-")) }}
+            {{ end }}
+          {{ end }}
+          <a href="#" data-filter="{{ $data_filter | safeHTMLAttr }}" class="btn btn-primary btn-lg{{ if eq $idx $filter_default }} active{{ end }}">{{ .name }}</a>
+        {{ end }}
+      </div>
+    </div>
+    {{ end }}
+    <div class="project-search">
+      <input type="search" class="form-control" placeholder="Search projects" aria-label="Search projects">
+      <select class="custom-select" aria-label="Sort projects">
+        <option value="original-order">Most stars</option>
+        <option value="date">Newest</option>
+        <option value="name">Name</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="{{ if or $block.Params.content.filter_button (in (slice "masonry" 3) $view) }}isotope projects-container{{end}} {{if in (slice "masonry" 3) $view}}js-layout-masonry{{else}}row js-layout-row{{end}} {{ if eq $view "showcase" }}project-showcase{{end}}">
+
+    {{/* Query */}}
+    {{ $query := site.Pages }}
+
+    {{/* Filters */}}
+    {{ with $block.Params.content.page_type }}
+      {{/* Legacy filter, superseded by `filters.folders` */}}
+      {{ $query = where $query "Type" . }}
+    {{ end }}
+    {{ with $block.Params.content.filters.folders }}
+      {{ $query = where $query "Section" "in" . }}
+    {{ end }}
+    {{ with $block.Params.content.filters.tags }}
+      {{ $query = where $query "Params.tags" "intersect" . }}
+    {{ end }}
+    {{ with $block.Params.content.filters.exclude_tags }}
+      {{ $query = $query | symdiff (where site.Pages "Params.tags" "intersect" .) }}
+    {{ end }}
+    {{ with ($block.Params.content.filters.kinds | default (slice "page")) }}
+      {{ $query = where $query "Kind" "in" . }}
+    {{ end }}
+
+    {{/* Sort by GitHub stars; `sort` is stable, so equal counts stay newest first. */}}
+    {{ $stars := partialCached "functions/github_stars" . }}
+    {{ $ranked := slice }}
+    {{ range sort $query "Date" "desc" }}
+      {{ $ranked = $ranked | append (dict "page" . "stars" (index $stars (partial "functions/github_repo" .) | default 0)) }}
+    {{ end }}
+    {{ $query = slice }}
+    {{ range sort $ranked "stars" "desc" }}
+      {{ $query = $query | append .page }}
+    {{ end }}
+
+    {{ range $index, $item := $query }}
+      {{ $js_tag_classes := delimit (apply (apply (apply $item.Params.tags "replace" "." " " "-") "printf" "js-id-%s" ".") "lower" ".") " " }}
+        <div class="{{ if in (slice "masonry" 3) $view }}project-card project-item{{ else }}col-12{{ end }} isotope-item {{ $js_tag_classes | safeHTMLAttr }}"
+             data-date="{{ $item.Date.Unix }}" data-name="{{ lower $item.Title }}" data-tags="{{ lower (delimit $item.Params.tags " ") }}">
+        {{ partial "functions/render_view" (dict "page" $block "item" . "view" $view "index" $index) }}
+      </div>
+    {{end}}
+
+  </div>
+
+  <p class="project-none d-none">No projects match your search.</p>
+</div>
+
+<script>
+  {
+    // The theme creates the Isotope instance once the card images have loaded (wowchemy.js);
+    // until then, the controls only keep their state, and the first arrange() picks it up.
+    const section = document.currentScript.closest('section');
+    const grid = section.querySelector('.projects-container');
+    const buttons = section.querySelectorAll('.project-tags a');
+    const search = section.querySelector('.project-search input');
+    const sort = section.querySelector('.project-search select');
+    const none = section.querySelector('.project-none');
+    let tagFilter = section.querySelector('.project-tags a.active')?.dataset.filter ?? '*';
+
+    const arrange = () => {
+      const iso = window.Isotope && Isotope.data(grid);
+      if (!iso) return;
+      // A card matches the active tag button and every search word, anywhere in its text or tags.
+      const words = search.value.toLowerCase().split(/\s+/).filter(Boolean);
+      const matches = (item) => {
+        const text = `${item.textContent} ${item.dataset.tags}`.toLowerCase();
+        return item.matches(tagFilter) && words.every((word) => text.includes(word));
+      };
+      iso.arrange({filter: matches, sortBy: sort.value});
+      none.classList.toggle('d-none', iso.filteredItems.length > 0);
+    };
+
+    buttons.forEach((button) =>
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        buttons.forEach((other) => other.classList.toggle('active', other === button));
+        tagFilter = button.dataset.filter;
+        arrange();
+      }),
+    );
+    search.addEventListener('input', arrange);
+    sort.addEventListener('change', arrange);
+
+    window.addEventListener('load', function setUp() {
+      const iso = Isotope.data(grid);
+      if (!iso) return setTimeout(setUp, 100);
+      iso.option({
+        // With jQuery on the page, Isotope would otherwise hand the filter function (index, element).
+        isJQueryFiltering: false,
+        getSortData: {date: '[data-date] parseInt', name: '[data-name]'},
+        sortAscending: {'original-order': true, date: false, name: true},
+      });
+      iso.updateSortData();
+      // The browser may have restored the search text or sort order from an earlier visit.
+      arrange();
+    });
+  }
+</script>

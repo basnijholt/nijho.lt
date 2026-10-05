@@ -1,0 +1,6 @@
+{{- /* Returns the lowercased "owner/repo" that a project's external_link points to, or "" when it doesn't link to GitHub. */ -}}
+{{- $repo := "" -}}
+{{- with findRESubmatch `^https://github\.com/([^/]+/[^/?#]+)` (.Params.external_link | default "") 1 -}}
+  {{- $repo = index . 0 1 | lower -}}
+{{- end -}}
+{{- return $repo -}}

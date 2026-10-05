@@ -1,0 +1,25 @@
+{{- /* Returns the GitHub stars of every project as a map from lowercased "owner/repo" to the star count.
+  Call it with partialCached: it makes one search API request per 50 repos, and Hugo keeps the responses for an
+  hour (caches.getresource in hugo.yaml) so repeated builds stay under the unauthenticated rate limit. A failed
+  request only warns, because a build without star counts is better than no build. */ -}}
+{{- $repos := slice -}}
+{{- range where site.RegularPages "Type" "project" -}}
+  {{- with partial "functions/github_repo" . }}{{ $repos = $repos | append . }}{{ end -}}
+{{- end -}}
+{{- $repos = $repos | uniq -}}
+{{- $stars := dict -}}
+{{- if $repos -}}
+  {{- range $start := seq 0 50 (sub (len $repos) 1) -}}
+    {{- $query := delimit (apply (first 50 (after $start $repos)) "printf" "repo:%s" ".") "+" -}}
+    {{- with resources.GetRemote (printf "https://api.github.com/search/repositories?per_page=100&q=%s" $query) -}}
+      {{- with .Err -}}
+        {{- warnf "github_stars: %s" . -}}
+      {{- else -}}
+        {{- range (transform.Unmarshal .).items -}}
+          {{- $stars = merge $stars (dict (lower .full_name) (int .stargazers_count)) -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $stars -}}
