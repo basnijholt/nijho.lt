@@ -43,7 +43,7 @@
     <div class="project-title">
       <h4><a href="{{ $link }}" {{ $target | safeHTMLAttr }}>{{ $item.Title | markdownify | emojify }}</a></h4>
       {{ with $stars }}
-      <a href="https://github.com/{{ $repo }}/stargazers" target="_blank" rel="noopener" class="project-stars"
+      <a href="{{ $link }}" {{ $target | safeHTMLAttr }} class="project-stars"
          title="{{ lang.FormatNumberCustom 0 . }} {{ cond (eq . 1) "star" "stars" }} on GitHub">
         <i class="fas fa-star" aria-hidden="true"></i> {{ if ge . 1000 }}{{ printf "%.1fk" (div . 1000.0) | replaceRE `\.0k$` "k" }}{{ else }}{{ . }}{{ end }}
       </a>
