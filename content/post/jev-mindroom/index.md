@@ -140,8 +140,14 @@ judgment:
 From MindRoom's side, only the wire format differs.
 The endpoint accepts only user messages, so MindRoom sends each chat message as its own user message, prefixed with its role, like `assistant: ...`.
 Decisions can also answer with a refusal, which MindRoom treats as an abstention, so the usual fallback applies.
-I have not compared it with Jev on real traffic yet.
-Both log the same outcome fields, so running that comparison only takes a config change.
+
+I tested it against the live API through MindRoom's own code, with the same questions Jev gets.
+For participation, it gave 0.99 to replying to a direct question and 0.0 while two humans were talking to each other.
+Mid-turn, "Thanks, looks great so far!" got 0.0 for interrupting and "Stop, keep MySQL…" got 1.0.
+The router sent a pandas bug to `code` and a meeting request to `calendar`, both with confidence 1.0.
+A nonsense request got only 0.62, below the 0.8 threshold, so the normal LLM router took over.
+Each call took 130 to 280 ms.
+I have not compared it with Jev on real traffic yet, but both log the same outcome fields, so that only takes a config change.
 
 ## Named after Jevons
 
