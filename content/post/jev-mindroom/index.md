@@ -15,6 +15,7 @@ tags:
   - evals
   - typesafe
   - jev
+  - openai
 categories:
   - AI
   - Software Development
@@ -27,6 +28,8 @@ I am a permanent lurker on [r/LocalLLaMA](https://www.reddit.com/r/LocalLLaMA/),
 There were local clones like [mini-jev](https://github.com/r-ms/mini-jev) and [von](https://github.com/wfzyx/von), CLI wrappers like [jev-cli](https://github.com/joshLong145/jev-cli), and even [someone on Hacker News](https://news.ycombinator.com/item?id=49765348) claiming [they had built the same thing a year earlier](https://laya.convaiinnovations.com/).
 
 I tried Jev in [MindRoom]({{< ref "/post/mindroom" >}}), my [open-source](https://github.com/mindroom-ai/mindroom) agent platform on [Matrix](https://matrix.org), and less than two days later it was making [three decisions](https://github.com/mindroom-ai/mindroom/issues/2156) there.
+
+> **Update 2026-10-07:** OpenAI has since released the Decisions API, its own take on the same idea, and MindRoom now supports it as a third backend; see [below](#a-third-backend-openai-decisions).
 
 ## What a System One model is
 
@@ -118,6 +121,27 @@ agents:
 
 Both backends log their decisions and latency, so I can compare them on real traffic.
 The code is in [`src/mindroom/judgment/`](https://github.com/mindroom-ai/mindroom/tree/main/src/mindroom/judgment), and the backends are documented under [participation judgment backends](https://docs.mindroom.chat/configuration/threads/#judgment-backends).
+
+## A third backend: OpenAI Decisions
+
+Since I wrote this, OpenAI released its own version of the idea, the [Decisions API](https://developers.openai.com/api/docs/guides/decisions), currently in public beta.
+The question types match Jev's: a `predicate` is a Noul, and `choice` and `score` keep their names.
+It serves a single model, `gpt-6-luna`, and OpenAI says it returns answers "about 10x faster than the Responses API."
+Input costs $0.10 per million tokens and output is free, so it lists at about 2.4 times Jev's price.
+
+Thanks to the abstraction layer, adding it took [one PR](https://github.com/mindroom-ai/mindroom/pull/2751), and it works for all three decisions, including the router's Choice:
+
+```yaml
+judgment:
+  provider: openai_decisions
+  threshold: 0.8
+```
+
+From MindRoom's side, only the wire format differs.
+The endpoint accepts only user messages, so MindRoom sends each chat message as its own user message, prefixed with its role, like `assistant: ...`.
+Decisions can also answer with a refusal, which MindRoom treats as an abstention, so the usual fallback applies.
+I have not compared it with Jev on real traffic yet.
+Both log the same outcome fields, so running that comparison only takes a config change.
 
 ## Named after Jevons
 
