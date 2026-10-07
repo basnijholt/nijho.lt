@@ -29,7 +29,7 @@ There were local clones like [mini-jev](https://github.com/r-ms/mini-jev) and [v
 
 I tried Jev in [MindRoom]({{< ref "/post/mindroom" >}}), my [open-source](https://github.com/mindroom-ai/mindroom) agent platform on [Matrix](https://matrix.org), and less than two days later it was making [three decisions](https://github.com/mindroom-ai/mindroom/issues/2156) there.
 
-> **Update 2026-10-07:** OpenAI has since released the Decisions API, its own take on the same idea, and MindRoom now supports it as a third backend; see [below](#a-third-backend-openai-decisions).
+> **Update 2026-10-07:** OpenAI released the Decisions API today, its own take on the same idea, and MindRoom now supports it as a third backend; see [below](#a-third-backend-openai-decisions).
 
 ## What a System One model is
 
@@ -124,12 +124,12 @@ The code is in [`src/mindroom/judgment/`](https://github.com/mindroom-ai/mindroo
 
 ## A third backend: OpenAI Decisions
 
-Since I wrote this, OpenAI released its own version of the idea, the [Decisions API](https://developers.openai.com/api/docs/guides/decisions), currently in public beta.
+On October 7, OpenAI released its own version of the idea, the [Decisions API](https://developers.openai.com/api/docs/guides/decisions), currently in public beta.
 The question types match Jev's: a `predicate` is a Noul, and `choice` and `score` keep their names.
 It serves a single model, `gpt-6-luna`, and OpenAI says it returns answers "about 10x faster than the Responses API."
 Input costs $0.10 per million tokens and output is free, so it lists at about 2.4 times Jev's price.
 
-Thanks to the abstraction layer, adding it took [one PR](https://github.com/mindroom-ai/mindroom/pull/2751), and it works for all three decisions, including the router's Choice:
+Thanks to the abstraction layer, adding it took [one PR](https://github.com/mindroom-ai/mindroom/pull/2751), merged the same day, and it works for all three decisions, including the router's Choice:
 
 ```yaml
 judgment:
