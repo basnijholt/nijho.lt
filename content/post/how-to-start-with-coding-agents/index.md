@@ -177,7 +177,17 @@ I do something with the agent a couple of times, realize I'm going to keep repea
 A skill is just a procedure you want to repeat.
 You only know what to put in it after you've repeated it.
 
-I also have other models review the main agent's work in a loop, which is useful when I have ten things running at once.
+My own set is public as [baspowers](https://github.com/basnijholt/baspowers), which started as a fork of [superpowers](https://github.com/obra/superpowers).
+Some of its skills came from mining my own agent history for procedures I kept repeating, then A/B testing each one with and without the skill.
+Four of the ten candidates were dropped because the agents already did the right thing without them.
+The rule I ended up with: **keep only skills that change behavior.**
+
+Sometimes they really do.
+In one test, agents wrote a failing test before fixing a bug in 0 of 32 runs without my test-driven development skill, and in 32 of 32 runs with it.
+That matters when agents run on their own for hours.
+It does not matter for your first week of asking questions.
+
+I also run cross-model reviews in loops, which is useful when I have ten things running at once.
 But I keep updating those setups, because each new model makes parts of them unnecessary.
 My PR review skill used to make agents fix every nitpick.
 Now the models are good enough that it will forever find something, even after a hundred rounds, so I had to change it.
