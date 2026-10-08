@@ -187,21 +187,23 @@ I never sit down and think "now I need to develop a skill."
 I do something with the agent a couple of times, realize I'm going to keep repeating it, and then say: "let's make a skill out of this, and make it self-evolving."
 A skill is just a procedure you want to repeat.
 You only know what to put in it after you've repeated it.
+(In [MindRoom](https://docs.mindroom.chat/skills/#automatic-skill-learning), an agent can even do this on its own: with automatic skill learning turned on, it reviews its recent work in the background and turns repeated workflows into skills.)
 
-My own set is public as [baspowers](https://github.com/basnijholt/baspowers), which started as a fork of [superpowers](https://github.com/obra/superpowers).
-Some of its skills came from mining my own agent history for procedures I kept repeating, then A/B testing each one with and without the skill.
+My own set of skills is public as [baspowers](https://github.com/basnijholt/baspowers), which started as a fork of [superpowers](https://github.com/obra/superpowers).
+Some of its skills came from mining my own agent history of more than ten thousand conversations for procedures I kept repeating, then A/B testing each one with and without the skill.
+An A/B test sounds like a lot of work, but you can ask the agent to run it for you, and tell it which other models to test with.
 Four of the ten candidates were dropped because the agents already did the right thing without them.
 The rule I ended up with: **keep only skills that change behavior.**
 
 Sometimes they really do.
-In one test, agents wrote a failing test before fixing a bug in 0 of 32 runs without my test-driven development skill, and in 32 of 32 runs with it.
+In one test, agents wrote a failing test before fixing a bug in 0 of 32 runs without my [test-driven development skill](https://github.com/basnijholt/baspowers/tree/main/skills/test-driven-development), and in 32 of 32 runs with it.
 That matters when agents run on their own for hours.
 It does not matter for your first week of asking questions.
 
 I also run cross-model reviews in loops, which is useful when I have ten things running at once.
 But I keep updating those setups, because each new model makes parts of them unnecessary.
-My PR review skill used to make agents fix every nitpick.
-Now the models are good enough that it will forever find something, even after a hundred rounds, so I had to change it.
+My [PR review skill](https://github.com/mindroom-ai/mindroom/blob/main/.claude/skills/pr-review/SKILL.md) used to make agents fix every nitpick.
+Now the models are good enough that it will forever find something, even after a hundred rounds, so I had to change it: it now only blocks on issues with a realistic scenario.
 
 That's the honest problem with copying someone's elaborate workflow.
 It encodes the weaknesses of last year's models and the habits of one person.
