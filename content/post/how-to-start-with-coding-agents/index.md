@@ -1,7 +1,7 @@
 ---
-title: "How to start with coding agents 🤖"
+title: "How to start with AI 🤖"
 subtitle: "You don't need skills, you don't need AGENTS.md, you just need to ask questions"
-summary: "There is a lot of noise about elaborate agent workflows that 99% of people don't need. Install a coding agent, use the best model, and ask it everything. The rest can come later, or never."
+summary: "There is a lot of noise about elaborate AI workflows that 99% of people don't need. Install it, use the best model, and ask it everything. The rest can come later, or never."
 projects: []
 date: "2026-10-08T00:00:00Z"
 draft: true
@@ -22,7 +22,7 @@ categories:
 ---
 
 I am honestly surprised that this is still a question.
-But I am literally still getting it: "how do I start with coding agents?"
+But I am literally still getting it: "how do I start with AI?" or "how do I start with coding agents?"
 
 My answer is simpler than people expect.
 There is a lot of noise, and a lot of pretense, about very specific workflows.
@@ -34,13 +34,16 @@ You don't need an `AGENTS.md`.
 You don't need anything.
 You just need to ask questions.
 
+Most of my examples come from code, because that is where I use AI the most.
+But the advice is the same whether you write software or not.
+
 {{% callout note %}}
 **TL;DR**
-1. Install a coding agent. It takes 30 seconds. No setup.
+1. Install it. It takes 30 seconds. No setup.
 2. Ask it everything. If it could do something itself and tells you to do it, you are a meat proxy.
 3. Use the best model. Cheap models are often not cheaper on real work.
 4. Trust it in proportion to how measurable the outcome is.
-5. Make it review its own work and have a second model (Codex or Claude) review it too. Watch for scope creep.
+5. Make it review its own work and get a second opinion from another model. Watch for scope creep.
 6. Skills, multi-agent loops and the rest come later, if ever.
 {{% /callout %}}
 
@@ -48,7 +51,7 @@ You just need to ask questions.
 
 ## 1. Install it, and that's it
 
-Getting started is literally a one-liner to install Claude Code or Codex.
+Getting started is downloading the ChatGPT or Claude app, or literally a one-liner to install Claude Code or Codex if you write code.
 Maybe you log in, or click a button to get access.
 That's the whole setup.
 "I need to take time to learn how to use it" is not a real barrier anymore.
@@ -70,12 +73,12 @@ There is no secret sauce.
 The real change is a mindset, not a tool.
 
 When you run into a problem, the old reflex is to Google it.
-The new reflex is to ask the agent.
+The new reflex is to ask the AI.
 For everything.
 
 When the agent says "now you need to run the tests," no.
-Everything it can do, you let the agent do.
-If the agent tells you what to do when it could do it itself, you are just a **meat proxy**, and you are wasting your own time.
+Everything it can do, you let it do.
+If the AI tells you what to do when it could do it itself, you are just a **meat proxy**, and you are wasting your own time.
 
 It is genuinely absurd how good it has gotten.
 My mom sent me a photo of [MindRoom]({{< ref "/post/mindroom" >}}) crashing in her browser, a screen full of minified JavaScript.
@@ -106,7 +109,7 @@ It just used a lot more tokens: around 200,000 output tokens versus about 120,00
 
 So for simple tasks, the cheaper model is cheaper.
 For difficult work, it is often the same price or more expensive.
-And worse code gets more expensive later, because somebody has to maintain it.
+And a worse answer gets more expensive later, because somebody has to fix it.
 
 The one knob worth turning is **reasoning effort**.
 The highest level can cost almost twice as much for a marginal gain.
@@ -118,53 +121,32 @@ Designing a brand new feature does.
 When I started, I read every single line of code it wrote and had so many comments.
 By now I trust the output much more, because I've seen it.
 
-How closely I look depends on how important the code is and how measurable the result is.
+How closely I look depends on how important the result is and how measurable it is.
 The core of a project, the part everything relies on: there I want to understand precisely what's going on.
 An integration that fetches my email from some external API, something written a million times whose outcome is easy to check: I don't read the code.
 When I see that it works, I believe it.
-
-What makes that safe is that tests have become so cheap to ask for.
-"Set up the entire system, run it with real data, don't touch production, crash it at different points in the middle."
-All the random things you would check yourself if you had infinite time.
-Have it write a lot of tests.
-More tests is better, even when some have limited value.
-What I care about is that the source code itself is clean.
-
-And a lot of people will disagree here, but I throw away design docs.
-What came out in the end was never what the doc said anyway.
-The code and the tests are the specification, because that's also what the agent reads.
-Documentation that conflicts with the code is the worst: the agent will start changing your code to match the docs without you noticing.
+The same goes outside code: an answer you can check in a minute needs less scrutiny than one you can't check at all.
 
 ## 5. Talk to it, then make it review itself 🗣️
 
-I start by telling the agent what I want, usually by voice.
+I start by telling it what I want, usually by voice.
 I just ramble.
-Because it is so good at language, even when I go off track it pushes back: "I understand what you mean, but that implementation is bad because of this, I'd do it this way."
+Because it is so good at language, even when I go off track it pushes back: "I understand what you mean, but that approach is bad because of this, I'd do it this way."
 Sometimes it says we could do it either way, and I say: let's try both.
 
-The agent will do what you ask, and it will work.
+It will do what you ask, and the result will look fine.
 The question is whether it's good.
-So before you accept anything, ask it to review its own work:
+So before you accept anything, ask it to review its own work.
 
-- Is the code clean?
-- Does it fit well within the existing architecture?
-- Does it repeat itself?
-- Is it overengineered? Keep it simple, stupid.
-
-The key part for me: I don't let the agent be the only judge of its own work.
-I have it call other models to review it, against the same criteria, until they agree it's good.
+The key part for me: I don't let one model be the only judge of its own work.
+I have other models review it, against the same criteria, until they agree it's good.
 That sounds like a lot of setup.
 It isn't magic either.
-As long as you have both Codex and Claude Code installed, you are essentially ready.
-Just tell the agent: "have Codex review this in a separate session and address what it finds."
-It can usually figure out how to call the other command-line tool on its own.
-
-I personally built a worktree orchestration tool for this, [`agent-cli dev`]({{< ref "/post/parallel-agentic-coding" >}}), which comes with a skill that teaches the agent to use it.
-But honestly, that is not necessary anymore nowadays.
+In a chat app, that can be as simple as pasting the answer into the other company's app and asking what's wrong with it.
 
 And one instruction that matters more than the rest: **be mindful of scope creep.**
 A review will always find something.
-Very often it's an edge case that looks real in isolation but can never happen in your actual system.
+Very often it's an edge case that looks real in isolation but can never happen in your actual situation.
 Ask whether each finding is realistic before you let it build more.
 
 ## 6. What about skills and multi-agent loops? 🔁
@@ -196,8 +178,39 @@ That's the honest problem with copying someone's elaborate workflow.
 It encodes the weaknesses of last year's models and the habits of one person.
 Start with nothing, and let your own repetition tell you what to add.
 
-## 7. Your role changed, it didn't disappear
+## 7. If you write code 💻
 
+A few things only apply to software.
+
+**Tests are cheap now, so ask for them.**
+"Set up the entire system, run it with real data, don't touch production, crash it at different points in the middle."
+All the random things you would check yourself if you had infinite time.
+Have it write a lot of tests.
+More tests is better, even when some have limited value.
+What I care about is that the source code itself is clean.
+
+**The code is the spec.**
+A lot of people will disagree here, but I throw away design docs.
+What came out in the end was never what the doc said anyway.
+The code and the tests are the specification, because that's also what the agent reads.
+Documentation that conflicts with the code is the worst: the agent will start changing your code to match the docs without you noticing.
+
+**Review against your own criteria.**
+The questions I make it answer about its own work:
+
+- Is the code clean?
+- Does it fit well within the existing architecture?
+- Does it repeat itself?
+- Is it overengineered? Keep it simple, stupid.
+
+**Cross-model review needs two installs.**
+As long as you have both Codex and Claude Code installed, you are essentially ready.
+Just tell the agent: "have Codex review this in a separate session and address what it finds."
+It can usually figure out how to call the other command-line tool on its own.
+I personally built a worktree orchestration tool for this, [`agent-cli dev`]({{< ref "/post/parallel-agentic-coding" >}}), which comes with a skill that teaches the agent to use it.
+But honestly, that is not necessary anymore nowadays.
+
+**Your role changed, it didn't disappear.**
 Some software engineers feel personally attacked by all this.
 I think you have to get over yourself.
 Your secret sauce was never knowing the syntax really well.
@@ -210,8 +223,8 @@ A difficult system deserves more rigor, not by reading every line, but by unders
 
 ## Conclusion: this post has an expiry date
 
-Right now I'd tell you to use Claude Code with Claude Opus 5.5.
-Just two weeks ago I was telling people to install Codex with GPT-6 Astra.
+Right now I'd tell you to use Claude Opus 5.5.
+Just two weeks ago I was telling people to use GPT-6 Astra.
 Things change continuously, and in most cases you'll be fine with either.
 
 I'm also sure that a few weeks from now, I will no longer accept the model I'm praising today.
