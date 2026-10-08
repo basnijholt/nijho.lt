@@ -143,6 +143,14 @@ An integration that fetches my email from some external API, something written a
 When I see that it works, I believe it.
 The same goes outside code: an answer you can check in a minute needs less scrutiny than one you can't check at all.
 
+{{< figure src="trust-tree.svg" alt="A tree with three large blue core nodes at the top and six small grey leaf nodes at the bottom. The core is labeled: everything depends on it, read it and understand it. The leaves are labeled: nothing depends on them, check that they work." >}}
+
+This is also why expertise still matters.
+When I scroll through a large piece of code, I can judge its complexity at a glance.
+When it explains something in a field I know, I can tell when it's wrong and call bullshit.
+In a field I don't know, I can't, so I spend much more time validating to reach the same level of trust.
+Match your scrutiny to your expertise.
+
 ## 5. Talk to it, then make it review itself 🗣️
 
 I start by telling it what I want, usually by voice.
