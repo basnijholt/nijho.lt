@@ -136,6 +136,9 @@ I default to xhigh myself, which is probably overkill for half of what I do.
 
 When I started, I read every single line of code it wrote and had so many comments.
 By now I trust the output much more, because I've seen it.
+The scope I hand over has grown with that trust.
+[Canvases in MindRoom Chat](https://chat.mindroom.chat/canvases/), interactive pages an agent can show you next to the conversation, felt like a half-year project.
+I built it in a day, on my phone.
 
 How closely I look depends on how important the result is and how measurable it is.
 The core of a project, the part everything relies on: there I want to understand precisely what's going on.
