@@ -54,7 +54,9 @@ But the advice is the same whether you write software or not.
 Getting started is downloading the ChatGPT or Claude app, or literally a one-liner to install Claude Code or Codex if you write code.
 Maybe you log in, or click a button to get access.
 That's the whole setup.
-"I need to take time to learn how to use it" is not a real barrier anymore.
+"I need to take time to learn how to use it" was never a real barrier.
+The interface is trivial: text in, text out.
+Everything else is optional.
 
 I open agents in projects of mine that have never seen any AI, and seconds later they know the entire thing.
 The frontier models have much better taste than they used to.
@@ -64,8 +66,10 @@ But even there it does better than it used to.
 
 I should admit that I used to give different advice.
 In [On agentic coding]({{< ref "/post/agentic-coding" >}}), a year ago, I told you to create a `CLAUDE.md` in every project root with your preferences.
-I'd skip that now.
-There is even research suggesting that a long instruction file full of standard rules produces worse results than none at all.
+(Today that would be an `AGENTS.md`, which all the major agents read.)
+I still use them, but not everywhere, and you don't need one to get started.
+There is even [research](https://arxiv.org/abs/2602.11988) showing that repository-level context files tend to *lower* the task success rate of coding agents compared to having none, while making each task more expensive.
+Files that an LLM generated for itself did worst.
 There is no secret sauce.
 
 ## 2. Ask it everything 🥩
