@@ -89,9 +89,13 @@ It is genuinely absurd how good it has gotten.
 My mom sent me a photo of [MindRoom]({{< ref "/post/mindroom" >}}) crashing in her browser, a screen full of minified JavaScript.
 I sent the photo to my agent.
 The answer: the Google Translate extension was interfering with the page.
+And it didn't stop at the diagnosis, it wrote the fix too.
 
-Many people who still haven't tried it tried GPT-4 once, it was wrong about something, and that became their mental model.
-That mental model is years out of date.
+The people who still don't use it are, I think, in one of two groups.
+Some had a bad experience once, years ago, and never tried again.
+That experience is badly out of date.
+Others, and I suspect it's a large group, avoid AI on principle.
+This post won't change their minds, but it might lower the bar for everyone else.
 
 ## 3. Use the best model 💸
 
