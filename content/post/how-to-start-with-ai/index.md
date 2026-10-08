@@ -99,31 +99,38 @@ This post won't change their minds, but it might lower the bar for everyone else
 
 ## 3. Use the best model 💸
 
-The most common follow-up question: shouldn't I use a cheaper model to save money?
+Another very common question: shouldn't I use a cheaper model to save money?
 When you're starting out, my answer is to use the best one.
 
-**Your time costs more than the tokens.**
+**Your time almost certainly costs more than the tokens.**
+For an engineer, it certainly does.
 Continuously deciding "do I need the smartest model for this, or the weakest one?" is itself not efficient.
-A useful check when a session costs $50: how long would this have taken you without AI?
-Often the honest answer is that you would not have done it at all.
+A useful check when a session costs $50: what would this have cost you without AI?
+If you would have done it anyway, the answer is almost always way more.
+(If you only did it because AI made it possible, the comparison gets harder.)
 
 **Cheaper per token is not cheaper per task.**
 A cheaper model does not necessarily get to the solution in fewer tokens.
 On hard problems it typically uses way more.
 
-My favorite plot for this is [Artificial Analysis](https://artificialanalysis.ai/)'s intelligence index versus **cost per task**, which accounts for both price and how many tokens a model burns.
-When I last looked, Sonnet scored about 56 against Opus at max effort's 58, and per task they cost roughly the same, maybe 10% apart.
-Even though Sonnet is about five times cheaper per token.
-It just used a lot more tokens: around 200,000 output tokens versus about 120,000.
+My favorite way to see this is [Artificial Analysis](https://artificialanalysis.ai/)'s intelligence index versus **cost per task**, which accounts for both the price and how many tokens a model burns.
+Here are Claude Opus 5.5 and Claude Sonnet 5.5 at each reasoning effort:
+
+{{< plot name="costPerTask" caption="Artificial Analysis Intelligence Index versus the average cost of one of its tasks, for each reasoning effort, as of 2026-10-08. Hover for the output tokens per task." >}}
+
+Sonnet costs half as much per token.
+But at max effort it scores 56, the same as Opus at xhigh, and costs $5.46 per task against Opus's $3.46.
+It just uses a lot more tokens: about 197,000 output tokens per task versus 66,000.
+Above a score of about 47, the Opus line is both higher and further to the left.
 
 So for simple tasks, the cheaper model is cheaper.
-For difficult work, it is often the same price or more expensive.
+For difficult work, it is sometimes the same price, often takes longer, and can cost more, because it burns through so many more tokens.
 And a worse answer gets more expensive later, because somebody has to fix it.
 
-The one knob worth turning is **reasoning effort**.
-The highest level can cost almost twice as much for a marginal gain.
-Calculating some usage statistics does not need the highest level of intelligence.
-Designing a brand new feature does.
+**Don't put reasoning effort on max.**
+Going from xhigh to max on Opus buys 1.6 points for 73% more money.
+On Sonnet it is 2.7 times the cost.
+I default to xhigh myself, which is probably overkill for half of what I do.
 
 ## 4. Decide how much to trust it 🔍
 
