@@ -68,8 +68,9 @@ I should admit that I used to give different advice.
 In [On agentic coding]({{< ref "/post/agentic-coding" >}}), a year ago, I told you to create a `CLAUDE.md` in every project root with your preferences.
 (Today that would be an `AGENTS.md`, which all the major agents read.)
 I still use them, but not everywhere, and you don't need one to get started.
-There is even [research](https://arxiv.org/abs/2602.11988) showing that repository-level context files tend to *lower* the task success rate of coding agents compared to having none, while making each task more expensive.
-Files that an LLM generated for itself did worst.
+There is even [research](https://arxiv.org/abs/2602.11988) showing that repository-level context files don't generally improve the task success rate of coding agents, while raising the cost by over 20%.
+They help when you have non-standard practices the agent can't guess.
+A list of standard rules or an overview of the repository does not.
 There is no secret sauce.
 
 ## 2. Ask it everything 🥩
