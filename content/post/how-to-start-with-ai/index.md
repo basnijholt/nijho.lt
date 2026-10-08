@@ -39,7 +39,7 @@ But the advice is the same whether you write software or not.
 {{% callout note %}}
 **TL;DR**
 1. Install Claude or ChatGPT. The app if you want to chat, Claude Code or Codex in your terminal if you write code. It takes 30 seconds. No setup.
-2. Ask it everything, and be critical of what comes back. If it could do something itself, let it.
+2. Ask it everything, and be critical of what comes back. Don't do anything it could do itself, and tell it so.
 3. Use the best model. Cheap models are often not cheaper on real work.
 4. Trust it in proportion to how measurable the outcome is.
 5. Have its work reviewed in a fresh context, by the same model and by another one. Watch for scope creep.
