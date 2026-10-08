@@ -157,7 +157,7 @@ That sounds like a lot of setup.
 It isn't magic either.
 As long as you have both Codex and Claude Code installed, you are essentially ready.
 Just tell the agent: "have Codex review this in a separate session and address what it finds."
-It knows how to call the other command-line tool.
+It can usually figure out how to call the other command-line tool on its own.
 
 I personally built a worktree orchestration tool for this, [`agent-cli dev`]({{< ref "/post/parallel-agentic-coding" >}}), which comes with a skill that teaches the agent to use it.
 But honestly, that is not necessary anymore nowadays.
