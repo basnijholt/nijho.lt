@@ -31,16 +31,16 @@ None of that is useful for 99% of people.
 
 You don't need skills.
 You don't need an `AGENTS.md`.
-You don't need anything.
-You just need to ask questions.
+You don't need anything except the app itself.
+You just need to ask questions, and be critical of the answers.
 
 Most of my examples come from code, because that is where I use AI the most.
 But the advice is the same whether you write software or not.
 
 {{% callout note %}}
 **TL;DR**
-1. Install it. It takes 30 seconds. No setup.
-2. Ask it everything. If it could do something itself and tells you to do it, you are a meat proxy.
+1. Install Claude or ChatGPT. The app if you want to chat, Claude Code or Codex in your terminal if you write code. It takes 30 seconds. No setup.
+2. Ask it everything, and be critical of what comes back. If it could do something itself and tells you to do it, you are a meat proxy.
 3. Use the best model. Cheap models are often not cheaper on real work.
 4. Trust it in proportion to how measurable the outcome is.
 5. Make it review its own work and get a second opinion from another model. Watch for scope creep.
