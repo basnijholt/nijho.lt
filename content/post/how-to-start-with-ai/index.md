@@ -1,5 +1,5 @@
 ---
-title: "How to start with AI 🤖"
+title: "How to start with AI"
 subtitle: "Yes, I am actually still getting this question. You don't need skills or an AGENTS.md, you just need to ask questions."
 summary: "There is a lot of noise about elaborate AI workflows that 99% of people don't need. Install it, use the best model, and ask it everything. The rest can come later, or never."
 projects: []
@@ -78,8 +78,7 @@ There is no secret sauce.
 The real change is a mindset, not a tool.
 
 When you run into a problem, the old reflex is to Google it.
-The new reflex is to ask the AI.
-For everything.
+The new reflex is to ask the AI about everything.
 
 When the agent says "now you need to run the tests," no.
 Everything it can do, you let it do.
@@ -89,7 +88,7 @@ It is genuinely absurd how good it has gotten.
 My mom sent me a photo of [MindRoom]({{< ref "/post/mindroom" >}}) crashing in her browser, a screen full of minified JavaScript.
 I sent the photo to my agent.
 The answer: the Google Translate extension was interfering with the page.
-And it didn't stop at the diagnosis, it wrote the fix too.
+It wrote the fix too.
 
 The people who still don't use it are, I think, in one of two groups.
 Some had a bad experience once, years ago, and never tried again.
@@ -97,7 +96,7 @@ That experience is badly out of date.
 Others, and I suspect it's a large group, avoid AI on principle.
 This post won't change their minds, but it might lower the bar for everyone else.
 
-## 3. Use the best model 💸
+## 3. Use the best model
 
 Another very common question: shouldn't I use a cheaper model to save money?
 When you're starting out, my answer is to use the best one.
@@ -132,7 +131,7 @@ Going from xhigh to max on Opus buys 1.6 points for 73% more money.
 On Sonnet it is 2.7 times the cost.
 I default to xhigh myself, which is probably overkill for half of what I do.
 
-## 4. Decide how much to trust it 🔍
+## 4. Decide how much to trust it
 
 When I started, I read every single line of code it wrote and had so many comments.
 By now I trust the output much more, because I've seen it.
@@ -154,7 +153,7 @@ When it explains something in a field I know, I can tell when it's wrong and cal
 In a field I don't know, I can't, so I spend much more time validating to reach the same level of trust.
 Match your scrutiny to your expertise.
 
-## 5. Talk to it, then make it review itself 🗣️
+## 5. Talk to it, then make it review itself
 
 I start by telling it what I want, usually by voice.
 I just ramble.
@@ -166,7 +165,7 @@ In almost all cases, AI can now deliver what you asked for in a single prompt, a
 The question is whether it's actually good, and whether it meets your standards.
 So before you accept anything, have it reviewed.
 
-The key part for me: the review has to come from a fresh context, not from the conversation that produced the work.
+For me, the review has to come from a fresh context that never saw the conversation that produced the work.
 A new session, or a sub-agent, that only sees the result.
 That can be the same model or a different one.
 I do both: the same model in a fresh context, and other models, until they agree it's good.
@@ -178,7 +177,7 @@ A review will always find something.
 Very often it's an edge case that looks real in isolation but can never happen in your actual situation.
 Ask whether each finding is realistic before you let it build more.
 
-## 6. What about skills and multi-agent loops? 🔁
+## 6. What about skills and multi-agent loops?
 
 Yes, I use those things.
 No, you don't need them to start.
@@ -205,11 +204,11 @@ But I keep updating those setups, because each new model makes parts of them unn
 My [PR review skill](https://github.com/mindroom-ai/mindroom/blob/main/.claude/skills/pr-review/SKILL.md) used to make agents fix every nitpick.
 Now the models are good enough that it will forever find something, even after a hundred rounds, so I had to change it: it now only blocks on issues with a realistic scenario.
 
-That's the honest problem with copying someone's elaborate workflow.
+That is the problem with copying someone's elaborate workflow.
 It encodes the weaknesses of last year's models and the habits of one person.
-Start with nothing, and let your own repetition tell you what to add.
+Start with nothing, and add things once you notice you keep repeating them.
 
-## 7. If you write code 💻
+## 7. If you write code
 
 A few things only apply to software.
 
@@ -251,7 +250,7 @@ They are more important than ever: test-driven development, building things at t
 I think of engineering skill as a scale that runs from negative to positive.
 A good engineer removes work for others.
 A bad engineer creates work for others.
-Give the bad engineer AI, and they multiply their bad output, because AI is literally a multiplier.
+Give the bad engineer AI, and they multiply their bad output, because AI is a multiplier.
 
 Before AI, you could spend a year writing a few thousand lines of code, maybe a couple tens of thousands at most.
 You were intimately familiar with all of it, so you could get away with a somewhat worse architecture.
@@ -270,10 +269,10 @@ Now you need to know what to build, and how it should be built.
 
 And you need to be strict.
 You can produce thousands of lines a day, so be thoughtful about whether you want them in your codebase forever.
-Changing the color of a button: one prompt, done.
-A difficult system deserves more rigor, not by reading every line, but by understanding the architecture and its implications.
+Changing the color of a button takes one prompt.
+A difficult system needs more rigor, which means understanding the architecture and what it implies instead of reading every line.
 
-## Conclusion: this post has an expiry date
+## This post has an expiry date
 
 Right now I'd tell you to use Claude Opus 5.5.
 Just two weeks ago I was telling people to use GPT-6 Astra.
@@ -284,14 +283,12 @@ Not because it can't do the amazing things it does now.
 But because the next one will do even more amazing things that it can't.
 With every new model, my workflow changes, and the amount of scope I hand over per task grows dramatically.
 
-That is exactly why I don't recommend building an elaborate setup first.
+That's why I don't recommend building an elaborate setup first.
 Every skill, rule file and agent graph is tuned to the limitations of the model you have today.
-Those limitations are gone in a few months, and the setup quietly turns into dead weight.
-The one habit that survives every model change is the simple one: ask it.
+Those limitations are gone in a few months, and then the setup is dead weight.
+Asking it things is the one habit that survives every model change.
 
-So install it today, use the best model, and ask it everything, including whether its own work is any good.
-Everything else is optional, and probably temporary.
-
-What's stopping you from trying it today?
+Install it today, use the best model, and ask it everything, including whether its own work is any good.
+The rest is optional, and probably temporary.
 
 [^loc]: I wrote about 4.5 million lines of code this year, as counted by [trueloc](https://github.com/basnijholt/trueloc), another tool of mine that counts every line added across all commits in my pull requests.
