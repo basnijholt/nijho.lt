@@ -214,7 +214,7 @@ Start with nothing, and let your own repetition tell you what to add.
 A few things only apply to software.
 
 **Tests are cheap now, so ask for them.**
-"Set up the entire system, run it with real data, don't touch production, crash it at different points in the middle."
+"Set up the actual live system, end to end (don't touch production!), run it with real data, crash it at different points in the middle."
 All the random things you would check yourself if you had infinite time.
 Have it write a lot of tests.
 More tests is better, even when some have limited value.
@@ -224,6 +224,7 @@ What I care about is that the source code itself is clean.
 A lot of people will disagree here, but I throw away design docs.
 What came out in the end was never what the doc said anyway.
 The code and the tests are the specification, because that's also what the agent reads.
+The only thing I keep is what the code can't say: why something was done a certain way.
 Documentation that conflicts with the code is the worst: the agent will start changing your code to match the docs without you noticing.
 
 **Review against your own criteria.**
@@ -247,9 +248,14 @@ I've been saying the same thing for a long time: somebody who is literally a goo
 Good engineering practices never went away.
 They are more important than ever: test-driven development, building things at the right level of abstraction, a proper architecture.
 
+I think of engineering skill as a scale that runs from negative to positive.
+A good engineer removes work for others.
+A bad engineer creates work for others.
+Give the bad engineer AI, and they multiply their bad output, because AI is literally a multiplier.
+
 Before AI, you could spend a year writing a few thousand lines of code, maybe a couple tens of thousands at most.
 You were intimately familiar with all of it, so you could get away with a somewhat worse architecture.
-Now you can produce a million lines of code in a year.
+Now you can produce a million lines of code in a year.[^loc]
 There is no possible way you can keep up with all of it.
 If you want to build something lasting and robust, you need proper foundations.
 And that is where your opinions matter.
@@ -287,3 +293,5 @@ So install it today, use the best model, and ask it everything, including whethe
 Everything else is optional, and probably temporary.
 
 What's stopping you from trying it today?
+
+[^loc]: I wrote about 4.5 million lines of code this year, as counted by [trueloc](https://github.com/basnijholt/trueloc), another tool of mine that counts every line added across all commits in my pull requests.
