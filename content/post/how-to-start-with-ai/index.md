@@ -24,7 +24,6 @@ categories:
 I am honestly surprised that this is still a question.
 But I am literally still getting it: "how do I start with AI?" or "how do I start with coding agents?"
 
-My answer is simpler than people expect.
 There is a lot of noise, and a lot of pretense, about very specific workflows.
 Multi-agent loops, agent and sub-agent graphs, carefully tuned rule files.
 None of that is useful for 99% of people.
@@ -64,14 +63,13 @@ In an established codebase they just follow the existing style.
 If you point one at a codebase that is a bunch of crap, it might still produce a bunch of crap.
 But even there it does better than it used to.
 
-I should admit that I used to give different advice.
+I used to give different advice.
 In [On agentic coding]({{< ref "/post/agentic-coding" >}}), a year ago, I told you to create a `CLAUDE.md` in every project root with your preferences.
 (Today that would be an `AGENTS.md`, which all the major agents read.)
 I still use them, but not everywhere, and you don't need one to get started.
 There is even [research](https://arxiv.org/abs/2602.11988) showing that repository-level context files don't generally improve the task success rate of coding agents, while raising the cost by over 20%.
 They help when you have non-standard practices the agent can't guess.
 A list of standard rules or an overview of the repository does not.
-There is no secret sauce.
 
 ## 2. Ask it everything 🥩
 
@@ -94,7 +92,7 @@ The people who still don't use it are, I think, in one of two groups.
 Some had a bad experience once, years ago, and never tried again.
 That experience is badly out of date.
 Others, and I suspect it's a large group, avoid AI on principle.
-This post won't change their minds, but it might lower the bar for everyone else.
+This post won't change their minds, but it might make starting easier for everyone else.
 
 ## 3. Use the best model
 
@@ -212,21 +210,24 @@ Start with nothing, and add things once you notice you keep repeating them.
 
 A few things only apply to software.
 
-**Tests are cheap now, so ask for them.**
+### Tests are cheap now, so ask for them
+
 "Set up the actual live system, end to end (don't touch production!), run it with real data, crash it at different points in the middle."
 All the random things you would check yourself if you had infinite time.
 Have it write a lot of tests.
 More tests is better, even when some have limited value.
 What I care about is that the source code itself is clean.
 
-**The code is the spec.**
+### The code is the spec
+
 A lot of people will disagree here, but I throw away design docs.
 What came out in the end was never what the doc said anyway.
 The code and the tests are the specification, because that's also what the agent reads.
 The only thing I keep is what the code can't say: why something was done a certain way.
 Documentation that conflicts with the code is the worst: the agent will start changing your code to match the docs without you noticing.
 
-**Review against your own criteria.**
+### Review against your own criteria
+
 The questions I make it answer about its own work:
 
 - Is the code clean?
@@ -234,14 +235,16 @@ The questions I make it answer about its own work:
 - Does it repeat itself?
 - Is it overengineered? Keep it simple, stupid.
 
-**Cross-model review needs two installs.**
+### Cross-model review needs two installs
+
 As long as you have both Codex and Claude Code installed, you are essentially ready.
 Just tell the agent: "have Codex review this in a separate session and address what it finds."
 It can usually figure out how to call the other command-line tool on its own.
 I personally built a worktree orchestration tool for this, [`agent-cli dev`]({{< ref "/post/parallel-agentic-coding" >}}), which comes with a skill that teaches the agent to use it.
 But honestly, that is not necessary anymore nowadays.
 
-**A good AI engineer is just a good engineer.**
+### A good AI engineer is just a good engineer
+
 People ask me what makes a good agentic engineer.
 I've been saying the same thing for a long time: somebody who is literally a good engineer.
 Good engineering practices never went away.
@@ -261,7 +264,8 @@ And that is where your opinions matter.
 You don't need any setup to start, but you do need taste to build something that lasts.
 (I made a related point a year ago in [On agentic coding]({{< ref "/post/agentic-coding" >}}): AI amplifies the experience you already have.)
 
-**Your role changed, it didn't disappear.**
+### Your role changed, it didn't disappear
+
 Some software engineers feel personally attacked by all this.
 I think you have to get over yourself.
 Your secret sauce was never knowing the syntax really well.
