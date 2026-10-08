@@ -158,20 +158,22 @@ Match your scrutiny to your expertise.
 
 I start by telling it what I want, usually by voice.
 I just ramble.
-Because it is so good at language, even when I go off track it pushes back: "I understand what you mean, but that approach is bad because of this, I'd do it this way."
+It is so good at language that even when I go off track and talk incoherently, it almost always understands what I mean.
+And sometimes it pushes back: "I understand what you mean, but that approach is bad because of this, I'd do it this way."
 Sometimes it says we could do it either way, and I say: let's try both.
 
-It will do what you ask, and the result will look fine.
-The question is whether it's good.
-So before you accept anything, ask it to review its own work.
+In almost all cases, AI can now deliver what you asked for in a single prompt, and it will actually work.
+The question is whether it's actually good, and whether it meets your standards.
+So before you accept anything, have it reviewed.
 
-The key part for me: I don't let one model be the only judge of its own work.
-I have other models review it, against the same criteria, until they agree it's good.
-That sounds like a lot of setup.
-It isn't magic either.
-In a chat app, that can be as simple as pasting the answer into the other company's app and asking what's wrong with it.
+The key part for me: the review has to come from a fresh context, not from the conversation that produced the work.
+A new session, or a sub-agent, that only sees the result.
+That can be the same model or a different one.
+I do both: the same model in a fresh context, and other models, until they agree it's good.
+That sounds like a lot of setup, but it isn't.
+In a chat app, it can be as simple as pasting the answer into a new chat, or into the other company's app, and asking what's wrong with it.
 
-And one instruction that matters more than the rest: **be mindful of scope creep.**
+Whatever you use, also tell it to **be mindful of scope creep.**
 A review will always find something.
 Very often it's an edge case that looks real in isolation but can never happen in your actual situation.
 Ask whether each finding is realistic before you let it build more.
