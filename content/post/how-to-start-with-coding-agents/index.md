@@ -210,11 +210,26 @@ It can usually figure out how to call the other command-line tool on its own.
 I personally built a worktree orchestration tool for this, [`agent-cli dev`]({{< ref "/post/parallel-agentic-coding" >}}), which comes with a skill that teaches the agent to use it.
 But honestly, that is not necessary anymore nowadays.
 
+**A good AI engineer is just a good engineer.**
+People ask me what makes a good agentic engineer.
+I've been saying the same thing for a long time: somebody who is literally a good engineer.
+Good engineering practices never went away.
+They are more important than ever: test-driven development, building things at the right level of abstraction, a proper architecture.
+
+Before AI, you could spend a year writing a few thousand lines of code, maybe a couple tens of thousands at most.
+You were intimately familiar with all of it, so you could get away with a somewhat worse architecture.
+Now you can produce a million lines of code in a year.
+There is no possible way you can keep up with all of it.
+If you want to build something lasting and robust, you need proper foundations.
+And that is where your opinions matter.
+You don't need any setup to start, but you do need taste to build something that lasts.
+(I made a related point a year ago in [On agentic coding]({{< ref "/post/agentic-coding" >}}): AI amplifies the experience you already have.)
+
 **Your role changed, it didn't disappear.**
 Some software engineers feel personally attacked by all this.
 I think you have to get over yourself.
 Your secret sauce was never knowing the syntax really well.
-Now you need to know what to build.
+Now you need to know what to build, and how it should be built.
 
 And you need to be strict.
 You can produce thousands of lines a day, so be thoughtful about whether you want them in your codebase forever.
