@@ -43,7 +43,7 @@ But the advice is the same whether you write software or not.
 2. Ask it everything, and be critical of what comes back. If it could do something itself and tells you to do it, you are a meat proxy.
 3. Use the best model. Cheap models are often not cheaper on real work.
 4. Trust it in proportion to how measurable the outcome is.
-5. Make it review its own work and get a second opinion from another model. Watch for scope creep.
+5. Have its work reviewed in a fresh context, by the same model and by another one. Watch for scope creep.
 6. Skills, multi-agent loops and the rest come later, if ever.
 {{% /callout %}}
 
