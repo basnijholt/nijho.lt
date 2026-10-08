@@ -4,7 +4,7 @@ subtitle: "Yes, I am actually still getting this question. You don't need skills
 summary: "There is a lot of noise about elaborate AI workflows that 99% of people don't need. Install it, use the best model, and ask it everything. The rest can come later, or never."
 projects: []
 date: "2026-10-08T00:00:00Z"
-draft: true
+draft: false
 featured: false
 
 authors:
