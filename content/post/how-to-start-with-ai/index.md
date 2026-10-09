@@ -193,7 +193,7 @@ You only know what to put in it after you've repeated it.
 (In [MindRoom](https://docs.mindroom.chat/skills/#automatic-skill-learning), an agent can even do this on its own: with automatic skill learning turned on, it reviews its recent work in the background and turns repeated workflows into skills.)
 
 My own set of skills is public as [baspowers](https://github.com/basnijholt/baspowers), which started as a fork of [superpowers](https://github.com/obra/superpowers).
-Some of its skills came from mining my own agent history of more than ten thousand conversations for procedures I kept repeating, then A/B testing each one with and without the skill.
+Some of its skills came from [mining more than ten thousand session logs](https://github.com/basnijholt/baspowers#how-the-delivery-skills-were-made) of my agent history for procedures I kept repeating, then A/B testing each one with and without the skill.
 An A/B test sounds like a lot of work, but you can ask the agent to run it for you, and tell it which other models to test with.
 Four of the ten candidates were dropped because the agents already did the right thing without them.
 The rule I ended up with: **keep only skills that change behavior.**
