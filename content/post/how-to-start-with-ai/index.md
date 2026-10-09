@@ -21,14 +21,13 @@ categories:
   - level:beginner
 ---
 
-I am honestly surprised that this is still a question.
-But I am literally still getting it: "how do I start with AI?" or "how do I start with coding agents?"
-
 Recently, on a train, I sat near someone typing code by hand for hours.
 At the same time, I was orchestrating more than ten agents just by talking to my phone.
 I felt like I was living in a different world.
 It made me realize my own bias.
 I had just assumed that by now everyone would have AI write their code.
+
+So maybe I shouldn't be surprised that I still get asked: "how do I start with AI?" or "how do I start with coding agents?"
 
 There is a lot of noise, and a lot of pretense, about very specific workflows.
 Multi-agent loops, agent and sub-agent graphs, carefully tuned rule files.
