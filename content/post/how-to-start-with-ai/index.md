@@ -80,6 +80,9 @@ The real change is a mindset, not a tool.
 
 When you run into a problem, the old reflex is to Google it.
 The new reflex is to ask the AI about everything.
+Asking also means asking it to do things.
+Most of what I type is a description of what I want done, and why.
+Give it the context you would give a colleague.
 
 When the agent says "now you need to run the tests," no.
 Everything it can do, you let it do.
