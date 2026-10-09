@@ -15,13 +15,11 @@ authors:
 
 tags:
   - homelab
-  - proxmox
-  - nas
   - zfs
+  - backups
 
 categories:
-  - technology
-  - tutorial
+  - Homelab
   - level:intermediate
 ---
 

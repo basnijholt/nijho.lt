@@ -9,25 +9,17 @@ featured: true
 authors:
   - admin
 tags:
-  - python
   - ai
-  - llm
-  - ollama
-  - local-first
+  - local-ai
+  - hardware
+  - speech-to-text
+  - python
   - open-source
   - nixos
-  - gpu
-  - whisper
-  - langgraph
-  - crewai
-  - pydanticai
-  - nvidia-rtx-3090
-  - local-llm
-  - whisper.cpp
 categories:
-  - Technology
+  - AI
   - Software Development
-  - "level:intermediate"
+  - level:intermediate
 ---
 
 {{< toc >}}

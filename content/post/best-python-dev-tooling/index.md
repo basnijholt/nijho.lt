@@ -18,32 +18,11 @@ authors:
 
 tags:
   - python
-  - pre-commit
-  - black
-  - ruff
-  - tox
-  - pyupgrade
-  - isort
-  - mypy
-  - versioningit
-  - versioneer
-  - setuptools-scm
-  - miniver
-  - bumpversion
-  - bump2version
-  - nox
-  - pytest
-  - pyproject.toml
-  - setup.py
-  - setup.cfg
-  - readthedocs
-  - sphinx
-  - jupyter
-  - myst-nb
-  - jupytext
+  - developer-tools
+  - packaging
 
 categories:
-  - setup
+  - Software Development
   - level:intermediate
 ---
 

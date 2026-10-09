@@ -20,23 +20,11 @@ authors:
 tags:
   - dotfiles
   - terminal
-  - productivity
-  - zsh
-  - bash
-  - cli-tools
-  - automation
-  - dotbot
-  - dotbins
-  - nix-darwin
-  - cross-platform
-  - keychain
-  - git
-  - uv
-  - iterm2
+  - macos
+  - open-source
 
 categories:
-  - terminal
-  - setup
+  - Setup
   - level:intermediate
 ---
 

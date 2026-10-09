@@ -6,16 +6,12 @@ featured: false
 summary: "🎄🎁 Advent of Open Source – Day 06/24: Making scientific research truly reproducible with fully open-source code and data."
 subtitle: "🎄🎁 Advent of Open Source – Day 06/24: A commitment to open science through publicly available, runnable code for every publication."
 tags:
-  - open-source
-  - openscience
-  - physics
-  - quantumcomputing
   - python
-  - advent
-categories:
-  - technology
   - open-source
-  - advent
+  - academia
+  - scientific-computing
+categories:
+  - Open Source
 authors:
   - admin
 excludeFromList: true

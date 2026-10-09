@@ -6,16 +6,12 @@ featured: false
 summary: "🎄🎁 Advent of Open Source – Day 03/24: Rebuilding a popular backup tool in Python for better reliability and cross-platform compatibility."
 subtitle: "🎄🎁 Advent of Open Source – Day 03/24: A Python port of rsync-time-backup, enhancing Time Machine-style backups."
 tags:
-  - open-source
   - python
-  - backups
-  - devtools
-  - programming
-  - advent
-categories:
-  - technology
   - open-source
-  - advent
+  - backups
+  - terminal
+categories:
+  - Open Source
 authors:
   - admin
 excludeFromList: true

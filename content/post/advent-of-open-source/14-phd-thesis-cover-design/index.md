@@ -6,16 +6,13 @@ featured: false
 summary: "🎄🎁 Advent of Open Source – Day 14/24: Combining quantum physics, machine learning, and generative art to create unique PhD thesis covers."
 subtitle: "🎄🎁 Advent of Open Source – Day 14/24: An open-source project for designing personalized thesis covers using Python."
 tags:
-  - open-source
-  - phd
   - python
-  - machinelearning
-  - datavisualization
-  - advent
-categories:
-  - technology
   - open-source
-  - advent
+  - academia
+  - machine-learning
+  - data-visualization
+categories:
+  - Open Source
 authors:
   - admin
 excludeFromList: true

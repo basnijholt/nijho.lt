@@ -6,16 +6,11 @@ featured: false
 summary: "🎄🎁 Advent of Open Source – Day 17/24: Scaling adaptive sampling to 100,000+ cores with a novel meta-scheduling approach."
 subtitle: "🎄🎁 Advent of Open Source – Day 17/24: A [tool](https://github.com/basnijholt/adaptive-scheduler) for efficient, interactive supercomputing from a Jupyter notebook."
 tags:
-  - open-source
   - python
-  - hpc
-  - quantumcomputing
-  - parallelcomputing
-  - advent
-categories:
-  - technology
   - open-source
-  - advent
+  - scientific-computing
+categories:
+  - Open Source
 authors:
   - admin
 excludeFromList: true

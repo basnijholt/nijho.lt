@@ -8,11 +8,9 @@ featured: false
 authors:
   - admin
 tags:
-  - AI
-  - Gemini
+  - ai
   - agentic-coding
-  - LLM
-  - google
+  - model-reviews
 categories:
   - AI
   - Software Development

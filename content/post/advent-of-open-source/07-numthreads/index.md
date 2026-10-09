@@ -6,16 +6,11 @@ featured: false
 summary: "🎄🎁 Advent of Open Source – Day 07/24: Solving a common performance pitfall in scientific computing with a tiny yet powerful tool."
 subtitle: "🎄🎁 Advent of Open Source – Day 07/24: A simple utility to control thread counts for numerical libraries, preventing performance degradation."
 tags:
-  - open-source
   - python
-  - hpc
-  - scientificcomputing
-  - programming
-  - advent
-categories:
-  - technology
   - open-source
-  - advent
+  - scientific-computing
+categories:
+  - Open Source
 authors:
   - admin
 excludeFromList: true

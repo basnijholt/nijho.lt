@@ -17,18 +17,14 @@ authors:
   - admin
 
 tags:
-  - phd
-  - thesis
-  - machine learning
-  - programming
   - python
-  - matplotlib
-  - ipywidgets
-  - keras
+  - academia
+  - machine-learning
+  - data-visualization
+  - scientific-computing
 
 categories:
-  - phd
-  - education
+  - Software Development
   - level:fun
 ---
 

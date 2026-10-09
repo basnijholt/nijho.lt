@@ -6,16 +6,12 @@ featured: false
 summary: "🎄🎁 Advent of Open Source – Day 11/24: Contributing to the backbone of scientific Python through the conda-forge community."
 subtitle: "🎄🎁 Advent of Open Source – Day 11/24: Maintaining over 40 conda-forge recipes, enabling easy installation of scientific software."
 tags:
-  - open-source
   - python
-  - scientific
-  - programming
-  - community
-  - advent
-categories:
-  - technology
   - open-source
-  - advent
+  - packaging
+  - scientific-computing
+categories:
+  - Open Source
 authors:
   - admin
 excludeFromList: true

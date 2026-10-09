@@ -6,16 +6,11 @@ featured: false
 summary: "🎄🎁 Advent of Open Source – Day 20/24: Simplifying complex computational workflows with automatic DAG construction and parallelization."
 subtitle: "🎄🎁 Advent of Open Source – Day 20/24: A Python package to streamline scientific computations with minimal boilerplate."
 tags:
-  - open-source
   - python
-  - datascience
-  - scientificcomputing
-  - programming
-  - advent
-categories:
-  - technology
   - open-source
-  - advent
+  - scientific-computing
+categories:
+  - Open Source
 authors:
   - admin
 excludeFromList: true

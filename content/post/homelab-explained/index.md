@@ -10,21 +10,11 @@ authors:
 tags:
   - homelab
   - self-hosting
-  - traefik
-  - tailscale
-  - headscale
-  - wireguard
-  - dns
-  - terraform
-  - docker
-  - compose-farm
   - nixos
-  - networking
-  - agentic-coding
+  - docker
+  - security
 categories:
-  - technology
-  - DevOps
-  - tutorial
+  - Homelab
   - level:beginner
 ---
 

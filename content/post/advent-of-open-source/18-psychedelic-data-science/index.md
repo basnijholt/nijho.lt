@@ -6,16 +6,11 @@ featured: false
 summary: "🎄🎁 Advent of Open Source – Day 18/24: Exploring the language of psychedelic experiences through data science and NLP."
 subtitle: "🎄🎁 Advent of Open Source – Day 18/24: A fun project analyzing vocabulary richness in psychedelic trip reports."
 tags:
-  - open-source
   - python
-  - datascience
-  - nlp
-  - machinelearning
-  - advent
-categories:
-  - technology
   - open-source
-  - advent
+  - machine-learning
+categories:
+  - Open Source
 authors:
   - admin
 excludeFromList: true

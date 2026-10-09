@@ -11,18 +11,15 @@ authors:
   - admin
 
 tags:
-  - AI
-  - programming
-  - coding
-  - AI-assisted
-  - vibe-coding
-  - development
+  - ai
+  - agentic-coding
+  - software-design
   - python
-  - cursor
 
 categories:
-  - development
-  - level:beginning
+  - AI
+  - Software Development
+  - level:beginner
 ---
 
 ## I tried "vibe coding" for 3 hours, my application worked, but then I spent 15 hours fixing it

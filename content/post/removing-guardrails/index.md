@@ -10,13 +10,11 @@ authors:
 tags:
   - ai
   - agentic-coding
-  - claude-code
   - git
-  - productivity
-  - development
+  - security
 categories:
-  - Software Development
   - AI
+  - Software Development
   - level:intermediate
 ---
 

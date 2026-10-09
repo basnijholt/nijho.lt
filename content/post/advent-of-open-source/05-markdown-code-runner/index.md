@@ -6,16 +6,12 @@ featured: false
 summary: "🎄🎁 Advent of Open Source – Day 05/24: Keeping documentation in sync with code by automatically executing and updating Markdown code blocks."
 subtitle: "🎄🎁 Advent of Open Source – Day 05/24: A tool to ensure code examples and outputs in Markdown files are always up-to-date."
 tags:
-  - open-source
   - python
-  - documentation
-  - devtools
-  - programming
-  - advent
-categories:
-  - technology
   - open-source
-  - advent
+  - documentation
+  - developer-tools
+categories:
+  - Open Source
 authors:
   - admin
 excludeFromList: true

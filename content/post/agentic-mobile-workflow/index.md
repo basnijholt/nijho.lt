@@ -8,21 +8,16 @@ featured: false
 authors:
   - admin
 tags:
-  - agentic-coding
   - ai
-  - workflow
-  - ios
-  - self-hosting
-  - nixos
-  - wireguard
-  - blink
-  - zellij
-  - ollama
-  - faster-whisper
+  - agentic-coding
+  - local-ai
+  - speech-to-text
+  - terminal
   - agent-cli
+  - nixos
 categories:
-  - Software Development
   - AI
+  - Software Development
   - level:intermediate
 image:
   caption: ""

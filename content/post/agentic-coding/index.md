@@ -8,22 +8,13 @@ featured: true
 authors:
   - admin
 tags:
-  - AI
+  - ai
   - agentic-coding
-  - claude
-  - claude-code
-  - codex
-  - openai
+  - model-reviews
   - open-source
-  - python
-  - productivity
-  - development
-  - ai-assisted
-  - cursor
-  - gpt-5
 categories:
-  - Software Development
   - AI
+  - Software Development
   - level:intermediate
 image:
   caption: "PyPI Package Publication Analysis showing explosive growth in 2024-2025"

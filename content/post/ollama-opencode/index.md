@@ -8,15 +8,11 @@ featured: true
 authors:
   - admin
 tags:
-  - python
   - ai
-  - llm
-  - ollama
-  - local-first
-  - open-source
-  - opencode
+  - local-ai
 categories:
-  - "level:beginner"
+  - AI
+  - level:beginner
 ---
 
 I have hundreds of private journal entries stored locally, many with incorrect date formats.

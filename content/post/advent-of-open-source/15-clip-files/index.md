@@ -6,16 +6,13 @@ featured: false
 summary: "🎄🎁 Advent of Open Source – Day 15/24: Automating the process of sharing code context with AI assistants."
 subtitle: "🎄🎁 Advent of Open Source – Day 15/24: A command-line tool to quickly copy and format code for AI interactions."
 tags:
-  - open-source
   - python
-  - devtools
-  - ai
-  - programming
-  - advent
-categories:
-  - technology
   - open-source
-  - advent
+  - ai
+  - developer-tools
+  - terminal
+categories:
+  - Open Source
 authors:
   - admin
 excludeFromList: true

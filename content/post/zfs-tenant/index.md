@@ -12,13 +12,10 @@ tags:
   - backups
   - homelab
   - nixos
-  - syncoid
   - security
   - open-source
-  - agentic-coding
 categories:
-  - technology
-  - DevOps
+  - Homelab
   - level:intermediate
 ---
 

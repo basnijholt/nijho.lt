@@ -6,16 +6,11 @@ featured: false
 summary: "🎄🎁 Advent of Open Source – Day 02/24: Automating home lighting to sync with the sun, making smart homes even smarter."
 subtitle: "🎄🎁 Advent of Open Source – Day 02/24: A popular Home Assistant integration for dynamic, sun-synced lighting."
 tags:
-  - open-source
-  - homeassistant
-  - smarthome
-  - iot
   - python
-  - advent
-categories:
-  - technology
   - open-source
-  - advent
+  - home-automation
+categories:
+  - Open Source
 authors:
   - admin
 excludeFromList: true

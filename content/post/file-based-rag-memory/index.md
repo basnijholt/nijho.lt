@@ -8,20 +8,14 @@ featured: true
 authors:
   - admin
 tags:
-  - python
   - ai
-  - rag
-  - memory
-  - local-first
-  - open-source
+  - local-ai
   - agent-cli
-  - aijournal
-  - openai
-  - chromadb
-  - onnx
+  - python
+  - open-source
 categories:
-  - Software Development
   - AI
+  - Software Development
   - level:intermediate
 image:
   caption: "The architecture of a file-based memory system"

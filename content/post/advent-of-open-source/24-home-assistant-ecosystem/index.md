@@ -6,16 +6,11 @@ featured: false
 summary: "🎄🎁 Advent of Open Source – Day 24/24: A collection of Home Assistant-related projects, showcasing the power of open source to enhance daily life."
 subtitle: "🎄🎁 Advent of Open Source – Day 24/24: From reverse-engineering speakers to repurposing hardware, these projects highlight open source innovation in the smart home."
 tags:
-  - open-source
-  - homeassistant
-  - iot
   - python
-  - smarthome
-  - advent
-categories:
-  - technology
   - open-source
-  - advent
+  - home-automation
+categories:
+  - Open Source
 authors:
   - admin
 excludeFromList: true

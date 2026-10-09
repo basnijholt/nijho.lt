@@ -8,17 +8,15 @@ featured: false
 authors:
   - admin
 tags:
-  - diction
-  - agent-cli
-  - qwen
+  - ai
+  - local-ai
   - speech-to-text
   - self-hosting
-  - ios
+  - agent-cli
   - docker
-  - ai
 categories:
   - AI
-  - Self-Hosting
+  - Homelab
   - level:intermediate
 image:
   caption: ""

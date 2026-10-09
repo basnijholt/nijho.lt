@@ -6,17 +6,11 @@ featured: false
 summary: "🎄🎁 Advent of Open Source – Day 13/24: Simplifying Python dependency management across pip, conda, and complex projects."
 subtitle: "🎄🎁 Advent of Open Source – Day 13/24: A tool to unify dependency management, making project setup a breeze."
 tags:
-  - open-source
   - python
-  - devtools
-  - programming
-  - packagemanagement
-  - conda
-  - advent
-categories:
-  - technology
   - open-source
-  - advent
+  - packaging
+categories:
+  - Open Source
 authors:
   - admin
 excludeFromList: true

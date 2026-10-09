@@ -6,16 +6,11 @@ featured: false
 summary: "🎄🎁 Advent of Open Source – Day 10/24: Sharing my extensive Home Assistant setup with 137 automations and counting."
 subtitle: "🎄🎁 Advent of Open Source – Day 10/24: A deep dive into a comprehensive, privacy-focused smart home configuration."
 tags:
-  - open-source
-  - homeassistant
-  - smarthome
-  - iot
   - python
-  - advent
-categories:
-  - technology
   - open-source
-  - advent
+  - home-automation
+categories:
+  - Open Source
 authors:
   - admin
 excludeFromList: true

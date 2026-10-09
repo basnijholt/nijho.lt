@@ -8,17 +8,14 @@ featured: false
 authors:
   - admin
 tags:
-  - self-hosting
-  - local-llm
-  - qwen
-  - open-source
   - ai
-  - homelab
-  - nvidia-rtx-3090
-  - economics
+  - local-ai
+  - self-hosting
+  - hardware
+  - model-reviews
 categories:
   - AI
-  - Self-Hosting
+  - Homelab
   - level:intermediate
 ---
 

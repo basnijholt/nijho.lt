@@ -12,18 +12,10 @@ authors:
 
 tags:
   - python
-  - programming
-  - functional-programming
   - software-design
-  - code-quality
-  - testing
-  - maintainability
-  - unidep
-  - pipefunc
 
 categories:
-  - development
-  - philosophy
+  - Software Development
   - level:intermediate
 ---
 

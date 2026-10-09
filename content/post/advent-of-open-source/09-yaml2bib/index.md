@@ -6,16 +6,11 @@ featured: false
 summary: "🎄🎁 Advent of Open Source – Day 09/24: Solving the universal academic headache of inconsistent BibTeX entries."
 subtitle: "🎄🎁 Advent of Open Source – Day 09/24: A tool to generate perfect BibTeX files from YAML using DOIs, ensuring citation consistency."
 tags:
-  - open-source
   - python
-  - academia
-  - latex
-  - research
-  - advent
-categories:
-  - technology
   - open-source
-  - advent
+  - academia
+categories:
+  - Open Source
 authors:
   - admin
 excludeFromList: true
