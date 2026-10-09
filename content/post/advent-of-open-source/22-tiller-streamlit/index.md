@@ -6,19 +6,13 @@ featured: false
 summary: "🎄🎁 Advent of Open Source – Day 22/24: Visualizing personal finances with Tiller and Streamlit for better financial independence tracking."
 subtitle: "🎄🎁 Advent of Open Source – Day 22/24: A Streamlit app that automatically pulls financial data from Tiller for insightful analysis."
 tags:
-  - open-source
   - python
-  - streamlit
-  - personalfinance
-  - datavisualization
-  - tiller
-  - traefik
-  - docker
-  - advent
-categories:
-  - technology
   - open-source
-  - advent
+  - personal-finance
+  - data-visualization
+  - self-hosting
+categories:
+  - Open Source
 authors:
   - admin
 excludeFromList: true

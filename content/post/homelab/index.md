@@ -12,15 +12,14 @@ authors:
 
 tags:
   - homelab
-  - proxmox
-  - nas
+  - self-hosting
+  - home-automation
   - docker
-  - home-assistant
   - zfs
+  - hardware
 
 categories:
-  - technology
-  - tutorial
+  - Homelab
   - level:intermediate
 ---
 

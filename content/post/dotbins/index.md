@@ -18,20 +18,12 @@ authors:
 
 tags:
   - terminal
-  - productivity
   - dotfiles
-  - cli-tools
-  - binaries
-  - zoxide
-  - bat
-  - eza
-  - ripgrep
-  - delta
-  - fzf
   - python
+  - open-source
 
 categories:
-  - terminal
+  - Setup
   - level:beginner
 ---
 

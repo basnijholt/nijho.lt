@@ -8,22 +8,15 @@ featured: true
 authors:
   - admin
 tags:
-  - python
   - ai
   - agentic-coding
-  - claude-code
   - git
-  - git-worktrees
-  - productivity
-  - development
-  - cli
-  - open-source
   - agent-cli
-  - zellij
-  - tmux
+  - terminal
+  - open-source
 categories:
-  - Software Development
   - AI
+  - Software Development
   - level:intermediate
 image:
   caption: "One command to create a complete parallel development environment"

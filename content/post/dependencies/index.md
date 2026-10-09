@@ -12,19 +12,11 @@ authors:
 
 tags:
   - python
-  - dependencies
   - packaging
-  - open-source
   - software-design
-  - unidep
-  - development
-  - workflow
-  - libraries
-  - applications
 
 categories:
-  - development
-  - philosophy
+  - Software Development
   - level:intermediate
 ---
 

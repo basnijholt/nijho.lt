@@ -12,13 +12,11 @@ authors:
 
 tags:
   - python
-  - licensing
-  - gpl
   - packaging
   - open-source
 
 categories:
-  - licensing
+  - Software Development
   - level:beginner
 
 image:

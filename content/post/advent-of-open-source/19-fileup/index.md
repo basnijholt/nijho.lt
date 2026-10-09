@@ -6,16 +6,12 @@ featured: false
 summary: "🎄🎁 Advent of Open Source – Day 19/24: Sharing files directly from the terminal with a simple, zero-dependency utility."
 subtitle: "🎄🎁 Advent of Open Source – Day 19/24: A tiny command-line tool for effortless file sharing, used for over 7 years."
 tags:
-  - open-source
   - python
-  - devtools
-  - commandline
-  - programming
-  - advent
-categories:
-  - technology
   - open-source
-  - advent
+  - terminal
+  - developer-tools
+categories:
+  - Open Source
 authors:
   - admin
 excludeFromList: true

@@ -12,21 +12,11 @@ authors:
 
 tags:
   - python
-  - conda
-  - mamba
-  - micromamba
-  - pipenv
-  - docker
-  - nb_conda_kernels
-  - pyenv
-  - venv
-  - virtualenv
-  - homebrew
-  - pixi
-  - uv
+  - packaging
+  - developer-tools
 
 categories:
-  - setup
+  - Software Development
   - level:beginner
 ---
 

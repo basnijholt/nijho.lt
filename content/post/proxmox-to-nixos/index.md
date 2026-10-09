@@ -7,10 +7,13 @@ draft: false
 authors:
   - admin
 categories:
-  - Software Development
-  - DevOps
-  - HomeLab
-tags: ["nixos", "proxmox", "incus", "homelab", "migration", "agentic-ai"]
+  - Homelab
+  - level:intermediate
+tags:
+  - nixos
+  - homelab
+  - migration
+  - agentic-coding
 ---
 
 # I've gone full Nix: Proxmox to NixOS + Incus

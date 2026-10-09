@@ -12,13 +12,9 @@ authors:
 
 tags:
   - open-source
-  - advent
-  - technology
 
 categories:
-  - technology
-  - open-source
-  - advent
+  - Open Source
 ---
 
 {{% callout note %}}

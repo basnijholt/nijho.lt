@@ -12,14 +12,10 @@ authors:
 
 tags:
   - git
-  - development
-  - workflow
-  - productivity
-  - version-control
+  - developer-tools
 
 categories:
-  - technology
-  - tutorial
+  - Software Development
   - level:beginner
 ---
 

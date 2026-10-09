@@ -10,16 +10,12 @@ authors:
 tags:
   - nixos
   - zfs
-  - btrfs
-  - disko
-  - restic
   - backups
+  - migration
   - homelab
-  - infrastructure
   - agentic-coding
 categories:
-  - technology
-  - DevOps
+  - Homelab
   - level:intermediate
 ---
 

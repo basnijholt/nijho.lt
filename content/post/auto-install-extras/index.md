@@ -9,17 +9,11 @@ authors:
   - admin
 tags:
   - python
-  - uv
-  - uvx
-  - dependencies
   - packaging
-  - cli
-  - open-source
   - agent-cli
-  - developer-experience
+  - open-source
 categories:
   - Software Development
-  - Python
   - level:intermediate
 image:
   caption: ""

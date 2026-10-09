@@ -7,10 +7,11 @@ draft: false
 authors:
   - admin
 categories:
-  - Software Development
-  - DevOps
-  - NixOS
-tags: ["nixos", "linux", "cuda", "devops", "automation"]
+  - Homelab
+  - level:intermediate
+tags:
+  - nixos
+  - homelab
 ---
 
 # The CUDA compilation nightmare: how I solved 18-hour builds with NixOS

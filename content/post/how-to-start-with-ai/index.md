@@ -13,11 +13,9 @@ authors:
 tags:
   - ai
   - agentic-coding
-  - claude-code
-  - productivity
 
 categories:
-  - development
+  - AI
   - level:beginner
 ---
 

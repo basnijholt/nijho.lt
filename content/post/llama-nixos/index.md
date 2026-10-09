@@ -8,19 +8,14 @@ featured: true
 authors:
   - admin
 tags:
-  - llama-cpp
-  - llama-swap
-  - ollama
+  - ai
   - local-ai
-  - llm
-  - gguf
   - nixos
-  - dual-gpu
-  - rtx3090
+  - hardware
 categories:
-  - Technology
   - AI
-  - "level:intermediate"
+  - Homelab
+  - level:intermediate
 ---
 
 {{< toc >}}

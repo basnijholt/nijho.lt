@@ -18,20 +18,10 @@ authors:
 
 tags:
   - terminal
-  - productivity
-  - zsh
-  - oh-my-zsh
   - dotfiles
-  - dotbot
-  - starship
-  - autoenv
-  - z
-  - autoenv
-  - zsh-autosuggestions
-  - git
 
 categories:
-  - terminal
+  - Setup
   - level:intermediate
 ---
 

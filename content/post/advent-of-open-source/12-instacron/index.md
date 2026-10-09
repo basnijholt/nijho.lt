@@ -6,16 +6,10 @@ featured: false
 summary: "🎄🎁 Advent of Open Source – Day 12/24: Automating Instagram posting with random philosophical quotes and emojis, because why not?"
 subtitle: "🎄🎁 Advent of Open Source – Day 12/24: A Python script for automated, humorous Instagram content generation."
 tags:
-  - open-source
   - python
-  - automation
-  - photography
-  - instagram
-  - advent
-categories:
-  - technology
   - open-source
-  - advent
+categories:
+  - Open Source
 authors:
   - admin
 excludeFromList: true

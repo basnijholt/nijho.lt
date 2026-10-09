@@ -8,18 +8,15 @@ featured: true
 authors:
   - admin
 tags:
-  - AI
-  - open-source
-  - python
-  - matrix
-  - agents
+  - ai
   - mindroom
-  - openclaw
+  - matrix
   - self-hosting
-  - side-projects
+  - python
+  - open-source
 categories:
   - AI
-  - open-source
+  - Open Source
   - level:intermediate
 ---
 

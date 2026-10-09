@@ -9,16 +9,12 @@ authors:
   - admin
 tags:
   - nixos
-  - truenas
   - zfs
-  - disko
   - homelab
+  - migration
   - agentic-coding
-  - open-source
-  - infrastructure
 categories:
-  - technology
-  - DevOps
+  - Homelab
   - level:intermediate
 ---
 

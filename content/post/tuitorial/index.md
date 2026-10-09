@@ -7,12 +7,12 @@ summary: A Python package for creating engaging code walkthroughs in your termin
 tags:
   - python
   - terminal
-  - teaching
   - documentation
   - open-source
 categories:
-  - technology
-  - open-source
+  - Open Source
+  - Software Development
+  - level:beginner
 authors:
   - admin
 ---

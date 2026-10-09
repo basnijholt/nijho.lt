@@ -17,13 +17,10 @@ authors:
   - admin
 
 tags:
-  - vscode
-  - vscode-extension
-  - editor
-  - ide
+  - developer-tools
 
 categories:
-  - editor
+  - Setup
   - level:beginner
 ---
 

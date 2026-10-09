@@ -18,11 +18,10 @@ authors:
 
 tags:
   - macos
-  - homebrew
-  - oh-my-zsh
+  - dotfiles
 
 categories:
-  - setup
+  - Setup
   - level:beginner
 ---
 

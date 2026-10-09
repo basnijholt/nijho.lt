@@ -11,11 +11,7 @@ tags:
   - ai
   - mindroom
   - matrix
-  - agents
-  - evals
-  - typesafe
-  - jev
-  - openai
+  - model-reviews
 categories:
   - AI
   - Software Development

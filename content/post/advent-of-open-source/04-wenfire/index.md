@@ -6,16 +6,11 @@ featured: false
 summary: "🎄🎁 Advent of Open Source – Day 04/24: Calculating the path to financial independence with a personalized web app."
 subtitle: "🎄🎁 Advent of Open Source – Day 04/24: A financial independence calculator built with FastAPI, htmx, and Vega-Lite."
 tags:
-  - open-source
   - python
-  - financialindependence
-  - webdev
-  - fire
-  - advent
-categories:
-  - technology
   - open-source
-  - advent
+  - personal-finance
+categories:
+  - Open Source
 authors:
   - admin
 excludeFromList: true

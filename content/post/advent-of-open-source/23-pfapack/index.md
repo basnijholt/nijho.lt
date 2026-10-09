@@ -6,18 +6,11 @@ featured: false
 summary: "🎄🎁 Advent of Open Source – Day 23/24: Making efficient Pfaffian computations accessible to Python users with optimized C and FORTRAN under the hood."
 subtitle: "🎄🎁 Advent of Open Source – Day 23/24: A user-friendly Python package for calculating the square root of the determinant of skew-symmetric matrices."
 tags:
-  - open-source
   - python
-  - scientificcomputing
-  - math
-  - pfaffian
-  - fortran
-  - c
-  - advent
-categories:
-  - technology
   - open-source
-  - advent
+  - scientific-computing
+categories:
+  - Open Source
 authors:
   - admin
 excludeFromList: true

@@ -6,16 +6,12 @@ featured: false
 summary: "🎄🎁 Advent of Open Source – Day 16/24: Revolutionizing parameter space exploration with adaptive sampling algorithms."
 subtitle: "🎄🎁 Advent of Open Source – Day 16/24: A Python package for efficient, intelligent sampling in scientific computing."
 tags:
-  - open-source
   - python
-  - scientificcomputing
-  - parallelcomputing
-  - programming
-  - advent
-categories:
-  - technology
   - open-source
-  - advent
+  - scientific-computing
+  - machine-learning
+categories:
+  - Open Source
 authors:
   - admin
 excludeFromList: true

@@ -17,27 +17,12 @@ authors:
   - admin
 
 tags:
-  - AI
-  - LLM
-  - OpenWebUI
-  - LibreChat
-  - Claude
-  - GPT
-  - Gemini
-  - DeepSeek
-  - Qwen
-  - OpenRouter
+  - ai
   - self-hosting
   - docker
-  - API
-  - clip-files
-  - cursor
-  - workflow
 
 categories:
   - AI
-  - development
-  - self-hosting
   - level:intermediate
 ---
 

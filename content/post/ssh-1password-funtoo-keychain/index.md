@@ -17,23 +17,12 @@ authors:
   - admin
 
 tags:
-  # Core concepts
-  - ssh
-  - ssh-agent
-  - keychain
-  - 1password
-  - 1password-cli
-  # Broader context
   - terminal
-  - productivity
   - security
-  - automation
-  - zsh
   - dotfiles
 
 categories:
-  - terminal
-  - security
+  - Setup
   - level:intermediate
 ---
 
