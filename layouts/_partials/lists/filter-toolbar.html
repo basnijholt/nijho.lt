@@ -1,0 +1,33 @@
+{{- /* Tag buttons, a search box and a sort menu for the items of a [data-filter-root]; filter.js drives them and
+  unhides the toolbar. Takes a dict of:
+  buttons: filter_button entries (name, tag; tag "*" shows everything), counted against the tags of pages
+  default: index of the button pressed at first (default 0)
+  pages:   the pages behind the items
+  noun:    what the items are, for labels ("projects")
+  sort:    sort options in menu order (value, text, label for "sorted by <label>"); value "order" is the page order */ -}}
+<div class="filter-toolbar" data-filter-toolbar hidden>
+  {{- with .buttons }}
+  <div class="filters" role="group" aria-label="Filter {{ $.noun }} by tag">
+    {{- range $i, $b := . }}
+    {{- $tag := cond (eq .tag "*") "*" (lower .tag) }}
+    {{- $n := 0 }}
+    {{- range $.pages }}
+      {{- if or (eq $tag "*") (in (apply (.Params.tags | default slice) "lower" ".") $tag) }}{{ $n = add $n 1 }}{{ end }}
+    {{- end }}
+    <button type="button" class="filter" data-filter="{{ $tag }}" aria-pressed="{{ eq $i ($.default | default 0) }}">{{ .name }}<span class="n">{{ $n }}</span></button>
+    {{- end }}
+  </div>
+  {{- end }}
+  <div class="tools-row">
+    <div class="tools">
+      <label class="field"><span class="sr-only">Search {{ .noun }}</span>{{ partial "ui-icon.html" "search" }}<input type="search" placeholder="Search {{ .noun }}" data-filter-search></label>
+      {{- with .sort }}
+      <label class="field"><span class="sr-only">Sort {{ $.noun }}</span>{{ partial "ui-icon.html" "sort-descending" }}
+        <select data-filter-sort>
+          {{- range . }}<option value="{{ .value }}" data-label="{{ .label }}">{{ .text }}</option>{{ end -}}
+        </select>{{ partial "ui-icon.html" "caret-down" }}</label>
+      {{- end }}
+    </div>
+    <p class="filter-count mono" aria-live="polite" data-filter-count></p>
+  </div>
+</div>

@@ -48,27 +48,3 @@
   path: /post/index.html
   match: article root missing in candidate
   reason: "The post list has no body of its own; the baseline's article root there is the first summary"
-- check: ids
-  path: /index.html
-  match: "missing ID: about"
-  reason: "Temporary: stays until the homepage sections land, then delete it"
-- check: ids
-  path: /index.html
-  match: "missing ID: blog-posts"
-  reason: "Temporary: stays until the homepage sections land, then delete it"
-- check: ids
-  path: /index.html
-  match: "missing ID: contact"
-  reason: "Temporary: stays until the homepage sections land, then delete it"
-- check: ids
-  path: /index.html
-  match: "missing ID: photography"
-  reason: "Temporary: stays until the homepage sections land, then delete it"
-- check: ids
-  path: /index.html
-  match: "missing ID: projects"
-  reason: "Temporary: stays until the homepage sections land, then delete it"
-- check: ids
-  path: /index.html
-  match: "missing ID: publications"
-  reason: "Temporary: stays until the homepage sections land, then delete it"

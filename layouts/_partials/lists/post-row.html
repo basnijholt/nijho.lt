@@ -1,12 +1,16 @@
 {{- /* One entry of a wide post list: date, reading time, title and categories on the left, the full summary and a
-     thumbnail (a thumbnail* image, else the featured image) on the right. */ -}}
+     thumbnail (a thumbnail* image, else the featured image) on the right.
+  Takes the page, or a dict of the page and h, the title's heading level (default 2). */ -}}
+{{- $page := . }}{{ $h := 2 }}
+{{- if reflect.IsMap . }}{{ $page = .page }}{{ $h = .h }}{{ end }}
+{{- with $page }}
 <li class="blog-item">
   <div class="head">
     <p class="post-meta mono">
       {{- if not .Date.IsZero }}<time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>{{ end }}
       {{- if .Params.reading_time }} · {{ .ReadingTime }} min read{{ end -}}
     </p>
-    <h2 class="blog-title"><a class="stretch" href="{{ .RelPermalink }}">{{ .Title | default site.Title }}</a></h2>
+    <h{{ $h }} class="blog-title"><a class="stretch" href="{{ .RelPermalink }}">{{ .Title | default site.Title }}</a></h{{ $h }}>
     {{- with .GetTerms "categories" }}
     <div class="chips">{{ range . }}<a class="chip" href="{{ .RelPermalink }}">{{ partial "functions/title.html" . }}</a>{{ end }}</div>
     {{- end }}
@@ -22,3 +26,4 @@
     {{- end }}{{ end }}
   </div>
 </li>
+{{- end }}

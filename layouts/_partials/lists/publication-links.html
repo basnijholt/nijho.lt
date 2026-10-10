@@ -1,0 +1,18 @@
+{{- /* The links of a publication: preprint, PDF, code, dataset, then front matter links[] (name, url). */ -}}
+{{- $links := slice }}
+{{- with .Params.url_preprint }}{{ $links = $links | append (dict "name" "Preprint" "url" . "icon" "scroll") }}{{ end }}
+{{- with .Params.url_pdf }}{{ $links = $links | append (dict "name" "PDF" "url" . "icon" "file-pdf") }}{{ end }}
+{{- with .Params.url_code }}{{ $links = $links | append (dict "name" "Code" "url" . "icon" "code") }}{{ end }}
+{{- with .Params.url_dataset }}{{ $links = $links | append (dict "name" "Dataset" "url" . "icon" "database") }}{{ end }}
+{{- range .Params.links }}
+  {{- $icon := "link-simple" }}
+  {{- if hasPrefix (lower .name) "arxiv" }}{{ $icon = "scroll" }}{{ else if strings.Contains .url "github.com" }}{{ $icon = "github" }}{{ end }}
+  {{- $links = $links | append (dict "name" .name "url" .url "icon" $icon) }}
+{{- end }}
+{{- with $links }}
+<div class="pub-links">
+  {{- range . }}
+  <a href="{{ .url }}" title="{{ .name }}">{{ if eq .icon "github" }}{{ partial "icon.html" (dict "name" "github" "class" "ico") }}{{ else }}{{ partial "ui-icon.html" .icon }}{{ end }}{{ .name }}</a>
+  {{- end }}
+</div>
+{{- end }}

@@ -1,8 +1,7 @@
 {{ define "main" }}
-  <h1>{{ .Title }}</h1>
-  <ul>
-    {{ range .Pages }}
-      <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
-    {{ end }}
-  </ul>
+{{- /* content/home is a headless bundle: each of its pages is one section, ordered by weight. The section's file
+     name is its ID and names the partial in home/ that renders it. */}}
+{{- range sort (where ((site.GetPage "/home").Resources.ByType "page") "Params.active" "ne" false) "Params.weight" }}
+  {{- partial (printf "home/%s.html" .File.ContentBaseName) . }}
+{{- end }}
 {{ end }}

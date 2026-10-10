@@ -8,7 +8,7 @@
 <link rel="preload" href="/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
 {{ partialCached "head/css.html" . }}
 {{- $scripts := slice "js/theme.js" }}
-{{- if .IsHome }}{{ $scripts = $scripts | append "js/nav.js" }}{{ end }}
+{{- if .IsHome }}{{ $scripts = $scripts | append "js/nav.js" "js/filter.js" }}{{ end }}
 {{- if and .IsPage (eq .Type "post") }}
   {{- $scripts = $scripts | append "js/copy.js" }}
   {{- if gt (len .Fragments.HeadingsMap) 1 }}{{ $scripts = $scripts | append "js/toc.js" }}{{ end }}
