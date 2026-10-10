@@ -166,15 +166,15 @@ export default {
       { family: "GPT", model: "GPT-6 Astra", reasoning: "default", change: 31, lo: 24, hi: 38 },
       { family: "GPT", model: "GPT-6 Luna", reasoning: "default", change: -4, lo: -18, hi: 14 },
       { family: "GPT", model: "GPT-6.1 Sol", reasoning: "default", change: 19, lo: 9, hi: 29 },
-    ].map((d) => ({ ...d, label: narrow ? d.model : `${d.model} (${d.reasoning})` }));
+    ].map((d) => ({ ...d, label: narrow ? `${d.model}\n(${d.reasoning})` : `${d.model} (${d.reasoning})` }));
     return Plot.plot({
       width,
-      height: 30 * data.length + 110,
-      marginLeft: narrow ? 92 : 210,
+      height: (narrow ? 44 : 30) * data.length + 110,
+      marginLeft: narrow ? 136 : 210,
       marginRight: 24,
       marginBottom: 52,
       style: STYLE,
-      x: { domain: [-50, 45], label: "Change in tokens per task with native tools", grid: true, tickFormat: pct, ...X_LABEL },
+      x: { domain: [-50, 45], label: narrow ? "Change with native tools" : "Change in tokens per task with native tools", grid: true, tickFormat: pct, ...X_LABEL },
       y: { label: null, domain: data.map((d) => d.label) },
       color: { domain: ["Claude", "GPT"], range: [COLORS.standardWork, COLORS.whole], legend: true },
       marks: [
@@ -256,8 +256,8 @@ export default {
     const parts = ["System prompt", "Tool definitions"];
     // Tokens each part costs on every request, measured by sending it on its own and reading the reported input tokens.
     const bars = [
-      { model: "Claude Sonnet 5.5", mode: "standard mode", system: 2295, tools: 1292 },
-      { model: "Claude Sonnet 5.5", mode: "minimal mode", system: 152, tools: 363 },
+      { model: "Claude Sonnet 5.5", mode: "standard mode", system: 2295, tools: 1990 },
+      { model: "Claude Sonnet 5.5", mode: "minimal mode", system: 152, tools: 509 },
       { model: "GPT-6 Astra", mode: "standard mode", system: 1463, tools: 867 },
       { model: "GPT-6 Astra", mode: "minimal mode", system: 97, tools: 72 },
     ].map((d) => ({ ...d, label: `${d.model}\n${d.mode}` }));
@@ -272,7 +272,7 @@ export default {
       marginRight: 64,
       marginBottom: 52,
       style: STYLE,
-      x: { domain: [0, 4000], label: "Tokens on every request", grid: true, tickFormat: (d) => `${d / 1000}k`, ...X_LABEL },
+      x: { domain: [0, 4500], label: "Tokens on every request", grid: true, tickFormat: (d) => `${d / 1000}k`, ...X_LABEL },
       y: { domain: bars.map((d) => d.label), label: null, tickSize: 0, padding: 0.25 },
       color: { domain: parts, range: [COLORS.systemPrompt, COLORS.toolDefinitions], legend: true },
       marks: [

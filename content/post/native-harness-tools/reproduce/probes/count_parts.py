@@ -13,8 +13,8 @@ from mindroom.constants import resolve_runtime_paths
 def functions(model, mode):
     out = []
     for t in json.load(open(f"/work/tmp/tools-{model}-{mode}.json")):
-        spec = t.get("function", t)
-        f = Function(name=spec["name"], description=spec.get("description"), parameters=spec.get("parameters") or {"type": "object", "properties": {}})
+        spec = t.get("function", t)  # Anthropic requests keep the schema under input_schema, OpenAI ones under parameters
+        f = Function(name=spec["name"], description=spec.get("description"), parameters=spec.get("parameters") or spec.get("input_schema") or {"type": "object", "properties": {}})
         f.entrypoint = lambda **_: "ok"
         out.append(f)
     return out
