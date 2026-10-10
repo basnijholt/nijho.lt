@@ -1,0 +1,34 @@
+{{- $pages := where (cond .IsHome site.RegularPages .RegularPages) "Kind" "page" }}
+{{- $rfc822 := "Mon, 02 Jan 2006 15:04:05 -0700" }}
+{{- $description := partial "functions/title.html" . | default site.Title }}
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<title>{{ partial "functions/page_title.html" . }}</title>
+<link>{{ .Permalink }}</link>
+{{- with .OutputFormats.Get "rss" }}
+{{ printf "<atom:link href=%q rel=\"self\" type=%q/>" .Permalink .MediaType.Type | safeHTML }}
+{{- end }}
+<description>{{ $description }}</description>
+<generator>Hugo</generator>
+<language>{{ site.Language.Locale }}</language>
+<copyright>{{ replace site.Copyright "{year}" (string now.Year) }}</copyright>
+{{- range first 1 (.RegularPagesRecursive | default .Pages).ByDate.Reverse }}
+  {{- if not .Date.IsZero }}
+<lastBuildDate>{{ .Date.Format $rfc822 }}</lastBuildDate>
+  {{- end }}
+{{- end }}
+{{- with partial "functions/og_image.html" . }}
+<image><url>{{ .url }}</url><title>{{ $description }}</title><link>{{ $.Permalink }}</link></image>
+{{- end }}
+{{- range $pages }}
+<item>
+<title>{{ .Title }}</title>
+<link>{{ .Permalink }}</link>
+<pubDate>{{ .Date.Format $rfc822 }}</pubDate>
+<guid isPermaLink="false">{{ .RelPermalink }}</guid>
+<description>{{ .Content | transform.XMLEscape | safeHTML }}</description>
+</item>
+{{- end }}
+</channel>
+</rss>

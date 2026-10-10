@@ -1,0 +1,37 @@
+{{- $pages := site.RegularPages | union (where (where site.Pages "Section" "authors") "Params.superuser" true) }}
+{{- $index := slice }}
+{{- range $pages }}
+  {{- if or .Draft .Params.private (eq .Params.searchable false) (not .File) }}
+    {{- continue }}
+  {{- end }}
+  {{- $summary := .Params.summary | default .Params.abstract | default "" | markdownify | default .Summary }}
+  {{- $authors := slice }}
+  {{- range .Params.authors }}
+    {{- $profile := site.GetPage (printf "/authors/%s" (urlize .)) }}
+    {{- if and $profile $profile.File }}
+      {{- $authors = $authors | append $profile.Title }}
+    {{- else }}
+      {{- $authors = $authors | append (plainify .) }}
+    {{- end }}
+  {{- end }}
+  {{- $index = $index | append (dict
+    "objectID" .File.UniqueID
+    "date" .Date.UTC.Unix
+    "publishdate" .PublishDate
+    "lastmod" .Lastmod.UTC.Unix
+    "expirydate" .ExpiryDate.UTC.Unix
+    "lang" .Lang
+    "permalink" .Permalink
+    "relpermalink" .RelPermalink
+    "title" .Title
+    "summary" ($summary | plainify | htmlUnescape | chomp)
+    "content" (.Plain | htmlUnescape | truncate 5000)
+    "authors" (cond (gt (len $authors) 0) $authors nil)
+    "kind" .Kind
+    "type" .Type
+    "section" .Section
+    "tags" .Params.tags
+    "categories" .Params.categories
+  ) }}
+{{- end }}
+{{- $index | jsonify }}
