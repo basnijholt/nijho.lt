@@ -1,3 +1,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
+{{- /* Runs before the stylesheet so a pinned theme applies on first paint. */}}
+<script>try{const t=localStorage.getItem("theme");if(t=="light"||t=="dark")document.documentElement.dataset.theme=t}catch{}</script>
+<link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
+{{ partialCached "head/css.html" . }}
+{{- $scripts := slice "js/theme.js" }}
+{{- if .IsHome }}{{ $scripts = $scripts | append "js/nav.js" }}{{ end }}
+{{- range $scripts }}
+  {{- with resources.Get . | js.Build (dict "minify" true "format" "esm") | fingerprint }}
+<script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous"></script>
+  {{- end }}
+{{- end }}

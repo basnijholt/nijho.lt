@@ -1,3 +1,14 @@
 <footer class="site-footer">
-  <p>© {{ now.Year }} {{ site.Title }}</p>
+  <div class="wrap">
+    <p>
+      © {{ now.Year }} {{ site.Title }}. Source code on <a href="https://github.com/basnijholt/nijho.lt/">GitHub</a>
+      and builds on <a href="https://app.netlify.com/sites/nijholt/deploys">Netlify</a>.
+    </p>
+    <p class="links">
+      {{- with site.Home.OutputFormats.Get "rss" }}
+      <a href="{{ .RelPermalink }}">RSS</a>
+      {{- end }}
+      <a href="#top">Back to top</a>
+    </p>
+  </div>
 </footer>

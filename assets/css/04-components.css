@@ -1,0 +1,48 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: var(--bg);
+  font-size: 14.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .15s, transform .1s;
+
+  &:hover {
+    background: var(--surface);
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  color: var(--text-2);
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.5;
+  white-space: nowrap;
+  transition: color .15s, background .15s;
+}
+
+a.chip:hover {
+  background: var(--surface-2);
+  color: var(--accent);
+}

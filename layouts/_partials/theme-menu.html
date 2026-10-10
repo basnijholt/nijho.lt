@@ -1,0 +1,8 @@
+<button class="icon-btn needs-js" type="button" popovertarget="theme-menu" aria-label="Color theme">
+  {{- partial "ui-icon.html" "theme" -}}
+</button>
+<div id="theme-menu" popover role="group" aria-label="Color theme">
+  <button type="button" data-theme-choice="light" aria-pressed="false">{{ partial "ui-icon.html" "sun" }}Light</button>
+  <button type="button" data-theme-choice="dark" aria-pressed="false">{{ partial "ui-icon.html" "moon" }}Dark</button>
+  <button type="button" data-theme-choice="auto" aria-pressed="true">{{ partial "ui-icon.html" "auto" }}Automatic</button>
+</div>
