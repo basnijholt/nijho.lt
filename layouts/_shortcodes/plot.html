@@ -1,10 +1,9 @@
-{{/* Observable Plot chart rendered from an ES module in the page bundle.
+{{- /* Observable Plot chart rendered from an ES module in the page bundle.
      Usage:
        {{< plot name="costPerRun" caption="Some *markdown* caption" >}}
        {{< plot name="costPerRun" src="charts.js" >}}   -> custom module (default: plots.js)
      The module must `export default { costPerRun: ({Plot, width}) => Plot.plot({...}) }`.
-     Charts re-render when their container width changes.
-*/}}
+     Charts re-render when their container width changes. */ -}}
 {{- $src := .Get "src" | default "plots.js" -}}
 {{- $module := .Page.Resources.Get $src -}}
 {{- if not $module -}}

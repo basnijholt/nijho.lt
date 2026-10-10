@@ -1,6 +1,6 @@
 {{- /* Inline SVG for an icon in assets/icons, e.g. partial "icon.html" (dict "name" "github" "class" "big"). */ -}}
 {{- with resources.Get (printf "icons/%s.svg" .name) -}}
-{{- $class := trim (printf "icon %s" ($.class | default "")) " " -}}
+{{- $class := trim (printf "ico %s" ($.class | default "")) " " -}}
 {{- replace (trim .Content "\n") "<svg " (printf `<svg class="%s" aria-hidden="true" focusable="false" ` $class) 1 | safeHTML -}}
 {{- else -}}
 {{- errorf "icon.html: no SVG for icon %q in assets/icons/" .name -}}

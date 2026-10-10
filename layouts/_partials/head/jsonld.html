@@ -1,4 +1,4 @@
-{{- $author := site.GetPage "/authors/admin" }}
+{{- $author := partial "functions/site_author.html" . }}
 {{- $time := "2006-01-02T15:04:05Z07:00" }}
 {{- $schemas := slice }}
 {{- if .IsHome }}

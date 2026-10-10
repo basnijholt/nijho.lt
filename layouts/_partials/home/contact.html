@@ -23,7 +23,7 @@
           {{- $value := .name }}
           {{- with findRESubmatch `^([^:]+):\s+(.+)$` .name 1 }}{{ $label = index . 0 1 }}{{ $value = index . 0 2 }}{{ end }}
           {{- $wide := ne $value .name }}
-        <li{{ if $wide }} class="wide"{{ end }}>{{ partial "icon.html" (dict "name" .icon "class" "ico") }}<div><span class="k">{{ $label }}</span><a class="v{{ if $wide }} fp{{ end }}" href="{{ .link }}">{{ $value }}</a></div></li>
+        <li{{ if $wide }} class="wide"{{ end }}>{{ partial "icon.html" (dict "name" .icon) }}<div><span class="k">{{ $label }}</span><a class="v{{ if $wide }} fp{{ end }}" href="{{ .link }}">{{ $value }}</a></div></li>
         {{- end }}
       </ul>
     </div>

@@ -2,7 +2,7 @@
   when the previous item has the same year. Lists the first 6 authors; when the site author is among the rest,
   the count of the rest names them. */ -}}
 {{- $p := .page }}
-{{- $me := (site.GetPage "/authors/admin").Title }}
+{{- $me := (partial "functions/site_author.html" .).Title }}
 {{- $authors := $p.Params.authors | default slice }}
 {{- $shown := slice }}
 {{- range first 6 $authors }}
@@ -20,9 +20,8 @@
         {{- delimit $shown ", " " and " | safeHTML }}
       {{- end -}}
     </p>
-    {{- with $p.Params.publication | default $p.Params.publication_short }}
-    {{- /* "In *Journal* (J.)." reads as a venue without the leading "In " and the final period. */}}
-    <p class="pub-venue">{{ . | replaceRE `^In\s+` "" | replaceRE `\.$` "" | markdownify }}, {{ $p.Date.Format "January 2006" }}</p>
+    {{- with partial "functions/venue.html" $p }}
+    <p class="pub-venue">{{ . | markdownify }}, {{ $p.Date.Format "January 2006" }}</p>
     {{- end }}
   </div>
   {{ partial "lists/publication-links.html" $p }}

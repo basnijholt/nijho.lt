@@ -1,6 +1,6 @@
 {{- $published := .PublishDate | default .Date }}
 <div class="byline">
-  {{- with site.GetPage "/authors/admin" }}
+  {{- with partial "functions/site_author.html" . }}
   <a class="who" href="{{ .RelPermalink }}">
     {{- with (.Resources.ByType "image").GetMatch "avatar*" }}{{ with .Fill "68x68 Center webp" }}<img src="{{ .RelPermalink }}" width="34" height="34" alt="">{{ end }}{{ end -}}
     {{ .Title }}</a>

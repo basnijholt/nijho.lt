@@ -1,3 +1,4 @@
+{{- /* A highlighted note: {{% callout note %}} or {{% callout warning %}} around Markdown. Styles in 05-prose.css (.callout). */ -}}
 {{- $kind := .Get 0 }}
 {{- $icon := index (dict "note" "info" "warning" "warning") $kind }}
 {{- if not $icon }}

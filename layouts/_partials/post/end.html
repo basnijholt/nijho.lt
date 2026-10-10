@@ -1,0 +1,13 @@
+{{- /* The end of a post, project or publication page: tags, share and edit links, and on posts the author card. */ -}}
+<footer class="post-end">
+  {{- with .GetTerms "tags" }}
+  <div class="tags"><span class="label">Tags</span>{{ range . }}<a class="chip" href="{{ .RelPermalink }}">{{ partial "functions/title.html" . }}</a>{{ end }}</div>
+  {{- end }}
+  <div class="row">
+    {{ partial "post/share.html" . }}
+    {{ partial "post/edit-link.html" . }}
+  </div>
+  {{- if eq .Type "post" }}
+  {{ partial "post/author-card.html" . }}
+  {{- end }}
+</footer>

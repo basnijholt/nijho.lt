@@ -18,7 +18,10 @@ let active = -1;
 
 const load = () => {
   index ??= fetch("/index.json")
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) throw new Error(`index.json: ${response.status}`);
+      return response.json();
+    })
     .then((pages) =>
       pages.map((page) => ({
         page,
@@ -26,7 +29,12 @@ const load = () => {
           fields.map(([key]) => [key, [page[key] ?? ""].flat().join(" ").toLowerCase()]),
         ),
       })),
-    );
+    )
+    .catch((error) => {
+      // Forget the failure, so the next search fetches the index again.
+      index = undefined;
+      throw error;
+    });
   return index;
 };
 
@@ -34,7 +42,12 @@ const search = async () => {
   const words = input.value.toLowerCase().split(/\s+/).filter(Boolean);
   if (!words.length) return show([], "");
   status.textContent = "Searching…";
-  const pages = await load();
+  let pages;
+  try {
+    pages = await load();
+  } catch {
+    return show([], "Search is unavailable right now. Try again in a moment.");
+  }
   const results = [];
   for (const { page, text } of pages) {
     let score = 0;
@@ -91,7 +104,8 @@ const open = (query) => {
   if (!dialog.open) dialog.showModal();
   input.focus();
   input.select();
-  load();
+  // Fetch the index while the reader types; a failure shows when the first search needs it.
+  load().catch(() => {});
   search();
 };
 

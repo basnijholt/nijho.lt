@@ -1,0 +1,3 @@
+{{- /* Returns whether Hugo can resize an image without losing anything: not an SVG, which it cannot process, and not
+  a GIF, whose animation it would drop. */ -}}
+{{- return (and (reflect.IsImageResourceProcessable .) (ne (path.Ext .Name | lower) ".gif")) -}}

@@ -13,14 +13,6 @@
   </header>
   {{ partial "post/featured.html" . }}
   <div class="prose">{{ .Content }}</div>
-  <footer class="post-end">
-    {{ with .GetTerms "tags" }}
-    <div class="tags"><span class="label">Tags</span>{{ range . }}<a class="chip" href="{{ .RelPermalink }}">{{ partial "functions/title.html" . }}</a>{{ end }}</div>
-    {{ end }}
-    <div class="row">
-      {{ partial "post/share.html" . }}
-      {{ partial "post/edit-link.html" . }}
-    </div>
-  </footer>
+  {{ partial "post/end.html" . }}
 </article>
 {{ end }}

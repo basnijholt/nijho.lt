@@ -13,9 +13,12 @@
   <div class="plate fill"><img src="{{ .RelPermalink }}" alt="" loading="lazy"></div>
   {{- else with $image }}
     {{- $shown := . }}
-    {{- if ne (path.Ext .Name | lower) ".gif" }}{{ $shown = .Fit "600x400 webp" }}{{ end }}
-    {{- $logo := ge (div (float .Height) .Width) 0.9 }}
-  <div class="plate {{ cond $logo "logo" "fill" }}"><img src="{{ $shown.RelPermalink }}" width="{{ $shown.Width }}" height="{{ $shown.Height }}" alt="" loading="lazy"></div>
+    {{- if partial "functions/resizable.html" . }}{{ $shown = .Fit "600x400 webp" }}{{ end }}
+    {{- if reflect.IsImageResourceProcessable . }}
+  <div class="plate {{ cond (ge (div (float .Height) .Width) 0.9) "logo" "fill" }}"><img src="{{ $shown.RelPermalink }}" width="{{ $shown.Width }}" height="{{ $shown.Height }}" alt="" loading="lazy"></div>
+    {{- else }}
+  <div class="plate fill"><img src="{{ $shown.RelPermalink }}" alt="" loading="lazy"></div>
+    {{- end }}
   {{- else }}
   <div class="plate empty" aria-hidden="true">
     {{- with index (findRE `\p{So}\x{FE0F}?` (plainify $summary) 1) 0 }}<span class="emo">{{ . }}</span>{{ end }}

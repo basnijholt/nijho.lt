@@ -1,0 +1,3 @@
+{{- /* Returns a publication's venue as Markdown: publication, else publication_short, without the leading "In " and
+  the final period that the front matter writes ("In *Journal* (J.)."). */ -}}
+{{- return (.Params.publication | default .Params.publication_short | default "" | replaceRE `^In\s+` "" | replaceRE `\.$` "") -}}

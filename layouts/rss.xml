@@ -23,7 +23,7 @@
 {{- end }}
 {{- range $pages }}
 <item>
-<title>{{ .Title }}</title>
+<title>{{ partial "functions/title.html" . }}</title>
 <link>{{ .Permalink }}</link>
 <pubDate>{{ .Date.Format $rfc822 }}</pubDate>
 <guid isPermaLink="false">{{ .RelPermalink }}</guid>

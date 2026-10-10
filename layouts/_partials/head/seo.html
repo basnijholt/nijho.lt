@@ -11,7 +11,7 @@
 {{- $locale := split site.Language.Locale "-" }}
 <title>{{ $title }}</title>
 <meta name="description" content="{{ $description }}">
-<meta name="author" content="{{ (site.GetPage "/authors/admin").Title }}">
+<meta name="author" content="{{ (partial "functions/site_author.html" .).Title }}">
 {{- if or .Params.private (not hugo.IsProduction) }}
 <meta name="robots" content="noindex">
 {{- end }}
@@ -21,7 +21,7 @@
 <link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ $title }}">
 {{- end }}
 {{- /* Mastodon verifies the profile links in the author's social list through rel="me". */}}
-{{- range (site.GetPage "/authors/admin").Params.social }}{{ if eq .icon "mastodon" }}
+{{- range (partial "functions/site_author.html" .).Params.social }}{{ if eq .icon "mastodon" }}
 <link rel="me" href="{{ .link }}">
 {{- end }}{{ end }}
 <meta property="og:type" content="{{ $ogType }}">
