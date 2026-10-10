@@ -1,0 +1,14 @@
+{
+ "_doc": "MindRoom shell instance: one MindRoom agent with worker-routed shell/file tools behind MindRoom's OpenAI-compatible API (standalone, Docker worker backend), frozen policy gpt-6-luna through the Codex ChatGPT login. Evolve set = 36 terminal tasks in 12 families (3 each), held-out = 12 fresh instances (1 per family); each task is graded by a hidden check in a throwaway network-less container. S = fraction of trials that pass. Search roles run gpt-6-astra through the same Codex login (RRSI_LLM_BACKEND=codex). delta is null so it is calibrated from repeated base evaluations.",
+ "T": 6, "k": 4, "m": 2,
+ "b_min": 1, "b_max": 3, "w": 2, "m_draft": 1,
+ "delta": null, "delta_z": 2.0,
+ "beta0": 0.10, "beta1": 40.0,
+ "w_s": 100.0, "w_c": 15.0, "w_n": 0.5,
+ "n_prune": 3,
+ "repair_rounds": 2, "invalid_missing_frac": 0.1,
+ "n_fail_traces": 16, "n_success_traces": 4, "eval_parallel": 2,
+ "proposer_model": "gpt-6-astra", "analyst_model": "gpt-6-astra", "critic_model": "gpt-6-astra",
+ "concurrency": 5,
+ "worker_image": "mindroom-rrsi-worker:dev"
+}

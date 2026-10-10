@@ -65,6 +65,48 @@ export default {
     });
   },
 
+  generations: ({ Plot, width }) => {
+    const narrow = width < 600;
+    // Change in tokens per task with native tools (shell and file tools) instead of MindRoom's, with 95% CIs.
+    // Each model ran at its provider's default reasoning setting.
+    const data = [
+      { family: "Claude", model: "Opus 4.7", reasoning: "no thinking", change: -22, lo: -27, hi: -16 },
+      { family: "Claude", model: "Opus 4.8", reasoning: "no thinking", change: -26, lo: -34, hi: -17 },
+      { family: "Claude", model: "Sonnet 5", reasoning: "adaptive thinking", change: -36, lo: -46, hi: -22 },
+      { family: "Claude", model: "Opus 5.5", reasoning: "adaptive thinking", change: -9, lo: -13, hi: -4 },
+      { family: "Claude", model: "Sonnet 5.5", reasoning: "adaptive thinking", change: -9, lo: -15, hi: -1 },
+      { family: "GPT", model: "GPT-5.5", reasoning: "default", change: -4, lo: -13, hi: 7 },
+      { family: "GPT", model: "GPT-5.6 Sol", reasoning: "default", change: -15, lo: -23, hi: -5 },
+      { family: "GPT", model: "GPT-6 Astra", reasoning: "default", change: 31, lo: 24, hi: 38 },
+      { family: "GPT", model: "GPT-6 Luna", reasoning: "default", change: -4, lo: -18, hi: 14 },
+      { family: "GPT", model: "GPT-6.1 Sol", reasoning: "default", change: 19, lo: 9, hi: 29 },
+    ].map((d) => ({ ...d, label: narrow ? d.model : `${d.model} (${d.reasoning})` }));
+    return Plot.plot({
+      width,
+      height: 30 * data.length + 110,
+      marginLeft: narrow ? 92 : 210,
+      marginRight: 24,
+      marginBottom: 52,
+      style: STYLE,
+      x: { domain: [-50, 45], label: "Change in tokens per task with native tools", grid: true, tickFormat: pct, ...X_LABEL },
+      y: { label: null, domain: data.map((d) => d.label) },
+      color: { domain: ["Claude", "GPT"], range: [COLORS.standardWork, COLORS.whole], legend: true },
+      marks: [
+        Plot.ruleX([0], { stroke: "currentColor", strokeOpacity: 0.6 }),
+        Plot.ruleY(data, { y: "label", x1: "lo", x2: "hi", stroke: "family", strokeWidth: 3 }),
+        Plot.dot(data, { y: "label", x: "change", fill: "family", r: 5 }),
+        Plot.tip(
+          data,
+          Plot.pointer({
+            y: "label",
+            x: "change",
+            title: (d) => `${d.model}, ${d.reasoning}\n${pct(d.change)} tokens per task\n95% CI ${pct(d.lo)} to ${pct(d.hi)}`,
+          })
+        ),
+      ],
+    });
+  },
+
   minimalSplit: ({ Plot, width }) => {
     const narrow = width < 600;
     const arms = ["Standard mode", "Minimal mode"];

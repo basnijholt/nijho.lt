@@ -1,0 +1,7 @@
+# The agent under test; the drivers rewrite `tools` per configuration (shell + coding, or shell only).
+role: Terminal assistant that completes tasks in a Linux shell.
+instructions:
+  - Complete the user's task.
+tools:
+  - shell
+  - coding

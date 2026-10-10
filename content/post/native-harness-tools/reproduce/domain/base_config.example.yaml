@@ -1,0 +1,14 @@
+# The drivers write one of these per configuration; the adapter merges harness/agent.yaml in as agents.coder.
+models:
+  default:
+    provider: codex            # or vertexai_claude
+    id: gpt-6-astra
+    tool_dialect: mindroom     # mindroom, claude, or codex (PR #2766 only; omit on main)
+    # extra_kwargs:            # only in the effort runs
+    #   reasoning_effort: low  # GPT; Claude 5.5 uses output_config: {effort: low}
+router:
+  model: default
+memory:
+  backend: none
+defaults:
+  tools: []

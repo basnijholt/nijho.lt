@@ -1,0 +1,26 @@
+diff --git a/src/mindroom/tool_dialects/claude.py b/src/mindroom/tool_dialects/claude.py
+index 03b3fc18b..1e1d02112 100644
+--- a/src/mindroom/tool_dialects/claude.py
++++ b/src/mindroom/tool_dialects/claude.py
+@@ -26,7 +26,7 @@ from mindroom.tools.shell import WORKING_METHOD_NOTE, WORKSPACE_CWD_NOTE
+ 
+ def _bash_to_canonical(arguments: dict[str, Any]) -> dict[str, Any]:
+     # Like Claude Code, output arrives whole up to the byte cap, which notes any cut, not as the last 100 lines.
+-    canonical: dict[str, Any] = {"args": wire_argument(arguments, "Bash", "command"), "tail": MAX_OUTPUT_LINES}
++    canonical: dict[str, Any] = {"args": wire_argument(arguments, "Bash", "command"), "tail": 100}
+     if wire_argument(arguments, "Bash", "run_in_background", kind=bool, required=False):
+         canonical["timeout"] = 0
+     elif (timeout := wire_argument(arguments, "Bash", "timeout", kind=float, required=False)) is not None:
+diff --git a/src/mindroom/tool_dialects/codex.py b/src/mindroom/tool_dialects/codex.py
+index c490f78f0..c247e5172 100644
+--- a/src/mindroom/tool_dialects/codex.py
++++ b/src/mindroom/tool_dialects/codex.py
+@@ -56,7 +56,7 @@ eof_line: "*** End of File" LF
+ 
+ def _exec_to_canonical(arguments: dict[str, Any]) -> dict[str, Any]:
+     # Like Codex, output arrives whole up to the byte cap, which notes any cut, so max_output_tokens is not forwarded.
+-    canonical: dict[str, Any] = {"args": wire_argument(arguments, "exec_command", "cmd"), "tail": MAX_OUTPUT_LINES}
++    canonical: dict[str, Any] = {"args": wire_argument(arguments, "exec_command", "cmd"), "tail": 100}
+     if (workdir := wire_argument(arguments, "exec_command", "workdir", required=False)) is not None:
+         canonical["workdir"] = workdir
+     minimum, default, maximum = _YIELD_MS
