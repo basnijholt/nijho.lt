@@ -127,3 +127,12 @@ uv run --group browser python browser_check.py [BUILD_DIR] [--screenshots OUT_DI
 Serves a build (by default, a fresh build of the working tree with `HUGO_BIN`) and checks it in the system Chromium: the theme menu, search, the project filters, console errors, axe accessibility in light and dark, the weight of a plain post, the homepage without JavaScript, anchors under the sticky header, the header layout and keyboard focus.
 Exits 1 if a check fails.
 `--screenshots` also saves the key pages in light and dark at 1440 and 390 px wide; with `--no-checks` it only does that, which works for a baseline build too.
+
+## Contact map
+
+```bash
+uv run --with pillow python contact_map.py [--zoom 10]
+```
+
+Draws `assets/media/map.webp`, the homepage's contact map, from OpenStreetMap tiles centered on `content.coordinates` in `content/home/contact.md`.
+The page puts its marker at the center of the image, so run this after changing the coordinates.

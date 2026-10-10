@@ -2,12 +2,14 @@
 
     uv run --group browser python browser_check.py [BUILD_DIR] [--screenshots OUT_DIR [--no-checks]]
 
-Without BUILD_DIR it builds the working tree with $HUGO_BIN first. Every check runs, and the script exits non-zero
-when any of them fails. --screenshots also writes the review screenshot set (key pages, light and dark, 1440 and
-390 px wide) to OUT_DIR; with --no-checks it only does that, for example for a baseline build.
+Without BUILD_DIR it builds the working tree with $HUGO_BIN first. $CHROMIUM overrides the Chromium binary. Every
+check runs, and the script exits non-zero when any of them fails. --screenshots also writes the review screenshot
+set (key pages, light and dark, 1440 and 390 px wide) to OUT_DIR; with --no-checks it only does that, for example
+for a baseline build.
 """
 
 import argparse
+import os
 import functools
 import gzip
 import http.server
@@ -22,7 +24,7 @@ from playwright.sync_api import Browser, Page, sync_playwright
 
 from parity.build import build_site
 
-CHROMIUM = "/run/current-system/sw/bin/chromium"
+CHROMIUM = os.environ.get("CHROMIUM", "/run/current-system/sw/bin/chromium")
 POST = "/post/self-hosting-ai-is-not-cheaper/"
 # A long post without charts, diagrams, GIFs or videos, for the page-weight budget.
 PLAIN_POST = "/post/agentic-coding/"
@@ -50,7 +52,6 @@ SCREENSHOTS = {
     "404": "/404.html",
     "search": "/?q=zfs",
 }
-NAV_LINKS = 6
 
 CHECKS: list[Callable[[Browser, str], None]] = []
 
@@ -180,8 +181,13 @@ def post_page_budget(browser, base):
 @check
 def no_js(browser, base):
     p = page(browser, base, java_script_enabled=False, color_scheme="dark")
-    visible = p.evaluate("[...document.querySelectorAll('#projects article.proj')].filter(c => c.getClientRects().length).length")
-    assert visible == 51, visible
+    visible, total = p.evaluate(
+        """() => {
+          const cards = [...document.querySelectorAll('#projects article.proj')];
+          return [cards.filter(c => c.getClientRects().length).length, cards.length];
+        }"""
+    )
+    assert total and visible == total, (visible, total)
     assert not p.evaluate("document.querySelector('[data-filter-toolbar]').getClientRects().length")
     assert p.evaluate("getComputedStyle(document.body).backgroundColor") == "rgb(20, 20, 19)"
     p.click('#site-menu a[href="/#publications"]')
@@ -244,15 +250,17 @@ def header_height_and_single_line_nav(browser, base):
         p = page(browser, base, viewport={"width": width, "height": 900})
         assert p.eval_on_selector(".site-header", "h => h.offsetHeight") <= 72
         tops = p.eval_on_selector_all("#site-menu a", "links => links.map(a => a.offsetTop)")
-        assert len(tops) == NAV_LINKS and len(set(tops)) == 1, (width, tops)
+        assert tops and len(set(tops)) == 1, (width, tops)
         p.context.close()
 
 
 @check
 def keyboard_reaches_nav_search_and_theme(browser, base):
     p = page(browser, base)
+    menu = p.eval_on_selector_all("#site-menu a", "links => links.map(a => a.textContent.trim())")
+    header = ["Skip to content", p.text_content(".site-header .brand").strip(), *menu]
     reached = []
-    for _ in range(12):
+    for _ in range(len(header) + 2):
         p.keyboard.press("Tab")
         reached.append(
             p.evaluate(
@@ -264,7 +272,6 @@ def keyboard_reaches_nav_search_and_theme(browser, base):
             )
         )
     names = [name for _, name, _ in reached]
-    header = ["Skip to content", "Bas Nijholt", "Home", "Blog", "Projects", "Photography", "Publications", "Contact"]
     assert names[: len(header) + 2] == [*header, "Search", "Color theme"], names
     assert all(visible for _, _, visible in reached[: len(header) + 2]), reached
 

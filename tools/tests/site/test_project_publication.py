@@ -48,7 +48,8 @@ def test_publication_authors_truncated_and_linked(site):
     assert authors[0]["href"] == "/authors/morteza-aghaee/"
     assert authors[5]["href"] == "/authors/andrey-e.-antipov/"
     assert all(site.resolves(a["href"]) for a in authors)
-    assert soup.select_one(".pub-authors").get_text(" ", strip=True).endswith("and 142 more")
+    total = len(published("publication")["majorana-fusion"]["authors"])
+    assert soup.select_one(".pub-authors").get_text(" ", strip=True).endswith(f"and {total - 20} more")
     assert soup.select_one(".byline").get_text(" ", strip=True).startswith("February 2025")
     assert soup.select_one(".abstract p").get_text().startswith("The fusion of non-Abelian anyons")
     facts = {dt.get_text(strip=True): dd for dt, dd in zip(soup.select(".pub-facts dt"), soup.select(".pub-facts dd"))}

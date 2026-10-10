@@ -7,9 +7,13 @@ marketing:
     twitter: 'basnijholt'
   analytics:
     google_analytics: 'G-B50P3BHJ6C'
+    # Plausible's script for this site.
+    plausible: 'https://plausible.nijho.lt/js/pa-ylHri3AS4w8PLULPjHH4G.js'
 
 features:
-  # "Edit this page" links on posts.
+  # The footer's link to the Netlify builds.
+  deploys: 'https://app.netlify.com/sites/nijholt/deploys'
+  # "Edit this page" links on posts, and the footer's link to the source.
   repository:
     url: 'https://github.com/basnijholt/nijho.lt'
     content_dir: 'content'

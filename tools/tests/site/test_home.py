@@ -23,6 +23,14 @@ def published(section: str) -> list[dict]:
     return [fm for fm in pages if not fm.get("draft")]
 
 
+def section(name: str) -> dict:
+    """The front matter of a homepage section in content/home."""
+    return front_matter(CONTENT / "home" / f"{name}.md")
+
+
+AUTHOR = front_matter(CONTENT / "authors/admin/_index.md")
+
+
 def cards(soup) -> list:
     return soup.select("#projects article.proj")
 
@@ -31,15 +39,16 @@ def test_home_section_ids_in_order(site):
     widgets = [(front_matter(f)["weight"], f.stem) for f in (CONTENT / "home").glob("*.md") if f.stem != "index"]
     ids = [s["id"] for s in site.soup(HOME).select("main > section[id]")]
     assert ids == [stem for _, stem in sorted(widgets)]
-    assert ids == ["about", "blog-posts", "projects", "photography", "publications", "contact"]
 
 
 def test_home_counts(site):
     soup = site.soup(HOME)
-    assert len(soup.select("#blog-posts ul.w1 > li")) == 10
-    assert len(cards(soup)) == len(published("project")) == 51
-    assert len(soup.select("#publications ol.pubs > li")) == len(published("publication")) == 15
-    assert len(soup.select("#photography .photo-grid a img")) == 9
+    assert len(soup.select("#blog-posts ul.w1 > li")) == section("blog-posts")["content"]["count"]
+    assert len(cards(soup)) == len(published("project"))
+    assert len(soup.select("#publications ol.pubs > li")) == len(published("publication"))
+    grid = re.search(r"\{\{< photo-grid >\}\}(.*?)\{\{< /photo-grid >\}\}", (CONTENT / "home/photography.md").read_text(), re.S)
+    photos = [line for line in grid.group(1).splitlines() if "|" in line]
+    assert len(soup.select("#photography .photo-grid a img")) == len(photos) > 0
 
 
 def test_home_blog_rows_are_the_newest_posts(site):
@@ -50,41 +59,33 @@ def test_home_blog_rows_are_the_newest_posts(site):
         reverse=True,
     )
     assert [a for _, a in newest] == soup.select("#blog-posts .post-meta time")
-    assert soup.select_one('#blog-posts a.more[href="/post/"]').get_text(strip=True) == "See all blog posts"
-    assert soup.select_one("#blog-posts .sub").get_text(strip=True) == "Sparse scribblings on a variety of topics"
+    blog = section("blog-posts")
+    more = soup.select_one(f'#blog-posts a.more[href="/{blog["content"]["archive"]["link"]}"]')
+    assert more.get_text(strip=True) == blog["content"]["archive"]["text"]
+    assert soup.select_one("#blog-posts .sub").get_text(strip=True) == blog["subtitle"]
 
 
 def test_home_intro(site):
-    author = front_matter(CONTENT / "authors/admin/_index.md")
-    organization = author["organizations"][0]
+    organization = AUTHOR["organizations"][0]
     intro = site.soup(HOME).select_one("section#about")
-    assert intro.select_one("h1").get_text(strip=True) == "Bas Nijholt"
-    assert intro.select_one(".role").get_text(" ", strip=True) == f"{author['role']} at {organization['name']}"
+    assert intro.select_one("h1").get_text(strip=True) == AUTHOR["title"]
+    assert intro.select_one(".role").get_text(" ", strip=True) == f"{AUTHOR['role']} at {organization['name']}"
     assert intro.select_one(f'.role a[href="{organization["url"]}"]')
     avatar = intro.select_one("img.avatar")
     assert avatar["src"].endswith(".webp") and avatar.get("loading") != "lazy"
-    assert intro.select_one(".bio").get_text(" ", strip=True).startswith("Hi, my name is Bas.")
-    assert len(intro.select(".social a")) == 7
-    assert intro.select_one('.social a[href="/#contact"]')
+    body = (CONTENT / "authors/admin/_index.md").read_text(encoding="utf-8").split("---", 2)[2]
+    assert intro.select_one(".bio").get_text(" ", strip=True).startswith(" ".join(body.split()[:4]))
+    links = [s["link"] if not s["link"].startswith("#") else f"/{s['link']}" for s in AUTHOR["social"]]
+    assert [a["href"] for a in intro.select(".social a")] == links
 
 
 def test_home_interests_and_education(site):
     intro = site.soup(HOME).select_one("section#about")
     interests = intro.select(".interests li")
-    assert [li.get_text(strip=True) for li in interests] == [
-        "Quantum Mechanics",
-        "Landscape photography",
-        "Open-source software",
-        "Hiking in the mountains",
-        "Blockchain technology",
-        "Home automation",
-        "Artificial Intelligence",
-    ]
+    assert [li.get_text(strip=True) for li in interests] == [re.sub(r"<[^>]+>", "", i).strip() for i in AUTHOR["interests"]]
     assert all(li.select_one("em.fa-fw") for li in interests)
     assert [li.get_text(" ", strip=True) for li in intro.select(".edu li")] == [
-        "2020 PhD in computational Quantum Mechanics TU Delft",
-        "2015 MSc in Applied Physics TU Delft",
-        "2012 BSc in Applied Physics TU Delft",
+        f"{c['year']} {c['course']} {c['institution']}" for c in AUTHOR["education"]["courses"]
     ]
 
 
@@ -126,8 +127,9 @@ def test_project_toolbar(site):
     toolbar = soup.select_one("#projects [data-filter-toolbar]")
     assert toolbar.has_attr("hidden")
     buttons = {b["data-filter"]: int(b.select_one(".n").get_text()) for b in toolbar.select("button[data-filter]")}
-    assert list(buttons) == ["*", "python", "ai", "homelab", "home automation", "education", "parallel computing"]
-    assert buttons["*"] == 51
+    configured = section("projects")["content"]["filter_button"]
+    assert list(buttons) == [b["tag"] if b["tag"] == "*" else b["tag"].lower() for b in configured]
+    assert buttons["*"] == len(published("project"))
     tagged = [c for c in cards(soup) if "home automation" in c["data-tags"].split(",")]
     assert buttons["home automation"] == len(tagged) > 0
     assert toolbar.select_one("input[type=search][data-filter-search]")
@@ -162,17 +164,23 @@ def test_publications(site):
 
 
 def test_contact(site):
+    data = section("contact")["content"]
+    place = f"{data['address']['city']}, {data['address']['region']}"
     contact = site.soup(HOME).select_one("section#contact")
-    assert contact.select_one('a.email[href="mailto:bas@nijho.lt"]').get_text(strip=True) == "bas@nijho.lt"
+    assert contact.select_one(f'a.email[href="mailto:{data["email"]}"]').get_text(strip=True) == data["email"]
     channels = {li.select_one(".k").get_text(strip=True): li.select_one(".v") for li in contact.select(".channels li")}
-    assert list(channels) == ["Location", "Directions", "PGP key", "Matrix", "Telegram", "Twitter", "GitHub"]
-    assert channels["Location"].get_text(strip=True) == "Kirkland, Washington"
-    assert channels["PGP key"]["href"] == "/bas.asc"
-    assert channels["PGP key"].get_text(strip=True) == "A40D B603 2FCB 6B54 B570 8D53 82C7 7BBB A474 3E31"
-    assert channels["GitHub"]["href"] == "https://github.com/basnijholt"
+    assert list(channels)[:2] == ["Location", "Directions"]
+    assert channels["Location"].get_text(strip=True) == place
+    assert channels["Directions"].get_text(strip=True) == data["directions"]
+    assert [v["href"] for v in list(channels.values())[2:]] == [link["link"] for link in data["contact_links"]]
+    pgp = next(link for link in data["contact_links"] if link["name"].startswith("PGP key: "))
+    assert channels["PGP key"].get_text(strip=True) == pgp["name"].removeprefix("PGP key: ")
+    lat, lon = data["coordinates"]["latitude"], data["coordinates"]["longitude"]
     card = contact.select_one("a.map-card")
-    assert card["href"] == "https://www.openstreetmap.org/?mlat=47.6769&mlon=-122.2060#map=12/47.6769/-122.2060"
-    assert card.select_one("img")["src"].endswith(".webp")
+    assert card["href"] == f"https://www.openstreetmap.org/?mlat={lat}&mlon={lon}#map=12/{lat}/{lon}"
+    image = card.select_one("img")
+    assert re.fullmatch(r"/media/map(_hu_[0-9a-f]+)?\.webp", image["src"]), image["src"]
+    assert image["alt"] == f"Map of the area around {place}, with a marker on it"
 
 
 def test_home_weight_under_2mb(site):
@@ -199,7 +207,7 @@ def test_build_survives_github_api_failure(repo_root, tmp_path):
     env = {"HUGO_SECURITY_HTTP_URLS": "^none$", "HUGO_CACHEDIR": str(tmp_path / "cache")}
     build = Build(build_site(repo_root, tmp_path / "public", hugo=hugo, env=env))
     home = cards(build.soup(HOME))
-    assert len(home) == 51
+    assert len(home) == len(published("project"))
     assert not [c for c in home if c.select_one(".stars")]
     dates = [int(c["data-date"]) for c in home]
     assert dates == sorted(dates, reverse=True)

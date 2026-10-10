@@ -1,6 +1,6 @@
 {{- /* Contact: the email address, location, directions and contact_links (icon, name, link; a name "Label: value"
   shows Label above value, else the icon names the channel), and a map that opens OpenStreetMap at the coordinates.
-  The map image is assets/media/map-kirkland.webp. */ -}}
+  The map image is assets/media/map.webp, drawn by tools/contact_map.py around content.coordinates. */ -}}
 {{- $c := .Params.content }}
 {{- $brands := dict "github" "GitHub" }}
 {{- $place := delimit (slice $c.address.city $c.address.region) ", " }}
@@ -30,8 +30,8 @@
     {{- with $c.coordinates }}
     {{- $osm := printf "https://www.openstreetmap.org/?mlat=%s&mlon=%s#map=12/%s/%s" .latitude .longitude .latitude .longitude }}
     <a class="map-card" href="{{ $osm | safeURL }}" aria-label="{{ $place }} on OpenStreetMap">
-      {{- with resources.Get "media/map-kirkland.webp" }}
-      <img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" loading="lazy" alt="Map of the Seattle area with a marker on {{ $place }}">
+      {{- with resources.Get "media/map.webp" }}
+      <img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" loading="lazy" alt="Map of the area around {{ $place }}, with a marker on it">
       {{- end }}
       <span class="pin" aria-hidden="true"></span>
       <span class="osm">&copy; OpenStreetMap contributors</span>

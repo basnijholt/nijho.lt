@@ -20,7 +20,10 @@
 {{- with .OutputFormats.Get "rss" }}
 <link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ $title }}">
 {{- end }}
-<link rel="me" href="https://fosstodon.org/@basnijholt">
+{{- /* Mastodon verifies the profile links in the author's social list through rel="me". */}}
+{{- range (site.GetPage "/authors/admin").Params.social }}{{ if eq .icon "mastodon" }}
+<link rel="me" href="{{ .link }}">
+{{- end }}{{ end }}
 <meta property="og:type" content="{{ $ogType }}">
 <meta property="og:site_name" content="{{ site.Title }}">
 <meta property="og:url" content="{{ .Permalink }}">

@@ -37,6 +37,7 @@ Netlify builds with Hugo 0.167.0 (`netlify.toml`); devbox has 0.165.0, the newes
 - `assets/css/`: plain CSS in cascade layers, imported by `main.css` and bundled by Hugo's `css.Build`.
 - `assets/js/`: small ES modules, each loaded only on the pages that use it (search, theme menu, project and publication filters, contents rail, copy buttons, image zoom, comments).
 - `assets/icons/`: brand icons as SVG, used inline and as CSS masks for the Font Awesome markup in the content.
+- `assets/media/map.webp`: the contact map, drawn around the coordinates in `content/home/contact.md` by `tools/contact_map.py`.
 
 `tools/` checks the build: `parity` compares it with a build of the old theme so no URL, feed or page goes missing, and `browser_check.py` tests it in Chromium.
 See [tools/README.md](tools/README.md).

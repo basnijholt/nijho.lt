@@ -6,14 +6,17 @@ import re
 from datetime import date
 from urllib.parse import quote
 
+import yaml
+
+from helpers import TOOLS
+
+CONFIG = TOOLS.parent / "config/_default"
 MENU = [
-    ("Home", "/#about"),
-    ("Blog", "/#blog-posts"),
-    ("Projects", "/#projects"),
-    ("Photography", "/#photography"),
-    ("Publications", "/#publications"),
-    ("Contact", "/#contact"),
+    (item["name"], f"/{item['url']}")
+    for item in sorted(yaml.safe_load((CONFIG / "menus.yaml").read_text(encoding="utf-8"))["main"], key=lambda i: i["weight"])
 ]
+TITLE = yaml.safe_load((CONFIG / "hugo.yaml").read_text(encoding="utf-8"))["title"]
+PARAMS = yaml.safe_load((CONFIG / "params.yaml").read_text(encoding="utf-8"))
 LAYERS = "reset,tokens,base,layout,components,prose,syntax,home,pages,icons,shortcodes"
 
 
@@ -123,8 +126,9 @@ def test_footer_copyright_rss_and_back_to_top(site):
     for path in sample_pages(site):
         footer = site.soup(path).find("footer", class_="site-footer")
         text = " ".join(footer.get_text().split())
-        assert f"© {date.today().year} Bas Nijholt. Source code on GitHub and builds on Netlify." in text
+        assert f"© {date.today().year} {TITLE}. Source code on GitHub and builds on Netlify." in text
         hrefs = {a.get_text(strip=True): a["href"] for a in footer.find_all("a")}
-        assert hrefs["GitHub"] == "https://github.com/basnijholt/nijho.lt/"
+        assert hrefs["GitHub"] == PARAMS["features"]["repository"]["url"]
+        assert hrefs["Netlify"] == PARAMS["features"]["deploys"]
         assert hrefs["RSS"] == "/index.xml"
         assert hrefs["Back to top"] == "#top"

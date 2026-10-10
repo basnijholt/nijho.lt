@@ -25,6 +25,15 @@ THEME_COLORS = {("(prefers-color-scheme: light)", "#f5f5f4"), ("(prefers-color-s
 MARKDOWN_SYNTAX = re.compile(r"\]\(|`|\*\*\S(?:.*?\S)?\*\*|__(?!\w+__)\S(?:.*?\S)?__")
 
 
+def author_mastodon() -> list[str]:
+    """The Mastodon profiles in the site author's social links, which the head declares with rel="me"."""
+    author = (TOOLS.parent / "content/authors/admin/_index.md").read_text(encoding="utf-8")
+    return [s["link"] for s in yaml.safe_load(author.split("---")[1])["social"] if s["icon"] == "mastodon"]
+
+
+MASTODON = author_mastodon()
+
+
 def front_matter(index: Path) -> dict:
     return yaml.safe_load(index.read_text(encoding="utf-8").split("---", 2)[1])
 
@@ -130,7 +139,7 @@ def test_head_extras_on_every_kind(site):
         assert colors == THEME_COLORS, kind
         hreflang = head.find_all("link", hreflang=True)
         assert [(link["hreflang"], link["href"]) for link in hreflang] == [("en-us", canonical)], kind
-        assert [link["href"] for link in head.find_all("link", rel="me")] == ["https://fosstodon.org/@basnijholt"], kind
+        assert [link["href"] for link in head.find_all("link", rel="me")] == MASTODON, kind
         assert head.find("link", rel="manifest")["href"] == "/manifest.webmanifest", kind
 
 
