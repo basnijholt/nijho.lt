@@ -1,5 +1,6 @@
 """Per-page checks: ids, SEO fields and article content."""
 
+import html
 import json
 
 import pytest
@@ -173,6 +174,57 @@ def test_seo_ignores_url_forms_attribute_kind_and_unlisted_meta(make_build, base
     base = make_build("base", {POST: page(head=base_head)})
     cand = make_build("cand", {POST: page(head=cand_head)})
     assert check_seo(base, cand) == []
+
+
+def descriptions(text: str) -> str:
+    value = html.escape(text)
+    return f'<meta name="description" content="{value}"><meta property="og:description" content="{value}">'
+
+
+@pytest.mark.parametrize(
+    ("base", "cand"),
+    [
+        pytest.param(
+            "📤 [`fileup`](https://github.com/basnijholt/fileup): upload with `fu x`", "📤 fileup: upload with fu x",
+            id="markdown-link-and-code",
+        ),
+        pytest.param(
+            "_**Tying Quantum Knots.**_ An *online* course, **very useful**",
+            "Tying Quantum Knots. An online course, very useful",
+            id="emphasis",
+        ),
+        pytest.param(
+            "`ipynb_git_filters` keeps `__all__` and `_helper()`", "ipynb_git_filters keeps __all__ and _helper()",
+            id="underscores-in-code",
+        ),
+        pytest.param("who doesn't need 'vibe' \"linking\"", "who doesn’t need ‘vibe’ “linking”", id="curly-quotes"),
+        pytest.param("Day 01/24 -- one --- two...", "Day 01/24 – one — two…", id="dashes-and-ellipsis"),
+        pytest.param("Q&amp;A, a\xa0b,\n  then c \n", "Q&A, a b, then c", id="entities-nbsp-and-whitespace"),
+    ],
+)
+def test_seo_compares_descriptions_as_plain_text(make_build, base, cand):
+    base_build = make_build("base", {POST: page(head=descriptions(base))})
+    cand_build = make_build("cand", {POST: page(head=descriptions(cand))})
+    assert check_seo(base_build, cand_build) == []
+
+
+@pytest.mark.parametrize(
+    ("base", "cand", "detail"),
+    [
+        pytest.param(
+            "[`x`](https://x.org): a *fast* tool", "x: a slow tool", "description: 'x: a fast tool' -> 'x: a slow tool'",
+            id="changed-word",
+        ),
+        pytest.param(
+            "First sentence. Second sentence.", "First sentence.",
+            "description: 'First sentence. Second sentence.' -> 'First sentence.'", id="truncated",
+        ),
+    ],
+)
+def test_seo_reports_wording_changes_in_descriptions(make_build, base, cand, detail):
+    base_build = make_build("base", {POST: page(head=descriptions(base))})
+    cand_build = make_build("cand", {POST: page(head=descriptions(cand))})
+    assert check_seo(base_build, cand_build) == [Finding("seo", POST, detail), Finding("seo", POST, "og:" + detail)]
 
 
 def test_seo_skips_pages_the_candidate_lacks(make_build):

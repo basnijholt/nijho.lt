@@ -45,6 +45,7 @@ A check fails when:
 - `feeds`: a baseline feed is missing or differs in channel title or link, in its guids (byte for byte) or item links, or in an item's title, pubDate or text.
 - `ids`: an id inside a baseline article body, or a homepage section id, is gone from the page.
 - `seo`: a page's `<head>` title, SEO `<meta>` tags, canonical or RSS links, or JSON-LD type, headline, dates or author differ.
+  Descriptions are compared as plain text: Markdown link, code and emphasis syntax, entities, typographic quotes, dashes and whitespace do not count.
 - `content`: a post, project or publication lost its article body, its text differs (TOC and heading anchors ignored), or its count of `img`, `pre`, `table`, `video` or `details` changed.
 - `old-images`: a baseline `_hu` image is gone, unless the first `_redirects` rule matching its path (splats and placeholders included) is a 3xx and the redirects end at the original: an image file on this site named as the old name before `_hu`, with any image extension.
 - `internal-links`: an `href`, `src`, `srcset` or video `poster` points to a site path that does not exist, unless the same link on the same baseline page was already broken.

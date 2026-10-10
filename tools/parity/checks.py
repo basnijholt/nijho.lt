@@ -2,6 +2,7 @@
 
 import copy
 import difflib
+import html
 import json
 import re
 from collections import Counter
@@ -30,6 +31,11 @@ SEO_META = (
     "twitter:card", "twitter:site", "article:published_time", "article:modified_time",
 )
 JSONLD_KEYS = ("@type", "headline", "datePublished", "dateModified", "author")
+DESCRIPTION_KEYS = ("description", "og:description")
+MARKDOWN_LINK_RE = re.compile(r"\[([^\]]*)\]\([^)\s]*\)")
+# A run of * or _ that opens or closes a word, so snake_case names keep their underscores
+EMPHASIS_RE = re.compile(r"(?<!\w)[*_]+(?=\S)|(?<=\S)[*_]+(?!\w)")
+TYPOGRAPHY = str.maketrans({"‘": "'", "’": "'", "“": '"', "”": '"', "–": "-", "—": "-", "…": "..."})
 COUNTED_TAGS = ("img", "pre", "table", "video", "details")
 # TOC blocks and heading anchor glyphs: the new theme renders them differently on purpose
 UNCOMPARED = "details.toc, details.toc-inpage, nav#TableOfContents, a.anchor"
@@ -197,7 +203,7 @@ def check_ids(base: Build, cand: Build) -> list[Finding]:
 def seo_fields(soup: BeautifulSoup) -> dict[str, str]:
     """Return a page's <head> title, SEO_META tags (by name or property), canonical, RSS links and JSON-LD fields.
 
-    Only the URL values (canonical, og:url, og:image and feeds) are normalized.
+    The URL values (canonical, og:url, og:image and feeds) are normalized to paths and the descriptions to plain text.
     """
     fields = {}
     # Inline SVGs in the body have a <title> of their own
@@ -210,6 +216,9 @@ def seo_fields(soup: BeautifulSoup) -> dict[str, str]:
     for key in ("og:url", "og:image"):
         if key in fields:
             fields[key] = norm_url(fields[key])
+    for key in DESCRIPTION_KEYS:
+        if key in fields:
+            fields[key] = _plain_text(fields[key])
     if canonical := soup.find("link", rel="canonical", href=True):
         fields["canonical"] = norm_url(canonical["href"])
     if feeds := soup.find_all("link", rel="alternate", type="application/rss+xml", href=True):
@@ -222,6 +231,17 @@ def seo_fields(soup: BeautifulSoup) -> dict[str, str]:
                 value = value.get("name", str(value))
             fields[f"jsonld:{key}"] = str(value)
     return fields
+
+
+def _plain_text(text: str) -> str:
+    """Strip what rendering Markdown changes, so only the words are compared.
+
+    Unescapes entities, keeps link text, drops code and emphasis markers, straightens typographic quotes, dashes and
+    ellipses, and collapses whitespace.
+    """
+    text = MARKDOWN_LINK_RE.sub(r"\1", html.unescape(text)).replace("`", "")
+    text = EMPHASIS_RE.sub("", text).translate(TYPOGRAPHY)
+    return " ".join(re.sub(r"-{2,}", "-", text).split())
 
 
 def _jsonld(soup: BeautifulSoup) -> dict:
