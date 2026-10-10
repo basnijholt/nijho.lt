@@ -1,127 +1,24 @@
-# SITE SETUP
-# Guide: https://wowchemy.com/docs/getting-started/
-# Documentation: https://wowchemy.com/docs/
-# This file is formatted using YAML syntax - learn more at https://learnxinyminutes.com/docs/yaml/
-
-# Appearance
-
-appearance:
-  theme_day: minimal
-  theme_night: minimal
-  font: classic
-  font_size: L
-
-# SEO
+# Site parameters; each one is read by a template in layouts/.
 
 marketing:
   seo:
-    site_type: Person
-    local_business_type: ''
-    org_name: ''
+    # Meta description for pages without a summary of their own.
     description: ''
     twitter: 'basnijholt'
   analytics:
     google_analytics: 'G-B50P3BHJ6C'
-    baidu_tongji: ''
-  verification:
-    google: ''
-    baidu: ''
-
-# Site header
-
-header:
-  navbar:
-    enable: true
-    align: c
-    show_logo: true
-    show_language: false
-    show_day_night: true
-    show_search: true
-    highlight_active_link: true
-
-# Site footer
-
-footer:
-  copyright:
-    notice: '© {year} Me. This work is licensed under {license}'
-    license:
-      enable: false
-      allow_derivatives: false
-      share_alike: true
-      allow_commercial: false
-
-# Localization
-
-locale:
-  date_format: '2006-01-02'
-  time_format: '15:04'
-  address_format: en-us
-
-# Site features
 
 features:
-  syntax_highlighter:
-    extra_languages:
-      - python
-  math:
-    # Off site-wide: MathJax treats any two dollar signs in a paragraph as inline math,
-    # which breaks prices in posts. Pages with LaTeX opt in with `math: true`.
-    enable: false
-  privacy_pack:
-    enable: false
+  # "Edit this page" links on posts.
   repository:
     url: 'https://github.com/basnijholt/nijho.lt'
     content_dir: 'content'
     branch: main
-  avatar:
-    gravatar: false
-    shape: circle
+  # Comments on posts: a GitHub Discussions thread per page path.
   comment:
-    provider: 'giscus'
     giscus:
       repo: 'basnijholt/nijho.lt'
       repo_id: 'MDEwOlJlcG9zaXRvcnkxNDAwMjE0MDE='
       category: 'General'
       category_id: 'DIC_kwDOCFiOmc4CV-Q5'
-      theme: preferred_color_scheme
       language_code: en
-      mapping: pathname
-
-  search:
-    provider: wowchemy
-    algolia:
-      app_id: ''
-      api_key: ''
-      index_name: ''
-      show_logo: false
-  map:
-    provider: 'mapnik'
-    api_key: ''
-    zoom: 4
-
-# Extensions
-
-extensions:
-  cms:
-    branch: master
-    local_backend: false
-  isotope:
-    enable: true
-  academicons:
-    enable: true
-
-# Additional configurations
-
-publications:
-  date_format: January 2006
-  citation_style: apa
-
-projects:
-  post_view: 2
-  publication_view: 2
-  talk_view: 2
-
-section_pager: false
-docs_section_pager: true
-abstract_length: 135
-plugins_js: []

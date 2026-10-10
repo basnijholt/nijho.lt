@@ -25,7 +25,7 @@ uv run parity compare-branch [--allow FILE] [--baseline-hugo PATH] [--hugo PATH]
 Builds the baseline commit into `/tmp/parity-baseline/<sha>` and the working tree into `/tmp/parity-candidate-<hash>`, then runs `compare` on them with `parity-allow.yaml`.
 The hash comes from the repository path, so every checkout has its own candidate directory; the header names the commit and both directories.
 The baseline build is reused until the commit or the baseline Hugo version changes; the candidate is rebuilt every run.
-`devbox run parity` runs this from the repository root; without `HUGO_BIN`, both builds get devbox's Hugo.
+`devbox run parity` runs this from the repository root; set `HUGO_BASELINE_BIN` first, since devbox's Hugo cannot build the old theme.
 
 ## compare
 
@@ -117,3 +117,13 @@ A sitemap without `<loc>` entries is an error.
 uv run pytest -m "not slow"
 uv run pytest   # also builds the baseline commit (Hugo 0.123.3) and the site (Hugo 0.167.0), skipping without them
 ```
+
+## Browser checks
+
+```bash
+uv run --group browser python browser_check.py [BUILD_DIR] [--screenshots OUT_DIR [--no-checks]]
+```
+
+Serves a build (by default, a fresh build of the working tree with `HUGO_BIN`) and checks it in the system Chromium: the theme menu, search, the project filters, console errors, axe accessibility in light and dark, the weight of a plain post, the homepage without JavaScript, anchors under the sticky header, the header layout and keyboard focus.
+Exits 1 if a check fails.
+`--screenshots` also saves the key pages in light and dark at 1440 and 390 px wide; with `--no-checks` it only does that, which works for a baseline build too.

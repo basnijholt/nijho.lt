@@ -9,15 +9,9 @@ cascade:
     editable: true
     reading_time: true
     commentable: true
-    show_related: true
-    show_breadcrumb: true
 
-defaultContentLanguage: en
-hasCJKLanguage: false
-defaultContentLanguageInSubdir: false
 removePathAccents: true
 
-enableGitInfo: false
 summaryLength: 30
 pagination:
   pagerSize: 100
