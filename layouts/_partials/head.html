@@ -7,7 +7,10 @@
 <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
 {{ partialCached "head/css.html" . }}
-{{- $scripts := slice "js/theme.js" }}
+{{- /* Same-origin navigations cross-fade, and links are prefetched when the pointer rests on them. */}}
+<style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }</style>
+<script type="speculationrules">{"prefetch":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
+{{- $scripts := slice "js/theme.js" "js/search.js" }}
 {{- if .IsHome }}{{ $scripts = $scripts | append "js/nav.js" "js/filter.js" }}{{ end }}
 {{- if and (eq .Kind "section") (in (slice "project" "publication") .Section) }}{{ $scripts = $scripts | append "js/filter.js" }}{{ end }}
 {{- if and .IsPage (eq .Type "post") }}

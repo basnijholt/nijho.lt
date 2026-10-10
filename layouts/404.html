@@ -1,4 +1,17 @@
 {{ define "main" }}
-  <h1>Page not found</h1>
-  <p><a href="{{ site.Home.RelPermalink }}">Go to the homepage</a></p>
+<div class="wrap list not-found">
+  <header class="list-head">
+    <h1>Page not found</h1>
+    <p class="sub">The page you are looking for has moved or never existed. Search for it, or start from one of these.</p>
+  </header>
+  <form class="field" action="/" method="get" role="search">
+    {{ partial "ui-icon.html" "search" }}
+    <input type="search" name="q" placeholder="Search the site" aria-label="Search the site">
+  </form>
+  <ul class="not-found-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/post/">Blog posts</a></li>
+    <li><a href="/project/">Projects</a></li>
+  </ul>
+</div>
 {{ end }}

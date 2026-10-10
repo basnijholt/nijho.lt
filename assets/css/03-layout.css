@@ -60,29 +60,6 @@
     gap: 6px;
   }
 
-  & .icon-btn {
-    display: inline-grid;
-    place-items: center;
-    width: 38px;
-    height: 38px;
-    border: 1px solid var(--line);
-    border-radius: var(--r-sm);
-    background: transparent;
-    color: var(--text);
-    font-size: 18px;
-    cursor: pointer;
-    transition: background .15s, border-color .15s, transform .1s;
-
-    &:hover {
-      border-color: var(--surface-2);
-      background: var(--surface);
-    }
-
-    &:active {
-      transform: translateY(1px);
-    }
-  }
-
   /* The theme menu, and below 920px the nav list. Popovers sit in the top layer, so they are placed against the
      viewport: 8px below the 38px header buttons, flush with the right edge of .wrap. */
   & :popover-open {
@@ -182,6 +159,30 @@
     & .needs-js {
       display: none;
     }
+  }
+}
+
+/* Square icon buttons: header tools, the search dialog's close button. */
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--text);
+  font-size: 18px;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, transform .1s;
+
+  &:hover {
+    border-color: var(--surface-2);
+    background: var(--surface);
+  }
+
+  &:active {
+    transform: translateY(1px);
   }
 }
 
