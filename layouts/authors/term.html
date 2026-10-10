@@ -16,7 +16,7 @@
   {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
 {{- end }}
   <ul class="w1">
-    {{- range .Paginator.Pages }}{{ partial "lists/post-row.html" . }}{{ end }}
+    {{- range .Paginator.Pages }}{{ partial "lists/post-row.html" (dict "page" .) }}{{ end }}
   </ul>
   {{ partial "pagination.html" . }}
 </div>
