@@ -7,7 +7,7 @@ from collections import defaultdict
 from pathlib import Path
 
 from . import ParityError
-from .site import Build
+from .site import Build, read_utf8
 
 # Hugo 0.123.3 resized images: <stem>_hu<fast md5 of the source>_<source size in bytes>_<options>.<ext>
 HU_RE = re.compile(r"_hu([0-9a-f]{32})_(\d+)_")
@@ -41,39 +41,39 @@ def _forbidden_words() -> list[str]:
     words = []
     for file in (config / "forbidden-words", config / "forbidden-words.private"):
         if file.exists():
-            lines = (line.strip() for line in file.read_text(encoding="utf-8").splitlines())
+            lines = (line.strip() for line in read_utf8(file).splitlines())
             words += [line.split("\t")[0].casefold() for line in lines if line and not line.startswith("#")]
     return words
 
 
 def map_old_images(base: Build, repo: Path, cand: Build) -> tuple[list[dict], list[str]]:
-    """Map each _hu image the candidate lacks to its source in content/ or assets/, by fast md5 and size.
+    """Map each _hu image the candidate lacks to the names of its sources in content/ or assets/, by fast md5 and size.
 
-    Of identical sources, the one named as the old name before _hu wins, since the old-images check wants that name;
-    else the first by path, content/ first. Returns the data/old_images.yaml entries and the old names skipped for
-    holding a word from the commit hook's lists, which would block committing the output; the old-images check reports
-    those images.
+    Identical sources with different names each get the old name, since the old image sat next to one of them and the
+    entries do not say which. Returns the data/old_images.yaml entries and the old names skipped because they or a
+    source's name hold a word from the commit hook's lists, which would block committing the output; the old-images
+    check reports those images.
     """
     words = _forbidden_words()
-    sources = defaultdict(list)
+    sources = defaultdict(set)
     for folder in ("content", "assets"):
-        for file in sorted((repo / folder).rglob("*")):
+        for file in (repo / folder).rglob("*"):
             if file.is_file():
-                sources[hugo_fast_md5(file), file.stat().st_size].append(file)
+                sources[hugo_fast_md5(file), file.stat().st_size].add(file.name)
 
     names, skipped, missing = defaultdict(list), [], []
     for name in sorted({Path(path).name for path in base.files - cand.files}):
         if not (match := HU_RE.search(name)):
             continue
         size = int(match[2])
-        found = sources.get((match[1], size))
-        source = min(found, key=lambda file: file.stem != name[: match.start()]).name if found else None
-        if any(word in name.casefold() for word in words):
+        found = sorted(sources.get((match[1], size), ()))
+        if any(word in "/".join([name, *found]).casefold() for word in words):
             skipped.append(name)
-        elif source is None:
+        elif not found:
             missing.append(name)
         else:
-            names[source, size].append(name)
+            for source in found:
+                names[source, size].append(name)
     if missing:
         raise ParityError(
             f"{len(missing)} old image(s) without a source in content/ or assets/ "

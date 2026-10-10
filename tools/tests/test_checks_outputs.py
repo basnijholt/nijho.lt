@@ -1,5 +1,7 @@
 """Checks on output files: paths, sitemap, feeds and redirects."""
 
+import html
+
 import pytest
 
 from helpers import item, rss, sitemap
@@ -83,6 +85,12 @@ def test_sitemap_keeps_locs_and_their_pages(make_build, base_locs, cand_locs, ca
 
 
 DATE = "Mon, 01 Jan 2024 00:00:00 +0000"
+OLD_TOC = (
+    '<details class="toc-inpage"><summary>Table of Contents</summary>'
+    '<nav id="TableOfContents"><a href="#x">Text of a</a></nav></details>'
+)
+NEW_TOC = '<details class="toc" open><summary>Table of contents</summary><nav id="TableOfContents"></nav></details>'
+ANCHOR = '<a class="anchor" href="#x">#</a>'
 
 
 @pytest.mark.parametrize(
@@ -188,12 +196,51 @@ DATE = "Mon, 01 Jan 2024 00:00:00 +0000"
         pytest.param(
             [item("a")], [item("a", description="Text &lt;em&gt;of&lt;/em&gt;\n a")], {}, [], id="item-text-markup-only"
         ),
+        pytest.param(
+            [item("a", description=html.escape(OLD_TOC + '<h2 id="x">Text of a</h2>'))],
+            [item("a", description=html.escape(NEW_TOC + f'<h2 id="x">Text of a {ANCHOR}</h2>'))],
+            {},
+            [],
+            id="item-text-without-toc-and-heading-anchors",
+        ),
     ],
 )
 def test_feeds_report_each_difference(make_build, base_items, cand_items, channel, expected):
     base = make_build("base", {FEED: rss(base_items)})
     cand = make_build("cand", {FEED: rss(cand_items, **channel)})
     assert check_feeds(base, cand) == [Finding("feeds", FEED, detail) for detail in expected]
+
+
+def changed(start: int, stop: int) -> list[str]:
+    """Item text with one changed word per index, so every index is its own text finding."""
+    return [f"keep{i} old{i} keep{i + 1}" for i in range(start, stop)]
+
+
+@pytest.mark.parametrize(
+    ("base_texts", "cand_texts", "kept", "more"),
+    [
+        pytest.param(changed(0, 20), [t.replace("old", "new") for t in changed(0, 20)], 20, 0, id="twenty-items"),
+        pytest.param(changed(0, 25), [t.replace("old", "new") for t in changed(0, 25)], 20, 5, id="many-items"),
+        pytest.param(
+            [" ".join(changed(0, 15)), " ".join(changed(15, 25))],
+            [" ".join(changed(0, 15)).replace("old", "new"), " ".join(changed(15, 25)).replace("old", "new")],
+            20, 5, id="two-items-with-many-changes",
+        ),
+    ],
+)
+def test_feed_text_findings_are_capped_per_feed(make_build, base_texts, cand_texts, kept, more):
+    """Twenty text findings per feed file, in item order, then one line counting the rest; other findings stay."""
+    base_items = [item(f"a{i:02}", description=text) for i, text in enumerate(base_texts)]
+    cand_items = [item(f"a{i:02}", description=text) for i, text in enumerate(cand_texts)]
+    cand_items[0] |= {"title": "Renamed"}
+    findings = check_feeds(make_build("base", {FEED: rss(base_items)}), make_build("cand", {FEED: rss(cand_items)}))
+    details = [finding.detail for finding in findings]
+    assert "item '/post/a00/' title: 'Post a00' -> 'Renamed'" in details
+    assert len([detail for detail in details if " text: " in detail]) == kept
+    assert [detail for detail in details if detail.startswith("text: ")] == (
+        [f"text: {more} more differences"] if more else []
+    )
+    assert any(detail.startswith("item '/post/a00/' text: 'keep0 old0 keep1") for detail in details)
 
 
 def test_feeds_reports_missing_feed(make_build):
@@ -271,5 +318,33 @@ BASE_RULES = "/old/ /new/ 301!\n/a/ /b/ 302\n"
 )
 def test_redirects_report_each_lost_rule(make_build, cand_rules, expected):
     base = make_build("base", {"/_redirects": BASE_RULES})
+    cand = make_build("cand", {"/_redirects": cand_rules})
+    assert check_redirects(base, cand) == [Finding("redirects", source, detail) for source, detail in expected]
+
+
+SHADOWED = "/old/* /elsewhere/ 301\n/old/ /new/ 301\n"
+
+
+@pytest.mark.parametrize(
+    ("base_rules", "cand_rules", "expected"),
+    [
+        pytest.param(SHADOWED, SHADOWED, [], id="shadowed-in-both"),
+        pytest.param(
+            SHADOWED, "/old/* /other/ 301\n/old/ /new/ 301\n", [("/old/*", "missing redirect to /elsewhere/ 301")],
+            id="shadowed-by-another-rule",
+        ),
+        pytest.param(
+            SHADOWED, "/old/* /elsewhere/ 301\n", [("/old/", "missing redirect to /new/ 301")],
+            id="shadowed-in-baseline-but-missing",
+        ),
+        pytest.param(
+            "/old/ /new/ 301\n", SHADOWED,
+            [("/old/", "redirect to /new/ 301 is shadowed by /old/* /elsewhere/ 301")],
+            id="shadowed-only-in-candidate",
+        ),
+    ],
+)
+def test_redirects_need_first_match_only_where_the_baseline_had_it(make_build, base_rules, cand_rules, expected):
+    base = make_build("base", {"/_redirects": base_rules})
     cand = make_build("cand", {"/_redirects": cand_rules})
     assert check_redirects(base, cand) == [Finding("redirects", source, detail) for source, detail in expected]

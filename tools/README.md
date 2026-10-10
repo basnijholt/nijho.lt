@@ -43,16 +43,18 @@ A check fails when:
 - `paths`: a baseline page, feed, image or other public file is missing (theme assets and `_hu` resized images are skipped).
 - `sitemap`: a baseline loc is missing, or a loc has no `index.html` although the baseline loc had one.
 - `feeds`: a baseline feed is missing or differs in channel title or link, in its guids (byte for byte) or item links, or in an item's title, pubDate or text.
+  The text leaves out TOC blocks and heading anchors, as `content` does.
 - `ids`: an id inside a baseline article body, or a homepage section id, is gone from the page.
 - `seo`: a page's `<head>` title, SEO `<meta>` tags, canonical or RSS links, or JSON-LD type, headline, dates or author differ.
-  Descriptions are compared as plain text: Markdown link, code and emphasis syntax, entities, typographic quotes, dashes and whitespace do not count.
+  Descriptions are compared as plain text: entities, typographic quotes, dashes and whitespace do not count, and the baseline's Markdown link, code and emphasis syntax is stripped.
+  Emphasis is a `*`, `**`, `_` or `__` pair around words, so `snake_case` and `__init__.py` stay as written; Markdown in the candidate's description is a difference.
 - `content`: a post, project or publication lost its article body, its text differs (TOC and heading anchors ignored), or its count of `img`, `pre`, `table`, `video` or `details` changed.
-- `old-images`: a baseline `_hu` image is gone, unless the first `_redirects` rule matching its path (splats and placeholders included) is a 3xx and the redirects end at the original: an image file on this site named as the old name before `_hu`, with any image extension.
+- `old-images`: a baseline `_hu` image is gone, unless the first `_redirects` rule matching its path (splats and placeholders included) is a 3xx and the redirects end at the original: a file on this site with the source size and Hugo fast md5 written in the old name.
 - `internal-links`: an `href`, `src`, `srcset` or video `poster` points to a site path that does not exist, unless the same link on the same baseline page was already broken.
-- `redirects`: a baseline `_redirects` rule (source, target, status and `!`) is missing, or an earlier candidate rule matches its source first.
+- `redirects`: a baseline `_redirects` rule (source, target, status and `!`) is missing, or an earlier candidate rule matches its source first although none did in the baseline.
 
 A text difference in a feed item or an article is one finding per changed run of words, shown with up to three unchanged words on each side, so a `match` copied from one finding allows that run and no other.
-A run of more than 12 words shows its first and last six with the count between, and after 20 findings one more counts the rest of the text's differences.
+A run of more than 12 words shows its first and last six with the count between, and after 20 findings one more counts the rest of the text's differences; for feeds, the 20 are per feed file.
 
 ## Allow file
 
@@ -82,7 +84,7 @@ Use an empty directory or an earlier `OUT`; an earlier build is reused when the 
 ## old-images
 
 Hugo 0.123.3 names resized images `<name>_hu<md5>_<size>_...` after the source file, and newer Hugo names them differently.
-This prints YAML that maps each such baseline image the candidate lacks to its source file in `content/` or `assets/` of `--repo` (default: this repository):
+This prints YAML that maps each such baseline image the candidate lacks to the name and size of its source file in `content/` or `assets/` of `--repo` (default: this repository):
 
 ```bash
 uv run parity old-images BASE CAND [--repo DIR]
@@ -90,9 +92,9 @@ uv run parity old-images /tmp/parity-baseline/$(cat parity-baseline.txt) /tmp/pa
 ```
 
 It fails if an old image has no source.
-Of identical source files, the one named like the old image wins, else the first by path, `content/` before `assets/`.
-Hugo 0.123.3 leaves the name out of images resized from a long file name (`_hu<md5>_...`), so the `old-images` check reports those; allow each with a `match` that names its redirect target.
-Names containing a word from the commit hook's lists, `forbidden-words` and `forbidden-words.private` in `~/.config/git/` (or `$XDG_CONFIG_HOME/git/`), are skipped; stderr gives the count, and the `old-images` check reports those images.
+Identical source files with different names each get the old name, since the entries do not say which one the old image sat next to.
+`layouts/home.redirects` redirects each old name in the folder of every image with that source name and size to the image.
+Old names, or names of their sources, containing a word from the commit hook's lists, `forbidden-words` and `forbidden-words.private` in `~/.config/git/` (or `$XDG_CONFIG_HOME/git/`), are skipped; stderr gives the count, and the `old-images` check reports those images.
 
 ## live
 

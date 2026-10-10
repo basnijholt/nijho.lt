@@ -200,6 +200,8 @@ def descriptions(text: str) -> str:
         pytest.param("who doesn't need 'vibe' \"linking\"", "who doesn’t need ‘vibe’ “linking”", id="curly-quotes"),
         pytest.param("Day 01/24 -- one --- two...", "Day 01/24 – one — two…", id="dashes-and-ellipsis"),
         pytest.param("Q&amp;A, a\xa0b,\n  then c \n", "Q&A, a b, then c", id="entities-nbsp-and-whitespace"),
+        pytest.param("**Bold**. Then _this_, (*that*)", "Bold. Then this, (that)", id="emphasis-before-punctuation"),
+        pytest.param("ship `__init__.py` files", "ship __init__.py files", id="dunder-in-code"),
     ],
 )
 def test_seo_compares_descriptions_as_plain_text(make_build, base, cand):
@@ -218,6 +220,26 @@ def test_seo_compares_descriptions_as_plain_text(make_build, base, cand):
         pytest.param(
             "First sentence. Second sentence.", "First sentence.",
             "description: 'First sentence. Second sentence.' -> 'First sentence.'", id="truncated",
+        ),
+        pytest.param("use fu x", "use `fu x`", "description: 'use fu x' -> 'use `fu x`'", id="code-in-candidate"),
+        pytest.param(
+            "a **fast** tool", "a **fast** tool", "description: 'a fast tool' -> 'a **fast** tool'",
+            id="emphasis-in-candidate",
+        ),
+        pytest.param(
+            "[x](https://x.org) tool", "[x](https://x.org) tool", "description: 'x tool' -> '[x](https://x.org) tool'",
+            id="link-in-candidate",
+        ),
+        pytest.param(
+            "edit __init__.py", "edit init.py", "description: 'edit __init__.py' -> 'edit init.py'", id="dunder"
+        ),
+        pytest.param(
+            "edit init.py", "edit __init__.py", "description: 'edit init.py' -> 'edit __init__.py'",
+            id="dunder-in-candidate",
+        ),
+        pytest.param("a * b * c", "a b c", "description: 'a * b * c' -> 'a b c'", id="lone-asterisks"),
+        pytest.param(
+            "snake_case_name", "snakecasename", "description: 'snake_case_name' -> 'snakecasename'", id="snake-case"
         ),
     ],
 )

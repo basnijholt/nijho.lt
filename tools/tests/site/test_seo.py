@@ -19,6 +19,9 @@ CONTENT = TOOLS.parent / "content"
 GA = "https://www.googletagmanager.com/gtag/js?id=G-B50P3BHJ6C"
 PLAUSIBLE = "https://plausible.nijho.lt/js/pa-ylHri3AS4w8PLULPjHH4G.js"
 THEME_COLORS = {("(prefers-color-scheme: light)", "#f5f5f4"), ("(prefers-color-scheme: dark)", "#141413")}
+# Markdown left in plain text: link syntax, code backticks, and ** or __ pairs around words; a dunder name such as
+# __all__ is code, not emphasis
+MARKDOWN_SYNTAX = re.compile(r"\]\(|`|\*\*\S(?:.*?\S)?\*\*|__(?!\w+__)\S(?:.*?\S)?__")
 
 
 def front_matter(index: Path) -> dict:
@@ -105,7 +108,7 @@ def test_description_has_no_markdown_link_syntax(site):
         head = site.soup(path).head
         description = meta(head, "description")
         assert meta(head, "og:description") == description, path
-        if description and "](" in description:
+        if description and MARKDOWN_SYNTAX.search(description):
             offenders.append(path)
     assert offenders == []
 

@@ -19,6 +19,8 @@ STATUS_RE = re.compile(r"(\d{3})(!?)")
 REDIRECT_HOPS = 10
 # A redirect placeholder: a colon, a letter, then letters, digits or underscores, so :8080 is literal
 PLACEHOLDER_RE = re.compile(r":([A-Za-z][A-Za-z0-9_]*)")
+# TOC blocks and heading anchor glyphs: the new theme renders them differently on purpose
+UNCOMPARED = "details.toc, details.toc-inpage, nav#TableOfContents, a.anchor"
 
 
 def norm_url(url: str) -> str:
@@ -37,11 +39,13 @@ def off_site(url: str) -> bool:
 
 
 def read_utf8(file: Path) -> str:
-    """Return the text of a UTF-8 file; raise ParityError naming it if it is not UTF-8."""
+    """Return the text of a UTF-8 file; raise ParityError naming it if it cannot be read or is not UTF-8."""
     try:
         return Path(file).read_text(encoding="utf-8")
     except UnicodeDecodeError as e:
         raise ParityError(f"{file}: invalid UTF-8 at byte {e.start}: {e.reason}") from None
+    except OSError as e:
+        raise ParityError(f"{file}: {e.strerror or e}") from None
 
 
 def parse_sitemap(xml: str, source: str) -> list[str]:
@@ -55,7 +59,9 @@ def parse_sitemap(xml: str, source: str) -> list[str]:
 
 @dataclass(frozen=True)
 class FeedItem:
-    """An RSS item: guid and link normalized, raw_guid as written, text the description as collapsed plain text."""
+    """An RSS item: guid and link normalized, raw_guid as written, text the description as collapsed plain text
+    without the UNCOMPARED parts.
+    """
     title: str
     link: str
     guid: str
@@ -148,7 +154,7 @@ class Build:
                 title=item.findtext("title", ""),
                 link=norm_url(item.findtext("link", "")),
                 guid=norm_url(item.findtext("guid", "")),
-                text=" ".join(BeautifulSoup(item.findtext("description", ""), "lxml").get_text().split()),
+                text=_item_text(item.findtext("description", "")),
                 raw_guid=item.findtext("guid", ""),
                 pub_date=item.findtext("pubDate", ""),
             )
@@ -190,6 +196,14 @@ class Build:
                 if match := _redirect_regex(rule.source).fullmatch(candidate):
                     return rule, _fill(rule.target, match.groupdict())
         return None, ""
+
+
+def _item_text(description: str) -> str:
+    """Return the whitespace-collapsed text of an item description without its UNCOMPARED parts."""
+    soup = BeautifulSoup(description, "lxml")
+    for tag in soup.select(UNCOMPARED):
+        tag.decompose()
+    return " ".join(soup.get_text().split())
 
 
 def _fill(target: str, values: dict[str, str]) -> str:

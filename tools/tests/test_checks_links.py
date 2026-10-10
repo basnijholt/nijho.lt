@@ -2,11 +2,13 @@
 
 import pytest
 
-from helpers import page
+from helpers import bmp, page
 from parity.checks import Finding, broken_internal_links, check_internal_links, check_old_images
 
 PAGE = "/post/x/index.html"
-OLD = "/media/photo_hu0123456789abcdef0123456789abcdef_5000_300x200_fit_q90_lanczos.webp"
+# bmp(16, 16) and the source md5 and size that Hugo 0.123.3 puts in the names of its resizes (see test_old_images.py)
+ORIGINAL, DIGEST, SIZE = bmp(16, 16), "3e42b460547f9240314cce9a8a6e4c9d", 822
+OLD = f"/media/photo_hu{DIGEST}_{SIZE}_300x200_fit_q90_lanczos.webp"
 OLD_NAME = OLD.removeprefix("/media/")
 OLD_WITHOUT_SIZE = "/css/x_hu0123456789abcdef0123456789abcdef.png"
 
@@ -66,41 +68,47 @@ def test_internal_links_reports_known_broken_link_on_a_new_page(make_build):
     assert check_internal_links(base, cand) == [Finding("internal-links", "/b/index.html", "/gone/ does not resolve")]
 
 
-NOT_PHOTO = "which is not an image named 'photo'"
+NOT_ORIGINAL = f"which is not the original ({SIZE} bytes, Hugo fast md5 {DIGEST})"
 
 
 @pytest.mark.parametrize(
     ("rules", "detail"),
     [
         pytest.param("", "no redirect", id="no-rule"),
-        pytest.param(f"{OLD} /media/photo.webp 301\n", None, id="redirect"),
-        pytest.param(f"{OLD} /media/photo.webp 302\n", None, id="temporary-redirect"),
-        pytest.param(f"{OLD} /media/photo.jpg 301\n", None, id="original-with-another-extension"),
-        pytest.param(f"{OLD} https://www.nijho.lt/media/photo.webp 301\n", None, id="absolute-target-on-site"),
-        pytest.param(f"{OLD} /x/ 301\n/x/ /media/photo.webp 301\n", None, id="chain-to-the-original"),
-        pytest.param("/media/* /media/photo.webp 301\n", None, id="splat-rule"),
-        pytest.param("/media/:name /media/photo.webp 301\n", None, id="placeholder-rule"),
-        pytest.param(f"{OLD} / 301\n", f"redirects to /, {NOT_PHOTO}", id="home-page"),
-        pytest.param(f"{OLD} /post/x/ 301\n", f"redirects to /post/x/, {NOT_PHOTO}", id="page"),
-        pytest.param(f"{OLD} /media/photo.png/ 301\n", f"redirects to /media/photo.png/, {NOT_PHOTO}", id="directory"),
+        pytest.param(f"{OLD} /media/photo.bmp 301\n", None, id="redirect"),
+        pytest.param(f"{OLD} /media/photo.bmp 302\n", None, id="temporary-redirect"),
+        pytest.param(f"{OLD} /media/copy.bmp 301\n", None, id="original-under-another-name"),
+        pytest.param(f"{OLD} https://www.nijho.lt/media/photo.bmp 301\n", None, id="absolute-target-on-site"),
+        pytest.param(f"{OLD} /x/ 301\n/x/ /media/photo.bmp 301\n", None, id="chain-to-the-original"),
+        pytest.param("/media/* /media/photo.bmp 301\n", None, id="splat-rule"),
+        pytest.param("/media/:name /media/photo.bmp 301\n", None, id="placeholder-rule"),
+        pytest.param(f"{OLD} / 301\n", f"redirects to /, {NOT_ORIGINAL}", id="home-page"),
+        pytest.param(f"{OLD} /post/x/ 301\n", f"redirects to /post/x/, {NOT_ORIGINAL}", id="page"),
         pytest.param(
-            f"{OLD} /media/other.webp 301\n", f"redirects to /media/other.webp, {NOT_PHOTO}", id="other-image"
+            f"{OLD} /media/photo.png/ 301\n", f"redirects to /media/photo.png/, {NOT_ORIGINAL}", id="directory"
         ),
-        pytest.param(f"{OLD} /media/photo.txt 301\n", f"redirects to /media/photo.txt, {NOT_PHOTO}", id="not-an-image"),
         pytest.param(
-            "/media/* /img/:splat 301\n", f"redirects to /img/{OLD_NAME}, {NOT_PHOTO}", id="splat-target-is-a-copy"
+            f"{OLD} /media/photo.webp 301\n", f"redirects to /media/photo.webp, {NOT_ORIGINAL}",
+            id="same-stem-other-image",
+        ),
+        pytest.param(
+            f"{OLD} /media/longer.bmp 301\n", f"redirects to /media/longer.bmp, {NOT_ORIGINAL}",
+            id="same-fast-md5-other-size",
+        ),
+        pytest.param(
+            "/media/* /img/:splat 301\n", f"redirects to /img/{OLD_NAME}, {NOT_ORIGINAL}", id="splat-target-is-a-copy"
         ),
         pytest.param(
             f"{OLD} /media/gone.webp 301\n", "redirects to /media/gone.webp, which does not resolve",
             id="target-missing",
         ),
         pytest.param(
-            f"{OLD} /media/gone.webp 301\n{OLD} /media/photo.webp 301\n",
+            f"{OLD} /media/gone.webp 301\n{OLD} /media/photo.bmp 301\n",
             "redirects to /media/gone.webp, which does not resolve",
             id="first-rule-wins",
         ),
         pytest.param(
-            f"/media/* /media/gone.webp 301\n{OLD} /media/photo.webp 301\n",
+            f"/media/* /media/gone.webp 301\n{OLD} /media/photo.bmp 301\n",
             "redirects to /media/gone.webp, which does not resolve",
             id="earlier-splat-rule-wins",
         ),
@@ -109,31 +117,56 @@ NOT_PHOTO = "which is not an image named 'photo'"
             id="splat-target-missing",
         ),
         pytest.param(
-            f"{OLD} /media/photo.webp 301\n/media/photo.webp /gone/ 301!\n",
+            f"{OLD} /media/photo.bmp 301\n/media/photo.bmp /gone/ 301!\n",
             "redirects to /gone/, which does not resolve",
             id="forced-rule-on-the-target",
         ),
-        pytest.param(f"{OLD} /media/photo.webp 200\n", "rule for the old URL is a 200, not a redirect", id="rewrite"),
-        pytest.param(f"{OLD} /media/photo.webp 404\n", "rule for the old URL is a 404, not a redirect", id="not-found"),
+        pytest.param(f"{OLD} /media/photo.bmp 200\n", "rule for the old URL is a 200, not a redirect", id="rewrite"),
+        pytest.param(f"{OLD} /media/photo.bmp 404\n", "rule for the old URL is a 404, not a redirect", id="not-found"),
         pytest.param(
             f"{OLD} https://elsewhere.example/p.webp 301\n",
             "redirects to https://elsewhere.example/p.webp, which leaves the site",
             id="target-on-another-host",
         ),
         pytest.param(
-            f"{OLD} /x/ 301\n/x/ https://nijho.lt/media/photo.webp 301\n",
-            "redirects to https://nijho.lt/media/photo.webp, which leaves the site",
+            f"{OLD} /x/ 301\n/x/ https://nijho.lt/media/photo.bmp 301\n",
+            "redirects to https://nijho.lt/media/photo.bmp, which leaves the site",
             id="later-hop-to-the-apex-domain",
         ),
     ],
 )
 def test_old_images_need_a_redirect_to_their_original(make_build, rules, detail):
-    """The original is an image file on this site named like the old image up to _hu, with any image extension."""
+    """The original is a file of this site with the source size and Hugo fast md5 written in the old name."""
     base = make_build("base", {OLD: b"old"})
-    files = ("/media/photo.webp", "/media/photo.jpg", "/media/other.webp", "/media/photo.txt", f"/img/{OLD_NAME}")
-    pages = ("/index.html", "/post/x/index.html", "/media/photo.png/index.html")
-    cand = make_build("cand", dict.fromkeys(files + pages, b"new") | {"/_redirects": rules})
+    files = {
+        "/media/photo.bmp": ORIGINAL,
+        "/media/copy.bmp": ORIGINAL,
+        "/media/photo.webp": bmp(8, 8),
+        # Files of 64 to 2048 bytes hash only their first 64 bytes, so this one shares the original's fast md5
+        "/media/longer.bmp": ORIGINAL + b"x",
+        f"/img/{OLD_NAME}": b"copy",
+    }
+    pages = dict.fromkeys(("/index.html", "/post/x/index.html", "/media/photo.png/index.html"), b"page")
+    cand = make_build("cand", files | pages | {"/_redirects": rules})
     assert check_old_images(base, cand) == ([] if detail is None else [Finding("old-images", OLD, detail)])
+
+
+def test_old_images_accept_names_without_the_source_stem(make_build):
+    """Hugo 0.123.3 leaves the stem out of images resized from a long file name; the hash and size still match."""
+    album = "/media/albums/cover"
+    olds = [f"{album}/_hu{DIGEST}_{SIZE}_{suffix * 32}.webp" for suffix in "abc"]
+    original = f"{album}/data__sweep__data_learner_0457.pickle.jpg"
+    rules = "".join(f"{old} {original} 301\n" for old in olds)
+    base = make_build("base", dict.fromkeys(olds, b"old"))
+    cand = make_build("cand", {original: ORIGINAL, "/_redirects": rules})
+    assert check_old_images(base, cand) == []
+
+
+def test_old_images_need_a_size_in_the_old_name_to_prove_the_original(make_build):
+    base = make_build("base", {OLD_WITHOUT_SIZE: b"old"})
+    cand = make_build("cand", {"/media/photo.bmp": ORIGINAL, "/_redirects": f"{OLD_WITHOUT_SIZE} /media/photo.bmp\n"})
+    detail = "redirects to /media/photo.bmp, but the old name has no source size to compare"
+    assert check_old_images(base, cand) == [Finding("old-images", OLD_WITHOUT_SIZE, detail)]
 
 
 def test_old_images_checks_only_missing_resized_images(make_build):

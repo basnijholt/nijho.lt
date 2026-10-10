@@ -13,7 +13,8 @@ from urllib.parse import unquote, urljoin, urlsplit
 
 from bs4 import BeautifulSoup, Tag
 
-from .site import Build, Feed, Redirect, norm_url, off_site
+from .old_images import HU_RE, hugo_fast_md5
+from .site import UNCOMPARED, Build, Feed, Redirect, norm_url, off_site
 
 PUBLIC_RE = re.compile(
     r"\.("
@@ -33,14 +34,13 @@ SEO_META = (
 JSONLD_KEYS = ("@type", "headline", "datePublished", "dateModified", "author")
 DESCRIPTION_KEYS = ("description", "og:description")
 MARKDOWN_LINK_RE = re.compile(r"\[([^\]]*)\]\([^)\s]*\)")
-# A run of * or _ that opens or closes a word, so snake_case names keep their underscores
-EMPHASIS_RE = re.compile(r"(?<!\w)[*_]+(?=\S)|(?<=\S)[*_]+(?!\w)")
+CODE_SPAN_RE = re.compile(r"`([^`]*)`")
+# A pair of *, **, _ or __ around words: the opening marker starts a word and the closing one ends it, so snake_case
+# and __init__.py keep their underscores
+EMPHASIS_RE = re.compile(r"(?<![\w*_])(\*\*|__|\*|_)(?=\S)(.+?)(?<=\S)\1(?![\w*_])(?![.,;:!?)\]]\w)")
 TYPOGRAPHY = str.maketrans({"‘": "'", "’": "'", "“": '"', "”": '"', "–": "-", "—": "-", "…": "..."})
 COUNTED_TAGS = ("img", "pre", "table", "video", "details")
-# TOC blocks and heading anchor glyphs: the new theme renders them differently on purpose
-UNCOMPARED = "details.toc, details.toc-inpage, nav#TableOfContents, a.anchor"
 RESIZED_RE = re.compile(r"_hu[0-9a-f]{32}")
-IMAGE_EXTENSIONS = (".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".avif", ".bmp")
 # text_diff shows up to TEXT_CONTEXT unchanged words around a change, changed runs of up to TEXT_WORDS words in full,
 # and TEXT_LINES lines per text
 TEXT_CONTEXT, TEXT_WORDS, TEXT_LINES = 3, 12, 20
@@ -102,7 +102,10 @@ def check_feeds(base: Build, cand: Build) -> list[Finding]:
 
 
 def _feed_differences(base: Feed, cand: Feed) -> list[str]:
-    """Compare channel title and link, raw guids byte for byte, item links, and per item its title, pubDate and text."""
+    """Compare channel title and link, raw guids byte for byte, item links, and per item its title, pubDate and text.
+
+    Text differences are capped per feed like those of one text (see text_diff).
+    """
     details = []
     if base.title != cand.title:
         details.append(f"channel title: {base.title!r} -> {cand.title!r}")
@@ -126,6 +129,7 @@ def _feed_differences(base: Feed, cand: Feed) -> list[str]:
 
     # Pair items by normalized guid, so an item whose guid only changed host is still compared
     cand_items = {item.guid: item for item in cand.items}
+    texts = []
     for guid, old in {item.guid: item for item in base.items}.items():
         new = cand_items.get(guid)
         if new is None:
@@ -134,8 +138,8 @@ def _feed_differences(base: Feed, cand: Feed) -> list[str]:
             details.append(f"item {guid!r} title: {old.title!r} -> {new.title!r}")
         if not _same_instant(old.pub_date, new.pub_date):
             details.append(f"item {guid!r} pubDate: {old.pub_date!r} -> {new.pub_date!r}")
-        details += [f"item {guid!r} {line}" for line in text_diff(old.text, new.text)]
-    return details
+        texts += [f"item {guid!r} {line}" for line in _text_runs(old.text, new.text)]
+    return details + _capped(texts)
 
 
 def _same_instant(base: str, cand: str) -> bool:
@@ -153,6 +157,18 @@ def text_diff(base: str, cand: str) -> list[str]:
 
     After TEXT_LINES lines, one more line counts the rest.
     """
+    return _capped(_text_runs(base, cand))
+
+
+def _capped(lines: list[str]) -> list[str]:
+    """Return the first TEXT_LINES text differences, plus a line counting the rest."""
+    if len(lines) > TEXT_LINES:
+        return lines[:TEXT_LINES] + [f"text: {len(lines) - TEXT_LINES} more differences"]
+    return lines
+
+
+def _text_runs(base: str, cand: str) -> list[str]:
+    """Return one line per run of words that differs, with up to TEXT_CONTEXT unchanged words on each side."""
     old, new = base.split(), cand.split()
     opcodes = difflib.SequenceMatcher(None, old, new, autojunk=False).get_opcodes()
     lines = []
@@ -167,8 +183,6 @@ def text_diff(base: str, cand: str) -> list[str]:
             f"text: {' '.join(before + _shorten(old[i1:i2]) + after)!r} -> "
             f"{' '.join(before + _shorten(new[j1:j2]) + after)!r}"
         )
-    if len(lines) > TEXT_LINES:
-        return lines[:TEXT_LINES] + [f"text: {len(lines) - TEXT_LINES} more differences"]
     return lines
 
 
@@ -200,10 +214,11 @@ def check_ids(base: Build, cand: Build) -> list[Finding]:
     return sorted(findings)
 
 
-def seo_fields(soup: BeautifulSoup) -> dict[str, str]:
+def seo_fields(soup: BeautifulSoup, markdown: bool = False) -> dict[str, str]:
     """Return a page's <head> title, SEO_META tags (by name or property), canonical, RSS links and JSON-LD fields.
 
-    The URL values (canonical, og:url, og:image and feeds) are normalized to paths and the descriptions to plain text.
+    The URL values (canonical, og:url, og:image and feeds) are normalized to paths and the descriptions to plain text;
+    with markdown, the descriptions are Markdown whose syntax is stripped too.
     """
     fields = {}
     # Inline SVGs in the body have a <title> of their own
@@ -218,7 +233,7 @@ def seo_fields(soup: BeautifulSoup) -> dict[str, str]:
             fields[key] = norm_url(fields[key])
     for key in DESCRIPTION_KEYS:
         if key in fields:
-            fields[key] = _plain_text(fields[key])
+            fields[key] = _plain_text(fields[key], markdown=markdown)
     if canonical := soup.find("link", rel="canonical", href=True):
         fields["canonical"] = norm_url(canonical["href"])
     if feeds := soup.find_all("link", rel="alternate", type="application/rss+xml", href=True):
@@ -233,15 +248,28 @@ def seo_fields(soup: BeautifulSoup) -> dict[str, str]:
     return fields
 
 
-def _plain_text(text: str) -> str:
-    """Strip what rendering Markdown changes, so only the words are compared.
+def _plain_text(text: str, markdown: bool = False) -> str:
+    """Unescape entities, straighten typographic quotes, dashes and ellipses, and collapse whitespace.
 
-    Unescapes entities, keeps link text, drops code and emphasis markers, straightens typographic quotes, dashes and
-    ellipses, and collapses whitespace.
+    With markdown, also keep only the text of links, code spans and emphasis (see _strip_markdown).
     """
-    text = MARKDOWN_LINK_RE.sub(r"\1", html.unescape(text)).replace("`", "")
-    text = EMPHASIS_RE.sub("", text).translate(TYPOGRAPHY)
-    return " ".join(re.sub(r"-{2,}", "-", text).split())
+    text = html.unescape(text)
+    if markdown:
+        text = _strip_markdown(text)
+    return " ".join(re.sub(r"-{2,}", "-", text.translate(TYPOGRAPHY)).split())
+
+
+def _strip_markdown(text: str) -> str:
+    """Keep the text of links, code spans and emphasis pairs; code spans keep their * and _ as written."""
+    parts = CODE_SPAN_RE.split(MARKDOWN_LINK_RE.sub(r"\1", text))
+    return "".join(part if index % 2 else _strip_emphasis(part) for index, part in enumerate(parts))
+
+
+def _strip_emphasis(text: str) -> str:
+    """Remove emphasis pairs (EMPHASIS_RE), outer pairs first, until none is left."""
+    while (stripped := EMPHASIS_RE.sub(r"\2", text)) != text:
+        text = stripped
+    return text
 
 
 def _jsonld(soup: BeautifulSoup) -> dict:
@@ -258,12 +286,15 @@ def _jsonld(soup: BeautifulSoup) -> dict:
 
 
 def check_seo(base: Build, cand: Build) -> list[Finding]:
-    """Report every seo_fields value that differs on a page both builds have."""
+    """Report every seo_fields value that differs on a page both builds have.
+
+    Only the baseline's descriptions are read as Markdown, so Markdown syntax in the candidate's is reported.
+    """
     findings = []
     for path in base.pages:
         if path not in cand.files:
             continue
-        old, new = seo_fields(base.soup(path)), seo_fields(cand.soup(path))
+        old, new = seo_fields(base.soup(path), markdown=True), seo_fields(cand.soup(path))
         findings += [
             Finding("seo", path, f"{key}: {old.get(key, '')!r} -> {new.get(key, '')!r}")
             for key in old.keys() | new.keys()
@@ -305,18 +336,18 @@ def check_content(base: Build, cand: Build) -> list[Finding]:
 
 def check_old_images(base: Build, cand: Build) -> list[Finding]:
     """Report baseline _hu images the candidate lacks, unless the rule Netlify applies to the old path is a 3xx and the
-    redirects end at the original: an image file on this site named as the old name before _hu, any image extension.
+    redirects end at the original: a file of this site with the source size and Hugo fast md5 in the old name.
 
     A redirect off the site is reported too: nothing here can tell whether it serves the image.
     """
     findings = []
     for path in sorted(base.files - cand.files):
         name = PurePosixPath(path).name
-        if not (match := RESIZED_RE.search(name)):
+        if not RESIZED_RE.search(name):
             continue
         rule, _ = cand.redirect(path)
         target, served = cand.final_target(path)
-        stem = name[: match.start()]
+        source = HU_RE.search(name)
         if rule is None:
             detail = "no redirect"
         elif not 300 <= rule.status < 400:
@@ -325,19 +356,23 @@ def check_old_images(base: Build, cand: Build) -> list[Finding]:
             detail = f"redirects to {target}, which leaves the site"
         elif not served:
             detail = f"redirects to {target}, which does not resolve"
-        elif not _is_image_named(cand, target, stem):
-            detail = f"redirects to {target}, which is not an image named {stem!r}"
+        elif source is None:
+            detail = f"redirects to {target}, but the old name has no source size to compare"
+        elif not _is_original(cand, target, source[1], int(source[2])):
+            detail = f"redirects to {target}, which is not the original ({source[2]} bytes, Hugo fast md5 {source[1]})"
         else:
             continue
         findings.append(Finding("old-images", path, detail))
     return findings
 
 
-def _is_image_named(build: Build, path: str, stem: str) -> bool:
-    """Whether path is an image file of build with this name before the extension."""
+def _is_original(build: Build, path: str, md5: str, size: int) -> bool:
+    """Whether path is a file of build with this size in bytes and this Hugo 0.123.3 fast md5."""
     decoded = unquote(path)
-    file = PurePosixPath(decoded)
-    return decoded in build.files and file.suffix.lower() in IMAGE_EXTENSIONS and file.stem == stem
+    if decoded not in build.files:
+        return False
+    file = build.root / decoded.lstrip("/")
+    return file.stat().st_size == size and hugo_fast_md5(file) == md5
 
 
 def _link_urls(soup: BeautifulSoup) -> list[str]:
@@ -386,15 +421,15 @@ def check_internal_links(base: Build, cand: Build) -> list[Finding]:
 
 
 def check_redirects(base: Build, cand: Build) -> list[Finding]:
-    """Report baseline redirect rules (source, target, status and force) that are not the first candidate rule
-    matching their source: missing, or shadowed by an earlier rule.
+    """Report baseline redirect rules (source, target, status and force) that the candidate lacks, and those that were
+    the first rule matching their source in the baseline but are shadowed by an earlier rule in the candidate.
     """
     findings = set()
     for rule in base.redirects:
         first, _ = cand.redirect(rule.source)
         if rule not in cand.redirects:
             findings.add(Finding("redirects", rule.source, f"missing redirect to {_rule_text(rule)}"))
-        elif first != rule:
+        elif first != rule and base.redirect(rule.source)[0] == rule:
             detail = f"redirect to {_rule_text(rule)} is shadowed by {first.source} {_rule_text(first)}"
             findings.add(Finding("redirects", rule.source, detail))
     return sorted(findings)

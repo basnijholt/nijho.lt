@@ -69,15 +69,40 @@ def test_map_old_images_without_source_is_an_error(tmp_path):
 
 
 @pytest.mark.parametrize("file", ["forbidden-words", "forbidden-words.private"])
-def test_map_old_images_skips_names_with_forbidden_words(tmp_path, monkeypatch, file):
-    """Words match case-insensitively; a skipped name is only in the skipped list."""
+@pytest.mark.parametrize(
+    "old_name",
+    [
+        pytest.param("secretco-logo" + SMALL.removeprefix("small"), id="in-old-name"),
+        pytest.param(HUGO_NAMES["tiny"][1].removeprefix("tiny"), id="in-source-of-a-stemless-name"),
+    ],
+)
+def test_map_old_images_skips_names_with_forbidden_words(tmp_path, monkeypatch, file, old_name):
+    """Words match case-insensitively in the old name or its source's name; a skipped name is only in the skipped
+    list."""
     config = tmp_path / "config" / "git"
     config.mkdir(parents=True)
     (config / file).write_text("# comment\n\nSecretCo\tA test word\n")
     monkeypatch.setenv("XDG_CONFIG_HOME", str(tmp_path / "config"))
-    old_name = "secretco-logo" + SMALL.removeprefix("small")
-    base, repo, cand = sites(tmp_path, [old_name, SMALL], {"assets/media/small.bmp": bmp(16, 16)})
+    sources = {"assets/media/small.bmp": bmp(16, 16), "assets/media/secretco-logo.bmp": bmp(1, 1)}
+    base, repo, cand = sites(tmp_path, [old_name, SMALL], sources)
     assert map_old_images(base, repo, cand) == ([{"file": "small.bmp", "size": 822, "names": [SMALL]}], [old_name])
+
+
+@pytest.mark.parametrize(
+    ("make", "reason"),
+    [
+        pytest.param(lambda path: path.write_bytes(b"word\xff\tA reason\n"), "invalid UTF-8", id="not-utf8"),
+        pytest.param(lambda path: path.mkdir(), "Is a directory", id="directory"),
+    ],
+)
+def test_map_old_images_names_an_unreadable_word_list(tmp_path, monkeypatch, make, reason):
+    config = tmp_path / "config" / "git"
+    config.mkdir(parents=True)
+    make(config / "forbidden-words")
+    monkeypatch.setenv("XDG_CONFIG_HOME", str(tmp_path / "config"))
+    base, repo, cand = sites(tmp_path, [SMALL], {"assets/media/small.bmp": bmp(16, 16)})
+    with pytest.raises(ParityError, match=f"^{re.escape(str(config / 'forbidden-words'))}: .*{reason}"):
+        map_old_images(base, repo, cand)
 
 
 def test_map_old_images_lists_a_name_once_when_two_folders_lose_it(tmp_path):
@@ -89,17 +114,10 @@ def test_map_old_images_lists_a_name_once_when_two_folders_lose_it(tmp_path):
     assert map_old_images(base, repo, cand) == ([{"file": "small.bmp", "size": 822, "names": [SMALL]}], [])
 
 
-@pytest.mark.parametrize(
-    ("stem", "copies", "expected"),
-    [
-        pytest.param(
-            "small", ["content/a/large.bmp", "content/b/small.bmp", "assets/x.bmp"], "small.bmp", id="same-stem"
-        ),
-        pytest.param("other", [f"content/{name}.bmp" for name in "hgfedcba"], "a.bmp", id="first-in-path-order"),
-    ],
-)
-def test_map_old_images_picks_the_source_named_like_the_old_image_else_the_first(tmp_path, stem, copies, expected):
-    """Identical files share an md5 and size; the old name's stem picks one, and sorted paths break ties."""
-    old = SMALL.replace("small", stem, 1)
-    base, repo, cand = sites(tmp_path, [old], dict.fromkeys(copies, bmp(16, 16)))
-    assert map_old_images(base, repo, cand) == ([{"file": expected, "size": 822, "names": [old]}], [])
+def test_map_old_images_gives_the_old_name_to_every_name_of_identical_sources(tmp_path):
+    """The entries do not say where the old image was, so each name an identical source has gets it."""
+    copies = ["content/a/large.bmp", "content/b/small.bmp", "content/c/small.bmp", "assets/x.bmp"]
+    base, repo, cand = sites(tmp_path, [SMALL], dict.fromkeys(copies, bmp(16, 16)))
+    assert map_old_images(base, repo, cand) == (
+        [{"file": file, "size": 822, "names": [SMALL]} for file in ("large.bmp", "small.bmp", "x.bmp")], []
+    )
