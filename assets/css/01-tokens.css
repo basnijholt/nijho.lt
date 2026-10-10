@@ -50,6 +50,20 @@
   --r: 14px;
   --r-sm: 8px;
 
+  /* Type scale: every font size in the theme is one of these steps, or a clamp() for the large headings. */
+  --fs-2xs: 12px;
+  --fs-xs: 13.5px;
+  --fs-sm: 15px;
+  --fs-md: 16px;
+  --fs-base: 17px;
+  --fs-lg: 18px;
+  --fs-xl: 20px;
+  --fs-2xl: 22px;
+  --fs-3xl: 25px;
+  --fs-4xl: 30px;
+  --fs-5xl: 36px;
+  --fs-6xl: 46px;
+
   --max: 1240px;
   --pad: clamp(20px, 4.5vw, 56px);
   --header-h: 66px;

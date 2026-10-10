@@ -1,6 +1,6 @@
 .prose {
   color: var(--text-2);
-  font-size: 18px;
+  font-size: var(--fs-lg);
   line-height: 1.72;
   overflow-wrap: break-word;
 
@@ -30,13 +30,13 @@
 
   & h2 {
     margin-top: 2.4em;
-    font-size: 30px;
+    font-size: var(--fs-4xl);
     line-height: 1.15;
   }
 
   & h3 {
     margin-top: 2em;
-    font-size: 22px;
+    font-size: var(--fs-2xl);
     line-height: 1.25;
   }
 
@@ -129,7 +129,7 @@
   & figcaption {
     margin-top: 12px;
     color: var(--muted);
-    font-size: 14.5px;
+    font-size: var(--fs-sm);
     line-height: 1.55;
   }
 
@@ -140,7 +140,7 @@
     background: var(--surface);
     color: var(--text);
     font-family: var(--mono);
-    font-size: 14px;
+    font-size: var(--fs-xs);
     line-height: 1.65;
     tab-size: 4;
 
@@ -162,7 +162,7 @@
     &:not([data-processed]) {
       color: var(--text);
       font-family: var(--mono);
-      font-size: 14px;
+      font-size: var(--fs-xs);
       line-height: 1.65;
       white-space: pre;
     }
@@ -179,7 +179,7 @@
   & table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 15.5px;
+    font-size: var(--fs-md);
     line-height: 1.45;
     font-variant-numeric: tabular-nums;
   }
@@ -229,7 +229,7 @@
   & .toc {
     border: 0;
     background: var(--surface);
-    font-size: 15px;
+    font-size: var(--fs-sm);
     line-height: 1.5;
 
     & ul {
@@ -255,7 +255,7 @@
   & sup a {
     padding: 0 2px;
     font-family: var(--mono);
-    font-size: 12px;
+    font-size: var(--fs-2xs);
     text-decoration: none;
 
     &::before {
@@ -272,7 +272,7 @@
     padding-top: 22px;
     border-top: 1px solid var(--line);
     color: var(--muted);
-    font-size: 15px;
+    font-size: var(--fs-sm);
     line-height: 1.6;
 
     & hr {
@@ -285,7 +285,7 @@
     }
 
     & li::marker {
-      font-size: 13px;
+      font-size: var(--fs-xs);
     }
 
     & a {
@@ -294,10 +294,10 @@
   }
 
   @media (width <= 767px) {
-    font-size: 17px;
+    font-size: var(--fs-base);
 
     & h2 {
-      font-size: 25px;
+      font-size: var(--fs-3xl);
     }
 
     & .anchor {
@@ -305,7 +305,7 @@
     }
 
     & pre {
-      font-size: 12.5px;
+      font-size: var(--fs-2xs);
     }
   }
 }
@@ -318,13 +318,13 @@
   border-radius: var(--r);
   background: var(--accent-soft);
   color: var(--text);
-  font-size: 16.5px;
+  font-size: var(--fs-md);
   line-height: 1.6;
 
   & > .ico {
     margin-top: 2px;
     color: var(--accent);
-    font-size: 21px;
+    font-size: var(--fs-xl);
   }
 
   & > div > * + * {

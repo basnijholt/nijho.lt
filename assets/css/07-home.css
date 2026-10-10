@@ -11,14 +11,14 @@ section.block {
   margin-bottom: 40px;
 
   & h2 { font-size: clamp(32px, 3.6vw, 44px); line-height: 1.05; }
-  & .sub { margin-top: 10px; font-size: 18px; color: var(--muted); }
+  & .sub { margin-top: 10px; font-size: var(--fs-lg); color: var(--muted); }
 }
 .more {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   padding-bottom: 2px;
-  font-size: 15px;
+  font-size: var(--fs-sm);
   font-weight: 500;
   white-space: nowrap;
 
@@ -52,7 +52,7 @@ section.block {
 }
 .role {
   margin-top: 14px;
-  font-size: 21px;
+  font-size: var(--fs-xl);
   font-weight: 500;
   color: var(--muted);
 
@@ -63,7 +63,7 @@ section.block {
   gap: 14px;
   max-width: 64ch;
   margin-top: 26px;
-  font-size: 18.5px;
+  font-size: var(--fs-lg);
   line-height: 1.62;
   color: var(--text-2);
 
@@ -77,7 +77,7 @@ section.block {
   padding-top: 32px;
   border-top: 1px solid var(--line);
 
-  & h3 { margin-bottom: 14px; font-family: var(--body); font-size: 15px; font-weight: 600; letter-spacing: 0; }
+  & h3 { margin-bottom: 14px; font-family: var(--body); font-size: var(--fs-sm); font-weight: 600; letter-spacing: 0; }
 }
 .interests {
   & ul {
@@ -89,7 +89,7 @@ section.block {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 15px;
+    font-size: var(--fs-sm);
     line-height: 1.35;
     color: var(--text-2);
   }
@@ -101,7 +101,7 @@ section.block {
     height: 32px;
     border-radius: var(--r-sm);
     background: var(--surface);
-    font-size: 17px;
+    font-size: var(--fs-base);
     color: var(--accent);
   }
 }
@@ -115,15 +115,15 @@ section.block {
     gap: 12px;
     align-items: baseline;
   }
-  & .yr { font-size: 13px; color: var(--accent); }
-  & strong { display: block; font-size: 16px; font-weight: 600; line-height: 1.35; }
-  & .inst { font-size: 15px; color: var(--muted); }
+  & .yr { font-size: var(--fs-xs); color: var(--accent); }
+  & strong { display: block; font-size: var(--fs-md); font-weight: 600; line-height: 1.35; }
+  & .inst { font-size: var(--fs-sm); color: var(--muted); }
 }
 
 /* Free Markdown sections, such as Photography. */
 .sec-body > p {
   max-width: 72ch;
-  font-size: 18px;
+  font-size: var(--fs-lg);
   line-height: 1.65;
   color: var(--text-2);
 }
@@ -162,14 +162,14 @@ section.block {
     grid-template-columns: 22px minmax(0, 1fr);
     gap: 12px;
     align-items: start;
-    font-size: 15.5px;
+    font-size: var(--fs-md);
     line-height: 1.5;
   }
-  & li > .ico { margin-top: 1px; font-size: 20px; color: var(--muted); }
-  & .k { display: block; font-size: 13px; color: var(--muted); }
+  & li > .ico { margin-top: 1px; font-size: var(--fs-xl); color: var(--muted); }
+  & .k { display: block; font-size: var(--fs-xs); color: var(--muted); }
   & .v { overflow-wrap: anywhere; }
   & .wide { grid-column: 1 / -1; }
-  & .fp { font-family: var(--mono); font-size: 13.5px; }
+  & .fp { font-family: var(--mono); font-size: var(--fs-xs); }
 }
 .map-card {
   position: relative;
@@ -222,10 +222,10 @@ section.block {
   padding: 12px 14px;
   border-radius: 10px;
   background: color-mix(in srgb, var(--bg) 94%, transparent);
-  font-size: 15px;
+  font-size: var(--fs-sm);
   font-weight: 500;
 
-  & .mono { display: inline-flex; align-items: center; gap: 4px; font-size: 12.5px; }
+  & .mono { display: inline-flex; align-items: center; gap: 4px; font-size: var(--fs-2xs); }
 }
 .osm {
   position: absolute;
@@ -234,11 +234,11 @@ section.block {
   padding: 2px 7px;
   border-radius: 6px;
   background: color-mix(in srgb, var(--bg) 88%, transparent);
-  font-size: 11.5px;
+  font-size: var(--fs-2xs);
   color: var(--muted);
 }
 
-@media (width <= 1024px) {
+@media (width <= 1180px) {
   .intro { grid-template-columns: 200px minmax(0, 1fr); column-gap: 40px; }
   .avatar { width: 200px; }
   .facts { grid-template-columns: minmax(0, 1fr); gap: 28px; }
@@ -255,22 +255,22 @@ section.block {
     gap: 14px;
     margin-bottom: 30px;
 
-    & .sub { font-size: 16.5px; }
+    & .sub { font-size: var(--fs-md); }
   }
   .intro {
     grid-template-columns: minmax(0, 1fr);
     padding-block: 36px 56px;
 
-    & h1 { font-size: 46px; }
+    & h1 { font-size: var(--fs-6xl); }
     & .social { margin-top: 24px; }
   }
   .avatar { width: 132px; margin-bottom: 26px; }
-  .role { margin-top: 10px; font-size: 18px; }
-  .bio { margin-top: 18px; font-size: 17px; }
+  .role { margin-top: 10px; font-size: var(--fs-lg); }
+  .bio { margin-top: 18px; font-size: var(--fs-base); }
   .facts { margin-top: 36px; padding-top: 28px; }
-  .sec-body > p { font-size: 16.5px; }
+  .sec-body > p { font-size: var(--fs-md); }
   .channels { grid-template-columns: minmax(0, 1fr); }
-  .email { font-size: 34px; }
+  .email { font-size: var(--fs-5xl); }
   .map-card { aspect-ratio: 4 / 3; }
 }
 @media (prefers-reduced-motion: reduce) {
