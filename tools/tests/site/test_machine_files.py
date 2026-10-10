@@ -1,10 +1,11 @@
-"""Files for machines: RSS feeds, robots.txt, the web manifest, Netlify headers, and the search index."""
+"""Files for machines: RSS feeds, robots.txt, the web manifest, Netlify headers and redirects, and the search index."""
 
 import json
 import struct
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
+import pytest
 import yaml
 
 from helpers import TOOLS
@@ -121,3 +122,49 @@ def test_index_json_schema_and_count(site, baseline):
     # truncate skips anything that looks like markup when it counts, so a cut text can run a little over 5000
     cut = [entry["content"] for entry in index if entry["content"].endswith("…")]
     assert cut and max(len(content) for content in cut) < 5500
+
+
+def test_redirects_parity_clean(failures):
+    assert failures("redirects") == []
+
+
+def test_redirects_cover_day_nn_and_llamaswap(site):
+    days = sorted(path for path in (CONTENT / "post/advent-of-open-source").iterdir() if path.is_dir())
+    assert len(days) == 24
+    expected = {f"/post/advent-of-open-source/day_{day.name[:2]}/": page_url(day / "index.md") for day in days}
+    expected["/post/llamaswap/"] = "/post/llama-nixos/"
+    for old, new in expected.items():
+        rule, target = site.redirect(old)
+        assert (target, rule.status, rule.force) == (new, 301, False), old
+        assert site.final_target(old) == (new, True), old
+
+
+def test_every_redirect_target_resolves(site):
+    targets = {rule.target for rule in site.redirects if rule.target.startswith("/") and ":" not in rule.target}
+    assert targets
+    assert sorted(target for target in targets if not site.resolves(target)) == []
+
+
+@pytest.mark.parametrize(
+    ("old", "new"),
+    [
+        ("/tags/python/", "/tag/python/"),
+        ("/tags/python/index.xml", "/tag/python/index.xml"),
+        ("/categories/ai/", "/category/ai/"),
+        ("/tags/page/2/", "/tags/"),
+        ("/tag/python/page/2/", "/tag/python/"),
+        ("/post/page/2/", "/post/"),
+        ("/project/page/2/", "/project/"),
+        ("/publication_types/2/", "/publication/"),
+        ("/publication-type/7/", "/publication/"),
+    ],
+)
+def test_old_url_schemes_redirect(site, old, new):
+    assert site.final_target(old) == (new, True)
+
+
+def test_netlify_subdomain_redirects_to_the_site(site):
+    rule = next(rule for rule in site.redirects if rule.source.startswith("https://nijholt.netlify.app/"))
+    assert (rule.source, rule.target, rule.status, rule.force) == (
+        "https://nijholt.netlify.app/*", "https://www.nijho.lt/:splat", 301, True
+    )
