@@ -1,2 +1,2 @@
-<pre class="mermaid">{{ .Inner | safeHTML }}</pre>
+<div class="mermaid">{{ strings.TrimSuffix "\n" .Inner | safeHTML }}</div>
 {{- .Page.Store.Set "mermaid" true }}

@@ -3,13 +3,32 @@ text and anchors with the baseline."""
 
 import re
 
-from helpers import CONTENT, page_url
+import pytest
+import yaml
+
+from helpers import CONTENT, bmp, page_url, require_hugo
+from parity.build import build_site, resolve_hugo
+from parity.site import Build
 
 # An <a> written as HTML in the Markdown, which the link render hook never sees
 RAW_LINK_RE = re.compile(r'<a href="(http[^"]+)"')
 SRCSET_RE = re.compile(r"(\S+) (\d+)w")
 # ref shortcodes give absolute links to this site, which the link render hook sees as placeholders
 SITE = "https://www.nijho.lt/"
+
+HOOK_PAGE = """---
+title: Hooks
+---
+
+[relative](httpie/) [secure](https://example.com/) [plain](http://example.com/) [mail](mailto:me@example.com) \
+[local](/post/x/)
+
+{{< figure src="logo.svg" alt="Logo" width="220" >}}
+
+{{< figure src="photo.bmp" alt="Photo" caption="Left half, with *tenting*." width="300" >}}
+
+![Local file named like a URL](httpie.bmp)
+"""
 
 
 def sources(pattern: str) -> dict[str, str]:
@@ -26,6 +45,55 @@ def prose(site, path: str):
     root = site.soup(path).select_one(".prose")
     assert root is not None, f"{path} has no .prose"
     return root
+
+
+@pytest.fixture(scope="module")
+def hook_page(repo_root, tmp_path_factory):
+    """The .prose of HOOK_PAGE, built with this site's render hooks, figure shortcode and Markdown settings."""
+    hugo = require_hugo(resolve_hugo(), "0.167.0", "HUGO_BIN")
+    root = tmp_path_factory.mktemp("hooks")
+    config = yaml.safe_load((repo_root / "config/_default/hugo.yaml").read_text(encoding="utf-8"))
+    site_config = {key: config[key] for key in ("markup", "imaging")}
+    site_config |= {"baseURL": SITE, "disableKinds": ["taxonomy", "term", "rss", "sitemap"]}
+    (root / "hugo.yaml").write_text(yaml.safe_dump(site_config), encoding="utf-8")
+    for name in ("_markup/render-heading.html", "_markup/render-image.html", "_markup/render-link.html",
+                 "_partials/figure.html", "_shortcodes/figure.html"):
+        (root / "layouts" / name).parent.mkdir(parents=True, exist_ok=True)
+        (root / "layouts" / name).write_text((repo_root / "layouts" / name).read_text(encoding="utf-8"))
+    (root / "layouts/home.html").write_text("")
+    (root / "layouts/page.html").write_text('<div class="prose">{{ .Content }}</div>')
+    bundle = root / "content/hooks"
+    bundle.mkdir(parents=True)
+    (bundle / "index.md").write_text(HOOK_PAGE, encoding="utf-8")
+    (bundle / "logo.svg").write_text('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2 1"></svg>')
+    (bundle / "photo.bmp").write_bytes(bmp(1000, 500))
+    (bundle / "httpie.bmp").write_bytes(bmp(40, 30))
+    build = Build(build_site(root, root / "public", production=False, hugo=hugo))
+    return build.soup("/hooks/index.html").select_one(".prose")
+
+
+@pytest.mark.parametrize(
+    ("text", "external"),
+    [("relative", False), ("secure", True), ("plain", True), ("mail", False), ("local", False)],
+)
+def test_link_target(hook_page, text, external):
+    link = hook_page.find("a", string=text)
+    assert (link.get("target"), link.get("rel")) == (("_blank", ["noopener"]) if external else (None, None))
+
+
+def test_local_image_named_like_a_url_is_resized(hook_page):
+    img = hook_page.find("img", alt="Local file named like a URL")
+    assert img["src"].endswith(".webp") and img.has_attr("srcset")
+
+
+def test_figure_width_and_caption_id(hook_page):
+    logo = hook_page.find("img", alt="Logo")
+    assert logo["src"].endswith("/logo.svg") and logo["width"] == "220" and not logo.has_attr("height")
+    photo = hook_page.find("img", alt="Photo")
+    assert (photo["width"], photo["height"]) == ("300", "150")
+    figure = photo.parent
+    assert figure.name == "figure" and figure["id"] == "figure-left-half-with-tenting"
+    assert figure.figcaption.em.get_text() == "tenting"
 
 
 def test_ids_parity_clean(failures):
@@ -103,6 +171,22 @@ def test_video_autoplay_loop_attrs(site):
             assert video.source["src"] in site.files and video.source["type"] == "video/mp4", path
 
 
+def test_autoplay_stops_for_reduced_motion(site):
+    pages = sources(r"\{\{< video [^>]*autoplay")
+    assert pages
+    for path in site.pages:
+        soup = site.soup(path)
+        stoppers = [
+            s for s in soup.find_all("script")
+            if "prefers-reduced-motion: reduce" in (s.string or "") and "video[autoplay]" in s.string
+        ]
+        if path in pages:
+            assert len(stoppers) == 1 and stoppers[0].find_all_previous("video", autoplay=True), path
+            assert "removeAttribute" in stoppers[0].string and "pause()" in stoppers[0].string
+        else:
+            assert stoppers == [], path
+
+
 def test_toc_open(site):
     pages = sources(r"\{\{< toc >\}\}")
     assert pages
@@ -135,7 +219,7 @@ def test_mermaid_only_where_used(site):
     assert pages
     for path in site.pages:
         soup = site.soup(path)
-        diagrams = soup.select("pre.mermaid")
+        diagrams = soup.select("div.mermaid")
         loaders = [s for s in soup.find_all("script", type="module") if "/npm/mermaid@" in (s.string or "")]
         if path in pages:
             assert len(diagrams) == pages[path].count("```mermaid") and len(loaders) == 1, path
@@ -157,3 +241,5 @@ def test_gallery_links_originals_at_baseline_paths(site, baseline):
             assert img["src"].endswith(".webp") and img["src"] in site.files
             assert int(img["width"]) <= 350 and int(img["height"]) <= 250
             assert img["loading"] == "lazy" and img.has_attr("data-zoomable")
+    album_files = [file for file in site.files if file.startswith("/media/albums/")]
+    assert len({file.lower() for file in album_files}) == len(album_files), "an album file is published twice"

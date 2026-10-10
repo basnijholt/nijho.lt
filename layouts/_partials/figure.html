@@ -4,7 +4,7 @@
 {{- $src := .src }}
 {{- $caption := .caption | default "" }}
 {{- $img := dict "src" $src }}
-{{- if not (strings.HasPrefix $src "http") }}
+{{- if not (findRE "^https?://" $src 1) }}
   {{- with or (.page.Resources.Get $src) (resources.Get (path.Join "media" $src)) }}
     {{- if eq .MediaType.SubType "svg" }}
       {{- $img = dict "src" .RelPermalink }}

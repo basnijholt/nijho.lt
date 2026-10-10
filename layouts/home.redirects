@@ -16,7 +16,11 @@
   {{- end }}
 {{- end }}
 {{- range resources.Match "media/**" }}
-  {{- $images.Add (path.Base .Name) (slice .) }}
+  {{- $image := . }}
+  {{- if strings.HasPrefix .Name "/media/albums/" }}
+    {{- $image = partial "functions/album_original.html" . }}
+  {{- end }}
+  {{- $images.Add (path.Base .Name) (slice $image) }}
 {{- end }}
 {{- range hugo.Data.old_images }}
   {{- $old := . }}

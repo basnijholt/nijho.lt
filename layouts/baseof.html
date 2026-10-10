@@ -10,6 +10,9 @@
   <main id="main">
     {{ block "main" . }}{{ end }}
   </main>
+  {{- if .Store.Get "autoplay" }}
+  {{ partial "reduced-motion.html" . }}
+  {{- end }}
   {{- if .Store.Get "mermaid" }}
   {{ partial "mermaid.html" . }}
   {{- end }}

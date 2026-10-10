@@ -1,7 +1,7 @@
 <script type="module">
   import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@12.1.0/dist/mermaid.esm.min.mjs";
 
-  const diagrams = [...document.querySelectorAll("pre.mermaid")];
+  const diagrams = [...document.querySelectorAll("div.mermaid")];
   const sources = diagrams.map((diagram) => diagram.innerHTML);
   const darkScheme = matchMedia("(prefers-color-scheme: dark)");
   // Mermaid replaces each diagram's source with an SVG, so a theme change draws them again from the saved sources.
