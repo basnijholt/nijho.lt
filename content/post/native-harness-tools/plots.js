@@ -10,7 +10,60 @@ const COLORS = {
   standardWork: "#ff725c",
   minimalFixed: "#9fd8a9",
   minimalWork: "#3ca951",
+  mindroomFixed: "#97bbf5",
+  mindroomWork: "#4269d0",
+  nativeFixed: "#f7d58b",
+  nativeWork: "#efb118",
+  systemPrompt: "#9c9c9c",
+  toolDefinitions: "#a463f2",
+  claude: "#ff725c",
+  gpt: "#4269d0",
 };
+
+const k = (d) => `${(d / 1000).toFixed(1)}k`;
+
+// Two bars per model, each split into the fixed part (first-request input times requests) and the work on top of it.
+// rows: [model, [fixed, work, requests], [fixed, work, requests]]; each segment carries its own start and end.
+function splitChart({ Plot, width, rows, arms, colors, xMax }) {
+  const narrow = width < 600;
+  const parts = ["Fixed part", "Work"];
+  const data = rows.flatMap(([model, ...bars]) =>
+    bars.flatMap(([fixed, work, requests], i) => [
+      { model, arm: arms[i], part: parts[0], key: `${arms[i]}, fixed`, tokens: fixed, x1: 0, x2: fixed, total: fixed + work, requests },
+      { model, arm: arms[i], part: parts[1], key: `${arms[i]}, work`, tokens: work, x1: fixed, x2: fixed + work, total: fixed + work, requests },
+    ])
+  );
+  const totals = rows.flatMap(([model, [af, aw], [bf, bw]]) => [
+    { model, arm: arms[0], total: af + aw, label: k(af + aw) },
+    { model, arm: arms[1], total: bf + bw, label: `${k(bf + bw)} (${pct(Math.round(((bf + bw) / (af + aw) - 1) * 100))})` },
+  ]);
+  const keys = arms.flatMap((arm) => [`${arm}, fixed`, `${arm}, work`]);
+  return Plot.plot({
+    width,
+    height: 64 * rows.length + 110,
+    marginLeft: narrow ? 120 : 136,
+    marginRight: narrow ? 92 : 104,
+    marginBottom: 52,
+    style: STYLE,
+    x: { domain: [0, xMax], label: "Tokens per task", grid: true, tickFormat: (d) => `${d / 1000}k`, ...X_LABEL },
+    y: { axis: null, domain: arms },
+    fy: { domain: rows.map((r) => r[0]), label: null, padding: 0.25 },
+    color: { domain: keys, range: colors, legend: true },
+    marks: [
+      Plot.barX(data, { fy: "model", y: "arm", x1: "x1", x2: "x2", fill: "key", insetTop: 2, insetBottom: 2 }),
+      Plot.text(totals, { fy: "model", y: "arm", x: "total", text: "label", textAnchor: "start", dx: 6 }),
+      Plot.tip(
+        data,
+        Plot.pointer({
+          fy: "model",
+          y: "arm",
+          x: (d) => (d.x1 + d.x2) / 2,
+          title: (d) => `${d.model}, ${d.arm}\n${d.part}: ${k(d.tokens)} tokens per task\nTotal: ${k(d.total)}, ${d.requests.toFixed(2)} requests per task`,
+        })
+      ),
+    ],
+  });
+}
 
 const STYLE = { fontSize: "13px", fontFamily: "system-ui, sans-serif", background: "transparent" };
 
@@ -107,55 +160,118 @@ export default {
     });
   },
 
-  minimalSplit: ({ Plot, width }) => {
+  tokenSplit: ({ Plot, width }) =>
+    // Through MindRoom's API on the pull request, default reasoning: MindRoom's shell and file tools against the native ones.
+    splitChart({
+      Plot,
+      width,
+      arms: ["MindRoom's tools", "Native tools"],
+      colors: [COLORS.mindroomFixed, COLORS.mindroomWork, COLORS.nativeFixed, COLORS.nativeWork],
+      xMax: 22000,
+      rows: [
+        [MODELS[0], [14617, 4326, 3.94], [12713, 4531, 3.94]],
+        [MODELS[1], [13994, 3771, 3.78], [12610, 3627, 3.92]],
+        [MODELS[2], [5767, 2483, 3.53], [7065, 3741, 4.0]],
+        [MODELS[3], [6086, 2787, 3.72], [7072, 3462, 4.0]],
+        [MODELS[4], [7924, 4079, 4.86], [6822, 4710, 3.86]],
+      ],
+    }),
+
+  effortChange: ({ Plot, width }) => {
     const narrow = width < 600;
-    const arms = ["Standard mode", "Minimal mode"];
-    // Tokens per task in Matrix conversations, same agent with only the shell tool. The fixed part is the first
-    // request's input (system prompt, tool definitions, and task) times the number of requests; work is the rest.
-    const rows = [
-      [MODELS[0], [18030, 4161], [3919, 4111]],
-      [MODELS[1], [18300, 4148], [3817, 4011]],
-      [MODELS[2], [8950, 2479], [1265, 1533]],
-      [MODELS[3], [8666, 2404], [1278, 2092]],
-      [MODELS[4], [10035, 2532], [1678, 3541]],
+    const levels = ["low", "default", "high"];
+    // Change in tokens per task with native tools instead of MindRoom's, with 95% CIs, at each reasoning effort.
+    const data = [
+      { model: "Claude Sonnet 5.5", level: "low", change: -19, lo: -23, hi: -15, mindroom: 15154, native: 12330 },
+      { model: "Claude Sonnet 5.5", level: "default", change: -9, lo: -15, hi: -1, mindroom: 17765, native: 16237 },
+      { model: "Claude Sonnet 5.5", level: "high", change: -15, lo: -19, hi: -10, mindroom: 18286, native: 15630 },
+      { model: "GPT-6 Astra", level: "low", change: 27, lo: 20, hi: 34, mindroom: 8361, native: 10627 },
+      { model: "GPT-6 Astra", level: "default", change: 31, lo: 24, hi: 38, mindroom: 8250, native: 10807 },
+      { model: "GPT-6 Astra", level: "high", change: 45, lo: 37, hi: 52, mindroom: 8934, native: 12918 },
     ];
-    const parts = ["Fixed part", "Work"];
-    // Each segment carries its own start and end, so the bars need no stacking transform.
-    const data = rows.flatMap(([model, ...arms_]) =>
-      arms_.flatMap(([fixed, work], i) => [
-        { model, arm: arms[i], part: parts[0], key: `${arms[i]}, fixed`, tokens: fixed, x1: 0, x2: fixed, total: fixed + work },
-        { model, arm: arms[i], part: parts[1], key: `${arms[i]}, work`, tokens: work, x1: fixed, x2: fixed + work, total: fixed + work },
-      ])
-    );
-    const totals = rows.flatMap(([model, [sf, sw], [mf, mw]]) => [
-      { model, arm: arms[0], total: sf + sw, label: `${((sf + sw) / 1000).toFixed(1)}k` },
-      { model, arm: arms[1], total: mf + mw, label: `${((mf + mw) / 1000).toFixed(1)}k (${pct(Math.round(((mf + mw) / (sf + sw) - 1) * 100))})` },
-    ]);
-    const keys = [`${arms[0]}, fixed`, `${arms[0]}, work`, `${arms[1]}, fixed`, `${arms[1]}, work`];
+    const models = ["Claude Sonnet 5.5", "GPT-6 Astra"];
+    const last = models.map((m) => data.filter((d) => d.model === m).at(-1));
     return Plot.plot({
       width,
-      height: 64 * MODELS.length + 110,
-      marginLeft: narrow ? 120 : 136,
-      marginRight: narrow ? 92 : 104,
+      height: Math.min(360, Math.max(280, width * 0.5)),
+      marginLeft: 52,
+      marginRight: narrow ? 96 : 130,
       marginBottom: 52,
       style: STYLE,
-      x: { domain: [0, 24000], label: "Tokens per task", grid: true, tickFormat: (d) => `${d / 1000}k`, ...X_LABEL },
-      y: { axis: null, domain: arms },
-      fy: { domain: MODELS, label: null, padding: 0.25 },
-      color: { domain: keys, range: [COLORS.standardFixed, COLORS.standardWork, COLORS.minimalFixed, COLORS.minimalWork], legend: true },
+      x: { domain: levels, label: "Reasoning effort", padding: 0.4, ...X_LABEL },
+      y: { domain: [-30, 55], label: "Change in tokens per task with native tools", labelArrow: "none", grid: true, tickFormat: pct },
+      color: { domain: models, range: [COLORS.claude, COLORS.gpt] },
       marks: [
-        Plot.barX(data, { fy: "model", y: "arm", x1: "x1", x2: "x2", fill: "key", insetTop: 2, insetBottom: 2 }),
-        Plot.text(totals, { fy: "model", y: "arm", x: "total", text: "label", textAnchor: "start", dx: 6 }),
+        Plot.ruleY([0], { stroke: "currentColor", strokeOpacity: 0.6 }),
+        Plot.ruleX(data, { x: "level", y1: "lo", y2: "hi", stroke: "model", strokeWidth: 3 }),
+        Plot.line(data, { x: "level", y: "change", stroke: "model", strokeWidth: 1.5, strokeOpacity: 0.5 }),
+        Plot.dot(data, { x: "level", y: "change", fill: "model", r: 5 }),
+        Plot.text(last, { x: "level", y: "change", text: "model", fill: "model", textAnchor: "start", dx: 12, fontWeight: "bold" }),
         Plot.tip(
           data,
           Plot.pointer({
-            fy: "model",
-            y: "arm",
-            x: (d) => (d.x1 + d.x2) / 2,
-            title: (d) => `${d.model}, ${d.arm.toLowerCase()}\n${d.part}: ${(d.tokens / 1000).toFixed(1)}k tokens per task\nTotal: ${(d.total / 1000).toFixed(1)}k`,
+            x: "level",
+            y: "change",
+            title: (d) => `${d.model}, ${d.level} effort\n${pct(d.change)} tokens per task (95% CI ${pct(d.lo)} to ${pct(d.hi)})\nMindRoom's tools ${k(d.mindroom)}, native ${k(d.native)}`,
           })
         ),
       ],
     });
   },
+
+  promptParts: ({ Plot, width }) => {
+    const narrow = width < 600;
+    const parts = ["System prompt", "Tool definitions"];
+    // Tokens each part costs on every request, measured by sending it on its own and reading the reported input tokens.
+    const bars = [
+      { model: "Claude Sonnet 5.5", mode: "standard mode", system: 2295, tools: 1292 },
+      { model: "Claude Sonnet 5.5", mode: "minimal mode", system: 152, tools: 363 },
+      { model: "GPT-6 Astra", mode: "standard mode", system: 1463, tools: 867 },
+      { model: "GPT-6 Astra", mode: "minimal mode", system: 97, tools: 72 },
+    ].map((d) => ({ ...d, label: `${d.model}\n${d.mode}` }));
+    const data = bars.flatMap((d) => [
+      { ...d, part: parts[0], tokens: d.system, x1: 0, x2: d.system },
+      { ...d, part: parts[1], tokens: d.tools, x1: d.system, x2: d.system + d.tools },
+    ]);
+    return Plot.plot({
+      width,
+      height: 54 * bars.length + 110,
+      marginLeft: narrow ? 120 : 136,
+      marginRight: 64,
+      marginBottom: 52,
+      style: STYLE,
+      x: { domain: [0, 4000], label: "Tokens on every request", grid: true, tickFormat: (d) => `${d / 1000}k`, ...X_LABEL },
+      y: { domain: bars.map((d) => d.label), label: null, tickSize: 0, padding: 0.25 },
+      color: { domain: parts, range: [COLORS.systemPrompt, COLORS.toolDefinitions], legend: true },
+      marks: [
+        Plot.barX(data, { y: "label", x1: "x1", x2: "x2", fill: "part" }),
+        Plot.text(bars, { y: "label", x: (d) => d.system + d.tools, text: (d) => (d.system + d.tools).toLocaleString("en-US"), textAnchor: "start", dx: 6 }),
+        Plot.tip(
+          data,
+          Plot.pointer({
+            y: "label",
+            x: (d) => (d.x1 + d.x2) / 2,
+            title: (d) => `${d.model}, ${d.mode}\n${d.part}: ${d.tokens.toLocaleString("en-US")} tokens`,
+          })
+        ),
+      ],
+    });
+  },
+
+  minimalSplit: ({ Plot, width }) =>
+    // Matrix conversations on main, default reasoning, the same agent with only the shell tool.
+    splitChart({
+      Plot,
+      width,
+      arms: ["Standard mode", "Minimal mode"],
+      colors: [COLORS.standardFixed, COLORS.standardWork, COLORS.minimalFixed, COLORS.minimalWork],
+      xMax: 24000,
+      rows: [
+        [MODELS[0], [18030, 4161, 3.89], [3919, 4111, 3.89]],
+        [MODELS[1], [18300, 4148, 3.94], [3817, 4011, 3.81]],
+        [MODELS[2], [8950, 2479, 3.44], [1265, 1533, 3.03]],
+        [MODELS[3], [8666, 2404, 3.33], [1278, 2092, 3.06]],
+        [MODELS[4], [10035, 2532, 3.86], [1678, 3541, 4.03]],
+      ],
+    }),
 };

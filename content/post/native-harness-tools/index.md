@@ -107,22 +107,17 @@ In the first run, 3 of Astra's 91 shell results were longer than that, and none 
 ## Where the tokens went
 
 Every request to a model sends the whole conversation so far, plus the definition of every tool the model can use.
-So the first request of a task shows what a set of tools costs before the model has done any work.
-These numbers come from the runs at each provider's default reasoning setting.
+So I split each task's tokens in two.
+The fixed part is the first request's input, which holds the system prompt, the tool definitions, and the task, times the number of requests.
+The work is everything the model read and wrote on top of that.
 
-| Model | Requests per task, MindRoom → native | First request in input tokens, MindRoom → native |
-|---|---|---|
-| Claude Opus 5.5 | 3.94 → 3.94 | 3,696 → 3,218 |
-| Claude Sonnet 5.5 | 3.78 → 3.92 | 3,702 → 3,216 |
-| GPT-6 Astra | 3.53 → 4.00 | 1,628 → 1,762 |
-| GPT-6.1 Sol | 3.72 → 4.00 | 1,628 → 1,762 |
-| GPT-6 Luna | 4.86 → 3.86 | 1,628 → 1,762 |
+{{< plot name="tokenSplit" caption="Tokens per task through MindRoom's API with MindRoom's shell and file tools and with the native ones, split into the fixed part (light) and the work the model did on top of it (dark). All models ran at their provider's default reasoning setting. Hover for the number of requests." >}}
 
 Claude did not work any differently with Claude Code's tools.
-It made about the same number of requests, and its savings match the roughly 480 tokens by which the definitions of Claude Code's tools are shorter than MindRoom's.
+It made about the same number of requests, its work changed by less than 5%, and its savings all come from the fixed part: Claude Code's tool definitions are about 480 tokens shorter than MindRoom's.
 
 GPT did work differently.
-With Codex's tools, Astra and Sol made 0.3 to 0.5 more requests per task, and each request carried a bit more.
+With Codex's tools, Astra and Sol made 0.3 to 0.5 more requests per task and did 51% and 24% more work.
 I expected the opposite.
 These are the tools these models were trained on, so I thought they would need fewer and more confident steps.
 
@@ -189,22 +184,14 @@ I look at what the reasoning setting itself changes [below](#does-more-reasoning
 Everything so far ran at each provider's default reasoning setting.
 So I also ran the two models with the clearest effect, Claude Sonnet 5.5 and GPT-6 Astra, at low and at high reasoning effort.[^effort]
 
-| Model | Reasoning effort | MindRoom's tools | Native tools | Change |
-|---|---|---|---|---|
-| Claude Sonnet 5.5 | low | 15,154 | 12,330 | −19% [−23, −15] |
-| Claude Sonnet 5.5 | default | 17,765 | 16,237 | −9% [−15, −1] |
-| Claude Sonnet 5.5 | high | 18,286 | 15,630 | −15% [−19, −10] |
-| GPT-6 Astra | low | 8,361 | 10,627 | +27% [+20, +34] |
-| GPT-6 Astra | default | 8,250 | 10,807 | +31% [+24, +38] |
-| GPT-6 Astra | high | 8,934 | 12,918 | +45% [+37, +52] |
+{{< plot name="effortChange" caption="Change in tokens per task when Claude Sonnet 5.5 and GPT-6 Astra use their native harness tools instead of MindRoom's, at each reasoning effort, with 95% confidence intervals. The default is what each provider uses when no effort is sent; Sonnet's default behaved like its high setting, and Astra's fell between low and high. Hover for the tokens per task." >}}
 
-Tokens per task, with 95% confidence intervals for the change; both models solved all 36 tasks in every row except one, where Astra with MindRoom's tools solved 35.
+Both models solved all 36 tasks at every effort with either set of tools, except for one task that Astra missed with MindRoom's tools at its default effort.
 
 More reasoning did not make Codex's tools work better for GPT; it made them worse.
 At high effort, Astra made 4.5 requests per task with Codex's tools against 3.6 with MindRoom's, and used 45% more tokens.
 For Claude, the native tools stayed cheaper at every level, and saved the most at low effort, where Sonnet also made the fewest requests.
 So the reasoning setting changes how many tokens a task takes, but not which tools are cheaper.
-Sonnet's default behaved like its high setting, and Astra's default fell between low and high.
 
 ## Where minimal mode came from
 
@@ -265,9 +252,10 @@ The definitions of the shell's tools add another 1,292 and 867 tokens.
 In minimal mode, the system prompt is 12 lines, 152 and 97 tokens, and the single `bash` tool adds 363 and 72 tokens.[^claudetools]
 The model receives all of that again with every request, so it adds up: in standard mode, about 80% of all tokens were this fixed part.
 
+{{< plot name="promptParts" caption="What every request carries besides the conversation: the system prompt and the tool definitions, in standard and in minimal mode, from each provider's own token counts. Hover for values." >}}
+
 A shorter prompt saves tokens even if the model then has to work harder, so the real question is whether it did.
-To check, I split every task's tokens into the fixed part, which is the first request's input times the number of requests, and the rest: everything the model read and wrote while it worked.
-Those are the light and dark parts of the bars in the chart above.
+The [same split](#where-the-tokens-went) into the fixed part and the work answers that: they are the light and dark parts of the bars in the minimal-mode chart above.
 The work stayed the same for both Claude models (1% and 3% less), and went down for Astra and Sol (38% and 13% less).
 Luna is the exception: it made more requests and did 40% more work in minimal mode, but the shorter prompt still more than paid for that.
 
@@ -346,6 +334,17 @@ All scripts, the tasks, and one row per trial, with its reasoning setting, are [
 | GPT-6 Astra | 36/36 · 6,025 | 36/36 · 6,052 (0%) |
 | GPT-6.1 Sol | 36/36 · 6,195 | 36/36 · 6,177 (0%) |
 | GPT-6 Luna | 31/36 · 7,118 | 34/36 · 7,018 (−1%) |
+
+**Reasoning effort: native tools against MindRoom's tools (pull request, through MindRoom's API)**
+
+| Model | Reasoning effort | MindRoom's tools | Native tools |
+|---|---|---|---|
+| Claude Sonnet 5.5 | low | 36/36 · 15,154 | 36/36 · 12,330 (−19%) |
+| Claude Sonnet 5.5 | default | 36/36 · 17,765 | 36/36 · 16,237 (−9%) |
+| Claude Sonnet 5.5 | high | 36/36 · 18,286 | 36/36 · 15,630 (−15%) |
+| GPT-6 Astra | low | 36/36 · 8,361 | 36/36 · 10,627 (+27%) |
+| GPT-6 Astra | default | 35/36 · 8,250 | 36/36 · 10,807 (+31%) |
+| GPT-6 Astra | high | 36/36 · 8,934 | 36/36 · 12,918 (+45%) |
 
 **Minimal mode against standard mode (main branch, through Matrix, shell tool only, default reasoning)**
 
