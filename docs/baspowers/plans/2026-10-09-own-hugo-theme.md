@@ -14,7 +14,7 @@
 
 ## Global Constraints
 
-- Work only in the worktree `~/Work/nijho.lt-worktrees/own-theme` (branch `own-theme`). Never write to `~/Work/nijho.lt`; other sessions switch its branch.
+- Work only in the worktree `~/Work/nijho.lt-worktrees/own-theme` (branch `theme`, stacked on `parity-check`). Never write to `~/Work/nijho.lt`; other sessions switch its branch.
 - Hugo versions: the new theme targets **Hugo 0.167.0** (`export HUGO_BIN=/tmp/hugo-latest/bin/hugo`); the baseline (old theme at the pinned commit) builds with **0.123.3** (`export HUGO_BASELINE_BIN=/tmp/hugo-bin/hugo`). If either is missing, download `hugo_extended_<version>_linux-amd64.tar.gz` from the gohugoio/hugo GitHub release. Netlify's `HUGO_VERSION` moves to `0.167.0` in Task 19.
 - Templates use only the Hugo 0.146+ tree: `layouts/{baseof,home,page,section,taxonomy,term,404}.html`, `layouts/<section>/{page,section}.html`, `layouts/_partials/`, `layouts/_shortcodes/`, `layouts/_markup/`. Never `_default/`, `partials/`, `shortcodes/` or `index.html`; never call `partial "partials/..."`.
 - Hugo 0.167 traps (see the guide's gotchas): `pagination.pagerSize` (not `paginate`), `.Summary` is HTML (use `plainify` for text), wrap `resources.GetRemote` in `try`, `site.Pages` (not `site.AllPages`), `hugo.Data`, `site.Language.Locale`, `imaging.jpeg.quality`/`imaging.webp.quality` set to 90, `build.noJSConfigInAssets: true`, front-matter integers are `uint64`.
