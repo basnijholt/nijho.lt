@@ -74,9 +74,13 @@ The agent's commands ran in a Docker container, the way MindRoom runs agents it 
 I tested five models: Claude Opus 5.5, Claude Sonnet 5.5, GPT-6 Astra, GPT-6.1 Sol, and GPT-6 Luna.
 Almost every configuration solved almost every task, so the interesting number is how many tokens the agent needed to get there.[^tokens]
 
+I left every model at its provider's default reasoning setting.
+For the Claude models, that is adaptive thinking, where the model decides when to think; they thought before 15 to 25% of their replies.
+On the Codex backend, GPT's default barely reasoned on these tasks: only 4 to 12% of requests had any reasoning tokens, and then a few dozen to about a hundred.
+
 ## Claude got a bit cheaper, GPT got more expensive
 
-{{< plot name="nativeDelta" caption="Change in tokens per task when each model uses its native harness tools instead of MindRoom's, with 95% confidence intervals. The second row caps the shell output at the last 100 lines, like MindRoom's own shell tool does. Hover for values." >}}
+{{< plot name="nativeDelta" caption="Change in tokens per task when each model uses its native harness tools instead of MindRoom's, with 95% confidence intervals. The second row caps the shell output at the last 100 lines, like MindRoom's own shell tool does, and the third row gives the model only the shell tool. Hover for values." >}}
 
 With Claude Code's tools, both Claude models used about 9% fewer tokens.
 With Codex's tools, GPT-6 Astra used 31% more tokens and GPT-6.1 Sol 19% more.
@@ -183,6 +187,12 @@ That is what inspired MindRoom's minimal mode.
 If tool definitions cost tokens on every request, fewer tools should be cheaper.
 With only the shell tool and none of the file tools, the agent used 29 to 40% fewer tokens than with both, and solved the same tasks.[^shellonly]
 
+This is where I expected the native tools to matter most: a model with nothing but a shell, in exactly the shape it knows from its own harness.
+So I also gave Claude only Claude Code's `Bash`, `BashOutput`, and `KillShell`, and GPT only Codex's `exec_command` and `write_stdin`.
+For GPT, it made no difference at all: Astra, Sol, and Luna used the same number of tokens, within a percent, and made the same number of requests.
+Claude Sonnet 5.5 used 18% fewer tokens and Claude Opus 5.5 6% fewer, mostly because Claude Code's shell tools take fewer tokens to describe than MindRoom's.
+The third row of the [first chart](#claude-got-a-bit-cheaper-gpt-got-more-expensive) shows these numbers.
+
 MindRoom also has a [minimal mode](https://docs.mindroom.chat/tools/agent-cli/), which takes this all the way.
 The agent gets a short prompt and a single `bash` tool instead of its normal prompt and tools.
 It can still reach its other tools through a command-line program inside that shell, but for these tasks, all it needs is Bash.
@@ -190,13 +200,26 @@ It can still reach its other tools through a command-line program inside that sh
 Minimal mode only works in chat conversations, so I ran it through Matrix.
 Next to it, I ran the same agent with only its shell tool in standard mode, also through Matrix.[^matrix]
 
-{{< plot name="minimalTokens" caption="Tokens per task in Matrix conversations: the same agent with only MindRoom's shell tool, in standard mode and in minimal mode with a single Bash tool. Hover for values." >}}
+{{< plot name="minimalSplit" caption="Tokens per task in Matrix conversations: the same agent with only MindRoom's shell tool, in standard mode and in minimal mode with a single Bash tool. The light part of each bar is the fixed part (the system prompt, the tool definitions, and the task, resent with every request), the dark part the work the model did on top of that. Hover for values." >}}
 
 The minimal agent used 58 to 76% fewer tokens than the same agent in standard mode, for every model.
 Its first request dropped from about 4,600 to 1,000 input tokens for Claude, and from about 2,600 to 410 for GPT.
 Astra and Sol also needed fewer requests, about 3.0 per task instead of 3.3 to 3.4.
 Three of the five models solved one task fewer in minimal mode, mostly the same script-writing task that other configurations also miss now and then.
 That is within the noise here, but I will keep an eye on it with harder tasks.
+
+Is that a fair comparison?
+Most of the difference is the prompt.
+In standard mode, the system prompt is about 100 lines: 2,295 tokens for Claude Sonnet 5.5 and 1,463 for GPT-6 Astra.
+The definitions of the shell's tools add another 1,292 and 867 tokens.
+In minimal mode, the system prompt is 12 lines, 152 and 97 tokens, and the single `bash` tool adds 363 and 72 tokens.[^claudetools]
+The model receives all of that again with every request, so it adds up: in standard mode, about 80% of all tokens were this fixed part.
+
+A shorter prompt saves tokens even if the model then has to work harder, so the real question is whether it did.
+To check, I split every task's tokens into the fixed part, which is the first request's input times the number of requests, and the rest: everything the model read and wrote while it worked.
+Those are the light and dark parts of the bars in the chart above.
+The work stayed the same for both Claude models (1% and 3% less), and went down for Astra and Sol (38% and 13% less).
+Luna is the exception: it made more requests and did 40% more work in minimal mode, but the shorter prompt still more than paid for that.
 
 So models that were trained with a carefully designed set of tools did best with almost no tools at all.
 
@@ -265,6 +288,8 @@ Each cell shows tasks solved out of 36, then tokens per task.
 {{< /detail-tag >}}
 
 [^strict]: Armin also found that Anthropic's strict tool mode, which restricts the model's output to the tool's schema, made these failures disappear in his tests. Pi later turned it on for Claude models, and a pi user then [linked a different problem to it](https://github.com/earendil-works/pi/issues/10074#issuecomment-6000381416): in that user's logs, 9.5% of Claude's edits had mangled `\u` escapes for non-ASCII text, such as Korean, with strict mode on, and 1.5% with it off.
+
+[^claudetools]: Anthropic adds its own instructions for tool use to every request that has tools, which is why a single Bash tool costs Claude 363 tokens. I measured all four numbers by sending each part on its own and reading the input tokens the provider reported.
 
 [^tasks]: The 12 tasks come from 12 families: a CSV report, finding the commit that broke a check, renaming an API across a package, counting errors in log files, fixing failing tests, finding files, extracting fields from JSON, writing a shell script, editing a configuration file, counting matching lines in very long command output, unpacking nested archives, and deduplicating and merging data files. I tune MindRoom's agent setup on other instances of these families, and these 12 were held out from that.
 
