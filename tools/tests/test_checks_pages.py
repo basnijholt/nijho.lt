@@ -294,16 +294,36 @@ def test_content_skips_other_pages(make_build, path):
     [
         pytest.param(
             '<p>See <a href="/x/">the docs</a>.</p>', "<p>See .</p>",
-            ["text: 'See the docs.' -> 'See .'"], id="link-text-dropped",
+            ["text: 'See the docs .' -> 'See .'"], id="link-text-dropped",
         ),
         pytest.param(
             "<p>Python</p>", "<p>python</p>", ["text: 'Python' -> 'python'"], id="case"
         ),
         pytest.param(
             '<p>Claim<sup><a href="#fn:1">1</a></sup>.</p>', "<p>Claim.</p>",
-            ["text: 'Claim1.' -> 'Claim.'"], id="footnote-reference-dropped",
+            ["text: 'Claim 1 .' -> 'Claim.'"], id="footnote-reference-dropped",
         ),
         pytest.param("<p>a\n   b</p>", "<p>a b</p>", [], id="whitespace"),
+        pytest.param("<p>One</p><p>Two</p>", "<p>One</p>\n\n<p>Two</p>", [], id="whitespace-between-blocks"),
+        pytest.param(
+            "<ul><li>One</li><li>Two</li></ul>", "<ul>\n<li>One</li>\n<li>Two</li>\n</ul>", [], id="list-items"
+        ),
+        pytest.param(
+            "<p>One</p><p>Two</p>", "<p>One</p>\n<p></p>", ["text: 'One Two' -> 'One'"],
+            id="word-dropped-between-blocks",
+        ),
+        pytest.param(
+            '<pre class="chroma"><span class="nt">"key"</span><span class="p">:</span> 1</pre>',
+            '<pre class="chroma">"key": 1</pre>', [], id="code-highlighted-differently",
+        ),
+        pytest.param(
+            '<pre class="chroma"><span>"key"</span>: 1</pre>', '<pre class="chroma"><span>"key"</span>: 2</pre>',
+            ["""text: '"key": 1' -> '"key": 2'"""], id="code-changed",
+        ),
+        pytest.param(
+            '<div class="mermaid">A<br/>B</div>', '<pre class="mermaid">A<br/>B</pre>', ["pre count: 0 -> 1"],
+            id="line-break-outside-code",
+        ),
         pytest.param('<h2>H<a class="anchor" href="#h">#</a></h2>', "<h2>H</h2>", [], id="heading-anchor"),
         pytest.param(
             '<details class="toc"><summary>Contents</summary><a href="#a">A</a></details><p>Body</p>', "<p>Body</p>",

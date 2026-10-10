@@ -304,11 +304,17 @@ def check_seo(base: Build, cand: Build) -> list[Finding]:
 
 
 def _body(root: Tag) -> tuple[str, dict[str, int]]:
-    """Return an article body's whitespace-collapsed text and COUNTED_TAGS counts, without the UNCOMPARED parts."""
+    """Return an article body's text and COUNTED_TAGS counts, without the UNCOMPARED parts.
+
+    Every text node counts as its own words, so whether the markup puts whitespace between two blocks does not matter.
+    Highlighted code keeps its text as written, because Chroma versions split it into spans at different places.
+    """
     root = copy.copy(root)  # Build.soup results are shared
     for tag in root.select(UNCOMPARED):
         tag.decompose()
-    return " ".join(root.get_text().split()), {name: len(root.find_all(name)) for name in COUNTED_TAGS}
+    for code in root.select("pre.chroma"):
+        code.string = code.get_text()
+    return " ".join(root.get_text(" ").split()), {name: len(root.find_all(name)) for name in COUNTED_TAGS}
 
 
 def check_content(base: Build, cand: Build) -> list[Finding]:

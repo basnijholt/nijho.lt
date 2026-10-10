@@ -49,6 +49,7 @@ A check fails when:
   Descriptions are compared as plain text: entities, typographic quotes, dashes and whitespace do not count, and the baseline's Markdown link, code and emphasis syntax is stripped.
   Emphasis is a `*`, `**`, `_` or `__` pair around words, so `snake_case` and `__init__.py` stay as written; Markdown in the candidate's description is a difference.
 - `content`: a post, project or publication lost its article body, its text differs (TOC and heading anchors ignored), or its count of `img`, `pre`, `table`, `video` or `details` changed.
+  Every text node counts as separate words, so whitespace between blocks does not matter; highlighted code is compared as written.
 - `old-images`: a baseline `_hu` image is gone, unless the first `_redirects` rule matching its path (splats and placeholders included) is a 3xx and the redirects end at the original: a file on this site with the source size and Hugo fast md5 written in the old name.
 - `internal-links`: an `href`, `src`, `srcset` or video `poster` points to a site path that does not exist, unless the same link on the same baseline page was already broken.
 - `redirects`: a baseline `_redirects` rule (source, target, status and `!`) is missing, or another rule than in the baseline matches its source first.
