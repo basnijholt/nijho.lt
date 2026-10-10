@@ -538,6 +538,7 @@ dialog.zoom {
   }
 }
 .list > .prose {
+  max-width: 720px;
   margin-bottom: 40px;
 }
 

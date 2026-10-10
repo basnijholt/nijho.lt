@@ -89,3 +89,10 @@ def test_publication_filters_present(site):
 
 def test_old_images_parity_clean(failures):
     assert failures("old-images") == []
+
+
+def test_publication_links_accented_coauthors(site):
+    hrefs = {a["href"] for a in site.soup("/publication/spin_orbit/index.html").select(".pub-authors a")}
+    assert "/authors/onder-gul/" in hrefs
+    names = [a.get_text(strip=True) for a in site.soup("/publication/conductance_quantization/index.html").select(".pub-authors a")]
+    assert "Önder Gül" in names and "Sébastien R. Plissard" in names

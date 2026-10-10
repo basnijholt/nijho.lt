@@ -3,11 +3,6 @@ section.block {
   padding-block: 96px 104px;
   border-top: 1px solid var(--line);
 }
-/* Rendering waits until a section nears the viewport; the browser remembers its real height afterwards. */
-section.block:not(#blog-posts) {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 1000px;
-}
 .sec-head {
   display: flex;
   align-items: flex-end;

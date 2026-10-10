@@ -79,3 +79,21 @@ def test_retrospective_keeps_the_baseline_title(site, baseline):
 
 def test_no_broken_internal_links(site):
     assert broken_internal_links(site) == []
+
+
+def test_publication_type_titles(site):
+    taxonomy = site.soup("/publication_types/index.html")
+    assert taxonomy.select_one("h1").get_text(strip=True) == "Publication types"
+    assert taxonomy.title.string.startswith("Publication types |")
+    term = site.soup("/publication-type/article-journal/index.html")
+    assert term.select_one("h1").get_text(strip=True) == "Journal article"
+    assert term.title.string.startswith("Journal article |")
+    assert "Journal article" in [a.get_text(" ", strip=True).rsplit(" ", 1)[0] for a in taxonomy.select("ul.terms a")]
+
+
+def test_untitled_page_row_uses_its_first_heading(site):
+    row = site.soup("/post/advent-of-open-source/index.html").select_one(
+        'ul.w1 > li:has(a[href="/post/advent-of-open-source/retrospective/"])'
+    )
+    assert row.select_one(".blog-title").get_text(strip=True) == "A Retrospective on Advent of Open Source"
+    assert not row.select(".summary h1, .summary h2")

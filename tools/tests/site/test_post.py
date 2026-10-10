@@ -126,3 +126,21 @@ def test_post_scripts_stay_small(site):
     size = sum(len(gzip.compress((site.root / src[1:]).read_bytes())) for src in scripts)
     assert size < 15_000, size
     assert not site.soup("/phd-defense/index.html").select('script[src*="/js/toc."]')
+
+
+def test_standalone_page_uses_the_post_layout(site):
+    soup = site.soup("/phd-defense/index.html")
+    assert soup.select_one("article.wrap.post .post-head h1")
+    assert soup.select_one("article.wrap.post > .prose").get_text(strip=True)
+    assert soup.select_one("[data-zoomable]") and soup.select('script[src^="/js/zoom."]')
+
+
+def test_contents_rail_only_with_entries(site):
+    for page in post_pages(site):
+        soup = site.soup(page)
+        rail = soup.select_one(".rail")
+        toc = soup.select('script[src^="/js/toc."]')
+        if rail:
+            assert len(rail.select("nav a")) >= 2, page
+        assert bool(toc) == bool(rail), page
+    assert not site.soup("/post/git-worktree/index.html").select_one(".rail")

@@ -4,19 +4,22 @@
 {{- $page := . }}{{ $h := 2 }}
 {{- if reflect.IsMap . }}{{ $page = .page }}{{ $h = .h }}{{ end }}
 {{- with $page }}
+{{- /* A page without a title (a content file without front matter) goes by its first top-level heading. */}}
+{{- $title := .Title }}
+{{- if not $title }}{{ range .Fragments.HeadingsMap }}{{ if and (not $title) (eq .Level 1) }}{{ $title = .Title }}{{ end }}{{ end }}{{ end }}
 <li class="blog-item">
   <div class="head">
     <p class="post-meta mono">
       {{- if not .Date.IsZero }}<time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>{{ end }}
       {{- if .Params.reading_time }} · {{ .ReadingTime }} min read{{ end -}}
     </p>
-    <h{{ $h }} class="blog-title"><a class="stretch" href="{{ .RelPermalink }}">{{ .Title | default site.Title }}</a></h{{ $h }}>
+    <h{{ $h }} class="blog-title"><a class="stretch" href="{{ .RelPermalink }}">{{ $title | default site.Title }}</a></h{{ $h }}>
     {{- with .GetTerms "categories" }}
     <div class="chips">{{ range . }}<a class="chip" href="{{ .RelPermalink }}">{{ partial "functions/title.html" . }}</a>{{ end }}</div>
     {{- end }}
   </div>
   <div class="side">
-    <div class="summary">{{ with .Params.summary }}{{ . | markdownify | emojify }}{{ else }}{{ .Summary }}{{ end }}</div>
+    <div class="summary">{{ with .Params.summary }}{{ . | markdownify | emojify }}{{ else }}{{ .Summary | replaceRE `(?s)<h[1-6][^>]*>.*?</h[1-6]>` "" | safeHTML }}{{ end }}</div>
     {{- with (.Resources.ByType "image").GetMatch "thumbnail*" }}
       {{- with .Fill "176x312 webp" }}<img class="thumb" src="{{ .RelPermalink }}" width="88" height="156" alt="" loading="lazy">{{ end }}
     {{- else }}{{ with partial "functions/featured_image.html" . }}

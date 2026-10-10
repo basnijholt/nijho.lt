@@ -81,6 +81,16 @@ def page(browser: Browser, base: str, path: str = "/", **options) -> Page:
     return new
 
 
+def settle(p: Page) -> None:
+    """Wait until a smooth scroll has stopped: the scroll position is the same in three readings 150 ms apart."""
+    readings = []
+    while len(readings) < 3 or len(set(readings[-3:])) > 1:
+        p.wait_for_timeout(150)
+        readings.append(p.evaluate("scrollY"))
+        if len(readings) > 60:
+            raise AssertionError("the page kept scrolling for 9 s")
+
+
 @check
 def theme_toggle_persists_across_navigation(browser, base):
     p = page(browser, base, color_scheme="light")
@@ -190,6 +200,42 @@ def anchor_not_hidden_under_header(browser, base):
     top = p.eval_on_selector(f"[id='{heading}']", "h => h.getBoundingClientRect().top")
     bottom = p.eval_on_selector(".site-header", "h => h.getBoundingClientRect().bottom")
     assert top >= bottom, (top, bottom)
+
+
+@check
+def menu_links_land_on_their_sections(browser, base):
+    """Each menu link, followed from the homepage and from a post, shows its section's heading near the top, below
+    the sticky header."""
+    off = []
+    for width in (1440, 390):
+        for start in ("/", POST):
+            p = page(browser, base, start, viewport={"width": width, "height": 900})
+            for href in p.eval_on_selector_all("#site-menu a", "links => links.map(a => a.getAttribute('href'))"):
+                p.goto(start, wait_until="networkidle")
+                if width < 920:
+                    p.click(".menu-btn")
+                p.click(f'#site-menu a[href="{href}"]')
+                p.wait_for_url(f"**{href}")
+                settle(p)
+                section = href.split("#")[1]
+                top = p.eval_on_selector(f"#{section} :is(h1, h2)", "h => h.getBoundingClientRect().top")
+                bottom = p.eval_on_selector(".site-header", "h => h.getBoundingClientRect().bottom")
+                # The last section cannot rise further once the page is scrolled to its end, and the first one starts
+                # at the header with the avatar above its heading on small screens.
+                at_end = p.evaluate("innerHeight + scrollY >= document.documentElement.scrollHeight - 2")
+                at_start = p.evaluate("scrollY") == 0
+                if not (top >= bottom and (top - bottom <= 160 or at_end or at_start)):
+                    off.append(f"{width}px from {start}: {href} heading top {top:.0f}, header bottom {bottom:.0f}")
+            p.context.close()
+    assert off == [], off
+
+
+@check
+def list_text_keeps_a_readable_measure(browser, base):
+    p = page(browser, base, "/post/advent-of-open-source/")
+    width = p.eval_on_selector(".list > .prose", "e => e.getBoundingClientRect().width")
+    p.context.close()
+    assert width <= 760, width
 
 
 @check

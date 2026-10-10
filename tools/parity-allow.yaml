@@ -48,3 +48,11 @@
   path: /post/index.html
   match: article root missing in candidate
   reason: "The post list has no body of its own; the baseline's article root there is the first summary"
+- check: feeds
+  path: /publication_types/index.xml
+  match: "channel title: 'Publication_types | Bas Nijholt' -> 'Publication types | Bas Nijholt'"
+  reason: The publication-type taxonomy is titled with a readable name
+- check: feeds
+  path: /publication-type/article-journal/index.xml
+  match: "channel title: 'Article-Journal | Bas Nijholt' -> 'Journal article | Bas Nijholt'"
+  reason: Publication types are titled with the names their pages and links use

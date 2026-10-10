@@ -53,6 +53,9 @@
       }
       grid.replaceChildren(...rows)
     }
+    // Lay out once now, while the page is still parsing, so the rows do not change height after the browser has
+    // scrolled to a #fragment further down; the observer then follows width changes.
+    layOut()
     new ResizeObserver(layOut).observe(grid)
   }
 </script>

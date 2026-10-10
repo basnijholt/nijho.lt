@@ -1,6 +1,9 @@
 {{ define "main" }}
 {{- $me := (site.GetPage "/authors/admin").Title }}
 {{- $authors := .Params.authors | default slice }}
+{{- /* Author pages by lowercased name. Term URLs drop accents (removePathAccents), so they cannot be rebuilt from a name. */}}
+{{- $profiles := dict }}
+{{- range .GetTerms "authors" }}{{ $profiles = merge $profiles (dict (lower .LinkTitle) .RelPermalink) }}{{ end }}
 <article class="wrap post publication">
   <header class="post-head">
     {{ partial "post/breadcrumb.html" . }}
@@ -8,7 +11,7 @@
     {{- /* The first 20 authors link to their author pages; a count stands in for the rest. */}}
     <p class="pub-authors">
       {{- range $i, $name := first 20 $authors }}{{ if $i }}, {{ end }}
-        {{- with site.GetPage (printf "/authors/%s" (urlize $name)) }}<a href="{{ .RelPermalink }}">{{ if eq $name $me }}<strong>{{ $name }}</strong>{{ else }}{{ $name }}{{ end }}</a>{{ else }}{{ $name }}{{ end }}
+        {{- with index $profiles (lower $name) }}<a href="{{ . }}">{{ if eq $name $me }}<strong>{{ $name }}</strong>{{ else }}{{ $name }}{{ end }}</a>{{ else }}{{ $name }}{{ end }}
       {{- end }}
       {{- with sub (len $authors) 20 }}{{ if gt . 0 }}, and {{ . }} more{{ end }}{{ end -}}
     </p>

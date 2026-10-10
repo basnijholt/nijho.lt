@@ -7,7 +7,7 @@
     {{ partial "post/meta.html" . }}
   </header>
   {{ partial "post/featured.html" . }}
-  {{- if gt (len .Fragments.HeadingsMap) 1 }}
+  {{- if gt (len (findRE `<a ` .TableOfContents)) 1 }}
   <aside class="rail">
     <nav aria-label="Contents">
       <h2>Contents</h2>

@@ -29,7 +29,11 @@ def test_speculation_rules_and_view_transition_present(site):
     for page in PAGES:
         soup = site.soup(page)
         rules = json.loads(soup.select_one('script[type="speculationrules"]').get_text())
-        assert rules == {"prefetch": [{"where": {"href_matches": "/*"}, "eagerness": "moderate"}]}, page
+        [rule] = rules["prefetch"]
+        assert rule["eagerness"] == "moderate", page
+        assert rule["where"]["and"][0] == {"href_matches": "/*"}, page
+        skipped = rule["where"]["and"][1]["not"]["href_matches"]
+        assert {"/*.xml", "/*.json", "/*.asc", "/*.gif", "/*.png", "/*.jpg", "/*.mp4"} <= set(skipped), page
         styles = "".join(s.get_text() for s in soup.select("head style")).replace(" ", "").replace(";}", "}")
         assert "@media(prefers-reduced-motion:no-preference){@view-transition{navigation:auto}}" in styles
 
