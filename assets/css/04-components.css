@@ -46,3 +46,12 @@ a.chip:hover {
   background: var(--surface-2);
   color: var(--accent);
 }
+
+/* Inline brand and social icons from icon.html. */
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+  fill: currentColor;
+}

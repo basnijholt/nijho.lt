@@ -1,0 +1,34 @@
+{{ define "main" }}
+<article class="wrap post">
+  <header class="post-head">
+    {{ partial "post/breadcrumb.html" . }}
+    <h1>{{ .Title }}</h1>
+    {{ with .Params.subtitle }}<p class="subtitle">{{ . | markdownify | emojify }}</p>{{ end }}
+    {{ partial "post/meta.html" . }}
+  </header>
+  {{ partial "post/featured.html" . }}
+  {{- if gt (len .Fragments.HeadingsMap) 1 }}
+  <aside class="rail">
+    <nav aria-label="Contents">
+      <h2>Contents</h2>
+      {{ .TableOfContents }}
+    </nav>
+  </aside>
+  {{- end }}
+  <div class="prose">{{ .Content }}</div>
+  <footer class="post-end">
+    {{ with .GetTerms "tags" }}
+    <div class="tags"><span class="label">Tags</span>{{ range . }}<a class="chip" href="{{ .RelPermalink }}">{{ partial "functions/title.html" . }}</a>{{ end }}</div>
+    {{ end }}
+    <div class="row">
+      {{ partial "post/share.html" . }}
+      {{ partial "post/edit-link.html" . }}
+    </div>
+    {{ partial "post/author-card.html" . }}
+  </footer>
+</article>
+<div class="after">
+  {{ partial "post/related.html" . }}
+  {{ partial "comments.html" . }}
+</div>
+{{ end }}

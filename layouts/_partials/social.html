@@ -1,0 +1,7 @@
+{{- /* The author's social links (front matter social: icon, link) as icon buttons. */ -}}
+<ul class="social" aria-label="Elsewhere">
+  {{- range .Params.social }}
+  {{- $link := cond (hasPrefix .link "#") (printf "/%s" .link) .link }}
+  <li><a href="{{ $link }}" aria-label="{{ .icon | humanize }}">{{ partial "icon.html" (dict "name" .icon) }}</a></li>
+  {{- end }}
+</ul>

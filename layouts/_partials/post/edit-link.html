@@ -1,0 +1,3 @@
+{{- if .Params.editable }}{{ with site.Params.features.repository }}
+<a class="edit" href="{{ .url }}/edit/{{ .branch }}/{{ .content_dir }}/{{ $.File.Path }}">{{ partial "ui-icon.html" "pencil-simple" }}Edit this page</a>
+{{- end }}{{ end }}

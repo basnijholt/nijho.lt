@@ -7,4 +7,5 @@
 @import "./04-components.css" layer(components);
 @import "./05-prose.css" layer(prose);
 @import "./06-syntax.css" layer(syntax);
+@import "./08-pages.css" layer(pages);
 @import "./10-shortcodes.css" layer(shortcodes);

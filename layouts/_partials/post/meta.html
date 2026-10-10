@@ -1,0 +1,17 @@
+{{- $published := .PublishDate | default .Date }}
+<div class="byline">
+  {{- with site.GetPage "/authors/admin" }}
+  <a class="who" href="{{ .RelPermalink }}">
+    {{- with (.Resources.ByType "image").GetMatch "avatar*" }}{{ with .Fill "68x68 Center webp" }}<img src="{{ .RelPermalink }}" width="34" height="34" alt="">{{ end }}{{ end -}}
+    {{ .Title }}</a>
+  {{- end }}
+  <span class="item">{{ partial "ui-icon.html" "calendar-blank" }}<span class="mono">Published on <time class="published" datetime="{{ $published.Format "2006-01-02" }}">{{ $published.Format "Jan 2, 2006" }}</time>
+    {{- if ne (.Lastmod.Format "2006-01-02") ($published.Format "2006-01-02") }} · Last updated on <time class="updated" datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod.Format "Jan 2, 2006" }}</time>{{ end -}}
+  </span></span>
+  {{- if .Params.reading_time }}
+  <span class="item">{{ partial "ui-icon.html" "clock" }}<span class="mono">{{ .ReadingTime }} min read</span></span>
+  {{- end }}
+  {{- with .GetTerms "categories" }}
+  <span class="item">{{ partial "ui-icon.html" "folder-simple" }}<span class="chips">{{ range . }}<a class="chip" href="{{ .RelPermalink }}">{{ partial "functions/title.html" . }}</a>{{ end }}</span></span>
+  {{- end }}
+</div>

@@ -1,0 +1,17 @@
+{{- /* The featured image above the text, unless image.preview_only keeps it for lists and share cards.
+     image.placement 2 makes it as wide as the page; GIFs and SVGs are shown as they are. */ -}}
+{{- if not .Params.image.preview_only }}
+  {{- with partial "functions/featured_image.html" . }}
+    {{- $wide := eq (int ($.Params.image.placement | default 1)) 2 }}
+    {{- $image := . }}
+    {{- if not (in (slice ".gif" ".svg") (path.Ext .Name | lower)) }}
+      {{- $image = .Fit (cond $wide "1200x2500 webp" "720x2500 webp") }}
+    {{- end }}
+<figure class="featured{{ if $wide }} featured-wide{{ end }}">
+  <img src="{{ $image.RelPermalink }}"{{ with $image.Width }} width="{{ . }}" height="{{ $image.Height }}"{{ end }} alt="{{ $.Params.image.caption | markdownify | plainify }}" fetchpriority="high">
+  {{- with $.Params.image.caption }}
+  <figcaption>{{ . | markdownify | emojify }}</figcaption>
+  {{- end }}
+</figure>
+  {{- end }}
+{{- end }}

@@ -1,0 +1,13 @@
+{{- with site.GetPage "/authors/admin" }}
+<div class="author-card">
+  {{- with (.Resources.ByType "image").GetMatch "avatar*" }}{{ with .Fill "176x176 Center webp" }}
+  <img src="{{ .RelPermalink }}" width="88" height="88" alt="">
+  {{- end }}{{ end }}
+  <div>
+    <h3><a href="/">{{ .Title }}</a></h3>
+    <p class="r">{{ .Params.role }}{{ with index .Params.organizations 0 }} at <a href="{{ .url }}">{{ .name }}</a>{{ end }}</p>
+    {{ with .Params.bio }}<p>{{ . | markdownify }}</p>{{ end }}
+    {{ partial "social.html" . }}
+  </div>
+</div>
+{{- end }}
