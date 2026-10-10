@@ -10,7 +10,7 @@ body {
   overflow-x: clip;
   background: var(--bg);
   color: var(--text);
-  font: 400 17px/1.6 var(--body);
+  font: 400 var(--fs-base)/1.6 var(--body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -50,7 +50,7 @@ code {
 
 .mono {
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: var(--fs-xs);
   letter-spacing: 0;
   color: var(--muted);
   font-variant-numeric: tabular-nums;
@@ -86,7 +86,7 @@ code {
 
 @media (width <= 767px) {
   body {
-    font-size: 16px;
+    font-size: var(--fs-md);
   }
 }
 

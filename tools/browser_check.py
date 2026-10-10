@@ -1,14 +1,15 @@
 # /// script
 # requires-python = ">=3.12"
-# dependencies = ["axe-playwright-python", "playwright"]
+# dependencies = ["axe-playwright-python==0.1.8", "playwright==1.63.0"]
 # ///
 """Check a build of the site in Chromium: behaviour, accessibility, page weight and rendering without JavaScript.
 
     uv run tools/browser_check.py [BUILD_DIR] [--screenshots OUT_DIR [--no-checks]]
 
-Without BUILD_DIR it builds the working tree with $HUGO_BIN first. $CHROMIUM overrides the Chromium binary. Every
-check runs, and the script exits non-zero when any of them fails. --screenshots also writes the review screenshot
-set (key pages, light and dark, 1440 and 390 px wide) to OUT_DIR; with --no-checks it only does that.
+Without BUILD_DIR it builds the working tree with $HUGO_BIN first. $CHROMIUM overrides the Chromium binary; empty
+means Playwright's own (.github/workflows/check.yml installs it). Analytics requests are blocked, so checks count no
+visits. Every check runs, and the script exits non-zero when any of them fails. --screenshots also writes the review
+screenshot set (key pages, light and dark, 1440 and 390 px wide) to OUT_DIR; with --no-checks it only does that.
 """
 
 import argparse
@@ -16,6 +17,7 @@ import functools
 import gzip
 import http.server
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -28,12 +30,13 @@ from axe_playwright_python.sync_playwright import Axe
 from playwright.sync_api import Browser, Page, sync_playwright
 
 ROOT = Path(__file__).resolve().parent.parent
-CHROMIUM = os.environ.get("CHROMIUM", "/run/current-system/sw/bin/chromium")
+CHROMIUM = os.environ.get("CHROMIUM", "/run/current-system/sw/bin/chromium") or None
 POST = "/post/self-hosting-ai-is-not-cheaper/"
 # A long post without charts, diagrams, GIFs or videos, for the page-weight budget.
 PLAIN_POST = "/post/agentic-coding/"
 # Site configuration and the comments, not the theme; the budget leaves them out.
-UNBUDGETED = ("googletagmanager.com", "google-analytics.com", "plausible.nijho.lt", "giscus.app")
+ANALYTICS = re.compile(r"googletagmanager\.com|google-analytics\.com|plausible\.nijho\.lt")
+UNBUDGETED = ("giscus.app",)
 KEY_PAGES = [
     "/",
     POST,
@@ -95,6 +98,7 @@ def page(browser: Browser, base: str, path: str = "/", on: dict | None = None, *
     on maps page events to handlers, attached before the page loads."""
     options.setdefault("viewport", {"width": 1440, "height": 900})
     context = browser.new_context(base_url=base, **options)
+    context.route(ANALYTICS, lambda route: route.abort())
     try:
         new = context.new_page()
         for event, handler in (on or {}).items():
@@ -180,8 +184,8 @@ def axe_finds_nothing_serious(browser, base):
 
 @check
 def plain_post_stays_light(browser, base):
-    """A plain post loads under 300 KB in under 20 requests, not counting analytics and the comments. The local
-    server sends files uncompressed, so each response counts at its gzip size, as Netlify serves text."""
+    """A plain post loads under 300 KB in under 20 requests, not counting the comments (analytics are blocked).
+    The local server sends files uncompressed, so each response counts at its gzip size, as Netlify serves text."""
     responses = []
     with page(browser, base, PLAIN_POST, on={"response": lambda response: responses.append(response)}):
         sizes = {}

@@ -2,28 +2,4 @@
 {{- $file := path.Join "content" .Page.File.Dir (.Get "src") -}}
 {{- if not (fileExists $file) -}}{{ errorf "bleed-svg: %q not found in %s" (.Get "src") .Page.File.Path }}{{- end -}}
 <div class="svg-bleed" role="img" aria-label="{{ .Get "alt" }}"><div class="svg-bleed-stage">{{ readFile $file | safeHTML }}</div></div>
-<script>
-  {
-    // Pause the animation while it is off screen. Whenever it plays, line every SVG and CSS animation up with the first SVG's clock.
-    const stage = document.currentScript.previousElementSibling.querySelector(".svg-bleed-stage")
-    const [clock, ...others] = stage.querySelectorAll(":scope > svg")
-    const css = () => stage.getAnimations({ subtree: true })
-    const play = () => {
-      const time = clock.getCurrentTime()
-      clock.unpauseAnimations()
-      others.forEach((svg) => { svg.setCurrentTime(time); svg.unpauseAnimations() })
-      css().forEach((animation) => { animation.currentTime = time * 1000; animation.play() })
-    }
-    let visible = false
-    new IntersectionObserver(([entry]) => {
-      visible = entry.isIntersecting
-      if (visible) play()
-      else {
-        [clock, ...others].forEach((svg) => svg.pauseAnimations())
-        css().forEach((animation) => animation.pause())
-      }
-    }).observe(stage)
-    // The SVG clock only starts at the load event, while the CSS animations start right away.
-    addEventListener("load", () => visible && play())
-  }
-</script>
+{{ partial "script.html" "js/bleed-svg.js" }}

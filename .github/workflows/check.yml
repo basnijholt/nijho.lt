@@ -1,0 +1,41 @@
+# Builds the site with the Hugo version Netlify uses and runs tools/browser_check.py on it, for every pull request and
+# every push to main. Netlify builds the deploy previews and production on its own; this adds the browser checks.
+name: Check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      # The images are in Git LFS (about 200 MB); download them only when they change.
+      - name: List LFS files
+        run: git lfs ls-files --long | cut -d ' ' -f1 | sort > .lfs-files
+      - uses: actions/cache@v4
+        with:
+          path: .git/lfs
+          key: lfs-${{ hashFiles('.lfs-files') }}
+          restore-keys: lfs-
+      - name: Fetch LFS files
+        run: git lfs pull
+
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: "0.167.0"
+          extended: true
+
+      - uses: astral-sh/setup-uv@v6
+
+      - name: Install Chromium for Playwright
+        run: uv run --with playwright==1.63.0 python -m playwright install --with-deps chromium
+
+      - name: Build and check in Chromium
+        run: uv run tools/browser_check.py
+        env:
+          # Empty: use Playwright's Chromium instead of the NixOS default path.
+          CHROMIUM: ""
