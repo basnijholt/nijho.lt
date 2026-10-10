@@ -1,0 +1,26 @@
+{{ define "main" }}
+<article class="wrap post project">
+  <header class="post-head">
+    {{ partial "post/breadcrumb.html" . }}
+    <h1>{{ .Title }}</h1>
+    {{ with .Params.summary }}<p class="subtitle">{{ . | markdownify | emojify }}</p>{{ end }}
+    <div class="byline">
+      <span class="item">{{ partial "ui-icon.html" "calendar-blank" }}<span class="mono"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time></span></span>
+      {{- with .Params.external_link }}
+      <a class="btn btn-accent" href="{{ . }}">Go to project site{{ partial "ui-icon.html" "arrow-up-right" }}</a>
+      {{- end }}
+    </div>
+  </header>
+  {{ partial "post/featured.html" . }}
+  <div class="prose">{{ .Content }}</div>
+  <footer class="post-end">
+    {{ with .GetTerms "tags" }}
+    <div class="tags"><span class="label">Tags</span>{{ range . }}<a class="chip" href="{{ .RelPermalink }}">{{ partial "functions/title.html" . }}</a>{{ end }}</div>
+    {{ end }}
+    <div class="row">
+      {{ partial "post/share.html" . }}
+      {{ partial "post/edit-link.html" . }}
+    </div>
+  </footer>
+</article>
+{{ end }}

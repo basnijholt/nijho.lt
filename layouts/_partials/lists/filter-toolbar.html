@@ -4,6 +4,8 @@
   default: index of the button pressed at first (default 0)
   pages:   the pages behind the items
   noun:    what the items are, for labels ("projects")
+  selects: menus that keep the items whose data-<key> equals the chosen value: a dict of key, label, icon (a
+           ui-icon name), all (the text of the empty choice) and options (value, text)
   sort:    sort options in menu order (value, text, label for "sorted by <label>"); value "order" is the page order */ -}}
 <div class="filter-toolbar" data-filter-toolbar hidden>
   {{- with .buttons }}
@@ -21,6 +23,13 @@
   <div class="tools-row">
     <div class="tools">
       <label class="field"><span class="sr-only">Search {{ .noun }}</span>{{ partial "ui-icon.html" "search" }}<input type="search" placeholder="Search {{ .noun }}" data-filter-search></label>
+      {{- range .selects }}
+      <label class="field"><span class="sr-only">{{ .label }}</span>{{ partial "ui-icon.html" .icon }}
+        <select data-filter-key="{{ .key }}">
+          <option value="">{{ .all }}</option>
+          {{- range .options }}<option value="{{ .value }}">{{ .text }}</option>{{ end -}}
+        </select>{{ partial "ui-icon.html" "caret-down" }}</label>
+      {{- end }}
       {{- with .sort }}
       <label class="field"><span class="sr-only">Sort {{ $.noun }}</span>{{ partial "ui-icon.html" "sort-descending" }}
         <select data-filter-sort>

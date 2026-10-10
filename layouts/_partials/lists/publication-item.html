@@ -8,7 +8,7 @@
 {{- range first 6 $authors }}
   {{- $shown = $shown | append (cond (eq . $me) (printf "<strong>%s</strong>" .) (htmlEscape .)) }}
 {{- end }}
-<li{{ if .cont }} class="cont"{{ end }}>
+<li{{ if .cont }} class="cont"{{ end }} data-year="{{ $p.Date.Format "2006" }}" data-type="{{ delimit ($p.Params.publication_types | default slice) "," }}">
   <span class="pub-year">{{ $p.Date.Format "2006" }}</span>
   <div>
     <a class="pub-title" href="{{ $p.RelPermalink }}">{{ $p.Title }}</a>

@@ -9,6 +9,7 @@
 {{ partialCached "head/css.html" . }}
 {{- $scripts := slice "js/theme.js" }}
 {{- if .IsHome }}{{ $scripts = $scripts | append "js/nav.js" "js/filter.js" }}{{ end }}
+{{- if and (eq .Kind "section") (in (slice "project" "publication") .Section) }}{{ $scripts = $scripts | append "js/filter.js" }}{{ end }}
 {{- if and .IsPage (eq .Type "post") }}
   {{- $scripts = $scripts | append "js/copy.js" }}
   {{- if gt (len .Fragments.HeadingsMap) 1 }}{{ $scripts = $scripts | append "js/toc.js" }}{{ end }}
@@ -20,5 +21,6 @@
 <script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous"></script>
   {{- end }}
 {{- end }}
+{{- if .Params.math }}{{ partial "head/mathjax.html" . }}{{ end }}
 {{ partial "head/jsonld.html" . }}
 {{ partialCached "head/analytics.html" . }}

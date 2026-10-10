@@ -1,0 +1,3 @@
+{{- /* Returns the display name of a publication type (a CSL type such as article-journal), as the old theme named them. */ -}}
+{{- $names := dict "article-journal" "Journal article" "paper-conference" "Conference paper" "chapter" "Book section" }}
+{{- return (index $names . | default (humanize .)) -}}

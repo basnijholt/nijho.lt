@@ -1,0 +1,28 @@
+{{- /* Every project as a card, most GitHub stars first (newest first among equal counts), with the tag filters,
+  search box and sort menu of filter.js. Without JavaScript the toolbar stays hidden and every card shows.
+  Takes the homepage's projects section, whose front matter holds the page type and the filter buttons. */ -}}
+{{- $stars := partialCached "functions/github_stars" . }}
+{{- $ranked := slice }}
+{{- range (where site.RegularPages "Type" .Params.content.page_type).ByDate.Reverse }}
+  {{- $ranked = $ranked | append (dict "page" . "stars" (index $stars (partial "functions/github_repo" .) | default 0)) }}
+{{- end }}
+{{- /* sort is stable, so equal star counts keep the newest-first order. */}}
+{{- $ranked = sort $ranked "stars" "desc" }}
+<div data-filter-root data-filter-noun="projects">
+  {{ partial "lists/filter-toolbar.html" (dict
+    "buttons" .Params.content.filter_button
+    "default" .Params.content.filter_default
+    "pages" (apply $ranked "index" "." "page")
+    "noun" "projects"
+    "sort" (slice
+      (dict "value" "order" "text" "Most stars" "label" "GitHub stars")
+      (dict "value" "date" "text" "Newest" "label" "newest first")
+      (dict "value" "name" "text" "Name" "label" "name"))
+  ) }}
+  <div class="proj-grid" data-filter-items>
+    {{- range $i, $r := $ranked }}
+    {{- partial "lists/project-card.html" (dict "page" .page "order" $i "stars" .stars) }}
+    {{- end }}
+  </div>
+  {{ partial "lists/filter-empty.html" "projects" }}
+</div>

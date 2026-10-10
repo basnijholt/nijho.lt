@@ -40,3 +40,8 @@ textarea {
   font: inherit;
   color: inherit;
 }
+
+/* The hidden attribute wins over any display a component sets. */
+[hidden]:not([hidden="until-found"]) {
+  display: none !important;
+}

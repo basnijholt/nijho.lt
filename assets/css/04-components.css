@@ -177,7 +177,6 @@ a.chip:hover {
   flex-direction: column;
   min-width: 0;
 
-  &[hidden] { display: none; }
   & h3 {
     min-width: 0;
     font-size: 18.5px;

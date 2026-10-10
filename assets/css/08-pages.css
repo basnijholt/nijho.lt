@@ -437,6 +437,60 @@ dialog.zoom {
 }
 
 /* Lists: /post/, sections, term and author pages. */
+/* Project and publication pages reuse the post grid. */
+.btn-accent {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: light-dark(#fff, #141413);
+
+  &:hover { background: color-mix(in srgb, var(--accent) 88%, var(--text)); }
+}
+.publication .post-head {
+  & .pub-authors {
+    margin-top: 22px;
+    max-width: 80ch;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--muted);
+
+    & a { color: var(--text-2); transition: color .15s; }
+    & a:hover { color: var(--accent); }
+    & strong { color: var(--text); font-weight: 600; }
+  }
+  & .venue { color: var(--text-2); }
+  & .pub-links { margin-top: 22px; }
+}
+.abstract {
+  grid-column: 1;
+  padding-top: 36px;
+
+  & h2 { font-size: 24px; letter-spacing: -0.02em; }
+  & p {
+    margin-top: 14px;
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--text-2);
+  }
+}
+.pub-facts {
+  grid-column: 1;
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 10px 24px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  font-size: 15.5px;
+
+  & dt { color: var(--muted); }
+  & dd { margin: 0; color: var(--text-2); }
+  & a { color: var(--text); border-bottom: 1px solid var(--line); transition: color .15s, border-color .15s; }
+  & a:hover { color: var(--accent); border-color: var(--accent); }
+}
+.post > .abstract, .post > .pub-facts { grid-column: 1; }
+/* Project logos are mostly square; a full-width square would fill the screen. */
+.project > .featured img { width: auto; max-height: 420px; }
+
 .list {
   padding-block: 56px 96px;
 }

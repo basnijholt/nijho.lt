@@ -1,0 +1,32 @@
+{{ define "main" }}
+{{- $pubs := .Pages.ByDate.Reverse }}
+{{- $types := slice }}
+{{- range site.Taxonomies.publication_types.Alphabetical }}
+  {{- $types = $types | append (dict "value" .Page.Data.Term "text" (partial "functions/publication_type.html" .Page.Data.Term)) }}
+{{- end }}
+{{- $years := slice }}
+{{- range $pubs }}{{ $years = $years | append (.Date.Format "2006") }}{{ end }}
+{{- $years = apply ($years | uniq) "dict" "value" "." "text" "." }}
+<div class="wrap list">
+  <header class="list-head">
+    <h1>{{ .Title }}</h1>
+  </header>
+  {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+  <div data-filter-root data-filter-noun="publications">
+    {{ partial "lists/filter-toolbar.html" (dict
+      "noun" "publications"
+      "selects" (slice
+        (dict "key" "type" "label" "Publication type" "icon" "scroll" "all" "All types" "options" $types)
+        (dict "key" "year" "label" "Year" "icon" "calendar-blank" "all" "All years" "options" $years))
+    ) }}
+    <ol class="pubs" data-filter-items data-filter-group="year">
+      {{- $year := "" }}
+      {{- range $pubs }}
+      {{- partial "lists/publication-item.html" (dict "page" . "cont" (eq $year (.Date.Format "2006"))) }}
+      {{- $year = .Date.Format "2006" }}
+      {{- end }}
+    </ol>
+    {{ partial "lists/filter-empty.html" "publications" }}
+  </div>
+</div>
+{{ end }}
