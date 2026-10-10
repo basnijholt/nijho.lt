@@ -1,5 +1,5 @@
-# Builds the site with the Hugo version Netlify uses and runs tools/browser_check.py on it, for every pull request and
-# every push to main. Netlify builds the deploy previews and production on its own; this adds the browser checks.
+# Builds the site with the Hugo version Netlify uses, checks every link in it, and runs tools/browser_check.py on it, for
+# every pull request and every push to main. Netlify builds the deploy previews and production on its own.
 name: Check
 
 on:
@@ -37,8 +37,24 @@ jobs:
       - name: Install Chromium for Playwright
         run: uv run --with playwright==1.63.0 python -m playwright install --with-deps chromium
 
-      - name: Build and check in Chromium
-        run: uv run tools/browser_check.py
+      - name: Build
+        run: hugo --gc --minify -d public
+        env:
+          HUGO_ENV: production
+
+      # Every link and #fragment within the site must resolve, absolute https://www.nijho.lt/ links included; links to
+      # other sites are not fetched.
+      - name: Check links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --offline --include-fragments --no-progress
+            --root-dir ${{ github.workspace }}/public --index-files index.html
+            --remap 'https://www\.nijho\.lt/ file://${{ github.workspace }}/public/'
+            'public/**/*.html'
+
+      - name: Check in Chromium
+        run: uv run tools/browser_check.py public
         env:
           # Empty: use Playwright's Chromium instead of the NixOS default path.
           CHROMIUM: ""

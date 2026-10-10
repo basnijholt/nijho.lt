@@ -2,7 +2,7 @@
 {{- $posts := where site.RegularPages "Section" "post" }}
 <section class="block" id="{{ .File.ContentBaseName }}" aria-labelledby="{{ .File.ContentBaseName }}-h">
   <div class="wrap">
-    {{ partial "home/sec-head.html" (dict "section" . "more" (cond .Params.content.archive.enable .Params.content.archive false)) }}
+    {{ partial "home/sec-head.html" . }}
     <ul class="w1">
       {{- range first (.Params.content.count | default 10) $posts.ByDate.Reverse }}
       {{- partial "lists/post-row.html" (dict "page" . "h" 3) }}

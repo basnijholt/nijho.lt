@@ -6,7 +6,7 @@
   </header>
   {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
   <ul class="w1">
-    {{- range (.Paginate .Pages).Pages }}{{ partial "lists/post-row.html" . }}{{ end }}
+    {{- range (.Paginate .Pages).Pages }}{{ partial "lists/post-row.html" (dict "page" .) }}{{ end }}
   </ul>
   {{ partial "pagination.html" . }}
 </div>

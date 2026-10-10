@@ -1,13 +1,11 @@
-{{- /* The heading of a homepage section: its title and subtitle, and a "more" link when given one.
-  Takes the section page, or a dict of the section page and more (a dict of text and link). */ -}}
-{{- $section := . }}{{ $more := false }}
-{{- if reflect.IsMap . }}{{ $section = .section }}{{ $more = .more }}{{ end }}
+{{- /* The heading of a homepage section (a page of content/home): its title and subtitle, and a "more" link when its
+  front matter sets content.archive (enable, text, link). */ -}}
 <div class="sec-head">
   <div>
-    <h2 id="{{ $section.File.ContentBaseName }}-h">{{ $section.Title }}</h2>
-    {{- with $section.Params.subtitle }}<p class="sub">{{ . | markdownify | emojify }}</p>{{ end }}
+    <h2 id="{{ .File.ContentBaseName }}-h">{{ .Title }}</h2>
+    {{- with .Params.subtitle }}<p class="sub">{{ . | markdownify | emojify }}</p>{{ end }}
   </div>
-  {{- with $more }}
+  {{- with .Params.content.archive }}{{ if .enable }}
   <a class="more" href="{{ .link | relURL }}">{{ .text }}{{ partial "ui-icon.html" "arrow-right" }}</a>
-  {{- end }}
+  {{- end }}{{ end }}
 </div>

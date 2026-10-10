@@ -9,7 +9,7 @@
   top: -48px;
   left: 12px;
   z-index: 30;
-  padding: 8px 14px;
+  padding: var(--space-xs) var(--space-md);
   border-radius: var(--r-sm);
   background: var(--text);
   color: var(--bg);
@@ -30,7 +30,7 @@
   & .nav {
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: var(--space-xl);
     height: var(--header-h);
   }
 
@@ -57,7 +57,7 @@
 
   & .nav-tools {
     display: flex;
-    gap: 6px;
+    gap: var(--space-2xs);
   }
 
   /* The theme menu, and below 920px the nav list. Popovers sit in the top layer, so they are placed against the
@@ -68,7 +68,7 @@
     right: max(var(--pad), (100% - var(--max)) / 2 + var(--pad));
     min-width: 176px;
     margin: 0;
-    padding: 6px;
+    padding: var(--space-2xs);
     border: 1px solid var(--line);
     border-radius: var(--r);
     background: var(--bg);
@@ -78,9 +78,9 @@
     & :is(a, button) {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: var(--space-sm);
       width: 100%;
-      padding: 8px 10px;
+      padding: var(--space-xs) var(--space-sm);
       border: 0;
       border-radius: var(--r-sm);
       background: transparent;
@@ -124,7 +124,7 @@
     & .nav-links:not(:popover-open) {
       position: static;
       display: flex;
-      gap: 26px;
+      gap: var(--space-lg);
       margin: 0 0 0 auto;
       padding: 0;
       overflow: visible;
@@ -133,7 +133,7 @@
       color: inherit;
 
       & a {
-        padding: 6px 0;
+        padding: var(--space-2xs) 0;
         border-bottom: 2px solid transparent;
 
         &[aria-current] {
@@ -145,7 +145,7 @@
 
   @media (920px < width <= 1180px) {
     & .nav-links:not(:popover-open) {
-      gap: 20px;
+      gap: var(--space-lg);
     }
   }
 
@@ -181,7 +181,7 @@
 }
 
 .site-footer {
-  padding-block: 32px 40px;
+  padding-block: var(--space-xl) var(--space-2xl);
   border-top: 1px solid var(--line);
   color: var(--muted);
   font-size: var(--fs-sm);
@@ -191,12 +191,12 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 12px 24px;
+    gap: var(--space-sm) var(--space-lg);
   }
 
   & .links {
     display: flex;
-    gap: 6px 24px;
+    gap: var(--space-2xs) var(--space-lg);
   }
 
   & a {

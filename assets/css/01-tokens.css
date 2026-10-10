@@ -64,6 +64,19 @@
   --fs-5xl: 36px;
   --fs-6xl: 46px;
 
+  /* Spacing scale for margin, padding and gap; 1-3 px nudges, negative margins and positions stay literal. */
+  --space-3xs: 4px;
+  --space-2xs: 6px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 40px;
+  --space-3xl: 48px;
+  --space-4xl: 64px;
+  --space-5xl: 96px;
+
   --max: 1240px;
   --pad: clamp(20px, 4.5vw, 56px);
   --header-h: 66px;
