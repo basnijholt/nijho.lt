@@ -4,7 +4,7 @@ of the term it reads first, which changes between builds (AI or ai); such a page
 else the first spelling, in sorted order. */ -}}
 {{- if and .File (not .Title) }}
   {{- /* A content file without front matter goes by its first top-level heading. */}}
-  {{- range .Fragments.Headings }}{{ if eq .Level 1 }}{{ return .Title }}{{ end }}{{ end }}
+  {{- range .Fragments.Headings }}{{ if eq .Level 1 }}{{ return (.Title | plainify | htmlUnescape) }}{{ end }}{{ end }}
 {{- end }}
 {{- if .File }}
   {{- return .Title }}

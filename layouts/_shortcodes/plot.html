@@ -10,29 +10,12 @@
   {{- errorf "plot shortcode: %q not found in page bundle of %s" $src .Page.File.Path -}}
 {{- end -}}
 {{- $name := .Get "name" -}}
-{{- $id := printf "plot-%s-%d" $name .Ordinal -}}
 {{- $caption := .Get "caption" -}}
 <figure class="plot-figure">
-  <div id="{{ $id }}" class="plot-container" role="img" aria-label="{{ $caption | markdownify | plainify }}"></div>
+  <div class="plot-container" role="img" aria-label="{{ $caption | markdownify | plainify }}" data-plot-module="{{ $module.RelPermalink }}" data-plot-name="{{ $name }}"></div>
   {{- with $caption }}
   <figcaption>{{ . | markdownify }}</figcaption>
   {{- end }}
   <noscript>This chart needs JavaScript.</noscript>
 </figure>
-<script type="module">
-  import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6.17/+esm";
-  import plots from "{{ $module.RelPermalink }}";
-
-  const container = document.getElementById("{{ $id }}");
-  let lastWidth = 0;
-  new ResizeObserver(() => {
-    const width = Math.round(container.clientWidth);
-    if (!width || width === lastWidth) return;
-    lastWidth = width;
-    container.replaceChildren(plots["{{ $name }}"]({ Plot, width }));
-    // The theme sets `svg { fill: currentColor }`, which beats the fill attribute on legend swatches.
-    container.querySelectorAll("svg[fill]").forEach((svg) => (svg.style.fill = svg.getAttribute("fill")));
-    // The container is one labelled image; Plot's labels on its inner groups are not allowed there.
-    container.querySelectorAll("svg [aria-label]").forEach((element) => element.removeAttribute("aria-label"));
-  }).observe(container);
-</script>
+{{ partial "script.html" "js/plot.js" }}
