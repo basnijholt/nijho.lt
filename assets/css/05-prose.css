@@ -127,14 +127,14 @@
   }
 
   & figcaption {
-    margin-top: 12px;
+    margin-top: var(--space-sm);
     color: var(--muted);
     font-size: var(--fs-sm);
     line-height: 1.55;
   }
 
   & pre {
-    padding: 18px 20px 20px;
+    padding: var(--space-md) var(--space-lg) var(--space-lg);
     overflow-x: auto;
     border-radius: var(--r);
     background: var(--surface);
@@ -154,7 +154,7 @@
   }
 
   & .mermaid {
-    padding: 18px 20px 20px;
+    padding: var(--space-md) var(--space-lg) var(--space-lg);
     overflow-x: auto;
     border-radius: var(--r);
     background: var(--surface);
@@ -185,7 +185,7 @@
   }
 
   & th {
-    padding: 0 14px 10px;
+    padding: 0 var(--space-md) var(--space-sm);
     border-bottom: 1.5px solid var(--text);
     color: var(--text);
     font-weight: 600;
@@ -194,7 +194,7 @@
   }
 
   & td {
-    padding: 10px 14px;
+    padding: var(--space-sm) var(--space-md);
     vertical-align: top;
   }
 
@@ -211,7 +211,7 @@
   }
 
   & details {
-    padding: 14px 18px;
+    padding: var(--space-md) var(--space-md);
     border: 1px solid var(--line);
     border-radius: var(--r);
 
@@ -233,7 +233,7 @@
     line-height: 1.5;
 
     & ul {
-      margin-top: 6px;
+      margin-top: var(--space-2xs);
       padding-left: 1.1em;
       list-style: none;
     }
@@ -269,7 +269,7 @@
 
   & .footnotes {
     margin-top: 3.2em;
-    padding-top: 22px;
+    padding-top: var(--space-lg);
     border-top: 1px solid var(--line);
     color: var(--muted);
     font-size: var(--fs-sm);
@@ -281,7 +281,7 @@
 
     & ol {
       display: grid;
-      gap: 8px;
+      gap: var(--space-xs);
     }
 
     & li::marker {
@@ -313,8 +313,8 @@
 .callout {
   display: grid;
   grid-template-columns: 22px minmax(0, 1fr);
-  gap: 14px;
-  padding: 18px 22px;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
   border-radius: var(--r);
   background: var(--accent-soft);
   color: var(--text);
@@ -343,7 +343,7 @@
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr));
-  gap: 10px;
+  gap: var(--space-sm);
 
   & img {
     width: 100%;

@@ -1,9 +1,9 @@
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--space-2xs);
   height: 36px;
-  padding: 0 14px;
+  padding: 0 var(--space-md);
   border: 1px solid var(--line);
   border-radius: var(--r-sm);
   background: var(--bg);
@@ -24,14 +24,14 @@
 .chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: var(--space-2xs);
 }
 
 .chip {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 3px 9px;
+  gap: var(--space-2xs);
+  padding: 3px var(--space-xs);
   border-radius: var(--r-sm);
   background: var(--surface);
   color: var(--text-2);
@@ -94,32 +94,32 @@ a.chip:hover {
 /* Tag buttons, search and sort above a filterable list (filter-toolbar.html, filter.js). */
 .filter-toolbar {
   display: grid;
-  gap: 14px;
-  margin-bottom: 28px;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
 
   & .tools-row {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 12px 24px;
+    gap: var(--space-sm) var(--space-lg);
   }
   & .tools {
     display: flex;
-    gap: 8px;
+    gap: var(--space-xs);
   }
 }
 .filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: var(--space-2xs);
 }
 .filter {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: var(--space-xs);
   height: 36px;
-  padding: 0 12px;
+  padding: 0 var(--space-sm);
   border: 1px solid var(--line);
   border-radius: var(--r-sm);
   background: transparent;
@@ -167,32 +167,32 @@ a.chip:hover {
   }
   & input {
     width: 230px;
-    padding: 0 12px 0 36px;
+    padding: 0 var(--space-sm) 0 var(--space-2xl);
 
     &::placeholder { color: var(--muted); opacity: 1; }
   }
   & select {
-    padding: 0 34px 0 36px;
+    padding: 0 var(--space-xl) 0 var(--space-2xl);
     appearance: none;
     cursor: pointer;
   }
 }
 .filter-empty {
-  padding: 48px 24px;
+  padding: var(--space-3xl) var(--space-lg);
   border: 1.5px dashed var(--line);
   border-radius: var(--r);
   color: var(--muted);
   text-align: center;
 
-  & strong { display: block; margin-bottom: 4px; color: var(--text); font-weight: 600; }
-  & .btn { margin-top: 14px; }
+  & strong { display: block; margin-bottom: var(--space-3xs); color: var(--text); font-weight: 600; }
+  & .btn { margin-top: var(--space-md); }
 }
 
 /* Project cards (project-card.html). */
 .proj-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 36px 24px;
+  gap: var(--space-2xl) var(--space-lg);
 }
 .proj {
   position: relative;
@@ -211,7 +211,7 @@ a.chip:hover {
   }
   & p {
     display: -webkit-box;
-    margin-top: 6px;
+    margin-top: var(--space-2xs);
     overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
@@ -251,7 +251,7 @@ a.chip:hover {
   &.empty {
     align-content: center;
     justify-items: center;
-    gap: 10px;
+    gap: var(--space-sm);
   }
   & .emo { font-size: var(--fs-5xl); line-height: 1; }
   & .repo {
@@ -264,18 +264,18 @@ a.chip:hover {
     white-space: nowrap;
   }
 }
-.proj-body { padding: 14px 2px 0; }
+.proj-body { padding: var(--space-md) 2px 0; }
 .proj-row {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 12px;
+  gap: var(--space-sm);
 }
 .stars {
   display: inline-flex;
   flex: none;
   align-items: center;
-  gap: 4px;
+  gap: var(--space-3xs);
   white-space: nowrap;
 
   & .ico { font-size: var(--fs-xs); color: var(--accent); }
@@ -285,12 +285,12 @@ a.chip:hover {
 .pubs > li {
   display: grid;
   grid-template-columns: 72px minmax(0, 1fr) minmax(0, 340px);
-  gap: 8px 40px;
-  padding-block: 26px;
+  gap: var(--space-xs) var(--space-2xl);
+  padding-block: var(--space-lg);
   border-top: 1px solid var(--line);
 
   &:first-child { padding-top: 0; border-top: 0; }
-  &.cont { padding-top: 6px; border-top-color: transparent; }
+  &.cont { padding-top: var(--space-2xs); border-top-color: transparent; }
   &.cont .pub-year { visibility: hidden; }
 }
 .pub-year { padding-top: 3px; font-family: var(--mono); font-size: var(--fs-xs); color: var(--accent); }
@@ -305,28 +305,28 @@ a.chip:hover {
   &:hover { color: var(--accent); }
 }
 .pub-authors {
-  margin-top: 8px;
+  margin-top: var(--space-xs);
   font-size: var(--fs-sm);
   line-height: 1.55;
   color: var(--muted);
 
   & strong { color: var(--text); font-weight: 600; }
 }
-.pub-venue { margin-top: 6px; font-size: var(--fs-sm); color: var(--text-2); }
+.pub-venue { margin-top: var(--space-2xs); font-size: var(--fs-sm); color: var(--text-2); }
 .pub-links {
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
-  gap: 6px;
+  gap: var(--space-2xs);
   padding-top: 2px;
 
   & a {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
+    gap: var(--space-2xs);
     max-width: 100%;
     height: 28px;
-    padding: 0 9px;
+    padding: 0 var(--space-xs);
     overflow: hidden;
     border: 1px solid var(--line);
     border-radius: var(--r-sm);
@@ -361,16 +361,16 @@ a.chip:hover {
     scrollbar-width: none;
   }
   .filter { flex: none; }
-  .proj-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 14px; }
+  .proj-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-lg) var(--space-md); }
   .proj h3 { font-size: var(--fs-md); }
   .proj p { font-size: var(--fs-xs); }
   .proj-row { flex-direction: column; gap: 2px; }
-  .pubs > li { grid-template-columns: minmax(0, 1fr); gap: 6px; padding-block: 22px; }
-  .pubs > li.cont { padding-top: 22px; border-top-color: var(--line); }
+  .pubs > li { grid-template-columns: minmax(0, 1fr); gap: var(--space-2xs); padding-block: var(--space-lg); }
+  .pubs > li.cont { padding-top: var(--space-lg); border-top-color: var(--line); }
   .pubs > li.cont .pub-year { display: none; }
   .pub-year { padding-top: 0; }
   .pub-title { font-size: var(--fs-lg); }
-  .pub-links { grid-column: 1; margin-top: 8px; }
+  .pub-links { grid-column: 1; margin-top: var(--space-xs); }
 }
 @media (prefers-reduced-motion: reduce) {
   .proj:hover .plate img { transform: none; }
@@ -380,7 +380,7 @@ a.chip:hover {
 .search {
   width: min(640px, 100% - 32px);
   max-height: min(640px, 100dvh - 96px);
-  margin: 72px auto auto;
+  margin: var(--space-4xl) auto auto;
   padding: 0;
   overflow: hidden;
   border: 1px solid var(--line);
@@ -398,8 +398,8 @@ a.chip:hover {
 .search-bar {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 10px 10px 16px;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-sm) var(--space-sm) var(--space-md);
   border-bottom: 1px solid var(--line);
 
   /* The whole bar shows the field's focus, so the field itself needs no ring. */
@@ -428,7 +428,7 @@ a.chip:hover {
   & a {
     display: grid;
     gap: 3px;
-    padding: 12px 16px;
+    padding: var(--space-sm) var(--space-md);
     border-bottom: 1px solid var(--line);
   }
   & [aria-selected="true"] a, & a:hover { background: var(--surface); }
@@ -445,7 +445,7 @@ a.chip:hover {
   }
 }
 .search-status {
-  padding: 10px 16px;
+  padding: var(--space-sm) var(--space-md);
 
   &:empty { display: none; }
 }
