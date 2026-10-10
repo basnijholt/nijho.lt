@@ -1,0 +1,13 @@
+{{- /* Returns the page's sharing image as dict "url" (absolute) and "card" (the twitter:card type): an author's avatar
+on their term page, else the original featured image, else the site icon. */ -}}
+{{- $avatar := cond (eq .Kind "term") ((.Resources.ByType "image").GetMatch "avatar*") nil }}
+{{- $featured := partial "functions/featured_image.html" . }}
+{{- $image := dict }}
+{{- if $avatar }}
+  {{- $image = dict "url" ($avatar.Fill "270x270 Center").Permalink "card" "summary" }}
+{{- else if $featured }}
+  {{- $image = dict "url" $featured.Permalink "card" "summary_large_image" }}
+{{- else }}
+  {{- $image = dict "url" ((resources.Get "media/icon.png").Fill "512x512 Center").Permalink "card" "summary" }}
+{{- end }}
+{{- return $image -}}

@@ -1,0 +1,29 @@
+{{- /* A publication in a list: year, title, authors, venue and links. Takes a dict of page and cont, which is true
+  when the previous item has the same year. Lists the first 6 authors; when the site author is among the rest,
+  the count of the rest names them. */ -}}
+{{- $p := .page }}
+{{- $me := (site.GetPage "/authors/admin").Title }}
+{{- $authors := $p.Params.authors | default slice }}
+{{- $shown := slice }}
+{{- range first 6 $authors }}
+  {{- $shown = $shown | append (cond (eq . $me) (printf "<strong>%s</strong>" .) (htmlEscape .)) }}
+{{- end }}
+<li{{ if .cont }} class="cont"{{ end }} data-year="{{ $p.Date.Format "2006" }}" data-type="{{ delimit ($p.Params.publication_types | default slice) "," }}">
+  <span class="pub-year">{{ $p.Date.Format "2006" }}</span>
+  <div>
+    <a class="pub-title" href="{{ $p.RelPermalink }}">{{ $p.Title }}</a>
+    <p class="pub-authors">
+      {{- if gt (len $authors) 6 }}
+        {{- delimit $shown ", " | safeHTML }}, and {{ sub (len $authors) 6 }} more
+        {{- if in (after 6 $authors) $me }}, including <strong>{{ $me }}</strong>{{ end }}
+      {{- else }}
+        {{- delimit $shown ", " " and " | safeHTML }}
+      {{- end -}}
+    </p>
+    {{- with $p.Params.publication | default $p.Params.publication_short }}
+    {{- /* "In *Journal* (J.)." reads as a venue without the leading "In " and the final period. */}}
+    <p class="pub-venue">{{ . | replaceRE `^In\s+` "" | replaceRE `\.$` "" | markdownify }}, {{ $p.Date.Format "January 2006" }}</p>
+    {{- end }}
+  </div>
+  {{ partial "lists/publication-links.html" $p }}
+</li>

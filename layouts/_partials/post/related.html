@@ -1,0 +1,16 @@
+{{- with first 5 (site.RegularPages.Related .) }}
+<section class="wrap" aria-labelledby="related-h">
+  <h2 id="related-h">Related</h2>
+  <ul class="related">
+    {{- range . }}
+    <li>
+      <p class="mono">{{ .Date.Format "Jan 2, 2006" }}{{ if .Params.reading_time }} · {{ .ReadingTime }} min read{{ end }}</p>
+      <a class="t stretch" href="{{ .RelPermalink }}">{{ .Title }}</a>
+      {{- with .Params.summary }}
+      <p>{{ . | markdownify | plainify | emojify }}</p>
+      {{- end }}
+    </li>
+    {{- end }}
+  </ul>
+</section>
+{{- end }}

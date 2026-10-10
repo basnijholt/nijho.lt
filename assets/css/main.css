@@ -1,0 +1,12 @@
+@layer reset, tokens, base, layout, components, prose, syntax, home, pages, icons, shortcodes;
+
+@import "./00-reset.css" layer(reset);
+@import "./01-tokens.css" layer(tokens);
+@import "./02-base.css" layer(base);
+@import "./03-layout.css" layer(layout);
+@import "./04-components.css" layer(components);
+@import "./05-prose.css" layer(prose);
+@import "./06-syntax.css" layer(syntax);
+@import "./07-home.css" layer(home);
+@import "./08-pages.css" layer(pages);
+@import "./10-shortcodes.css" layer(shortcodes);

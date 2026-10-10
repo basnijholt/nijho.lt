@@ -1,0 +1,29 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{{ partial "head/seo.html" . }}
+{{ partialCached "head/icons.html" . }}
+{{- /* Runs before the stylesheet so a pinned theme applies on first paint. */}}
+<script>try{const t=localStorage.getItem("theme");if(t=="light"||t=="dark")document.documentElement.dataset.theme=t}catch{}</script>
+<link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
+{{ partialCached "head/css.html" . }}
+{{- /* Same-origin navigations cross-fade, and links to pages (not feeds or files) are prefetched when the pointer rests on them. */}}
+<style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }</style>
+<script type="speculationrules">{"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/*.xml","/*.json","/*.asc","/*.pdf","/*.gif","/*.png","/*.jpg","/*.jpeg","/*.webp","/*.svg","/*.mp4","/*.mov","/*.py"]}}]},"eagerness":"moderate"}]}</script>
+{{- $scripts := slice "js/theme.js" "js/search.js" }}
+{{- if .IsHome }}{{ $scripts = $scripts | append "js/nav.js" "js/filter.js" }}{{ end }}
+{{- if and (eq .Kind "section") (in (slice "project" "publication") .Section) }}{{ $scripts = $scripts | append "js/filter.js" }}{{ end }}
+{{- if and .IsPage (eq .Type "post") }}
+  {{- $scripts = $scripts | append "js/copy.js" }}
+  {{- if gt (len (findRE `<a ` .TableOfContents)) 1 }}{{ $scripts = $scripts | append "js/toc.js" }}{{ end }}
+  {{- if .Params.commentable }}{{ $scripts = $scripts | append "js/comments.js" }}{{ end }}
+{{- end }}
+{{- if and .IsPage (strings.Contains .Content "data-zoomable") }}{{ $scripts = $scripts | append "js/zoom.js" }}{{ end }}
+{{- range $scripts }}
+  {{- with resources.Get . | js.Build (dict "minify" true "format" "esm") | fingerprint }}
+<script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous"></script>
+  {{- end }}
+{{- end }}
+{{- if .Params.math }}{{ partial "head/mathjax.html" . }}{{ end }}
+{{ partial "head/jsonld.html" . }}
+{{ partialCached "head/analytics.html" . }}

@@ -1,0 +1,11 @@
+{{- /* Returns the page's meta description as plain text: summary, abstract, the content summary of a regular page,
+the site description, or the role of the site's author. Front-matter values are Markdown. */ -}}
+{{- $description := .Params.summary | default .Params.abstract | default "" | markdownify }}
+{{- if and (not $description) .IsPage }}
+  {{- $description = .Summary }}
+{{- end }}
+{{- $description = $description | default site.Params.marketing.seo.description }}
+{{- if not $description }}
+  {{- $description = (site.GetPage "/authors/admin").Params.role }}
+{{- end }}
+{{- return ($description | plainify | htmlUnescape | chomp) -}}

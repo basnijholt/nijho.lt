@@ -1,0 +1,14 @@
+{{- /* Every publication, newest first, grouped by year, after the section's own text (a callout). */ -}}
+<section class="block" id="{{ .File.ContentBaseName }}" aria-labelledby="{{ .File.ContentBaseName }}-h">
+  <div class="wrap">
+    {{ partial "home/sec-head.html" . }}
+    {{ .Content }}
+    <ol class="pubs">
+      {{- $year := "" }}
+      {{- range (where site.RegularPages "Type" .Params.content.page_type).ByDate.Reverse }}
+      {{- partial "lists/publication-item.html" (dict "page" . "cont" (eq $year (.Date.Format "2006"))) }}
+      {{- $year = .Date.Format "2006" }}
+      {{- end }}
+    </ol>
+  </div>
+</section>

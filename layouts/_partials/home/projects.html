@@ -1,0 +1,7 @@
+{{- /* The projects section: its heading, then every project card (lists/project-grid.html). */ -}}
+<section class="block" id="{{ .File.ContentBaseName }}" aria-labelledby="{{ .File.ContentBaseName }}-h">
+  <div class="wrap">
+    {{ partial "home/sec-head.html" . }}
+    {{ partial "lists/project-grid.html" . }}
+  </div>
+</section>

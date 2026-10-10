@@ -1,0 +1,6 @@
+{{- $kind := .Get 0 }}
+{{- $icon := index (dict "note" "info" "warning" "warning") $kind }}
+{{- if not $icon }}
+  {{- errorf "callout: unknown kind %q at %s; use note or warning" $kind .Position }}
+{{- end -}}
+<aside class="callout callout-{{ $kind }}">{{ partial "ui-icon.html" $icon }}<div>{{ .Inner | markdownify | emojify }}</div></aside>

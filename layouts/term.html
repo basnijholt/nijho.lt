@@ -1,0 +1,12 @@
+{{ define "main" }}
+<div class="wrap list">
+  <header class="list-head">
+    <h1>{{ partial "functions/title.html" . }}</h1>
+    <p class="sub">{{ len .Pages }} {{ cond (eq (len .Pages) 1) "page" "pages" }} · <a href="{{ (.OutputFormats.Get "rss").RelPermalink }}">RSS feed</a></p>
+  </header>
+  <ul class="w1">
+    {{- range .Paginator.Pages }}{{ partial "lists/post-row.html" . }}{{ end }}
+  </ul>
+  {{ partial "pagination.html" . }}
+</div>
+{{ end }}

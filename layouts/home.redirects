@@ -1,0 +1,38 @@
+{{- $rules := slice }}
+{{- range site.Pages }}
+  {{- $target := .RelPermalink }}
+  {{- range .Aliases }}
+    {{- $source := cond (strings.HasSuffix . ".html") . (printf "%s/" (strings.TrimSuffix "/" .)) }}
+    {{- $rules = $rules | append (printf "%s %s 301" $source $target) }}
+  {{- end }}
+{{- end }}
+{{- range hugo.Data.redirects }}
+  {{- $rules = $rules | append (printf "%s %s %d%s" .from .to (.status | default 301) (cond (.force | default false) "!" "")) }}
+{{- end }}
+{{- $images := newScratch }}
+{{- range site.Pages }}
+  {{- range .Resources.ByType "image" }}
+    {{- $images.Add (path.Base .Name) (slice .) }}
+  {{- end }}
+{{- end }}
+{{- range resources.Match "media/**" }}
+  {{- $image := . }}
+  {{- if strings.HasPrefix .Name "/media/albums/" }}
+    {{- $image = partial "functions/album_original.html" . }}
+  {{- end }}
+  {{- $images.Add (path.Base .Name) (slice $image) }}
+{{- end }}
+{{- range hugo.Data.old_images }}
+  {{- $old := . }}
+  {{- range $images.Get .file }}
+    {{- if eq (len .Content) $old.size }}
+      {{- $target := .RelPermalink }}
+      {{- range $old.names }}
+        {{- $rules = $rules | append (printf "%s/%s %s 301" (path.Dir $target) . $target) }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- range $rules }}
+  {{- . }}
+{{ end -}}

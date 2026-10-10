@@ -1,0 +1,40 @@
+.chroma {
+  & :is(.k, .kc, .kd, .kn, .kp, .kr, .kt, .nt, .nd, .ow) {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  & :is(.s, .sa, .sb, .sc, .dl, .sd, .s2, .se, .sh, .si, .sx, .sr, .s1, .ss) {
+    color: var(--code-str);
+  }
+
+  & :is(.m, .mb, .mf, .mh, .mi, .il, .mo, .nf, .fm, .nc, .ne) {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  & :is(.c, .ch, .cm, .c1, .cs) {
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  & :is(.cp, .cpf, .p, .o, .gp, .go) {
+    color: var(--muted);
+  }
+
+  & .gd {
+    color: var(--accent);
+  }
+
+  & .gi {
+    color: var(--code-str);
+  }
+
+  & :is(.gh, .gu, .gs) {
+    font-weight: 600;
+  }
+
+  & .ge {
+    font-style: italic;
+  }
+}

@@ -1,0 +1,13 @@
+{{ define "main" }}
+<div class="wrap list">
+  <header class="list-head">
+    <h1>{{ partial "functions/title.html" . }}</h1>
+  </header>
+  <ul class="terms">
+    {{- range (.Paginate .Pages.ByTitle).Pages }}
+    <li><a href="{{ .RelPermalink }}">{{ partial "functions/title.html" . }} <span class="mono">{{ len .Pages }}</span></a></li>
+    {{- end }}
+  </ul>
+  {{ partial "pagination.html" . }}
+</div>
+{{ end }}

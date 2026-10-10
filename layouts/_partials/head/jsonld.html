@@ -1,0 +1,79 @@
+{{- $author := site.GetPage "/authors/admin" }}
+{{- $time := "2006-01-02T15:04:05Z07:00" }}
+{{- $schemas := slice }}
+{{- if .IsHome }}
+  {{- $schemas = $schemas | append (dict
+    "@context" "https://schema.org"
+    "@type" "WebSite"
+    "name" site.Title
+    "url" .Permalink
+    "potentialAction" (dict
+      "@type" "SearchAction"
+      "target" (printf "%s?q={search_term_string}" .Permalink)
+      "query-input" "required name=search_term_string"
+    )
+  ) }}
+  {{- $sameAs := slice }}
+  {{- range $author.Params.social }}
+    {{- if hasPrefix .link "https://" }}
+      {{- $sameAs = $sameAs | append .link }}
+    {{- end }}
+  {{- end }}
+  {{- $person := dict
+    "@context" "https://schema.org"
+    "@type" "Person"
+    "name" $author.Title
+    "url" .Permalink
+    "jobTitle" $author.Params.role
+    "sameAs" $sameAs
+  }}
+  {{- with ($author.Resources.ByType "image").GetMatch "avatar*" }}
+    {{- $person = merge $person (dict "image" (.Fill "270x270 Center").Permalink) }}
+  {{- end }}
+  {{- $schemas = $schemas | append $person }}
+{{- else if .IsPage }}
+  {{- with index (dict "post" "BlogPosting" "project" "Article" "publication" "ScholarlyArticle") .Type }}
+    {{- $name := $author.Title }}
+    {{- range first 1 ($.GetTerms "authors") }}
+      {{- $name = .Title }}
+    {{- end }}
+    {{- $article := dict
+      "@context" "https://schema.org"
+      "@type" .
+      "mainEntityOfPage" (dict "@type" "WebPage" "@id" $.Permalink)
+      "headline" $.Title
+      "datePublished" ($.PublishDate.Format $time)
+      "dateModified" ($.Lastmod.Format $time)
+      "author" (dict "@type" "Person" "name" $name)
+      "publisher" (dict
+        "@type" "Organization"
+        "name" site.Title
+        "logo" (dict "@type" "ImageObject" "url" ((resources.Get "media/icon.png").Fill "192x192 Center").Permalink)
+      )
+      "description" (partial "functions/description.html" $)
+    }}
+    {{- with partial "functions/featured_image.html" $ }}
+      {{- $article = merge $article (dict "image" (slice .Permalink)) }}
+    {{- end }}
+    {{- $schemas = $schemas | append $article }}
+  {{- end }}
+  {{- if eq .Type "post" }}
+    {{- $items := slice }}
+    {{- range $i, $page := .Ancestors.Reverse | append . }}
+      {{- $items = $items | append (dict
+        "@type" "ListItem"
+        "position" (add $i 1)
+        "name" $page.Title
+        "item" $page.Permalink
+      ) }}
+    {{- end }}
+    {{- $schemas = $schemas | append (dict
+      "@context" "https://schema.org"
+      "@type" "BreadcrumbList"
+      "itemListElement" $items
+    ) }}
+  {{- end }}
+{{- end }}
+{{- range $schemas }}
+<script type="application/ld+json">{{ jsonify . | safeJS }}</script>
+{{- end }}

@@ -1,0 +1,7 @@
+{{- /* A section of free Markdown, such as the photography text and its photo grid. */ -}}
+<section class="block" id="{{ .File.ContentBaseName }}" aria-labelledby="{{ .File.ContentBaseName }}-h">
+  <div class="wrap">
+    {{ partial "home/sec-head.html" . }}
+    <div class="sec-body">{{ .Content }}</div>
+  </div>
+</section>

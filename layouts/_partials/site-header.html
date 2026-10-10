@@ -1,0 +1,19 @@
+<header class="site-header">
+  <nav class="wrap nav" aria-label="Main">
+    <a class="brand" href="{{ site.Home.RelPermalink }}">{{ site.Title }}</a>
+    <ul class="nav-links" id="site-menu" popover>
+      {{- range site.Menus.main }}
+      <li><a href="{{ .URL | relURL }}">{{ .Name }}</a></li>
+      {{- end }}
+    </ul>
+    <div class="nav-tools">
+      <button class="icon-btn needs-js" type="button" aria-label="Search" aria-haspopup="dialog" aria-controls="search">
+        {{- partial "ui-icon.html" "search" -}}
+      </button>
+      {{ partial "theme-menu.html" . }}
+      <button class="icon-btn menu-btn" type="button" popovertarget="site-menu" aria-label="Menu">
+        {{- partial "ui-icon.html" "menu" -}}
+      </button>
+    </div>
+  </nav>
+</header>

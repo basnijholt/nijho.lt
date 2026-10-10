@@ -1,0 +1,40 @@
+{{- /* A row of demo-clip recordings that play while on screen; styles in assets/css/10-shortcodes.css (.demo-clips). */ -}}
+<div class="demo-clips">
+  <div class="demo-clips-row">{{ .Inner }}</div>
+  <p class="demo-clips-note">Demo recordings with a fictional company and scripted responses.{{ with .Get "more" }} {{ . | markdownify }}{{ end }}</p>
+  <script>
+    {
+      // Play each recording while at least half of it is on screen, and pause it once it scrolls away or a theme switch hides it.
+      const onScreen = new IntersectionObserver((entries) => {
+        for (const { target, isIntersecting } of entries) {
+          // play() rejects when a quick scroll pauses the video before it starts; there is nothing to recover.
+          isIntersecting ? target.play().catch(() => {}) : target.pause()
+        }
+      }, { threshold: 0.5 })
+      // Inline, each video plays a small preview; in fullscreen, switch to the full-resolution file at the same moment, and back on exit.
+      const swap = (video, src) => {
+        if (!src || video.currentSrc.split("#")[0] === src) return
+        const time = video.currentTime, playing = !video.paused
+        video.src = src
+        video.addEventListener("loadedmetadata", () => {
+          video.currentTime = time
+          if (playing) video.play().catch(() => {})
+        }, { once: true })
+      }
+      const videos = document.currentScript.parentElement.querySelectorAll("video")
+      videos.forEach((video) => {
+        video.dataset.preview = video.getAttribute("src").split("#")[0]
+        onScreen.observe(video)
+        // iOS plays fullscreen video in its own player and only fires these events on the element.
+        video.addEventListener("webkitbeginfullscreen", () => swap(video, video.dataset.full))
+        video.addEventListener("webkitendfullscreen", () => swap(video, video.dataset.preview))
+      })
+      for (const event of ["fullscreenchange", "webkitfullscreenchange"]) {
+        document.addEventListener(event, () => {
+          const fullscreen = document.fullscreenElement || document.webkitFullscreenElement
+          videos.forEach((video) => swap(video, video === fullscreen ? video.dataset.full : video.dataset.preview))
+        })
+      }
+    }
+  </script>
+</div>

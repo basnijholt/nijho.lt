@@ -1,0 +1,11 @@
+{{ define "main" }}
+{{- /* /project/ has no content file; its heading and filters come from the homepage's projects section. */}}
+{{- $section := (site.GetPage "/home").Resources.GetMatch "projects.md" }}
+<div class="wrap list">
+  <header class="list-head">
+    <h1>{{ $section.Title }}</h1>
+    {{ with $section.Params.subtitle }}<p class="sub">{{ . | markdownify | emojify }}</p>{{ end }}
+  </header>
+  {{ partial "lists/project-grid.html" $section }}
+</div>
+{{ end }}

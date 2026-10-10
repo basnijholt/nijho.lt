@@ -1,0 +1,41 @@
+{{- /* The introduction: avatar, name, role, biography, social links, interests and education of an author.
+  Takes the about section of the homepage (front matter author names the author) or an author page. */ -}}
+{{- $author := . }}
+{{- with .Params.author }}{{ $author = site.GetPage (printf "/authors/%s" .) }}{{ end }}
+<section id="about" class="wrap intro" aria-label="About">
+  {{- with ($author.Resources.ByType "image").GetMatch "avatar*" }}{{ with .Fill "540x675 Center webp" }}
+  <img class="avatar" src="{{ .RelPermalink }}" width="270" height="338" alt="{{ $author.Title }}" fetchpriority="high">
+  {{- end }}{{ end }}
+  <div>
+    <h1>{{ $author.Title }}</h1>
+    {{- with $author.Params.role }}
+    <p class="role">{{ . }}{{ range first 1 $author.Params.organizations }} at <a href="{{ .url }}">{{ .name }}</a>{{ end }}</p>
+    {{- end }}
+    <div class="bio">{{ $author.Content }}</div>
+    {{ partial "social.html" $author }}
+    <div class="facts">
+      {{- with $author.Params.interests }}
+      <div class="interests">
+        <h3>Interests</h3>
+        <ul>
+          {{- range . }}
+          {{- /* Each interest is text followed by its icon markup; the icon goes on a plate in front. */}}
+          {{- $icon := index (findRE `<em [^>]*>\s*</em>` . 1) 0 | default "" }}
+          <li><span class="plate-ico">{{ $icon | safeHTML }}</span>{{ replace . $icon "" | strings.TrimSpace | safeHTML }}</li>
+          {{- end }}
+        </ul>
+      </div>
+      {{- end }}
+      {{- with $author.Params.education.courses }}
+      <div>
+        <h3>Education</h3>
+        <ul class="edu">
+          {{- range . }}
+          <li><span class="yr mono">{{ .year }}</span><div><strong>{{ .course }}</strong><span class="inst">{{ .institution }}</span></div></li>
+          {{- end }}
+        </ul>
+      </div>
+      {{- end }}
+    </div>
+  </div>
+</section>

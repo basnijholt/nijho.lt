@@ -1,0 +1,36 @@
+{{- /* A project card. The image is animated.svg as-is, else the featured image fitted into 600x400 (a GIF stays
+  the original, since Hugo cannot keep its animation), else the summary's first emoji. Square and portrait images
+  are logos and get a smaller frame. The title links to external_link, else the project page.
+  Takes a dict of page, order (its index in the default order) and stars (its GitHub star count, 0 if unknown). */ -}}
+{{- $p := .page }}
+{{- $link := $p.Params.external_link | default $p.RelPermalink }}
+{{- $summary := "" }}
+{{- with $p.Params.summary }}{{ $summary = . | markdownify | emojify }}{{ else }}{{ $summary = $p.Summary }}{{ end }}
+<article class="proj" data-tags="{{ delimit (apply ($p.Params.tags | default slice) "lower" ".") "," }}"
+  data-name="{{ lower $p.Title }}" data-date="{{ $p.Date.Unix }}" data-order="{{ .order }}" data-stars="{{ .stars }}">
+  {{- $image := partial "functions/featured_image.html" $p }}
+  {{- with $p.Resources.GetMatch "animated.svg" }}
+  <div class="plate fill"><img src="{{ .RelPermalink }}" alt="" loading="lazy"></div>
+  {{- else with $image }}
+    {{- $shown := . }}
+    {{- if ne (path.Ext .Name | lower) ".gif" }}{{ $shown = .Fit "600x400 webp" }}{{ end }}
+    {{- $logo := ge (div (float .Height) .Width) 0.9 }}
+  <div class="plate {{ cond $logo "logo" "fill" }}"><img src="{{ $shown.RelPermalink }}" width="{{ $shown.Width }}" height="{{ $shown.Height }}" alt="" loading="lazy"></div>
+  {{- else }}
+  <div class="plate empty" aria-hidden="true">
+    {{- with index (findRE `\p{So}\x{FE0F}?` (plainify $summary) 1) 0 }}<span class="emo">{{ . }}</span>{{ end }}
+    {{- with partial "functions/github_repo" $p }}<span class="repo">{{ . }}</span>{{ end }}
+  </div>
+  {{- end }}
+  <div class="proj-body">
+    <div class="proj-row">
+      <h3><a class="stretch" href="{{ $link }}">{{ $p.Title | markdownify | emojify }}</a></h3>
+      {{- with .stars }}
+      <span class="stars mono" title="{{ lang.FormatNumberCustom 0 . }} {{ cond (eq . 1) "star" "stars" }} on GitHub">
+        {{- partial "ui-icon.html" "star-fill" }}{{ if ge . 1000 }}{{ printf "%.1fk" (div . 1000.0) | replaceRE `\.0k$` "k" }}{{ else }}{{ . }}{{ end -}}
+      </span>
+      {{- end }}
+    </div>
+    {{- with $summary }}<p>{{ . }}</p>{{ end }}
+  </div>
+</article>

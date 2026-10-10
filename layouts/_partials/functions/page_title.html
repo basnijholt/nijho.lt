@@ -1,0 +1,6 @@
+{{- /* Returns the page's <title> and og:title: the SEO title or the page title, then " | <site title>". */ -}}
+{{- $title := .Params.seo.title | default (partial "functions/title.html" .) }}
+{{- if and $title (ne $title site.Title) }}
+  {{- $title = printf "%s | %s" $title site.Title }}
+{{- end }}
+{{- return ($title | default site.Title) -}}

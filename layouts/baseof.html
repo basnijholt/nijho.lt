@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.Locale }}">
+<head>
+  {{ partial "head.html" . }}
+  {{ block "head_extra" . }}{{ end }}
+</head>
+<body class="kind-{{ .Kind }} type-{{ .Type }}">
+  <a class="skip-link" href="#main">Skip to content</a>
+  {{ partial "site-header.html" . }}
+  <main id="main">
+    {{ block "main" . }}{{ end }}
+  </main>
+  {{- if .Store.Get "autoplay" }}
+  {{ partial "reduced-motion.html" . }}
+  {{- end }}
+  {{- if .Store.Get "mermaid" }}
+  {{ partial "mermaid.html" . }}
+  {{- end }}
+  {{ partial "site-footer.html" . }}
+  {{ partial "search.html" . }}
+</body>
+</html>

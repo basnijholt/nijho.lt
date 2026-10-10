@@ -1,0 +1,58 @@
+# One entry per expected difference. Copy match from the report including the quotes around the path;
+# the closing quote keeps /post/advent-of-open-source/23-pfapack/ from matching.
+- check: feeds
+  path: /authors/admin/index.xml
+  match: "guid '/post/advent-of-open-source/'"
+  reason: "Hugo 0.123 race: the advent section page (authors: [admin]) is randomly included in the admin term's pages"
+- check: feeds
+  path: /authors/admin/index.xml
+  match: "link '/post/advent-of-open-source/'"
+  reason: "Hugo 0.123 race: the advent section page (authors: [admin]) is randomly included in the admin term's pages"
+- check: seo
+  path: "*"
+  match: "og:image: '/media/icon_hu80d4068d4a221917e6e98566e3ddf93f_419855_512x512_fill_lanczos_center_3.png' -> '/media/icon_hu_408a8f6cef43e327.png'"
+  reason: Hugo 0.167 names resized images <stem>_hu_<hash>; the same 512x512 fill of media/icon.png
+- check: seo
+  path: /authors/admin/index.html
+  match: "og:image: '/authors/admin/avatar_hu9e60e4b9bc120dfb6a666009f2878da6_182107_270x270_fill_q90_lanczos_center.jpg' -> '/authors/admin/avatar_hu_4964721255c921b6.jpg'"
+  reason: Hugo 0.167 names resized images <stem>_hu_<hash>; the same 270x270 fill of the avatar
+- check: seo
+  path: /authors/page/1/index.html
+  match: "title: '/authors/' -> 'https://www.nijho.lt/authors/'"
+  reason: Redirect pages are titled with their target URL, which is absolute now
+- check: seo
+  path: /post/advent-of-open-source/page/1/index.html
+  match: "title: '/post/advent-of-open-source/' -> 'https://www.nijho.lt/post/advent-of-open-source/'"
+  reason: Redirect pages are titled with their target URL, which is absolute now
+- check: seo
+  path: /post/page/1/index.html
+  match: "title: '/post/' -> 'https://www.nijho.lt/post/'"
+  reason: Redirect pages are titled with their target URL, which is absolute now
+- check: seo
+  path: /publication/*
+  match: "jsonld:@type: 'Article' -> 'ScholarlyArticle'"
+  reason: Publications are marked up as ScholarlyArticle instead of Article
+- check: seo
+  path: /phd-defense/index.html
+  match: "description: '(in het Nederlands onderaan) Towards realistic numerical simulations of Majorana devices Hi all, Due to external circumstances my Ph.D. defense will be happening without a live audience. Only my professor (Anton Akhmerov), the chairman, Beadle, Marcella, and I will be physically at the TU Delft.' -> '(in het Nederlands onderaan) Towards realistic numerical simulations of Majorana devices Hi all, Due to external circumstances my Ph.D. defense will be happening without a live audience. Only my professor (Anton Akhmerov), the chairman, Beadle, Marcella, and I will be physically at the TU Delft. The other 7 professors in my committee will be calling in using Skype.'"
+  reason: Hugo 0.134 and later end an automatic summary at a block boundary, so it keeps the paragraph's last sentence
+- check: seo
+  path: /project/adaptive-scheduler/index.html
+  match: "description: 'adaptive-scheduler: Run simulations adaptively on many cores (>10k) and easily manage starting and restarting using mpi4py.futures, ipyparallel, or dask-mpi :tada:' -> 'adaptive-scheduler: Run simulations adaptively on many cores (>10k) and easily manage starting and restarting using mpi4py.futures, ipyparallel, or dask-mpi 🎉'"
+  reason: The summary is rendered as Markdown, which turns emoji shortcodes into emoji
+- check: seo
+  path: /project/home-assistant/index.html
+  match: "description: \"Many things in my house are automated using the Python Home Assistant framework. I've built some interseting automations and app, see my config files and AppDaemon apps :house: :robot:\" -> \"Many things in my house are automated using the Python Home Assistant framework. I've built some interseting automations and app, see my config files and AppDaemon apps 🏠 🤖\""
+  reason: The summary is rendered as Markdown, which turns emoji shortcodes into emoji
+- check: content
+  path: /post/index.html
+  match: article root missing in candidate
+  reason: "The post list has no body of its own; the baseline's article root there is the first summary"
+- check: feeds
+  path: /publication_types/index.xml
+  match: "channel title: 'Publication_types | Bas Nijholt' -> 'Publication types | Bas Nijholt'"
+  reason: The publication-type taxonomy is titled with a readable name
+- check: feeds
+  path: /publication-type/article-journal/index.xml
+  match: "channel title: 'Article-Journal | Bas Nijholt' -> 'Journal article | Bas Nijholt'"
+  reason: Publication types are titled with the names their pages and links use

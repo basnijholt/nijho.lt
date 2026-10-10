@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.13.6/.schema/devbox.schema.json",
   "packages": [
-    "hugo@0.123.3",
+    "hugo@0.165.0",
     "git@latest"
   ],
   "shell": {
@@ -12,7 +12,8 @@
     "scripts": {
       "dev": "echo 'Starting server at http://localhost:1313/' && hugo server --buildDrafts --disableFastRender",
       "build": "hugo --gc --minify",
-      "build:preview": "hugo --gc --minify --buildFuture"
+      "build:preview": "hugo --gc --minify --buildFuture",
+      "parity": "cd tools/migration && uv run parity compare-branch"
     }
   }
 }

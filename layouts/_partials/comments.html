@@ -1,0 +1,7 @@
+{{- /* giscus comments, loaded by comments.js; the thread is matched to the page by its path. */ -}}
+{{- if .Params.commentable }}{{ with site.Params.features.comment.giscus }}
+<section class="wrap" id="comments" aria-labelledby="comments-h" data-giscus-repo="{{ .repo }}" data-giscus-repo-id="{{ .repo_id }}" data-giscus-category="{{ .category }}" data-giscus-category-id="{{ .category_id }}" data-giscus-mapping="pathname" data-giscus-lang="{{ .language_code | default "en" }}">
+  <h2 id="comments-h">Comments</h2>
+  <noscript><p>Comments are a GitHub Discussions thread and need JavaScript.</p></noscript>
+</section>
+{{- end }}{{ end }}

@@ -1,0 +1,15 @@
+<footer class="site-footer">
+  <div class="wrap">
+    <p>
+      © {{ now.Year }} {{ site.Title }}.
+      {{- with site.Params.features.repository.url }} Source code on <a href="{{ . }}">GitHub</a>{{ end }}
+      {{- with site.Params.features.deploys }} and builds on <a href="{{ . }}">Netlify</a>{{ end }}.
+    </p>
+    <p class="links">
+      {{- with site.Home.OutputFormats.Get "rss" }}
+      <a href="{{ .RelPermalink }}">RSS</a>
+      {{- end }}
+      <a href="#top">Back to top</a>
+    </p>
+  </div>
+</footer>

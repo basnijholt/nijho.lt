@@ -1,0 +1,14 @@
+{{- /* Thumbnails of assets/media/albums/<album>/ that open the originals. */}}
+{{- $album := .Get "album" }}
+{{- $fit := printf "%s webp" (.Get "resize_options" | default "350x250") }}
+{{- $images := sort (resources.Match (path.Join "media/albums" $album "*")) "Name" }}
+{{- if not $images }}
+  {{- errorf "gallery: no images in assets/media/albums/%s (%s)" $album .Position }}
+{{- end -}}
+<div class="gallery">
+  {{- range $i, $image := $images }}
+    {{- $thumb := $image.Fit $fit }}
+    {{- $original := partial "functions/album_original.html" $image }}
+  <a href="{{ $original.RelPermalink }}"><img src="{{ $thumb.RelPermalink }}" width="{{ $thumb.Width }}" height="{{ $thumb.Height }}" alt="Image {{ add $i 1 }} of {{ len $images }}" loading="lazy" data-zoomable></a>
+  {{- end }}
+</div>

@@ -1,0 +1,42 @@
+{{- /* Contact: the email address, location, directions and contact_links (icon, name, link; a name "Label: value"
+  shows Label above value, else the icon names the channel), and a map that opens OpenStreetMap at the coordinates.
+  The map image is assets/media/map.webp, drawn by tools/contact_map.py around content.coordinates. */ -}}
+{{- $c := .Params.content }}
+{{- $brands := dict "github" "GitHub" }}
+{{- $place := delimit (slice $c.address.city $c.address.region) ", " }}
+<section class="block" id="{{ .File.ContentBaseName }}" aria-labelledby="{{ .File.ContentBaseName }}-h">
+  <div class="wrap contact">
+    <div>
+      <h2 id="{{ .File.ContentBaseName }}-h">{{ .Title }}</h2>
+      {{- with $c.email }}
+      <a class="email" href="mailto:{{ . }}">{{ . }}</a>
+      {{- end }}
+      <ul class="channels">
+        {{- with $place }}
+        <li>{{ partial "ui-icon.html" "map-pin" }}<div><span class="k">Location</span><span class="v">{{ . }}</span></div></li>
+        {{- end }}
+        {{- with $c.directions }}
+        <li>{{ partial "ui-icon.html" "compass" }}<div><span class="k">Directions</span><span class="v">{{ . }}</span></div></li>
+        {{- end }}
+        {{- range $c.contact_links }}
+          {{- $label := index $brands .icon | default (humanize .icon) }}
+          {{- $value := .name }}
+          {{- with findRESubmatch `^([^:]+):\s+(.+)$` .name 1 }}{{ $label = index . 0 1 }}{{ $value = index . 0 2 }}{{ end }}
+          {{- $wide := ne $value .name }}
+        <li{{ if $wide }} class="wide"{{ end }}>{{ partial "icon.html" (dict "name" .icon "class" "ico") }}<div><span class="k">{{ $label }}</span><a class="v{{ if $wide }} fp{{ end }}" href="{{ .link }}">{{ $value }}</a></div></li>
+        {{- end }}
+      </ul>
+    </div>
+    {{- with $c.coordinates }}
+    {{- $osm := printf "https://www.openstreetmap.org/?mlat=%s&mlon=%s#map=12/%s/%s" .latitude .longitude .latitude .longitude }}
+    <a class="map-card" href="{{ $osm | safeURL }}" aria-label="{{ $place }} on OpenStreetMap">
+      {{- with resources.Get "media/map.webp" }}
+      <img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" loading="lazy" alt="Map of the area around {{ $place }}, with a marker on it">
+      {{- end }}
+      <span class="pin" aria-hidden="true"></span>
+      <span class="osm">&copy; OpenStreetMap contributors</span>
+      <span class="map-label"><span>{{ $place }}</span><span class="mono">OpenStreetMap {{ partial "ui-icon.html" "arrow-up-right" }}</span></span>
+    </a>
+    {{- end }}
+  </div>
+</section>

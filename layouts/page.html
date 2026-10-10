@@ -1,0 +1,9 @@
+{{ define "main" }}
+<article class="wrap post">
+  <header class="post-head">
+    <h1>{{ .Title }}</h1>
+    {{ with .Params.subtitle }}<p class="subtitle">{{ . | markdownify | emojify }}</p>{{ end }}
+  </header>
+  <div class="prose">{{ .Content }}</div>
+</article>
+{{ end }}

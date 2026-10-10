@@ -1,0 +1,11 @@
+{{- /* The search dialog; search.js opens it from the header button, the / key and ?q= in the URL. */ -}}
+<dialog id="search" class="search" aria-label="Search">
+  <div class="search-bar">
+    {{ partial "ui-icon.html" "search" }}
+    <input type="search" placeholder="Search posts, projects and publications" autocomplete="off" spellcheck="false"
+      role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="search-results" aria-label="Search">
+    <button type="button" class="icon-btn" data-search-close aria-label="Close search">{{ partial "ui-icon.html" "x" }}</button>
+  </div>
+  <ul id="search-results" class="search-results" role="listbox" aria-label="Results"></ul>
+  <p class="search-status mono" aria-live="polite"></p>
+</dialog>

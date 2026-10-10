@@ -1,0 +1,15 @@
+{{- /* The Font Awesome and academicons classes written as HTML in content or front matter, e.g. "fa-github" for
+     <em class="fab fa-github fa-fw">. The build fails when one has no SVG in assets/icons. */ -}}
+{{- $sources := slice -}}
+{{- range site.Pages }}{{ $sources = $sources | append .RawContent (jsonify .Params) }}{{ end -}}
+{{- with site.GetPage "/home" }}{{ range .Resources.ByType "page" }}{{ $sources = $sources | append .RawContent (jsonify .Params) }}{{ end }}{{ end -}}
+{{- $modifiers := slice "fw" "lg" "2x" "3x" "li" -}}
+{{- $classes := slice -}}
+{{- range findRESubmatch `\b(?:fa[srb]?|ai) ((?:fa|ai)-([a-z0-9-]+))` (delimit $sources "\n") -}}
+  {{- $name := index . 2 -}}
+  {{- if not (in $modifiers $name) -}}
+    {{- if not (resources.Get (printf "icons/%s.svg" $name)) }}{{ errorf "icon %q has no SVG in assets/icons/" $name }}{{ end -}}
+    {{- $classes = $classes | append (index . 1) -}}
+  {{- end -}}
+{{- end -}}
+{{- return (sort (uniq $classes)) -}}

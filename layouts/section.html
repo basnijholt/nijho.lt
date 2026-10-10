@@ -1,0 +1,13 @@
+{{ define "main" }}
+<div class="wrap list">
+  <header class="list-head">
+    <h1>{{ .Title }}</h1>
+    {{ with .Params.subtitle }}<p class="sub">{{ . | markdownify | emojify }}</p>{{ end }}
+  </header>
+  {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+  <ul class="w1">
+    {{- range (.Paginate .Pages).Pages }}{{ partial "lists/post-row.html" . }}{{ end }}
+  </ul>
+  {{ partial "pagination.html" . }}
+</div>
+{{ end }}

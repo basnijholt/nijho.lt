@@ -1,0 +1,5 @@
+{{- /* What a [data-filter-root] shows when no item matches; takes the noun for the items ("projects"). */ -}}
+<div class="filter-empty" data-filter-empty hidden>
+  <strong>No {{ . }} match that search.</strong>Try another word, or show every one again.
+  <button type="button" class="btn" data-filter-reset>Show all {{ . }}</button>
+</div>
