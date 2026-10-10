@@ -1,0 +1,10 @@
+# One entry per expected finding. Copy match from the report including the quotes around the path;
+# the closing quote keeps /post/advent-of-open-source/23-pfapack/ from matching.
+- check: feeds
+  path: /authors/admin/index.xml
+  match: "guid '/post/advent-of-open-source/'"
+  reason: "Hugo 0.123 race: the advent section page (authors: [admin]) is randomly included in the admin term's pages"
+- check: feeds
+  path: /authors/admin/index.xml
+  match: "link '/post/advent-of-open-source/'"
+  reason: "Hugo 0.123 race: the advent section page (authors: [admin]) is randomly included in the admin term's pages"

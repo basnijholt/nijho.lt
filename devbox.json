@@ -12,7 +12,8 @@
     "scripts": {
       "dev": "echo 'Starting server at http://localhost:1313/' && hugo server --buildDrafts --disableFastRender",
       "build": "hugo --gc --minify",
-      "build:preview": "hugo --gc --minify --buildFuture"
+      "build:preview": "hugo --gc --minify --buildFuture",
+      "parity": "cd tools && uv run parity compare-branch"
     }
   }
 }
