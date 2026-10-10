@@ -1,0 +1,3 @@
+<h{{ .Level }} id="{{ .Anchor }}">{{ .Text }}
+{{- if or (eq .Level 2) (eq .Level 3) }} <a class="anchor" href="#{{ .Anchor }}" aria-label="Link to this section">#</a>{{ end -}}
+</h{{ .Level }}>

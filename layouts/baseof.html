@@ -10,6 +10,9 @@
   <main id="main">
     {{ block "main" . }}{{ end }}
   </main>
+  {{- if .Store.Get "mermaid" }}
+  {{ partial "mermaid.html" . }}
+  {{- end }}
   {{ partial "site-footer.html" . }}
 </body>
 </html>

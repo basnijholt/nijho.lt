@@ -1,3 +1,30 @@
-{{- $src := .Get "src" -}}
-{{- with .Page.Resources.Get $src }}{{ $src = .RelPermalink }}{{ end -}}
-<video src="{{ $src }}" controls></video>
+{{- /* A video from the page bundle, assets/media/ or a remote URL, with <name>.jpg next to it as the poster.
+  Flags: controls, autoplay (muted, as browsers require) and loop; "false" turns one off. */}}
+{{- $src := .Get "src" }}
+{{- $flags := dict }}
+{{- range $name := slice "controls" "autoplay" "loop" }}
+  {{- with $.Get $name }}
+    {{- if ne (string .) "false" }}{{ $flags = merge $flags (dict $name true) }}{{ end }}
+  {{- end }}
+{{- end }}
+{{- $url := $src }}
+{{- $type := printf "video/%s" (strings.TrimPrefix "." (path.Ext $src)) }}
+{{- $poster := "" }}
+{{- if not (strings.HasPrefix $src "http") }}
+  {{- $posterName := printf "%s.jpg" (strings.TrimSuffix (path.Ext $src) $src) }}
+  {{- $video := .Page.Resources.Get $src }}
+  {{- $poster = .Page.Resources.Get $posterName }}
+  {{- if not $video }}
+    {{- $video = resources.Get (path.Join "media" $src) }}
+    {{- $poster = resources.Get (path.Join "media" $posterName) }}
+  {{- end }}
+  {{- with $video }}
+    {{- $url = .RelPermalink }}
+    {{- $type = .MediaType.Type }}
+  {{- else }}
+    {{- errorf "video: %q is neither in the bundle nor in assets/media/ (%s)" $src .Position }}
+  {{- end }}
+{{- end -}}
+<video{{ if $flags.controls }} controls{{ end }}{{ if $flags.autoplay }} autoplay muted playsinline{{ end }}{{ if $flags.loop }} loop{{ end }}{{ with $poster }} poster="{{ .RelPermalink }}"{{ end }} preload="metadata">
+<source src="{{ $url }}" type="{{ $type }}">
+</video>

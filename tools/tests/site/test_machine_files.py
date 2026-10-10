@@ -8,12 +8,11 @@ from xml.etree import ElementTree as ET
 import pytest
 import yaml
 
-from helpers import TOOLS, require_hugo
+from helpers import CONTENT, page_url, require_hugo
 from parity.build import build_site, resolve_hugo
 from parity.site import Build
 
 ORIGIN = "https://www.nijho.lt"
-CONTENT = TOOLS.parent / "content"
 INDEX_KEYS = {
     "objectID", "date", "publishdate", "lastmod", "expirydate", "lang", "permalink", "relpermalink", "title",
     "summary", "content", "authors", "kind", "type", "section", "tags", "categories",
@@ -22,16 +21,6 @@ INDEX_KEYS = {
 
 def channel(build: Build, path: str) -> ET.Element:
     return ET.parse(build.root / path.lstrip("/")).getroot().find("channel")
-
-
-def page_url(file: Path) -> str:
-    """The URL path of a content page: its bundle directory or file name, or the `slug:` in its front matter."""
-    path = file.parent if file.name == "index.md" else file.with_suffix("")
-    text = file.read_text(encoding="utf-8")
-    front_matter = yaml.safe_load(text.split("---", 2)[1]) if text.startswith("---") else {}
-    if slug := front_matter.get("slug"):
-        path = path.with_name(slug)
-    return f"/{path.relative_to(CONTENT).as_posix()}/"
 
 
 def headers(build: Build) -> dict[str, dict[str, str]]:

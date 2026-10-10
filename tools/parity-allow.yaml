@@ -44,39 +44,43 @@
   path: /project/home-assistant/index.html
   match: "description: \"Many things in my house are automated using the Python Home Assistant framework. I've built some interseting automations and app, see my config files and AppDaemon apps :house: :robot:\" -> \"Many things in my house are automated using the Python Home Assistant framework. I've built some interseting automations and app, see my config files and AppDaemon apps 🏠 🤖\""
   reason: The summary is rendered as Markdown, which turns emoji shortcodes into emoji
-- check: feeds
-  path: "*"
-  match: "item '/post/file-based-rag-memory/' text: 'proxy. flowchart LR Client[\"Client(Cursor, Open WebUI)\"] -->' -> 'proxy. flowchart LR Client[\"Client<br/>(Cursor, Open WebUI)\"] -->'"
-  reason: "Mermaid fences render as highlighted code, which shows the <br/> line breaks in node labels as text"
-- check: feeds
-  path: "*"
-  match: "item '/post/homelab-explained/' text: '\"ACL: only the portsshared with them\" .->' -> '\"ACL: only the ports<br/>shared with them\" .->'"
-  reason: "Mermaid fences render as highlighted code, which shows the <br/> line breaks in node labels as text"
-- check: feeds
-  path: "*"
-  match: "item '/post/homelab-explained/' text: 'flowchart LR home[\"At home(home network)\"]' -> 'flowchart LR home[\"At home<br/>(home network)\"]'"
-  reason: "Mermaid fences render as highlighted code, which shows the <br/> line breaks in node labels as text"
-- check: feeds
-  path: "*"
-  match: "item '/post/homelab-explained/' text: 'friends[\"Friends and family(Tailscale)\"] net[\"Anyone(internet)\"] subgraph router[\"Home router\"]' -> 'friends[\"Friends and family<br/>(Tailscale)\"] net[\"Anyone<br/>(internet)\"] subgraph router[\"Home router\"]'"
-  reason: "Mermaid fences render as highlighted code, which shows the <br/> line breaks in node labels as text"
-- check: feeds
-  path: "*"
-  match: "item '/post/homelab-explained/' text: 'fwd -- \"wan entrypoint:public routes only\" -->' -> 'fwd -- \"wan entrypoint:<br/>public routes only\" -->'"
-  reason: "Mermaid fences render as highlighted code, which shows the <br/> line breaks in node labels as text"
-- check: feeds
-  path: "*"
-  match: "item '/post/homelab-explained/' text: 'network)\"] wg[\"Away(WireGuard)\"] ts[\"Away(Tailscale)\"] friends[\"Friends and' -> 'network)\"] wg[\"Away<br/>(WireGuard)\"] ts[\"Away<br/>(Tailscale)\"] friends[\"Friends and'"
-  reason: "Mermaid fences render as highlighted code, which shows the <br/> line breaks in node labels as text"
-- check: feeds
-  path: "*"
-  match: "item '/post/homelab-explained/' text: 'only\" --> traefik traefik{{\"Traefikreverse proxy+ IP allowlist\"}} traefik' -> 'only\" --> traefik traefik{{\"Traefik<br/>reverse proxy<br/>+ IP allowlist\"}} traefik'"
-  reason: "Mermaid fences render as highlighted code, which shows the <br/> line breaks in node labels as text"
-- check: feeds
-  path: "*"
-  match: "item '/post/homelab-explained/' text: 'ts -- \"encrypted tunnelstraight to the NAS\"' -> 'ts -- \"encrypted tunnel<br/>straight to the NAS\"'"
-  reason: "Mermaid fences render as highlighted code, which shows the <br/> line breaks in node labels as text"
-- check: feeds
-  path: "*"
-  match: "item '/post/thesis-cover/' text: 'open gallery view) A few days' -> 'open gallery view) /media/albums/basnijholt-thesis-cover/"
-  reason: "The gallery shortcode lists the album's image paths instead of showing thumbnails"
+- check: content
+  path: /post/file-based-rag-memory/index.html
+  match: "pre count: 7 -> 8"
+  reason: "Mermaid diagrams are <pre class=\"mermaid\"> instead of <div class=\"mermaid\">, so their source keeps its line breaks without JavaScript"
+- check: content
+  path: /post/homelab-explained/index.html
+  match: "pre count: 26 -> 27"
+  reason: "Mermaid diagrams are <pre class=\"mermaid\"> instead of <div class=\"mermaid\">, so their source keeps its line breaks without JavaScript"
+- check: content
+  path: /post/nixos-cache/index.html
+  match: "pre count: 1 -> 2"
+  reason: "Mermaid diagrams are <pre class=\"mermaid\"> instead of <div class=\"mermaid\">, so their source keeps its line breaks without JavaScript"
+- check: content
+  path: /post/index.html
+  match: article root missing in candidate
+  reason: "The post list has no body of its own; the baseline's article root there is the first summary"
+- check: ids
+  path: /index.html
+  match: "missing ID: about"
+  reason: The homepage has no sections yet
+- check: ids
+  path: /index.html
+  match: "missing ID: blog-posts"
+  reason: The homepage has no sections yet
+- check: ids
+  path: /index.html
+  match: "missing ID: contact"
+  reason: The homepage has no sections yet
+- check: ids
+  path: /index.html
+  match: "missing ID: photography"
+  reason: The homepage has no sections yet
+- check: ids
+  path: /index.html
+  match: "missing ID: projects"
+  reason: The homepage has no sections yet
+- check: ids
+  path: /index.html
+  match: "missing ID: publications"
+  reason: The homepage has no sections yet

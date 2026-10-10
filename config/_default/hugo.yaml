@@ -74,6 +74,8 @@ markup:
       unsafe: true
     parser:
       autoIDType: github
+      # A Markdown image alone in its paragraph renders as a figure, which a <p> may not contain
+      wrapStandAloneImageWithinParagraph: false
       attribute:
         block: true
         title: true

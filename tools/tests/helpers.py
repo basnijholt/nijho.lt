@@ -10,11 +10,13 @@ import struct
 from pathlib import Path
 
 import pytest
+import yaml
 
 from parity.build import BuildError, get_hugo_version
 from parity.site import Build
 
 TOOLS = Path(__file__).resolve().parents[1]
+CONTENT = TOOLS.parent / "content"
 
 
 def write_build(root: Path, files: dict[str, str | bytes]) -> Build:
@@ -28,6 +30,16 @@ def write_build(root: Path, files: dict[str, str | bytes]) -> Build:
         else:
             path.write_text(content, encoding="utf-8")
     return Build(root)
+
+
+def page_url(file: Path) -> str:
+    """The URL path of a content page: its bundle directory or file name, or the `slug:` in its front matter."""
+    path = file.parent if file.name in ("index.md", "_index.md") else file.with_suffix("")
+    text = file.read_text(encoding="utf-8")
+    front_matter = yaml.safe_load(text.split("---", 2)[1]) if text.startswith("---") else {}
+    if slug := front_matter.get("slug"):
+        path = path.with_name(slug)
+    return f"/{path.relative_to(CONTENT).as_posix()}/"
 
 
 def page(body: str = "", *, head: str = "<title>T</title>") -> str:

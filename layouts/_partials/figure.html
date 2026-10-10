@@ -1,0 +1,48 @@
+{{- /* An image from the page bundle, assets/media/ or a remote URL. Rasters get WebP sizes up to 1200 px, SVG and GIF
+  stay as they are. With "block", it is a figure with an id and caption; otherwise only the image, for use in a line of
+  text. Takes a dict: page, src, alt, caption, width, block. */}}
+{{- $src := .src }}
+{{- $caption := .caption | default "" }}
+{{- $img := dict "src" $src }}
+{{- if not (strings.HasPrefix $src "http") }}
+  {{- with or (.page.Resources.Get $src) (resources.Get (path.Join "media" $src)) }}
+    {{- if eq .MediaType.SubType "svg" }}
+      {{- $img = dict "src" .RelPermalink }}
+    {{- else if eq .MediaType.SubType "gif" }}
+      {{- $img = dict "src" .RelPermalink "width" .Width "height" .Height }}
+    {{- else }}
+      {{- $original := . }}
+      {{- $srcset := slice }}
+      {{- $widths := slice }}
+      {{- range slice 400 760 1200 }}
+        {{- $size := $original.Fit (printf "%dx%d webp" . .) }}
+        {{- if not (in $widths $size.Width) }}
+          {{- $widths = $widths | append $size.Width }}
+          {{- $srcset = $srcset | append (printf "%s %dw" $size.RelPermalink $size.Width) }}
+        {{- end }}
+        {{- if eq . 760 }}
+          {{- $img = dict "src" $size.RelPermalink "width" $size.Width "height" $size.Height }}
+        {{- end }}
+      {{- end }}
+      {{- $img = merge $img (dict "srcset" (delimit $srcset ", ")) }}
+    {{- end }}
+  {{- else }}
+    {{- errorf "figure: %q is neither in the bundle of %s nor in assets/media/" $src .page.Path }}
+  {{- end }}
+{{- end }}
+{{- with .width }}
+  {{- $width := int . }}
+  {{- with $img.height }}
+    {{- $img = merge $img (dict "height" (int (math.Round (div (mul . $width) (float $img.width))))) }}
+  {{- end }}
+  {{- $img = merge $img (dict "width" $width) }}
+{{- end }}
+{{- if .block }}<figure{{ with $caption }} id="figure-{{ anchorize (plainify .) }}"{{ end }}>{{ end -}}
+<img src="{{ $img.src }}"
+  {{- with $img.srcset }} srcset="{{ . }}" sizes="auto, (max-width: 760px) 100vw, 720px"{{ end }}
+  {{- with $img.width }} width="{{ . }}"{{ end }}
+  {{- with $img.height }} height="{{ . }}"{{ end }} alt="{{ .alt | default (plainify $caption) }}" loading="lazy" data-zoomable>
+{{- if .block }}
+  {{- with $caption }}<figcaption>{{ . | markdownify | emojify }}</figcaption>{{ end -}}
+</figure>
+{{- end -}}

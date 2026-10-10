@@ -1,0 +1,20 @@
+<script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@12.1.0/dist/mermaid.esm.min.mjs";
+
+  const diagrams = [...document.querySelectorAll("pre.mermaid")];
+  const sources = diagrams.map((diagram) => diagram.innerHTML);
+  const darkScheme = matchMedia("(prefers-color-scheme: dark)");
+  // Mermaid replaces each diagram's source with an SVG, so a theme change draws them again from the saved sources.
+  const draw = () => {
+    const theme = document.documentElement.dataset.theme ?? (darkScheme.matches ? "dark" : "light");
+    diagrams.forEach((diagram, i) => {
+      diagram.innerHTML = sources[i];
+      diagram.removeAttribute("data-processed");
+    });
+    mermaid.initialize({ startOnLoad: false, theme: theme === "dark" ? "dark" : "neutral" });
+    mermaid.run({ nodes: diagrams });
+  };
+  draw();
+  new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  darkScheme.addEventListener("change", draw);
+</script>
