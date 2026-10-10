@@ -38,7 +38,7 @@
     font-family: var(--display);
     font-size: 19px;
     font-weight: 700;
-    letter-spacing: -0.02em;
+    letter-spacing: -.02em;
     white-space: nowrap;
   }
 
@@ -154,12 +154,6 @@
       margin-left: auto;
     }
   }
-
-  @media (scripting: none) {
-    & .needs-js {
-      display: none;
-    }
-  }
 }
 
 /* Square icon buttons: header tools, the search dialog's close button. */
@@ -206,13 +200,6 @@
   }
 
   & a {
-    border-bottom: 1px solid var(--line);
     color: var(--text-2);
-    transition: color .15s, border-color .15s;
-
-    &:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
   }
 }

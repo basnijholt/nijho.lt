@@ -18,14 +18,11 @@ section.block {
   align-items: center;
   gap: 6px;
   padding-bottom: 2px;
-  border-bottom: 1px solid var(--line);
   font-size: 15px;
   font-weight: 500;
   white-space: nowrap;
-  transition: border-color .15s, color .15s;
 
   & .ico { transition: transform .15s; }
-  &:hover { border-color: var(--accent); color: var(--accent); }
   &:hover .ico { transform: translateX(2px); }
 }
 
@@ -41,7 +38,7 @@ section.block {
     font-size: clamp(44px, 6vw, 72px);
     font-weight: 700;
     line-height: 1;
-    letter-spacing: -0.035em;
+    letter-spacing: -.035em;
   }
   & .social { margin-top: 30px; }
 }
@@ -59,8 +56,7 @@ section.block {
   font-weight: 500;
   color: var(--muted);
 
-  & a { border-bottom: 1px solid var(--line); color: var(--text); transition: border-color .15s, color .15s; }
-  & a:hover { border-color: var(--accent); color: var(--accent); }
+  & a { color: var(--text); }
 }
 .bio {
   display: grid;
@@ -150,7 +146,7 @@ section.block {
   font-size: clamp(36px, 5.2vw, 64px);
   font-weight: 650;
   line-height: 1;
-  letter-spacing: -0.035em;
+  letter-spacing: -.035em;
   transition: color .15s;
 
   &:hover { color: var(--accent); }
@@ -169,7 +165,7 @@ section.block {
     font-size: 15.5px;
     line-height: 1.5;
   }
-  & li > .ico, & li > .icon { margin-top: 1px; font-size: 20px; color: var(--muted); }
+  & li > .ico { margin-top: 1px; font-size: 20px; color: var(--muted); }
   & .k { display: block; font-size: 13px; color: var(--muted); }
   & .v { overflow-wrap: anywhere; }
   & .wide { grid-column: 1 / -1; }
@@ -242,16 +238,16 @@ section.block {
   color: var(--muted);
 }
 
-@media (max-width: 1024px) {
+@media (width <= 1024px) {
   .intro { grid-template-columns: 200px minmax(0, 1fr); column-gap: 40px; }
   .avatar { width: 200px; }
   .facts { grid-template-columns: minmax(0, 1fr); gap: 28px; }
 }
-@media (max-width: 920px) {
+@media (width <= 920px) {
   .contact { grid-template-columns: minmax(0, 1fr); gap: 40px; }
   .map-card { aspect-ratio: 16 / 9; }
 }
-@media (max-width: 767px) {
+@media (width <= 767px) {
   section.block { padding-block: 64px 72px; }
   .sec-head {
     flex-direction: column;

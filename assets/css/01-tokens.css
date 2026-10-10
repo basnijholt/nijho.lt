@@ -41,7 +41,7 @@
   --text-2: light-dark(#3b3b39, #cacac6);
   --muted: light-dark(#61615f, #9c9c98);
   --accent: light-dark(#b9431a, #ee8257);
-  --accent-soft: light-dark(rgba(185, 67, 26, .08), rgba(238, 130, 87, .11));
+  --accent-soft: light-dark(rgb(185 67 26 / .08), rgb(238 130 87 / .11));
   --code-str: light-dark(#3b6a48, #9fc7a8);
   /* Keeps logos drawn for white backgrounds legible in dark mode */
   --plate-light: #e9e9e7;

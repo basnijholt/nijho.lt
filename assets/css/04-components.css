@@ -47,17 +47,8 @@ a.chip:hover {
   color: var(--accent);
 }
 
-/* Inline brand and social icons from icon.html. */
-.icon {
-  display: inline-block;
-  width: 1em;
-  height: 1em;
-  vertical-align: -0.125em;
-  fill: currentColor;
-}
-
-/* Links in running text outside .prose: underlined in an accent tint. */
-:is(.bio, .sub, .sec-body, .callout, .channels) a {
+/* Links in running text: underlined in an accent tint. */
+:is(.prose, .bio, .sec-head .sub, .sec-body, .callout, .channels) a {
   color: var(--text);
   text-decoration: underline;
   text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
@@ -66,6 +57,36 @@ a.chip:hover {
   transition: color .15s, text-decoration-color .15s;
 
   &:hover { color: var(--accent); text-decoration-color: var(--accent); }
+}
+
+/* Standalone links: a thin line under them that turns accent on hover. */
+:is(.site-footer a, .edit, .more, .role a, .pub-facts a, .not-found-links a, .list-head .sub a) {
+  border-bottom: 1px solid var(--line);
+  transition: color .15s, border-color .15s;
+
+  &:hover { border-color: var(--accent); color: var(--accent); }
+}
+
+/* Square icon links: share buttons and social profiles. */
+:is(.share :is(a, button), .social a) {
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  color: var(--text-2);
+  cursor: pointer;
+  transition: background .15s, color .15s, transform .1s;
+
+  &:hover { background: var(--surface-2); color: var(--accent); }
+  &:active { transform: translateY(1px); }
+}
+
+/* Hides the parent's stretched link target behind its other links. */
+.stretch::after {
+  content: "";
+  position: absolute;
+  inset: 0;
 }
 
 /* Tag buttons, search and sort above a filterable list (filter-toolbar.html, filter.js). */
@@ -182,7 +203,7 @@ a.chip:hover {
     font-size: 18.5px;
     font-weight: 650;
     line-height: 1.25;
-    letter-spacing: -0.018em;
+    letter-spacing: -.018em;
     overflow-wrap: anywhere;
     transition: color .15s;
   }
@@ -276,7 +297,7 @@ a.chip:hover {
   font-size: 20px;
   font-weight: 600;
   line-height: 1.3;
-  letter-spacing: -0.012em;
+  letter-spacing: -.012em;
   transition: color .15s;
 
   &:hover { color: var(--accent); }
@@ -319,19 +340,19 @@ a.chip:hover {
   & .ico { flex: none; font-size: 14px; }
 }
 
-@media (max-width: 1180px) {
+@media (width <= 1180px) {
   .proj-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
-@media (max-width: 1024px) {
+@media (width <= 1024px) {
   .pubs > li { grid-template-columns: 64px minmax(0, 1fr); }
   .pub-links { grid-column: 2; }
 }
-@media (max-width: 920px) {
+@media (width <= 920px) {
   .filter-toolbar .tools { width: 100%; }
   .filter-toolbar .field:first-child { flex: 1; }
   .field input { width: 100%; }
 }
-@media (max-width: 767px) {
+@media (width <= 767px) {
   .filters {
     flex-wrap: nowrap;
     margin-inline: calc(var(--pad) * -1);
@@ -351,7 +372,7 @@ a.chip:hover {
   .pub-title { font-size: 18px; }
   .pub-links { grid-column: 1; margin-top: 8px; }
 }
-@media (max-width: 420px) {
+@media (width <= 420px) {
   .proj-grid { gap: 22px 12px; }
   .proj p { -webkit-line-clamp: 4; }
 }
@@ -385,6 +406,8 @@ a.chip:hover {
   padding: 10px 10px 10px 16px;
   border-bottom: 1px solid var(--line);
 
+  /* The whole bar shows the field's focus, so the field itself needs no ring. */
+  &:has(input:focus-visible) { box-shadow: inset 0 -2px 0 var(--accent); }
   & > .ico { flex: none; font-size: 19px; color: var(--muted); }
   & input {
     flex: 1;

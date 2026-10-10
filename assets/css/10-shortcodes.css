@@ -7,7 +7,6 @@
 
   &:hover, &:focus {
     z-index: 2001;
-    outline: none;
   }
   &::after {
     content: attr(data-tooltip);
@@ -15,11 +14,11 @@
     left: 0;
     bottom: calc(100% + 8px);
     transform: translateY(4px);
-    background: rgba(25, 25, 28, 0.95);
+    background: rgb(25 25 28 / .95);
     color: #fff;
-    padding: 0.4em 0.75em;
+    padding: .4em .75em;
     border-radius: 6px;
-    font-size: 0.85em;
+    font-size: .85em;
     font-style: normal;
     font-weight: normal;
     line-height: 1.35;
@@ -29,7 +28,7 @@
     text-align: left;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.15s ease, transform 0.15s ease;
+    transition: opacity .15s, transform .15s;
     pointer-events: none;
     z-index: 2000;
   }
@@ -40,10 +39,10 @@
     bottom: calc(100% + 2px);
     transform: translateX(-50%);
     border: 6px solid transparent;
-    border-top-color: rgba(25, 25, 28, 0.95);
+    border-top-color: rgb(25 25 28 / .95);
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.15s ease;
+    transition: opacity .15s;
     pointer-events: none;
     z-index: 2000;
   }
@@ -75,7 +74,7 @@ html:has(.demo-clips), body:has(.demo-clips) {
   display: flow-root;
   margin: 2rem 0;
 
-  .bleed-ink {
+  & .bleed-ink {
     fill: light-dark(#0d1b2a, #e8eef4);
   }
 }
@@ -85,7 +84,7 @@ html:has(.demo-clips), body:has(.demo-clips) {
   width: 145%;
   margin: -22.5%;
 
-  svg {
+  & svg {
     display: block;
     width: 100%;
     height: auto;
@@ -102,27 +101,27 @@ html:has(.demo-clips), body:has(.demo-clips) {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1rem;
 
-  @media (min-width: 1200px) {
+  @media (width >= 1200px) {
     margin-inline: -22.5%;
   }
-  figure {
+  & figure {
     margin: 0;
   }
-  video {
+  & video {
     display: block;
     width: 100%;
     margin: 0;
     border-radius: 6px;
   }
-  figcaption {
-    margin: 0.4rem 0 0;
-    font-size: 0.85em;
+  & figcaption {
+    margin: .4rem 0 0;
+    font-size: .85em;
     text-align: center;
   }
 }
 .demo-clips-note {
-  margin-top: 0.75rem;
-  font-size: 0.85em;
+  margin-top: .75rem;
+  font-size: .85em;
   font-style: italic;
   text-align: center;
 }
@@ -131,13 +130,13 @@ html:has(.demo-clips), body:has(.demo-clips) {
   display: none;
 }
 :root[data-theme="dark"] {
-  .demo-clip-light { display: none; }
-  .demo-clip-dark { display: block; }
+  & .demo-clip-light { display: none; }
+  & .demo-clip-dark { display: block; }
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    .demo-clip-light { display: none; }
-    .demo-clip-dark { display: block; }
+    & .demo-clip-light { display: none; }
+    & .demo-clip-dark { display: block; }
   }
 }
 
@@ -146,32 +145,32 @@ html:has(.demo-clips), body:has(.demo-clips) {
 .photo-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: .5rem;
   margin: 1.5rem 0 1rem;
 
-  a {
+  & a {
     flex: var(--ratio) 1 calc(var(--ratio) * 12rem);
     min-width: 0;
   }
   /* Growing from zero in proportion to the aspect ratio gives every photo in a row the same height. */
-  .photo-row {
+  & .photo-row {
     display: flex;
     flex-basis: 100%;
     gap: inherit;
 
-    a {
+    & a {
       flex-basis: 0;
     }
   }
-  img {
+  & img {
     display: block;
     width: 100%;
     height: auto;
     border-radius: var(--r-sm);
-    transition: opacity 0.2s;
+    transition: opacity .2s;
   }
-  a:hover img {
-    opacity: 0.85;
+  & a:hover img {
+    opacity: .85;
   }
 }
 
@@ -179,17 +178,17 @@ html:has(.demo-clips), body:has(.demo-clips) {
 .plot-figure {
   margin: 2rem 0;
 
-  svg {
+  & svg {
     overflow: visible;
     /* Background of Plot's tooltips; its default is white. */
     --plot-background: light-dark(#fff, #1e1f24);
   }
-  figcaption {
-    margin-top: 0.5rem;
-    font-size: 0.85em;
+  & figcaption {
+    margin-top: .5rem;
+    font-size: .85em;
     color: var(--muted);
   }
-  [class$="-swatches"] {
+  & [class$="-swatches"] {
     font-size: 13px;
   }
 }
