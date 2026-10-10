@@ -206,7 +206,7 @@ def test_external_links_target_blank(site):
             href = link["href"]
             if href.startswith(SITE):
                 continue
-            if href.startswith("http") and href not in raw:
+            if re.match(r"https?://", href) and href not in raw:
                 external += 1
                 assert link.get("target") == "_blank" and "noopener" in link.get("rel", []), (path, href)
             elif href.startswith(("/", "#")):

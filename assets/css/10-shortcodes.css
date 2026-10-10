@@ -1,0 +1,195 @@
+/* Hover tooltips (tooltip shortcode). */
+.hover-tip {
+  position: relative;
+  text-decoration: underline dotted;
+  text-underline-offset: 2px;
+  cursor: help;
+
+  &:hover, &:focus {
+    z-index: 2001;
+    outline: none;
+  }
+  &::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 0;
+    bottom: calc(100% + 8px);
+    transform: translateY(4px);
+    background: rgba(25, 25, 28, 0.95);
+    color: #fff;
+    padding: 0.4em 0.75em;
+    border-radius: 6px;
+    font-size: 0.85em;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.35;
+    white-space: normal;
+    width: max-content;
+    max-width: min(280px, 80vw);
+    text-align: left;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    pointer-events: none;
+    z-index: 2000;
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 2px);
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: rgba(25, 25, 28, 0.95);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.15s ease;
+    pointer-events: none;
+    z-index: 2000;
+  }
+  &:hover::after, &:focus::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  &:hover::before, &:focus::before {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+/* Inline SVG whose glow bleeds past the text column (bleed-svg shortcode).
+   The SVG's viewBox is padded by 22.5% on each side, which the stage's negative margins cancel. */
+html:has(.svg-bleed), body:has(.svg-bleed),
+html:has(.demo-clips), body:has(.demo-clips) {
+  overflow-x: clip;
+}
+.prose:has(.svg-bleed), .prose:has(.demo-clips) {
+  overflow: visible;
+  display: flow-root;
+}
+.svg-bleed {
+  position: relative;
+  z-index: 10;
+  pointer-events: none;
+  display: flow-root;
+  margin: 2rem 0;
+
+  .bleed-ink {
+    fill: light-dark(#0d1b2a, #e8eef4);
+  }
+}
+/* The stage is the SVG's box, so glow drawn over it can be placed in percentages of the viewBox. */
+.svg-bleed-stage {
+  position: relative;
+  width: 145%;
+  margin: -22.5%;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+}
+
+/* A row of demo recordings (demo-clips shortcode), as wide as the bleed-svg artwork on large screens. */
+.demo-clips {
+  margin: 1.5rem 0;
+}
+.demo-clips-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+
+  @media (min-width: 1200px) {
+    margin-inline: -22.5%;
+  }
+  figure {
+    margin: 0;
+  }
+  video {
+    display: block;
+    width: 100%;
+    margin: 0;
+    border-radius: 6px;
+  }
+  figcaption {
+    margin: 0.4rem 0 0;
+    font-size: 0.85em;
+    text-align: center;
+  }
+}
+.demo-clips-note {
+  margin-top: 0.75rem;
+  font-size: 0.85em;
+  font-style: italic;
+  text-align: center;
+}
+/* Each recording has a light and a dark version; show the one matching the page theme. */
+.demo-clip-dark {
+  display: none;
+}
+:root[data-theme="dark"] {
+  .demo-clip-light { display: none; }
+  .demo-clip-dark { display: block; }
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    .demo-clip-light { display: none; }
+    .demo-clip-dark { display: block; }
+  }
+}
+
+/* Photos in justified rows (photo-grid shortcode): each row fills the width and its photos share one height.
+   The shortcode's script groups the photos into .photo-row elements; without it, they wrap at roughly 12rem tall. */
+.photo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.5rem 0 1rem;
+
+  a {
+    flex: var(--ratio) 1 calc(var(--ratio) * 12rem);
+    min-width: 0;
+  }
+  /* Growing from zero in proportion to the aspect ratio gives every photo in a row the same height. */
+  .photo-row {
+    display: flex;
+    flex-basis: 100%;
+    gap: inherit;
+
+    a {
+      flex-basis: 0;
+    }
+  }
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--r-sm);
+    transition: opacity 0.2s;
+  }
+  a:hover img {
+    opacity: 0.85;
+  }
+}
+
+/* Observable Plot charts (plot shortcode). */
+.plot-figure {
+  margin: 2rem 0;
+
+  svg {
+    overflow: visible;
+    /* Background of Plot's tooltips; its default is white. */
+    --plot-background: light-dark(#fff, #1e1f24);
+  }
+  figcaption {
+    margin-top: 0.5rem;
+    font-size: 0.85em;
+    opacity: 0.8;
+  }
+  [class$="-swatches"] {
+    font-size: 13px;
+  }
+}

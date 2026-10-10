@@ -1,12 +1,12 @@
 {{- /* The fonts are in static/, outside esbuild's reach; externals keeps their URLs as written. */}}
-{{- with resources.Get "css/main.css" }}
-  {{- $opts := dict
-    "minify" true
-    "targetPath" "css/main.css"
-    "target" (slice "chrome120" "edge120" "firefox117" "safari17.2" "ios17.2")
-    "externals" (slice "/fonts/*")
-  }}
-  {{- with . | css.Build $opts | fingerprint }}
+{{- $opts := dict
+  "minify" true
+  "targetPath" "css/base.css"
+  "target" (slice "chrome120" "edge120" "firefox117" "safari17.2" "ios17.2")
+  "externals" (slice "/fonts/*")
+}}
+{{- $base := resources.Get "css/main.css" | css.Build $opts }}
+{{- $icons := resources.Get "css/icons.css" | resources.ExecuteAsTemplate "css/icons-built.css" . }}
+{{- with slice $base $icons | resources.Concat "css/main.css" | fingerprint }}
 <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
-  {{- end }}
 {{- end }}

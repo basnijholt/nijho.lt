@@ -1,0 +1,8 @@
+{{- /* A Hugo template (head/css.html runs it): masks for the icon classes content writes as HTML, in the current text colour. */ -}}
+@layer icons{.fa,.fas,.far,.fab,.ai{display:inline-block;width:1em;height:1em;vertical-align:-.125em;background:currentColor;mask:var(--icon) center/contain no-repeat}.fa-fw{width:1.25em}
+{{- range $class := partialCached "functions/content_icons.html" . -}}
+{{- with resources.Get (printf "icons/%s.svg" (replaceRE `^(fa|ai)-` "" $class)) -}}
+.{{ $class }}{--icon:url("data:image/svg+xml;base64,{{ trim .Content "\n" | base64Encode }}")}
+{{- end -}}
+{{- end -}}
+}

@@ -1,0 +1,7 @@
+Brand and solid icons: Font Awesome Free 6.5.1 by Fonticons, Inc., https://fontawesome.com
+  License: CC BY 4.0 (icons), https://fontawesome.com/license/free
+  home.svg is "house" and university.svg is "building-columns", named after the Font Awesome 5 classes the content uses.
+google-scholar.svg: Academicons 1.9.4 by James Walsh, https://jpswalsh.github.io/academicons/
+  License: SIL Open Font License 1.1
+matrix.svg: Simple Icons, https://simpleicons.org
+  License: CC0 1.0

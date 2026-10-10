@@ -1,4 +1,4 @@
-{{- /* Inline an SVG (or an HTML fragment wrapping one) from the page bundle so its glow can bleed past the content column. The SVG's viewBox must be padded to match the negative margins in assets/scss/custom.scss (.svg-bleed-stage). Read with readFile because Hugo treats an .html file in a bundle as a page. */ -}}
+{{- /* Inline an SVG (or an HTML fragment wrapping one) from the page bundle so its glow can bleed past the content column. The SVG's viewBox must be padded to match the negative margins in assets/css/10-shortcodes.css (.svg-bleed-stage). Read with readFile because Hugo treats an .html file in a bundle as a page. */ -}}
 {{- $file := path.Join "content" .Page.File.Dir (.Get "src") -}}
 {{- if not (fileExists $file) -}}{{ errorf "bleed-svg: %q not found in %s" (.Get "src") .Page.File.Path }}{{- end -}}
 <div class="svg-bleed" role="img" aria-label="{{ .Get "alt" }}"><div class="svg-bleed-stage">{{ readFile $file | safeHTML }}</div></div>
