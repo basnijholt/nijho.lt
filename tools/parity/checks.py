@@ -40,6 +40,11 @@ CODE_SPAN_RE = re.compile(r"`([^`]*)`")
 EMPHASIS_RE = re.compile(r"(?<![\w*_])(\*\*|__|\*|_)(?=\S)(.+?)(?<=\S)\1(?![\w*_])(?![.,;:!?)\]]\w)")
 TYPOGRAPHY = str.maketrans({"‘": "'", "’": "'", "“": '"', "”": '"', "–": "-", "—": "-", "…": "..."})
 COUNTED_TAGS = ("img", "pre", "table", "video", "details")
+# Elements whose text never runs into the text around them, whatever whitespace the markup has
+BLOCK_TAGS = (
+    "p", "li", "h1", "h2", "h3", "h4", "h5", "h6", "td", "th", "tr", "pre", "div", "figure", "figcaption",
+    "blockquote", "br", "dt", "dd", "details", "summary",
+)
 RESIZED_RE = re.compile(r"_hu[0-9a-f]{32}")
 # text_diff shows up to TEXT_CONTEXT unchanged words around a change, changed runs of up to TEXT_WORDS words in full,
 # and TEXT_LINES lines per text
@@ -306,15 +311,19 @@ def check_seo(base: Build, cand: Build) -> list[Finding]:
 def _body(root: Tag) -> tuple[str, dict[str, int]]:
     """Return an article body's text and COUNTED_TAGS counts, without the UNCOMPARED parts.
 
-    Every text node counts as its own words, so whether the markup puts whitespace between two blocks does not matter.
-    Highlighted code keeps its text as written, because Chroma versions split it into spans at different places.
+    A space goes around every BLOCK_TAGS element, so whether the markup puts whitespace between two blocks does not
+    matter, while a space lost or added next to a link or other inline element does. Highlighted code keeps its text
+    as written, because Chroma versions split it into spans at different places.
     """
     root = copy.copy(root)  # Build.soup results are shared
     for tag in root.select(UNCOMPARED):
         tag.decompose()
     for code in root.select("pre.chroma"):
         code.string = code.get_text()
-    return " ".join(root.get_text(" ").split()), {name: len(root.find_all(name)) for name in COUNTED_TAGS}
+    for tag in root.find_all(BLOCK_TAGS):
+        tag.insert_before(" ")
+        tag.insert_after(" ")
+    return " ".join(root.get_text().split()), {name: len(root.find_all(name)) for name in COUNTED_TAGS}
 
 
 def check_content(base: Build, cand: Build) -> list[Finding]:
