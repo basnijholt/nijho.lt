@@ -32,7 +32,7 @@ jobs:
           hugo-version: "0.167.0"
           extended: true
 
-      - uses: astral-sh/setup-uv@v10
+      - uses: astral-sh/setup-uv@v10.3.0
 
       - name: Install Chromium for Playwright
         run: uv run --with playwright==1.63.0 python -m playwright install --with-deps chromium
