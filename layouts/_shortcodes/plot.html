@@ -33,5 +33,7 @@
     container.replaceChildren(plots["{{ $name }}"]({ Plot, width }));
     // The theme sets `svg { fill: currentColor }`, which beats the fill attribute on legend swatches.
     container.querySelectorAll("svg[fill]").forEach((svg) => (svg.style.fill = svg.getAttribute("fill")));
+    // The container is one labelled image; Plot's labels on its inner groups are not allowed there.
+    container.querySelectorAll("svg [aria-label]").forEach((element) => element.removeAttribute("aria-label"));
   }).observe(container);
 </script>

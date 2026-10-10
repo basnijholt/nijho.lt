@@ -187,7 +187,7 @@ html:has(.demo-clips), body:has(.demo-clips) {
   figcaption {
     margin-top: 0.5rem;
     font-size: 0.85em;
-    opacity: 0.8;
+    color: var(--muted);
   }
   [class$="-swatches"] {
     font-size: 13px;

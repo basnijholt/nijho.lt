@@ -18,6 +18,11 @@ dependencies = [
 dev = [
     "pytest",
 ]
+# For browser_check.py; Chromium itself comes from the system.
+browser = [
+    "axe-playwright-python",
+    "playwright",
+]
 
 [project.scripts]
 parity = "parity.__main__:main"
