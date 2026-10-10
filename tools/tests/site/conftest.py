@@ -14,9 +14,12 @@ from parity.checks import ALL_CHECKS, Finding
 from parity.site import Build
 
 
+HERE = Path(__file__).parent
+
+
 def pytest_collection_modifyitems(items):
     for item in items:
-        if {"site", "baseline"} & set(item.fixturenames):
+        if item.path.is_relative_to(HERE) and {"site", "baseline"} & set(item.fixturenames):
             item.add_marker(pytest.mark.slow)
 
 

@@ -1,14 +1,6 @@
-# Configuration of Hugo
-# Hugo Documentation: https://gohugo.io/getting-started/configuration/#all-configuration-settings
-# This file is formatted using YAML syntax - learn more at https://learnxinyminutes.com/docs/yaml/
-
 title: Bas Nijholt
 baseurl: https://www.nijho.lt/
 copyright: '© {year}'
-
-############################
-## PAGE OPTIONS
-############################
 
 cascade:
   # Blog post options
@@ -20,18 +12,10 @@ cascade:
     show_related: true
     show_breadcrumb: true
 
-############################
-## LANGUAGE
-############################
-
 defaultContentLanguage: en
 hasCJKLanguage: false
 defaultContentLanguageInSubdir: false
 removePathAccents: true
-
-############################
-## ADVANCED
-############################
 
 enableGitInfo: false
 summaryLength: 30
@@ -39,12 +23,9 @@ pagination:
   pagerSize: 100
 enableEmoji: true
 enableRobotsTXT: true
-footnotereturnlinkcontents: <sup>^</sup>
-# .html files in content are SVG fragments that the bleed-svg shortcode reads with readFile. Ignoring them keeps them
-# from becoming content, so security.allowContent can keep its default, which refuses HTML content.
-ignoreFiles: [\.html$, \.ipynb$, .ipynb_checkpoints$, \.Rmd$, \.Rmarkdown$, _cache$]
+# Content .html files are SVG fragments that bleed-svg reads with readFile; as content, allowContent would refuse them
+ignoreFiles: [\.html$]
 permalinks:
-  event: '/talk/:slug/'
   tags: '/tag/:slug/'
   categories: '/category/:slug/'
   publication_types: '/publication-type/:slug/'
