@@ -59,7 +59,7 @@
 - {from: /authors/signe-markussen/, to: /authors/signe-brynold-markussen/}
 - {from: /authors/william-s-cole/, to: /authors/william-s.-cole/}
 - {from: /authors/zahra-heidarnia-fathabad/, to: /authors/zahra-heidarnia/}
-# Tags removed by the retag in d3b3736, mapped by tools/derive_tag_redirects.py and reviewed by hand
+# Tags removed by the retag in d3b3736, each sent to the tag its posts carry most often, reviewed by hand
 - {from: /tag/1password/, to: /tag/security/}
 - {from: /tag/1password/index.xml, to: /tag/security/index.xml}
 - {from: /tag/1password-cli/, to: /tag/security/}

@@ -40,4 +40,13 @@ Netlify builds with Hugo 0.167.0 (`netlify.toml`); devbox has 0.165.0, the newes
 - `assets/media/map.webp`: the contact map, drawn around the coordinates in `content/home/contact.md` by `tools/contact_map.py`.
 
 `tools/browser_check.py` tests a build in Chromium and `tools/contact_map.py` redraws the contact map; see [tools/README.md](tools/README.md).
-`tools/migration/` checked the switch from the old theme (no URL, feed or page went missing) and can be deleted once the switch has settled.
+
+### URLs to keep
+
+Links to this site exist all over the web, so a template change must not move a page:
+
+- Every URL ends in a slash (Netlify redirects the slashless form). Folder names with dots or underscores (`/project/rsync-time-machine.py/`, `/publication/phd_thesis/`) and author slugs with dots (`/authors/andrey-e.-antipov/`) stay as Hugo writes them.
+- giscus finds a post's comments by its path, so a moved post loses its thread.
+- Heading anchors are GitHub-style (`autoIDType: github`), and the homepage sections keep their IDs (`#about`, `#blog-posts`, `#projects`, `#photography`, `#publications`, `#contact`), which the menu and old links use.
+- Files in page bundles and `assets/media/` keep their paths, and so does `/bas.asc`.
+- A renamed or removed URL gets a line in `data/redirects.yaml`; `data/old_images.yaml` sends the image URLs of the previous theme to their files.

@@ -1,7 +1,6 @@
 # Tools
 
 Standalone [uv](https://docs.astral.sh/uv/) scripts; `uv run` installs what each one declares at its top.
-`migration/` holds the tooling for the theme switch and can go once that has settled (see its README).
 
 ## Browser checks
 
