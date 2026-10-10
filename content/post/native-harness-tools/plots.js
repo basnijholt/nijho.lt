@@ -6,6 +6,7 @@ const COLORS = {
   whole: "#4269d0",
   capped: "#97bbf5",
   shell: "#a463f2",
+  shellOnly: "#6cc5b0",
   standardFixed: "#ffb3a6",
   standardWork: "#ff725c",
   minimalFixed: "#9fd8a9",
@@ -41,7 +42,7 @@ function splitChart({ Plot, width, rows, arms, colors, xMax }) {
   return Plot.plot({
     width,
     height: 64 * rows.length + 110,
-    marginLeft: narrow ? 120 : 136,
+    marginLeft: 136,
     marginRight: narrow ? 92 : 104,
     marginBottom: 52,
     style: STYLE,
@@ -65,6 +66,42 @@ function splitChart({ Plot, width, rows, arms, colors, xMax }) {
   });
 }
 
+// Two dots per model, each a change in tokens per task with its 95% confidence interval.
+// rows: [model, [change, lo, hi], [change, lo, hi]], in the order of series.
+function deltaChart({ Plot, width, rows, series, colors, domain, label, shortLabel = label }) {
+  const narrow = width < 600;
+  const models = rows.map((r) => r[0]);
+  const data = rows.flatMap(([model, ...values]) =>
+    values.map(([change, lo, hi], i) => ({ model, series: series[i], change, lo, hi }))
+  );
+  return Plot.plot({
+    width,
+    height: 64 * rows.length + 110,
+    marginLeft: 136,
+    marginRight: 24,
+    marginBottom: 52,
+    style: STYLE,
+    x: { domain, label: narrow ? shortLabel : label, grid: true, tickFormat: pct, ...X_LABEL },
+    y: { axis: null, domain: series },
+    fy: { domain: models, label: null, padding: 0.25 },
+    color: { domain: series, range: colors, legend: true },
+    marks: [
+      Plot.ruleX([0], { stroke: "currentColor", strokeOpacity: 0.6 }),
+      Plot.ruleY(data, { fy: "model", y: "series", x1: "lo", x2: "hi", stroke: "series", strokeWidth: 3 }),
+      Plot.dot(data, { fy: "model", y: "series", x: "change", fill: "series", r: 5 }),
+      Plot.tip(
+        data,
+        Plot.pointer({
+          fy: "model",
+          y: "series",
+          x: "change",
+          title: (d) => `${d.model}, ${d.series.toLowerCase()}\n${pct(d.change)} tokens per task\n95% CI ${pct(d.lo)} to ${pct(d.hi)}`,
+        })
+      ),
+    ],
+  });
+}
+
 const STYLE = { fontSize: "13px", fontFamily: "system-ui, sans-serif", background: "transparent" };
 
 // Centered axis labels below the tick labels, so they never collide with them.
@@ -75,48 +112,44 @@ const MODELS = ["Claude Opus 5.5", "Claude Sonnet 5.5", "GPT-6 Astra", "GPT-6.1 
 const pct = (d) => `${d > 0 ? "+" : d < 0 ? "−" : ""}${Math.abs(d)}%`;
 
 export default {
-  nativeDelta: ({ Plot, width }) => {
-    const narrow = width < 600;
-    const series = ["Whole output", "Last 100 lines", "Shell tool only"];
+  nativeDelta: ({ Plot, width }) =>
     // Change in tokens per task with native tools instead of MindRoom's, and its 95% confidence interval:
-    // shell and file tools with whole output, the same capped at 100 lines, and only the shell tool.
-    const rows = [
-      [MODELS[0], [-9, -13, -4], [-8, -13, -3], [-6, -12, 0]],
-      [MODELS[1], [-9, -15, -1], [-8, -13, -2], [-18, -24, -13]],
-      [MODELS[2], [31, 24, 38], [26, 18, 34], [0, -3, 4]],
-      [MODELS[3], [19, 9, 29], [15, 6, 25], [0, -5, 4]],
-      [MODELS[4], [-4, -18, 14], [-10, -19, 1], [-1, -11, 9]],
-    ];
-    const data = rows.flatMap(([model, ...values]) =>
-      values.map(([change, lo, hi], i) => ({ model, series: series[i], change, lo, hi }))
-    );
-    return Plot.plot({
+    // shell and file tools with whole output, and the same with the shell output capped at 100 lines.
+    deltaChart({
+      Plot,
       width,
-      height: 84 * MODELS.length + 90,
-      marginLeft: narrow ? 120 : 136,
-      marginRight: 24,
-      marginBottom: 52,
-      style: STYLE,
-      x: { domain: [-30, 45], label: "Change in tokens per task with native tools", grid: true, tickFormat: pct, ...X_LABEL },
-      y: { axis: null, domain: series },
-      fy: { domain: MODELS, label: null, padding: 0.25 },
-      color: { domain: series, range: [COLORS.whole, COLORS.capped, COLORS.shell], legend: true },
-      marks: [
-        Plot.ruleX([0], { stroke: "currentColor", strokeOpacity: 0.6 }),
-        Plot.ruleY(data, { fy: "model", y: "series", x1: "lo", x2: "hi", stroke: "series", strokeWidth: 3 }),
-        Plot.dot(data, { fy: "model", y: "series", x: "change", fill: "series", r: 5 }),
-        Plot.tip(
-          data,
-          Plot.pointer({
-            fy: "model",
-            y: "series",
-            x: "change",
-            title: (d) => `${d.model}, ${d.series.toLowerCase()}\n${pct(d.change)} tokens per task\n95% CI ${pct(d.lo)} to ${pct(d.hi)}`,
-          })
-        ),
+      series: ["Whole output", "Last 100 lines"],
+      colors: [COLORS.whole, COLORS.capped],
+      domain: [-30, 45],
+      label: "Change in tokens per task with native tools",
+      shortLabel: "Change with native tools",
+      rows: [
+        [MODELS[0], [-9, -13, -4], [-8, -13, -3]],
+        [MODELS[1], [-9, -15, -1], [-8, -13, -2]],
+        [MODELS[2], [31, 24, 38], [26, 18, 34]],
+        [MODELS[3], [19, 9, 29], [15, 6, 25]],
+        [MODELS[4], [-4, -18, 14], [-10, -19, 1]],
       ],
-    });
-  },
+    }),
+
+  shellOnly: ({ Plot, width }) =>
+    // Change in tokens per task with 95% confidence intervals, on the pull request through MindRoom's API:
+    // MindRoom's shell tool alone against all of MindRoom's tools, and the native shell tools against MindRoom's shell tool.
+    deltaChart({
+      Plot,
+      width,
+      series: ["Without the file tools", "Native shell tools"],
+      colors: [COLORS.shellOnly, COLORS.shell],
+      domain: [-50, 15],
+      label: "Change in tokens per task",
+      rows: [
+        [MODELS[0], [-32, -35, -29], [-6, -12, 0]],
+        [MODELS[1], [-30, -34, -25], [-18, -24, -13]],
+        [MODELS[2], [-27, -30, -24], [0, -3, 4]],
+        [MODELS[3], [-30, -35, -25], [0, -5, 4]],
+        [MODELS[4], [-41, -46, -34], [-1, -11, 9]],
+      ],
+    }),
 
   generations: ({ Plot, width }) => {
     const narrow = width < 600;
@@ -206,7 +239,7 @@ export default {
         Plot.ruleX(data, { x: "level", y1: "lo", y2: "hi", stroke: "model", strokeWidth: 3 }),
         Plot.line(data, { x: "level", y: "change", stroke: "model", strokeWidth: 1.5, strokeOpacity: 0.5 }),
         Plot.dot(data, { x: "level", y: "change", fill: "model", r: 5 }),
-        Plot.text(last, { x: "level", y: "change", text: "model", fill: "model", textAnchor: "start", dx: 12, fontWeight: "bold" }),
+        Plot.text(last, { x: "level", y: "change", text: (d) => (narrow ? d.model.replace("Claude ", "") : d.model), fill: "model", textAnchor: "start", dx: 12, fontWeight: "bold" }),
         Plot.tip(
           data,
           Plot.pointer({
@@ -220,7 +253,6 @@ export default {
   },
 
   promptParts: ({ Plot, width }) => {
-    const narrow = width < 600;
     const parts = ["System prompt", "Tool definitions"];
     // Tokens each part costs on every request, measured by sending it on its own and reading the reported input tokens.
     const bars = [
@@ -236,7 +268,7 @@ export default {
     return Plot.plot({
       width,
       height: 54 * bars.length + 110,
-      marginLeft: narrow ? 120 : 136,
+      marginLeft: 136,
       marginRight: 64,
       marginBottom: 52,
       style: STYLE,

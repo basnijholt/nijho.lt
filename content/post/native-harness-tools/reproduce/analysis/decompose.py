@@ -1,6 +1,6 @@
 """Split tokens per trial into a fixed part (first-request input, resent on every request) and the work the model did."""
 import glob, json, re, statistics
-from collections import OrderedDict, defaultdict
+from collections import Counter, OrderedDict, defaultdict
 
 JOBS = "/work/rrsi-dialects/runs/mindroom_dialects/jobs"
 pat = re.compile(r"LLM usage.*?input_tokens=(\d+).*?output_tokens=(\d+)")
@@ -14,7 +14,15 @@ def api_trials(label):
         m, c = pat.search(line), corr.search(line)
         if m and c:
             groups.setdefault(c.group(1), []).append((int(m.group(1)), int(m.group(2))))
-    return list(groups.values())[1:]  # drop the worker warm-up
+    # Keep the request groups of graded trials, which drops the worker warm-up and attempts cut off by a stream error.
+    wanted = Counter(json.load(open(f))["tokens"] for f in glob.glob(f"{JOBS}/heldout_{label}/s*/*/trial.json"))
+    trials = []
+    for requests in groups.values():
+        total = sum(i + o for i, o in requests)
+        if wanted[total]:
+            wanted[total] -= 1
+            trials.append(requests)
+    return trials
 
 
 matrix = defaultdict(list)
@@ -44,17 +52,19 @@ def row(label, path):
     }
 
 
+CURRENT = ["claude-opus-5-5", "claude-sonnet-5-5", "gpt-6-astra", "gpt-6_1-sol", "gpt-6-luna"]
+OLDER = ["claude-opus-4-7", "claude-opus-4-8", "claude-sonnet-5", "gpt-5_5", "gpt-5_6-sol"]
 PAIRS = [
-    ("Matrix: standard → minimal (main, shell only)", "Matrix", "mainmatrixshell", "mainminimal"),
-    ("API: MindRoom tools → native tools (shell + coding)", "API", "headmindroom", "headnative"),
-    ("API: MindRoom shell → native shell (shell only)", "API", "headshellmindroom", "headshellnative"),
+    ("Matrix: standard → minimal (main, shell only)", "Matrix", "mainmatrixshell", "mainminimal", CURRENT),
+    ("API: MindRoom tools → native tools (shell + coding)", "API", "headmindroom", "headnative", CURRENT),
+    ("API: MindRoom tools → native tools (shell + coding), older models", "API", "headmindroom", "headnative", OLDER),
+    ("API: MindRoom shell → native shell (shell only)", "API", "headshellmindroom", "headshellnative", CURRENT),
 ]
-MODELS = ["claude-opus-5-5", "claude-sonnet-5-5", "gpt-6-astra", "gpt-6_1-sol", "gpt-6-luna"]
-for title, path, a, b in PAIRS:
+for title, path, a, b, models in PAIRS:
     print(f"\n### {title}\n")
     print("| Model | First request | Requests | Fixed part | Work part | Total |")
     print("|---|---|---|---|---|---|")
-    for m in MODELS:
+    for m in models:
         x, y = row(f"{m}-{a}-k3", path), row(f"{m}-{b}-k3", path)
         f = lambda k, fmt="{:,.0f}": f"{fmt.format(x[k])} → {fmt.format(y[k])}"
         dw = (y["work"] / x["work"] - 1) * 100
