@@ -1,5 +1,5 @@
 {{- /* A video from the page bundle, assets/media/ or a remote URL, with <name>.jpg next to it as the poster.
-  Flags: controls, autoplay (muted, as browsers require; reduced-motion.html stops it for readers who ask for less
+  Flags: controls, autoplay (muted, as browsers require; reduced-motion.js stops it for readers who ask for less
   motion) and loop; "false" turns one off. */}}
 {{- $src := .Get "src" }}
 {{- $flags := dict }}
@@ -26,7 +26,7 @@
     {{- errorf "video: %q is neither in the bundle nor in assets/media/ (%s)" $src .Position }}
   {{- end }}
 {{- end }}
-{{- if $flags.autoplay }}{{ .Page.Store.Set "autoplay" true }}{{ end -}}
+{{- if $flags.autoplay }}{{ partial "script.html" "js/reduced-motion.js" }}{{ end -}}
 <video{{ if $flags.controls }} controls{{ end }}{{ if $flags.autoplay }} autoplay muted playsinline{{ end }}{{ if $flags.loop }} loop{{ end }}{{ with $poster }} poster="{{ .RelPermalink }}"{{ end }} preload="metadata">
 <source src="{{ $url }}" type="{{ $type }}">
 </video>
