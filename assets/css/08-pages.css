@@ -25,7 +25,7 @@
     max-width: 24ch;
     font-size: clamp(36px, 5.4vw, 68px);
     line-height: 1.02;
-    letter-spacing: -0.037em;
+    letter-spacing: -.037em;
     font-weight: 700;
   }
   & .subtitle {
@@ -159,7 +159,7 @@
   }
 }
 /* With the rail showing, an in-text contents block would repeat it. */
-@media (min-width: 1101px) {
+@media (width > 1100px) {
   .post:has(.rail) .prose .toc { display: none; }
 }
 
@@ -201,19 +201,8 @@
   & :is(a, button) {
     width: 36px;
     height: 36px;
-    display: grid;
-    place-items: center;
-    border: 0;
-    border-radius: var(--r-sm);
-    background: var(--surface);
-    color: var(--text-2);
     font-size: 17px;
-    cursor: pointer;
-    transition: background .15s, color .15s, transform .1s;
 
-    &:hover { background: var(--surface-2); color: var(--accent); }
-    &:active { transform: translateY(1px); }
-    &[hidden] { display: none; }
     &[data-copied] { color: var(--accent); }
   }
 }
@@ -223,13 +212,9 @@
   align-items: center;
   gap: 7px;
   padding-bottom: 1px;
-  border-bottom: 1px solid var(--line);
   font-size: 14.5px;
   font-weight: 500;
-  color: var(--text-2);
-  transition: color .15s, border-color .15s;
-
-  &:hover { color: var(--accent); border-color: var(--accent); }
+  --link-color: var(--text-2);
 }
 
 .social {
@@ -240,16 +225,7 @@
   & a {
     width: 42px;
     height: 42px;
-    display: grid;
-    place-items: center;
-    border-radius: var(--r-sm);
-    background: var(--surface);
-    color: var(--text-2);
     font-size: 20px;
-    transition: background .15s, color .15s, transform .1s;
-
-    &:hover { background: var(--surface-2); color: var(--accent); }
-    &:active { transform: translateY(1px); }
   }
 }
 
@@ -262,12 +238,6 @@
   border-radius: var(--r);
   background: var(--surface);
 
-  & img {
-    width: 88px;
-    height: 88px;
-    border-radius: 18px;
-    object-fit: cover;
-  }
   & h3 {
     font-size: 22px;
     line-height: 1.15;
@@ -333,7 +303,7 @@
     font-size: 19px;
     font-weight: 600;
     line-height: 1.24;
-    letter-spacing: -0.015em;
+    letter-spacing: -.015em;
     color: var(--text);
     transition: color .15s;
   }
@@ -352,12 +322,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-}
-
-.stretch::after {
-  content: "";
-  position: absolute;
-  inset: 0;
 }
 
 /* Code blocks get a bar with the language and a copy button from copy.js. */
@@ -403,7 +367,7 @@ dialog.zoom {
   background: transparent;
   cursor: zoom-out;
 
-  &::backdrop { background: rgb(0 0 0 / 0.8); }
+  &::backdrop { background: rgb(0 0 0 / .8); }
   & img {
     max-width: 96vw;
     max-height: 96vh;
@@ -411,20 +375,20 @@ dialog.zoom {
   }
 }
 
-@media (max-width: 1180px) {
+@media (width <= 1180px) {
   .related { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
-@media (max-width: 1100px) {
+@media (width <= 1100px) {
   .post {
     grid-template-columns: minmax(0, 720px);
     justify-content: center;
   }
   .post > .rail { display: none; }
 }
-@media (max-width: 920px) {
+@media (width <= 920px) {
   .related { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-@media (max-width: 767px) {
+@media (width <= 767px) {
   .post { padding-top: 28px; }
   .crumbs li:last-child { display: none; }
   .post-head h1 { margin-top: 18px; font-size: 36px; }
@@ -436,7 +400,6 @@ dialog.zoom {
   .related { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* Lists: /post/, sections, term and author pages. */
 /* Project and publication pages reuse the post grid. */
 .btn-accent {
   border-color: var(--accent);
@@ -461,10 +424,9 @@ dialog.zoom {
   & .pub-links { margin-top: 22px; }
 }
 .abstract {
-  grid-column: 1;
   padding-top: 36px;
 
-  & h2 { font-size: 24px; letter-spacing: -0.02em; }
+  & h2 { font-size: 24px; letter-spacing: -.02em; }
   & p {
     margin-top: 14px;
     font-size: 18px;
@@ -473,7 +435,6 @@ dialog.zoom {
   }
 }
 .pub-facts {
-  grid-column: 1;
   display: grid;
   grid-template-columns: max-content minmax(0, 1fr);
   gap: 10px 24px;
@@ -484,8 +445,7 @@ dialog.zoom {
 
   & dt { color: var(--muted); }
   & dd { margin: 0; color: var(--text-2); }
-  & a { color: var(--text); border-bottom: 1px solid var(--line); transition: color .15s, border-color .15s; }
-  & a:hover { color: var(--accent); border-color: var(--accent); }
+  & a { --link-color: var(--text); }
 }
 .post > .abstract, .post > .pub-facts { grid-column: 1; }
 /* Project logos are mostly square; a full-width square would fill the screen. */
@@ -501,10 +461,10 @@ dialog.zoom {
   gap: 8px 24px;
   margin-top: 32px;
 
-  & a { border-bottom: 1px solid var(--line); font-weight: 500; transition: color .15s, border-color .15s; }
-  & a:hover { color: var(--accent); border-color: var(--accent); }
+  & a { font-weight: 500; }
 }
 
+/* Lists: /post/, sections, term and author pages. */
 .list {
   padding-block: 56px 96px;
 }
@@ -514,28 +474,27 @@ dialog.zoom {
   & h1 {
     font-size: clamp(36px, 4.6vw, 56px);
     line-height: 1.05;
-    letter-spacing: -0.03em;
+    letter-spacing: -.03em;
   }
   & .sub {
     margin-top: 12px;
     font-size: 18px;
     color: var(--muted);
 
-    & a { color: var(--text-2); border-bottom: 1px solid var(--line); }
-    & a:hover { color: var(--accent); border-color: var(--accent); }
+    & a { --link-color: var(--text-2); }
   }
 }
 .author-head {
   display: flex;
   gap: 24px;
   align-items: center;
-
-  & img {
-    width: 88px;
-    height: 88px;
-    border-radius: 18px;
-    object-fit: cover;
-  }
+}
+/* The author's photo on the author card and on author pages. */
+:is(.author-card, .author-head) img {
+  width: 88px;
+  height: 88px;
+  border-radius: 18px;
+  object-fit: cover;
 }
 .list > .prose {
   max-width: 720px;
@@ -564,7 +523,7 @@ dialog.zoom {
   & .blog-title {
     font-size: 25px;
     line-height: 1.18;
-    letter-spacing: -0.02em;
+    letter-spacing: -.02em;
 
     & a { transition: color .15s; }
   }
@@ -584,7 +543,7 @@ dialog.zoom {
     line-height: 1.62;
     color: var(--text-2);
 
-    & p + p { margin-top: 0.6em; }
+    & p + p { margin-top: .6em; }
   }
   & .thumb {
     flex: none;
@@ -635,7 +594,7 @@ dialog.zoom {
   & .disabled { display: none; }
 }
 
-@media (max-width: 767px) {
+@media (width <= 767px) {
   .w1 > li { grid-template-columns: minmax(0, 1fr); }
   .w1 .side { padding-top: 0; }
 }

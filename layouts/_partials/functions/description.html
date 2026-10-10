@@ -6,6 +6,6 @@ the site description, or the role of the site's author. Front-matter values are 
 {{- end }}
 {{- $description = $description | default site.Params.marketing.seo.description }}
 {{- if not $description }}
-  {{- $description = (site.GetPage "/authors/admin").Params.role }}
+  {{- $description = (partial "functions/site_author.html" .).Params.role }}
 {{- end }}
 {{- return ($description | plainify | htmlUnescape | chomp) -}}

@@ -14,7 +14,7 @@ function largest(img) {
     .split(",")
     .map((entry) => entry.trim().split(/\s+/))
     .filter(([url]) => url);
-  candidates.sort((a, b) => parseInt(b[1]) - parseInt(a[1]));
+  candidates.sort((a, b) => parseInt(b[1], 10) - parseInt(a[1], 10));
   return candidates[0]?.[0] ?? img.currentSrc;
 }
 

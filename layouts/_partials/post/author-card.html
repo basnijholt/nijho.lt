@@ -1,4 +1,4 @@
-{{- with site.GetPage "/authors/admin" }}
+{{- with partial "functions/site_author.html" . }}
 <div class="author-card">
   {{- with (.Resources.ByType "image").GetMatch "avatar*" }}{{ with .Fill "176x176 Center webp" }}
   <img src="{{ .RelPermalink }}" width="88" height="88" alt="">

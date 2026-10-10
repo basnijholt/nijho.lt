@@ -5,7 +5,7 @@
     {{- range . }}
     <li>
       <p class="mono">{{ .Date.Format "Jan 2, 2006" }}{{ if .Params.reading_time }} · {{ .ReadingTime }} min read{{ end }}</p>
-      <a class="t stretch" href="{{ .RelPermalink }}">{{ .Title }}</a>
+      <a class="t stretch" href="{{ .RelPermalink }}">{{ partial "functions/title.html" . }}</a>
       {{- with .Params.summary }}
       <p>{{ . | markdownify | plainify | emojify }}</p>
       {{- end }}

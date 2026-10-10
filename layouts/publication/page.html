@@ -1,5 +1,5 @@
 {{ define "main" }}
-{{- $me := (site.GetPage "/authors/admin").Title }}
+{{- $me := (partial "functions/site_author.html" .).Title }}
 {{- $authors := .Params.authors | default slice }}
 {{- /* Author pages by lowercased name. Term URLs drop accents (removePathAccents), so they cannot be rebuilt from a name. */}}
 {{- $profiles := dict }}
@@ -17,8 +17,8 @@
     </p>
     <div class="byline">
       <span class="item">{{ partial "ui-icon.html" "calendar-blank" }}<span class="mono"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2006" }}</time></span></span>
-      {{- with .Params.publication | default .Params.publication_short }}
-      <span class="item venue">{{ . | replaceRE `^In\s+` "" | replaceRE `\.$` "" | markdownify }}</span>
+      {{- with partial "functions/venue.html" . }}
+      <span class="item venue">{{ . | markdownify }}</span>
       {{- end }}
     </div>
     {{ partial "lists/publication-links.html" . }}
@@ -40,11 +40,6 @@
     {{- end }}
   </dl>
   <div class="prose">{{ .Content }}</div>
-  <footer class="post-end">
-    <div class="row">
-      {{ partial "post/share.html" . }}
-      {{ partial "post/edit-link.html" . }}
-    </div>
-  </footer>
+  {{ partial "post/end.html" . }}
 </article>
 {{ end }}

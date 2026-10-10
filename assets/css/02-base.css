@@ -35,7 +35,7 @@ h2,
 h3 {
   font-family: var(--display);
   font-weight: 650;
-  letter-spacing: -0.025em;
+  letter-spacing: -.025em;
   text-wrap: balance;
 }
 
@@ -56,12 +56,13 @@ code {
   font-variant-numeric: tabular-nums;
 }
 
+/* Icons from ui-icon.html (Phosphor) and icon.html (brands). */
 .ico {
   display: inline-block;
   width: 1em;
   height: 1em;
   fill: currentColor;
-  vertical-align: -0.125em;
+  vertical-align: -.125em;
 }
 
 .sr-only {
@@ -74,6 +75,13 @@ code {
   clip-path: inset(50%);
   white-space: nowrap;
   border: 0;
+}
+
+/* Controls that need JavaScript, such as the search button; like [hidden], this beats the display a component sets. */
+@media (scripting: none) {
+  .needs-js {
+    display: none !important;
+  }
 }
 
 @media (width <= 767px) {

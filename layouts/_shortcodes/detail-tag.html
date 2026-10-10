@@ -1,3 +1,4 @@
+{{- /* A collapsible block: the first argument is its summary, the inner Markdown its body. */ -}}
 <details>
   <summary>{{ (.Get 0) | markdownify }}</summary>
   {{ .Inner | markdownify }}

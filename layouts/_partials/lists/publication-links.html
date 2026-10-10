@@ -12,7 +12,7 @@
 {{- with $links }}
 <div class="pub-links">
   {{- range . }}
-  <a href="{{ .url }}" title="{{ .name }}">{{ if eq .icon "github" }}{{ partial "icon.html" (dict "name" "github" "class" "ico") }}{{ else }}{{ partial "ui-icon.html" .icon }}{{ end }}{{ .name }}</a>
+  <a href="{{ .url }}" title="{{ .name }}">{{ if eq .icon "github" }}{{ partial "icon.html" (dict "name" "github") }}{{ else }}{{ partial "ui-icon.html" .icon }}{{ end }}{{ .name }}</a>
   {{- end }}
 </div>
 {{- end }}

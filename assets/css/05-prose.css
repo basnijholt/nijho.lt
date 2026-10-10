@@ -12,20 +12,6 @@
     margin-top: 1.6em;
   }
 
-  & a {
-    color: var(--text);
-    text-decoration: underline;
-    text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
-    text-decoration-thickness: 1.5px;
-    text-underline-offset: 3px;
-    transition: text-decoration-color .15s, color .15s;
-
-    &:hover {
-      color: var(--accent);
-      text-decoration-color: var(--accent);
-    }
-  }
-
   & code {
     padding: .1em .38em;
     border-radius: 6px;

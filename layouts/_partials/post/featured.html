@@ -4,11 +4,11 @@
   {{- with partial "functions/featured_image.html" . }}
     {{- $wide := eq (int ($.Params.image.placement | default 1)) 2 }}
     {{- $image := . }}
-    {{- if not (in (slice ".gif" ".svg") (path.Ext .Name | lower)) }}
+    {{- if partial "functions/resizable.html" . }}
       {{- $image = .Fit (cond $wide "1200x2500 webp" "720x2500 webp") }}
     {{- end }}
 <figure class="featured{{ if $wide }} featured-wide{{ end }}">
-  <img src="{{ $image.RelPermalink }}"{{ with $image.Width }} width="{{ . }}" height="{{ $image.Height }}"{{ end }} alt="{{ $.Params.image.caption | markdownify | plainify }}" fetchpriority="high">
+  <img src="{{ $image.RelPermalink }}"{{ if reflect.IsImageResourceProcessable $image }} width="{{ $image.Width }}" height="{{ $image.Height }}"{{ end }} alt="{{ $.Params.image.caption | markdownify | plainify }}" fetchpriority="high">
   {{- with $.Params.image.caption }}
   <figcaption>{{ . | markdownify | emojify }}</figcaption>
   {{- end }}
