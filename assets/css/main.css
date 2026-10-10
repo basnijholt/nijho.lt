@@ -5,3 +5,5 @@
 @import "./02-base.css" layer(base);
 @import "./03-layout.css" layer(layout);
 @import "./04-components.css" layer(components);
+@import "./05-prose.css" layer(prose);
+@import "./06-syntax.css" layer(syntax);
