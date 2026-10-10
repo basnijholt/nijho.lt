@@ -15,7 +15,7 @@ from pathlib import Path
 
 import yaml
 
-REPO = Path(__file__).resolve().parents[1]
+REPO = Path(__file__).resolve().parents[2]
 # Characters Hugo keeps in a term's URL besides letters, digits and marks
 URL_PUNCTUATION = set("._-+~@#")
 

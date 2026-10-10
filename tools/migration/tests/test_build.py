@@ -109,7 +109,7 @@ def test_missing_hugo_binary_says_what_to_do(tmp_path):
 def test_unknown_commit_says_what_to_do(tmp_path, git_repo, marker):
     repo, _ = git_repo
     message = (
-        "unknown commit 'deadbeef'; fetch it, or check the commit given with --commit or in tools/parity-baseline.txt"
+        "unknown commit 'deadbeef'; fetch it, or check the commit given with --commit or in tools/migration/parity-baseline.txt"
     )
     with pytest.raises(BuildError, match=re.escape(message)):
         build_at_commit(repo, "deadbeef", tmp_path / "out", hugo=fake_hugo(tmp_path / "hugo", marker))
@@ -137,7 +137,7 @@ def test_commit_missing_from_the_repository_says_what_to_do(tmp_path, git_repo, 
     missing = "0123456789abcdef0123456789abcdef01234567"
     message = (
         f"git worktree add of {missing} failed: fatal: invalid reference: {missing}; "
-        "fetch it, or check the commit given with --commit or in tools/parity-baseline.txt"
+        "fetch it, or check the commit given with --commit or in tools/migration/parity-baseline.txt"
     )
     with pytest.raises(BuildError, match=f"^{re.escape(message)}$"):
         build_at_commit(repo, missing, tmp_path / "out", hugo=fake_hugo(tmp_path / "hugo", marker))

@@ -20,8 +20,8 @@ from .live import Reply, live_mismatch, live_responses
 from .old_images import map_old_images
 from .site import Build
 
-REPO = Path(__file__).resolve().parents[2]
-BASELINE_SHA_FILE = REPO / "tools/parity-baseline.txt"
+REPO = Path(__file__).resolve().parents[3]
+BASELINE_SHA_FILE = REPO / "tools/migration/parity-baseline.txt"
 BASELINE_DIR = Path("/tmp/parity-baseline")
 CANDIDATE_PREFIX = "/tmp/parity-candidate-"
 BASELINE_HUGO_HELP = "Hugo for the baseline (default: $HUGO_BASELINE_BIN, else $HUGO_BIN, else hugo)"
@@ -156,19 +156,19 @@ def _parser() -> argparse.ArgumentParser:
     )
     # argparse runs type on string defaults only, so a missing default file is an argument error too
     branch.add_argument(
-        "--allow", metavar="FILE", type=_file, default=str(REPO / "tools/parity-allow.yaml"),
-        help="allow file (default: tools/parity-allow.yaml)",
+        "--allow", metavar="FILE", type=_file, default=str(REPO / "tools/migration/parity-allow.yaml"),
+        help="allow file (default: tools/migration/parity-allow.yaml)",
     )
     branch.add_argument("--baseline-hugo", metavar="PATH", help=BASELINE_HUGO_HELP)
     branch.add_argument("--hugo", metavar="PATH", help="Hugo for the working tree (default: $HUGO_BIN, else hugo)")
 
     baseline = command(
-        "baseline", _baseline, "Build a commit (default: tools/parity-baseline.txt) into OUT with the baseline Hugo"
+        "baseline", _baseline, "Build a commit (default: tools/migration/parity-baseline.txt) into OUT with the baseline Hugo"
     )
     baseline.add_argument(
         "out", metavar="OUT", type=Path, help="an empty directory, or an earlier OUT (reused if commit and Hugo match)"
     )
-    baseline.add_argument("--commit", metavar="SHA", help="commit to build (default: tools/parity-baseline.txt)")
+    baseline.add_argument("--commit", metavar="SHA", help="commit to build (default: tools/migration/parity-baseline.txt)")
     baseline.add_argument("--baseline-hugo", metavar="PATH", help=BASELINE_HUGO_HELP)
 
     old_images = command(

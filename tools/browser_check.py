@@ -1,6 +1,10 @@
+# /// script
+# requires-python = ">=3.12"
+# dependencies = ["axe-playwright-python", "playwright"]
+# ///
 """Check a build of the site in Chromium: behaviour, accessibility, page weight, no-JS rendering and the header.
 
-    uv run --group browser python browser_check.py [BUILD_DIR] [--screenshots OUT_DIR [--no-checks]]
+    uv run tools/browser_check.py [BUILD_DIR] [--screenshots OUT_DIR [--no-checks]]
 
 Without BUILD_DIR it builds the working tree with $HUGO_BIN first. $CHROMIUM overrides the Chromium binary. Every
 check runs, and the script exits non-zero when any of them fails. --screenshots also writes the review screenshot
@@ -13,6 +17,7 @@ import os
 import functools
 import gzip
 import http.server
+import subprocess
 import sys
 import tempfile
 import threading
@@ -22,8 +27,7 @@ from pathlib import Path
 from axe_playwright_python.sync_playwright import Axe
 from playwright.sync_api import Browser, Page, sync_playwright
 
-from parity.build import build_site
-
+ROOT = Path(__file__).resolve().parent.parent
 CHROMIUM = os.environ.get("CHROMIUM", "/run/current-system/sw/bin/chromium")
 POST = "/post/self-hosting-ai-is-not-cheaper/"
 # A long post without charts, diagrams, GIFs or videos, for the page-weight budget.
@@ -59,6 +63,15 @@ CHECKS: list[Callable[[Browser, str], None]] = []
 def check(function: Callable[[Browser, str], None]) -> Callable[[Browser, str], None]:
     CHECKS.append(function)
     return function
+
+
+def build(out: Path) -> Path:
+    """Build the working tree for production into out. A fresh resource cache keeps image names as Netlify makes them."""
+    with tempfile.TemporaryDirectory(prefix="hugo-resources-") as resources:
+        env = os.environ | {"HUGO_ENV": "production", "HUGO_RESOURCEDIR": resources}
+        hugo = os.environ.get("HUGO_BIN", "hugo")
+        subprocess.run([hugo, "--gc", "--minify", "-s", str(ROOT), "-d", str(out)], env=env, check=True)
+    return out
 
 
 def serve(root: Path) -> str:
@@ -296,7 +309,7 @@ def main() -> int:
     args = parser.parse_args()
     checks = [] if args.no_checks else CHECKS
     with tempfile.TemporaryDirectory(prefix="browser-check-") as tmp:
-        root = args.build or build_site(Path(__file__).resolve().parent.parent, Path(tmp) / "public")
+        root = args.build or build(Path(tmp) / "public")
         base = serve(root)
         failed = 0
         with sync_playwright() as playwright:

@@ -1,10 +1,10 @@
-"""Checks on the real baseline build (slow: builds tools/parity-baseline.txt with Hugo 0.123.3 if not cached)."""
+"""Checks on the real baseline build (slow: builds tools/migration/parity-baseline.txt with Hugo 0.123.3 if not cached)."""
 
 from xml.etree import ElementTree as ET
 
 import pytest
 
-from helpers import TOOLS
+from helpers import REPO, TOOLS
 from parity.allow import load_allow, partition
 from parity.build import build_at_commit
 from parity.checks import ALL_CHECKS, DESCRIPTION_KEYS, check_feeds, seo_fields, sitemap_locs_without_page
@@ -55,7 +55,7 @@ def test_rebuilt_baseline_matches_itself(real_baseline, baseline_sha, baseline_h
     check_seo reads only the baseline's descriptions as Markdown, so the descriptions of both builds are compared here
     the way the baseline's are.
     """
-    rebuilt = Build(build_at_commit(TOOLS.parent, baseline_sha, tmp_path / "rebuilt", hugo=baseline_hugo))
+    rebuilt = Build(build_at_commit(REPO, baseline_sha, tmp_path / "rebuilt", hugo=baseline_hugo))
     description = tuple(f"{key}:" for key in DESCRIPTION_KEYS)
     findings = [
         finding for check in ALL_CHECKS.values() for finding in check(real_baseline, rebuilt)

@@ -96,7 +96,7 @@ def test_compare_branch_names_a_missing_default_allow_file(cli, tmp_path, monkey
     monkeypatch.setattr("parity.__main__.REPO", tmp_path)
     code, out, err = cli("compare-branch")
     assert (code, out) == (2, "")
-    assert f"argument --allow: {tmp_path / 'tools/parity-allow.yaml'} is not a file" in err
+    assert f"argument --allow: {tmp_path / 'tools/migration/parity-allow.yaml'} is not a file" in err
 
 
 def test_compare_branch_names_the_commit_and_both_build_directories(cli, git_repo, tmp_path, monkeypatch):

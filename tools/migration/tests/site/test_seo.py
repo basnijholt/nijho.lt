@@ -10,12 +10,12 @@ from pathlib import Path
 import pytest
 import yaml
 
-from helpers import TOOLS, require_hugo
+from helpers import REPO, require_hugo
 from parity.build import build_site, resolve_hugo
 from parity.site import Build
 
 ORIGIN = "https://www.nijho.lt"
-CONTENT = TOOLS.parent / "content"
+CONTENT = REPO / "content"
 GA = "https://www.googletagmanager.com/gtag/js?id=G-B50P3BHJ6C"
 PLAUSIBLE = "https://plausible.nijho.lt/js/pa-ylHri3AS4w8PLULPjHH4G.js"
 THEME_COLORS = {("(prefers-color-scheme: light)", "#f5f5f4"), ("(prefers-color-scheme: dark)", "#141413")}
@@ -27,7 +27,7 @@ MARKDOWN_SYNTAX = re.compile(r"\]\(|`|\*\*\S(?:.*?\S)?\*\*|__(?!\w+__)\S(?:.*?\S
 
 def author_mastodon() -> list[str]:
     """The Mastodon profiles in the site author's social links, which the head declares with rel="me"."""
-    author = (TOOLS.parent / "content/authors/admin/_index.md").read_text(encoding="utf-8")
+    author = (REPO / "content/authors/admin/_index.md").read_text(encoding="utf-8")
     return [s["link"] for s in yaml.safe_load(author.split("---")[1])["social"] if s["icon"] == "mastodon"]
 
 

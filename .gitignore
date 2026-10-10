@@ -3,6 +3,6 @@ public/
 *.DS_Store
 resources/
 .hugo_build.lock
-tools/.venv/
+tools/migration/.venv/
 __pycache__/
 *.pyc

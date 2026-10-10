@@ -16,7 +16,8 @@ from parity.build import BuildError, get_hugo_version
 from parity.site import Build
 
 TOOLS = Path(__file__).resolve().parents[1]
-CONTENT = TOOLS.parent / "content"
+REPO = TOOLS.parents[1]
+CONTENT = REPO / "content"
 
 
 def write_build(root: Path, files: dict[str, str | bytes]) -> Build:

@@ -8,9 +8,9 @@ from urllib.parse import quote
 
 import yaml
 
-from helpers import TOOLS
+from helpers import REPO
 
-CONFIG = TOOLS.parent / "config/_default"
+CONFIG = REPO / "config/_default"
 MENU = [
     (item["name"], f"/{item['url']}")
     for item in sorted(yaml.safe_load((CONFIG / "menus.yaml").read_text(encoding="utf-8"))["main"], key=lambda i: i["weight"])

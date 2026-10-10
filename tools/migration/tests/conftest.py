@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from helpers import TOOLS, require_hugo, write_build
+from helpers import REPO, TOOLS, require_hugo, write_build
 from parity.__main__ import BASELINE_DIR, main
 from parity.build import build_at_commit, resolve_baseline_hugo
 from parity.site import Build
@@ -83,5 +83,5 @@ def baseline_hugo() -> str:
 
 @pytest.fixture(scope="session")
 def real_baseline(baseline_sha, baseline_hugo) -> Build:
-    """The baseline build of tools/parity-baseline.txt, cached where compare-branch keeps it."""
-    return Build(build_at_commit(TOOLS.parent, baseline_sha, BASELINE_DIR / baseline_sha, hugo=baseline_hugo))
+    """The baseline build of tools/migration/parity-baseline.txt, cached where compare-branch keeps it."""
+    return Build(build_at_commit(REPO, baseline_sha, BASELINE_DIR / baseline_sha, hugo=baseline_hugo))

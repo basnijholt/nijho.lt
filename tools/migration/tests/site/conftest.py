@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from helpers import TOOLS, require_hugo
+from helpers import REPO, TOOLS, require_hugo
 from parity.allow import AllowRule, load_allow, partition
 from parity.build import build_site, resolve_hugo
 from parity.checks import ALL_CHECKS, Finding
@@ -25,7 +25,7 @@ def pytest_collection_modifyitems(items):
 
 @pytest.fixture(scope="session")
 def repo_root() -> Path:
-    return TOOLS.parent
+    return REPO
 
 
 @pytest.fixture(scope="session")

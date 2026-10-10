@@ -5,11 +5,11 @@ import re
 import pytest
 import yaml
 
-from helpers import CONTENT, TOOLS, require_hugo
+from helpers import CONTENT, REPO, require_hugo
 from parity.build import BuildError, build_site, resolve_hugo
 from parity.site import Build, read_utf8
 
-REPO = TOOLS.parent
+REPO = REPO
 ICONS = REPO / "assets/icons"
 # The pattern layouts/_partials/functions/content_icons.html uses, with only the icon name captured
 ICON_CLASS_RE = re.compile(r"\b(?:fa[srb]?|ai) (?:fa|ai)-([a-z0-9-]+)")

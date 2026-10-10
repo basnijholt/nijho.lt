@@ -39,5 +39,5 @@ Netlify builds with Hugo 0.167.0 (`netlify.toml`); devbox has 0.165.0, the newes
 - `assets/icons/`: brand icons as SVG, used inline and as CSS masks for the Font Awesome markup in the content.
 - `assets/media/map.webp`: the contact map, drawn around the coordinates in `content/home/contact.md` by `tools/contact_map.py`.
 
-`tools/` checks the build: `parity` compares it with a build of the old theme so no URL, feed or page goes missing, and `browser_check.py` tests it in Chromium.
-See [tools/README.md](tools/README.md).
+`tools/browser_check.py` tests a build in Chromium and `tools/contact_map.py` redraws the contact map; see [tools/README.md](tools/README.md).
+`tools/migration/` checked the switch from the old theme (no URL, feed or page went missing) and can be deleted once the switch has settled.

@@ -6,7 +6,7 @@ import subprocess
 import tempfile
 from pathlib import Path
 
-COMMIT_HINT = "fetch it, or check the commit given with --commit or in tools/parity-baseline.txt"
+COMMIT_HINT = "fetch it, or check the commit given with --commit or in tools/migration/parity-baseline.txt"
 
 
 class BuildError(Exception):

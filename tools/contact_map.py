@@ -1,6 +1,10 @@
+# /// script
+# requires-python = ">=3.12"
+# dependencies = ["httpx", "pillow", "pyyaml"]
+# ///
 """Draw the homepage's contact map from OpenStreetMap tiles, centered on the coordinates in content/home/contact.md.
 
-    uv run --with pillow python contact_map.py [--zoom 10]
+    uv run tools/contact_map.py [--zoom 10]
 
 Writes assets/media/map.webp (800x560). The page puts the marker at the image's center and credits OpenStreetMap
 contributors, so run this again after changing content.coordinates.
