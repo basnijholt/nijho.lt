@@ -26,6 +26,7 @@ Anthropic's models learn in Claude Code, and OpenAI's models learn in Codex.
 Every other harness, like [pi](https://github.com/badlogic/pi-mono), [opencode](https://opencode.ai/), or [MindRoom]({{< ref "/post/mindroom" >}}), gives the model its own tools for running commands and editing files.
 The models are usually smart enough to figure those out, but not always.
 Sometimes a model assumes an edit tool works like the one it was trained with, and uses it wrong.
+This summer, that happened to Claude Opus 4.8 in pi, which I come back to [below](#why-it-went-wrong-in-pi).
 
 So the idea was simple: give each model exactly the shell and file-editing tools of its native harness, and switch automatically depending on which model is answering.
 Claude would see Claude Code's `Bash`, `Read`, `Edit`, and `Write`.
@@ -128,6 +129,32 @@ Most of them were `read_file` calls with a path relative to the directory Luna h
 Codex has no tool for reading files, so Luna had to guess how mine worked, and guessed wrong.
 Mixing a model's native tools with tools it has never seen created exactly the kind of mistake I wanted to get rid of.
 
+## Why it went wrong in pi
+
+The case that got me thinking about this was Claude Opus 4.8 in pi.
+In July, a pi user reported that [about 20% of its edits failed in some sessions](https://github.com/earendil-works/pi/issues/6278).
+Pi's `edit` tool takes a list of replacements, and Opus 4.8 kept adding made-up fields to them, like `in_file`, `matchCase`, or `newText2`.
+Claude Sonnet 5 did it too, while Opus 4.7 and older Claude models never did in the same tests.
+
+Armin Ronacher, one of pi's maintainers, [dug into it](https://github.com/earendil-works/pi/issues/6278#issuecomment-4883362982) and compared it with what Claude Code does with the tool calls it receives.
+It turns out that Claude Code quietly repairs a lot of them:
+
+- It accepts several names for the same argument, like `old_str` and `old_string`.
+- It parses an argument that arrives as a string when it should be an object.
+- It fixes broken `\uXXXX` escapes in strings.
+- It drops fields it does not know.
+- When it cannot parse a call at all, it asks the model to try again.
+
+His hypothesis is that RL itself might be the cause.
+If a model is trained in a harness that absorbs these mistakes, a slightly wrong tool call still completes the task and still gets rewarded, so nothing teaches the model not to make it.
+Pi [now ignores unknown fields too](https://github.com/earendil-works/pi/commit/a1b336d73e13b53949ff629800081185d3e4694e), just like Claude Code.[^strict]
+
+This is the failure my idea was meant to prevent, and it did not show up in my runs.
+I think the shape of the tools explains why.
+The made-up fields always appeared inside pi's nested list of replacements, where the model has to write the JSON for each replacement itself.
+MindRoom's `edit_file` is flat, like Claude Code's `Edit`: a path, the old text, and the new text.
+So matching the exact names of a model's native tools seems to matter much less than keeping the tools as simple as those native tools are.
+
 ## Then I tried the opposite: one Bash tool
 
 If tool definitions cost tokens on every request, fewer tools should be cheaper.
@@ -213,6 +240,8 @@ That is a hunch, not a result, and testing it is what I want to do next.
 Each cell shows tasks solved out of 36, then tokens per task.
 
 {{< /detail-tag >}}
+
+[^strict]: Armin also found that Anthropic's strict tool mode, which restricts the model's output to the tool's schema, made these failures disappear in his tests. Pi later turned it on for Claude models, and a pi user then [linked a different problem to it](https://github.com/earendil-works/pi/issues/10074#issuecomment-6000381416): in that user's logs, 9.5% of Claude's edits had mangled `\u` escapes for non-ASCII text, such as Korean, with strict mode on, and 1.5% with it off.
 
 [^tasks]: The 12 tasks come from 12 families: a CSV report, finding the commit that broke a check, renaming an API across a package, counting errors in log files, fixing failing tests, finding files, extracting fields from JSON, writing a shell script, editing a configuration file, counting matching lines in very long command output, unpacking nested archives, and deduplicating and merging data files. I tune MindRoom's agent setup on other instances of these families, and these 12 were held out from that.
 
