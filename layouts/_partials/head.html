@@ -19,11 +19,7 @@
   {{- if .Params.commentable }}{{ $scripts = $scripts | append "js/comments.js" }}{{ end }}
 {{- end }}
 {{- if and .IsPage (strings.Contains .Content "data-zoomable") }}{{ $scripts = $scripts | append "js/zoom.js" }}{{ end }}
-{{- range $scripts }}
-  {{- with resources.Get . | js.Build (dict "minify" true "format" "esm") | fingerprint }}
-<script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous"></script>
-  {{- end }}
-{{- end }}
+{{- range $scripts }}{{ partial "script.html" . }}{{ end }}
 {{- if .Params.math }}{{ partial "head/mathjax.html" . }}{{ end }}
 {{ partial "head/jsonld.html" . }}
 {{ partialCached "head/analytics.html" . }}

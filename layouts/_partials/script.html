@@ -1,0 +1,6 @@
+{{- /* A <script type="module"> for a file in assets/js/, bundled, minified and fingerprinted. URLs it imports from
+  other sites (https://…) stay as they are. A module runs once per page however often its tag appears, so a shortcode
+  can include its script with every use. */ -}}
+{{- with resources.Get . | js.Build (dict "minify" true "format" "esm" "externals" (slice "https://*")) | fingerprint }}
+<script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous"></script>
+{{- end }}
