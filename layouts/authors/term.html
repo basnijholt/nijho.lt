@@ -1,0 +1,18 @@
+{{ define "main" }}
+<div class="wrap list">
+  <header class="list-head author-head">
+    {{- with (.Resources.ByType "image").GetMatch "avatar*" }}{{ with .Fill "176x176 Center webp" }}
+    <img src="{{ .RelPermalink }}" width="88" height="88" alt="">
+    {{- end }}{{ end }}
+    <div>
+      <h1>{{ partial "functions/title.html" . }}</h1>
+      {{ with .Params.role }}<p class="sub">{{ . }}{{ with index $.Params.organizations 0 }} at <a href="{{ .url }}">{{ .name }}</a>{{ end }}</p>{{ end }}
+    </div>
+  </header>
+  {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+  <ul class="w1">
+    {{- range .Paginator.Pages }}{{ partial "lists/post-row.html" . }}{{ end }}
+  </ul>
+  {{ partial "pagination.html" . }}
+</div>
+{{ end }}

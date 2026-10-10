@@ -435,3 +435,138 @@ dialog.zoom {
   .after section { padding-block: 48px; }
   .related { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* Lists: /post/, sections, term and author pages. */
+.list {
+  padding-block: 56px 96px;
+}
+.list-head {
+  padding-bottom: 32px;
+
+  & h1 {
+    font-size: clamp(36px, 4.6vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+  & .sub {
+    margin-top: 12px;
+    font-size: 18px;
+    color: var(--muted);
+
+    & a { color: var(--text-2); border-bottom: 1px solid var(--line); }
+    & a:hover { color: var(--accent); border-color: var(--accent); }
+  }
+}
+.author-head {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+
+  & img {
+    width: 88px;
+    height: 88px;
+    border-radius: 18px;
+    object-fit: cover;
+  }
+}
+.list > .prose {
+  margin-bottom: 40px;
+}
+
+.w1 {
+  border-top: 1px solid var(--line);
+
+  & > li {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 12px 56px;
+    padding-block: 28px;
+    border-bottom: 1px solid var(--line);
+
+    &:hover .blog-title a { color: var(--accent); }
+  }
+  & .head {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  & .post-meta { font-size: 13px; }
+  & .blog-title {
+    font-size: 25px;
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+
+    & a { transition: color .15s; }
+  }
+  & .chips {
+    position: relative;
+    z-index: 1;
+  }
+  & .side {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+    padding-top: 26px;
+  }
+  & .summary {
+    flex: 1;
+    font-size: 17px;
+    line-height: 1.62;
+    color: var(--text-2);
+
+    & p + p { margin-top: 0.6em; }
+  }
+  & .thumb {
+    flex: none;
+    width: 88px;
+    max-height: 156px;
+    margin-top: 4px;
+    border-radius: 10px;
+    object-fit: cover;
+    background: var(--surface-2);
+  }
+}
+
+.terms {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 8px 24px;
+
+  & a {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+    transition: color .15s;
+
+    &:hover { color: var(--accent); }
+  }
+}
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 40px;
+
+  & a {
+    display: grid;
+    place-items: center;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 10px;
+    border-radius: var(--r-sm);
+    background: var(--surface);
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+  & .active a { background: var(--text); color: var(--bg); }
+  & .disabled { display: none; }
+}
+
+@media (max-width: 767px) {
+  .w1 > li { grid-template-columns: minmax(0, 1fr); }
+  .w1 .side { padding-top: 0; }
+}

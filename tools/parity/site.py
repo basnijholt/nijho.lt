@@ -170,13 +170,16 @@ class Build:
     def final_target(self, path: str, hops: int = REDIRECT_HOPS) -> tuple[str, bool]:
         """Follow the rules Netlify applies from path; return where they end and whether a file of this site is served.
 
-        A path that is a file or a directory with index.html, looked up percent-decoded, is served unless its rule is
-        forced (!). Otherwise a 3xx or 200 rule leads on to its target path, or ends at a URL on another host; any other
-        status ends at the path, and so does running out of hops, which ends a loop.
+        A path that is a file or a directory with index.html (with or without its trailing slash), looked up
+        percent-decoded, is served unless its rule is forced (!). Otherwise a 3xx or 200 rule leads on to its target
+        path, or ends at a URL on another host; any other status ends at the path, and so does running out of hops,
+        which ends a loop.
         """
         decoded = unquote(path)
         rule, target = self.redirect(path)
-        exists = decoded in self.files or (decoded.endswith("/") and decoded + "index.html" in self.files)
+        # Netlify answers a directory requested without its trailing slash with a redirect to it.
+        index = decoded + ("index.html" if decoded.endswith("/") else "/index.html")
+        exists = decoded in self.files or index in self.files
         if exists and not (rule and rule.force):
             return path, True
         if rule is None or hops == 0 or not (rule.status == 200 or 300 <= rule.status < 400):

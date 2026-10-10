@@ -128,6 +128,8 @@ def chain(hops: int) -> str:
         pytest.param(["/a.png"], "", "/a.png", True, id="file"),
         pytest.param(["/a/index.html"], "", "/a/", True, id="directory-index"),
         pytest.param(["/a/other.html"], "", "/a/", False, id="directory-without-index"),
+        pytest.param(["/a/index.html"], "", "/a", True, id="directory-without-trailing-slash"),
+        pytest.param(["/a/other.html"], "", "/a", False, id="no-index-without-trailing-slash"),
         pytest.param([], "", "/gone/", False, id="missing"),
         pytest.param(["/a b.png"], "", "/a%20b.png", True, id="percent-encoded-file"),
         pytest.param(["/padkær/index.html"], "", "/padk%C3%A6r/", True, id="percent-encoded-directory"),
