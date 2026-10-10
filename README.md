@@ -12,12 +12,12 @@ devbox run dev      # http://localhost:1313, rebuilds on save, shows drafts
 devbox run build    # production build into public/
 ```
 
-[Devbox](https://www.jetify.com/devbox) provides Hugo 0.165.0, the newest it packages; with Hugo installed some other way, `hugo server` does the same.
+[Devbox](https://www.jetify.com/devbox) provides Hugo 0.165.0, the newest it packages; with Hugo installed some other way, `hugo server -D` does the same.
 Netlify builds with Hugo 0.167.0, set in `netlify.toml`, and builds a preview for every pull request.
 
 ## Writing
 
-Every page is a folder with an `index.md` and its images next to it.
+Most pages are a folder with an `index.md` and its images next to it.
 
 | What | Where | Front matter that matters |
 |---|---|---|
@@ -39,14 +39,15 @@ Images and other switches:
 |---|---|
 | `{{% callout note %}}…{{% /callout %}}` | A highlighted note; `warning` for a warning |
 | `{{< figure src="x.png" caption="…" >}}` | An image with a caption; images in Markdown get the same treatment |
-| `{{< video src="clip.mp4" >}}` | A video, with `clip.jpg` as its poster; `autoplay`, `loop` and `controls` flags |
+| `{{< video src="clip.mp4" >}}` | A video, with `clip.jpg` as its poster; add `controls="true"`, `autoplay="true"` or `loop="true"` |
 | `{{< plot name="cost" >}}` | An [Observable Plot](https://observablehq.com/plot/) chart from the page's `plots.js` |
 | `{{< gallery album="name" >}}` | Thumbnails of `assets/media/albums/name/` |
 | `{{< photo-grid >}}` | Photos from `assets/media/photography/` in justified rows; one `<instagram id> \| <alt text>` per line |
 | `{{< tooltip text="…" >}}word{{< /tooltip >}}` | Hover text |
 | `{{< detail-tag "Summary" >}}…{{< /detail-tag >}}` | A collapsible block |
 | `{{< toc >}}` | A table of contents in the text (wide screens show one beside the post anyway) |
-| `{{< bleed-svg src="x.svg" >}}`, `{{< demo-clips >}}` | Artwork and demo videos wider than the text column |
+| `{{< bleed-svg src="x.svg" >}}` | Artwork whose glow reaches past the text column |
+| `{{< demo-clips >}}{{< demo-clip … >}}{{< /demo-clips >}}` | A row of demo recordings, each in a light and a dark version |
 
 A fenced code block with the language `mermaid` renders as a diagram.
 

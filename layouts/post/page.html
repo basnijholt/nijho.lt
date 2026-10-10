@@ -2,7 +2,8 @@
 <article class="wrap post">
   <header class="post-head">
     {{ partial "post/breadcrumb.html" . }}
-    <h1>{{ .Title }}</h1>
+    {{- /* A page without a title has its own top-level heading in the text. */}}
+    {{ with .Title }}<h1>{{ . }}</h1>{{ end }}
     {{ with .Params.subtitle }}<p class="subtitle">{{ . | markdownify | emojify }}</p>{{ end }}
     {{ partial "post/meta.html" . }}
   </header>

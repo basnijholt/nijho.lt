@@ -1,5 +1,5 @@
 {{- $url := .Permalink | urlquery }}
-{{- $title := .Title | urlquery }}
+{{- $title := partial "functions/title.html" . | urlquery }}
 <div class="share">
   <span class="label">Share</span>
   <a href="{{ printf "https://twitter.com/intent/tweet?url=%s&text=%s" $url $title | safeURL }}" aria-label="Share on X">{{ partial "icon.html" (dict "name" "x-twitter") }}</a>

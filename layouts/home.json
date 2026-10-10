@@ -23,7 +23,7 @@
     "lang" .Lang
     "permalink" .Permalink
     "relpermalink" .RelPermalink
-    "title" .Title
+    "title" (partial "functions/title.html" .)
     "summary" ($summary | plainify | htmlUnescape | chomp)
     "content" (.Plain | htmlUnescape | truncate 5000)
     "authors" (cond (gt (len $authors) 0) $authors nil)

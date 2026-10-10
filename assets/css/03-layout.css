@@ -200,6 +200,6 @@
   }
 
   & a {
-    color: var(--text-2);
+    --link-color: var(--text-2);
   }
 }

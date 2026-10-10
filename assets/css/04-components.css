@@ -59,9 +59,11 @@ a.chip:hover {
   &:hover { color: var(--accent); text-decoration-color: var(--accent); }
 }
 
-/* Standalone links: a thin line under them that turns accent on hover. */
+/* Standalone links: a thin line under them that turns accent on hover. Their colour at rest is --link-color, so
+   rules in later layers can set it without overriding the hover colour. */
 :is(.site-footer a, .edit, .more, .role a, .pub-facts a, .not-found-links a, .list-head .sub a) {
   border-bottom: 1px solid var(--line);
+  color: var(--link-color, inherit);
   transition: color .15s, border-color .15s;
 
   &:hover { border-color: var(--accent); color: var(--accent); }

@@ -214,7 +214,7 @@
   padding-bottom: 1px;
   font-size: 14.5px;
   font-weight: 500;
-  color: var(--text-2);
+  --link-color: var(--text-2);
 }
 
 .social {
@@ -445,7 +445,7 @@ dialog.zoom {
 
   & dt { color: var(--muted); }
   & dd { margin: 0; color: var(--text-2); }
-  & a { color: var(--text); }
+  & a { --link-color: var(--text); }
 }
 .post > .abstract, .post > .pub-facts { grid-column: 1; }
 /* Project logos are mostly square; a full-width square would fill the screen. */
@@ -481,7 +481,7 @@ dialog.zoom {
     font-size: 18px;
     color: var(--muted);
 
-    & a { color: var(--text-2); }
+    & a { --link-color: var(--text-2); }
   }
 }
 .author-head {
