@@ -32,8 +32,9 @@ So the idea was simple: give each model exactly the shell and file-editing tools
 Claude would see Claude Code's `Bash`, `Read`, `Edit`, and `Write`.
 GPT would see Codex's `exec_command` and `apply_patch`.
 
-My wife did not share my excitement.
-So I built it, measured it, and was wrong in a way I find much more interesting than if I had been right.
+I was beyond excited.
+I could not really share that excitement locally, because my wife did not care, so I am sharing it with the internet instead.
+I built it, measured it, and was wrong in a way I find much more interesting than if I had been right.
 
 {{< toc >}}
 
@@ -154,6 +155,28 @@ I think the shape of the tools explains why.
 The made-up fields always appeared inside pi's nested list of replacements, where the model has to write the JSON for each replacement itself.
 MindRoom's `edit_file` is flat, like Claude Code's `Edit`: a path, the old text, and the new text.
 So matching the exact names of a model's native tools seems to matter much less than keeping the tools as simple as those native tools are.
+
+## Where minimal mode came from
+
+Before the results, some background on the other half of this experiment.
+
+[Pi](https://github.com/badlogic/pi-mono) made its name by being minimal.
+When Mario Zechner [introduced it](https://mariozechner.at/posts/2025-11-30-pi-coding-agent/) last November, its system prompt and tool definitions together came in below 1,000 tokens, and it had four tools: `read`, `write`, `edit`, and `bash`.
+He also wrote that "pi does not and will not support MCP", and he pointed to Terminus 2, a minimal agent from the Terminal-Bench team, which was "holding its own against agents with far more sophisticated tooling".
+
+Pi 1.0 came out on October 1 and [added MCP after all](https://earendil.com/posts/pi-1-0/), through a sandbox called Codemode that also runs image models and non-LLM models like [Jev]({{< ref "/post/jev-mindroom" >}}).
+[The Register](https://www.theregister.com/ai-and-ml/2026/10/02/pi-coding-agent-pulls-a-180-and-adds-mcp-support/5300678) called it a 180.
+On [Hacker News](https://news.ycombinator.com/item?id=49926069) and [r/LocalLLaMA](https://www.reddit.com/r/LocalLLaMA/comments/1wvffcr/pi_10_released_mcp_support_now_included_by_default/), people worried that ["Pi's days as a nice minimal agent TUI are numbered"](https://news.ycombinator.com/item?id=49926549).
+What struck me was how the maintainers explained it.
+[Armin Ronacher](https://news.ycombinator.com/item?id=49926377) wrote that the models "are trained on their respective harnesses and we're not here to fight their behavior", and [Mario Zechner](https://news.ycombinator.com/item?id=49926840) that "we follow what the models are trained on".
+That is exactly the bet behind my tool dialects.
+
+Then DeepSeek released [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness), which was [all over Hacker News](https://news.ycombinator.com/item?id=49285244) and the local AI subreddits I read.
+Its standard setup comes with a full set of tools.
+But for benchmarks, DeepSeek [points to its minimal profile](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/BENCHMARK.md).
+In early September, that profile had [exactly one tool, a persistent `bash`, and a one-line system prompt](https://github.com/deepseek-ai/deepseek-harness/blob/63795eaa5cba78cc0a92d95fccd8db5523d7f050/packages/bundle/sdk-minimal/README.md#L78-L84): "You are a helpful software engineer assistant."
+That is what inspired MindRoom's minimal mode.
+(Ten days later, DeepSeek's profile got a second tool, `working_directory`, so staying that small seems to be hard for everyone.)
 
 ## Then I tried the opposite: one Bash tool
 
