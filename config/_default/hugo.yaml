@@ -1,10 +1,9 @@
 # Configuration of Hugo
-# Guide: https://wowchemy.com/docs/getting-started/
 # Hugo Documentation: https://gohugo.io/getting-started/configuration/#all-configuration-settings
 # This file is formatted using YAML syntax - learn more at https://learnxinyminutes.com/docs/yaml/
 
 title: Bas Nijholt
-baseurl: '/' # Website URL
+baseurl: https://www.nijho.lt/
 copyright: '© {year}'
 
 ############################
@@ -13,7 +12,7 @@ copyright: '© {year}'
 
 cascade:
   # Blog post options
-  - _target:
+  - target:
       path: /post/**
     editable: true
     reading_time: true
@@ -36,11 +35,14 @@ removePathAccents: true
 
 enableGitInfo: false
 summaryLength: 30
-paginate: 100
+pagination:
+  pagerSize: 100
 enableEmoji: true
 enableRobotsTXT: true
 footnotereturnlinkcontents: <sup>^</sup>
-ignoreFiles: [\.ipynb$, .ipynb_checkpoints$, \.Rmd$, \.Rmarkdown$, _cache$]
+# .html files in content are SVG fragments that the bleed-svg shortcode reads with readFile. Ignoring them keeps them
+# from becoming content, so security.allowContent can keep its default, which refuses HTML content.
+ignoreFiles: [\.html$, \.ipynb$, .ipynb_checkpoints$, \.Rmd$, \.Rmarkdown$, _cache$]
 permalinks:
   event: '/talk/:slug/'
   tags: '/tag/:slug/'
@@ -48,12 +50,32 @@ permalinks:
   publication_types: '/publication-type/:slug/'
 disableAliases: true
 outputs:
-  home: [HTML, RSS, JSON, WebAppManifest, headers, redirects]
-  section: [HTML, RSS]
+  home: [html, rss, json, webappmanifest, headers, redirects]
+  section: [html, rss]
+  taxonomy: [html, rss]
+  term: [html, rss]
+outputFormats:
+  headers:
+    baseName: _headers
+    isPlainText: true
+    mediaType: text/netlify
+    notAlternative: true
+  redirects:
+    baseName: _redirects
+    isPlainText: true
+    mediaType: text/netlify
+    notAlternative: true
+mediaTypes:
+  text/netlify:
+    delimiter: ''
+    suffixes: ['']
 imaging:
   resampleFilter: lanczos
-  quality: 90
   anchor: smart
+  jpeg:
+    quality: 90
+  webp:
+    quality: 90
 timeout: 600000
 caches:
   # Remote resources (the GitHub star counts on the project cards) otherwise stay cached forever in Netlify's
@@ -66,7 +88,21 @@ taxonomies:
   publication_type: publication_types
   author: authors
 markup:
-  _merge: deep
+  goldmark:
+    renderer:
+      unsafe: true
+    parser:
+      autoIDType: github
+      attribute:
+        block: true
+        title: true
+  highlight:
+    noClasses: false
+    codeFences: true
+    guessSyntax: true
+  tableOfContents:
+    startLevel: 2
+    endLevel: 3
 related:
   threshold: 80
   includeNewer: true
@@ -76,9 +112,7 @@ related:
       weight: 100
     - name: categories
       weight: 70
-security:
-  _merge: deep
 sitemap:
-  _merge: deep
-minify:
-  _merge: deep
+  changefreq: weekly
+build:
+  noJSConfigInAssets: true

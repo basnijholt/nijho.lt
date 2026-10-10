@@ -2,7 +2,7 @@
 
 import pytest
 
-from conftest import item, rss, sitemap
+from helpers import item, rss, sitemap
 from parity.checks import Finding, check_feeds, check_paths, check_redirects, check_sitemap, text_diff
 
 FEED = "/post/index.xml"

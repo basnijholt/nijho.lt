@@ -1,0 +1,3 @@
+{{- $src := .Get "src" -}}
+{{- with .Page.Resources.Get $src }}{{ $src = .RelPermalink }}{{ end -}}
+<video src="{{ $src }}" controls></video>

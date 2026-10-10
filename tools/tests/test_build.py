@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from conftest import fake_hugo, read_marker
+from helpers import fake_hugo, read_marker
 from parity.build import BuildError, build_at_commit, build_site, get_hugo_version, resolve_baseline_hugo, resolve_hugo
 
 

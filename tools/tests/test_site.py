@@ -2,7 +2,7 @@
 
 import pytest
 
-from conftest import item, rss, sitemap
+from helpers import item, rss, sitemap
 from parity import ParityError
 from parity.site import Feed, FeedItem, Redirect, norm_url
 

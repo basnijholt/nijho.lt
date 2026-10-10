@@ -4,7 +4,7 @@ import re
 
 import pytest
 
-from conftest import bmp, write_build
+from helpers import bmp, write_build
 from parity import ParityError
 from parity.old_images import hugo_fast_md5, map_old_images
 

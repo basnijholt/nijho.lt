@@ -4,7 +4,7 @@ import re
 
 import pytest
 
-from conftest import TOOLS, item, rss
+from helpers import TOOLS, item, rss
 from parity import ParityError
 from parity.allow import AllowRule, load_allow, partition
 from parity.checks import Finding, check_feeds

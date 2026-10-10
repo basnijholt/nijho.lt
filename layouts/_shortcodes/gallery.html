@@ -1,0 +1,3 @@
+{{- range resources.Match (path.Join "media/albums" (.Get "album") "*") }}
+  <a href="{{ .RelPermalink }}">{{ .Name }}</a>
+{{- end }}

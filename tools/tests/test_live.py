@@ -8,7 +8,7 @@ from contextlib import contextmanager
 
 import pytest
 
-from conftest import sitemap
+from helpers import sitemap
 from parity.live import live_mismatch, live_responses, normalize_location
 
 PREVIEW = "http://preview.example/old/"

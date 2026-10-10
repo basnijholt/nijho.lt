@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from conftest import fake_hugo, item, page, rss
+from helpers import fake_hugo, item, page, rss
 from parity.__main__ import candidate_dir
 from parity.checks import ALL_CHECKS, HOME_IDS
 

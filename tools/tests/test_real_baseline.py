@@ -4,7 +4,7 @@ from xml.etree import ElementTree as ET
 
 import pytest
 
-from conftest import TOOLS
+from helpers import TOOLS
 from parity.allow import load_allow, partition
 from parity.build import build_at_commit
 from parity.checks import ALL_CHECKS, check_feeds, sitemap_locs_without_page

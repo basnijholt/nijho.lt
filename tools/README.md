@@ -108,5 +108,5 @@ A sitemap without `<loc>` entries is an error.
 
 ```bash
 uv run pytest -m "not slow"
-uv run pytest   # also builds the baseline commit; skipped unless the baseline Hugo is 0.123.3
+uv run pytest   # also builds the baseline commit (Hugo 0.123.3) and the site (Hugo 0.167.0), skipping without them
 ```

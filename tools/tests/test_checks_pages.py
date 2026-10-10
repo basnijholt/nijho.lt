@@ -5,7 +5,7 @@ import json
 import pytest
 from bs4 import BeautifulSoup
 
-from conftest import page
+from helpers import page
 from parity.allow import AllowRule, partition
 from parity.checks import Finding, check_content, check_ids, check_seo, seo_fields
 

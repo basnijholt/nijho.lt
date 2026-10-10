@@ -2,7 +2,7 @@
 
 import pytest
 
-from conftest import page
+from helpers import page
 from parity.checks import Finding, broken_internal_links, check_internal_links, check_old_images
 
 PAGE = "/post/x/index.html"

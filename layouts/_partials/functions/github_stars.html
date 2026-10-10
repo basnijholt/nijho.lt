@@ -11,10 +11,10 @@
 {{- if $repos -}}
   {{- range $start := seq 0 50 (sub (len $repos) 1) -}}
     {{- $query := delimit (apply (first 50 (after $start $repos)) "printf" "repo:%s" ".") "+" -}}
-    {{- with resources.GetRemote (printf "https://api.github.com/search/repositories?per_page=100&q=%s" $query) -}}
+    {{- with try (resources.GetRemote (printf "https://api.github.com/search/repositories?per_page=100&q=%s" $query)) -}}
       {{- with .Err -}}
         {{- warnf "github_stars: %s" . -}}
-      {{- else -}}
+      {{- else with .Value -}}
         {{- range (transform.Unmarshal .).items -}}
           {{- $stars = merge $stars (dict (lower .full_name) (int .stargazers_count)) -}}
         {{- end -}}
