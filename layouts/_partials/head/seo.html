@@ -1,0 +1,50 @@
+{{- $title := partial "functions/page_title.html" . }}
+{{- $description := partial "functions/description.html" . }}
+{{- $image := partial "functions/og_image.html" . }}
+{{- $time := "2006-01-02T15:04:05-07:00" }}
+{{- $ogType := "website" }}
+{{- if .IsHome }}
+  {{- $ogType = "profile" }}
+{{- else if and .IsPage (in (slice "post" "project" "publication") .Type) }}
+  {{- $ogType = "article" }}
+{{- end }}
+{{- $locale := split site.Language.Locale "-" }}
+<title>{{ $title }}</title>
+<meta name="description" content="{{ $description }}">
+<meta name="author" content="{{ (site.GetPage "/authors/admin").Title }}">
+{{- if or .Params.private (not hugo.IsProduction) }}
+<meta name="robots" content="noindex">
+{{- end }}
+<link rel="canonical" href="{{ .Permalink }}">
+<link rel="alternate" hreflang="{{ site.Language.Locale }}" href="{{ .Permalink }}">
+{{- with .OutputFormats.Get "rss" }}
+<link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ $title }}">
+{{- end }}
+<link rel="me" href="https://fosstodon.org/@basnijholt">
+<meta property="og:type" content="{{ $ogType }}">
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $description }}">
+<meta property="og:image" content="{{ $image.url }}">
+<meta property="og:locale" content="{{ index $locale 0 }}_{{ index $locale 1 | upper }}">
+{{- if .IsPage }}
+  {{- if not .PublishDate.IsZero }}
+<meta property="article:published_time" content="{{ .PublishDate.Format $time }}">
+  {{- end }}
+  {{- if not .Lastmod.IsZero }}
+<meta property="article:modified_time" content="{{ .Lastmod.Format $time }}">
+  {{- end }}
+{{- else if .IsBranch }}
+  {{- range first 1 (.RegularPagesRecursive | default .Pages).ByDate.Reverse }}
+    {{- if not .Date.IsZero }}
+<meta property="og:updated_time" content="{{ .Date.Format $time }}">
+    {{- end }}
+  {{- end }}
+{{- end }}
+<meta name="twitter:card" content="{{ $image.card }}">
+{{- with site.Params.marketing.seo.twitter }}
+<meta name="twitter:site" content="@{{ . }}">
+<meta name="twitter:creator" content="@{{ . }}">
+{{- end }}
+<meta name="twitter:image" content="{{ $image.url }}">

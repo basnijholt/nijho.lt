@@ -1,0 +1,11 @@
+<link rel="icon" href="/favicon.ico" sizes="32x32 48x48">
+{{- with resources.Get "media/icon.png" }}
+<link rel="icon" type="image/png" sizes="32x32" href="{{ (.Fill "32x32 Center").RelPermalink }}">
+<link rel="icon" type="image/png" sizes="192x192" href="{{ (.Fill "192x192 Center").RelPermalink }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ (.Fill "180x180 Center").RelPermalink }}">
+{{- end }}
+{{- with site.Home.OutputFormats.Get "webappmanifest" }}
+<link rel="manifest" href="{{ .RelPermalink }}">
+{{- end }}
+<meta name="theme-color" content="#f5f5f4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141413" media="(prefers-color-scheme: dark)">

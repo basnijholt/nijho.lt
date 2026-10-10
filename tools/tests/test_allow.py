@@ -51,7 +51,8 @@ def test_advent_rules_allow_only_the_section_item(make_build):
     base = make_build("base", {feed: rss([item("advent-of-open-source"), day, item("other")])})
     cand = make_build("cand", {feed: rss([])})
 
-    failures, allowed, unused = partition(check_feeds(base, cand), load_allow(TOOLS / "parity-allow.yaml"))
+    rules = [rule for rule in load_allow(TOOLS / "parity-allow.yaml") if (rule.check, rule.path) == ("feeds", feed)]
+    failures, allowed, unused = partition(check_feeds(base, cand), rules)
 
     assert [f.detail for f in allowed] == [
         "missing guid '/post/advent-of-open-source/'",

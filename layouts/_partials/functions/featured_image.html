@@ -1,0 +1,9 @@
+{{- /* Returns the page's featured image resource, or nil: a bundle image named *featured*, else the image named by
+front-matter image.filename, in the bundle or in assets/media/. */ -}}
+{{- $image := (.Resources.ByType "image").GetMatch "*featured*" }}
+{{- if not $image }}
+  {{- with .Params.image.filename }}
+    {{- $image = ($.Resources.ByType "image").GetMatch . | default (resources.Get (printf "media/%s" .)) }}
+  {{- end }}
+{{- end }}
+{{- return $image -}}

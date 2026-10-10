@@ -1,6 +1,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
+{{ partial "head/seo.html" . }}
+{{ partialCached "head/icons.html" . }}
 {{- /* Runs before the stylesheet so a pinned theme applies on first paint. */}}
 <script>try{const t=localStorage.getItem("theme");if(t=="light"||t=="dark")document.documentElement.dataset.theme=t}catch{}</script>
 <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -13,3 +14,5 @@
 <script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous"></script>
   {{- end }}
 {{- end }}
+{{ partial "head/jsonld.html" . }}
+{{ partialCached "head/analytics.html" . }}
