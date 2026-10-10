@@ -101,14 +101,15 @@ html:has(.demo-clips), body:has(.demo-clips) {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1rem;
 
-  @media (width > 1180px) {
+  /* Wider than the text column only where the 162 px on each side fit: left of the column, and in the gap before
+     the contents rail. Below that the cut-off clips would hide the edge or the rail. */
+  @media (width > 1460px) {
     margin-inline: -22.5%;
   }
   & figure {
     margin: 0;
   }
   & video {
-    display: block;
     width: 100%;
     margin: 0;
     border-radius: 6px;
@@ -126,6 +127,9 @@ html:has(.demo-clips), body:has(.demo-clips) {
   text-align: center;
 }
 /* Each recording has a light and a dark version; show the one matching the page theme. */
+.demo-clip-light {
+  display: block;
+}
 .demo-clip-dark {
   display: none;
 }
