@@ -51,7 +51,8 @@ A check fails when:
 - `content`: a post, project or publication lost its article body, its text differs (TOC and heading anchors ignored), or its count of `img`, `pre`, `table`, `video` or `details` changed.
 - `old-images`: a baseline `_hu` image is gone, unless the first `_redirects` rule matching its path (splats and placeholders included) is a 3xx and the redirects end at the original: a file on this site with the source size and Hugo fast md5 written in the old name.
 - `internal-links`: an `href`, `src`, `srcset` or video `poster` points to a site path that does not exist, unless the same link on the same baseline page was already broken.
-- `redirects`: a baseline `_redirects` rule (source, target, status and `!`) is missing, or an earlier candidate rule matches its source first although none did in the baseline.
+- `redirects`: a baseline `_redirects` rule (source, target, status and `!`) is missing, or another rule than in the baseline matches its source first.
+  A rule shadowed in the baseline may be shadowed by another rule only if the baseline's shadowing rule is gone too.
 
 A text difference in a feed item or an article is one finding per changed run of words, shown with up to three unchanged words on each side, so a `match` copied from one finding allows that run and no other.
 A run of more than 12 words shows its first and last six with the count between, and after 20 findings one more counts the rest of the text's differences; for feeds, the 20 are per feed file.
@@ -94,7 +95,8 @@ uv run parity old-images /tmp/parity-baseline/$(cat parity-baseline.txt) /tmp/pa
 It fails if an old image has no source.
 Identical source files with different names each get the old name, since the entries do not say which one the old image sat next to.
 `layouts/home.redirects` redirects each old name in the folder of every image with that source name and size to the image.
-Old names, or names of their sources, containing a word from the commit hook's lists, `forbidden-words` and `forbidden-words.private` in `~/.config/git/` (or `$XDG_CONFIG_HOME/git/`), are skipped; stderr gives the count, and the `old-images` check reports those images.
+A source whose name contains a word from the commit hook's lists, `forbidden-words` and `forbidden-words.private` in `~/.config/git/` (or `$XDG_CONFIG_HOME/git/`), is left out.
+An old name is skipped when it contains such a word or all its sources do; stderr gives the count, and the `old-images` check reports those images.
 
 ## live
 

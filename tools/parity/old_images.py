@@ -46,13 +46,17 @@ def _forbidden_words() -> list[str]:
     return words
 
 
+def _holds_word(name: str, words: list[str]) -> bool:
+    return any(word in name.casefold() for word in words)
+
+
 def map_old_images(base: Build, repo: Path, cand: Build) -> tuple[list[dict], list[str]]:
     """Map each _hu image the candidate lacks to the names of its sources in content/ or assets/, by fast md5 and size.
 
     Identical sources with different names each get the old name, since the old image sat next to one of them and the
-    entries do not say which. Returns the data/old_images.yaml entries and the old names skipped because they or a
-    source's name hold a word from the commit hook's lists, which would block committing the output; the old-images
-    check reports those images.
+    entries do not say which. A word from the commit hook's lists would block committing the output, so a source whose
+    name holds one is left out. Returns the data/old_images.yaml entries and the old names skipped because they hold
+    such a word or all their sources do; the old-images check reports those images.
     """
     words = _forbidden_words()
     sources = defaultdict(set)
@@ -67,12 +71,13 @@ def map_old_images(base: Build, repo: Path, cand: Build) -> tuple[list[dict], li
             continue
         size = int(match[2])
         found = sorted(sources.get((match[1], size), ()))
-        if any(word in "/".join([name, *found]).casefold() for word in words):
+        allowed = [source for source in found if not _holds_word(source, words)]
+        if _holds_word(name, words) or (found and not allowed):
             skipped.append(name)
         elif not found:
             missing.append(name)
         else:
-            for source in found:
+            for source in allowed:
                 names[source, size].append(name)
     if missing:
         raise ParityError(

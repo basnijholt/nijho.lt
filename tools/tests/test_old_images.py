@@ -114,6 +114,17 @@ def test_map_old_images_lists_a_name_once_when_two_folders_lose_it(tmp_path):
     assert map_old_images(base, repo, cand) == ([{"file": "small.bmp", "size": 822, "names": [SMALL]}], [])
 
 
+def test_map_old_images_skips_only_the_source_with_a_forbidden_word(tmp_path, monkeypatch):
+    """An identical source with a blocked name is left out; the old name still maps to the other one."""
+    config = tmp_path / "config" / "git"
+    config.mkdir(parents=True)
+    (config / "forbidden-words").write_text("SecretCo\tA test word\n")
+    monkeypatch.setenv("XDG_CONFIG_HOME", str(tmp_path / "config"))
+    sources = {"assets/media/small.bmp": bmp(16, 16), "assets/other/secretco-copy.bmp": bmp(16, 16)}
+    base, repo, cand = sites(tmp_path, [SMALL], sources)
+    assert map_old_images(base, repo, cand) == ([{"file": "small.bmp", "size": 822, "names": [SMALL]}], [])
+
+
 def test_map_old_images_gives_the_old_name_to_every_name_of_identical_sources(tmp_path):
     """The entries do not say where the old image was, so each name an identical source has gets it."""
     copies = ["content/a/large.bmp", "content/b/small.bmp", "content/c/small.bmp", "assets/x.bmp"]

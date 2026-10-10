@@ -8,7 +8,8 @@ from xml.etree import ElementTree as ET
 import pytest
 import yaml
 
-from helpers import TOOLS
+from helpers import TOOLS, require_hugo
+from parity.build import build_site, resolve_hugo
 from parity.site import Build
 
 ORIGIN = "https://www.nijho.lt"
@@ -126,6 +127,44 @@ def test_index_json_schema_and_count(site, baseline):
 
 def test_redirects_parity_clean(failures):
     assert failures("redirects") == []
+
+
+def test_old_images_parity_clean(failures):
+    assert failures("old-images") == []
+
+
+ALIASES = {
+    "/post/old/": "/post/old/",
+    "/post/no-slash": "/post/no-slash/",
+    "/project/rsync-time-machine.py": "/project/rsync-time-machine.py/",
+    "/project/nijho.lt/": "/project/nijho.lt/",
+    "/page.html": "/page.html",
+}
+
+
+@pytest.fixture(scope="module")
+def alias_redirects(repo_root, tmp_path_factory) -> dict[str, str]:
+    """The _redirects rules (source -> target) of a small site with layouts/home.redirects and ALIASES on one page."""
+    hugo = require_hugo(resolve_hugo(), "0.167.0", "HUGO_BIN")
+    root = tmp_path_factory.mktemp("aliases")
+    config = yaml.safe_load((repo_root / "config/_default/hugo.yaml").read_text(encoding="utf-8"))
+    site_config = {key: config[key] for key in ("outputFormats", "mediaTypes", "disableAliases")}
+    site_config |= {"baseURL": ORIGIN + "/", "outputs": {"home": ["html", "redirects"]}}
+    (root / "hugo.yaml").write_text(yaml.safe_dump(site_config), encoding="utf-8")
+    (root / "layouts").mkdir()
+    (root / "layouts/home.redirects").write_text((repo_root / "layouts/home.redirects").read_text(encoding="utf-8"))
+    for name in ("home.html", "page.html"):
+        (root / "layouts" / name).write_text("{{ .Title }}", encoding="utf-8")
+    (root / "content/post/p").mkdir(parents=True)
+    (root / "content/post/p/index.md").write_text(f"---\ntitle: P\naliases: {list(ALIASES)}\n---\n")
+    rules = Build(build_site(root, root / "public", production=False, hugo=hugo)).redirects
+    return {rule.source: rule.target for rule in rules}
+
+
+@pytest.mark.parametrize(("alias", "source"), ALIASES.items())
+def test_alias_redirect_sources(alias_redirects, alias, source):
+    """An alias is a folder with a trailing slash unless it names an .html file, as Hugo writes alias pages."""
+    assert alias_redirects[source] == "/post/p/"
 
 
 def test_redirects_cover_day_nn_and_llamaswap(site):

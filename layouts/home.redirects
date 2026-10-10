@@ -2,7 +2,8 @@
 {{- range site.Pages }}
   {{- $target := .RelPermalink }}
   {{- range .Aliases }}
-    {{- $rules = $rules | append (printf "%s%s %s 301" . (cond (path.Ext .) "" "/") $target) }}
+    {{- $source := cond (strings.HasSuffix . ".html") . (printf "%s/" (strings.TrimSuffix "/" .)) }}
+    {{- $rules = $rules | append (printf "%s %s 301" $source $target) }}
   {{- end }}
 {{- end }}
 {{- range hugo.Data.redirects }}

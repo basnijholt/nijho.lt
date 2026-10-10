@@ -342,9 +342,14 @@ SHADOWED = "/old/* /elsewhere/ 301\n/old/ /new/ 301\n"
             [("/old/", "redirect to /new/ 301 is shadowed by /old/* /elsewhere/ 301")],
             id="shadowed-only-in-candidate",
         ),
+        pytest.param(
+            SHADOWED, "/old/ /x/ 301\n" + SHADOWED,
+            [("/old/", "redirect to /new/ 301 was shadowed by /old/* /elsewhere/ 301, now by /old/ /x/ 301")],
+            id="baseline-shadow-shadowed-in-turn",
+        ),
     ],
 )
-def test_redirects_need_first_match_only_where_the_baseline_had_it(make_build, base_rules, cand_rules, expected):
+def test_redirects_keep_the_rule_that_matched_first_in_the_baseline(make_build, base_rules, cand_rules, expected):
     base = make_build("base", {"/_redirects": base_rules})
     cand = make_build("cand", {"/_redirects": cand_rules})
     assert check_redirects(base, cand) == [Finding("redirects", source, detail) for source, detail in expected]

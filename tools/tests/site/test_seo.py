@@ -21,6 +21,7 @@ PLAUSIBLE = "https://plausible.nijho.lt/js/pa-ylHri3AS4w8PLULPjHH4G.js"
 THEME_COLORS = {("(prefers-color-scheme: light)", "#f5f5f4"), ("(prefers-color-scheme: dark)", "#141413")}
 # Markdown left in plain text: link syntax, code backticks, and ** or __ pairs around words; a dunder name such as
 # __all__ is code, not emphasis
+# One description names __all__, so single-word __x__ emphasis is not caught
 MARKDOWN_SYNTAX = re.compile(r"\]\(|`|\*\*\S(?:.*?\S)?\*\*|__(?!\w+__)\S(?:.*?\S)?__")
 
 

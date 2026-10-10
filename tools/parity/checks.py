@@ -421,16 +421,27 @@ def check_internal_links(base: Build, cand: Build) -> list[Finding]:
 
 
 def check_redirects(base: Build, cand: Build) -> list[Finding]:
-    """Report baseline redirect rules (source, target, status and force) that the candidate lacks, and those that were
-    the first rule matching their source in the baseline but are shadowed by an earlier rule in the candidate.
+    """Report baseline redirect rules (source, target, status and force) that the candidate lacks, and those whose
+    source another rule than in the baseline matches first.
+
+    A rule shadowed in the baseline may be shadowed by another rule only if the baseline's shadowing rule is gone too.
     """
     findings = set()
     for rule in base.redirects:
         first, _ = cand.redirect(rule.source)
+        base_first, _ = base.redirect(rule.source)
         if rule not in cand.redirects:
             findings.add(Finding("redirects", rule.source, f"missing redirect to {_rule_text(rule)}"))
-        elif first != rule and base.redirect(rule.source)[0] == rule:
+        elif first == base_first:
+            continue
+        elif base_first == rule:
             detail = f"redirect to {_rule_text(rule)} is shadowed by {first.source} {_rule_text(first)}"
+            findings.add(Finding("redirects", rule.source, detail))
+        elif base_first in cand.redirects:
+            detail = (
+                f"redirect to {_rule_text(rule)} was shadowed by {base_first.source} {_rule_text(base_first)}, "
+                f"now by {first.source} {_rule_text(first)}"
+            )
             findings.add(Finding("redirects", rule.source, detail))
     return sorted(findings)
 
