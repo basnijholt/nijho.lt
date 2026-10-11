@@ -2,6 +2,9 @@
 # Display name
 title: Bas Nijholt
 
+# How to say the name; shown when hovering it on the homepage
+pronunciation: Bahss NYE-holt
+
 # Is this the primary user of the site?
 superuser: true
 

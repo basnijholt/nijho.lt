@@ -42,6 +42,53 @@ section.block {
   }
   & .social { margin-top: var(--space-xl); }
 }
+/* How to say the name: a card under the heading on hover, focus or tap, with nothing marking the name beforehand. */
+.say {
+  position: relative;
+  cursor: help;
+  outline-offset: 6px;
+
+  &:is(:hover, :focus) .say-tip { opacity: 1; visibility: visible; translate: 0; }
+}
+.say-tip {
+  position: absolute;
+  top: calc(100% + var(--space-sm));
+  left: 0;
+  z-index: 5;
+  display: grid;
+  gap: 2px;
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  box-shadow: 0 12px 32px -12px color-mix(in srgb, var(--text) 28%, transparent);
+  color: var(--text);
+  font-size: var(--fs-2xl);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: normal;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  translate: 0 -4px;
+  transition: opacity .15s, translate .15s, visibility .15s;
+  pointer-events: none;
+
+  & .mono { font-size: var(--fs-2xs); font-weight: 400; color: var(--muted); }
+  /* Arrow pointing up at the name */
+  &::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: var(--space-lg);
+    width: 10px;
+    height: 10px;
+    border-top: inherit;
+    border-left: inherit;
+    background: inherit;
+    rotate: 45deg;
+  }
+}
 .avatar {
   width: 248px;
   height: auto;

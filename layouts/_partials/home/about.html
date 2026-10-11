@@ -7,7 +7,12 @@
   <img class="avatar" src="{{ .RelPermalink }}" width="270" height="338" alt="{{ $author.Title }}" fetchpriority="high">
   {{- end }}{{ end }}
   <div>
+    {{- with $author.Params.pronunciation }}
+    {{- /* Easter egg: hovering, focusing or tapping the name shows how to say it. The heading still reads as the plain name. */}}
+    <h1><span class="say" tabindex="0">{{ $author.Title }}<span class="say-tip" aria-hidden="true"><span class="mono">say it</span>{{ . }}</span></span></h1>
+    {{- else }}
     <h1>{{ $author.Title }}</h1>
+    {{- end }}
     {{- with $author.Params.role }}
     <p class="role">{{ . }}{{ range first 1 $author.Params.organizations }} at <a href="{{ .url }}">{{ .name }}</a>{{ end }}</p>
     {{- end }}
