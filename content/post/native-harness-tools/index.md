@@ -36,15 +36,17 @@ And because the smallest agents do surprisingly well, I would go one step furthe
 I was beyond excited.
 I could not really share that excitement locally, because my wife did not care, so I am sharing it with the internet instead.
 
-Then I measured it, and familiar tools did not make the models more efficient.
-With only Codex's tools, GPT-6 Astra even used 59% more tokens, and with Claude Code's tools, Claude only saved a few tokens because the descriptions I wrote for them are slightly shorter.
+Then I measured it against MindRoom's own tools, and the familiar ones did not make the models more efficient.
+With only Codex's tools, GPT-6 Astra did 84% more work, taking more steps and reading and writing more along the way, and used 59% more tokens.
+With Claude Code's tools, Claude Sonnet 5.5 did 15% more work, and Claude only came out a few tokens cheaper because the descriptions I wrote for those tools are slightly shorter.
 Only one model clearly worked more efficiently with its own tools: Claude Opus 4.8, the model from the pi story.
 The models seem to generalize beyond the environment they were trained in, and what still matters is how much the agent sends with every request.
 
 {{% callout note %}}
 **What I found**
 
-- Familiar tools did not make the models more efficient: GPT-6 Astra and Sol used 43 to 59% more tokens with only Codex's tools, and Claude Code's tools saved the Claude 5.5 models nothing: their 6 to 13% came from the slightly shorter descriptions I wrote.
+- Compared with MindRoom's own tools, the familiar ones did not make the models more efficient: with only Codex's tools, GPT-6 Astra and Sol did 60 to 84% more work and used 43 to 59% more tokens.
+- With Claude Code's tools, Claude Sonnet 5.5 did 15% more work and Opus 5.5 about the same; they only came out a few tokens cheaper because the descriptions I wrote for those tools are shorter.
 - Only Claude Opus 4.8, the model whose edits kept failing in pi, clearly worked more efficiently with its own tools.
 - What matters is how much the agent sends with every request: a minimal agent with one shell tool and a 12-line prompt used 58 to 76% fewer tokens on these short tasks.
 - Giving that minimal agent each model's own shell tool did not make it better.
@@ -206,11 +208,11 @@ For Claude, that is a shell and tools to read, edit, and write files; for GPT, a
 
 {{< plot name="fairCurrent" caption="Change in tokens per task when each model uses its native harness tools instead of MindRoom's, with 95% confidence intervals: with only the harness's own tools against MindRoom's matching set, and with the mixed set the pull request ships. Claude ran with adaptive thinking, and GPT with the effort Codex picks. Hover for values." >}}
 
-Claude got a little cheaper with Claude Code's tools, but only because the descriptions I wrote for them are slightly shorter; the tools themselves saved nothing.
+Claude got a little cheaper with Claude Code's tools, but only because the descriptions I wrote for them are slightly shorter; the tools themselves saved nothing, and Sonnet 5.5 even did 15% more work with them.
 It never even touched the file tools: Opus 5.5 and Sonnet 5.5 did everything in the shell, with either set.
 
 GPT got much more expensive.
-With only Codex's tools, GPT-6 Astra used 59% more tokens.
+With only Codex's tools, GPT-6 Astra did 84% more work and used 59% more tokens.
 It called `apply_patch` 30 times, as a separate step for edits it otherwise made inside its shell commands, and every extra step resends the whole conversation so far.
 I expected the opposite: these are the tools I assumed these models were trained on, so I thought they would need fewer and more confident steps.
 The mixed set, the lighter rows, points the same way.
@@ -229,9 +231,9 @@ Providers cache most of the fixed part between requests and charge much less for
 
 **Only the harness's own tools.**
 With Claude Code's tools, Opus 5.5 used 13% fewer tokens [95% CI −19 to −6%] and Sonnet 5.5 6% fewer [−10 to −1%].
-Both came from the definitions: the Claude Code-style set I wrote is about 480 tokens shorter, while the work on top of it grew by 7 and 15%.
+Both came from the definitions: the Claude Code-style set I wrote is about 480 tokens shorter, while the work on top of it grew by 7% [−7 to +23%] and 15% [+7 to +25%].
 With Codex's tools, GPT-6 Astra used 59% more tokens [+53 to +65%] and GPT-6.1 Sol 43% more [+33 to +52%].
-They called `apply_patch` 30 and 22 times, where with MindRoom's tools they made only 3 and 6 calls to the file tools, so they needed 4.7 and 4.4 requests per task instead of 3.5 and 3.6 and did 84 and 60% more work.
+They called `apply_patch` 30 and 22 times, where with MindRoom's tools they made only 3 and 6 calls to the file tools, so they needed 4.7 and 4.4 requests per task instead of 3.5 and 3.6 and did 84% [+73 to +96%] and 60% [+44 to +76%] more work.
 GPT-6 Luna used about the same with either set, +3% [−8 to +15%], and called `apply_patch` only 8 times.
 The pass rates stayed within one or two runs of each other, and no model made a tool error with either set.
 
@@ -288,7 +290,7 @@ With the mixed set, the older models seemed to prefer their native tools: the ol
 But that came from the extra tools the mixed set keeps from MindRoom, `grep`, `find_files`, and `ls`.
 Next to MindRoom's other tools, those made the older Claude models take more steps and read more, and next to Claude Code's tools, the models hardly touched them.
 With only each harness's own tools, that preference disappears, except for one model.
-The exception is the model from the pi story: Opus 4.8 used 19% fewer tokens with Claude Code's tools, more than the shorter descriptions explain, and read files through Bash instead of with a separate tool.
+The exception is the model from the pi story: Opus 4.8 did 17% less work and used 19% fewer tokens with Claude Code's tools, reading files through Bash instead of with a separate tool.
 And on the pi story itself: Opus 4.8 and Sonnet 5, the two models that made up fields in pi, made 111 edits with MindRoom's flat `edit_file` across both tests, and none of them failed.
 
 The GPT-5 models did about the same with either set, and unlike GPT-6 Astra and Sol, they barely used `apply_patch`.
@@ -301,7 +303,7 @@ The others did as well or better with tools they were presumably not trained on:
 
 **Only the harness's own tools.**
 With Claude Code's tools, Opus 4.7 used 3% fewer tokens [−12 to +6%], Opus 4.8 19% fewer [−26 to −11%], and Sonnet 5 7% fewer [−29 to +23%], a noisy result.
-Opus 4.8 did 17% less work on top of the shorter definitions; it called MindRoom's `read_file` 27 times, but never Claude Code's `Read`.
+Opus 4.8 did 17% less work [−29 to −4%] on top of the shorter definitions, while the other older models' work changed by −5 to +13%, none of it clearly; it called MindRoom's `read_file` 27 times, but never Claude Code's `Read`.
 With Codex's tools, GPT-5.5 used 5% more [−5 to +16%] and GPT-5.6 Sol 3% more [−4 to +11%]; they called `apply_patch` only 3 and 9 times, where with MindRoom's tools they made 20 and 16 calls to the file tools.
 The pass rates stayed within one or two runs of each other.
 None of the older models made a tool error with MindRoom's matching set; with Codex's, GPT-5.5 sent garbled working directories to `exec_command` 11 times.
