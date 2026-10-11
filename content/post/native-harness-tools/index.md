@@ -23,12 +23,12 @@ I dictated it into my watch so I would still remember it in the morning.
 
 Every frontier model learns to solve coding tasks with tools through reinforcement learning (RL), and I assume that training happens inside its vendor's own coding agent: Anthropic's models in Claude Code, and OpenAI's models in Codex.
 That is a big assumption, since the labs do not publish their training environments, but it makes business sense: they sell those agents, so they have every reason to make their models work best in them.
-Every other harness, like [pi](https://github.com/badlogic/pi-mono), [opencode](https://opencode.ai/), or [MindRoom]({{< ref "/post/mindroom" >}}), gives the model its own tools for running commands and editing files.
+Every other harness, like [pi](https://github.com/badlogic/pi-mono), [opencode](https://opencode.ai/), or my own [MindRoom]({{< ref "/post/mindroom" >}}), gives the model its own tools for running commands and editing files.
 The models are usually smart enough to figure those out, but not always.
 Sometimes a model assumes an edit tool works like the one it was trained with, and uses it wrong.
 This summer, that happened to Claude Opus 4.8 in pi, which I come back to [below](#why-i-believed-it).
 
-So the idea was simple: give each model exactly the shell and file-editing tools of its native harness, and switch automatically depending on which model is answering.
+So the idea was simple: in MindRoom, give each model the same shell and file-editing tools as its native harness, and switch them automatically depending on which model is answering.
 Claude would see Claude Code's `Bash`, `Read`, `Edit`, and `Write`.
 GPT would see Codex's `exec_command` and `apply_patch`.
 And because the smallest agents do surprisingly well, I would go one step further: a minimal agent whose one tool is the shell each model knows from its training.
