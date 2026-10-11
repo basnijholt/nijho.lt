@@ -478,6 +478,7 @@ And I am going to use minimal mode a lot more, with MindRoom's own `bash`.
 - I tested the names and arguments of the tools, not whole harnesses. Claude Code and Codex also have their own tool descriptions, system prompts, and output formats, Codex has an interactive terminal, and RL trains all of that together. The full harness might still help today's models; matching only the tools did not.
 - The tasks are easy and short: 97% of all runs passed, with three to seven requests per task on average. Harder, longer tasks might separate the tool sets on success, not only on cost.
 - With 36 runs per configuration, a 15 to 30% difference in tokens is clear, but a difference of one or two passed runs is not.
+- The confidence intervals cover run-to-run variation on these 12 tasks, not the choice of tasks. Resampling the tasks as well widens them, GPT-6 Astra's +59% to +38 to +81%, and makes Sonnet 5.5's 6% saving indistinguishable from none. Astra and Sol still used more tokens with Codex's tools on every one of the 12 tasks, and the minimal agent used fewer on every task, for every model.
 - Most runs used each model's standard reasoning mode, which differs between generations: adaptive thinking for Claude 5 and 5.5, none for Opus 4.7 and 4.8, and the effort Codex picks for GPT. I tried other settings on four models: two current ones at low and high effort, and Opus 4.7 and 4.8 with adaptive thinking.
 
 ## Why this excites me
