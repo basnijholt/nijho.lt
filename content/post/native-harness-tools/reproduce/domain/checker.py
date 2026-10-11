@@ -123,7 +123,8 @@ def check(spec: dict, task: Path) -> tuple[bool, str]:
             r = subprocess.run([str(work / c["script"]), *case["args"]], cwd=case_dir, input=case["stdin"] or "",
                                capture_output=True, text=True, timeout=30)
             got = "\n".join(line.strip() for line in r.stdout.strip().splitlines())
-            if got != case["expected"]:
+            # A script that prints the right answer but exits with an error is still broken.
+            if got != case["expected"] or r.returncode != 0:
                 return False, f"case {i}: got {got[:80]!r} expected {case['expected']!r} (rc {r.returncode})"
         return True, f"{len(c['cases'])} cases"
     return False, f"unknown check kind {kind}"

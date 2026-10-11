@@ -26,7 +26,12 @@ async def usage(provider, model, system, tools):
     agent = Agent(model=m, telemetry=False, system_message=system or None, tools=tools or None, build_context=bool(system))
     out = await agent.arun("Reply with the single word ok and do not call any tool.")
     m2 = out.metrics
-    return (m2.input_tokens or 0) + (getattr(m2, 'cache_read_tokens', 0) or 0) + (getattr(m2, 'cache_write_tokens', 0) or 0)
+    print(f"  {model}: input {m2.input_tokens}, cache read {m2.cache_read_tokens}, cache write {m2.cache_write_tokens}")
+    if provider == "codex":
+        # OpenAI counts cached input inside input_tokens already.
+        return m2.input_tokens or 0
+    # Anthropic reports cache reads and writes beside the uncached input.
+    return (m2.input_tokens or 0) + (m2.cache_read_tokens or 0) + (m2.cache_write_tokens or 0)
 
 
 async def main():
@@ -36,7 +41,9 @@ async def main():
             system = open(f"/work/tmp/sys-{model}-{mode}.txt").read()
             with_system = await usage(provider, model, system, None)
             with_tools = await usage(provider, model, None, functions(model, mode))
-            print(f"{model} {mode}: system prompt {with_system - base} tokens, tool definitions {with_tools - base} tokens (baseline request {base})")
+            # The parts are measured apart; the whole request checks that they add up.
+            with_both = await usage(provider, model, system, functions(model, mode))
+            print(f"{model} {mode}: system prompt {with_system - base} tokens, tool definitions {with_tools - base} tokens, together {with_both - base} (baseline request {base})")
 
 
 asyncio.run(main())
