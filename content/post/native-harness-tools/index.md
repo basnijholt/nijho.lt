@@ -45,6 +45,10 @@ What still matters is how much the agent sends with every request.
 
 ## Why I believed it
 
+Two things convinced me: what goes wrong when a model meets unfamiliar tools, and how well the smallest agents do.
+
+### Models should know their own tools best
+
 The case that got me thinking about this was Claude Opus 4.8 in pi.
 In July, a pi user reported that [about 20% of its edits failed in some sessions](https://github.com/earendil-works/pi/issues/6278).
 Pi's `edit` tool takes a list of replacements, and Opus 4.8 kept adding made-up fields to them, like `in_file`, `matchCase`, or `newText2`.
@@ -63,7 +67,17 @@ His hypothesis is that RL itself might be the cause.
 If a model is trained in a harness that absorbs these mistakes, a slightly wrong tool call still completes the task and still gets rewarded, so nothing teaches the model not to make it.
 Pi [now ignores unknown fields too](https://github.com/earendil-works/pi/commit/a1b336d73e13b53949ff629800081185d3e4694e), just like Claude Code.[^strict]
 
-The minimal half of my plan came from pi as well, which made its name by being small.
+Pi's maintainers have since taken that logic further.
+Pi 1.0 came out on October 1 and [added MCP](https://earendil.com/posts/pi-1-0/), support its author had once ruled out, through a sandbox called Codemode that also runs image models and non-LLM models like [Jev]({{< ref "/post/jev-mindroom" >}}).
+[The Register](https://www.theregister.com/ai-and-ml/2026/10/02/pi-coding-agent-pulls-a-180-and-adds-mcp-support/5300678) called it a 180.
+On [Hacker News](https://news.ycombinator.com/item?id=49926069) and [r/LocalLLaMA](https://www.reddit.com/r/LocalLLaMA/comments/1wvffcr/pi_10_released_mcp_support_now_included_by_default/), people worried that ["Pi's days as a nice minimal agent TUI are numbered"](https://news.ycombinator.com/item?id=49926549).
+What struck me was how the maintainers explained it.
+[Armin Ronacher](https://news.ycombinator.com/item?id=49926377) wrote that the models "are trained on their respective harnesses and we're not here to fight their behavior", and [Mario Zechner](https://news.ycombinator.com/item?id=49926840) that "we follow what the models are trained on".
+That is exactly the native-tools half of my plan.
+
+### Smaller agents do better
+
+Pi made its name the other way, by being small.
 When Mario Zechner [introduced pi](https://mariozechner.at/posts/2025-11-30-pi-coding-agent/) last November, its system prompt and tool definitions together came in below 1,000 tokens, and it had four tools: `read`, `write`, `edit`, and `bash`.
 He also wrote that "pi does not and will not support MCP", the Model Context Protocol through which most agents load outside tools.
 And he pointed to Terminus 2, a minimal agent from the Terminal-Bench team, which was "holding its own against agents with far more sophisticated tooling".
@@ -75,17 +89,9 @@ In early September, that profile had [exactly one tool, a persistent `bash`, and
 (Ten days later, it got a second tool, `working_directory`, so staying that small seems to be hard for everyone.)
 That is what inspired the minimal mode I added to MindRoom in September, which gives an agent a short prompt and a single `bash` tool.
 
-Then pi itself switched sides.
-Pi 1.0 came out on October 1 and [added MCP after all](https://earendil.com/posts/pi-1-0/), through a sandbox called Codemode that also runs image models and non-LLM models like [Jev]({{< ref "/post/jev-mindroom" >}}).
-[The Register](https://www.theregister.com/ai-and-ml/2026/10/02/pi-coding-agent-pulls-a-180-and-adds-mcp-support/5300678) called it a 180.
-On [Hacker News](https://news.ycombinator.com/item?id=49926069) and [r/LocalLLaMA](https://www.reddit.com/r/LocalLLaMA/comments/1wvffcr/pi_10_released_mcp_support_now_included_by_default/), people worried that ["Pi's days as a nice minimal agent TUI are numbered"](https://news.ycombinator.com/item?id=49926549).
-What struck me was how the maintainers explained it.
-[Armin Ronacher](https://news.ycombinator.com/item?id=49926377) wrote that the models "are trained on their respective harnesses and we're not here to fight their behavior", and [Mario Zechner](https://news.ycombinator.com/item?id=49926840) that "we follow what the models are trained on".
-That is exactly the native-tools half of my plan.
-
-Had I believed everything those benchmark setups suggest, I could have predicted much of what I found: a minimal agent like Terminus 2 does well with tools no model was trained on.
-I took their lesson about minimalism, but not that one.
-I expected each model's native tools to help, and to help most in a minimal agent with nothing but a shell, in exactly the shape the model knows from its own harness.
+My plan combined both: a minimal agent, with each model's native shell as its one tool.
+Had I believed everything those minimal agents suggest, I could have predicted much of what I found, because Terminus 2 does well with tools no model was trained on.
+I took their lesson about minimalism, but not that one: I expected the native tools to help, and to help most in a minimal agent with nothing but a shell.
 
 ## What I built
 
@@ -159,7 +165,7 @@ The models hardly ever print more than 100 lines anyway: in the uncapped run, 3 
 Every request to a model sends the whole conversation so far, plus the definition of every tool the model can use.
 So I split each task's tokens in two.
 The fixed part is the first request's input, which holds the system prompt, the tool definitions, and the task, times the number of requests.
-The work is everything the model read and wrote on top of that.
+The work is everything else the model read and wrote: tool results, its own replies, and the conversation they add up to.
 Providers cache most of the fixed part between requests and charge much less for cached input, so it costs less than its share of the tokens suggests.
 
 {{< plot name="tokenSplit" caption="Tokens per task with MindRoom's shell and file tools and with the native ones, split into the fixed part (light) and the work the model did on top of it (dark). All models ran at their provider's default reasoning setting. Hover for the number of requests." >}}
@@ -227,7 +233,7 @@ Both models passed all 36 runs at every effort with either set of tools, except 
 A higher effort did not make Codex's tools work better for GPT; it made them worse.
 At high effort, Astra made 4.5 requests per task with Codex's tools against 3.6 with MindRoom's, and used 45% more tokens.
 For Claude, the native tools stayed cheaper at every level, and saved the most at low effort, 19%, close to Opus 4.7 and 4.8, which do not think by default.
-Sonnet thought about as often at its default as at high effort, so the difference between those two is noise.
+Sonnet thought about as often at its default as at high effort, so I would not read much into the difference between those two.
 But Sonnet 5 thought more often than Sonnet 5.5 and still saved the most of all, 36%, so reasoning does not explain the difference between the generations cleanly.
 
 So the native-tools half of my plan would have worked for the previous generation of models, at least at their default settings.
