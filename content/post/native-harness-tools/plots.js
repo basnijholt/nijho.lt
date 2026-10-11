@@ -114,21 +114,21 @@ const pct = (d) => `${d > 0 ? "+" : d < 0 ? "−" : ""}${Math.abs(d)}%`;
 export default {
   fairCurrent: ({ Plot, width }) =>
     // Current models on the pull request through MindRoom's API: change in tokens per task with the native tools,
-    // with exactly the harness's own set against MindRoom's matching one, and with the mixed set the pull request ships.
+    // with only the harness's own set against MindRoom's matching one, and with the mixed set the pull request ships.
     deltaChart({
       Plot,
       width,
-      series: ["Exactly the harness's tools", "Mixed set, as shipped"],
+      series: ["Only the harness's tools", "Mixed set, as shipped"],
       colors: [COLORS.whole, COLORS.capped],
       domain: [-30, 70],
       label: "Change in tokens per task with native tools",
       shortLabel: "Change with native tools",
       rows: [
-        [MODELS[0], [-13, -19, -7], [-9, -13, -4]],
-        [MODELS[1], [-6, -10, -1], [-9, -15, -1]],
+        [MODELS[0], [-13, -19, -6], [-9, -13, -4]],
+        [MODELS[1], [-6, -10, -1], [-9, -15, -2]],
         [MODELS[2], [59, 53, 65], [31, 24, 38]],
-        [MODELS[3], [43, 33, 53], [19, 9, 29]],
-        [MODELS[4], [3, -8, 15], [-4, -18, 14]],
+        [MODELS[3], [43, 33, 52], [19, 9, 29]],
+        [MODELS[4], [3, -8, 15], [-4, -18, 15]],
       ],
     }),
 
@@ -137,17 +137,17 @@ export default {
     deltaChart({
       Plot,
       width,
-      series: ["Exactly the harness's tools", "Mixed set, as shipped"],
+      series: ["Only the harness's tools", "Mixed set, as shipped"],
       colors: [COLORS.whole, COLORS.capped],
       domain: [-50, 30],
       label: "Change in tokens per task with native tools",
       shortLabel: "Change with native tools",
       rows: [
         ["Claude Opus 4.7", [-3, -12, 6], [-22, -27, -16]],
-        ["Claude Opus 4.8", [-19, -26, -11], [-26, -34, -17]],
-        ["Claude Sonnet 5", [-7, -28, 23], [-36, -46, -22]],
+        ["Claude Opus 4.8", [-19, -26, -11], [-26, -34, -16]],
+        ["Claude Sonnet 5", [-7, -29, 23], [-36, -46, -21]],
         ["GPT-5.5", [5, -5, 16], [-4, -13, 7]],
-        ["GPT-5.6 Sol", [3, -4, 11], [-15, -23, -5]],
+        ["GPT-5.6 Sol", [3, -4, 11], [-15, -24, -5]],
       ],
     }),
 
@@ -164,10 +164,10 @@ export default {
       shortLabel: "Change with native tools",
       rows: [
         [MODELS[0], [-9, -13, -4], [-8, -13, -3]],
-        [MODELS[1], [-9, -15, -1], [-8, -13, -2]],
-        [MODELS[2], [31, 24, 38], [26, 18, 34]],
+        [MODELS[1], [-9, -15, -2], [-8, -13, -2]],
+        [MODELS[2], [31, 24, 38], [26, 18, 35]],
         [MODELS[3], [19, 9, 29], [15, 6, 25]],
-        [MODELS[4], [-4, -18, 14], [-10, -19, 1]],
+        [MODELS[4], [-4, -18, 15], [-10, -19, 1]],
       ],
     }),
 
@@ -182,8 +182,8 @@ export default {
       domain: [-50, 15],
       label: "Change in tokens per task",
       rows: [
-        [MODELS[0], [-32, -35, -29], [-6, -12, 0]],
-        [MODELS[1], [-30, -34, -25], [-18, -24, -13]],
+        [MODELS[0], [-32, -35, -28], [-6, -12, 0]],
+        [MODELS[1], [-30, -34, -25], [-18, -24, -12]],
         [MODELS[2], [-27, -30, -24], [0, -3, 4]],
         [MODELS[3], [-30, -35, -25], [0, -5, 4]],
         [MODELS[4], [-41, -46, -34], [-1, -11, 9]],
@@ -196,14 +196,14 @@ export default {
     // Each model ran at its provider's default reasoning setting.
     const data = [
       { family: "Claude", model: "Opus 4.7", reasoning: "no thinking", change: -22, lo: -27, hi: -16 },
-      { family: "Claude", model: "Opus 4.8", reasoning: "no thinking", change: -26, lo: -34, hi: -17 },
-      { family: "Claude", model: "Sonnet 5", reasoning: "adaptive thinking", change: -36, lo: -46, hi: -22 },
+      { family: "Claude", model: "Opus 4.8", reasoning: "no thinking", change: -26, lo: -34, hi: -16 },
+      { family: "Claude", model: "Sonnet 5", reasoning: "adaptive thinking", change: -36, lo: -46, hi: -21 },
       { family: "Claude", model: "Opus 5.5", reasoning: "adaptive thinking", change: -9, lo: -13, hi: -4 },
-      { family: "Claude", model: "Sonnet 5.5", reasoning: "adaptive thinking", change: -9, lo: -15, hi: -1 },
+      { family: "Claude", model: "Sonnet 5.5", reasoning: "adaptive thinking", change: -9, lo: -15, hi: -2 },
       { family: "GPT", model: "GPT-5.5", reasoning: "Codex's choice", change: -4, lo: -13, hi: 7 },
-      { family: "GPT", model: "GPT-5.6 Sol", reasoning: "Codex's choice", change: -15, lo: -23, hi: -5 },
+      { family: "GPT", model: "GPT-5.6 Sol", reasoning: "Codex's choice", change: -15, lo: -24, hi: -5 },
       { family: "GPT", model: "GPT-6 Astra", reasoning: "Codex's choice", change: 31, lo: 24, hi: 38 },
-      { family: "GPT", model: "GPT-6 Luna", reasoning: "Codex's choice", change: -4, lo: -18, hi: 14 },
+      { family: "GPT", model: "GPT-6 Luna", reasoning: "Codex's choice", change: -4, lo: -18, hi: 15 },
       { family: "GPT", model: "GPT-6.1 Sol", reasoning: "Codex's choice", change: 19, lo: 9, hi: 29 },
     ].map((d) => ({ ...d, label: narrow ? `${d.model}\n(${d.reasoning})` : `${d.model} (${d.reasoning})` }));
     return Plot.plot({
@@ -245,10 +245,10 @@ export default {
       shortLabel: "Change with native tools",
       rows: [
         ["Claude Opus 4.7", [-22, -27, -16], [-10, -17, -4]],
-        ["Claude Opus 4.8", [-26, -34, -17], [-23, -31, -15]],
-        ["Claude Sonnet 5", [-36, -46, -22], [25, -25, 90]],
+        ["Claude Opus 4.8", [-26, -34, -16], [-23, -31, -15]],
+        ["Claude Sonnet 5", [-36, -46, -21], [25, -24, 88]],
         ["GPT-5.5", [-4, -13, 7], [0, -9, 9]],
-        ["GPT-5.6 Sol", [-15, -23, -5], [-6, -13, 3]],
+        ["GPT-5.6 Sol", [-15, -24, -5], [-6, -14, 3]],
       ],
     }),
 
@@ -274,8 +274,8 @@ export default {
     const levels = ["low", "none set", "high"];
     // Change in tokens per task with native tools instead of MindRoom's, with 95% CIs, at each reasoning effort.
     const data = [
-      { model: "Claude Sonnet 5.5", level: "low", change: -19, lo: -23, hi: -15, mindroom: 15154, native: 12330 },
-      { model: "Claude Sonnet 5.5", level: "none set", change: -9, lo: -15, hi: -1, mindroom: 17765, native: 16237 },
+      { model: "Claude Sonnet 5.5", level: "low", change: -19, lo: -22, hi: -15, mindroom: 15154, native: 12330 },
+      { model: "Claude Sonnet 5.5", level: "none set", change: -9, lo: -15, hi: -2, mindroom: 17765, native: 16237 },
       { model: "Claude Sonnet 5.5", level: "high", change: -15, lo: -19, hi: -10, mindroom: 18286, native: 15630 },
       { model: "GPT-6 Astra", level: "low", change: 27, lo: 20, hi: 34, mindroom: 8361, native: 10627 },
       { model: "GPT-6 Astra", level: "none set", change: 31, lo: 24, hi: 38, mindroom: 8250, native: 10807 },
@@ -363,9 +363,9 @@ export default {
       rows: [
         [MODELS[0], [7, 2, 13], [13, 5, 22]],
         [MODELS[1], [-4, -10, 4], [3, -3, 9]],
-        [MODELS[2], [36, 20, 56], [9, -5, 28]],
-        [MODELS[3], [34, 21, 48], [15, 8, 23]],
-        [MODELS[4], [46, 5, 103], [5, -9, 19]],
+        [MODELS[2], [36, 21, 55], [9, -5, 27]],
+        [MODELS[3], [34, 21, 49], [15, 8, 23]],
+        [MODELS[4], [46, 5, 102], [5, -8, 18]],
       ],
     }),
 
