@@ -301,7 +301,7 @@ And on the pi story itself: Opus 4.8 and Sonnet 5, the two models that made up f
 With only each harness's own tools, the GPT-5 models did about the same with either set, and unlike GPT-6 Astra and Sol, they barely used `apply_patch`.
 So reaching for its native editing tool, and paying for it, is new in that generation.
 
-Familiar tools clearly made exactly one of the ten models I tested more efficient: the one that started it.
+Of the ten models I tested, familiar tools clearly made only one more efficient, the one that started it.
 The others did as well or better with tools they were presumably not trained on: they seem to generalize beyond the environment they were trained in.
 
 {{< detail-tag "The numbers behind this section" >}}
@@ -323,7 +323,7 @@ Next to Claude Code's tools, they called them once in total.
 {{< plot name="generations" caption="Change in tokens per task when each model uses its native harness tools instead of MindRoom's, with 95% confidence intervals, oldest models first in each family. Each model's reasoning mode is in parentheses: Opus 4.7 and 4.8 do not think, the other Claude models think adaptively, and GPT uses the effort Codex picks. Hover for values." >}}
 
 Opus 4.7, Opus 4.8, and Sonnet 5 used 22 to 36% fewer tokens with Claude Code's tools.
-Unlike for the 5.5 models, that was not just the shorter definitions: they made fewer requests and did 26 to 45% less work on top of the fixed part.
+Unlike the 5.5 models, they also made fewer requests and did 26 to 45% less work on top of the fixed part.
 GPT-5.6 Sol used 15% fewer tokens with Codex's tools and did 27% less work, and GPT-5.5 used about the same.
 One generation later, the GPT-6 models use up to 31% more with Codex's tools, and the Claude 5.5 models mostly save what the shorter definitions save.
 The pass rates stayed within one or two runs of each other for every model.
@@ -356,7 +356,7 @@ For Astra, I set `reasoning_effort` to `low` or `high`; for Sonnet 5.5, `output_
 {{< plot name="effortChange" caption="Change in tokens per task when Claude Sonnet 5.5 and GPT-6 Astra use their native harness tools instead of MindRoom's, at each reasoning effort, with 95% confidence intervals. With no effort set, Sonnet uses adaptive thinking, and Astra the effort Codex picks. Hover for the tokens per task." >}}
 
 Both models passed all 36 runs at every effort with either set of tools, except for one run that Astra failed with MindRoom's tools at its default effort.
-A higher effort did not make Codex's tools work better for GPT; it made them worse: at high effort, Astra made 4.5 requests per task with Codex's tools against 3.6 with MindRoom's, and used 45% more tokens.
+A higher effort made Codex's tools worse for GPT. At high effort, Astra made 4.5 requests per task with Codex's tools against 3.6 with MindRoom's, and used 45% more tokens.
 Even at high effort, though, Astra reasoned before only 10 to 12% of its requests, against 4 to 7% at its default, far below the GPT-5 models.
 For Claude, the native tools stayed cheaper at every level, and saved the most at low effort, 19%, where Sonnet thought before only 3 to 4% of its replies.
 Sonnet thought about as often at its default as at high effort, so I would not read much into the difference between those two.
@@ -365,8 +365,7 @@ Sonnet thought about as often at its default as at high effort, so I would not r
 
 ## What does matter: what the agent sends
 
-If the familiar shape of the tools does not help, what does?
-My guess was the other half of my plan: a smaller agent.
+My next guess was the other half of my plan, a smaller agent.
 Every request to the model resends the system prompt and the definition of every tool, so an agent with a shorter prompt and fewer tools sends less with every step.
 
 ### Fewer tools
@@ -399,7 +398,7 @@ Minimal mode only works in chat, so I ran this comparison in Matrix conversation
 A chat adds context about the room to every request, but even so, the minimal agent used 21 to 52% fewer tokens than the shell-only agent through MindRoom's API.
 
 The difference starts before the model does anything.
-For Claude Sonnet 5.5, the prompt and tool definitions that ride along with every request shrink from 4,285 tokens to 661.[^claudetools]
+For Claude Sonnet 5.5, the prompt and tool definitions sent with every request shrink from 4,285 tokens to 661.[^claudetools]
 
 {{< plot name="promptParts" caption="What every request carries besides the conversation: the system prompt and the tool definitions, in standard and in minimal mode, from each provider's own token counts. Hover for values." >}}
 
@@ -506,7 +505,7 @@ If models only worked well in the harness they were trained in, the labs would o
 Instead, at least the skill of using unfamiliar tools seems to carry over to other harnesses.
 I suspect the same holds one level up, for how several agents work together.
 The labs presumably train their models in their own harness, but if what the models learn transfers this well, a harness built outside the labs, like MindRoom, could get just as good at letting agents collaborate.
-That is a hunch, not a result, and testing it is what I want to do next.
+That is still a hunch, and testing it is what I want to do next.
 
 ## Appendix: how I measured, and the numbers behind the charts
 
