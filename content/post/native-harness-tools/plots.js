@@ -112,6 +112,45 @@ const MODELS = ["Claude Opus 5.5", "Claude Sonnet 5.5", "GPT-6 Astra", "GPT-6.1 
 const pct = (d) => `${d > 0 ? "+" : d < 0 ? "−" : ""}${Math.abs(d)}%`;
 
 export default {
+  fairCurrent: ({ Plot, width }) =>
+    // Current models on the pull request through MindRoom's API: change in tokens per task with the native tools,
+    // with exactly the harness's own set against MindRoom's matching one, and with the mixed set the pull request ships.
+    deltaChart({
+      Plot,
+      width,
+      series: ["Exactly the harness's tools", "Mixed set, as shipped"],
+      colors: [COLORS.whole, COLORS.capped],
+      domain: [-30, 70],
+      label: "Change in tokens per task with native tools",
+      shortLabel: "Change with native tools",
+      rows: [
+        [MODELS[0], [-13, -19, -7], [-9, -13, -4]],
+        [MODELS[1], [-6, -10, -1], [-9, -15, -1]],
+        [MODELS[2], [59, 53, 65], [31, 24, 38]],
+        [MODELS[3], [43, 33, 53], [19, 9, 29]],
+        [MODELS[4], [3, -8, 15], [-4, -18, 14]],
+      ],
+    }),
+
+  fairOlder: ({ Plot, width }) =>
+    // Older models, same comparisons.
+    deltaChart({
+      Plot,
+      width,
+      series: ["Exactly the harness's tools", "Mixed set, as shipped"],
+      colors: [COLORS.whole, COLORS.capped],
+      domain: [-50, 30],
+      label: "Change in tokens per task with native tools",
+      shortLabel: "Change with native tools",
+      rows: [
+        ["Claude Opus 4.7", [-3, -12, 6], [-22, -27, -16]],
+        ["Claude Opus 4.8", [-19, -26, -11], [-26, -34, -17]],
+        ["Claude Sonnet 5", [-7, -28, 23], [-36, -46, -22]],
+        ["GPT-5.5", [5, -5, 16], [-4, -13, 7]],
+        ["GPT-5.6 Sol", [3, -4, 11], [-15, -23, -5]],
+      ],
+    }),
+
   nativeDelta: ({ Plot, width }) =>
     // Change in tokens per task with native tools instead of MindRoom's, and its 95% confidence interval:
     // shell and file tools with whole output, and the same with the shell output capped at 100 lines.
