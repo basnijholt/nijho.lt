@@ -114,11 +114,11 @@ const pct = (d) => `${d > 0 ? "+" : d < 0 ? "−" : ""}${Math.abs(d)}%`;
 export default {
   fairCurrent: ({ Plot, width }) =>
     // Current models on the pull request through MindRoom's API: change in tokens per task with the native tools,
-    // with only the harness's own set against MindRoom's matching one, and with the mixed set the pull request ships.
+    // with only the harness's own set against MindRoom's matching one, and with the mixed set in the pull request.
     deltaChart({
       Plot,
       width,
-      series: ["Only the harness's tools", "Mixed set, as shipped"],
+      series: ["Only the harness's tools", "Mixed set, as in the pull request"],
       colors: [COLORS.whole, COLORS.capped],
       domain: [-30, 70],
       label: "Change in tokens per task with native tools",
@@ -137,7 +137,7 @@ export default {
     deltaChart({
       Plot,
       width,
-      series: ["Only the harness's tools", "Mixed set, as shipped"],
+      series: ["Only the harness's tools", "Mixed set, as in the pull request"],
       colors: [COLORS.whole, COLORS.capped],
       domain: [-50, 30],
       label: "Change in tokens per task with native tools",
