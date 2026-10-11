@@ -21,7 +21,7 @@ categories:
 A few nights ago, lying in bed, I had what felt like a galaxy-brain idea.
 I dictated it into my watch so I would still remember it in the morning.
 
-Every frontier model learns to write code with reinforcement learning (RL), and I assume it learns inside its vendor's own coding agent: Anthropic's models in Claude Code, and OpenAI's models in Codex.
+Every frontier model learns to solve coding tasks with tools through reinforcement learning (RL), and I assume that training happens inside its vendor's own coding agent: Anthropic's models in Claude Code, and OpenAI's models in Codex.
 That is a big assumption, since the labs do not publish their training environments, but it makes business sense: they sell those agents, so they have every reason to make their models work best in them.
 Every other harness, like [pi](https://github.com/badlogic/pi-mono), [opencode](https://opencode.ai/), or [MindRoom]({{< ref "/post/mindroom" >}}), gives the model its own tools for running commands and editing files.
 The models are usually smart enough to figure those out, but not always.
@@ -487,7 +487,7 @@ And I am going to use minimal mode a lot more, with MindRoom's own `bash`.
 Half of my plan was wrong, and I am happy about that.
 The benchmarks I did not believe were right, at least for these models.
 It suggests that these models generalize much better than I gave them credit for.
-They learned with one specific set of tools, and on these tasks they did just as well with tools they had presumably never trained on, as long as those tools were simple and clearly described.
+They were trained with one specific set of tools, and on these tasks they did just as well with tools they had presumably never seen in training, as long as those tools were simple and clearly described.
 Only Opus 4.8, the model that started all this, still needed its native tools.
 What matters more than familiarity is how much the agent sends with every request: the prompt and the definition of every tool.
 
