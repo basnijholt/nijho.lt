@@ -184,8 +184,9 @@ html:has(.demo-clips), body:has(.demo-clips) {
 
   & svg {
     overflow: visible;
-    /* Background of Plot's tooltips; its default is white. */
-    --plot-background: light-dark(#fff, #1e1f24);
+    /* Background of Plot's tooltips. Plot sets it to white in a stylesheet of its own outside any layer, which beats
+       every layered rule whatever its specificity, so only an important one inside a layer wins. */
+    --plot-background: light-dark(#fff, #1e1f24) !important;
   }
   & figcaption {
     margin-top: .5rem;
