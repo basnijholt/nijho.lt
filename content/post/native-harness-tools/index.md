@@ -52,6 +52,55 @@ What still matters is how much the agent sends with every request.
 
 {{< toc >}}
 
+## What a harness is
+
+"Harness" gets thrown around a lot, but there is no magic in it.
+Every coding agent talks to the model the same way: each request contains a system prompt, the definition of every tool the model may call, and the conversation so far.
+When the model answers with a tool call, the harness runs the tool, adds the result to the conversation, and sends everything again.
+
+<figure class="harness-diagram" style="max-width: 460px; margin: 2rem auto;">
+<svg viewBox="0 0 380 470" role="img" aria-label="One request holds the system prompt, the tool definitions, and the conversation so far. The model answers with a tool call, the harness runs it, adds the result to the conversation, and sends the whole request again." style="width: 100%; height: auto; font-family: system-ui, sans-serif;">
+<defs><marker id="harness-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L8,4 L0,8 z" fill="currentColor"/></marker></defs>
+<rect x="10" y="10" width="250" height="210" rx="10" fill="none" stroke="currentColor" stroke-opacity="0.45"/>
+<text x="22" y="32" font-size="14" font-weight="700" fill="currentColor">One request to the model</text>
+<rect x="22" y="44" width="226" height="48" rx="6" fill="#97bbf5" fill-opacity="0.45"/>
+<text x="34" y="64" font-size="13" font-weight="600" fill="currentColor">System prompt</text>
+<text x="34" y="81" font-size="11" fill="currentColor" fill-opacity="0.8">who the agent is, how it should work</text>
+<rect x="22" y="100" width="226" height="48" rx="6" fill="#97bbf5" fill-opacity="0.45"/>
+<text x="34" y="120" font-size="13" font-weight="600" fill="currentColor">Tool definitions</text>
+<text x="34" y="137" font-size="11" fill="currentColor" fill-opacity="0.8">name, description, and arguments</text>
+<rect x="22" y="156" width="226" height="52" rx="6" fill="#4269d0" fill-opacity="0.35"/>
+<text x="34" y="177" font-size="13" font-weight="600" fill="currentColor">Conversation so far</text>
+<text x="34" y="194" font-size="11" fill="currentColor" fill-opacity="0.8">the task, every tool call, every result</text>
+<path d="M268 46 h6 v100 h-6" fill="none" stroke="currentColor" stroke-opacity="0.6"/>
+<text x="281" y="88" font-size="11" fill="currentColor">the same on</text>
+<text x="281" y="102" font-size="11" fill="currentColor">every request</text>
+<path d="M268 158 h6 v48 h-6" fill="none" stroke="currentColor" stroke-opacity="0.6"/>
+<text x="281" y="170" font-size="11" fill="currentColor">grows with</text>
+<text x="281" y="184" font-size="11" fill="currentColor">every step</text>
+<line x1="135" y1="220" x2="135" y2="246" stroke="currentColor" marker-end="url(#harness-arrow)"/>
+<rect x="85" y="250" width="100" height="40" rx="20" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-opacity="0.45"/>
+<text x="135" y="275" font-size="13" font-weight="700" text-anchor="middle" fill="currentColor">Model</text>
+<line x1="186" y1="270" x2="214" y2="270" stroke="currentColor" stroke-opacity="0.6" marker-end="url(#harness-arrow)"/>
+<text x="220" y="274" font-size="11" fill="currentColor" fill-opacity="0.8">or a final answer</text>
+<line x1="135" y1="290" x2="135" y2="318" stroke="currentColor" marker-end="url(#harness-arrow)"/>
+<rect x="35" y="322" width="200" height="46" rx="6" fill="none" stroke="currentColor" stroke-opacity="0.45"/>
+<text x="47" y="341" font-size="13" font-weight="600" fill="currentColor">A tool call</text>
+<text x="47" y="358" font-size="11" fill="currentColor" fill-opacity="0.8" font-family="ui-monospace, monospace">Bash: ls data/</text>
+<line x1="135" y1="368" x2="135" y2="394" stroke="currentColor" marker-end="url(#harness-arrow)"/>
+<rect x="35" y="398" width="200" height="46" rx="6" fill="none" stroke="currentColor" stroke-opacity="0.45"/>
+<text x="47" y="417" font-size="13" font-weight="600" fill="currentColor">The harness runs it</text>
+<text x="47" y="434" font-size="11" fill="currentColor" fill-opacity="0.8">and adds the result</text>
+<path d="M235 421 H355 V199 H264" fill="none" stroke="currentColor" stroke-dasharray="4 3" marker-end="url(#harness-arrow)"/>
+<text x="347" y="300" font-size="11" fill="currentColor" text-anchor="middle" transform="rotate(-90 347 300)">sent again, all of it</text>
+</svg>
+<figcaption>What a coding agent sends with every step. The light parts are the same every time; only the conversation grows.</figcaption>
+</figure>
+
+So from the model's side, a harness is three things: its system prompt, its tool definitions, and what comes back when a tool runs.
+The first two are just text, so they are easy to copy, and the tool definitions are effectively the harness's API: change them, and the model sees a different harness.
+The third is code, which takes more work to copy.
+
 ## Why I believed it
 
 Two things convinced me: how well the smallest agents do, and what goes wrong when a model meets unfamiliar tools.
