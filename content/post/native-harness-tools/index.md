@@ -54,7 +54,21 @@ What still matters is how much the agent sends with every request.
 
 ## Why I believed it
 
-Two things convinced me: what goes wrong when a model meets unfamiliar tools, and how well the smallest agents do.
+Two things convinced me: how well the smallest agents do, and what goes wrong when a model meets unfamiliar tools.
+
+### Smaller agents do better
+
+Pi made its name by being small.
+When Mario Zechner [introduced pi](https://mariozechner.at/posts/2025-11-30-pi-coding-agent/) last November, its system prompt and tool definitions together came in below 1,000 tokens, and it had four tools: `read`, `write`, `edit`, and `bash`.
+He also wrote that "pi does not and will not support MCP", the Model Context Protocol through which most agents load outside tools.
+And he pointed to Terminus 2, a minimal agent from the Terminal-Bench team, which was "holding its own against agents with far more sophisticated tooling".
+
+In August, DeepSeek released [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness), which was [all over Hacker News](https://news.ycombinator.com/item?id=49285244) and the local AI subreddits I read.
+Its standard setup comes with a full set of tools.
+But for benchmarks, DeepSeek [points to its minimal profile](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/BENCHMARK.md).
+In early September, that profile had [exactly one tool, a persistent `bash`, and a one-line system prompt](https://github.com/deepseek-ai/deepseek-harness/blob/63795eaa5cba78cc0a92d95fccd8db5523d7f050/packages/bundle/sdk-minimal/README.md#L78-L84): "You are a helpful software engineer assistant."
+(Ten days later, it got a second tool, `working_directory`, so staying that small seems to be hard for everyone.)
+That is what inspired the minimal mode I added to MindRoom in September, which gives an agent a short prompt and a single `bash` tool.
 
 ### Models should know their own tools best
 
@@ -76,30 +90,16 @@ His hypothesis is that RL itself might be the cause.
 If a model is trained in a harness that absorbs these mistakes, a slightly wrong tool call still completes the task and still gets rewarded, so nothing teaches the model not to make it.
 Pi [now ignores unknown fields too](https://github.com/earendil-works/pi/commit/a1b336d73e13b53949ff629800081185d3e4694e), just like Claude Code.[^strict]
 
-Pi's maintainers have since taken that logic further.
-Pi 1.0 came out on October 1 and [added MCP](https://earendil.com/posts/pi-1-0/), support its author had once ruled out, through a sandbox called Codemode that also runs image models and non-LLM models like [Jev]({{< ref "/post/jev-mindroom" >}}).
+Then pi itself switched sides.
+Pi 1.0 came out on October 1 and [added MCP after all](https://earendil.com/posts/pi-1-0/), through a sandbox called Codemode that also runs image models and non-LLM models like [Jev]({{< ref "/post/jev-mindroom" >}}).
 [The Register](https://www.theregister.com/ai-and-ml/2026/10/02/pi-coding-agent-pulls-a-180-and-adds-mcp-support/5300678) called it a 180.
 On [Hacker News](https://news.ycombinator.com/item?id=49926069) and [r/LocalLLaMA](https://www.reddit.com/r/LocalLLaMA/comments/1wvffcr/pi_10_released_mcp_support_now_included_by_default/), people worried that ["Pi's days as a nice minimal agent TUI are numbered"](https://news.ycombinator.com/item?id=49926549).
 What struck me was how the maintainers explained it.
 [Armin Ronacher](https://news.ycombinator.com/item?id=49926377) wrote that the models "are trained on their respective harnesses and we're not here to fight their behavior", and [Mario Zechner](https://news.ycombinator.com/item?id=49926840) that "we follow what the models are trained on".
 That is exactly the native-tools half of my plan.
 
-### Smaller agents do better
-
-Pi made its name the other way, by being small.
-When Mario Zechner [introduced pi](https://mariozechner.at/posts/2025-11-30-pi-coding-agent/) last November, its system prompt and tool definitions together came in below 1,000 tokens, and it had four tools: `read`, `write`, `edit`, and `bash`.
-He also wrote that "pi does not and will not support MCP", the Model Context Protocol through which most agents load outside tools.
-And he pointed to Terminus 2, a minimal agent from the Terminal-Bench team, which was "holding its own against agents with far more sophisticated tooling".
-
-In August, DeepSeek released [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness), which was [all over Hacker News](https://news.ycombinator.com/item?id=49285244) and the local AI subreddits I read.
-Its standard setup comes with a full set of tools.
-But for benchmarks, DeepSeek [points to its minimal profile](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/BENCHMARK.md).
-In early September, that profile had [exactly one tool, a persistent `bash`, and a one-line system prompt](https://github.com/deepseek-ai/deepseek-harness/blob/63795eaa5cba78cc0a92d95fccd8db5523d7f050/packages/bundle/sdk-minimal/README.md#L78-L84): "You are a helpful software engineer assistant."
-(Ten days later, it got a second tool, `working_directory`, so staying that small seems to be hard for everyone.)
-That is what inspired the minimal mode I added to MindRoom in September, which gives an agent a short prompt and a single `bash` tool.
-
 My plan combined both: a minimal agent, with each model's native shell as its one tool.
-Those benchmarks also say something I chose to ignore: agents like Terminus 2 do well with tools no model was trained on.
+The benchmarks also said something I chose to ignore: agents like Terminus 2 do well with tools no model was trained on.
 I did not believe that part.
 In opencode and pi, I had repeatedly seen models get the edit tool wrong, so I assumed the benchmarks did not carry over to real work.
 My belief that a model works best in the harness it was trained in was that strong: I expected the native tools to help, and to help most in a minimal agent with nothing but a shell.
