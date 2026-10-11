@@ -193,6 +193,26 @@ export default {
     });
   },
 
+  olderShell: ({ Plot, width }) =>
+    // Older models on the pull request through MindRoom's API, default reasoning: change in tokens per task with the
+    // native tools instead of MindRoom's, with shell and file tools, and with only the shell tools.
+    deltaChart({
+      Plot,
+      width,
+      series: ["Shell and file tools", "Shell tools only"],
+      colors: [COLORS.whole, COLORS.shell],
+      domain: [-50, 95],
+      label: "Change in tokens per task with native tools",
+      shortLabel: "Change with native tools",
+      rows: [
+        ["Claude Opus 4.7", [-22, -27, -16], [-10, -17, -4]],
+        ["Claude Opus 4.8", [-26, -34, -17], [-23, -31, -15]],
+        ["Claude Sonnet 5", [-36, -46, -22], [25, -25, 90]],
+        ["GPT-5.5", [-4, -13, 7], [0, -9, 9]],
+        ["GPT-5.6 Sol", [-15, -23, -5], [-6, -13, 3]],
+      ],
+    }),
+
   tokenSplit: ({ Plot, width }) =>
     // Through MindRoom's API on the pull request, default reasoning: MindRoom's shell and file tools against the native ones.
     splitChart({

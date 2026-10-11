@@ -38,7 +38,7 @@ MODELS = {
     "gpt-6_1-sol": "default (Codex backend)",
     "gpt-6-luna": "default (Codex backend)",
 }
-LABEL = re.compile(r"^(?P<model>.+?)-(?P<arm>" + "|".join(sorted(ARMS, key=len, reverse=True)) + r")(?:-eff(?P<effort>low|high))?-k3$")
+LABEL = re.compile(r"^(?P<model>.+?)-(?P<arm>" + "|".join(sorted(ARMS, key=len, reverse=True)) + r")(?:-eff(?P<effort>low|high)|-think(?P<think>adaptive))?-k3$")
 
 # Matrix runs keep the true per-request totals in each model's runtime log, grouped by trial room.
 usage = re.compile(r"LLM usage.*?input_tokens=(\d+).*?output_tokens=(\d+)")
@@ -57,7 +57,7 @@ for job in sorted(glob.glob(f"{JOBS}/heldout_*-k3")):
     if not match or match["model"] not in MODELS:
         continue
     setup, path, code, shape, tools = ARMS[match["arm"]]
-    reasoning = f"{match['effort']} (explicit)" if match["effort"] else MODELS[match["model"]]
+    reasoning = f"{match['effort']} (explicit)" if match["effort"] else "adaptive thinking (explicit)" if match["think"] else MODELS[match["model"]]
     for f in sorted(glob.glob(f"{job}/s*/*/trial.json")):
         t = json.load(open(f))
         messages = t.get("messages") or []

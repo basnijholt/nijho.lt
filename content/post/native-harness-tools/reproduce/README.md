@@ -1,4 +1,4 @@
-# Reproducing "I combined my two favorite ideas for coding agents"
+# Reproducing "Recent models no longer prefer the tools they were trained with"
 
 Everything I ran for the post, as I ran it, plus one row per trial in `results/trials.csv`.
 The scripts use the absolute paths of my machine (`/work/...`); change them to yours.
@@ -45,6 +45,7 @@ The scripts use the absolute paths of my machine (`/work/...`); change them to y
    - `driver-shell.sh`: only the shell tool, in MindRoom's shape and in the native shape.
    - `driver-earlier.sh`: the same comparison on Claude Opus 4.7, Opus 4.8, and Sonnet 5, and GPT-5.5 and GPT-5.6 Sol.
    - `driver-effort.sh`: GPT-6 Astra and Claude Sonnet 5.5 at low and high reasoning effort.
+   - `driver-older-checks.sh`: the older models with only the shell tools, and Claude Opus 4.7 and 4.8 with adaptive thinking.
 5. For minimal mode, start the homeserver and run `matrix/lanes.sh`, which calls `matrix/matrix_eval.py` once per model.
    Each trial gets a fresh room with the agent and MindRoom's router; minimal trials send `!mode coder minimal` first.
    Set `RRSI_EVAL_PASSWORD` for the test user it registers.
@@ -55,6 +56,7 @@ The scripts use the absolute paths of my machine (`/work/...`); change them to y
    - `ci_matrix.py <base>,<other> ...`: the same for Matrix cells, with tokens from the runtime logs, in total and without the input the provider served from its cache;
    - `decompose.py`: the fixed part (first-request input times requests) and the work part of every trial;
    - `overhead.py` and `overhead_matrix.py`: requests per trial and the first request's input;
+   - `reasoning_rates.py <configuration> ...`: how often Claude thought before a reply, and how often GPT reasoned before a request;
    - `make_csv.py`: `results/trials.csv`.
 7. `probes/count_parts.py` measures the system prompt and the tool definitions on their own, from the provider's reported input tokens; it reads the prompts that `matrix/capture.py` records with MindRoom's `debug.log_llm_requests`.
 
