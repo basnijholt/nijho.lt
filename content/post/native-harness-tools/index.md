@@ -392,7 +392,7 @@ Claude Sonnet 5.5 used 18% fewer tokens and Claude Opus 5.5 6% fewer, mostly bec
 
 ### Minimal mode: one shell tool and a 12-line prompt
 
-MindRoom's [minimal mode](https://docs.mindroom.chat/tools/agent-cli/) takes this all the way.
+MindRoom's [minimal mode](https://docs.mindroom.chat/tools/agent-cli/), modeled on DeepSeek's minimal profile, takes this all the way.
 The agent gets a 12-line prompt and a single `bash` tool instead of its normal prompt and tools.
 Its instructions, skills, context files, and memory move behind a command-line program inside that shell, which it can call when it needs them.
 Minimal mode only works in chat, so I ran this comparison in Matrix conversations, against the same agent in standard mode with only its shell tools.
@@ -494,6 +494,7 @@ What I will do is use minimal mode a lot more, with MindRoom's own `bash`.
 ## Why this excites me
 
 Half of my plan was wrong, and I am happy about that.
+The minimal-harness, DeepSeek-style half held up; the native-tools half did not.
 The benchmarks I did not believe were right, at least for these models.
 It suggests that these models generalize much better than I gave them credit for.
 They were trained with one specific set of tools, and on these tasks they did just as well with tools they had presumably never seen in training, as long as those tools were simple, like an edit tool that takes one path, the old text, and the new text.
