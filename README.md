@@ -71,7 +71,7 @@ Links to this site exist all over the web, so a change must not move a page:
 
 ## Tools
 
-- `uv run tools/browser_check.py` builds the site and checks it in Chromium: search, the filters, the theme menu, accessibility, page weight, the site without JavaScript and keyboard navigation.
+- `uv run tools/browser_check.py` builds the site and checks it in Chromium: search, the filters, the theme menu, accessibility, readable chart tooltips in both color schemes, page weight, the site without JavaScript and keyboard navigation.
 - `uv run tools/contact_map.py` redraws the contact map after the coordinates in `content/home/contact.md` change.
 
 See [tools/README.md](tools/README.md) for the options.

@@ -119,6 +119,18 @@ def settle(p: Page) -> None:
             raise AssertionError("the page kept scrolling for 9 s")
 
 
+def contrast(a: str, b: str) -> float:
+    """The WCAG contrast ratio of two rgb(...) colors."""
+
+    def luminance(color: str) -> float:
+        channels = [int(x) / 255 for x in re.findall(r"\d+", color)[:3]]
+        r, g, b = (c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4 for c in channels)
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b
+
+    high, low = sorted((luminance(a), luminance(b)), reverse=True)
+    return (high + 0.05) / (low + 0.05)
+
+
 @check
 def theme_choice_survives_navigation(browser, base):
     with page(browser, base, color_scheme="light") as p:
@@ -180,6 +192,25 @@ def axe_finds_nothing_serious(browser, base):
                         targets = [node["target"] for node in violation["nodes"]][:3]
                         found.append(f"{scheme} {path}: {violation['id']} ({violation['impact']}) {targets}")
     assert found == [], "\n".join(found)
+
+
+@check
+def chart_tips_are_readable_in_both_schemes(browser, base):
+    """A chart's hover tip fills its box with --plot-background behind text in the chart's color, so the two must
+    contrast in either scheme. A probe rect stands in for the tip, which Plot draws only under the pointer."""
+    for scheme in ("light", "dark"):
+        with page(browser, base, POST, color_scheme=scheme) as p:
+            chart = p.locator(".plot-container svg[class^=plot-]").first
+            chart.wait_for()
+            box, text = chart.evaluate("""svg => {
+                const probe = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                probe.setAttribute("fill", "var(--plot-background)");
+                svg.append(probe);
+                const colors = [getComputedStyle(probe).fill, getComputedStyle(svg).color];
+                probe.remove();
+                return colors;
+            }""")
+            assert contrast(box, text) >= 4.5, f"{scheme}: tip text {text} on {box}"
 
 
 @check
