@@ -31,7 +31,7 @@ This summer, that happened to Claude Opus 4.8 in pi, which I come back to [below
 So the idea was simple: in MindRoom, give each model the same shell and file-editing tools as its native harness, and switch them automatically depending on which model is answering.
 Claude would see Claude Code's `Bash`, `Read`, `Edit`, and `Write`.
 GPT would see Codex's `exec_command` and `apply_patch`.
-And because the smallest agents do surprisingly well, I would go one step further: a minimal agent whose one tool is the shell each model knows from its training.
+And because the smallest agents do surprisingly well, I would go one step further: a minimal agent whose only tool is the shell each model knows from its training.
 
 I was beyond excited.
 I could not really share that excitement locally, because my wife did not care, so I am sharing it with the internet instead.
@@ -147,7 +147,7 @@ What struck me was how the maintainers explained it.
 [Armin Ronacher](https://news.ycombinator.com/item?id=49926377) wrote that the models "are trained on their respective harnesses and we're not here to fight their behavior", and [Mario Zechner](https://news.ycombinator.com/item?id=49926840) that "we follow what the models are trained on".
 That is exactly the native-tools half of my plan.
 
-My plan combined both: a minimal agent, with each model's native shell as its one tool.
+My plan combined both: a minimal agent, with each model's native shell as its only tool.
 Terminal-Bench also said something I chose to ignore: agents like Terminus 2 do well with tools no model was trained on.
 I did not believe that part.
 In opencode and pi, I had repeatedly seen models get the edit tool wrong, so I assumed the benchmarks did not carry over to real work.
