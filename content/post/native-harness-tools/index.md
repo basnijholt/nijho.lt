@@ -119,13 +119,13 @@ Inside MindRoom, nothing changes: approvals, hooks, and the stored history keep 
 That gives MindRoom a property I like a lot: a conversation can switch from Claude to GPT halfway through, and each model sees the earlier tool calls in its own shape, as if it had made them in its own harness.
 
 Matching the native harness exactly turned out to be a stretch, though.
+Codex has no tool for reading files, so GPT keeps MindRoom's `read_file`, and both keep MindRoom's `grep`, `find_files`, and `ls`, so each native set is a mix.
 The tools have the same names and arguments as in Claude Code and Codex, but I wrote short descriptions of my own, because Claude Code's are not openly licensed.
 What they return is MindRoom's output, and the system prompt is MindRoom's too.
 So keep in mind for everything below: I tested the names and shapes of the tools, not the whole harness.
 
 {{< detail-tag "How the translation works" >}}
 
-- Codex has no tool for reading files, so GPT keeps MindRoom's `read_file`, and both keep MindRoom's `grep`, `find_files`, and `ls`.
 - Codex's `apply_patch` is freeform: the model writes the patch as plain text instead of JSON arguments. I ported Codex's patch parser and the code that applies patches, together with Codex's own test cases, so a patch from a Codex-trained model applies exactly as it would in Codex. Its description comes from Codex too, which is openly licensed.
 - A switched model sees earlier calls in its own shape only for the tools its own harness also has, like the shell: an edit made with Claude Code's `Edit` stays an `edit_file` call for GPT, which has no matching tool.
 - An earlier version of the pull request also rewrote every tool result to look like the native one. That was a lot of fragile code, so I removed it before I measured anything.
@@ -156,9 +156,10 @@ Claude got a little cheaper with Claude Code's tools, but only because the descr
 It never even touched the file tools: Opus 5.5 and Sonnet 5.5 did everything in the shell, with either set.
 
 GPT got more expensive.
-GPT-6 Astra used 31% more tokens with the exact tools Codex trained it on.
+GPT-6 Astra used 31% more tokens with the tools Codex trained it on.
 It reached for `apply_patch` as a separate step for edits it otherwise made inside its shell commands, and every extra step resends the whole conversation so far.
 I expected the opposite: these are the tools these models were trained on, so I thought they would need fewer and more confident steps.
+It is not that the native tools return longer output, either: the light rows in the chart cut their output to 100 lines, MindRoom's default, and that changes almost nothing.
 
 The tool mistakes I wanted to prevent did not happen with MindRoom's tools at all.
 The only errors came from mixing two worlds: with Codex's tools, Luna had to guess how MindRoom's `read_file` resolves paths, and got it wrong seven times.
@@ -216,7 +217,7 @@ So I ran the same comparison on older models that are still available: Claude Op
 
 {{< plot name="generations" caption="Change in tokens per task when each model uses its native harness tools instead of MindRoom's, with 95% confidence intervals, oldest models first in each family. Every model ran at its provider's default reasoning setting, given in parentheses. Hover for values." >}}
 
-This time, the native tools clearly helped: the older Claude models used 22 to 36% fewer tokens with Claude Code's tools.
+This time, the native tools clearly helped: the older Claude models used 22 to 36% fewer tokens with Claude Code's tools, and GPT-5.6 Sol 15% fewer with Codex's.
 The reason is how they used the file tools.
 Given MindRoom's `read_file`, Sonnet 5 called it 44 times; given Claude Code's `Read`, only 6 times, and it read the files through Bash instead, in far fewer steps.
 Today's Claude does not touch the file tools at all, so it has nothing to gain there.
@@ -314,6 +315,7 @@ For Claude Sonnet 5.5, the prompt and tool definitions that ride along with ever
 
 {{< plot name="minimalSplit" caption="Tokens per task in Matrix conversations: the same agent with only MindRoom's shell tools, in standard mode and in minimal mode with its single bash tool, split into the fixed part (light) and the work the model did on top of it (dark). All models ran at their provider's default reasoning setting. Hover for values." >}}
 
+Each bar splits a task's tokens into the fixed part, the prompt and tool definitions resent with every request, and the work the model did on top of it.
 The minimal agent used 58 to 76% fewer tokens than the same agent in standard mode, for every model.
 Most of that is input the provider had cached and bills at a fraction of the price, so the bill shrinks less than the token count does.
 And the model did not pay for it with extra work: the dark part of the bars stayed about the same or shrank, except for Luna's.
@@ -357,7 +359,7 @@ I patched minimal mode so that its single tool appears as Claude Code's `Bash` f
 It did not make the minimal agent better for any model.
 For Claude, it made little difference.
 For GPT, it was clearly worse, mostly because `exec_command` hands back a command's whole output, and in an agent that sends so little else, a few long outputs weigh a lot.
-Even with the output cut to the same 100 lines, the native tool still cost GPT a bit more.
+Even with its output cut to 100 lines, `bash`'s default and the light rows in the chart, the native tool still cost GPT a bit more.
 
 So the whole effect of the combination came from its minimal half: models that were trained with a carefully designed set of tools did best with one tool and almost no prompt, and the tool's native shape did not make it better.
 
