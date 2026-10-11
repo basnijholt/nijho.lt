@@ -115,6 +115,9 @@ In [this pull request](https://github.com/mindroom-ai/mindroom/pull/2766), I add
 | Claude | `Bash`, `BashOutput`, `KillShell`, `Read`, `Edit`, and `Write`, as in Claude Code | `run_shell_command`, `check_shell_command`, `kill_shell_command`, `read_file`, `edit_file`, and `write_file` |
 | GPT | `exec_command`, `write_stdin`, and a freeform `apply_patch`, as in Codex, and a `kill_shell_command` that takes Codex's `session_id` | `run_shell_command`, `check_shell_command`, `kill_shell_command`, `edit_file`, and `write_file` |
 
+Inside MindRoom, nothing changes: approvals, hooks, and the stored history keep MindRoom's names, and the translation only happens on the way to and from the model.
+That gives MindRoom a property I like a lot: a conversation can switch from Claude to GPT halfway through, and each model sees the earlier tool calls in its own shape, as if it had made them in its own harness.
+
 Matching the native harness exactly turned out to be a stretch, though.
 The tools have the same names and arguments as in Claude Code and Codex, but I wrote short descriptions of my own, because Claude Code's are not openly licensed.
 What they return is MindRoom's output, and the system prompt is MindRoom's too.
@@ -124,7 +127,7 @@ So keep in mind for everything below: I tested the names and shapes of the tools
 
 - Codex has no tool for reading files, so GPT keeps MindRoom's `read_file`, and both keep MindRoom's `grep`, `find_files`, and `ls`.
 - Codex's `apply_patch` is freeform: the model writes the patch as plain text instead of JSON arguments. I ported Codex's patch parser and the code that applies patches, together with Codex's own test cases, so a patch from a Codex-trained model applies exactly as it would in Codex. Its description comes from Codex too, which is openly licensed.
-- Inside MindRoom, nothing changes: approvals, hooks, and the stored history keep MindRoom's names. The translation only happens on the way to and from the model. That way, a conversation can switch from Claude to GPT halfway through, and each model sees earlier calls to the tools its own harness also has, like the shell, in its own shape.
+- A switched model sees earlier calls in its own shape only for the tools its own harness also has, like the shell: an edit made with Claude Code's `Edit` stays an `edit_file` call for GPT, which has no matching tool.
 - An earlier version of the pull request also rewrote every tool result to look like the native one. That was a lot of fragile code, so I removed it before I measured anything.
 
 {{< /detail-tag >}}
