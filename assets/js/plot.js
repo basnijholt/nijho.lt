@@ -17,6 +17,8 @@ for (const container of document.querySelectorAll(".plot-container[data-plot-mod
   let lastWidth = 0;
   let drawn;
   firstDraws.push(new Promise((resolve) => (drawn = resolve)));
+  // A chart in a closed <details> takes no space and draws only when opened, so the scroll does not wait for it.
+  if (container.closest("details:not([open])")) drawn();
   new ResizeObserver(async () => {
     const width = Math.round(container.clientWidth);
     if (!width || width === lastWidth) return;

@@ -1,0 +1,6 @@
+# Thin eval worker: the released MindRoom image with main's mindroom package (identical dependencies).
+FROM ghcr.io/mindroom-ai/mindroom:v2026.10.222
+USER root
+RUN rm -rf /app/src/mindroom
+COPY --chown=1000:1000 mindroom /app/src/mindroom
+USER 1000:1000
