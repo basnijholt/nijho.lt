@@ -365,7 +365,7 @@ Sonnet thought about as often at its default as at high effort, so I would not r
 
 ## What does matter: what the agent sends
 
-If the shape of the tools does not matter, what does?
+If the familiar shape of the tools does not help, what does?
 My guess was the other half of my plan: a smaller agent.
 Every request to the model resends the system prompt and the definition of every tool, so an agent with a shorter prompt and fewer tools sends less with every step.
 
