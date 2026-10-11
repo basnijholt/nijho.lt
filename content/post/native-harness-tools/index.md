@@ -400,8 +400,10 @@ Each bar splits a task's tokens into the fixed part, the prompt and tool definit
 The minimal agent used 58 to 76% fewer tokens than the same agent in standard mode, for every model.
 Most of that is input the provider had cached and bills at a fraction of the price, so the bill shrinks less than the token count does.
 And the model did not pay for it with extra work: the dark part of the bars stayed about the same or shrank, except for Luna's.
+I had also hoped that the smaller agent would need less to do the task itself, but only GPT-6 Astra and Sol did, with slightly fewer steps and about a quarter less output; Claude worked exactly the same in both modes.
 
 These tasks are short, three or four requests each, which is why the prompt weighs so much.
+They also leave little room to save steps, so testing that hope properly needs longer tasks.
 In a long session, the growing conversation dominates and the percentage shrinks, but the saving per request stays: about 3,600 tokens for Claude and 2,200 for GPT.
 And a real agent's prompt carries far more instructions, skills, and memory than this test agent's, so it saves more per request.
 
@@ -428,6 +430,7 @@ Even with the extra context of a Matrix conversation, it used fewer tokens than 
 A shorter prompt saves tokens even if the model then has to work harder, so the real question is whether it had to.
 Mostly, it did not: the work stayed the same for both Claude models (1% and 3% less), and went down for Astra and Sol (38% and 13% less), which also needed fewer requests, about 3.0 per task instead of 3.3 to 3.4.
 Luna is the exception: it made more requests and did 40% more work in minimal mode, but the shorter prompt still more than paid for that.
+Counted per task without the resent conversation, the Claude models wrote and added to the conversation the same in both modes, Astra and Sol wrote about a quarter less and needed 0.2 to 0.4 fewer requests, and Luna added 33% more, mostly longer command output.
 Three of the five models failed one more run in minimal mode, mostly on the same script-writing task that other configurations also miss now and then.
 That is within the noise here, but I will keep an eye on it with harder tasks.
 
