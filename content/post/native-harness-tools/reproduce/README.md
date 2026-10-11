@@ -1,4 +1,4 @@
-# Reproducing "I gave each model the coding tools it was trained on"
+# Reproducing "I combined my two favorite ideas for coding agents"
 
 Everything I ran for the post, as I ran it, plus one row per trial in `results/trials.csv`.
 The scripts use the absolute paths of my machine (`/work/...`); change them to yours.

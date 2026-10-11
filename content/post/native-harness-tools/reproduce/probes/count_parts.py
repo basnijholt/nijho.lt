@@ -30,7 +30,7 @@ async def usage(provider, model, system, tools):
 
 
 async def main():
-    for provider, model in (("vertexai_claude", "claude-sonnet-5-5"),):
+    for provider, model in (("vertexai_claude", "claude-sonnet-5-5"), ("codex", "gpt-6-astra")):
         base = await usage(provider, model, None, None)
         for mode in ("standard", "minimal"):
             system = open(f"/work/tmp/sys-{model}-{mode}.txt").read()
