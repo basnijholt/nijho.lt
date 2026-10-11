@@ -20,6 +20,8 @@ ARMS = {
     "headnative100": ("Native tools, 100-line output", "API", "PR #2766 d73aafb51 + tail100.patch", "native", "shell + coding"),
     "headshellmindroom": ("MindRoom shell only", "API", "PR #2766 d73aafb51", "mindroom", "shell"),
     "headshellnative": ("Native shell only", "API", "PR #2766 d73aafb51", "native", "shell"),
+    "headfairmindroom": ("MindRoom's matching set, no extras", "API", "PR #2766 d73aafb51", "mindroom", "shell + coding without grep, find_files, ls (and read_file for GPT)"),
+    "headfairnative": ("Exactly the harness's own set", "API", "PR #2766 d73aafb51", "native", "shell + coding without grep, find_files, ls (and read_file for GPT)"),
     "mainmatrixshell": ("Standard mode, shell only", "Matrix", "main v2026.10.228", "mindroom", "shell"),
     "mainminimal": ("Minimal mode, one bash", "Matrix", "main v2026.10.228", "mindroom", "bash"),
     "headminimal": ("Minimal mode, one bash", "Matrix", "PR #2766 d73aafb51 + minimal-native.patch, off", "mindroom", "bash"),

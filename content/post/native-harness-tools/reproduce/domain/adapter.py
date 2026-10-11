@@ -87,9 +87,17 @@ def load_harness(root: Path) -> dict:
     if extra := set(agent) - ALLOWED_KEYS:
         raise ValueError(f"harness/agent.yaml keys not evolvable here: {sorted(extra)}; allowed: {sorted(ALLOWED_KEYS)}")
     tools = agent.get("tools") or []
-    if not all(isinstance(t, str) for t in tools) or set(tools) - ALLOWED_TOOLS:
-        raise ValueError(f"tools must be plain names from {sorted(ALLOWED_TOOLS)}; got {tools}")
+    for entry in tools:
+        # A tool is a plain name, or a single-key mapping that only drops some of its functions.
+        name, overrides = (entry, {}) if isinstance(entry, str) else next(iter(entry.items())) if isinstance(entry, dict) and len(entry) == 1 else (None, None)
+        excluded = overrides.get("exclude_tools", []) if isinstance(overrides, dict) else None
+        if name not in ALLOWED_TOOLS or not isinstance(overrides, dict) or set(overrides) - {"exclude_tools"} or not isinstance(excluded, list) or not all(isinstance(f, str) for f in excluded):
+            raise ValueError(f"tools must be names from {sorted(ALLOWED_TOOLS)}, optionally with exclude_tools; got {tools}")
     return agent
+
+
+def _tool_name(entry: str | dict) -> str:
+    return entry if isinstance(entry, str) else next(iter(entry))
 
 
 def write_config(root: Path, out_dir: Path) -> Path:
@@ -98,7 +106,7 @@ def write_config(root: Path, out_dir: Path) -> Path:
     tools = list(agent.get("tools") or [])
     cfg["agents"] = {AGENT: {**agent, "display_name": "Coder", "model": "default", "learning": False,
                              "memory_backend": "none", "include_default_tools": False,
-                             "worker_tools": tools, "worker_scope": "shared"}}
+                             "worker_tools": [_tool_name(t) for t in tools], "worker_scope": "shared"}}
     out_dir.mkdir(parents=True, exist_ok=True)
     path = out_dir / "config.yaml"
     path.write_text(yaml.safe_dump(cfg, sort_keys=False, allow_unicode=True))

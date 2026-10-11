@@ -1,4 +1,4 @@
-# Reproducing "Recent models no longer prefer the tools they were trained with"
+# Reproducing "Giving models the tools they were trained with can make them worse"
 
 Everything I ran for the post, as I ran it, plus one row per trial in `results/trials.csv`.
 The scripts use the absolute paths of my machine (`/work/...`); change them to yours.
@@ -8,7 +8,7 @@ The scripts use the absolute paths of my machine (`/work/...`); change them to y
 - **Tasks:** 12 held-out terminal tasks, one from each of 12 families, in `domain/heldout-tasks.tar.gz`.
   Each task gives the agent a few files; a hidden check (`domain/checker.py`) grades the result in a container without network access.
   Every configuration ran each task three times, so every configuration has 36 trials.
-- **Agent:** one MindRoom agent named `coder` with MindRoom's `shell` and `coding` tools (or only `shell`), its commands running in a Docker worker.
+- **Agent:** one MindRoom agent named `coder` with MindRoom's `shell` and `coding` tools (or only `shell`, or `coding` without some of its functions), its commands running in a Docker worker.
 - **Minimal mode:** the same agent in a Matrix room after `!mode coder minimal`, with MindRoom's single `bash` tool, or, for the combination, with one native-shaped run tool from `matrix/minimal-native.patch`.
 - **Tokens:** input plus output tokens over every model request of a trial, from MindRoom's per-request `LLM usage` log lines.
   For the API path, these equal the usage the API reports; for Matrix, the analysis scripts read them per trial room from the runtime log.
@@ -39,9 +39,11 @@ The scripts use the absolute paths of my machine (`/work/...`); change them to y
 3. Put the model credentials where MindRoom finds them: the Codex CLI login for `provider: codex`, and the environment for Vertex AI for `provider: vertexai_claude` (the drivers source a local `vertex.env` with the project and region, which is not included).
 4. Run a driver from `api/` for the API-path configurations.
    Each driver writes `base_config.yaml` (see `domain/base_config.example.yaml`) and `harness/agent.yaml` for one configuration, commits them, and runs `rrsi.py heldout` on that commit.
+   The adapter accepts a tool as a plain name or as a name with `exclude_tools`, which MindRoom applies to that toolkit.
    - `driver-first-run.sh`: MindRoom tools against native tools (the first run), current models.
    - `driver-main-shell.sh`: MindRoom main with only the shell tool.
    - `driver-pr-head.sh`: MindRoom tools, native tools, and native tools with 100-line output, on `d73aafb51`.
+   - `driver-fair-sets.sh`: each harness's own tools against MindRoom's matching set, on `d73aafb51`, for all ten models; `exclude_tools` drops `grep`, `find_files`, and `ls` from `coding`, and for GPT also `read_file`.
    - `driver-shell.sh`: only the shell tool, in MindRoom's shape and in the native shape.
    - `driver-earlier.sh`: the same comparison on Claude Opus 4.7, Opus 4.8, and Sonnet 5, and GPT-5.5 and GPT-5.6 Sol.
    - `driver-effort.sh`: GPT-6 Astra and Claude Sonnet 5.5 at low and high reasoning effort.
