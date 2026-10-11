@@ -41,9 +41,10 @@ def ci(base, other, reps=5000, seed=0):
     return point, draws[int(0.025 * reps)], draws[int(0.975 * reps)]
 
 
-for base_label, other_label in (pair.split(",") for pair in sys.argv[1:]):
-    b, bp, bn = load(base_label)
-    o, op, on = load(other_label)
-    point, lo, hi = ci(b, o)
-    print(f"{other_label} vs {base_label}: tokens {point:+.0%} [95% CI {lo:+.0%}, {hi:+.0%}]; "
-          f"pass {op}/{on} vs {bp}/{bn}, Fisher p={fisher(op, on, bp, bn):.2f}")
+if __name__ == "__main__":
+    for base_label, other_label in (pair.split(",") for pair in sys.argv[1:]):
+        b, bp, bn = load(base_label)
+        o, op, on = load(other_label)
+        point, lo, hi = ci(b, o)
+        print(f"{other_label} vs {base_label}: tokens {point:+.0%} [95% CI {lo:+.0%}, {hi:+.0%}]; "
+              f"pass {op}/{on} vs {bp}/{bn}, Fisher p={fisher(op, on, bp, bn):.2f}")

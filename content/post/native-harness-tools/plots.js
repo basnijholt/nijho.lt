@@ -290,6 +290,26 @@ export default {
     });
   },
 
+  minimalNative: ({ Plot, width }) =>
+    // Minimal mode on the pull request with the experiment patch, through Matrix, default reasoning: change in tokens
+    // per task with the native run tool instead of MindRoom's bash, whole output and cut to the last 100 lines.
+    deltaChart({
+      Plot,
+      width,
+      series: ["Whole output", "Last 100 lines"],
+      colors: [COLORS.whole, COLORS.capped],
+      domain: [-20, 105],
+      label: "Change in tokens per task with the native tool",
+      shortLabel: "Change with native tool",
+      rows: [
+        [MODELS[0], [7, 2, 13], [13, 5, 22]],
+        [MODELS[1], [-4, -10, 4], [3, -3, 9]],
+        [MODELS[2], [36, 20, 56], [9, -5, 28]],
+        [MODELS[3], [34, 21, 48], [15, 8, 23]],
+        [MODELS[4], [46, 5, 103], [5, -9, 19]],
+      ],
+    }),
+
   minimalSplit: ({ Plot, width }) =>
     // Matrix conversations on main, default reasoning, the same agent with only the shell tool.
     splitChart({

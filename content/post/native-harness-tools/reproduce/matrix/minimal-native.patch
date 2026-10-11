@@ -1,0 +1,110 @@
+diff --git a/src/mindroom/agent_cli/bash.py b/src/mindroom/agent_cli/bash.py
+index 6062419a3..658fdc57b 100644
+--- a/src/mindroom/agent_cli/bash.py
++++ b/src/mindroom/agent_cli/bash.py
+@@ -17,7 +17,7 @@ if TYPE_CHECKING:
+     from agno.tools.function import Function
+ 
+ 
+-__all__ = ["MinimalBashTools"]
++__all__ = ["MinimalBashTools", "MinimalRunTools"]
+ 
+ 
+ class MinimalBashTools(Toolkit):
+@@ -74,3 +74,47 @@ class MinimalBashTools(Toolkit):
+             msg = "Bash requires an active response owner"
+             raise RuntimeError(msg)
+         return await self._execute(ToolKey("shell", name), arguments, fc)
++
++
++class MinimalRunTools(Toolkit):
++    """Experiment only: present the canonical `run_shell_command` as minimal mode's single function.
++
++    The tool dialect then shows it in the model family's own shape, such as Claude Code's `Bash` or
++    Codex's `exec_command`, while execution keeps minimal Bash's response owner.
++    """
++
++    def __init__(
++        self,
++        *,
++        execute: Callable[[ToolKey, dict[str, object], FunctionCall], Awaitable[str | ToolResult]] | None = None,
++        on_prepare: Callable[[Function], None] | None = None,
++    ) -> None:
++        self._execute = execute
++        super().__init__(name="minimal_run", tools=[])
++        function = BashPresentationFunction.from_callable(self.run_shell_command)
++        assert isinstance(function, BashPresentationFunction)
++        # The dialect recognizes the canonical shell function by its name and toolkit.
++        function.owning_toolkit = "shell"
++        function.bind_preparation(on_prepare)
++        self.async_functions["run_shell_command"] = function
++        self.functions["run_shell_command"] = function
++
++    async def run_shell_command(
++        self,
++        args: str,
++        tail: int = 100,
++        timeout: int = DEFAULT_RUN_TIMEOUT_SECONDS,  # noqa: ASYNC109
++        workdir: str | None = None,
++        fc: FunctionCall | None = None,
++    ) -> str | ToolResult:
++        """Run a shell command with Bash and return its output."""
++        if not isinstance(args, str) or not args.strip():
++            msg = "run_shell_command requires a command"
++            raise ValueError(msg)
++        arguments: dict[str, object] = {"args": args, "timeout": timeout, "tail": tail}
++        if workdir is not None:
++            arguments["workdir"] = workdir
++        if self._execute is None or fc is None:
++            msg = "Bash requires an active response owner"
++            raise RuntimeError(msg)
++        return await self._execute(ToolKey("shell", "run_shell_command"), arguments, fc)
+diff --git a/src/mindroom/minimal_agent.py b/src/mindroom/minimal_agent.py
+index c9f0b6f37..f9f297297 100644
+--- a/src/mindroom/minimal_agent.py
++++ b/src/mindroom/minimal_agent.py
+@@ -2,12 +2,13 @@
+ 
+ from __future__ import annotations
+ 
++import os
+ from typing import TYPE_CHECKING, Any, NoReturn
+ 
+ from agno.tools.function import Function
+ from agno.tools.toolkit import Toolkit
+ 
+-from mindroom.agent_cli.bash import MinimalBashTools
++from mindroom.agent_cli.bash import MinimalBashTools, MinimalRunTools
+ from mindroom.agent_cli.context import minimal_system_message
+ from mindroom.agent_cli.lifetime import current_cli_lifetime
+ from mindroom.agent_cli.response_owner import bind_response_owner
+@@ -31,6 +32,11 @@ if TYPE_CHECKING:
+     from mindroom.tool_system.output_files import ToolOutputFilePolicy
+ 
+ 
++def _minimal_facade() -> type[MinimalBashTools | MinimalRunTools]:
++    """Experiment only: MINDROOM_EXPERIMENT_MINIMAL_RUN_TOOL=1 swaps minimal Bash for the canonical run function."""
++    return MinimalRunTools if os.environ.get("MINDROOM_EXPERIMENT_MINIMAL_RUN_TOOL") == "1" else MinimalBashTools
++
++
+ class MinimalAgent(KnowledgeToolDescribingAgent):
+     """Keep complete agent state while presenting exactly one Bash function."""
+ 
+@@ -108,7 +114,7 @@ class MinimalAgent(KnowledgeToolDescribingAgent):
+         user_id: str | None = None,  # noqa: ARG002 - pure SDK inspection
+     ) -> list[Any]:
+         """Pure presentation for synchronous prompt inspection; never issue a grant."""
+-        return [MinimalBashTools()]
++        return [_minimal_facade()()]
+ 
+     @staticmethod
+     def _validate_handlers(processed_tools: list[Any]) -> None:
+@@ -263,7 +269,7 @@ class MinimalAgent(KnowledgeToolDescribingAgent):
+             def prepared(function: Function) -> None:
+                 lifetime.bind_provider(owner.checkpoint, function)
+ 
+-            facade = MinimalBashTools(execute=owner.execute_bash, on_prepare=prepared)
++            facade = _minimal_facade()(execute=owner.execute_bash, on_prepare=prepared)
+         except BaseException as exc:
+             await catalog.close()
+             self._raise_failure(exc)

@@ -9,6 +9,7 @@ The scripts use the absolute paths of my machine (`/work/...`); change them to y
   Each task gives the agent a few files; a hidden check (`domain/checker.py`) grades the result in a container without network access.
   Every configuration ran each task three times, so every configuration has 36 trials.
 - **Agent:** one MindRoom agent named `coder` with MindRoom's `shell` and `coding` tools (or only `shell`), its commands running in a Docker worker.
+- **Minimal mode:** the same agent in a Matrix room after `!mode coder minimal`, with MindRoom's single `bash` tool, or, for the combination, with one native-shaped run tool from `matrix/minimal-native.patch`.
 - **Tokens:** input plus output tokens over every model request of a trial, from MindRoom's per-request `LLM usage` log lines.
   For the API path, these equal the usage the API reports; for Matrix, the analysis scripts read them per trial room from the runtime log.
 - **Reasoning:** every configuration ran at its provider's default reasoning setting, except the effort runs, which set it explicitly.
@@ -24,6 +25,7 @@ The scripts use the absolute paths of my machine (`/work/...`); change them to y
 |---|---|
 | MindRoom with tool dialects | [PR #2766](https://github.com/mindroom-ai/mindroom/pull/2766) at commit `d73aafb51` (the first run used the branch a day earlier) |
 | Native tools with 100-line output | `d73aafb51` plus `api/tail100.patch` |
+| Minimal mode with a native tool | `d73aafb51` plus `matrix/minimal-native.patch`, and `api/tail100.patch` for the 100-line arm; minimal mode with `bash` ran on the same code with the patch's flag off |
 | MindRoom main | release `v2026.10.228` (commit `1c594efa1`) |
 | Worker images | `ghcr.io/mindroom-ai/mindroom:v2026.10.222` with the matching `src/mindroom` copied in (`worker/`); the dependencies did not change between these versions |
 | Benchmark runner | [google-research/rrsi](https://github.com/google-research/rrsi) at commit `be50316e1db0`, with `domain/` as `domains/mindroom_dialects` |
@@ -46,8 +48,11 @@ The scripts use the absolute paths of my machine (`/work/...`); change them to y
 5. For minimal mode, start the homeserver and run `matrix/lanes.sh`, which calls `matrix/matrix_eval.py` once per model.
    Each trial gets a fresh room with the agent and MindRoom's router; minimal trials send `!mode coder minimal` first.
    Set `RRSI_EVAL_PASSWORD` for the test user it registers.
+   For the combination, apply `matrix/minimal-native.patch` to the pull request (and `api/tail100.patch` in a second tree for the 100-line arm), then run `matrix/lanes-native.sh` and `matrix/lanes-native100.sh`, which call `matrix/matrix_eval_native.py`.
+   The patch only acts when `MINDROOM_EXPERIMENT_MINIMAL_RUN_TOOL=1`, which the harness sets for the native arms.
 6. Analyze with the scripts in `analysis/`:
    - `ci.py <base>,<other> ...`: the relative token change with a 95% bootstrap interval, and Fisher's exact test on passes;
+   - `ci_matrix.py <base>,<other> ...`: the same for Matrix cells, with tokens from the runtime logs, in total and without the input the provider served from its cache;
    - `decompose.py`: the fixed part (first-request input times requests) and the work part of every trial;
    - `overhead.py` and `overhead_matrix.py`: requests per trial and the first request's input;
    - `make_csv.py`: `results/trials.csv`.

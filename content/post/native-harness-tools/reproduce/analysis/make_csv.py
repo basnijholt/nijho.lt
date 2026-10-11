@@ -22,6 +22,9 @@ ARMS = {
     "headshellnative": ("Native shell only", "API", "PR #2766 d73aafb51", "native", "shell"),
     "mainmatrixshell": ("Standard mode, shell only", "Matrix", "main v2026.10.228", "mindroom", "shell"),
     "mainminimal": ("Minimal mode, one bash", "Matrix", "main v2026.10.228", "mindroom", "bash"),
+    "headminimal": ("Minimal mode, one bash", "Matrix", "PR #2766 d73aafb51 + minimal-native.patch, off", "mindroom", "bash"),
+    "headminimalnative": ("Minimal mode, one native run tool", "Matrix", "PR #2766 d73aafb51 + minimal-native.patch", "native", "Bash or exec_command"),
+    "headminimalnative100": ("Minimal mode, one native run tool, 100-line output", "Matrix", "PR #2766 d73aafb51 + minimal-native.patch + tail100.patch", "native", "Bash or exec_command"),
 }
 MODELS = {
     "claude-opus-4-7": "default (no thinking)",
