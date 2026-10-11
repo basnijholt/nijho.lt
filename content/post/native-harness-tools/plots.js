@@ -161,11 +161,11 @@ export default {
       { family: "Claude", model: "Sonnet 5", reasoning: "adaptive thinking", change: -36, lo: -46, hi: -22 },
       { family: "Claude", model: "Opus 5.5", reasoning: "adaptive thinking", change: -9, lo: -13, hi: -4 },
       { family: "Claude", model: "Sonnet 5.5", reasoning: "adaptive thinking", change: -9, lo: -15, hi: -1 },
-      { family: "GPT", model: "GPT-5.5", reasoning: "default", change: -4, lo: -13, hi: 7 },
-      { family: "GPT", model: "GPT-5.6 Sol", reasoning: "default", change: -15, lo: -23, hi: -5 },
-      { family: "GPT", model: "GPT-6 Astra", reasoning: "default", change: 31, lo: 24, hi: 38 },
-      { family: "GPT", model: "GPT-6 Luna", reasoning: "default", change: -4, lo: -18, hi: 14 },
-      { family: "GPT", model: "GPT-6.1 Sol", reasoning: "default", change: 19, lo: 9, hi: 29 },
+      { family: "GPT", model: "GPT-5.5", reasoning: "Codex's choice", change: -4, lo: -13, hi: 7 },
+      { family: "GPT", model: "GPT-5.6 Sol", reasoning: "Codex's choice", change: -15, lo: -23, hi: -5 },
+      { family: "GPT", model: "GPT-6 Astra", reasoning: "Codex's choice", change: 31, lo: 24, hi: 38 },
+      { family: "GPT", model: "GPT-6 Luna", reasoning: "Codex's choice", change: -4, lo: -18, hi: 14 },
+      { family: "GPT", model: "GPT-6.1 Sol", reasoning: "Codex's choice", change: 19, lo: 9, hi: 29 },
     ].map((d) => ({ ...d, label: narrow ? `${d.model}\n(${d.reasoning})` : `${d.model} (${d.reasoning})` }));
     return Plot.plot({
       width,
@@ -232,14 +232,14 @@ export default {
 
   effortChange: ({ Plot, width }) => {
     const narrow = width < 600;
-    const levels = ["low", "default", "high"];
+    const levels = ["low", "none set", "high"];
     // Change in tokens per task with native tools instead of MindRoom's, with 95% CIs, at each reasoning effort.
     const data = [
       { model: "Claude Sonnet 5.5", level: "low", change: -19, lo: -23, hi: -15, mindroom: 15154, native: 12330 },
-      { model: "Claude Sonnet 5.5", level: "default", change: -9, lo: -15, hi: -1, mindroom: 17765, native: 16237 },
+      { model: "Claude Sonnet 5.5", level: "none set", change: -9, lo: -15, hi: -1, mindroom: 17765, native: 16237 },
       { model: "Claude Sonnet 5.5", level: "high", change: -15, lo: -19, hi: -10, mindroom: 18286, native: 15630 },
       { model: "GPT-6 Astra", level: "low", change: 27, lo: 20, hi: 34, mindroom: 8361, native: 10627 },
-      { model: "GPT-6 Astra", level: "default", change: 31, lo: 24, hi: 38, mindroom: 8250, native: 10807 },
+      { model: "GPT-6 Astra", level: "none set", change: 31, lo: 24, hi: 38, mindroom: 8250, native: 10807 },
       { model: "GPT-6 Astra", level: "high", change: 45, lo: 37, hi: 52, mindroom: 8934, native: 12918 },
     ];
     const models = ["Claude Sonnet 5.5", "GPT-6 Astra"];
