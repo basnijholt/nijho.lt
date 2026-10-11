@@ -146,8 +146,8 @@ His hypothesis is that RL itself might be the cause.
 If a model is trained in a harness that absorbs these mistakes, a slightly wrong tool call still completes the task and still gets rewarded, so nothing teaches the model not to make it.
 Pi [now ignores unknown fields too](https://github.com/earendil-works/pi/commit/a1b336d73e13b53949ff629800081185d3e4694e), just like Claude Code.[^strict]
 
-Then pi itself changed course.
-Pi 1.0 came out on October 1 and [added MCP after all](https://earendil.com/posts/pi-1-0/), through a sandbox called Codemode that also runs image models and non-LLM models like [Jev]({{< ref "/post/jev-mindroom" >}}).
+Then pi itself strayed from its minimal roots.
+Pi 1.0 came out on October 1 and [added MCP after all](https://earendil.com/posts/pi-1-0/).
 [The Register](https://www.theregister.com/ai-and-ml/2026/10/02/pi-coding-agent-pulls-a-180-and-adds-mcp-support/5300678) called it a 180.
 On [Hacker News](https://news.ycombinator.com/item?id=49926069) and [r/LocalLLaMA](https://www.reddit.com/r/LocalLLaMA/comments/1wvffcr/pi_10_released_mcp_support_now_included_by_default/), people worried that ["Pi's days as a nice minimal agent TUI are numbered"](https://news.ycombinator.com/item?id=49926549).
 What struck me was how the maintainers explained it.
