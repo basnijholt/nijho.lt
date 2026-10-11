@@ -41,6 +41,15 @@ GPT-6 Astra even used 31% more tokens with the tools it was trained on.
 Most models of the previous generation did do better with their native tools, so something changed within one generation: today's models seem to generalize beyond the environment they were trained in.
 What still matters is how much the agent sends with every request.
 
+{{% callout note %}}
+**What I found**
+
+- Today's models don't need the tools they were trained with, and GPT-6 even got more expensive with Codex's own tools.
+- The previous generation did prefer its native tools, mostly because unfamiliar file tools pulled it into extra steps.
+- What matters is how much the agent sends with every request: a minimal agent with one shell tool and a 12-line prompt used 58 to 76% fewer tokens.
+- Giving that minimal agent each model's own shell tool did not make it better.
+{{% /callout %}}
+
 {{< toc >}}
 
 ## Why I believed it
@@ -99,71 +108,76 @@ My belief that a model works best in the harness it was trained in was that stro
 
 MindRoom is my open-source platform for AI agents that live in Matrix chat rooms.
 Its agents get shell and file tools under MindRoom's own names, like `run_shell_command`, `read_file`, and `edit_file`.
-
-In [this pull request](https://github.com/mindroom-ai/mindroom/pull/2766), I added what I call tool dialects.
-A model now sees those tools in the shape of the coding agent it was trained in:
+In [this pull request](https://github.com/mindroom-ai/mindroom/pull/2766), I added what I call tool dialects: a model now sees those tools in the shape of the coding agent it was trained in.
 
 | Model | Sees | Instead of |
 |---|---|---|
 | Claude | `Bash`, `BashOutput`, `KillShell`, `Read`, `Edit`, and `Write`, as in Claude Code | `run_shell_command`, `check_shell_command`, `kill_shell_command`, `read_file`, `edit_file`, and `write_file` |
 | GPT | `exec_command`, `write_stdin`, and a freeform `apply_patch`, as in Codex, and a `kill_shell_command` that takes Codex's `session_id` | `run_shell_command`, `check_shell_command`, `kill_shell_command`, `edit_file`, and `write_file` |
 
-Codex has no tool for reading files, so GPT keeps MindRoom's `read_file`, and both keep MindRoom's `grep`, `find_files`, and `ls`.
-Codex's `apply_patch` is freeform: the model writes the patch as plain text instead of JSON arguments.
-I ported Codex's patch parser and the code that applies patches, together with Codex's own test cases, so a patch from a Codex-trained model applies exactly as it would in Codex.
-
-Inside MindRoom, nothing changes: approvals, hooks, and the stored history keep MindRoom's names.
-The translation only happens on the way to and from the model.
-That way, a conversation can switch from Claude to GPT halfway through, and each model sees earlier calls to the tools its own harness also has, like the shell, in its own shape.
-
 Matching the native harness exactly turned out to be a stretch, though.
-The tools have the same names and arguments as in Claude Code and Codex, but I wrote short descriptions of my own, because Claude Code's are not openly licensed; only `apply_patch`'s comes from Codex, which is.
+The tools have the same names and arguments as in Claude Code and Codex, but I wrote short descriptions of my own, because Claude Code's are not openly licensed.
 What they return is MindRoom's output, and the system prompt is MindRoom's too.
-An earlier version of the pull request also rewrote every tool result to look like the native one.
-That was a lot of fragile code, so I removed it before I measured anything.
-Keep this in mind for everything below: I tested the names and shapes of the tools, not the whole harness.
+So keep in mind for everything below: I tested the names and shapes of the tools, not the whole harness.
+
+{{< detail-tag "How the translation works" >}}
+
+- Codex has no tool for reading files, so GPT keeps MindRoom's `read_file`, and both keep MindRoom's `grep`, `find_files`, and `ls`.
+- Codex's `apply_patch` is freeform: the model writes the patch as plain text instead of JSON arguments. I ported Codex's patch parser and the code that applies patches, together with Codex's own test cases, so a patch from a Codex-trained model applies exactly as it would in Codex. Its description comes from Codex too, which is openly licensed.
+- Inside MindRoom, nothing changes: approvals, hooks, and the stored history keep MindRoom's names. The translation only happens on the way to and from the model. That way, a conversation can switch from Claude to GPT halfway through, and each model sees earlier calls to the tools its own harness also has, like the shell, in its own shape.
+- An earlier version of the pull request also rewrote every tool result to look like the native one. That was a lot of fragile code, so I removed it before I measured anything.
+
+{{< /detail-tag >}}
 
 ## How I measured it
 
-I used 12 terminal tasks from an evaluation suite I built for MindRoom.[^tasks]
-Each task gives the agent a few files and asks for a result: a report from a CSV file, the first commit in a git history that broke a check, a function renamed across a package, failing tests fixed, and so on.
-A small harness sent each task to MindRoom's OpenAI-compatible API as a new conversation, and a hidden check graded the result in a separate container without network access.
-Every task ran three times per configuration, so each number below comes from 36 runs.
-The agent's commands ran in a Docker container, the way MindRoom runs agents it does not fully trust.
-
-I tested five current models, Claude Opus 5.5, Claude Sonnet 5.5, GPT-6 Astra, GPT-6.1 Sol, and GPT-6 Luna, and later [five older ones](#the-previous-generation-preferred-them).
+I used 12 terminal tasks from an evaluation suite I built for MindRoom, like writing a report from a CSV file, finding the commit that broke a check, or fixing failing tests.[^tasks]
+A hidden check graded each result, and every setup ran every task three times.
 Almost every run passed, so the interesting number is how many tokens the agent needed to get there, and cheaper below means fewer tokens.[^tokens]
+I tested five current models, Claude Opus 5.5 and Sonnet 5.5, and GPT-6 Astra, GPT-6.1 Sol, and GPT-6 Luna, and later [five older ones](#the-previous-generation-preferred-them), all at their provider's default reasoning setting.
 
-I left every model at its provider's default reasoning setting.
-For the current Claude models, that is adaptive thinking, where the model decides when to think; with MindRoom's tools and with the native ones, they thought before 15 to 25% of their replies.
-I ran the GPT models through OpenAI's Codex backend, the endpoint the Codex CLI uses, and sent no reasoning effort, so its default applied.
-The GPT-6 models barely reasoned on these tasks: in those runs, only 4 to 12% of their requests had any reasoning tokens, and then 7 to 234 of them.
+{{< detail-tag "Details of the setup" >}}
+
+- A small harness sent each task to MindRoom's OpenAI-compatible API as a new conversation, and a hidden check graded the result in a separate container without network access. Every task ran three times per configuration, so each number in this post comes from 36 runs.
+- The agent's commands ran in a Docker container, the way MindRoom runs agents it does not fully trust.
+- For the current Claude models, the default reasoning setting is adaptive thinking, where the model decides when to think. With MindRoom's tools and with the native ones, they thought before 15 to 25% of their replies.
+- I ran the GPT models through OpenAI's Codex backend, the endpoint the Codex CLI uses, and sent no reasoning effort, so its default applied. The GPT-6 models barely reasoned on these tasks: in those runs, only 4 to 12% of their requests had any reasoning tokens, and then 7 to 234 of them.
+
+{{< /detail-tag >}}
 
 ## Today's models don't need their native tools
 
 {{< plot name="nativeDelta" caption="Change in tokens per task when each model uses its native harness tools instead of MindRoom's, with 95% confidence intervals. The second row caps the native shell output at the last 100 lines, MindRoom's shell default. All models ran at their provider's default reasoning setting: adaptive thinking for Claude, and the Codex backend's default for GPT. Hover for values." >}}
 
+Claude got a little cheaper with Claude Code's tools, but only because the descriptions I wrote for them are shorter.
+It never even touched the file tools: Opus 5.5 and Sonnet 5.5 did everything in the shell, with either set.
+
+GPT got more expensive.
+GPT-6 Astra used 31% more tokens with the exact tools Codex trained it on.
+It reached for `apply_patch` as a separate step for edits it otherwise made inside its shell commands, and every extra step resends the whole conversation so far.
+I expected the opposite: these are the tools these models were trained on, so I thought they would need fewer and more confident steps.
+
+The tool mistakes I wanted to prevent did not happen with MindRoom's tools at all.
+The only errors came from mixing two worlds: with Codex's tools, Luna had to guess how MindRoom's `read_file` resolves paths, and got it wrong seven times.
+
+{{< detail-tag "The numbers behind this section" >}}
+
+**Tokens and pass rates.**
 With Claude Code's tools, both Claude models used about 9% fewer tokens.
 With Codex's tools, GPT-6 Astra used 31% more tokens and GPT-6.1 Sol 19% more.
 An earlier run of the same experiment, before some unrelated fixes in the pull request, gave almost the same numbers: 33% more for Astra and 15% more for Sol.
 For GPT-6 Luna, the difference was too small to tell apart from noise.
+The pass rates barely moved: Opus, Sonnet, and Sol passed all 36 runs with either set of tools, and Astra failed one run in some configurations.
+Luna passed 33 runs with MindRoom's tools and 35 with Codex's; in the earlier run it was the other way around, 35 against 32, so I read that as noise too.
 
-The pass rates barely moved.
-Opus, Sonnet, and Sol passed all 36 runs with either set of tools, and Astra failed one run in some configurations.
-Luna passed 33 runs with MindRoom's tools and 35 with Codex's.
-In the earlier run it was the other way around, 35 against 32, so I read that as noise too.
-
-### It is not the longer output
-
-There was one obvious suspect.
+**It is not the longer output.**
 MindRoom's own shell tool returns the last 100 lines of a command's output by default.
 For the native tools, I returned everything up to 50 KiB, because that is closer to what Claude Code and Codex do.
 So I ran everything again with the native tools capped at the same 100 lines, the second row in the chart above.
 The cap barely changes anything: Astra still uses 26% more tokens, Sol 15% more, and the Claude models still save about 8%.
 The models hardly ever print more than 100 lines anyway: in the uncapped run, 3 of Astra's 91 shell results and 3 of Sol's 93 were longer than that, and none of Claude's 220.
 
-### Where the tokens went
-
+**Where the tokens went.**
 Every request to a model sends the whole conversation so far, plus the definition of every tool the model can use.
 So I split each task's tokens in two.
 The fixed part is the first request's input, which holds the system prompt, the tool definitions, and the task, times the number of requests.
@@ -181,85 +195,82 @@ With Codex's tools, Astra and Sol edited files with `apply_patch` 17 and 15 time
 Each patch is a request of its own, which accounts for their 0.3 to 0.5 extra requests per task.
 They also did 51% and 24% more work.
 And Codex's tools take about 130 more tokens to describe than MindRoom's, because `apply_patch` costs about 270 more than `edit_file` and `write_file` together, so the fixed part grew as well.
-I expected the opposite.
-These are the tools these models were trained on, so I thought they would need fewer and more confident steps.
 
-### The mistakes I wanted to prevent barely happened
-
-The whole idea started from models using unfamiliar tools wrong.
-In these runs, that did not happen with MindRoom's tools at all: none of the five models made a single tool error in its 36 runs.
+**The mistakes.**
+None of the five models made a single tool error with MindRoom's tools in its 36 runs.
 Partly, the models rarely needed the file tools: the Claude models never called one, and of the GPT models, only Luna used them often.
-The only model that made tool errors was Luna, and only with the Codex tools: 7 errors in 36 runs.
-All of them were `read_file` calls with a path relative to the directory Luna had just given `exec_command`.
-Luna had to guess how MindRoom's `read_file` resolves paths, and guessed wrong.
-Mixing a model's native tools with tools it has never seen created exactly the kind of mistake I wanted to get rid of.
-
+The only model that made tool errors was Luna, and only with the Codex tools: 7 errors in 36 runs, all of them `read_file` calls with a path relative to the directory Luna had just given `exec_command`.
 The made-up fields in pi always appeared inside its nested list of replacements, where the model has to write the JSON for each replacement itself.
 MindRoom's `edit_file` is flat, like Claude Code's `Edit`: a path, the old text, and the new text.
 So I suspected that keeping the tools as simple as the native ones matters more than matching their exact names.
-The current Claude models never called a file tool here, so only the older ones, which did, can say anything about that.
+
+{{< /detail-tag >}}
 
 ## The previous generation preferred them
 
-The pi story made me wonder whether this used to be different.
-Opus 4.8 struggled with pi's edit tool while Opus 4.7 did not, and my newest models do not need their native tools at all.
+The pi story made me wonder whether this used to be different, since Opus 4.8 struggled with pi's edit tool while Opus 4.7 did not.
 So I ran the same comparison on older models that are still available: Claude Opus 4.7, Opus 4.8, and Sonnet 5, and GPT-5.5 and GPT-5.6 Sol.
 
 {{< plot name="generations" caption="Change in tokens per task when each model uses its native harness tools instead of MindRoom's, with 95% confidence intervals, oldest models first in each family. Every model ran at its provider's default reasoning setting, given in parentheses. Hover for values." >}}
 
-Most of the older models clearly did better with their native tools.
+This time, the native tools clearly helped: the older Claude models used 22 to 36% fewer tokens with Claude Code's tools.
+The reason is how they used the file tools.
+Given MindRoom's `read_file`, Sonnet 5 called it 44 times; given Claude Code's `Read`, only 6 times, and it read the files through Bash instead, in far fewer steps.
+Today's Claude does not touch the file tools at all, so it has nothing to gain there.
+
+Take the file tools away, and most of that preference disappears.
+
+{{< plot name="olderShell" caption="Change in tokens per task when the older models use their native harness tools instead of MindRoom's, with 95% confidence intervals: with shell and file tools, and with only the shell tools. Every model ran at its provider's default reasoning setting. Hover for values." >}}
+
+With only the shell, the native shape mostly saved what shorter definitions save, as it did for today's models.
+The exception is the model from the pi story: Opus 4.8 still worked noticeably less with Claude Code's shell.
+And on the pi story itself: Opus 4.8 and Sonnet 5, the two models that made up fields in pi, made 58 edits with MindRoom's flat `edit_file`, and none of them failed.
+
+I also checked whether thinking explains the difference, because Opus 4.7 and 4.8 do not think unless you ask them to.
+Given the adaptive thinking that the 5.5 models get by default, they thought before about a third of their replies, and still did clearly better with Claude Code's tools.[^thinking]
+
+So the native-tools half of my plan would have worked for the previous generation of models, mostly through the file tools.
+Today's models seem to have learned to use tools they were not trained on as well as their own: they generalize beyond the environment they were trained in.
+
+{{< detail-tag "The numbers behind this section" >}}
+
+**The older models with all their tools.**
 Opus 4.7, Opus 4.8, and Sonnet 5 used 22 to 36% fewer tokens with Claude Code's tools.
 Unlike for the 5.5 models, that was not just the shorter definitions: they made fewer requests and did 26 to 45% less work on top of the fixed part.
 GPT-5.6 Sol used 15% fewer tokens with Codex's tools and did 27% less work, and GPT-5.5 used about the same.
 One generation later, the GPT-6 models use up to 31% more with Codex's tools, and the Claude 5.5 models mostly save what the shorter definitions save.
 The pass rates stayed within one or two runs of each other for every model.
 
-The difference is in how they used the file tools.
-With MindRoom's tools, the older Claude models read files with `read_file`, 24, 29, and 44 times; with Claude Code's, they called `Read` only 3, 1, and 6 times and read files through Bash instead, which takes fewer separate requests.
+**How they used the file tools.**
+With MindRoom's tools, the older Claude models called `read_file` 24, 29, and 44 times; with Claude Code's, they called `Read` only 3, 1, and 6 times and read files through Bash instead.
 GPT-5.6 Sol needed 9 patches where it had made 32 calls to `edit_file` and `write_file`.
-Today's Claude models never touch the file tools with either set, so they have nothing to gain there.
-
-Their file-tool use also lets me check part of the pi story.
-Opus 4.8 and Sonnet 5, the two models that made up fields in pi, made 37 and 21 calls to MindRoom's flat `edit_file`, and none of them failed.
-That does not prove that pi's nested list caused those failures, because I never gave them a nested edit tool, but a flat one did not trigger them.
+Opus 4.8 and Sonnet 5 made 37 and 21 calls to MindRoom's flat `edit_file`, and none of them failed.
+That does not prove that pi's nested list caused pi's failures, because I never gave them a nested edit tool, but a flat one did not trigger them.
 Their few tool errors were different ones: Sonnet 5 twice polled a background command that did not exist, GPT-5.5 and GPT-5.6 Sol each had one edit whose old text did not match, and GPT-5.5 sent garbled working directories to Codex's `exec_command` seven times.
 
-### Is it the file tools or the shell?
+**Only the shell tools.**
+The native set mixes a model's own tools with some of MindRoom's, such as `grep`, `ls`, and, for GPT, `read_file`, so I also ran the older models with only the shell tools, in MindRoom's shape and in the native one.
+Opus 4.7 then used 10% fewer tokens with the native shell, GPT-5.6 Sol 6% fewer, and GPT-5.5 the same, and almost all of that came from shorter definitions.
+Opus 4.8 used 23% fewer tokens, made fewer requests, and did 16% less work.
+Sonnet 5's result is too noisy to read: in one run, the native shell returned a 50 KB output early on, and resending it with every later request made that run cost 12 times the median; its median run used 9% fewer tokens with the native shell.
 
-The native set mixes a model's own tools with some of MindRoom's, such as `grep`, `ls`, and, for GPT, `read_file`.
-To take the file tools out of the picture, I also ran the older models with only the shell tools, in MindRoom's shape and in the native one, as I did for today's models [below](#fewer-tools).
-
-{{< plot name="olderShell" caption="Change in tokens per task when the older models use their native harness tools instead of MindRoom's, with 95% confidence intervals: with shell and file tools, and with only the shell tools. Every model ran at its provider's default reasoning setting. Hover for values." >}}
-
-With only the shell, the native shape helped much less.
-Opus 4.7 used 10% fewer tokens, GPT-5.6 Sol 6% fewer, and GPT-5.5 the same, and almost all of that came from shorter definitions, as it did for today's models.
-Only Opus 4.8, the model that failed in pi, still worked differently with its native shell: it used 23% fewer tokens, made fewer requests, and did 16% less work.
-Sonnet 5's result is too noisy to read: in one run, the native shell returned a 50 KB output early on, and resending it with every later request made that run cost 12 times the median.
-
-So the previous generation's preference was mostly about the file tools: given MindRoom's unfamiliar ones, it made many more separate calls.
-
-### Is it the reasoning?
-
-The older models also did not run with the same reasoning as the new ones.
+**The reasoning settings.**
 Opus 4.7 and 4.8 do not think unless you ask them to, and Sonnet 5 thought before 42% of its replies, against 15 to 25% for the 5.5 models at the same adaptive setting.
 The GPT-5 models reasoned before 59 to 76% of their requests, while the GPT-6 models reasoned before only 4 to 12%.
+With adaptive thinking, Opus 4.7 and 4.8 thought before 26 to 36% of their replies, and still used 35% and 20% fewer tokens with Claude Code's tools.
 
-The most direct check was to give Opus 4.7 and 4.8 the adaptive thinking that the 5.5 models get by default.[^thinking]
-They then thought before 26 to 36% of their replies, and still did better with Claude Code's tools: Opus 4.7 used 35% fewer tokens with them, and Opus 4.8 20% fewer.
-So thinking does not explain why the previous generation preferred its native tools.
-
-I also ran one current model of each family, Claude Sonnet 5.5 and GPT-6 Astra, at low and at high reasoning effort.[^effort]
+I also ran one current model of each family, Claude Sonnet 5.5 and GPT-6 Astra, at low and at high reasoning effort.
+For Astra, I set `reasoning_effort` to `low` or `high`; for Sonnet 5.5, `output_config.effort`, which is how the Claude 5.5 models take a reasoning effort.
 
 {{< plot name="effortChange" caption="Change in tokens per task when Claude Sonnet 5.5 and GPT-6 Astra use their native harness tools instead of MindRoom's, at each reasoning effort, with 95% confidence intervals. The default is what each provider uses when no effort is sent. Hover for the tokens per task." >}}
 
 Both models passed all 36 runs at every effort with either set of tools, except for one run that Astra failed with MindRoom's tools at its default effort.
 A higher effort did not make Codex's tools work better for GPT; it made them worse: at high effort, Astra made 4.5 requests per task with Codex's tools against 3.6 with MindRoom's, and used 45% more tokens.
-Even at high effort, though, Astra reasoned before only 10 to 12% of its requests, far below the GPT-5 models.
+Even at high effort, though, Astra reasoned before only 10 to 12% of its requests, against 4 to 7% at its default, far below the GPT-5 models.
 For Claude, the native tools stayed cheaper at every level, and saved the most at low effort, 19%, where Sonnet thought before only 3 to 4% of its replies.
 Sonnet thought about as often at its default as at high effort, so I would not read much into the difference between those two.
 
-So the native-tools half of my plan would have worked for the previous generation of models, mostly through the file tools.
-Today's models seem to have learned to use tools they were not trained on as well as their own: they generalize beyond the environment they were trained in.
+{{< /detail-tag >}}
 
 ## What does matter: what the agent sends
 
@@ -268,72 +279,99 @@ Every request carries the system prompt and the definition of every tool, so the
 
 ### Fewer tools
 
+Fewer tools did help.
+With only MindRoom's shell tools and none of its file tools, the agent used about a third fewer tokens and passed about as many runs.
+A shell-only agent is also where I still expected the native tools to matter most, because every step goes through the one tool whose shape the model knows best.
+They did not: GPT used the same number of tokens with Codex's shell tools, and Claude saved only what its shorter descriptions save.
+
+{{< detail-tag "The numbers behind this section" >}}
+
 {{< plot name="shellOnly" caption="Change in tokens per task, with 95% confidence intervals: with only MindRoom's shell tools instead of all of MindRoom's tools, and with only the native shell tools instead of MindRoom's. All models ran at their provider's default reasoning setting. Hover for values." >}}
 
 With only MindRoom's three shell tools, for running, checking, and stopping a command, and none of its file tools, the agent used 27 to 41% fewer tokens.
 It passed about as many runs: Luna passed 31 instead of 33, which is within the noise, and the other four models passed all 36.
 
-A shell-only agent is also where I still expected the native tools to matter most, because every step goes through the one tool whose shape the model knows best.
-So I also gave Claude only Claude Code's `Bash`, `BashOutput`, and `KillShell`, and GPT only Codex's `exec_command` and `write_stdin`, with MindRoom's `kill_shell_command` in Codex's style.
+For the native shape, I gave Claude only Claude Code's `Bash`, `BashOutput`, and `KillShell`, and GPT only Codex's `exec_command` and `write_stdin`, with MindRoom's `kill_shell_command` in Codex's style.
 For GPT, the total did not move: Astra, Sol, and Luna used the same number of tokens, within 2%, and made the same number of requests.
 Codex's shell tools alone take about 130 fewer tokens to describe than MindRoom's, and GPT spent about as much on extra work.
 Claude Sonnet 5.5 used 18% fewer tokens and Claude Opus 5.5 6% fewer, mostly because the Claude Code-style shell tools are shorter to describe than MindRoom's.
-So the shape of the shell tools barely mattered, but leaving out the file tools did.
+
+{{< /detail-tag >}}
 
 ### Minimal mode: one shell tool and a 12-line prompt
 
 MindRoom's [minimal mode](https://docs.mindroom.chat/tools/agent-cli/) takes this all the way.
 The agent gets a 12-line prompt and a single `bash` tool instead of its normal prompt and tools.
 Its instructions, skills, context files, and memory move behind a command-line program inside that shell, which it can call when it needs them.
-For these tasks, all it needs is the shell.
 
-Minimal mode only works in chat conversations, so I ran it through Matrix, next to the same agent with only its shell tools in standard mode.[^matrix]
-In a Matrix conversation, the agent also gets context about the room and the conversation, so it uses more tokens than through the API: on the same code, with only the shell tools, Claude Opus 5.5 used 22,192 tokens per task in Matrix against 12,904 through the API.
-That is why I compare minimal mode with standard mode in Matrix.
-
-Most of the difference is fixed before the model does anything.
-In standard mode, the system prompt is 2,295 tokens for Claude Sonnet 5.5 and 1,463 for GPT-6 Astra, and the tool definitions, the shell tools and one for inviting MindRoom's router, add another 1,990 and 867.
-In minimal mode, the system prompt is 152 and 97 tokens, and the single `bash` tool adds 509 and 72.[^claudetools]
-This test agent's standard prompt is about 100 lines only because its own configuration is one role line and one instruction.
-A real agent's prompt also carries its instructions, skills, context files, and memory, and can run to hundreds of lines, while its minimal prompt stays at 12, so real agents save even more.
+The difference starts before the model does anything.
+For Claude Sonnet 5.5, the prompt and tool definitions that ride along with every request shrink from 4,285 tokens to 661.[^claudetools]
 
 {{< plot name="promptParts" caption="What every request carries besides the conversation: the system prompt and the tool definitions, in standard and in minimal mode, from each provider's own token counts. Hover for values." >}}
-
-The model receives all of that, plus the task and the room's context, again with every request, so it adds up: in standard mode, about 80% of all tokens were this fixed part.
 
 {{< plot name="minimalSplit" caption="Tokens per task in Matrix conversations: the same agent with only MindRoom's shell tools, in standard mode and in minimal mode with its single bash tool, split into the fixed part (light) and the work the model did on top of it (dark). All models ran at their provider's default reasoning setting. Hover for values." >}}
 
 The minimal agent used 58 to 76% fewer tokens than the same agent in standard mode, for every model.
-Even with the extra context of a Matrix conversation, it used fewer tokens than the agent with only MindRoom's shell tools through the API on the same code: 21 to 52% fewer.
-Most of what it saves, though, is input the provider had cached and bills at a fraction of the price: counting only the uncached input and the output, the minimal agent used 16 to 42% fewer tokens.
-Its first request dropped from about 4,600 to 1,000 input tokens for Claude, and from about 2,600 to 410 for GPT.
+Most of that is input the provider had cached and bills at a fraction of the price, so the bill shrinks less than the token count does.
+And the model did not pay for it with extra work: the dark part of the bars stayed about the same or shrank, except for Luna's.
+This test agent is also tiny; a real agent's prompt carries far more instructions, skills, and memory, so it saves even more.
 
-Is that a fair comparison?
+{{< detail-tag "The numbers behind this section" >}}
+
+**Why Matrix.**
+Minimal mode only works in chat conversations, so I ran it through Matrix, next to the same agent with only its shell tools in standard mode.
+Each run got a fresh chat room with only the agent, named `coder`, and MindRoom's router, which handles commands like `!mode`; for minimal mode, I switched the room over with `!mode coder minimal` before sending the task.
+In a Matrix conversation, the agent also gets context about the room and the conversation, so it uses more tokens than through the API: on the same code, with only the shell tools, Claude Opus 5.5 used 22,192 tokens per task in Matrix against 12,904 through the API.
+That is why I compare minimal mode with standard mode in Matrix.
+
+**The prompt.**
+In standard mode, the system prompt is 2,295 tokens for Claude Sonnet 5.5 and 1,463 for GPT-6 Astra, and the tool definitions, the shell tools and one for inviting MindRoom's router, add another 1,990 and 867.
+In minimal mode, the system prompt is 152 and 97 tokens, and the single `bash` tool adds 509 and 72.
+This test agent's standard prompt is about 100 lines only because its own configuration is one role line and one instruction; a real agent's prompt also carries its instructions, skills, context files, and memory, and can run to hundreds of lines, while its minimal prompt stays at 12.
+The model receives all of that, plus the task and the room's context, again with every request, so it adds up: in standard mode, about 80% of all tokens were this fixed part.
+
+**The result.**
+Its first request dropped from about 4,600 to 1,000 input tokens for Claude, and from about 2,600 to 410 for GPT.
+Counting only the uncached input and the output, the minimal agent used 16 to 42% fewer tokens.
+Even with the extra context of a Matrix conversation, it used fewer tokens than the agent with only MindRoom's shell tools through the API on the same code: 21 to 52% fewer.
+
+**Is that a fair comparison?**
 A shorter prompt saves tokens even if the model then has to work harder, so the real question is whether it had to.
 Mostly, it did not: the work stayed the same for both Claude models (1% and 3% less), and went down for Astra and Sol (38% and 13% less), which also needed fewer requests, about 3.0 per task instead of 3.3 to 3.4.
 Luna is the exception: it made more requests and did 40% more work in minimal mode, but the shorter prompt still more than paid for that.
 Three of the five models failed one more run in minimal mode, mostly on the same script-writing task that other configurations also miss now and then.
 That is within the noise here, but I will keep an eye on it with harder tasks.
 
+{{< /detail-tag >}}
+
 ### Even with its native shell tool
 
-That leaves the combination I had in mind from the start: minimal mode with each model's native shell tool as its only tool.
-I patched minimal mode so that its single tool appears in the model's own dialect, Claude Code's `Bash` for Claude and Codex's `exec_command` for GPT, with the same 12-line prompt.[^combo]
-That tool only runs commands, but no current model ever polled or stopped a command in any of these runs, so it lacked nothing they used.
-I ran it next to minimal mode with MindRoom's own `bash` on the same code, and once more with the native tool's output cut to the last 100 lines.
-That is `bash`'s default, which the GPT models set themselves on every call, more often lower than higher; in the end, the capped native tool and `bash` returned about as much, except for Astra, whose `bash` results were twice as long.
+That leaves the combination I had in mind from the start: the minimal agent, with each model's native shell tool as its only tool.
+I patched minimal mode so that its single tool appears as Claude Code's `Bash` for Claude and as Codex's `exec_command` for GPT, with the same 12-line prompt.[^combo]
 
 {{< plot name="minimalNative" caption="Change in tokens per task in minimal mode when its single tool is the model's native shell tool, Claude Code's Bash or Codex's exec_command, instead of MindRoom's bash, with 95% confidence intervals. The second row cuts the native tool's output to the last 100 lines, MindRoom's bash default. All models ran at their provider's default reasoning setting. Hover for values." >}}
 
-The native tool did not make the minimal agent better for any model.
-For Claude, it made little difference: Sonnet used 4% fewer tokens and Opus 7% more.
-For GPT, it was clearly worse: 34 to 46% more tokens, mostly because `exec_command` returns a command's whole output, so the models read 39 to 50 lines per result instead of 20 to 36.
+It did not make the minimal agent better for any model.
+For Claude, it made little difference.
+For GPT, it was clearly worse, mostly because `exec_command` hands back a command's whole output, and in an agent that sends so little else, a few long outputs weigh a lot.
+Even with the output cut to the same 100 lines, the native tool still cost GPT a bit more.
+
+So the whole effect of the combination came from its minimal half: models that were trained with a carefully designed set of tools did best with one tool and almost no prompt, and the tool's native shape did not make it better.
+
+{{< detail-tag "The numbers behind this section" >}}
+
+The single native tool only runs commands, but no current model ever polled or stopped a command in any of these runs, so it lacked nothing they used.
+I ran it next to minimal mode with MindRoom's own `bash` on the same code, and once more with the native tool's output cut to the last 100 lines.
+That is `bash`'s default, which the GPT models set themselves on every call, more often lower than higher; in the end, the capped native tool and `bash` returned about as much, except for Astra, whose `bash` results were twice as long.
+
+For Claude, Sonnet used 4% fewer tokens with the native tool and Opus 7% more.
+For GPT, it was 34 to 46% more tokens, mostly because `exec_command` returns a command's whole output, so the models read 39 to 50 lines per result instead of 20 to 36.
 Cut to 100 lines, the native tool still cost GPT 5 to 15% more; part of that is its definition, which takes about 90 more tokens than `bash` on every request.
 In minimal mode, the agent sends so little else that a few long outputs weigh much more than through the API: the cap cut Astra's tokens by about 20% here, against 4% there.
 Claude rarely printed more than 100 lines, so its two native rows differ only by noise.
 The pass rates stayed the same within the noise.
 
-So models that were trained with a carefully designed set of tools did best with one tool and almost no prompt, and their native shape did not make that tool better.
+{{< /detail-tag >}}
 
 ## What I changed
 
@@ -471,7 +509,6 @@ MindRoom's shell alone is compared with all of MindRoom's tools, and the native 
 
 [^claudetools]: Anthropic adds its own instructions for tool use to every request that has tools, which is why MindRoom's single `bash` tool costs Claude 509 tokens. I measured all of these numbers by sending each part on its own and reading the input tokens the provider reported.
 
-[^effort]: For GPT-6 Astra, I set `reasoning_effort` to `low` or `high`; for Claude Sonnet 5.5, `output_config.effort`, which is how the Claude 5.5 models take a reasoning effort. Even at high effort, Astra reasoned before only 10 to 12% of its requests, against 4 to 7% at its default.
 
 [^thinking]: I set `thinking` to `adaptive` in the model's `extra_kwargs`. These models reject a fixed thinking budget and point to adaptive thinking instead.
 
@@ -481,4 +518,3 @@ MindRoom's shell alone is compared with all of MindRoom's tools, and the native 
 
 [^tokens]: Claude and GPT count tokens differently, so compare the numbers within one model, not across models.
 
-[^matrix]: Each run got a fresh chat room with only the agent, named `coder`, and MindRoom's router, which handles commands like `!mode`. For minimal mode, I switched the room over with `!mode coder minimal` before sending the task.
