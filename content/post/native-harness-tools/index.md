@@ -403,7 +403,7 @@ And the model did not pay for it with extra work: the dark part of the bars stay
 I had also hoped that the smaller agent would need less to do the task itself, but only GPT-6 Astra and Sol did, with slightly fewer steps and about a quarter less output; Claude worked exactly the same in both modes.
 
 These tasks are short, three or four requests each, which is why the prompt weighs so much.
-I tried to make them harder so they would take more steps, but the models were good enough that they only got about half again as long, and for the two models I tried, the pattern stayed the same.
+I tried to make them harder so they would take more steps, but the models were so good that they only took about 50% more requests, and for the two models I tried, the pattern stayed the same.
 I see no reason why longer tasks would erase the gain: every step a model saves also saves resending the conversation, so on long tasks it counts for more.
 In a long session, the growing conversation dominates and the prompt's share of the tokens shrinks, but its saving per request stays: about 3,600 tokens for Claude and 2,200 for GPT.
 And a real agent's prompt carries far more instructions, skills, and memory than this test agent's, so it saves more per request.
