@@ -1,7 +1,8 @@
 // Tag buttons, menus, search and sort for the items of every [data-filter-root]. An item matches the pressed tag
 // (data-filter="*" matches all), every menu (select[data-filter-key="year"] keeps items whose data-year is the
 // chosen value), and every search word, anywhere in its text or tags. A URL hash naming a tag or a menu value,
-// such as /publication/#article-journal, preselects it.
+// such as /publication/#article-journal, preselects it. The sort menu keeps its choice in the query string, such as
+// /?sort=name#projects, so a link restores the order.
 for (const root of document.querySelectorAll("[data-filter-root]")) {
   const items = root.querySelector("[data-filter-items]");
   const cards = [...items.children];
@@ -70,7 +71,13 @@ for (const root of document.querySelectorAll("[data-filter-root]")) {
   }
   for (const menu of menus) menu.addEventListener("change", apply);
   search.addEventListener("input", apply);
-  sort?.addEventListener("change", apply);
+  sort?.addEventListener("change", () => {
+    const url = new URL(location);
+    if (sort.selectedIndex) url.searchParams.set("sort", sort.value);
+    else url.searchParams.delete("sort");
+    history.replaceState(null, "", url);
+    apply();
+  });
   root.querySelector("[data-filter-reset]").addEventListener("click", () => {
     search.value = "";
     for (const menu of menus) menu.value = "";
@@ -87,6 +94,9 @@ for (const root of document.querySelectorAll("[data-filter-root]")) {
       if ([...menu.options].some((o) => o.value === hash)) menu.value = hash;
     }
   }
+
+  const order = new URLSearchParams(location.search).get("sort");
+  if (sort && [...sort.options].some((o) => o.value === order)) sort.value = order;
 
   root.querySelector("[data-filter-toolbar]").hidden = false;
   apply();
