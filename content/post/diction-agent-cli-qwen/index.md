@@ -85,58 +85,26 @@ You need an NVIDIA GPU with the [NVIDIA Container Toolkit](https://docs.nvidia.c
 I use Headscale, but Tailscale or plain WireGuard works just as well.
 Do not expose the gateway to the public internet.
 
-### Add Agent CLI
+### Write the Compose file
 
-Save the following as `Dockerfile.agent-cli` in an empty directory.
-It starts with the CUDA image from Agent CLI and adds the Transformers dependencies needed for Qwen:
-
-```dockerfile
-FROM ghcr.io/basnijholt/agent-cli-whisper:latest-cuda
-
-USER root
-
-ARG AGENT_CLI_VERSION=0.103.0
-
-RUN uv pip install \
-      --python /app/.venv/bin/python \
-      --upgrade \
-      "agent-cli[whisper-transformers]==${AGENT_CLI_VERSION}"
-
-RUN apt-get update \
-    && apt-get install --yes --no-install-recommends gcc libc6-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-USER whisper
-```
-
-### Add the Diction gateway
-
-Save this as `compose.yaml` next to the Dockerfile.
-It points Diction's gateway at Agent CLI's transcription port.
+Save the following as `compose.yaml` in an empty directory.
+Agent CLI's CI publishes a CUDA image with the Transformers backend and Qwen as the default model, so there is nothing to build.
+The file points Diction's gateway at Agent CLI's transcription port.
 `WHISPER_TTL` raises the idle timeout from the default five minutes to a day, so dictation rarely waits for a reload:
 
 ```yaml
 services:
   asr:
-    image: agent-cli-whisper-qwen:0.103.0
-    build:
-      context: .
-      dockerfile: Dockerfile.agent-cli
-      args:
-        AGENT_CLI_VERSION: "0.103.0"
+    image: ghcr.io/basnijholt/agent-cli-whisper:0.112.0-cuda-transformers
     environment:
-      WHISPER_MODEL: Qwen/Qwen3-ASR-1.7B-hf
-      WHISPER_EXTRA_ARGS: --backend transformers
       WHISPER_TTL: "86400"
-      WHISPER_LOG_LEVEL: info
-      WHISPER_DEVICE: cuda
     volumes:
       - model-cache:/home/whisper/.cache
     gpus: all
     restart: unless-stopped
 
   gateway:
-    image: dictionlabs/gateway:v13.0
+    image: dictionlabs/gateway:v14.0
     depends_on:
       - asr
     environment:
@@ -154,10 +122,10 @@ volumes:
 
 ### Start it and connect the app
 
-Build and start both services:
+Start both services:
 
 ```bash
-docker compose up -d --build
+docker compose up -d
 ```
 
 The first transcription downloads Qwen into the `model-cache` volume, so that request can take a few minutes.
