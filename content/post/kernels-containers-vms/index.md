@@ -29,7 +29,7 @@ That is changing.
 AI models have become very good at finding security bugs, including in Linux.
 Anthropic and OpenAI now keep their strongest security models, [Claude Mythos](https://www.anthropic.com/claude/mythos) and [Daybreak](https://openai.com/the-defense-factory/), behind identity checks and vetting.
 That restriction will not last long.
-Open-weight models trail the closed ones by months, not years, and they come with no such rules.
+Open-weight models trail the closed ones [by months, not years](https://epoch.ai/data-insights/open-closed-cyber-eci-gap), and they come with no such rules.
 Once there is an open model as good as Mythos, anyone can strip out its refusals (people call this abliteration) and point it at the Linux kernel.
 One security company used their own model to find a way out of a container and titled the write-up [Containers Are No Longer a Security Boundary](https://depthfirst.com/research/containers-are-no-longer-safe).
 
