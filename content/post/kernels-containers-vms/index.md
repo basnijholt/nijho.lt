@@ -233,6 +233,7 @@ MINDROOM_DOCKER_WORKER_RUNTIME=runsc
 ```
 
 Kata needs no entry in that file: once it is installed, `MINDROOM_DOCKER_WORKER_RUNTIME=io.containerd.kata.v2` is enough.
+The full setup, and a few catches for each runtime, are in the [MindRoom docs](https://docs.mindroom.chat/deployment/sandbox-proxy/#security-considerations).
 
 The six lines are short because everything else already existed.
 gVisor and Kata do the isolating.
@@ -261,7 +262,7 @@ The other costs are the usual trade-offs between containers and VMs:
 A stronger sandbox protects the host.
 It does nothing about the tokens and network access you give the worker.
 An agent needs no kernel exploit to misuse a token that can push to your repositories, or to poke at every device on your home network.
-Scoped credentials and a firewall allowlist matter at least as much, and MindRoom handles both separately.
+Scoped credentials and a firewall allowlist matter at least as much, and MindRoom handles both separately: [Agent Keys](https://docs.mindroom.chat/deployment/egress-broker/) let agents use API keys without ever seeing them, and [Approved Egress](https://docs.mindroom.chat/deployment/approved-egress/) limits which servers a worker on Kubernetes can reach.
 
 gVisor has had its own bugs, and it still talks to the host kernel, just through a much smaller door.
 KVM has bugs too, as this year's escapes show.
