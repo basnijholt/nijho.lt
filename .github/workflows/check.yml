@@ -13,6 +13,9 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-24.04
+    env:
+      HUGO_VERSION: "0.167.0"
+      PLAYWRIGHT_VERSION: "1.63.0"
     steps:
       - uses: actions/checkout@v7
 
@@ -29,13 +32,26 @@ jobs:
 
       - uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: "0.167.0"
+          hugo-version: ${{ env.HUGO_VERSION }}
           extended: true
 
       - uses: astral-sh/setup-uv@v10.3.0
 
+      # Playwright's own Chromium, pinned with Playwright; download it once per version.
+      - uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ env.PLAYWRIGHT_VERSION }}
       - name: Install Chromium for Playwright
-        run: uv run --with playwright==1.63.0 python -m playwright install --with-deps chromium
+        run: uv run --with "playwright==$PLAYWRIGHT_VERSION" python -m playwright install --with-deps chromium
+
+      # Hugo's processed images. Their names and bytes depend only on the source image and the processing options, so
+      # a cached copy builds the same site as Netlify's fresh one; --gc drops the images no page uses any more.
+      - uses: actions/cache@v6
+        with:
+          path: resources/_gen
+          key: hugo-resources-${{ env.HUGO_VERSION }}-${{ hashFiles('.lfs-files', 'layouts/**', 'config/**') }}
+          restore-keys: hugo-resources-${{ env.HUGO_VERSION }}-
 
       - name: Build
         run: hugo --gc --minify -d public
