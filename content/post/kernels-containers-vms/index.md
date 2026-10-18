@@ -176,7 +176,7 @@ The difference is how much code the attacker can reach, and that gap is large.
 On x86, Linux has about 390 syscalls, and Docker's default seccomp filter [blocks around 44](https://docs.docker.com/engine/security/seccomp/) of them.
 Behind the rest sit the kernel's filesystems, networking, memory management, and core code: about 3.8 million lines, even without counting drivers.
 Not all of that is reachable from a container, but a lot of it is.
-KVM on x86 is about 113,000 lines.
+KVM on x86 is about 114,000 lines.
 I counted both with [tokei](https://github.com/XAMPPRocky/tokei) on Linux 7.3-rc7, so treat them as ballpark numbers.
 On top of KVM comes the VMM, but only the few devices it fakes for the guest.
 Most QEMU escapes came from its many emulated devices, which is why Firecracker and Cloud Hypervisor keep that list short.
@@ -224,7 +224,7 @@ Or as a table:
 
 The change is [PR #2886](https://github.com/mindroom-ai/mindroom/pull/2886), which is now merged.
 It adds one setting, `MINDROOM_DOCKER_WORKER_RUNTIME`, and MindRoom passes its value to Docker as the runtime whenever it starts a worker.
-That is six lines of source code, plus 61 lines of tests and some docs.
+That is six lines of source code, plus 62 lines of tests and some docs.
 Changing the setting recreates each worker the next time it is used, and leaving it unset keeps everything as it was.
 
 Setting it up is two steps: register the runtime with the Docker daemon, then point MindRoom at it.
