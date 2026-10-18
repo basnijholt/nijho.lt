@@ -43,6 +43,8 @@ A [video from the Low Level channel](https://youtu.be/9-2CSJC114k) asking whethe
 I am not an expert in any of this.
 I have used containers, KVM, and hypervisors for years, including Proxmox before I [moved to NixOS]({{< ref "/post/proxmox-to-nixos" >}}), but I never deeply understood what happens underneath.
 Building this forced me to learn it, and writing this post is my exercise in understanding it all.
+All of this is very complicated (as is everything new), and I am still learning.
+I am sure I skip over a lot and simplify the rest; what is here are the parts that helped me understand it.
 I thought it would be nice to share.
 
 {{% callout note %}}
