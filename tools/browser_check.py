@@ -10,6 +10,7 @@ Without BUILD_DIR it builds the working tree with $HUGO_BIN first. $CHROMIUM ove
 means Playwright's own (.github/workflows/check.yml installs it). Analytics requests are blocked, so checks count no
 visits. Every check runs, and the script exits non-zero when any of them fails. --screenshots also writes the review
 screenshot set (key pages, light and dark, 1440 and 390 px wide) to OUT_DIR; with --no-checks it only does that.
+The checks run in parallel, each in its own Chromium.
 """
 
 import argparse
@@ -22,7 +23,8 @@ import subprocess
 import sys
 import tempfile
 import threading
-from collections.abc import Callable, Iterator
+from collections.abc import Callable, Iterable, Iterator
+from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager
 from pathlib import Path
 
@@ -62,12 +64,18 @@ SCREENSHOTS = {
 DARK_BACKGROUND = "rgb(20, 20, 19)"
 VISIBLE_CARDS = "[...document.querySelectorAll('#projects article.proj')].filter(c => c.getClientRects().length)"
 
-CHECKS: list[Callable[[Browser, str], None]] = []
+CHECKS: list[tuple[Callable[..., None], tuple]] = []
 
 
-def check(function: Callable[[Browser, str], None]) -> Callable[[Browser, str], None]:
-    CHECKS.append(function)
-    return function
+def check(function: Callable[..., None] | None = None, *, cases: Iterable[tuple] = ((),)) -> Callable[..., None]:
+    """Register a check once per case, a tuple of arguments after (browser, base). Each case runs on its own, so a
+    slow check split into cases finishes sooner."""
+
+    def register(function: Callable[..., None]) -> Callable[..., None]:
+        CHECKS.extend((function, case) for case in cases)
+        return function
+
+    return register(function) if function else register
 
 
 def build(out: Path) -> Path:
@@ -84,10 +92,15 @@ class QuietHandler(http.server.SimpleHTTPRequestHandler):
         pass
 
 
+class Server(http.server.ThreadingHTTPServer):
+    # The parallel checks open many connections at once; with the default queue of 5 some wait a second to retry.
+    request_queue_size = 128
+
+
 def serve(root: Path) -> str:
     """Serve root on a free local port in a background thread and return its base URL."""
     handler = functools.partial(QuietHandler, directory=str(root))
-    server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), handler)
+    server = Server(("127.0.0.1", 0), handler)
     threading.Thread(target=server.serve_forever, daemon=True).start()
     return f"http://127.0.0.1:{server.server_port}"
 
@@ -180,17 +193,16 @@ def no_errors_in_the_console(browser, base):
     assert errors == [], errors
 
 
-@check
-def axe_finds_nothing_serious(browser, base):
+@check(cases=[("light",), ("dark",)])
+def axe_finds_nothing_serious(browser, base, scheme):
     axe = Axe()
     found = []
-    for scheme in ("light", "dark"):
-        for path in KEY_PAGES:
-            with page(browser, base, path, color_scheme=scheme) as p:
-                for violation in axe.run(p).response["violations"]:
-                    if violation["impact"] in ("serious", "critical"):
-                        targets = [node["target"] for node in violation["nodes"]][:3]
-                        found.append(f"{scheme} {path}: {violation['id']} ({violation['impact']}) {targets}")
+    for path in KEY_PAGES:
+        with page(browser, base, path, color_scheme=scheme) as p:
+            for violation in axe.run(p).response["violations"]:
+                if violation["impact"] in ("serious", "critical"):
+                    targets = [node["target"] for node in violation["nodes"]][:3]
+                    found.append(f"{scheme} {path}: {violation['id']} ({violation['impact']}) {targets}")
     assert found == [], "\n".join(found)
 
 
@@ -245,29 +257,27 @@ def works_without_javascript(browser, base):
         assert "/post/" in p.url and p.url != f"{base}/post/"
 
 
-@check
-def menu_links_land_on_their_sections(browser, base):
+@check(cases=[(width, start) for width in (1440, 390) for start in ("/", POST)])
+def menu_links_land_on_their_sections(browser, base, width, start):
     """Each menu link, followed from the homepage and from a post, shows its section's heading near the top, below
     the sticky header."""
     off = []
-    for width in (1440, 390):
-        for start in ("/", POST):
-            with page(browser, base, start, viewport={"width": width, "height": 900}) as p:
-                for href in p.eval_on_selector_all("#site-menu a", "links => links.map(a => a.getAttribute('href'))"):
-                    p.goto(start, wait_until="networkidle")
-                    if width < 920:
-                        p.click(".menu-btn")
-                    p.click(f'#site-menu a[href="{href}"]')
-                    p.wait_for_url(f"**{href}")
-                    settle(p)
-                    top = p.eval_on_selector(f"{href[1:]} :is(h1, h2)", "h => h.getBoundingClientRect().top")
-                    bottom = p.eval_on_selector(".site-header", "h => h.getBoundingClientRect().bottom")
-                    # The last section cannot rise further once the page is scrolled to its end, and the first one
-                    # starts at the header with the avatar above its heading on small screens.
-                    at_end = p.evaluate("innerHeight + scrollY >= document.documentElement.scrollHeight - 2")
-                    at_start = p.evaluate("scrollY") == 0
-                    if not (top >= bottom and (top - bottom <= 160 or at_end or at_start)):
-                        off.append(f"{width}px from {start}: {href} heading top {top:.0f}, header bottom {bottom:.0f}")
+    with page(browser, base, start, viewport={"width": width, "height": 900}) as p:
+        for href in p.eval_on_selector_all("#site-menu a", "links => links.map(a => a.getAttribute('href'))"):
+            p.goto(start, wait_until="networkidle")
+            if width < 920:
+                p.click(".menu-btn")
+            p.click(f'#site-menu a[href="{href}"]')
+            p.wait_for_url(f"**{href}")
+            settle(p)
+            top = p.eval_on_selector(f"{href[1:]} :is(h1, h2)", "h => h.getBoundingClientRect().top")
+            bottom = p.eval_on_selector(".site-header", "h => h.getBoundingClientRect().bottom")
+            # The last section cannot rise further once the page is scrolled to its end, and the first one starts at
+            # the header with the avatar above its heading on small screens.
+            at_end = p.evaluate("innerHeight + scrollY >= document.documentElement.scrollHeight - 2")
+            at_start = p.evaluate("scrollY") == 0
+            if not (top >= bottom and (top - bottom <= 160 or at_end or at_start)):
+                off.append(f"{width}px from {start}: {href} heading top {top:.0f}, header bottom {bottom:.0f}")
     assert off == [], off
 
 
@@ -306,6 +316,17 @@ def screenshots(browser: Browser, base: str, out: Path) -> None:
     print(f"screenshots in {out}")
 
 
+def run(function: Callable[..., None], case: tuple, base: str) -> str | None:
+    """Run one case of a check in its own Chromium, as Playwright's sync API takes one instance per thread, and return
+    the error it raised, if any."""
+    try:
+        with sync_playwright() as playwright:
+            function(playwright.chromium.launch(executable_path=CHROMIUM), base, *case)
+    except Exception as error:  # noqa: BLE001 - one broken check or Chromium launch must not hide the others
+        return f"{type(error).__name__}: {error}"
+    return None
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("build", nargs="?", type=Path, help="a built site (default: build the working tree)")
@@ -316,19 +337,17 @@ def main() -> int:
     failed = 0
     with tempfile.TemporaryDirectory(prefix="browser-check-") as tmp:
         base = serve(args.build or build(Path(tmp) / "public"))
-        with sync_playwright() as playwright:
-            browser = playwright.chromium.launch(executable_path=CHROMIUM)
-            for function in checks:
-                try:
-                    function(browser, base)
-                except Exception as error:  # noqa: BLE001 - one broken check must not hide the others
-                    failed += 1
-                    print(f"FAIL {function.__name__}: {type(error).__name__}: {error}")
-                else:
-                    print(f"ok   {function.__name__}")
-            if args.screenshots:
+        with ThreadPoolExecutor() as pool:
+            errors = pool.map(lambda check: run(*check, base), checks)
+            for (function, case), error in zip(checks, errors):
+                name = function.__name__ + (f"[{', '.join(map(str, case))}]" if case else "")
+                failed += error is not None
+                print(f"FAIL {name}: {error}" if error else f"ok   {name}")
+        if args.screenshots:
+            with sync_playwright() as playwright:
+                browser = playwright.chromium.launch(executable_path=CHROMIUM)
                 screenshots(browser, base, args.screenshots)
-            browser.close()
+                browser.close()
     if checks:
         print(f"{len(checks) - failed} of {len(checks)} checks passed")
     return 1 if failed else 0
