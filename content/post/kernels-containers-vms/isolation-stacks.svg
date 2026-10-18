@@ -88,7 +88,7 @@
   <text transform="translate(700,230) rotate(-90)" text-anchor="middle" font-size="15" font-weight="700" fill="#0f766e">hypervisor</text>
 
   <!-- what the agent has to break, per column -->
-  <text x="340" y="466" text-anchor="middle" font-size="14" fill="#64748b">Red dashed: what the agent has to break to reach the host</text>
+  <text x="340" y="466" text-anchor="middle" font-size="14" fill="#64748b">Red dashed: code the agent can attack on its way to the host</text>
   <g text-anchor="middle" font-size="15" font-weight="600" fill="#b91c1c">
     <text x="97" y="492">host kernel</text>
     <text x="272" y="492">gVisor, then</text>
