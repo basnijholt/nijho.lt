@@ -29,7 +29,7 @@ AI models have become very good at finding security bugs, including in Linux.
 Anthropic and OpenAI now keep their strongest security models, [Claude Mythos](https://www.anthropic.com/claude/mythos) and [Daybreak](https://openai.com/the-defense-factory/), behind identity checks and vetting.
 Open-weight models come with no such rules, and they trail the closed ones by only [six to seven months](https://epoch.ai/data-insights/open-closed-cyber-eci-gap).
 Once there is an open model as good as Mythos, anyone can strip out its refusals (people call this abliteration) and point it at the Linux kernel.
-One security company used their own model to find a way out of a container and titled the write-up [Containers Are No Longer a Security Boundary](https://depthfirst.com/research/containers-are-no-longer-safe).
+The security company DepthFirst used its own model to find a way out of a container and titled the write-up [Containers Are No Longer a Security Boundary](https://depthfirst.com/research/containers-are-no-longer-safe).
 
 I care about this because running untrusted code in containers is exactly what [MindRoom]({{< ref "/post/mindroom" >}}) does.
 Every agent can get its own Docker worker, and its shell, file, Python, and browser tools run there.
@@ -72,7 +72,7 @@ Those requests are called system calls, or syscalls for short.
 There is one kernel per machine, and it decides who is allowed to do what.
 That makes it the most trusted code on the system.
 Most kernel bugs are harmless crashes or glitches.
-But some let a normal program become root, or even run its own code inside the kernel.
+But some let a normal program become root, the admin account, or even run its own code inside the kernel.
 At that point it can do anything on the machine, including leaving any container it was in.
 
 ## A container is a process in a costume
@@ -81,7 +81,7 @@ When you `docker run ubuntu`, you get a root shell in what feels like a fresh co
 Under the hood it is one ordinary process.
 The kernel dresses it up using three features:
 
-- **Namespaces** decide what the process can see. It gets its own list of processes (where it is PID 1), its own filesystem, its own network, and its own idea of who root is.
+- **Namespaces** decide what the process can see. It gets its own list of processes (where it is process number 1), its own filesystem, its own network, and its own idea of who root is.
 - **cgroups** decide how much it can use: CPU, memory, number of processes.
 - **seccomp** decides which syscalls it may make at all. It is a filter that blocks the ones a normal program never needs.
 
@@ -110,9 +110,7 @@ The kernel freed a piece of memory and then kept using it, a so-called use-after
 Their conclusion is that you should assume attackers can escape containers at will.
 
 Now put an AI agent in that container.
-It writes and runs code all day.
-It reads web pages and repositories written by strangers.
-One of those could talk it into running an exploit.
+It reads web pages and repositories written by strangers, and one of those could talk it into running an exploit.
 
 ## So I asked a model to break out
 
@@ -156,7 +154,7 @@ Google Project Zero turned [a bug in how KVM runs VMs inside VMs on AMD](https:/
 Google's [kvmCTF](https://security.googleblog.com/2024/06/virtual-escape-real-reward-introducing.html) pays up to {{< tooltip text="The top reward in the current kvmCTF rules, for a full escape from the guest VM to the host." >}}$250,000{{< /tooltip >}} for a new one.
 And this year, one researcher, Hyunwoo Kim, published [three KVM escapes](https://github.com/V4bel/Zapscape), one of them hidden in KVM {{< tooltip text="Januscape, CVE-2026-53359: a use-after-free in the shadow page tables of x86 KVM, added in August 2010 and fixed in June 2026." >}}since 2010{{< /tooltip >}}.
 
-The difference is how much code the attacker can reach, and that gap is large.
+The difference between a container and a VM is how much code an attacker can reach, and that gap is large.
 On x86, Linux has {{< tooltip text="386 to be exact: the entries that 64-bit programs can use in the x86_64 syscall table of Linux 7.3-rc7." >}}about 390 syscalls{{< /tooltip >}}, and Docker's [default seccomp filter](https://docs.docker.com/engine/security/seccomp/) blocks {{< tooltip text="Docker's documentation says its default profile disables around 44 system calls out of 300+." >}}around 44{{< /tooltip >}} of them.
 Behind the rest sit the kernel's filesystems, networking, memory management, and core code: {{< tooltip text="The fs, net, mm and kernel folders of Linux 7.3-rc7, counted with tokei, comments and blank lines included. The whole tree is 43 million lines, 26.5 million of them drivers." >}}about 3.8 million lines{{< /tooltip >}}, even without counting drivers.
 Not all of that is reachable from a container, but a lot of it is.
@@ -170,7 +168,7 @@ kvmCTF pays more than three times as much, and the same repository holds {{< too
 kvmCTF started a year later, but the gap is still big.
 
 Regular VMs are heavy.
-They boot slowly and reserve a lot of memory.
+They boot a full operating system and tend to use a lot of memory.
 A microVM is a stripped-down VM meant to run one workload and start quickly.
 That still leaves a practical problem.
 MindRoom, like most tools, speaks Docker: it hands Docker an image and some folders to mount, and gets a running container back.
@@ -234,8 +232,9 @@ For comparison, Claude Opus estimated that building a microVM backend into MindR
 
 ## What it costs
 
-I tested both runtimes with a real agent in a Matrix room: gVisor on that ARM server, and Kata in a throwaway VM on my desktop.
+I tested both runtimes with a real agent in a Matrix room: gVisor on that ARM server, and Kata {{< tooltip text="Kata 4.2 with QEMU and Docker 29.9, inside an Incus VM with nested KVM on my desktop's Ryzen 9 3900X." >}}in a throwaway VM on my desktop{{< /tooltip >}}.
 Shell, Python, git, background processes, and the browser all worked, without any MindRoom code change.
+My Kata numbers below come from a VM inside a VM, so bare-metal numbers will differ.
 
 Configuration is the cheap part: one runtime entry in Docker's config and one environment variable.
 The other costs are the usual trade-offs between containers and VMs:
@@ -243,10 +242,8 @@ The other costs are the usual trade-offs between containers and VMs:
 - **Computation.** Full speed with both. gVisor lets the agent's instructions run directly on the CPU and only steps in on syscalls, according to its [performance guide](https://gvisor.dev/docs/architecture_guide/performance/). A Kata guest runs on the CPU in its virtualization mode, and in [AWS's paper on Firecracker](https://www.usenix.org/conference/nsdi20/presentation/agache), the CPU overhead was {{< tooltip text="The paper reports memory overhead as low as 3% and negligible CPU overhead." >}}negligible{{< /tooltip >}}.
 - **Syscalls, disk, and network.** This is where both pay. Under gVisor, every syscall takes a detour through gVisor's kernel, so programs that make many small syscalls, like ones that open thousands of small files, slow down the most. Under Kata, disk and network go through the VMM's fake devices. In that same paper from 2020, a Firecracker guest reached {{< tooltip text="iperf3 over a tap device on an EC2 m5d.metal host, one stream: 44.1 Gbit/s for the host, 15.6 for Firecracker, and 23.8 for QEMU." >}}15 Gbit/s of network traffic where the host reached 44{{< /tooltip >}}.
 - **Startup.** gVisor only has to start a program, so it starts quickly. Kata has to boot a kernel first, and my worker took {{< tooltip text="From creating the container until the worker answered its health check, three runs each: 10.1 to 10.9 seconds with Kata, 2.4 to 3.3 with runc." >}}about 10 seconds to start instead of about 3{{< /tooltip >}}. Booting a VM can be much faster than that: [Firecracker](https://firecracker-microvm.github.io) boots a minimal one in about 125 ms.
-- **Memory.** gVisor adds a {{< tooltip text="gVisor's performance guide: the sandbox itself is responsible for a small, mostly fixed amount of memory overhead." >}}small, mostly fixed amount{{< /tooltip >}} per sandbox. Each Kata VM runs a second kernel with its own file cache, plus the VMM, which alone takes {{< tooltip text="Figure 7 of the Firecracker paper: memory used by the VMM process on top of the guest's own memory, about 3 MB for Firecracker, 13 MB for Cloud Hypervisor, and 131 MB for QEMU." >}}about 3 MB with Firecracker and 131 MB with QEMU{{< /tooltip >}}. Kata gives each worker VM {{< tooltip text="Kata's default VM has 1 vCPU and 2 GiB, set by default_vcpus and default_memory in its configuration file. Kata adds a container's memory limit on top, but MindRoom sets none for its workers. The worker's 1 GiB /tmp counts against it." >}}2 GiB by default{{< /tooltip >}}, and `/tmp` lives in that RAM. The host only hands out memory the guest actually touches, so my idle worker used {{< tooltip text="QEMU used 530 to 616 MiB and virtiofsd, which shares the folders, about 160 MiB for one idle worker VM." >}}about 0.7 GiB{{< /tooltip >}} of host memory. Raising the VM size costs nothing until a worker needs it. But a VM cannot grow past its size the way a container can, and memory the guest has used, for example for file cache, {{< tooltip text="Kata's reclaim_guest_freed_memory option, off by default, returns pages the guest frees. File cache does not count as free, so it stays." >}}mostly stays with the VM{{< /tooltip >}}.
+- **Memory.** gVisor adds a {{< tooltip text="gVisor's performance guide: the sandbox itself is responsible for a small, mostly fixed amount of memory overhead." >}}small, mostly fixed amount{{< /tooltip >}} per sandbox. Each Kata VM runs a second kernel plus the VMM, which alone takes {{< tooltip text="Figure 7 of the Firecracker paper: memory used by the VMM process on top of the guest's own memory, about 3 MB for Firecracker, 13 MB for Cloud Hypervisor, and 131 MB for QEMU." >}}about 3 MB with Firecracker and 131 MB with QEMU{{< /tooltip >}}. Kata gives each worker VM {{< tooltip text="Kata's default VM has 1 vCPU and 2 GiB, set by default_vcpus and default_memory in its configuration file. Kata adds a container's memory limit on top, but MindRoom sets none for its workers. The worker's 1 GiB /tmp counts against it." >}}2 GiB by default{{< /tooltip >}}, and `/tmp` lives in that RAM. The host only hands out memory the guest actually touches, so my idle worker used {{< tooltip text="QEMU used 530 to 616 MiB and virtiofsd, which shares the folders, about 160 MiB for one idle worker VM." >}}about 0.7 GiB{{< /tooltip >}} of host memory. Raising the VM size costs nothing until a worker needs it. But a VM cannot grow past its size the way a container can, and memory the guest has used, for example to keep recently read files in its cache, {{< tooltip text="Kata's reclaim_guest_freed_memory option, off by default, returns pages the guest frees. File cache does not count as free, so it stays." >}}mostly stays with the VM{{< /tooltip >}}.
 - **Compatibility.** gVisor reimplements Linux, and its [docs](https://gvisor.dev/docs/user_guide/compatibility/) say there will always be unimplemented features and bugs, so now and then a program will not work. Kata runs a real Linux kernel, so programs behave as usual, with one catch: a file lock held on the host does not block the worker, because the lock lives in the guest kernel.
-
-I measured Kata {{< tooltip text="Kata 4.2 with QEMU and Docker 29.9, inside an Incus VM with nested KVM on my desktop's Ryzen 9 3900X." >}}nested inside a VM{{< /tooltip >}}, so bare-metal numbers will differ.
 
 ## What this does not fix
 
