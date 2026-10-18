@@ -85,7 +85,7 @@ The kernel dresses it up using three features:
 - **cgroups** decide how much it can use: CPU, memory, number of processes.
 - **seccomp** decides which syscalls it may make at all. It is a filter that blocks the ones a normal program never needs.
 
-{{< figure src="container-kernel.svg" alt="Containers are processes that all make syscalls into one shared Linux kernel, which enforces namespaces, cgroups and seccomp" >}}
+{{< figure src="container-kernel.svg" alt="Two containers and the host's own processes all make syscalls into one shared Linux kernel, which keeps the containers apart with namespaces, cgroups and seccomp. One bug in that kernel reaches every container and the host." >}}
 
 There is no second kernel.
 Every syscall from inside a container lands in the same kernel as every other container and the host itself.
