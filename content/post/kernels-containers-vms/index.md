@@ -211,6 +211,10 @@ Or as a table:
 | gVisor (`runsc`) | gVisor's own kernel, written in Go | No | A gVisor bug, then a host kernel bug through its small filtered surface |
 | Kata Containers | Its own guest kernel in a microVM | Yes | A guest kernel bug, then a hypervisor bug |
 
+Each option also changes how much code on the host an escape can pick its bug from.
+
+{{< plot name="attackSurface" caption="Lines of code on the host that deal with what the agent's code asks for, counted with tokei, comments and blank lines included. For Docker, the core of Linux without drivers; for gVisor, its kernel and network stack without tests; for Kata, KVM without the VMM. Not all of it is reachable. Hover for exact numbers." >}}
+
 ## The PR: six lines
 
 The change is [PR #2886](https://github.com/mindroom-ai/mindroom/pull/2886), which is now merged.
