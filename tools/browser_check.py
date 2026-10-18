@@ -92,10 +92,15 @@ class QuietHandler(http.server.SimpleHTTPRequestHandler):
         pass
 
 
+class Server(http.server.ThreadingHTTPServer):
+    # The parallel checks open many connections at once; with the default queue of 5 some wait a second to retry.
+    request_queue_size = 128
+
+
 def serve(root: Path) -> str:
     """Serve root on a free local port in a background thread and return its base URL."""
     handler = functools.partial(QuietHandler, directory=str(root))
-    server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), handler)
+    server = Server(("127.0.0.1", 0), handler)
     threading.Thread(target=server.serve_forever, daemon=True).start()
     return f"http://127.0.0.1:{server.server_port}"
 
@@ -314,12 +319,11 @@ def screenshots(browser: Browser, base: str, out: Path) -> None:
 def run(function: Callable[..., None], case: tuple, base: str) -> str | None:
     """Run one case of a check in its own Chromium, as Playwright's sync API takes one instance per thread, and return
     the error it raised, if any."""
-    with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(executable_path=CHROMIUM)
-        try:
-            function(browser, base, *case)
-        except Exception as error:  # noqa: BLE001 - one broken check must not hide the others
-            return f"{type(error).__name__}: {error}"
+    try:
+        with sync_playwright() as playwright:
+            function(playwright.chromium.launch(executable_path=CHROMIUM), base, *case)
+    except Exception as error:  # noqa: BLE001 - one broken check or Chromium launch must not hide the others
+        return f"{type(error).__name__}: {error}"
     return None
 
 
