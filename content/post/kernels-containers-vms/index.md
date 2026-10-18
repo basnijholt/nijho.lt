@@ -2,25 +2,22 @@
 title: "It took me 6 lines to make MindRoom robust against agents escaping via kernel bugs 🔒"
 subtitle: "What I learned about kernels, containers, and VMs while adding a stronger sandbox to MindRoom."
 summary: "For years, a Docker container was a good enough box to run code in, because getting out of one needed a rare bug in the Linux kernel. Now AI models are good at finding those bugs, and AI agents write the code running inside the containers. This post explains what the kernel does, how containers use it to fake a separate computer, why that is a problem now, and how six lines of code let MindRoom give its agents a stronger wall."
-projects: []
-date: "2026-10-16T00:00:00Z"
+date: 2026-10-18
 draft: true
 featured: false
-
 authors:
   - admin
-
 tags:
+  - ai
   - mindroom
   - security
   - docker
   - gvisor
   - agents
   - self-hosting
-
 categories:
-  - development
   - AI
+  - Software Development
   - level:intermediate
 ---
 
