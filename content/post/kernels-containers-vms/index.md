@@ -1,7 +1,7 @@
 ---
-title: "It took me 6 lines to make MindRoom robust against agents escaping via kernel bugs 🔒"
+title: "Containers share one kernel, and AI is getting good at breaking it 🔒"
 subtitle: "What I learned about kernels, containers, and VMs while adding a stronger sandbox to MindRoom."
-summary: "For years, a Docker container was a good enough box to run code in, because getting out of one needed a hard-to-find bug in the Linux kernel. Now AI models are good at finding those bugs, and AI agents write the code running inside the containers. This post explains what the kernel does, how containers use it to fake a separate computer, why that is a problem now, and how six lines of code let MindRoom give its agents a stronger wall."
+summary: "For years, a Docker container was a good enough box to run code in, because getting out of one usually needed a hard-to-find bug in the Linux kernel. Now AI models are good at finding those bugs, and AI agents write the code running inside the containers. This post explains what the kernel does, how containers use it to fake a separate computer, why that is a problem now, and how six lines of code let MindRoom give its agents a stronger wall."
 date: 2026-10-18
 draft: true
 featured: false
@@ -26,7 +26,7 @@ It was good enough, because getting out of one usually meant finding a specific 
 
 AI models have become very good at finding security bugs, including in Linux.
 Anthropic and OpenAI now keep their strongest security models, [Claude Mythos](https://www.anthropic.com/claude/mythos) and [Daybreak Blue](https://openai.com/the-defense-factory/), behind identity checks and vetting.
-Open-weight models come with no such rules, and they trail the closed ones by only [six to seven months](https://epoch.ai/data-insights/open-closed-cyber-eci-gap).
+Open-weight models, which anyone can download and run, come with no such rules, and they trail the closed ones by only [six to seven months](https://epoch.ai/data-insights/open-closed-cyber-eci-gap).
 Once there is an open model as good as Mythos, anyone can strip out its refusals (people call this abliteration) and point it at the Linux kernel.
 The security company DepthFirst used its own model to find a way out of a container and titled the write-up [Containers Are No Longer a Security Boundary](https://depthfirst.com/research/containers-are-no-longer-safe).
 
@@ -80,7 +80,7 @@ When you `docker run -it ubuntu`, you get a root shell in what feels like a fres
 Under the hood it is one ordinary process.
 The kernel dresses it up using three features:
 
-- **Namespaces** decide what the process can see. It gets its own list of processes (where it is process number 1), its own filesystem, and its own network. Root inside is still root on the host, with most of its powers taken away.[^root]
+- **Namespaces** decide what the process can see. It gets its own list of processes (where it is process number 1), its own filesystem, and its own network. Root inside is still root on the host, with {{< tooltip text="Docker drops most of root's special powers, which Linux calls capabilities, and seccomp and AppArmor block more. Namespaces only change what root can see." >}}most of its powers taken away{{< /tooltip >}}.[^root]
 - **cgroups** decide how much it can use: CPU, memory, number of processes.
 - **seccomp** decides which syscalls it may make at all. It is a filter that blocks the ones a normal program never needs.
 
@@ -246,7 +246,7 @@ The other costs are the usual trade-offs between containers and VMs:
 - **Syscalls, disk, and network.** This is where both pay. Under gVisor, every syscall takes a detour through gVisor's kernel, so programs that make many small syscalls, like ones that open thousands of small files, slow down the most. Under Kata, disk and network go through the VMM's fake devices. In that same paper from 2020, a Firecracker guest reached {{< tooltip text="iperf3 over a tap device on an EC2 m5d.metal host, one stream: 44.1 Gbit/s for the host, 15.6 for Firecracker, and 23.8 for QEMU." >}}15 Gbit/s of network traffic where the host reached 44{{< /tooltip >}}.
 - **Startup.** gVisor only has to start a program, so it starts quickly. Kata has to boot a kernel first, and my worker took {{< tooltip text="From creating the container until the worker answered its health check, three runs each: 10.1 to 10.9 seconds with Kata, 2.4 to 3.3 with runc." >}}about 10 seconds to start instead of about 3{{< /tooltip >}}. Booting a VM can be much faster than that: [Firecracker](https://firecracker-microvm.github.io) boots a minimal one in about 125 ms.
 - **Memory.** gVisor adds a {{< tooltip text="gVisor's performance guide: the sandbox itself is responsible for a small, mostly fixed amount of memory overhead." >}}small, mostly fixed amount{{< /tooltip >}} per sandbox. Each Kata VM runs a second kernel plus the VMM, which alone takes {{< tooltip text="Figure 7 of the Firecracker paper: memory used by the VMM process on top of the guest's own memory, about 3 MB for Firecracker, 13 MB for Cloud Hypervisor, and 131 MB for QEMU." >}}about 3 MB with Firecracker and 131 MB with QEMU{{< /tooltip >}}. Kata gives each worker VM {{< tooltip text="Kata's default VM has 1 vCPU and 2 GiB, set by default_vcpus and default_memory in its configuration file. Kata adds a container's memory limit on top, but MindRoom sets none for its workers. The worker's 1 GiB /tmp counts against it." >}}2 GiB by default{{< /tooltip >}}, and `/tmp` lives in that RAM. The host only hands out memory the guest actually touches, so my idle worker used {{< tooltip text="QEMU used 530 to 616 MiB and virtiofsd, which shares the folders, about 160 MiB for one idle worker VM." >}}about 0.7 GiB{{< /tooltip >}} of host memory. Raising the VM size {{< tooltip text="The guest kernel keeps 64 bytes of bookkeeping for every 4 KiB page, about 1.6% of the VM's size, so an 8 GiB VM costs about 128 MiB up front." >}}costs little{{< /tooltip >}} until a worker needs it. But a VM cannot grow past its size the way a container can, and memory the guest has used, for example to keep recently read files in its cache, {{< tooltip text="Kata's reclaim_guest_freed_memory option, off by default, returns pages the guest frees. File cache does not count as free, so it stays." >}}mostly stays with the VM{{< /tooltip >}}.
-- **Compatibility.** gVisor reimplements Linux, and its [docs](https://gvisor.dev/docs/user_guide/compatibility/) say there will always be unimplemented features and bugs, so now and then a program will not work. Kata runs a real Linux kernel, so programs behave as usual, with one catch: a file lock held on the host does not block the worker, because the lock lives in the guest kernel.
+- **Compatibility.** gVisor reimplements Linux, and its [docs](https://gvisor.dev/docs/user_guide/compatibility/) say there will always be unimplemented features and bugs, so now and then a program will not work. Kata runs a real Linux kernel, so programs behave as usual, with a few catches. For example, a file lock held on the host does not block the worker, because the lock lives in the guest kernel.
 
 ## What this does not fix
 
