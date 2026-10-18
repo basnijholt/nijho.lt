@@ -36,7 +36,7 @@ One security company used their own model to find a way out of a container and t
 I care about this because running untrusted code in containers is exactly what [MindRoom]({{< ref "/post/mindroom" >}}) does.
 Every agent can get its own Docker worker, and its shell, file, Python, and browser tools run there.
 It can install anything, start background processes, and drive a real browser.
-And as I wrote in [my ZFS post]({{< ref "/post/btrfs-to-zfs" >}}), I run coding agents in YOLO mode, exclusively.
+And as I wrote in [my ZFS post]({{< ref "/post/btrfs-to-zfs" >}}), I run coding agents in {{< tooltip text="The agent runs every command without asking me for approval first." >}}YOLO mode{{< /tooltip >}}, exclusively.
 I do not review the commands they run, I look at the results.
 
 So both sides changed at once.
@@ -166,21 +166,21 @@ Code in a VM talks to its own guest kernel.
 To reach the host, it has to break that kernel first and then the hypervisor.
 That is still possible.
 Google Project Zero turned [a bug in KVM's nested virtualization on AMD](https://googleprojectzero.blogspot.com/2021/06/an-epyc-escape-case-study-of-kvm.html) into a full escape in 2021.
-Google's [kvmCTF](https://security.googleblog.com/2024/06/virtual-escape-real-reward-introducing.html) pays up to $250,000 for a new one.
-And this year, one researcher, Hyunwoo Kim, published [three KVM escapes](https://github.com/V4bel/Zapscape), one of them hidden in KVM since 2010.
+Google's [kvmCTF](https://security.googleblog.com/2024/06/virtual-escape-real-reward-introducing.html) pays up to {{< tooltip text="The top reward in the current kvmCTF rules, for a full escape from the guest VM to the host." >}}$250,000{{< /tooltip >}} for a new one.
+And this year, one researcher, Hyunwoo Kim, published [three KVM escapes](https://github.com/V4bel/Zapscape), one of them hidden in KVM {{< tooltip text="Januscape, CVE-2026-53359: a use-after-free in the shadow page tables of x86 KVM, added in August 2010 and fixed in June 2026." >}}since 2010{{< /tooltip >}}.
 
 The difference is how much code the attacker can reach, and that gap is large.
-On x86, Linux has about 390 syscalls, and Docker's default seccomp filter [blocks around 44](https://docs.docker.com/engine/security/seccomp/) of them.
-Behind the rest sit the kernel's filesystems, networking, memory management, and core code: about 3.8 million lines, even without counting drivers.
+On x86, Linux has {{< tooltip text="386 to be exact: the entries that 64-bit programs can use in the x86_64 syscall table of Linux 7.3-rc7." >}}about 390 syscalls{{< /tooltip >}}, and Docker's [default seccomp filter](https://docs.docker.com/engine/security/seccomp/) blocks {{< tooltip text="Docker's documentation says its default profile disables around 44 system calls out of 300+." >}}around 44{{< /tooltip >}} of them.
+Behind the rest sit the kernel's filesystems, networking, memory management, and core code: {{< tooltip text="The fs, net, mm and kernel folders of Linux 7.3-rc7, counted with tokei, comments and blank lines included. The whole tree is 43 million lines, 26.5 million of them drivers." >}}about 3.8 million lines{{< /tooltip >}}, even without counting drivers.
 Not all of that is reachable from a container, but a lot of it is.
-KVM on x86 is about 114,000 lines.
+KVM on x86 is {{< tooltip text="arch/x86/kvm plus virt/kvm in the same Linux 7.3-rc7 tree, counted the same way: 113,720 lines." >}}about 114,000 lines{{< /tooltip >}}.
 I counted both with [tokei](https://github.com/XAMPPRocky/tokei) on Linux 7.3-rc7, so treat them as ballpark numbers.
 On top of KVM comes the VMM, but only the few devices it fakes for the guest.
 Most QEMU escapes came from its many emulated devices, which is why Firecracker and Cloud Hypervisor keep that list short.
 
 Google's bug bounties point the same way.
-[kernelCTF](https://google.github.io/security-research/kernelctf/rules.html) pays $71,337 for each new kernel exploit that turns a normal user into root, and Google's [public repository](https://github.com/google/security-research/tree/master/pocs/linux/kernelctf) holds exploits for 93 different kernel bugs.
-kvmCTF pays more than three times as much, and the same repository holds one KVM exploit, which crashes the host instead of escaping it.
+[kernelCTF](https://google.github.io/security-research/kernelctf/rules.html) pays {{< tooltip text="One fixed amount per accepted exploit, according to the current kernelCTF rules." >}}$71,337{{< /tooltip >}} for each new kernel exploit that turns a normal user into root, and Google's [public repository](https://github.com/google/security-research/tree/master/pocs/linux/kernelctf) holds exploits for {{< tooltip text="119 exploit folders in pocs/linux/kernelctf, covering 93 unique CVEs, at commit 79f049dc from October 16, 2026." >}}93 different kernel bugs{{< /tooltip >}}.
+kvmCTF pays more than three times as much, and the same repository holds {{< tooltip text="The only folder in pocs/linux/kvmctf at the same commit: a NULL pointer dereference reached through nested virtualization." >}}one KVM exploit{{< /tooltip >}}, which crashes the host instead of escaping it.
 The programs started a year apart, and publishing takes time (Januscape, one of Kim's escapes, was used in kvmCTF but is not in the repository yet), but the gap is still big.
 
 Regular VMs are heavy.
@@ -221,7 +221,7 @@ Or as a table:
 
 The change is [PR #2886](https://github.com/mindroom-ai/mindroom/pull/2886), which is now merged.
 It adds one setting, `MINDROOM_DOCKER_WORKER_RUNTIME`, and MindRoom passes its value to Docker as the runtime whenever it starts a worker.
-That is six lines of source code, plus 62 lines of tests and some docs.
+That is {{< tooltip text="Three lines in docker.py and three in docker_config.py. The merged PR adds 98 lines: these 6, 62 lines of tests, and 30 lines of docs." >}}six lines of source code{{< /tooltip >}}, plus 62 lines of tests and some docs.
 Changing the setting recreates each worker the next time it is used, and leaving it unset keeps everything as it was.
 
 Setting it up is two steps: register the runtime with the Docker daemon, then point MindRoom at it.
@@ -247,7 +247,7 @@ Docker already gives each worker what it needs: a root directory on the host, re
 And Docker already knows how to hand a container to a different runtime.
 On the MindRoom side, the hard part happened months earlier, when agent tools moved out of the main process into dedicated workers with explicit mounts and credentials.
 Once every worker is one `containers.run` call, swapping what runs underneath it is one argument.
-For comparison, Claude Opus estimated that building a microVM backend into MindRoom itself would take 2,500 to 4,000 lines.
+For comparison, Claude Opus estimated that building a microVM backend into MindRoom itself would take {{< tooltip text="For a native Cloud Hypervisor backend that rebuilds image conversion, guest init, folder sharing, networking, and VM supervision. The estimate is in the PR description." >}}2,500 to 4,000 lines{{< /tooltip >}}.
 
 ## What it costs
 
@@ -261,11 +261,11 @@ gVisor has two version caveats, both in the [MindRoom docs](https://docs.mindroo
 
 Kata costs more:
 
-- **Startup.** A worker takes about 10 seconds to start instead of about 3.
-- **Memory.** Each worker VM gets 2 GiB by default, and `/tmp` lives in that RAM. An idle worker already used about 0.7 GiB of host memory.
+- **Startup.** A worker takes {{< tooltip text="From creating the container until the worker answered its health check, three runs each: 10.1 to 10.9 seconds with Kata, 2.4 to 3.3 with runc." >}}about 10 seconds to start instead of about 3{{< /tooltip >}}.
+- **Memory.** Each worker VM gets {{< tooltip text="Kata's default VM has 1 vCPU and 2 GiB, set by default_vcpus and default_memory in its configuration file. The worker's 1 GiB /tmp counts against it." >}}2 GiB by default{{< /tooltip >}}, and `/tmp` lives in that RAM. An idle worker already used {{< tooltip text="QEMU used 530 to 616 MiB and virtiofsd, which shares the folders, about 160 MiB for one idle worker VM." >}}about 0.7 GiB{{< /tooltip >}} of host memory.
 - **File locks.** A lock held on the host does not block the worker, because the lock lives in the guest kernel.
 
-I measured Kata nested inside a VM, so bare-metal numbers will differ.
+I measured Kata {{< tooltip text="Kata 4.2 with QEMU and Docker 29.9, inside an Incus VM with nested KVM on my desktop's Ryzen 9 3900X." >}}nested inside a VM{{< /tooltip >}}, so bare-metal numbers will differ.
 
 ## What this does not fix
 
