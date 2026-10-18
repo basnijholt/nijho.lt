@@ -123,7 +123,7 @@ But it only tried known bugs.
 A kernel a few weeks behind on patches, or a bug nobody has published yet, would be a different story.
 So the attempt tells me the easy path was closed that day, and not much more.
 
-## Stronger walls: virtual machines and gVisor
+## Stronger walls: virtual machines
 
 The classic answer is a virtual machine.
 A container shares the host's kernel, but a VM brings its own, and this is where the hardware comes in.
@@ -166,6 +166,8 @@ Google's bug bounties point the same way.
 [kernelCTF](https://google.github.io/security-research/kernelctf/rules.html) pays {{< tooltip text="One fixed amount per accepted exploit, according to the current kernelCTF rules." >}}$71,337{{< /tooltip >}} for each new kernel exploit that turns a normal user into root, and Google's [public repository](https://github.com/google/security-research/tree/master/pocs/linux/kernelctf) holds exploits for {{< tooltip text="119 exploit folders in pocs/linux/kernelctf, covering 93 unique CVEs, at commit 79f049dc from October 16, 2026." >}}93 different kernel bugs{{< /tooltip >}}.
 kvmCTF pays more than three times as much, and the same repository holds {{< tooltip text="The only folder in pocs/linux/kvmctf at the same commit: a NULL pointer dereference reached through nested virtualization." >}}one KVM exploit{{< /tooltip >}}, which crashes the host instead of escaping it.
 kvmCTF started a year later, but the gap is still big.
+
+## Kata Containers and gVisor
 
 Regular VMs are heavy.
 They boot a full operating system and tend to use a lot of memory.
