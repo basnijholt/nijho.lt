@@ -27,7 +27,7 @@ It was good enough, because getting out of one usually meant finding a specific 
 AI models have become very good at finding security bugs, including in Linux.
 Anthropic and OpenAI now keep their strongest security models, [Claude Mythos](https://www.anthropic.com/claude/mythos) and [Daybreak Blue](https://openai.com/the-defense-factory/), behind identity checks and vetting.
 Open-weight models, which anyone can download and run, come with no such rules, and they trail the closed ones by only [six to seven months](https://epoch.ai/data-insights/open-closed-cyber-eci-gap).
-Once there is an open model as good as Mythos, anyone can strip out its refusals (people call this abliteration) and point it at the Linux kernel.
+Once there is an open model as good as Mythos, anyone can strip out its refusals with a tool like [Heretic](https://github.com/p-e-w/heretic) (people call this abliteration) and point it at the Linux kernel.
 The security company DepthFirst used its own model to find a way out of a container and titled the write-up [Containers Are No Longer a Security Boundary](https://depthfirst.com/research/containers-are-no-longer-safe).
 
 I care about this because running untrusted code in containers is exactly what [MindRoom]({{< ref "/post/mindroom" >}}), my open-source system for AI agents that live in Matrix chat rooms, does.
