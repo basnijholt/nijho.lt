@@ -23,7 +23,7 @@ categories:
 
 For years, a Docker container was my default answer to "where do I run this?"
 I never thought it was a perfect sandbox.
-It was good enough, because getting out of one meant finding a specific kind of bug in the Linux kernel itself, and those were rare.
+It was good enough, because getting out of one usually meant finding a specific kind of bug in the Linux kernel itself, and those were rare.[^runc]
 
 AI models have become very good at finding security bugs, including in Linux.
 Anthropic and OpenAI now keep their strongest security models, [Claude Mythos](https://www.anthropic.com/claude/mythos) and [Daybreak Blue](https://openai.com/the-defense-factory/), behind identity checks and vetting.
@@ -81,7 +81,7 @@ When you `docker run ubuntu`, you get a root shell in what feels like a fresh co
 Under the hood it is one ordinary process.
 The kernel dresses it up using three features:
 
-- **Namespaces** decide what the process can see. It gets its own list of processes (where it is process number 1), its own filesystem, its own network, and its own idea of who root is.
+- **Namespaces** decide what the process can see. It gets its own list of processes (where it is process number 1), its own filesystem, and its own network. Root inside is still root on the host, with most of its powers taken away.[^root]
 - **cgroups** decide how much it can use: CPU, memory, number of processes.
 - **seccomp** decides which syscalls it may make at all. It is a filter that blocks the ones a normal program never needs.
 
@@ -148,7 +148,7 @@ Proxmox, which I mentioned above, is KVM plus QEMU.
 AWS Lambda is KVM plus Firecracker.
 
 Code in a VM talks to its own guest kernel.
-To reach the host, it has to break that kernel first and then the hypervisor.
+To reach the host, it usually has to break that kernel first and then the hypervisor.[^devices]
 That is still possible.
 Google Project Zero turned [a bug in how KVM runs VMs inside VMs on AMD](https://googleprojectzero.blogspot.com/2021/06/an-epyc-escape-case-study-of-kvm.html) into a full escape in 2021.
 Google's [kvmCTF](https://security.googleblog.com/2024/06/virtual-escape-real-reward-introducing.html) pays up to {{< tooltip text="The top reward in the current kvmCTF rules, for a full escape from the guest VM to the host." >}}$250,000{{< /tooltip >}} for a new one.
@@ -198,7 +198,7 @@ Its runtime is called `runsc`, and it plugs into Docker the same way.
 
 Or as a table:
 
-| Isolation | What worker code talks to | Needs KVM | Escape requires |
+| Isolation | What worker code talks to | Needs KVM | Usual escape route |
 |---|---|---|---|
 | Plain Docker (`runc`) | The host kernel, filtered by seccomp | No | A host kernel bug |
 | gVisor (`runsc`) | gVisor's own kernel, written in Go | No | A gVisor bug, then a host kernel bug through its small filtered surface |
@@ -265,3 +265,9 @@ That is true, and for years it did not matter much to me.
 With AI finding kernel bugs faster and agents running code nobody reads, it matters now.
 MindRoom can now move its agents off the shared kernel with one environment variable.
 I do not use it myself yet, but if you are more paranoid than I am, it is there.
+
+[^runc]: The other way out is a bug in the program that starts the container. In 2024, [CVE-2024-21626](https://github.com/opencontainers/runc/security/advisories/GHSA-xr7r-f8xq-vfvv) in runc, the program Docker uses for that, leaked a handle to a host folder into new containers, so a malicious image could reach the host's files without any kernel bug.
+
+[^root]: Docker can map the container's root to an ordinary user on the host with [user namespace remapping](https://docs.docker.com/engine/security/userns-remap/), or run without root altogether in [rootless mode](https://docs.docker.com/engine/security/rootless/), but neither is the default.
+
+[^devices]: A bug in one of the VMM's fake devices can skip the first step, because a normal program in the guest can feed those devices data through the network or a shared folder. [CVE-2020-8608](https://access.redhat.com/security/cve/cve-2020-8608), a buffer overflow in QEMU's user-mode networking, could be triggered that way with crafted network traffic.

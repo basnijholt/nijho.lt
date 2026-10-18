@@ -13,7 +13,7 @@
     <text x="36" y="72">PID 1 is python</text>
     <text x="36" y="94">its own files</text>
     <text x="36" y="116">its own network</text>
-    <text x="36" y="138">root only in here</text>
+    <text x="36" y="138">limited root</text>
   </g>
 
   <!-- Container B -->
@@ -23,7 +23,7 @@
     <text x="246" y="72">PID 1 is chromium</text>
     <text x="246" y="94">its own files</text>
     <text x="246" y="116">its own network</text>
-    <text x="246" y="138">root only in here</text>
+    <text x="246" y="138">limited root</text>
   </g>
 
   <!-- Host -->
