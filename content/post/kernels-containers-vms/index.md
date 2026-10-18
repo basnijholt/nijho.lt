@@ -25,11 +25,9 @@ For years, a Docker container was my default answer to "where do I run this?"
 I never thought it was a perfect sandbox.
 It was good enough, because getting out of one meant finding a specific kind of bug in the Linux kernel itself, and those were rare.
 
-That is changing.
 AI models have become very good at finding security bugs, including in Linux.
 Anthropic and OpenAI now keep their strongest security models, [Claude Mythos](https://www.anthropic.com/claude/mythos) and [Daybreak](https://openai.com/the-defense-factory/), behind identity checks and vetting.
-That restriction will not last long.
-Open-weight models trail the closed ones [by months, not years](https://epoch.ai/data-insights/open-closed-cyber-eci-gap), and they come with no such rules.
+Open-weight models come with no such rules, and they trail the closed ones by only [six to seven months](https://epoch.ai/data-insights/open-closed-cyber-eci-gap).
 Once there is an open model as good as Mythos, anyone can strip out its refusals (people call this abliteration) and point it at the Linux kernel.
 One security company used their own model to find a way out of a container and titled the write-up [Containers Are No Longer a Security Boundary](https://depthfirst.com/research/containers-are-no-longer-safe).
 
@@ -106,8 +104,7 @@ Kernel bugs that let a normal program take over the whole machine used to be rar
 [Dirty COW](https://dirtycow.ninja) in 2016 was big news.
 Something like it came out every year or two, you patched, and that was it.
 
-AI is changing that pace.
-The DepthFirst write-up I mentioned is a good example.
+AI is speeding this up, and the DepthFirst write-up I mentioned is a good example.
 Their model found a bug in the kernel code for Unix sockets, which programs on the same machine use to talk to each other.
 The kernel freed a piece of memory and then kept using it, a so-called use-after-free, and from inside a container that was enough to get out.
 Their conclusion is that you should assume attackers can escape containers at will.
@@ -172,7 +169,9 @@ Most QEMU escapes came from its many emulated devices, which is why Firecracker 
 Google's bug bounties point the same way.
 [kernelCTF](https://google.github.io/security-research/kernelctf/rules.html) pays {{< tooltip text="One fixed amount per accepted exploit, according to the current kernelCTF rules." >}}$71,337{{< /tooltip >}} for each new kernel exploit that turns a normal user into root, and Google's [public repository](https://github.com/google/security-research/tree/master/pocs/linux/kernelctf) holds exploits for {{< tooltip text="119 exploit folders in pocs/linux/kernelctf, covering 93 unique CVEs, at commit 79f049dc from October 16, 2026." >}}93 different kernel bugs{{< /tooltip >}}.
 kvmCTF pays more than three times as much, and the same repository holds {{< tooltip text="The only folder in pocs/linux/kvmctf at the same commit: a NULL pointer dereference reached through nested virtualization." >}}one KVM exploit{{< /tooltip >}}, which crashes the host instead of escaping it.
-The programs started a year apart, and publishing takes time (Januscape, one of Kim's escapes, was used in kvmCTF but is not in the repository yet), but the gap is still big.
+The programs started a year apart, and publishing takes time.
+Januscape, one of Kim's escapes, was used in kvmCTF but is not in the repository yet.
+Even so, the gap is big.
 
 Regular VMs are heavy.
 They boot slowly and reserve a lot of memory.
@@ -182,8 +181,8 @@ MindRoom, like most tools, speaks Docker: it hands Docker an image and some fold
 A VM does not take a Docker image.
 Switching to VMs would normally mean building disk images, booting them, and wiring up files and networking myself.
 
-This is where it helps to know that Docker does not start containers by itself.
-Docker takes care of images, networks, and volumes, and then hands the actual start to a small program called a runtime.
+Docker does not start containers by itself, though.
+It takes care of images, networks, and volumes, and then hands the actual start to a small program called a runtime.
 The default runtime, `runc`, does what I described earlier: it starts a process on the host kernel with namespaces, cgroups, and seccomp.
 But you can tell Docker to use a different runtime.
 
