@@ -26,7 +26,7 @@ I never thought it was a perfect sandbox.
 It was good enough, because getting out of one meant finding a specific kind of bug in the Linux kernel itself, and those were rare.
 
 AI models have become very good at finding security bugs, including in Linux.
-Anthropic and OpenAI now keep their strongest security models, [Claude Mythos](https://www.anthropic.com/claude/mythos) and [Daybreak](https://openai.com/the-defense-factory/), behind identity checks and vetting.
+Anthropic and OpenAI now keep their strongest security models, [Claude Mythos](https://www.anthropic.com/claude/mythos) and [Daybreak Blue](https://openai.com/the-defense-factory/), behind identity checks and vetting.
 Open-weight models come with no such rules, and they trail the closed ones by only [six to seven months](https://epoch.ai/data-insights/open-closed-cyber-eci-gap).
 Once there is an open model as good as Mythos, anyone can strip out its refusals (people call this abliteration) and point it at the Linux kernel.
 The security company DepthFirst used its own model to find a way out of a container and titled the write-up [Containers Are No Longer a Security Boundary](https://depthfirst.com/research/containers-are-no-longer-safe).
