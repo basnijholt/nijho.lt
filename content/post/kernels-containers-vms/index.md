@@ -147,8 +147,6 @@ The software that sets the rules and handles the VM exits is called the hypervis
 
 Proxmox, which I mentioned above, is KVM plus QEMU.
 AWS Lambda is KVM plus Firecracker.
-Without KVM, QEMU can still emulate the whole CPU in software, but that is very slow.
-This also finally explained Proxmox's passthrough option to me: when you pass a real GPU or network card to a VM, the VMM stops faking that device, and a chip called the IOMMU makes sure the device can only reach the guest's memory.
 
 Code in a VM talks to its own guest kernel.
 To reach the host, it has to break that kernel first and then the hypervisor.
@@ -162,16 +160,13 @@ On x86, Linux has {{< tooltip text="386 to be exact: the entries that 64-bit pro
 Behind the rest sit the kernel's filesystems, networking, memory management, and core code: {{< tooltip text="The fs, net, mm and kernel folders of Linux 7.3-rc7, counted with tokei, comments and blank lines included. The whole tree is 43 million lines, 26.5 million of them drivers." >}}about 3.8 million lines{{< /tooltip >}}, even without counting drivers.
 Not all of that is reachable from a container, but a lot of it is.
 KVM on x86 is {{< tooltip text="arch/x86/kvm plus virt/kvm in the same Linux 7.3-rc7 tree, counted the same way: 113,720 lines." >}}about 114,000 lines{{< /tooltip >}}.
-I counted both with [tokei](https://github.com/XAMPPRocky/tokei) on Linux 7.3-rc7, so treat them as ballpark numbers.
 On top of KVM comes the VMM, but only the few devices it fakes for the guest.
 Most QEMU escapes came from its many emulated devices, which is why Firecracker and Cloud Hypervisor keep that list short.
 
 Google's bug bounties point the same way.
 [kernelCTF](https://google.github.io/security-research/kernelctf/rules.html) pays {{< tooltip text="One fixed amount per accepted exploit, according to the current kernelCTF rules." >}}$71,337{{< /tooltip >}} for each new kernel exploit that turns a normal user into root, and Google's [public repository](https://github.com/google/security-research/tree/master/pocs/linux/kernelctf) holds exploits for {{< tooltip text="119 exploit folders in pocs/linux/kernelctf, covering 93 unique CVEs, at commit 79f049dc from October 16, 2026." >}}93 different kernel bugs{{< /tooltip >}}.
 kvmCTF pays more than three times as much, and the same repository holds {{< tooltip text="The only folder in pocs/linux/kvmctf at the same commit: a NULL pointer dereference reached through nested virtualization." >}}one KVM exploit{{< /tooltip >}}, which crashes the host instead of escaping it.
-The programs started a year apart, and publishing takes time.
-Januscape, one of Kim's escapes, was used in kvmCTF but is not in the repository yet.
-Even so, the gap is big.
+kvmCTF started a year later, but the gap is still big.
 
 Regular VMs are heavy.
 They boot slowly and reserve a lot of memory.
@@ -228,13 +223,9 @@ Setting it up is two steps: register the runtime with the Docker daemon, then po
 MINDROOM_DOCKER_WORKER_RUNTIME=runsc
 ```
 
-On NixOS that first part is `virtualisation.docker.daemon.settings.runtimes`.
-On Kubernetes, MindRoom already had `workers.kubernetes.runtimeClassName`; this is the Docker counterpart.
-
 The six lines are short because everything else already existed.
 gVisor and Kata do the isolating.
-Docker already gives each worker what it needs: a root directory on the host, read-only credentials and config, workspaces shared live with MindRoom and with other workers, a published port, and a route back to the primary.
-And Docker already knows how to hand a container to a different runtime.
+Docker already gives each worker its folders, its credentials, and its network, and it already knows how to hand a container to a different runtime.
 On the MindRoom side, the hard part happened months earlier, when agent tools moved out of the main process into dedicated workers with explicit mounts and credentials.
 Once every worker is one `containers.run` call, swapping what runs underneath it is one argument.
 For comparison, Claude Opus estimated that building a microVM backend into MindRoom itself would take {{< tooltip text="For a native Cloud Hypervisor backend that rebuilds image conversion, guest init, folder sharing, networking, and VM supervision. The estimate is in the PR description." >}}2,500 to 4,000 lines{{< /tooltip >}}.
@@ -242,12 +233,7 @@ For comparison, Claude Opus estimated that building a microVM backend into MindR
 ## What it costs
 
 I tested both runtimes with a real agent in a Matrix room: gVisor on that ARM server, and Kata in a throwaway VM on my desktop.
-Shell, Python, git, background processes, and the Worker Computer browser all worked, without any MindRoom code change.
-
-gVisor has two version caveats, both in the [MindRoom docs](https://docs.mindroom.chat/deployment/sandbox-proxy/):
-
-- Use release 20261005 or newer. Release 20260406 crashed Chromium after the first page.
-- With 20261005 or older, register `runsc` without `--oci-seccomp`, or workers cannot start threads ([google/gvisor#14688](https://github.com/google/gvisor/issues/14688)).
+Shell, Python, git, background processes, and the browser all worked, without any MindRoom code change.
 
 Kata costs more:
 
