@@ -84,6 +84,14 @@ The kernel dresses it up using three features:
 - **cgroups** decide how much it can use: CPU, memory, number of processes.
 - **seccomp** decides which syscalls it may make at all. It is a filter that blocks the ones a normal program never needs.
 
+That also works in the other direction.
+Whoever can tell Docker what to run can start a container as root and mount any folder from the host into it.
+Because root inside is root outside, they can then read and change every file in that folder, including files their own account may not open.
+Docker's own documentation says the `docker` group [grants root-level privileges](https://docs.docker.com/engine/install/linux-postinstall/).
+I knew that in theory, but it only clicked when I watched an AI agent do it on a machine where I had no root, only Docker access.
+It needed to change files it was not allowed to touch, so it started a small container, mounted their folder, and edited them from inside.
+No kernel bug needed.
+
 {{< figure src="container-kernel.svg" alt="Two containers and the host's own processes all make syscalls into one shared Linux kernel, which keeps the containers apart with namespaces, cgroups and seccomp. One bug in that kernel reaches every container and the host." >}}
 
 There is no second kernel.
