@@ -48,11 +48,6 @@ I have used containers, KVM, and hypervisors for years, including Proxmox before
 Building this forced me to learn it, and writing this post is my exercise in understanding it all.
 I thought it would be nice to share.
 
-The fix in MindRoom turned out to be six lines of code.
-In this post, I start with what the kernel does and how containers use it to look like separate computers.
-Then I cover why that is a problem now, how I asked an AI to break out of my own containers, and which stronger options exist.
-At the end come the six lines and what they cost.
-
 {{% callout note %}}
 **TL;DR:** A container is a process on your machine that the kernel dresses up as a separate computer.
 Every container shares that one kernel with the host, so a single bug in it can be a way out.
@@ -126,16 +121,12 @@ One of those could talk it into running an exploit.
 
 Before changing anything, I wanted to know how real this was for my own setup.
 I gave a MindRoom agent [Daybreak Blue](https://openai.com/the-defense-factory/) and asked it to escape its worker container using known kernel vulnerabilities.
-Daybreak Blue is OpenAI's security model: you verify your identity, and in return it stops refusing offensive security work.
-Anthropic's [Claude Mythos](https://www.anthropic.com/claude/mythos) is even more locked down and only available to vetted organizations.
+Daybreak Blue is OpenAI's security model for verified users, so it does the offensive security work that other models refuse.
 
 It did not get out, which was reassuring.
 But it only tried known bugs.
 A kernel a few weeks behind on patches, or a bug nobody has published yet, would be a different story.
 So the attempt tells me the easy path was closed that day, and not much more.
-
-I do not use the stronger runtimes for my own agents yet.
-I made the change so that people more paranoid than me can add that wall with one setting.
 
 ## Stronger walls: virtual machines and gVisor
 
@@ -281,8 +272,7 @@ Both walls make an escape far harder, and neither makes it impossible.
 ## Conclusion
 
 Once I started reading about this, I kept running into people saying containers were never a security boundary.
-That is true.
-I still think they were good enough, because getting out of one needed a kernel bug, and those were rare.
-With AI finding those bugs faster and agents running code nobody reads, that is less true now.
+That is true, and for years it did not matter much to me.
+With AI finding kernel bugs faster and agents running code nobody reads, it matters now.
 MindRoom can now move its agents off the shared kernel with one environment variable.
 I do not use it myself yet, but if you are more paranoid than I am, it is there.
