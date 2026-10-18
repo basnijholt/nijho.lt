@@ -13,7 +13,9 @@
     position: absolute;
     left: 0;
     bottom: calc(100% + 8px);
-    transform: translateY(4px);
+    /* tooltip.js sets --tip-room, the space before the screen's right edge; a wider tooltip moves left by the difference */
+    --tip-x: min(0px, var(--tip-room, 100%) - 100%);
+    transform: translate(var(--tip-x), 4px);
     background: rgb(25 25 28 / .95);
     color: #fff;
     padding: .4em .75em;
@@ -49,7 +51,7 @@
   &:hover::after, &:focus::after {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
+    transform: translate(var(--tip-x), 0);
   }
   &:hover::before, &:focus::before {
     opacity: 1;
