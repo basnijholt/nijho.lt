@@ -127,7 +127,8 @@ So the attempt tells me the easy path was closed that day, and not much more.
 
 ## Stronger walls: virtual machines and gVisor
 
-The classic answer is a virtual machine, and this is where the hardware comes in.
+The classic answer is a virtual machine.
+A container shares the host's kernel, but a VM brings its own, and this is where the hardware comes in.
 Modern CPUs have a virtualization mode built in, called VT-x on Intel and AMD-V on AMD.
 In that mode, a second kernel, the guest kernel, runs directly on the real CPU and believes it is in charge, while the CPU quietly limits it.
 When the guest tries something it may not do on its own, like talking to a disk or a network card, the CPU pauses the guest and hands control to the host.
@@ -136,7 +137,7 @@ Despite the name, nothing escapes and nothing crashes.
 The host handles the request, for example by pretending to be that disk, and then resumes the guest where it stopped.
 From the guest's point of view, the instruction simply finished.
 Memory is fenced off too.
-A second set of page tables in the CPU decides which real memory the guest can reach, so even a fully privileged guest kernel cannot touch host memory.
+The CPU keeps a separate map of which real memory each guest may use, so even a guest kernel with full privileges cannot touch the host's memory.
 
 The CPU only provides the mechanism.
 The software that sets the rules and handles the VM exits is called the hypervisor.
@@ -151,7 +152,7 @@ AWS Lambda is KVM plus Firecracker.
 Code in a VM talks to its own guest kernel.
 To reach the host, it has to break that kernel first and then the hypervisor.
 That is still possible.
-Google Project Zero turned [a bug in KVM's nested virtualization on AMD](https://googleprojectzero.blogspot.com/2021/06/an-epyc-escape-case-study-of-kvm.html) into a full escape in 2021.
+Google Project Zero turned [a bug in how KVM runs VMs inside VMs on AMD](https://googleprojectzero.blogspot.com/2021/06/an-epyc-escape-case-study-of-kvm.html) into a full escape in 2021.
 Google's [kvmCTF](https://security.googleblog.com/2024/06/virtual-escape-real-reward-introducing.html) pays up to {{< tooltip text="The top reward in the current kvmCTF rules, for a full escape from the guest VM to the host." >}}$250,000{{< /tooltip >}} for a new one.
 And this year, one researcher, Hyunwoo Kim, published [three KVM escapes](https://github.com/V4bel/Zapscape), one of them hidden in KVM {{< tooltip text="Januscape, CVE-2026-53359: a use-after-free in the shadow page tables of x86 KVM, added in August 2010 and fixed in June 2026." >}}since 2010{{< /tooltip >}}.
 
@@ -187,8 +188,9 @@ Docker, and MindRoom, still see an ordinary container.
 
 [gVisor](https://gvisor.dev), from Google, takes a different route, and it is not a VM.
 It is a reimplementation of the Linux kernel, written in Go, that runs as a normal program on the host.
+Go manages memory for the programmer, so the use-after-free mistake behind the DepthFirst escape is much harder to make in gVisor.
 The worker's syscalls go to gVisor instead of the host kernel, and gVisor itself only makes a small, filtered set of host syscalls.
-It needs no `/dev/kvm`, so it also runs inside cloud VMs that do not offer nested virtualization.
+It needs no `/dev/kvm`, so it also runs inside cloud VMs that cannot start VMs of their own.
 My test machine, an ARM server running NixOS, had no `/dev/kvm`, which is why I tried gVisor first.
 Its runtime is called `runsc`, and it plugs into Docker the same way.
 
