@@ -41,7 +41,7 @@ The code inside the container is now written by an AI, and the bugs that let it 
 A [video from the Low Level channel](https://youtu.be/9-2CSJC114k) asking whether containers are still safe made me sit down and rethink my setup.
 
 I am not an expert in any of this.
-I have used containers, KVM, and hypervisors for years, including Proxmox before I [moved to NixOS]({{< ref "/post/proxmox-to-nixos" >}}), but I never really understood what happens underneath.
+I have used containers, KVM, and hypervisors for years, including Proxmox before I [moved to NixOS]({{< ref "/post/proxmox-to-nixos" >}}), but I never deeply understood what happens underneath.
 Building this forced me to learn it, and writing this post is my exercise in understanding it all.
 I thought it would be nice to share.
 
