@@ -197,7 +197,7 @@ It needs no `/dev/kvm`, so it also runs inside cloud VMs that do not offer neste
 My test machine, an ARM server running NixOS, had no `/dev/kvm`, which is why I tried gVisor first.
 Its runtime is called `runsc`, and it plugs into Docker the same way.
 
-{{< figure src="isolation-stacks.svg" caption="The three options side by side. The red dashed parts are what the agent has to break to reach the host." alt="Three stacks side by side. Plain Docker: the agent's code talks to the host kernel directly. gVisor: the agent's code talks to the Sentry, a kernel written in Go, which makes a few filtered calls to the host kernel. Kata: the agent's code runs on a guest kernel inside a microVM, run by a VMM such as QEMU, Firecracker or Cloud Hypervisor, on top of the KVM module in the host kernel. The VMM plus KVM together are the hypervisor." >}}
+{{< figure src="isolation-stacks.svg" caption="The three options side by side." alt="Three stacks side by side. Plain Docker: the agent's code makes syscalls straight into the host kernel, so the agent has to break the host kernel through any syscall seccomp allows. gVisor: the agent's code makes syscalls into the Sentry, a kernel written in Go, which makes a few syscalls to the host kernel, so the agent has to break the Sentry and then the host kernel. Kata Containers: the agent's code runs on a guest Linux kernel inside a microVM. VM exits go to the KVM module in the host kernel, which passes device requests up to the VMM. The VMM and KVM together are the hypervisor, so the agent has to break the guest kernel and then the hypervisor." >}}
 
 Or as a table:
 
