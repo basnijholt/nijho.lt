@@ -119,6 +119,8 @@ Their conclusion is that you should assume attackers can escape containers at wi
 
 Now put an AI agent in that container.
 It reads web pages and repositories written by strangers, and one of those could talk it into running an exploit.
+On a MindRoom server, getting out of a worker means getting onto the machine that runs MindRoom itself.
+That is where the API keys, Matrix logins, and stored credentials live, which the workers are built to never see.
 
 ## So I asked a model to break out
 
