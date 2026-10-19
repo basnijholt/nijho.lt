@@ -2,7 +2,7 @@
 title: "Roll your own, fork the rest 🍴"
 subtitle: "A year of building MindRoom taught me that 'battle-tested' was the right rule with the wrong threshold"
 summary: "Stars measure interest, not usage. After a year of MindRoom, with forks of a Matrix client, two Matrix servers and a Matrix web client, plus 126 workarounds for one AI framework, my rule is: depend on what millions of projects use every day, roll your own when a library only gives you the easy part, and fork when the problem is hard and few people use the code."
-date: 2026-10-18
+date: 2026-10-19
 draft: false
 featured: false
 authors:
