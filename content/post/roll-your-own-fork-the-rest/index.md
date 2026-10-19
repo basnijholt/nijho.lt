@@ -78,16 +78,13 @@ An open protocol, about a decade old, with serious security reviews from {{< too
 Millions of people use it.
 
 Matrix is still a good protocol and I am still on it.
-But millions of people *using* Matrix does not mean many people *build clients on it*.
-There are not hundreds of client libraries. There are a few.
+But even though millions of people use Matrix, there are only a few client libraries.
 
-I hit this hardest with edits.
 MindRoom streams agent replies by editing the same message many times a second.
 Almost every part of the ecosystem I touched had a problem with that: {{< tooltip text="The most widely used Matrix app, made by the company behind the protocol." >}}Element{{< /tooltip >}}, {{< tooltip text="A Matrix web client focused on a simple, Discord-like interface. MindRoom's chat app is a fork of it." >}}Cinny{{< /tooltip >}}, {{< tooltip text="The Python Matrix client library MindRoom's agents use to log in, read and send messages." >}}matrix-nio{{< /tooltip >}}, and the {{< tooltip text="matrix-js-sdk, the library Element Web and Cinny are built on." >}}Matrix JavaScript SDK{{< /tooltip >}}.
 In the JavaScript SDK, edits that arrived while a thread was still loading were silently dropped, so you saw stale text until you reloaded.[^jssdk]
 
-The number to look at is not how many people use the *product*.
-It is how many projects use the *library you build on*.
+What counts is how many projects use the library you build on.
 Element's users do not test matrix-js-sdk for you. Other people building on matrix-js-sdk do.
 It gets roughly 100,000 downloads a day. matrix-nio, the Python client, about 23,000.
 
@@ -130,17 +127,14 @@ Agno and matrix-nio are the base that MindRoom is built on, which is probably al
 Take memory libraries, [Mem0](https://github.com/mem0ai/mem0) and friends.
 I have [already written about this]({{< ref "/post/file-based-rag-memory" >}}): I cloned LlamaIndex, LangChain, Letta, Mem0 and PydanticAI, studied how they work, and re-implemented the parts I needed. My memory system ended up "mostly modeled after Mem0".
 
-The core idea is **not hard**.
-{{< tooltip text="Retrieval-augmented generation: look up relevant text first and paste it into the prompt, so the model answers from your documents instead of from memory." >}}RAG{{< /tooltip >}} has no secret sauce. Chunk, embed, retrieve, re-rank, reconcile. Once you have read a couple of implementations you can write it, and afterwards you understand every line.
+The core idea is not hard.
+With {{< tooltip text="Retrieval-augmented generation: look up relevant text first and paste it into the prompt, so the model answers from your documents instead of from memory." >}}RAG{{< /tooltip >}}, you chunk, embed, retrieve, re-rank and reconcile. Once you have read a couple of implementations you can write it, and afterwards you understand every line.
 
 The same is true of an agent framework.
 It builds a JSON payload, posts it to an HTTP endpoint, parses a {{< tooltip text="Providers send the reply as server-sent events: a long-lived HTTP response with one small JSON chunk per token or tool-call fragment." >}}streaming response{{< /tooltip >}}, keeps a list of messages, and loops when the model asks for a tool call.
 With AI, that is a day or two of work.
 
-**So what is the hard part?**
-
-Making it reliable at scale.
-Not blocking the {{< tooltip text="In async Python, one thread runs all tasks by switching between them. A single call that blocks freezes every conversation at once." >}}event loop{{< /tooltip >}}. Handling the crazy edge cases.
+The hard part is making it reliable at scale: never blocking the {{< tooltip text="In async Python, one thread runs all tasks by switching between them. A single call that blocks freezes every conversation at once." >}}event loop{{< /tooltip >}}, and handling the crazy edge cases.
 With an agent system you end up building a very complicated state machine, and if you do not watch it, any combination of states is possible. Almost all of them are edge cases.
 
 A library gives you the easy 10% and leaves you the hard 90%.
@@ -177,7 +171,7 @@ Same with {{< tooltip text="An open-source, self-hosted ChatGPT-style web interf
 
 Keeping a fork up to date used to be miserable.
 With an LLM doing the rebasing, pulling in the latest upstream is now cheap, though still a bit of a risk every time.
-The real cost is that the moment you fork, the whole codebase becomes your responsibility, not just the part you changed.
+The bigger cost is that once you fork, you are responsible for the whole codebase, including the parts you never changed.
 
 ### Agno: patches instead of a fork
 
@@ -197,7 +191,7 @@ A few examples:
 - **Reasoning is silently lost when tool calls are replayed.**[^agno-reasoning]
 - **Provider errors collapse into a generic 502**, which throws away the error code you need to decide whether to retry.[^agno-502]
 
-At this size, the patches are a fork in everything but name.
+At this size, the patches amount to a fork.
 
 ## 6. I am not dunking on open source, including mine
 
@@ -209,12 +203,12 @@ Most new AI tooling is not very good, and MindRoom may well be included.
 It is large, fast-moving, and nowhere near millions of daily downloads.
 By my own rule, you should think twice before depending on it.
 
-I also have to be honest: I have not yet built a project the roll-your-own way from the start.
+I also have to admit that I have not yet built a project the roll-your-own way from the start.
 So comparing "what I would do next time" with what I actually did is not entirely fair.
 
 ## 7. My rule for the next `uv add`
 
-It is not a hard rule. It is a balance between three things.
+I weigh three questions.
 
 **How many projects use it?**
 Daily downloads of the actual package, not stars, and not how many people use the product built on top.
@@ -232,7 +226,6 @@ If the maintainers accept patches, upstream what is general enough.
 **If I started MindRoom over today, I would write the HTTP requests to the model providers myself.**
 Not even the OpenAI or Anthropic SDKs.
 And even httpx is less safe than its download numbers suggest: in early 2026 its maintainer closed the issue tracker and discussions, and the latest stable release is from December 2024.[^httpx]
-That is the hard part of open source too.
 
 In 2025 I wrote that the right answer is "it depends on the situation", and I still believe that.
 I just had the wrong threshold.
