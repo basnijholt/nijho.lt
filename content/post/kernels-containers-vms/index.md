@@ -99,9 +99,8 @@ You know where that code comes from, you keep your kernel patched, and that is g
 An AI agent is different.
 It writes new code on the spot and runs it, and nobody knows in advance what that code will do.
 
-Root inside being root outside matters in one more way.
-Anyone who can use Docker can start a container as root and mount any folder from the host into it.
-As root, they can then read and change every file in that folder, including files their own account may not open.
+Since root in a container is root on the host, anyone who can use Docker can start a container as root and mount any folder from the host into it.
+They can then read and change every file in that folder, including files their own account may not open.
 Docker's own documentation says the `docker` group [grants root-level privileges](https://docs.docker.com/engine/install/linux-postinstall/).
 I knew that in theory, but it only clicked when I watched an AI agent do it on a machine where I had no root, only Docker access.
 It needed to change files it was not allowed to touch, so it started a small container, mounted their folder, and edited them from inside.
