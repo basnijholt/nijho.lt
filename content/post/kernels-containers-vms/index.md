@@ -194,7 +194,7 @@ The default runtime, `runc`, does what I described earlier: it starts a process 
 But you can tell Docker to use a different runtime.
 
 [Kata Containers](https://katacontainers.io) is such a runtime, and it starts a microVM instead.
-It picks one of the VMMs above (my test used QEMU), boots a small guest kernel, and starts the container inside it.
+It picks one of the VMMs above (my test used QEMU), boots a small guest kernel, and starts the container inside it.[^kata]
 Docker, and MindRoom, still see an ordinary container.
 
 [gVisor](https://gvisor.dev), from Google, takes a different route, and it is not a VM.
@@ -217,7 +217,7 @@ Or as a table:
 
 Each option also changes how much code on the host an escape can pick its bug from.
 
-{{< plot name="attackSurface" caption="Lines of code on the host that deal with what the agent's code asks for, counted with tokei, comments and blank lines included. For Docker, the core of Linux without drivers; for gVisor, its kernel and network stack without tests; for Kata, KVM without the VMM. Not all of it is reachable. Hover for exact numbers." >}}
+{{< plot name="attackSurface" caption="Lines of code on the host that deal with what the agent's code asks for, counted with tokei, comments and blank lines included. For Docker, the core of Linux without drivers; for gVisor, its kernel and network stack without tests; for Kata, KVM alone, without the VMM and Kata's other helpers. Not all of it is reachable. Hover for exact numbers." >}}
 
 ## The PR: six lines
 
@@ -287,5 +287,7 @@ I do not use it myself yet, but if you are more paranoid than I am, it is there.
 [^runc]: The other way out is a bug in the program that starts the container. In 2024, [CVE-2024-21626](https://github.com/opencontainers/runc/security/advisories/GHSA-xr7r-f8xq-vfvv) in runc, the program Docker uses for that, leaked a handle to a host folder into new containers, so a malicious image could reach the host's files without any kernel bug.
 
 [^root]: Docker can map the container's root to an ordinary user on the host with [user namespace remapping](https://docs.docker.com/engine/security/userns-remap/), or run without root altogether in [rootless mode](https://docs.docker.com/engine/security/rootless/), but neither is the default.
+
+[^kata]: Like runc for Docker, Kata's own programs on the host are a way out too. In 2020, one bug ([CVE-2020-2023](https://nvd.nist.gov/vuln/detail/CVE-2020-2023)) let a container take over the guest without a kernel bug, and a second ([CVE-2020-2026](https://nvd.nist.gov/vuln/detail/CVE-2020-2026)) then let the guest trick the Kata runtime on the host into mounting files over any host path. Neither needed a KVM bug. virtiofsd, the program that shares folders with the guest, also runs on the host and handles the guest's file requests.
 
 [^devices]: A bug in one of the VMM's fake devices can skip the first step, because a normal program in the guest can feed those devices data through the network or a shared folder. [CVE-2020-8608](https://access.redhat.com/security/cve/cve-2020-8608), a buffer overflow in QEMU's user-mode networking, could be triggered that way with crafted network traffic.
