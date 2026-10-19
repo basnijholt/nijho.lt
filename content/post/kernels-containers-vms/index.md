@@ -144,13 +144,14 @@ The host handles the request, for example by pretending to be that disk, and the
 From the guest's point of view, the instruction simply finished.
 
 Memory is fenced off too.
-The CPU keeps a separate map of which real memory each guest may use, so even a guest kernel with full privileges cannot touch the host's memory.
+The host gives the CPU a separate map of which real memory each guest may use, and the CPU checks every memory access against it.
+So even a guest kernel with full privileges cannot touch the host's memory.
 
 The CPU only provides the mechanism.
 The software that sets the rules and handles the VM exits is called the hypervisor.
 "Hypervisor" is a role, not one program, and on Linux it is two pieces:
 
-- **KVM**, a module in the Linux kernel, uses the CPU's virtualization mode to run the guest and catches its VM exits. It shows up as the device `/dev/kvm`.
+- **KVM**, a module in the Linux kernel, uses the CPU's virtualization mode to run the guest, keeps that memory map, and catches its VM exits. It shows up as the device `/dev/kvm`.
 - **A VMM** (virtual machine monitor), a normal program on top, sets up the VM and handles the exits that KVM passes up, for example by pretending to be the guest's disk and network card. [QEMU](https://www.qemu.org), [Firecracker](https://firecracker-microvm.github.io), and [Cloud Hypervisor](https://www.cloudhypervisor.org) are three VMMs you can pick from.
 
 Proxmox, which I mentioned above, is KVM plus QEMU.
