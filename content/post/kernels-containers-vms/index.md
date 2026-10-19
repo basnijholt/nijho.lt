@@ -175,6 +175,8 @@ Google's bug bounties point the same way.
 [kernelCTF](https://google.github.io/security-research/kernelctf/rules.html) pays {{< tooltip text="One fixed amount per accepted exploit, according to the current kernelCTF rules." >}}$71,337{{< /tooltip >}} for each new kernel exploit that turns a normal user into root, and Google's [public repository](https://github.com/google/security-research/tree/master/pocs/linux/kernelctf) holds exploits for {{< tooltip text="119 exploit folders in pocs/linux/kernelctf, covering 93 unique CVEs, at commit 79f049dc from October 16, 2026." >}}93 different kernel bugs{{< /tooltip >}}.
 kvmCTF pays more than three times as much, and the same repository holds {{< tooltip text="The only folder in pocs/linux/kvmctf at the same commit: a NULL pointer dereference reached through nested virtualization. Januscape was also used in kvmCTF but is not in the repository yet." >}}one KVM exploit{{< /tooltip >}}, which crashes the host instead of escaping it.
 kvmCTF started a year later, but the gap is still big.
+Most of those kernel exploits would not work as written from a default container, because they {{< tooltip text="84 of the 119 exploit folders create a user namespace, which gives a normal process root's powers over its own set of namespaces and opens up kernel code it could not reach otherwise. Docker's default seccomp profile blocks that unless the container has the CAP_SYS_ADMIN capability." >}}first use a feature Docker blocks{{< /tooltip >}}.
+Still, they show how many exploitable bugs sit behind the syscalls.
 
 ## Kata Containers and gVisor
 
