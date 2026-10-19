@@ -205,6 +205,7 @@ By my own rule, you should think twice before depending on it.
 
 I also have to admit that I have not yet built a project the roll-your-own way from the start.
 So comparing "what I would do next time" with what I actually did is not entirely fair.
+This is what I think right now, and a year from now I may have to write another post correcting this one.
 
 ## 7. My rule for the next `uv add`
 
