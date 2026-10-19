@@ -19,6 +19,7 @@
   {{- if .Params.commentable }}{{ $scripts = $scripts | append "js/comments.js" }}{{ end }}
 {{- end }}
 {{- if and .IsPage (strings.Contains .Content "data-zoomable") }}{{ $scripts = $scripts | append "js/zoom.js" }}{{ end }}
+{{- if and .IsPage (strings.Contains .Content "hover-tip") }}{{ $scripts = $scripts | append "js/tooltip.js" }}{{ end }}
 {{- range $scripts }}{{ partial "script.html" . }}{{ end }}
 {{- if .Params.math }}{{ partial "head/mathjax.html" . }}{{ end }}
 {{ partial "head/jsonld.html" . }}
