@@ -288,6 +288,12 @@ Both walls make an escape far harder, and neither makes it impossible.
 Once I started reading about this, I kept running into people saying containers were never a security boundary.
 That is true, and for years I did not worry about it.
 With AI finding kernel bugs faster and agents running code nobody reads, I do now.
+
+No sandbox is perfectly safe, though.
+In [a conversation with Dwarkesh Patel](https://www.dwarkesh.com/p/noam-brown), Noam Brown doubted that even computers with no network connection at all would be enough to contain an AI.
+He pointed to [studies](https://arxiv.org/abs/1503.07919) where two such computers next to each other {{< tooltip text="BitWhisper, from Ben-Gurion University in 2015: 1 to 8 bits per hour between computers up to 40 cm apart, enough for a short command or a password." >}}talk through heat{{< /tooltip >}}: one runs its CPU hot, and the other picks up the change with its temperature sensor.
+Every option in this post trades some speed or memory for safety.
+How far to go depends on your own risk tolerance and how paranoid you are.
 MindRoom can now move its agents off the shared kernel with one environment variable.
 I do not use it myself yet, but if you are more paranoid than I am, it is there.
 
