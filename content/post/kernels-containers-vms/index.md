@@ -117,6 +117,10 @@ Their model found a bug in the kernel code for Unix sockets, which programs on t
 The kernel freed a piece of memory and then kept using it, a so-called use-after-free, and from inside a container that was enough to get out.
 Their conclusion is that you should assume attackers can escape containers at will.
 
+Could I block more syscalls, or take more powers away from root?
+A little, but that only narrows which parts of the shared kernel a container can reach.
+This bug sat in Unix sockets, which almost every program uses, including the browser the agent drives, so blocking them would break the agent.
+
 Now put an AI agent in that container.
 It reads web pages and repositories written by strangers, and one of those could talk it into running an exploit.
 On a MindRoom server, getting out of a worker means getting onto the machine that runs MindRoom itself.
@@ -204,6 +208,7 @@ Docker, and MindRoom, still see an ordinary container.
 It is a reimplementation of the Linux kernel, written in Go, that runs as a normal program on the host.
 Go manages memory for the programmer, so the use-after-free mistake behind the DepthFirst escape is much harder to make in gVisor.
 The worker's syscalls go to gVisor instead of the host kernel, and gVisor itself only makes a small, filtered set of host syscalls.
+That is the hardening idea taken all the way: gVisor answers the agent's syscalls itself, so the filter on the host can be much stricter than Docker's.
 It needs no `/dev/kvm`, so it also runs inside cloud VMs that cannot start VMs of their own.
 My test machine, an ARM server (with the kind of chip phones use) running NixOS, had no `/dev/kvm`, which is why I tried gVisor first.
 Its runtime is called `runsc`, and it plugs into Docker the same way.
