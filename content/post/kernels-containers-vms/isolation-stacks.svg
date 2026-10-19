@@ -32,7 +32,7 @@
     <!-- gVisor -->
     <rect x="205" y="76" width="135" height="36" rx="8" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="none"/>
     <rect x="205" y="148" width="135" height="54" rx="8" fill="#ede9fe" stroke="#dc2626"/>
-    <rect x="232" y="320" width="80" height="42" rx="8" fill="#ffffff" stroke="#dc2626"/>
+    <rect x="212" y="320" width="120" height="42" rx="8" fill="#ffffff" stroke="#dc2626"/>
 
     <!-- Kata: the microVM reaches down to the CPU, past the host kernel -->
     <rect x="375" y="70" width="150" height="336" rx="12" fill="#dcfce7" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="none"/>
