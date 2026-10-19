@@ -106,7 +106,7 @@ I knew that in theory, but it only clicked when I watched an AI agent do it on a
 It needed to change files it was not allowed to touch, so it started a small container, mounted their folder, and edited them from inside.
 No kernel bug needed.
 
-## Why kernel bugs matter more now
+## Why kernel bugs are a bigger problem now
 
 Kernel bugs that let a normal program take over the whole machine used to take skilled people weeks or months to find and exploit.
 The famous ones, like [Dirty COW](https://dirtycow.ninja) in 2016, made the news every year or two, you patched, and that was it.
@@ -116,8 +116,8 @@ Their model found a bug in the kernel code for Unix sockets, which programs on t
 The kernel freed a piece of memory and then kept using it, a so-called use-after-free, and from inside a container that was enough to get out.
 Their conclusion is that you should assume attackers can escape containers at will.
 
-Could I block more syscalls, or take more powers away from root?
-A little, but that only narrows which parts of the shared kernel a container can reach.
+Blocking more syscalls, or taking more powers away from root, helps a little.
+But it only narrows which parts of the shared kernel a container can reach.
 This bug sat in Unix sockets, which almost every program uses, including the browser the agent drives, so blocking them would break the agent.
 
 Now put an AI agent in that container.
@@ -277,7 +277,7 @@ The other costs are the usual trade-offs between containers and VMs:
 A stronger sandbox protects the host.
 It does nothing about the tokens and network access you give the worker.
 An agent needs no kernel exploit to misuse a token that can push to your repositories, or to poke at every device on your home network.
-Scoped credentials and a firewall allowlist matter at least as much, and MindRoom handles both separately: [Agent Keys](https://docs.mindroom.chat/deployment/egress-broker/) let agents use API keys without ever seeing them, and [Approved Egress](https://docs.mindroom.chat/deployment/approved-egress/) limits which servers a worker on Kubernetes can reach.
+Scoped credentials and a firewall allowlist protect you at least as much, and MindRoom handles both separately: [Agent Keys](https://docs.mindroom.chat/deployment/egress-broker/) let agents use API keys without ever seeing them, and [Approved Egress](https://docs.mindroom.chat/deployment/approved-egress/) limits which servers a worker on Kubernetes can reach.
 
 gVisor has had its own bugs, and it still talks to the host kernel, just through a much smaller door.
 KVM has bugs too, as this year's escapes show.
@@ -286,8 +286,8 @@ Both walls make an escape far harder, and neither makes it impossible.
 ## Conclusion
 
 Once I started reading about this, I kept running into people saying containers were never a security boundary.
-That is true, and for years it did not matter much to me.
-With AI finding kernel bugs faster and agents running code nobody reads, it matters now.
+That is true, and for years I did not worry about it.
+With AI finding kernel bugs faster and agents running code nobody reads, I do now.
 MindRoom can now move its agents off the shared kernel with one environment variable.
 I do not use it myself yet, but if you are more paranoid than I am, it is there.
 
