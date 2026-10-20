@@ -132,6 +132,7 @@ The first judging said the adapted harnesses scored almost 11 points higher.
 I had the same outputs judged a second time, and the gain shrank to under 4 points.
 Two judgings of the identical output differed by 5 points on average, and by up to 22.
 Only 4 of 13 tasks improved under both judgings.
+Measured honestly, the loop did not make the agents better.
 So measure the noise of the judge too, not only the noise of the agent.
 
 What did survive was, again, a short list of working habits that the optimizer kept writing:
@@ -142,6 +143,9 @@ What did survive was, again, a short list of working habits that the optimizer k
 - write a large file in parts instead of in one enormous tool call.
 
 Those are the next candidates for MindRoom's default instructions, tested as defaults rather than per task.
+
+Like RRSI, it only ever changed text: instructions, tool descriptions, and skills.
+Neither optimizer touched how the tools themselves work, and every interface fix in this post came from reading trajectories, not from the loop.
 
 Building this benchmark found bugs again.
 A standalone MindRoom API left its sandbox containers running after it stopped.
