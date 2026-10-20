@@ -1,7 +1,7 @@
 ---
 title: "Trying RRSI's self-improving agent harnesses on MindRoom"
 subtitle: "I let an optimizer rewrite my agents' instructions. It worked, but watching the agents struggle taught me more."
-summary: "Google's RRSI lets LLMs rewrite an agent's prompts, tools, and config, and keeps only the changes that hold up on a benchmark. I tried it on MindRoom agents. It found good working habits, but the bigger wins came from building an honest benchmark and watching where the agents got stuck."
+summary: "Google's RRSI lets LLMs rewrite an agent's prompts, tools, and config, and keeps only the changes that hold up on a benchmark. I tried it on MindRoom agents. It found good working habits, but the bigger wins came from building an honest benchmark and watching where the agents got stuck. A second try with Harness² taught the same lessons, and one more: check production before you build."
 date: 2026-10-02
 draft: true
 featured: false
@@ -122,6 +122,57 @@ Minimal mode then needed a third fewer tokens, with the extra wait commands gone
 The rerun also caught a confusing error that my own fix had introduced.
 Measure again after you fix something.
 
+## A second try: Harness² on office work
+
+A few weeks later Google Research released [Harness²](https://github.com/google-research/harness2).
+Instead of one harness for a whole benchmark, it adapts the harness to each task and carries what it learns to the next task of the same kind.
+I ran it on MindRoom agents doing [JobBench](https://github.com/Job-Bench/job-bench-eval) tasks: real office work like reconciling spreadsheets, editing Word documents, and building slide decks, graded by a judge model against a rubric.
+
+The first judging said the adapted harnesses scored almost 11 points higher.
+I had the same outputs judged a second time, and the gain shrank to under 4 points.
+Two judgings of the identical output differed by 5 points on average, and by up to 22.
+Only 4 of 13 tasks improved under both judgings.
+So measure the noise of the judge too, not only the noise of the agent.
+
+What did survive was, again, a short list of working habits that the optimizer kept writing:
+
+- don't put spreadsheet formulas in a file that nothing will ever calculate; write the values;
+- write a small checker script and run it before you say you are done;
+- use real heading styles in Word documents;
+- write a large file in parts instead of in one enormous tool call.
+
+Those are the next candidates for MindRoom's default instructions, tested as defaults rather than per task.
+
+Building this benchmark found bugs again.
+A standalone MindRoom API left its sandbox containers running after it stopped.
+A long container name prefix was silently cut short.
+A skill file with a small YAML mistake vanished without a word.
+And when Claude ran out of output tokens in the middle of a tool call, the call was either dropped or run with truncated arguments.
+All of those are fixed now.
+
+## Check production before you build
+
+One of those bugs took me down a long road.
+Skills can ship scripts, and MindRoom refused to run scripts from an agent's own skills.
+I decided that scripts should run wherever the agent's shell runs, and my coding agent built exactly that: commands routed through the agent's shell, skill folders mounted into the sandbox containers, every edge case handled.
+Three reviewer models approved it after seven rounds, and every round found something real.
+By then it had grown to more than 300 lines.
+
+Then I asked whether anyone ever used this.
+In production, over 30 days, agents read a skill's script 32 times, against more than 5,000 skill loads.
+They asked to run one twice, and both times it was refused.
+Not a single script had ever run through it.
+The agents already read the script and ran it with their own shell.
+
+So we deleted the feature instead: the tool now only reads scripts, a 13-line change.
+That also takes a few hundred characters out of every request of every agent with skills.
+
+The same look at production showed that more than half of the skills MindRoom's own skill learner had written were never used, while every one of them sits in every prompt.
+Self-improvement that only ever adds things needs a way to take them out again.
+
+The reviewers were right about every defect they found.
+None of them asked whether the feature should exist.
+
 ## Who did the work
 
 My coding agent did almost all of it: the benchmarks, the hidden checks, the runs, and the pull requests.
@@ -136,6 +187,8 @@ Each of those changed the direction more than any round of the optimizer did.
 - **Expect the first round to do most of the work.** The gains are general habits, and they show up early.
 - **Read the trajectories.** The bugs and the bad interfaces are in there, and no optimizer will fix those for you.
 - **Ask what your comparison does not test.**
+- **Score twice.** A second judging can erase most of a gain.
+- **Check production usage before you build a feature.** Sometimes the best fix is deleting it.
 
 RRSI is a nice piece of work, and I will keep the setup around to score agent configs.
 But the most valuable thing it gave me was a reason to watch my agents closely, and that turned out to be worth more than the instructions it wrote.
