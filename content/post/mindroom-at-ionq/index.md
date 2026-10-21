@@ -61,9 +61,9 @@ Every new group needed a hand-held onboarding, so I recorded short videos to mak
 The people who tried it kept using it, but it was hard to explain what it could do without showing it.
 
 {{< demo-clips more="More in the [MindRoom showcase](https://docs.mindroom.chat/showcase/)." >}}
-{{< demo-clip caption="A voice message becomes a reminder" light="https://github.com/user-attachments/assets/7bf1bb2f-31c7-4ef4-ac07-4ec1b22b2da1" dark="https://github.com/user-attachments/assets/8abba58e-790f-4c80-a57d-62ab683ea18c" >}}
-{{< demo-clip caption="An approval card before anything is sent" light="https://github.com/user-attachments/assets/d62d98e8-c066-4e1f-8a8f-d840da7b0bd1" dark="https://github.com/user-attachments/assets/6a2033ea-3354-4afd-9d58-fc617b18cd24" >}}
-{{< demo-clip caption="Watch the agent's browser and take over" light="https://github.com/user-attachments/assets/cc079b2f-6dbf-4509-9fdc-4ec21da85d7a" dark="https://github.com/user-attachments/assets/63868e17-6824-4073-8904-e1b7abc4b173" >}}
+{{< demo-clip caption="A voice message becomes a reminder" light="https://github.com/user-attachments/assets/f91d0d7f-b8b0-4039-9fda-c7a9caed7534" dark="https://github.com/user-attachments/assets/4c49c8f1-2b87-45a1-949a-b165d0e18c1a" >}}
+{{< demo-clip caption="An approval card before anything is sent" light="https://github.com/user-attachments/assets/cd2e754b-dbb7-4af7-a050-c29514ab712e" dark="https://github.com/user-attachments/assets/502962b4-4dc6-4819-ae5a-eef572a41422" >}}
+{{< demo-clip caption="Watch the agent's browser and take over" light="https://github.com/user-attachments/assets/db2b13b5-35c0-4b15-bbc9-93dec148f666" dark="https://github.com/user-attachments/assets/5fc87c49-f21b-4a23-8eeb-d66becd2289c" >}}
 {{< /demo-clips >}}
 
 ## Then all at once
