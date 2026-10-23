@@ -208,7 +208,7 @@ It is a reimplementation of the Linux kernel, written in Go, that runs as a norm
 Go manages memory for the programmer, so the use-after-free mistake behind the DepthFirst escape is much harder to make in gVisor.
 The worker's syscalls go to gVisor instead of the host kernel, and gVisor itself only makes a small, filtered set of host syscalls.
 That is the hardening idea taken all the way: gVisor answers the agent's syscalls itself, so the filter on the host can be much stricter than Docker's.
-It needs no `/dev/kvm`, so it also runs inside cloud VMs that cannot start VMs of their own.
+It needs no `/dev/kvm`, so it also runs inside cloud VMs that cannot start VMs of their own.[^gvisor-kvm]
 My test machine, an ARM server (with the kind of chip phones use) running NixOS, had no `/dev/kvm`, which is why I tried gVisor first.
 Its runtime is called `runsc`, and it plugs into Docker the same way.
 
@@ -302,5 +302,7 @@ I do not use it myself yet, but if you are more paranoid than I am, it is there.
 [^root]: Docker can map the container's root to an ordinary user on the host with [user namespace remapping](https://docs.docker.com/engine/security/userns-remap/), or run without root altogether in [rootless mode](https://docs.docker.com/engine/security/rootless/), but neither is the default. Rootless mode would have stopped the agent in my Docker story, because Docker then has only my own rights. Remapping would not, because anyone who can use Docker can turn it off for a single container. Neither helps against a kernel bug, because code running inside the kernel is above every user.
 
 [^kata]: Like runc for Docker, Kata's own programs on the host are a way out too. In 2020, one bug ([CVE-2020-2023](https://nvd.nist.gov/vuln/detail/CVE-2020-2023)) let a container take over the guest without a kernel bug, and a second ([CVE-2020-2026](https://nvd.nist.gov/vuln/detail/CVE-2020-2026)) then let the guest trick the Kata runtime on the host into mounting files over any host path. Neither needed a KVM bug. virtiofsd, the program that shares folders with the guest, also runs on the host and handles the guest's file requests.
+
+[^gvisor-kvm]: gVisor can [use KVM too](https://gvisor.dev/docs/architecture_guide/platforms/), as an option. By default it catches the agent's syscalls without it, which is the setup this post describes. With KVM switched on, gVisor runs the agent's code in the CPU's virtualization mode so catching syscalls is faster, but gVisor's own kernel still answers them, and there is no guest Linux and no fake devices. gVisor recommends that mode only on bare metal; inside a VM the default is usually faster.
 
 [^devices]: A bug in the VMM's fake devices, or in other VMM code that handles the guest's traffic, can skip the first step, because a normal program in the guest can feed that code data through the network or a shared folder. [CVE-2020-8608](https://access.redhat.com/security/cve/cve-2020-8608), a buffer overflow in QEMU's user-mode networking, could be triggered that way with crafted network traffic.
