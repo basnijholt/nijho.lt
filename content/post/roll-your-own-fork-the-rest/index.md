@@ -50,6 +50,10 @@ Now I think it means **millions of downloads, every day.**
 If I started MindRoom over, I would write my own HTTP requests to the model providers instead of using an AI framework.
 {{% /callout %}}
 
+> **Update 2026-10-27:** A week after publishing, I took my own advice twice.
+> MindRoom's knowledge search no longer uses ChromaDB, and code MindRoom owns has replaced Agno's runtime; Agno stays only as the tool library.
+> The full stories are in [the comments](#comments).
+
 ## 1. Stars measure interest, not usage
 
 When I picked [Agno](https://github.com/agno-agi/agno) as MindRoom's {{< tooltip text="A library that wraps the model providers' APIs and adds agents, tools, memory, knowledge bases and session storage on top." >}}AI framework{{< /tooltip >}}, it looked like the safe choice.
