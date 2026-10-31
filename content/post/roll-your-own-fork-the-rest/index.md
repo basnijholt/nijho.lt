@@ -50,7 +50,7 @@ Now I think it means **millions of downloads, every day.**
 If I started MindRoom over, I would write my own HTTP requests to the model providers instead of using an AI framework.
 {{% /callout %}}
 
-> **Update 2026-10-31:** In the two weeks after publishing, I took my own advice twice.
+> **Update 2026-10-31:** Within two weeks of publishing, I took my own advice twice.
 > MindRoom's knowledge search no longer uses ChromaDB, and code MindRoom owns has replaced Agno's runtime.
 > Agno is now only MindRoom's tool library.
 > The full stories are in [the comments](#comments).
