@@ -1,6 +1,6 @@
 ---
 title: "Switching apps on macOS in under 30 ms ⚡"
-subtitle: "How I found out what Keyboard Maestro does, and learned that its trick wasn't what made it fast"
+subtitle: "How I found out what Keyboard Maestro does, and what actually makes it fast"
 summary: "Keyboard Maestro was one of the last things on my Mac I couldn't set up from a text file in my dotfiles, and I only used it to switch apps with a hotkey. AppleScript was too slow, so I had an agent reverse engineer which macOS call Keyboard Maestro makes, and built a tool around it from a couple of prompts. Then it turned out an ordinary public call was just as fast: the speed comes from not starting a new process for every key press."
 date: 2026-11-20
 draft: false
@@ -38,7 +38,7 @@ It reads its hotkeys from a plain text file, and it brings an app to the front i
 - I used Keyboard Maestro almost only for app hotkeys, and it was one of the last things on my Mac I couldn't configure from a text file.
 - AppleScript was much slower, so I had an agent reverse engineer which macOS call Keyboard Maestro makes: an old, deprecated Apple function.
 - Agents built a small Swift tool around it in one afternoon, configured from a text file and installed by nix-darwin.
-- Then a plain public AppKit call turned out to be just as fast. What makes it fast isn't the API, it's not starting a new process for every key press.
+- Then a plain public AppKit call turned out to be just as fast. The speed comes from not starting a new process for every key press.
 {{% /callout %}}
 
 {{< toc >}}
@@ -73,9 +73,7 @@ On macOS, holding `Home` sends `Ctrl` + `Alt` + `Shift`, and I have 14 of these 
 Typically people suggest using an {{< tooltip text="Apple's scripting language for controlling Mac apps. Running a script starts a new process, compiles it, and sends a message to the app." >}}AppleScript{{< /tooltip >}} like `tell application "Brave Browser" to activate`, or `open -b <bundle id>`.
 I did not find those reliable, and they were quite slow compared to Keyboard Maestro.
 
-The tools that can be configured from a file have their own catch.
-Karabiner-Elements runs a shell command like `open -b` for every key press.
-`skhd` needs the {{< tooltip text="The macOS privacy setting that lets an app watch or control other apps. It is granted by hand in System Settings, per app binary." >}}Accessibility permission{{< /tooltip >}}, and macOS forgets it every time Nix rebuilds the binary to a new path.
+Karabiner-Elements can be configured from a file, but it also runs `open -b` for every key press.
 
 So what did I do?
 I used a reverse engineering tool to figure out what mechanism Keyboard Maestro actually uses.
@@ -88,10 +86,9 @@ So I switched to a more willing model.
 Its prompt asked for static analysis only, for interoperability, without launching or patching anything and skipping all licensing and registration code.
 It ran REA with {{< tooltip text="A free reverse engineering suite from the NSA that turns machine code back into readable assembly and C-like code." >}}Ghidra{{< /tooltip >}} on a copy of the Keyboard Maestro Engine binary and wrote a report[^rea].
 
-Keyboard Maestro catches the key with `RegisterEventHotKey`, an old {{< tooltip text="Apple's older C interfaces for Mac apps, from the classic Mac OS era. Many are deprecated but still work." >}}Carbon{{< /tooltip >}} function that needs no permission.
-Then it looks up the app's process and calls `SetFrontProcessWithOptions`, which brings the app to the front with all its windows.
-That function is still in the macOS SDK, but it has been deprecated since macOS 10.9 in 2013.
-There's no AppleScript and no message to the app that it has to answer.
+Keyboard Maestro catches the hotkey and then calls `SetFrontProcessWithOptions`, an old {{< tooltip text="Apple's older C interfaces for Mac apps, from the classic Mac OS era. Many are deprecated but still work." >}}Carbon{{< /tooltip >}} function that brings the app to the front with all its windows.
+Apple deprecated it in 2013, but it still works.
+There's no AppleScript involved, and the app doesn't have to answer anything.
 
 Before writing this post, I checked whether Keyboard Maestro's license forbids this kind of analysis[^license].
 I couldn't find a license agreement for the app at all, and my tool contains no Keyboard Maestro code.
@@ -103,13 +100,12 @@ My instruction was one line:
 
 > i want to have something that i can just configure with a text file. declaratively
 
-Then GPT-6.2 Sol reviewed it and found real bugs.
+Then GPT-6.2 Sol reviewed it and found bugs.
 The worst one would have broken my MindRoom key: the tool read any value ending in `.app` as a file path, so the {{< tooltip text="The unique name macOS uses for an app, like com.brave.Browser. It stays the same when the app is renamed or moved." >}}bundle ID{{< /tooltip >}} `chat.mindroom.app` was never looked up as an app.
-A last review against the report caught a subtler difference: Keyboard Maestro makes the call even when the app is already in front, so a window buried under another app's window still comes up.
 
 From my first screenshot of a Keyboard Maestro macro to a public repository with CI, a Homebrew formula and a nix-darwin module took one afternoon.
 
-## The trick wasn't the trick
+## A public call was just as fast
 
 I had assumed the deprecated Carbon call was what made Keyboard Maestro fast.
 So I had an agent check whether a public call could do the same, comparing nine ways to bring an app to the front, from a background process like the tool[^alt].
@@ -118,14 +114,11 @@ AppKit's ordinary {{< tooltip text="The public Swift and Objective-C interface f
 In every run it came within about 3 ms of `SetFrontProcessWithOptions`, sometimes faster and sometimes slower.
 The first benchmarks had already hinted at it: 20.8 ms for Keyboard Maestro's call and 23.1 ms for the AppKit one.
 
-So what made Keyboard Maestro fast was never the API.
-It's that the program is already running and makes one call itself.
+So Keyboard Maestro is fast because it's already running and makes one call itself, whichever API that call uses.
 `osascript` starts a new process for every key press, compiles the script, and sends an {{< tooltip text="The message system Mac apps use to talk to each other. The sender waits until the receiving app answers." >}}Apple Event{{< /tooltip >}} that the app has to answer.
 `open -b` also starts a new process every time.
 
-The public call has one catch.
-Since macOS 14, an app can be refused the front, for example right after you typed into the app that's in front.
-In 480 test switches with typing right before each one, macOS refused none.
+Since version 14, macOS may refuse such a request, but in 480 test switches it never did.
 So the tool now uses the public call, and nothing in it is deprecated.
 
 ## How fast it is
@@ -140,7 +133,7 @@ These are the medians from key press to app in front, on my M2 MacBook[^bench]:
 
 That's about twice as fast as `open -b`, and four times as fast as AppleScript.
 To be fair, Keyboard Maestro is just as fast, for the same reason.
-The tool is one Swift file of under 300 lines, with no dependencies, no menu bar icon and no UI.
+The tool is one Swift file of under 300 lines, with no dependencies and no UI.
 
 ## How it fits in my config
 
@@ -152,8 +145,7 @@ ctrl+alt+shift+t = com.googlecode.iterm2
 ctrl+alt+shift+m = chat.mindroom.app
 ```
 
-A value with a `/` is treated as a path to an app, anything else as a bundle ID.
-The tool watches the file, so saving it applies the change right away, and a broken edit keeps the old bindings and logs the line number.
+The tool watches the file, so saving it applies the change right away.
 
 My [hotkeys file](https://github.com/basnijholt/dotfiles/blob/main/configs/macos-hotkey-app-switcher/hotkeys.conf) lives in my dotfiles, next to the Hyprland bindings for Linux.
 nix-darwin installs the tool and starts it as a {{< tooltip text="The macOS service manager. A launchd agent is a background program that starts when you log in." >}}launchd{{< /tooltip >}} agent:
@@ -173,17 +165,17 @@ brew services start macos-hotkey-app-switcher
 
 Now my app hotkeys come with those four commands too.
 
-## What it costs
+## What it doesn't do
 
-- **macOS decides.** An app can be refused the front since macOS 14. In my tests it never was, but a future macOS could be stricter.
-- **Two apps can hold the same key.** macOS lets a second app register the same combination, and then both fire. I had to turn off the Keyboard Maestro group before switching.
-- **It does one thing.** Keyboard Maestro does hundreds of other things, and it's still the tool I'd recommend for anything beyond switching apps.
+It only switches apps.
+Keyboard Maestro does hundreds of other things, and it's still the tool I'd recommend for anything beyond this.
+If you keep it, turn off its app hotkeys first, because macOS lets two apps hold the same key and then both fire.
 
 ## Conclusion
 
 My app hotkeys are now a text file in my dotfiles instead of macros in an app.
 I reverse engineered Keyboard Maestro to copy its trick, and the tool ended up not needing it.
-What makes app switching fast is simply not starting a new process for every key press.
+What makes app switching fast is not starting a new process for every key press.
 
 [^rea]: The analysis ran on Keyboard Maestro Engine 11.1.1, on the arm64 slice of a copied binary (`lipo -thin arm64`), with the REA CLI (`search`, `xrefs`, `function`) and Ghidra 12.2. Nothing was launched or patched. The report traced the action from `AActivateApplication::DoAction` through Keyboard Maestro's own `activateWithOptions:` wrapper to `GetProcessForPID` and `SetFrontProcessWithOptions`, and found that "all windows" maps to flag `0` and "one window" to flag `1` (`kSetFrontProcessFrontWindowOnly`).
 [^license]: Checked on 2026-11-20. I bought Keyboard Maestro 11 directly from Stairways Software (through FastSpring), not from the Mac App Store. The 11.1.1 download, the store page and the wiki state only that a license is per user, for up to five Macs, and for one major version. The app bundle's license folder holds only the licenses of open-source libraries it uses.
