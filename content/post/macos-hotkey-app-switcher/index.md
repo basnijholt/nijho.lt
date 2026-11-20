@@ -87,9 +87,9 @@ I asked my agent in [MindRoom]({{< ref "/post/mindroom" >}}) to use [REA](https:
 The Claude Opus 5.5 subagent it handed this to declined straight away, because it was asked to disassemble a commercial binary.
 The agent then listed the functions Keyboard Maestro imports with `nm` and `strings`, which already pointed at two old {{< tooltip text="Apple's older C interfaces for Mac apps, from the classic Mac OS era. Many are deprecated but still work." >}}Carbon{{< /tooltip >}} functions.
 
-To confirm it, I asked for a prompt I could give to Codex.
-The prompt asked for static analysis only, for interoperability, without launching or patching anything and skipping all licensing and registration code.
-Codex ran REA with {{< tooltip text="A free reverse engineering suite from the NSA that turns machine code back into readable assembly and C-like code." >}}Ghidra{{< /tooltip >}} on a copy of the Keyboard Maestro Engine binary and wrote a report[^rea].
+To confirm it, I switched to a more willing model.
+Its prompt asked for static analysis only, for interoperability, without launching or patching anything and skipping all licensing and registration code.
+It ran REA with {{< tooltip text="A free reverse engineering suite from the NSA that turns machine code back into readable assembly and C-like code." >}}Ghidra{{< /tooltip >}} on a copy of the Keyboard Maestro Engine binary and wrote a report[^rea].
 
 The answer turned out to be simple.
 Keyboard Maestro catches the key with `RegisterEventHotKey`, which needs no permission.
@@ -113,7 +113,7 @@ I said what I wanted, and the agents did the rest:
 
 Then GPT-6.2 Sol reviewed it and found real bugs.
 The worst one would have broken my MindRoom key: the tool read any value ending in `.app` as a file path, so the {{< tooltip text="The unique name macOS uses for an app, like com.brave.Browser. It stays the same when the app is renamed or moved." >}}bundle ID{{< /tooltip >}} `chat.mindroom.app` was never looked up as an app.
-Codex then reviewed the code against the report and found two places where it still behaved differently from Keyboard Maestro.
+A last review of the code against the report found two places where it still behaved differently from Keyboard Maestro.
 For example, it skipped the call when the app was already in front, so a window buried under another app's window stayed buried.
 
 After that I asked for a separate repository, CI, a Homebrew formula, an animated SVG logo and a nicer README.
@@ -185,5 +185,5 @@ Instead, an agent found out which call the fast app makes, and another agent bui
 
 [^rea]: The analysis ran on Keyboard Maestro Engine 11.1.1, on the arm64 slice of a copied binary (`lipo -thin arm64`), with the REA CLI (`search`, `xrefs`, `function`) and Ghidra 12.2. Nothing was launched or patched. Setup took about 2 minutes and the first Ghidra analysis 208 seconds. The report traced the action from `AActivateApplication::DoAction` through Keyboard Maestro's own `activateWithOptions:` wrapper to `GetProcessForPID` and `SetFrontProcessWithOptions`, and found that "all windows" maps to flag `0` and "one window" to flag `1` (`kSetFrontProcessFrontWindowOnly`).
 [^license]: Checked on 2026-11-20. I bought Keyboard Maestro 11 directly from Stairways Software (through FastSpring), not from the Mac App Store. The 11.1.1 download, the store page and the wiki state only that a license is per user, for up to five Macs, and for one major version. The app bundle's license folder holds only the licenses of open-source libraries it uses.
-[^messages]: Counted from the chat thread on 2026-11-19: from 11:54 to 15:57, I sent 26 messages, including two screenshots and two pasted reports. Opus 5.5 wrote most of the code, Sol reviewed it over three rounds, and Codex ran the analysis and did a last review.
+[^messages]: Counted from the chat thread on 2026-11-19: from 11:54 to 15:57, I sent 26 messages, including two screenshots and two pasted reports. Opus 5.5 wrote most of the code and Sol reviewed it over three rounds.
 [^bench]: Measured by the building agent on 2026-11-19 on an M2 MacBook: two small test apps, switched back and forth 30 times per method with synthetic key presses, timed until the app was in front with its window on top. The tool's medians were 26 ms (v0.1.0), 27.3 ms (after review fixes) and 28.3 ms (v0.1.1). Keyboard Maestro's call on its own, timed the same way without a hotkey, took 20.8 ms. I didn't time Keyboard Maestro's whole hotkey path, or other launchers.
