@@ -70,7 +70,7 @@ It was a massive bump in my productivity, because it gave a much clearer view of
 Then {{< tooltip text="Claude Fable, a model family from Anthropic." >}}Fable{{< /tooltip >}} came out, and it felt better than the OpenAI models, so I went back to the {{< tooltip text="Anthropic's coding agent, which runs in a terminal." >}}Claude Code{{< /tooltip >}} CLI.
 Switching back and forth between the Codex desktop app and the Claude CLI wasn't optimal, so I looked for something that unified the two.
 I found [T3 Code](https://github.com/pingdotgg/t3code), which I really adored as well.
-It calls itself "the open-source control plane for coding agents".
+It calls itself "the open-source control plane for coding agents".[^t3]
 I think of it as a {{< tooltip text="The program around a model that turns it into an agent. It sends the prompts, gives the model tools such as a shell and a file editor, and runs what the model asks for." >}}harness{{< /tooltip >}} for harnesses: it runs the original Claude Code and Codex, and shows them in one web interface.
 
 T3 Code wasn't perfect for massively parallel work either.
@@ -92,7 +92,7 @@ I stayed with them because I felt a model must just work better in its native ha
 It's why I wrote seven weeks ago that ["for writing code, dedicated tools like Claude Code and Codex are better"]({{< ref "/post/mindroom-at-ionq" >}}).
 
 Then I [tested that belief]({{< ref "/post/native-harness-tools" >}}).
-Over {{< tooltip text="12 short terminal tasks, such as writing a report from a CSV file or fixing failing tests, each run many times per model and per set of tools." >}}more than 4,000 runs{{< /tooltip >}} of short terminal tasks, giving a model the tools of its own harness made only one model clearly more efficient.
+Over {{< tooltip text="12 short terminal tasks, such as writing a report from a CSV file or fixing failing tests, each run many times per model and per set of tools." >}}more than 4,000 runs{{< /tooltip >}} of short terminal tasks, giving a model the tools of its own harness made only one model clearly more efficient.[^harness]
 What did matter was how much the agent sends with every request: a minimal agent with one shell tool and a 12-line prompt used 58 to 76% fewer {{< tooltip text="The pieces of text a model reads and writes, each about three quarters of a word. Providers bill per token." >}}tokens{{< /tooltip >}} than MindRoom's standard agent.
 
 That got me over the mental block.
@@ -109,7 +109,7 @@ With Opus 5.5 and Fable 5.2 I had another massive boost in productivity, simply 
 The second is my skills, which are public as [baspowers](https://github.com/basnijholt/baspowers).
 They dictate a workflow where the agent follows established good engineering practices: it writes a spec and a plan, and it works {{< tooltip text="Test-driven development: first write a test that fails because of the bug or the missing feature, then write the code that makes it pass." >}}test-first{{< /tooltip >}}.
 But instead of involving me whenever something is ambiguous, it cross-checks with another {{< tooltip text="One of the most capable models available at that moment." >}}frontier model{{< /tooltip >}}, like {{< tooltip text="GPT-6 Astra, a model from OpenAI." >}}Astra{{< /tooltip >}}.
-Only if that doesn't resolve it does it involve me.
+Only if that doesn't resolve it does it involve me.[^crossmodel]
 
 {{< figure src="agent-question.png" caption="What reaches me. Astra asked for changes on this pull request four rounds in a row, so the agent stopped patching and came to me with three options and a recommendation. I answer with one click." alt="A MindRoom thread where the agent explains that a second model rejected its fix for the fourth time, lists three options with a recommended one at 70 percent, and shows them as clickable buttons." >}}
 
@@ -137,13 +137,13 @@ In the first twenty days of this month, the count is {{< tooltip text="3,966,635
 {{< figure src="lines-per-month.svg" caption="Lines added and deleted per month in my merged pull requests and direct commits, counted by trueloc on November 20, 2026. November 2026 is a partial month." alt="Bar chart of lines touched per month from November 2024 to November 2026. Most months before July 2025 are under 100,000. September and October 2026 are about 2.5 and 2.8 million, and the first twenty days of November 2026 are almost 4 million." >}}
 
 I strongly feel that lines of code is not a measure of quality at all.
-It's like measuring how good you are at building airplanes by how much weight you added to them, a comparison that's usually attributed to Bill Gates.
+It's like measuring how good you are at building airplanes by how much weight you added to them, a comparison that's usually attributed to Bill Gates.[^gates]
 
-The numbers come from [trueloc](https://github.com/basnijholt/trueloc), a tool of mine that counts every line added and deleted in every commit of my merged {{< tooltip text="A proposed change to a repository on GitHub. It gets reviewed and tested, and merging it puts the change into the main code." >}}pull requests{{< /tooltip >}}, plus my direct commits.
+The numbers come from [trueloc](https://github.com/basnijholt/trueloc), a tool of mine that counts every line added and deleted in every commit of my merged {{< tooltip text="A proposed change to a repository on GitHub. It gets reviewed and tested, and merging it puts the change into the main code." >}}pull requests{{< /tooltip >}}, plus my direct commits.[^trueloc]
 That includes churn, generated files, and code that an agent wrote and then rewrote.
 From November 2024 through October 2025 that was {{< tooltip text="1,380,174 lines added plus deleted." >}}about 1.4 million lines{{< /tooltip >}} in 848 merged pull requests.
-In the twelve months after that it was {{< tooltip text="9,957,695 lines added plus deleted." >}}about 10 million lines{{< /tooltip >}} in 5,148 pull requests, and {{< tooltip text="6,707,616 of 9,957,695 lines, which is 67%." >}}about two thirds{{< /tooltip >}} of those lines are in code files.
-November looks even bigger than it is: {{< tooltip text="About 1.69 million of 3.97 million lines, which is 43%. This is an estimate from the per-commit data." >}}more than 40%{{< /tooltip >}} of it is the same commits counted again in a stack of six pull requests, plus files I moved from one repository to another.
+In the twelve months after that it was {{< tooltip text="9,957,695 lines added plus deleted." >}}about 10 million lines{{< /tooltip >}} in 5,148 pull requests, and {{< tooltip text="6,707,616 of 9,957,695 lines, which is 67%." >}}about two thirds{{< /tooltip >}} of those lines are in code files.[^codefiles]
+November looks even bigger than it is: {{< tooltip text="About 1.69 million of 3.97 million lines, which is 43%. This is an estimate from the per-commit data." >}}more than 40%{{< /tooltip >}} of it is the same commits counted again in a stack of six pull requests, plus files I moved from one repository to another.[^november]
 
 So read the chart as the amount of work in flight, because that's what I had to keep track of.
 
@@ -190,7 +190,7 @@ So I came up with the Compact view, where every thread is one card.
 A card has three lines: the title and the time of the last reply, then what the agent is doing right now or the start of its last answer, and then who's in the thread, its git worktree or pull request, its tags, and the number of replies.
 
 **Sections.**
-Then, inspired by the sections in T3 Code, I added that type of grouping too.
+Then, inspired by the sections in T3 Code, I added that type of grouping too.[^sections]
 The cards now sit under four headers:
 
 - **Needs you:** the agent finished or asked me something, and nothing is running in the thread.
@@ -239,13 +239,13 @@ And this is the real thing, in the same demo room: a finished reply with its wor
 
 What you read is still the direct output of the model.
 The conclusion isn't a summary written by a different model, and the folded work is still there when you want it.
-The folding is another idea I took from T3 Code, where a finished turn collapses into a "Worked for" row.
+The folding is another idea I took from T3 Code, where a finished turn collapses into a "Worked for" row.[^fold]
 
 ## What I took from T3 Code
 
 The sections and the folded replies aren't the only things I ported.
 
-- The model picker has an Effort column for the {{< tooltip text="How much a model thinks before it answers. Higher levels are slower and cost more, and they help on hard problems." >}}reasoning level{{< /tooltip >}}.
+- The model picker has an Effort column for the {{< tooltip text="How much a model thinks before it answers. Higher levels are slower and cost more, and they help on hard problems." >}}reasoning level{{< /tooltip >}}.[^effort]
 - Pull requests show up as cards, with a side panel that has the changed files and their diffs.
 
 {{< figure src="pr-diff-panel.png" caption="The pull request panel next to its thread. The agent in the thread is waiting for CI, and a second model has already approved the merge." alt="A MindRoom thread on the left and a GitHub pull request panel on the right with a file tree, a diff of two Python files and a Squash and merge button." >}}
@@ -285,5 +285,25 @@ You can try the same view on [mindroom.chat](https://mindroom.chat), and the [sh
 
 I also wrote that [with every new model, my workflow changes]({{< ref "/post/how-to-start-with-ai" >}}).
 So this is how I develop right now, and I expect it to look different in a few months.
+
+[^t3]: From the README of [pingdotgg/t3code](https://github.com/pingdotgg/t3code), read on November 20, 2026. T3 Code is MIT licensed.
+
+[^harness]: That model was Claude Opus 4.8, which did 17% less work and used 19% fewer tokens with Claude Code's tools. GPT-6 Astra and Sol used 43 to 59% more tokens with the tools of their own harness.
+
+[^crossmodel]: The skill is [`consulting-cross-model`](https://github.com/basnijholt/baspowers/tree/main/skills/consulting-cross-model). Claude asks GPT-6 Astra, and Codex asks Claude Opus 5.5.
+
+[^gates]: The line that's usually quoted is "Measuring programming progress by lines of code is like measuring aircraft building progress by weight." I couldn't find a primary source for it.
+
+[^trueloc]: Counted on November 20, 2026 with `uvx trueloc count basnijholt --since 2024-11-01 --until 2026-11-20 --json`, run with my own GitHub login, so it covers every repository that account can see. Over the whole window that's 7,630 merged pull requests and 12,233 direct commits with 15,304,504 lines: 10,886,530 added and 4,417,974 deleted. September 2026 has 2,459,033 lines, October has 2,829,709, and November up to the 20th has 3,966,635.
+
+[^codefiles]: Code files are the ones with one of 26 source extensions, such as `.py`, `.ts`, `.tsx`, `.rs`, `.nix`, `.sh` and `.css`. In the last twelve months that's 6,707,616 of 9,957,695 lines (67%), and the rest is mostly JSON (11.7%), Markdown (9.2%) and SVG (4.4%). In the twelve months before, it was 832,382 of 1,380,174 lines (60%).
+
+[^november]: Six pull requests that merged on November 11 count for 1,133,900 lines here, while their own diffs on GitHub add up to 3,143 lines. Each branch in that stack carried the commits of the branches below it. Files moved between repositories add another 556,672 lines. Together that's 1,690,572 of 3,966,635 lines.
+
+[^sections]: The counted Needs you, Working, Later and Done filters are [mindroom-chat #436](https://github.com/mindroom-ai/mindroom-chat/pull/436), and the sections in the Compact view are [#448](https://github.com/mindroom-ai/mindroom-chat/pull/448). Both merged on November 17, 2026 (UTC).
+
+[^fold]: [mindroom-chat #419](https://github.com/mindroom-ai/mindroom-chat/pull/419) folds a finished reply behind the "Worked for" row, and [#670](https://github.com/mindroom-ai/mindroom-chat/pull/670) does that for every finished reply with a tool call.
+
+[^effort]: [mindroom-chat #562](https://github.com/mindroom-ai/mindroom-chat/pull/562).
 
 <script src="mindroom-mock.js" defer></script>
