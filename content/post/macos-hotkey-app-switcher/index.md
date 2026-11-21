@@ -137,12 +137,27 @@ The tool is one Swift file of under 300 lines, with no dependencies and no UI.
 
 ## How it fits in my config
 
-The config is one line per hotkey:
+The config is one line per hotkey. This is my whole file:
 
 ```ini
-ctrl+alt+shift+b = com.brave.Browser
-ctrl+alt+shift+t = com.googlecode.iterm2
-ctrl+alt+shift+m = chat.mindroom.app
+# Global app hotkeys for macos-hotkey-app-switcher (https://github.com/basnijholt/macos-hotkey-app-switcher, enabled in configs/nix-darwin).
+# Format: modifiers+key = bundle id (or an app path, which must contain a /). Saved changes apply at once.
+# Taken from the Keyboard Maestro "Open Apps" group (all windows, reopen windows, leave it at the front).
+
+ctrl+alt+shift+1 = com.1password.1password        # 1Password
+ctrl+alt+shift+3 = com.t3tools.t3code             # T3 Code
+ctrl+alt+shift+b = com.brave.Browser              # Brave Browser
+ctrl+alt+shift+c = com.apple.iCal                 # Calendar
+ctrl+alt+shift+e = com.apple.mail                 # Mail
+ctrl+alt+shift+g = com.google.Chrome              # Google Chrome
+ctrl+alt+shift+m = chat.mindroom.app              # MindRoom
+ctrl+alt+shift+p = com.spotify.client             # Spotify
+ctrl+alt+shift+s = com.tinyspeck.slackmacgap      # Slack
+ctrl+alt+shift+t = com.googlecode.iterm2          # iTerm2
+ctrl+alt+shift+u = com.todesktop.230313mzl4w4u92  # Cursor
+ctrl+alt+shift+v = com.microsoft.VSCode           # Visual Studio Code
+ctrl+alt+shift+x = com.openai.codex               # Codex
+ctrl+alt+shift+z = us.zoom.xos                    # Zoom
 ```
 
 The tool watches the file, so saving it applies the change right away.
