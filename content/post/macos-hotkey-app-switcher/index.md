@@ -28,6 +28,7 @@ When my hands are on the keyboard, they're on a [Glove80]({{< ref "/post/split-e
 I also have a deep obsession with declarative tools.
 Whenever I set up a new VM, a computer at home, or a new MacBook, I want the entire process to be reproducible and fast.
 That ties in with my love for [NixOS]({{< ref "/post/proxmox-to-nixos" >}}), and it's why my [dotfiles]({{< ref "/post/dotfiles" >}}) are public.
+Keyboard Maestro was the one app on my Mac that didn't fit that, so I replaced it.
 
 This post is about [`macos-hotkey-app-switcher`](https://github.com/basnijholt/macos-hotkey-app-switcher), which I believe to be the fastest and simplest hotkey app switcher in existence for macOS.
 I made it end to end with AI agents from just a couple of prompts.
@@ -66,14 +67,13 @@ So what I have is one key.
 If I hold my `Home` key, which is under my pinky, plus another key like `B`, I go to the Brave browser.
 `Home` + `T` is my terminal.
 `Home` + `M` is the MindRoom app.
-On macOS, holding `Home` sends `Ctrl` + `Alt` + `Shift`, and I have 14 of these bindings. The same ones live in my Hyprland config on Linux.
+On macOS, holding `Home` sends `Ctrl` + `Alt` + `Shift`, and I have more than a dozen of these bindings. The same ones live in my Hyprland config on Linux.
 
 ## Why not AppleScript
 
 Typically people suggest using an {{< tooltip text="Apple's scripting language for controlling Mac apps. Running a script starts a new process, compiles it, and sends a message to the app." >}}AppleScript{{< /tooltip >}} like `tell application "Brave Browser" to activate`, or `open -b <bundle id>`.
 I did not find those reliable, and they were quite slow compared to Keyboard Maestro.
-
-Karabiner-Elements can be configured from a file, but it also runs `open -b` for every key press.
+Karabiner-Elements, which I could configure from a file, runs `open -b` for every key press too.
 
 So what did I do?
 I used a reverse engineering tool to figure out what mechanism Keyboard Maestro actually uses.
@@ -83,7 +83,7 @@ I used a reverse engineering tool to figure out what mechanism Keyboard Maestro 
 I asked my agent in [MindRoom]({{< ref "/post/mindroom" >}}) to use [REA](https://github.com/morluto/rea), a tool that lets AI agents reverse engineer apps and binaries, on Keyboard Maestro.
 The Claude Opus 5.5 subagent it handed this to declined straight away, because it was asked to disassemble a commercial binary.
 So I switched to a more willing model.
-Its prompt asked for static analysis only, for interoperability, without launching or patching anything and skipping all licensing and registration code.
+I gave it a prompt that asked for static analysis only, for interoperability, without launching or patching anything and skipping all licensing and registration code.
 It ran REA with {{< tooltip text="A free reverse engineering suite from the NSA that turns machine code back into readable assembly and C-like code." >}}Ghidra{{< /tooltip >}} on a copy of the Keyboard Maestro Engine binary and wrote a report[^rea].
 
 Keyboard Maestro catches the hotkey and then calls `SetFrontProcessWithOptions`, an old {{< tooltip text="Apple's older C interfaces for Mac apps, from the classic Mac OS era. Many are deprecated but still work." >}}Carbon{{< /tooltip >}} function that brings the app to the front with all its windows.
@@ -103,12 +103,12 @@ My instruction was one line:
 Then GPT-6.2 Sol reviewed it and found bugs.
 The worst one would have broken my MindRoom key: the tool read any value ending in `.app` as a file path, so the {{< tooltip text="The unique name macOS uses for an app, like com.brave.Browser. It stays the same when the app is renamed or moved." >}}bundle ID{{< /tooltip >}} `chat.mindroom.app` was never looked up as an app.
 
-From my first screenshot of a Keyboard Maestro macro to a public repository with CI, a Homebrew formula and a nix-darwin module took one afternoon.
+From my first message to my agent to a public repository with CI, a Homebrew formula and a nix-darwin module took one afternoon.
 
 ## A public call was just as fast
 
 I had assumed the deprecated Carbon call was what made Keyboard Maestro fast.
-So I had an agent check whether a public call could do the same, comparing nine ways to bring an app to the front, from a background process like the tool[^alt].
+But Apple can remove a deprecated function in any macOS release, so I had an agent check whether a public call could do the same, comparing nine ways to bring an app to the front, from a background process like the tool[^alt].
 
 AppKit's ordinary {{< tooltip text="The public Swift and Objective-C interface for a running app. Its activate method asks macOS to bring that app to the front." >}}`NSRunningApplication.activate`{{< /tooltip >}}, with the option to bring all windows, was just as fast.
 In every run it came within about 3 ms of `SetFrontProcessWithOptions`, sometimes faster and sometimes slower.
@@ -132,15 +132,14 @@ These are the medians from key press to app in front, on my M2 MacBook[^bench]:
 | `osascript -e 'tell application id "…" to activate'` | 112 ms |
 
 That's about twice as fast as `open -b`, and four times as fast as AppleScript.
-To be fair, Keyboard Maestro is just as fast, for the same reason.
+Keyboard Maestro ties it, for the same reason, but it's a large paid app.
 The tool is one Swift file of under 300 lines, with no dependencies and no UI.
 
 ## How it fits in my config
 
-The config is one line per hotkey. This is my whole file:
+The config is one line per hotkey. These are my bindings:
 
 ```ini
-# Global app hotkeys for macos-hotkey-app-switcher (https://github.com/basnijholt/macos-hotkey-app-switcher, enabled in configs/nix-darwin).
 # Format: modifiers+key = bundle id (or an app path, which must contain a /). Saved changes apply at once.
 # Taken from the Keyboard Maestro "Open Apps" group (all windows, reopen windows, leave it at the front).
 
@@ -156,13 +155,12 @@ ctrl+alt+shift+s = com.tinyspeck.slackmacgap      # Slack
 ctrl+alt+shift+t = com.googlecode.iterm2          # iTerm2
 ctrl+alt+shift+u = com.todesktop.230313mzl4w4u92  # Cursor
 ctrl+alt+shift+v = com.microsoft.VSCode           # Visual Studio Code
-ctrl+alt+shift+x = com.openai.codex               # Codex
 ctrl+alt+shift+z = us.zoom.xos                    # Zoom
 ```
 
 The tool watches the file, so saving it applies the change right away.
 
-My [hotkeys file](https://github.com/basnijholt/dotfiles/blob/main/configs/macos-hotkey-app-switcher/hotkeys.conf) lives in my dotfiles, next to the Hyprland bindings for Linux.
+My [hotkeys file](https://github.com/basnijholt/dotfiles/blob/main/configs/macos-hotkey-app-switcher/hotkeys.conf) lives in my dotfiles.
 nix-darwin installs the tool and starts it as a {{< tooltip text="The macOS service manager. A launchd agent is a background program that starts when you log in." >}}launchd{{< /tooltip >}} agent:
 
 ```nix
