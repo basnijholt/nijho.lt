@@ -252,11 +252,12 @@ One click opens it again.
 
 <div class="mr-fold-demo"></div>
 
-And this is the real thing, in the same demo room: a finished reply with its work folded, and the same reply after one click.
+And this is the real client, with a question I really asked and the agent's real answer.
+The answer streams in while the agent works, and its work folds behind one row when it's done.
+One click opens that row again.
+The tool calls behind the row are made up for the demo.
 
-{{< figure src="reply-folded.png" caption="A finished reply in MindRoom Chat. Everything the agent did before its answer sits behind the Worked for 19s row." alt="A thread in MindRoom Chat where the agent's last reply starts with a collapsed Worked for 19s row, followed by its answer and a code block." >}}
-
-{{< figure src="reply-open.png" caption="The same reply after clicking that row: the reasoning, the tool calls and the text the agent wrote in between are all there." alt="The same thread with the Worked for row expanded, showing a Thought for 4 s row, a tool call count and two lines of intermediate text above the answer." >}}
+{{< video autoplay="true" loop="true" controls="yes" src="reply-streams-and-folds.mp4" >}}
 
 What you read is still the direct output of the model.
 The conclusion isn't a summary written by a different model, and the folded work is still there when you want it.
