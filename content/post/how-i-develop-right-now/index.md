@@ -270,7 +270,12 @@ The sections and the folded replies aren't the only things I ported.
 - The model picker has an Effort column for the {{< tooltip text="How much a model thinks before it answers. Higher levels are slower and cost more, and they help on hard problems." >}}reasoning level{{< /tooltip >}}.[^effort]
 - Pull requests show up as cards, with a side panel that has the changed files and their diffs.
 
-{{< figure src="pr-diff-panel.png" caption="The pull request panel next to its thread. The agent in the thread is waiting for CI, and a second model has already approved the merge." alt="A MindRoom thread on the left and a GitHub pull request panel on the right with a file tree, a diff of two Python files and a Squash and merge button." >}}
+Here it is on a merged pull request of MindRoom Chat.
+The badge on a card has a hover card, and a click opens the panel next to the thread.
+The panel has the summary, the file tree and the diffs.
+What it shows is what GitHub returned for the real pull request.
+
+{{< video autoplay="true" loop="true" controls="yes" src="pull-request-panel.mp4" >}}
 
 That pull request panel isn't part of the chat app itself.
 It's a [plugin](https://github.com/mindroom-ai/pull-request-client-plugin), because MindRoom Chat knows nothing about git.
