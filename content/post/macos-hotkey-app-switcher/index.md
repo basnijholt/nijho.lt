@@ -67,7 +67,7 @@ So what I have is one key.
 If I hold my `Home` key, which is under my pinky, plus another key like `B`, I go to the Brave browser.
 `Home` + `T` is my terminal.
 `Home` + `M` is the MindRoom app.
-On macOS, holding `Home` sends `Ctrl` + `Alt` + `Shift`, and I have more than a dozen of these bindings. The same ones live in my Hyprland config on Linux.
+On macOS, holding `Home` sends `Ctrl` + `Alt` + `Shift`, and I have 14 of these bindings. The same ones live in my Hyprland config on Linux.
 
 ## Why not AppleScript
 
@@ -155,6 +155,7 @@ ctrl+alt+shift+s = com.tinyspeck.slackmacgap      # Slack
 ctrl+alt+shift+t = com.googlecode.iterm2          # iTerm2
 ctrl+alt+shift+u = com.todesktop.230313mzl4w4u92  # Cursor
 ctrl+alt+shift+v = com.microsoft.VSCode           # Visual Studio Code
+ctrl+alt+shift+x = com.openai.codex               # Codex
 ctrl+alt+shift+z = us.zoom.xos                    # Zoom
 ```
 
