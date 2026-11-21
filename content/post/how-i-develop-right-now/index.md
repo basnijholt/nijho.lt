@@ -41,7 +41,7 @@ With that many, the hard part is knowing which session needs me.
 MindRoom Chat shows every thread as a card under Needs you, Working, Later or Done, and that view is what lets me keep up.
 {{% /callout %}}
 
-{{< figure src="compact-working.png" caption="My MindRoom-Dev room on November 20, 2026, in real use. Sixteen threads sit under Working, and the bar at the bottom counts the background jobs and sub-agents that are running. Each card shows an AI-generated title, what the agent is doing, its git worktree or pull request, and when it last replied." alt="MindRoom Chat in the Compact view with a Working section of sixteen thread cards, each with a title, a line about the agent's last action, a worktree or pull request badge and tags." >}}
+{{< figure src="room-sections.png" caption="My MindRoom-Dev room in the Compact view, rebuilt as a demo. The client is the real MindRoom Chat, and the threads are real threads from my room, replayed with their own titles and text. Six sit under Working and four under Needs you, and the bar at the bottom counts the background jobs and sub-agents. Each card shows an AI-generated title, what the agent last did, its git worktree or pull request, and when it last replied. The tool counts, the background jobs and the section each thread sits in are staged." alt="MindRoom Chat in the Compact view with a Working section of six thread cards, a Needs you section of four and the start of a Later section. Each card has a title, a line about the agent's last action, a worktree or pull request badge and tags." >}}
 
 ## Thirty terminal windows
 
