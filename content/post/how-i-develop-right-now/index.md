@@ -127,7 +127,13 @@ That means I can run fifteen parallel sessions extremely comfortably.
 After a good night's sleep, with a lot of focus, I'm able to orchestrate forty.
 That works simply because things take a while to execute, and because I can see what's going on.
 
-{{< figure src="sub-agents-panel.png" caption="One session is often more than one agent. This panel lists the sub-agents that are running in the room, with their tool calls, tokens, cost and run time." alt="A panel in MindRoom Chat listing twelve running sub-agents with columns for calls, tokens, cost and time." >}}
+One session is often more than one agent.
+In this clip the agent has two reviews running in the background, each by a different model.
+The bar under the thread lists every run with its tool calls, tokens, cost and time.
+A click on a run opens what that sub-agent is doing.
+The thread is a real one, and the two runs and their numbers are made up for the demo.
+
+{{< video autoplay="true" loop="true" controls="yes" src="sub-agents.mp4" >}}
 
 ## About those lines of code
 
