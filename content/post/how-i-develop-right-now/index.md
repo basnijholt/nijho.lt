@@ -21,7 +21,7 @@ categories:
 ---
 
 I'm a huge terminal nerd.
-I maintain at least twenty different CLI tools, and I use many of them every day.
+I maintain at least twenty different {{< tooltip text="Command-line interface: a program you run by typing a command in a terminal." >}}CLI{{< /tooltip >}} tools, and I use many of them every day.
 For a long time, all my coding with AI happened [strictly in the terminal]({{< ref "/post/terminal-ninja" >}}).
 At points I had probably thirty terminal windows open at once, with tabs and panes.
 
@@ -62,16 +62,16 @@ It's a terminal built for this, with vertical tabs and notifications for coding 
 
 ## The apps in between
 
-My next step was the Codex desktop app.
+My next step was the {{< tooltip text="OpenAI's desktop app for Codex, its coding agent. It shows several agent sessions next to each other in one window." >}}Codex desktop app{{< /tooltip >}}.
 I started using it around GPT-5.2, when the OpenAI models were, at least in my opinion, undoubtedly better.
 I absolutely loved it.
 It was a massive bump in my productivity, because it gave a much clearer view of what was running and what was done.
 
-Then Fable came out, and it felt better than the OpenAI models, so I went back to the Claude Code CLI.
+Then {{< tooltip text="Claude Fable, a model family from Anthropic." >}}Fable{{< /tooltip >}} came out, and it felt better than the OpenAI models, so I went back to the {{< tooltip text="Anthropic's coding agent, which runs in a terminal." >}}Claude Code{{< /tooltip >}} CLI.
 Switching back and forth between the Codex desktop app and the Claude CLI wasn't optimal, so I looked for something that unified the two.
 I found [T3 Code](https://github.com/pingdotgg/t3code), which I really adored as well.
 It calls itself "the open-source control plane for coding agents".
-I think of it as a harness for harnesses: it runs the original Claude Code and Codex, and shows them in one web interface.
+I think of it as a {{< tooltip text="The program around a model that turns it into an agent. It sends the prompts, gives the model tools such as a shell and a file editor, and runs what the model asks for." >}}harness{{< /tooltip >}} for harnesses: it runs the original Claude Code and Codex, and shows them in one web interface.
 
 T3 Code wasn't perfect for massively parallel work either.
 With more than twenty concurrent sessions, my relatively beefy AI machine started to struggle.
@@ -92,8 +92,8 @@ I stayed with them because I felt a model must just work better in its native ha
 It's why I wrote seven weeks ago that ["for writing code, dedicated tools like Claude Code and Codex are better"]({{< ref "/post/mindroom-at-ionq" >}}).
 
 Then I [tested that belief]({{< ref "/post/native-harness-tools" >}}).
-Over more than 4,000 runs of short terminal tasks, giving a model the tools of its own harness made only one model clearly more efficient.
-What did matter was how much the agent sends with every request: a minimal agent with one shell tool and a 12-line prompt used 58 to 76% fewer tokens than MindRoom's standard agent.
+Over {{< tooltip text="12 short terminal tasks, such as writing a report from a CSV file or fixing failing tests, each run many times per model and per set of tools." >}}more than 4,000 runs{{< /tooltip >}} of short terminal tasks, giving a model the tools of its own harness made only one model clearly more efficient.
+What did matter was how much the agent sends with every request: a minimal agent with one shell tool and a 12-line prompt used 58 to 76% fewer {{< tooltip text="The pieces of text a model reads and writes, each about three quarters of a word. Providers bill per token." >}}tokens{{< /tooltip >}} than MindRoom's standard agent.
 
 That got me over the mental block.
 If the native harness doesn't buy much, my agents can just as well work in the place where I already keep everything else.
@@ -107,8 +107,8 @@ The first is the models.
 With Opus 5.5 and Fable 5.2 I had another massive boost in productivity, simply because they can handle such an insanely large scope right now.
 
 The second is my skills, which are public as [baspowers](https://github.com/basnijholt/baspowers).
-They dictate a workflow where the agent follows established good engineering practices: it writes a spec and a plan, and it works test-first.
-But instead of involving me whenever something is ambiguous, it cross-checks with another frontier model, like Astra.
+They dictate a workflow where the agent follows established good engineering practices: it writes a spec and a plan, and it works {{< tooltip text="Test-driven development: first write a test that fails because of the bug or the missing feature, then write the code that makes it pass." >}}test-first{{< /tooltip >}}.
+But instead of involving me whenever something is ambiguous, it cross-checks with another {{< tooltip text="One of the most capable models available at that moment." >}}frontier model{{< /tooltip >}}, like {{< tooltip text="GPT-6 Astra, a model from OpenAI." >}}Astra{{< /tooltip >}}.
 Only if that doesn't resolve it does it involve me.
 
 {{< figure src="agent-question.png" caption="What reaches me. Astra asked for changes on this pull request four rounds in a row, so the agent stopped patching and came to me with three options and a recommendation. I answer with one click." alt="A MindRoom thread where the agent explains that a second model rejected its fix for the fourth time, lists three options with a recommended one at 70 percent, and shows them as clickable buttons." >}}
@@ -128,34 +128,34 @@ That works simply because things take a while to execute, and because I can see 
 
 Programming is my biggest passion.
 Before AI coding got really good, I looked at every line of my code, and every comma mattered to me.
-I'd often lie in bed scrolling through my own code in the GitHub app, trying to find a place where I could make it a little cleaner, more DRY or more elegant.
+I'd often lie in bed scrolling through my own code in the GitHub app, trying to find a place where I could make it a little cleaner, more {{< tooltip text="Don't repeat yourself: every piece of logic lives in one place." >}}DRY{{< /tooltip >}} or more elegant.
 
 In January I gave a presentation to a group of people who weren't very AI native.
 I told them that I had written about a million lines of code in the last year, and I felt slightly embarrassed to say that.
-In the first twenty days of this month, the count is almost four million.
+In the first twenty days of this month, the count is {{< tooltip text="3,966,635 lines added plus deleted from November 1 through November 20, 2026." >}}almost four million{{< /tooltip >}}.
 
 {{< figure src="lines-per-month.svg" caption="Lines added and deleted per month in my merged pull requests and direct commits, counted by trueloc on November 20, 2026. November 2026 is a partial month." alt="Bar chart of lines touched per month from November 2024 to November 2026. Most months before July 2025 are under 100,000. September and October 2026 are about 2.5 and 2.8 million, and the first twenty days of November 2026 are almost 4 million." >}}
 
 I strongly feel that lines of code is not a measure of quality at all.
 It's like measuring how good you are at building airplanes by how much weight you added to them, a comparison that's usually attributed to Bill Gates.
 
-The numbers come from [trueloc](https://github.com/basnijholt/trueloc), a tool of mine that counts every line added and deleted in every commit of my merged pull requests, plus my direct commits.
+The numbers come from [trueloc](https://github.com/basnijholt/trueloc), a tool of mine that counts every line added and deleted in every commit of my merged {{< tooltip text="A proposed change to a repository on GitHub. It gets reviewed and tested, and merging it puts the change into the main code." >}}pull requests{{< /tooltip >}}, plus my direct commits.
 That includes churn, generated files, and code that an agent wrote and then rewrote.
-From November 2024 through October 2025 that was about 1.4 million lines in 848 merged pull requests.
-In the twelve months after that it was about 10 million lines in 5,148 pull requests, and about two thirds of those lines are in code files.
-November looks even bigger than it is: more than 40% of it is the same commits counted again in a stack of six pull requests, plus files I moved from one repository to another.
+From November 2024 through October 2025 that was {{< tooltip text="1,380,174 lines added plus deleted." >}}about 1.4 million lines{{< /tooltip >}} in 848 merged pull requests.
+In the twelve months after that it was {{< tooltip text="9,957,695 lines added plus deleted." >}}about 10 million lines{{< /tooltip >}} in 5,148 pull requests, and {{< tooltip text="6,707,616 of 9,957,695 lines, which is 67%." >}}about two thirds{{< /tooltip >}} of those lines are in code files.
+November looks even bigger than it is: {{< tooltip text="About 1.69 million of 3.97 million lines, which is 43%. This is an estimate from the per-commit data." >}}more than 40%{{< /tooltip >}} of it is the same commits counted again in a stack of six pull requests, plus files I moved from one repository to another.
 
 So read the chart as the amount of work in flight, because that's what I had to keep track of.
 
 ## A thread is the agent's context window
 
 MindRoom started out as just a basic chat interface.
-My idea was that every conversation in a room happens in a thread, and the thread is the context window that the agent sees.
+My idea was that every conversation in a room happens in a thread, and the thread is the {{< tooltip text="The amount of text a model can take in at once. Everything the agent knows about the task has to fit in it." >}}context window{{< /tooltip >}} that the agent sees.
 The agent has tools to look into other threads if it wants to.
-But its context is just that one thread, which is compacted once the context window fills up.
+But its context is just that one thread, which is {{< tooltip text="The older part of the conversation is replaced by a summary, so the rest fits again." >}}compacted{{< /tooltip >}} once the context window fills up.
 
 So one task is one thread, and a room is a list of tasks.
-For coding, each thread also gets its own git worktree, and the pull requests the agent opens are linked to the thread.
+For coding, each thread also gets its own {{< tooltip text="A second working copy of the same repository, on its own branch and in its own folder, so several agents can change code without touching each other's files." >}}git worktree{{< /tooltip >}}, and the pull requests the agent opens are linked to the thread.
 
 ## From first messages to four sections
 
@@ -194,7 +194,7 @@ Then, inspired by the sections in T3 Code, I added that type of grouping too.
 The cards now sit under four headers:
 
 - **Needs you:** the agent finished or asked me something, and nothing is running in the thread.
-- **Working:** the agent is replying, or a sub-agent or background job in the thread is still running.
+- **Working:** the agent is replying, or a {{< tooltip text="A second agent that the main agent starts for one part of the task. It works in its own context and reports back." >}}sub-agent{{< /tooltip >}} or background job in the thread is still running.
 - **Later:** the thread is snoozed or has something scheduled, so it comes back on its own.
 - **Done:** I resolved it.
 
@@ -245,7 +245,7 @@ The folding is another idea I took from T3 Code, where a finished turn collapses
 
 The sections and the folded replies aren't the only things I ported.
 
-- The model picker has an Effort column for the reasoning level.
+- The model picker has an Effort column for the {{< tooltip text="How much a model thinks before it answers. Higher levels are slower and cost more, and they help on hard problems." >}}reasoning level{{< /tooltip >}}.
 - Pull requests show up as cards, with a side panel that has the changed files and their diffs.
 
 {{< figure src="pr-diff-panel.png" caption="The pull request panel next to its thread. The agent in the thread is waiting for CI, and a second model has already approved the merge." alt="A MindRoom thread on the left and a GitHub pull request panel on the right with a file tree, a diff of two Python files and a Squash and merge button." >}}
@@ -255,7 +255,7 @@ It's a [plugin](https://github.com/mindroom-ai/pull-request-client-plugin), beca
 The chat app only knows about rooms, threads and agents, and the coding parts sit on top of that.
 
 I could change the room view this often because [I own the client]({{< ref "/post/roll-your-own-fork-the-rest" >}}).
-[MindRoom Chat](https://github.com/mindroom-ai/mindroom-chat) is open source as well, under Apache-2.0.
+[MindRoom Chat](https://github.com/mindroom-ai/mindroom-chat) is open source as well, under {{< tooltip text="A permissive open-source license: you can use, change and redistribute the code, also commercially." >}}Apache-2.0{{< /tooltip >}}.
 If my four sections don't fit how you work, you can change them, the same way I took what I liked from T3 Code.
 
 ## What the numbers do and don't show
