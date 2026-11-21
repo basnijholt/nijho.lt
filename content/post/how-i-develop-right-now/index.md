@@ -202,16 +202,26 @@ A thread with a background job counts as Working.
 That's the fix for the thing that confused me in T3 Code: a thread that is still working in the background no longer shows up as needing me.
 
 The mock-up uses demo data.
-This is my real room, half a minute of it in real time: the Working section, the sub-agents that are running, and the pull requests behind a card.
+The clips below are the real MindRoom Chat, in a demo copy of my room that replays real threads of mine.
+The text in those threads is real.
+The tool calls, the background jobs and the numbers next to them are made up.
 
-{{< video autoplay="true" loop="true" controls="yes" src="compact-sections-tour.mp4" >}}
+Here I fold and open the sections, show only the unresolved threads, and turn the grouping off and on.
 
-{{< figure src="compact-later.png" caption="Later holds the threads that come back on their own: one that checks CI again in a few minutes, one that is snoozed until Monday morning, and one with a task that runs every two days." alt="The Later section with three thread cards: one with a countdown, one snoozed until November 23, and one with a recurring schedule." >}}
+{{< video autoplay="true" loop="true" controls="yes" src="room-sections.mp4" >}}
+
+And this is one request from start to finish.
+I type it in the room, and its card sits under Working while the agent replies.
+Once the agent is done, the card moves to Needs you.
+
+{{< video autoplay="true" loop="true" controls="yes" src="request-to-needs-you.mp4" >}}
+
+{{< figure src="room-later-done.png" caption="Later holds the threads that come back on their own: one with a task scheduled in 24 minutes, and two that are snoozed until the next morning. Done holds the threads I resolved." alt="The Later section with three thread cards, one with a scheduled time and two marked as snoozed until November 21, above a Done section with green resolved cards." >}}
 
 This small change in organization also resulted in a massive productivity boost, and it's the interface I'm using right now.
 
 The older view is still there.
-These two screenshots are the real MindRoom Chat with a demo room: the Threads view, which shows the first message of every thread with its title and reply count, and the same room in the Compact view with sections.
+These two screenshots are the real MindRoom Chat with a small scripted room: the Threads view, which shows the first message of every thread with its title and reply count, and the same room in the Compact view with sections.
 
 {{< figure src="threads-view.png" caption="The Threads view of a demo room in MindRoom Chat: every thread shows its first message, with the AI-generated title and the number of replies under it. The room and its people are scripted demo content." alt="MindRoom Chat showing a room timeline with four first messages, each followed by an AI-generated thread summary and a replies badge." >}}
 
