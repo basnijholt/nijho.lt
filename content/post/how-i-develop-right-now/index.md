@@ -111,7 +111,12 @@ They dictate a workflow where the agent follows established good engineering pra
 But instead of involving me whenever something is ambiguous, it cross-checks with another {{< tooltip text="One of the most capable models available at that moment." >}}frontier model{{< /tooltip >}}, like {{< tooltip text="GPT-6 Astra, a model from OpenAI." >}}Astra{{< /tooltip >}}.
 Only if that doesn't resolve it does it involve me.[^crossmodel]
 
-{{< figure src="agent-question.png" caption="What reaches me. Astra asked for changes on this pull request four rounds in a row, so the agent stopped patching and came to me with three options and a recommendation. I answer with one click." alt="A MindRoom thread where the agent explains that a second model rejected its fix for the fourth time, lists three options with a recommended one at 70 percent, and shows them as clickable buttons." >}}
+This is what reaches me, replayed from a real thread.
+Fable and Astra disagreed about a design choice, so the agent stopped and asked me.
+It lists both options and says which one it recommends.
+I answer with one click, and the agent goes on.
+
+{{< video autoplay="true" loop="true" controls="yes" src="agent-question.mp4" >}}
 
 I wrote last month that [you don't need skills to start with AI]({{< ref "/post/how-to-start-with-ai" >}}), and I still think so.
 In one test, agents wrote a failing test before fixing a bug in 0 of 32 runs without my test-driven development skill, and in 32 of 32 runs with it.
