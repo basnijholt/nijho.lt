@@ -28,7 +28,7 @@ When my hands are on the keyboard, they're on a [Glove80]({{< ref "/post/split-e
 I also have a deep obsession with declarative tools.
 Whenever I set up a new VM, a computer at home, or a new MacBook, I want the entire process to be reproducible and fast.
 That ties in with my love for [NixOS]({{< ref "/post/proxmox-to-nixos" >}}), and it's why my [dotfiles]({{< ref "/post/dotfiles" >}}) are public.
-Keyboard Maestro was the one app on my Mac that didn't fit that, so I replaced it.
+Keyboard Maestro didn't fit that, so I replaced it.
 
 This post is about [`macos-hotkey-app-switcher`](https://github.com/basnijholt/macos-hotkey-app-switcher), which I believe to be the fastest and simplest hotkey app switcher in existence for macOS.
 I made it end to end with AI agents from just a couple of prompts.
@@ -67,7 +67,8 @@ So what I have is one key.
 If I hold my `Home` key, which is under my pinky, plus another key like `B`, I go to the Brave browser.
 `Home` + `T` is my terminal.
 `Home` + `M` is the MindRoom app.
-On macOS, holding `Home` sends `Ctrl` + `Alt` + `Shift`, and I have 14 of these bindings. The same ones live in my Hyprland config on Linux.
+On macOS, holding `Home` sends `Ctrl` + `Alt` + `Shift`, and I have 14 of these bindings.
+The same ones live in my Hyprland config on Linux.
 
 ## Why not AppleScript
 
@@ -95,7 +96,7 @@ I couldn't find a license agreement for the app at all, and my tool contains no 
 
 ## Building it from a couple of prompts
 
-With the report in hand, my agent had Claude Opus 5.5 write a small Swift program that stays running in the background and does the same thing.
+From that report, my agent had Claude Opus 5.5 write a small Swift program that stays running in the background and does the same thing.
 My instruction was one line:
 
 > i want to have something that i can just configure with a text file. declaratively
@@ -103,14 +104,14 @@ My instruction was one line:
 Then GPT-6.2 Sol reviewed it and found bugs.
 The worst one would have broken my MindRoom key: the tool read any value ending in `.app` as a file path, so the {{< tooltip text="The unique name macOS uses for an app, like com.brave.Browser. It stays the same when the app is renamed or moved." >}}bundle ID{{< /tooltip >}} `chat.mindroom.app` was never looked up as an app.
 
-From my first message to my agent to a public repository with CI, a Homebrew formula and a nix-darwin module took one afternoon.
+It took one afternoon to go from my first message to a public repo with CI, a Homebrew formula, and a nix-darwin module.
 
 ## A public call was just as fast
 
 I had assumed the deprecated Carbon call was what made Keyboard Maestro fast.
-But Apple can remove a deprecated function in any macOS release, so I had an agent check whether a public call could do the same, comparing nine ways to bring an app to the front, from a background process like the tool[^alt].
+Apple can remove a deprecated function in any macOS release, so I had an agent benchmark nine ways to bring an app to the front from a background process[^alt].
 
-AppKit's ordinary {{< tooltip text="The public Swift and Objective-C interface for a running app. Its activate method asks macOS to bring that app to the front." >}}`NSRunningApplication.activate`{{< /tooltip >}}, with the option to bring all windows, was just as fast.
+AppKit's {{< tooltip text="The public Swift and Objective-C interface for a running app. Its activate method asks macOS to bring that app to the front." >}}`NSRunningApplication.activate`{{< /tooltip >}}, with the option to bring all windows, was just as fast.
 In every run it came within about 3 ms of `SetFrontProcessWithOptions`, sometimes faster and sometimes slower.
 The first benchmarks had already hinted at it: 20.8 ms for Keyboard Maestro's call and 23.1 ms for the AppKit one.
 
@@ -118,8 +119,8 @@ So Keyboard Maestro is fast because it's already running and makes one call itse
 `osascript` starts a new process for every key press, compiles the script, and sends an {{< tooltip text="The message system Mac apps use to talk to each other. The sender waits until the receiving app answers." >}}Apple Event{{< /tooltip >}} that the app has to answer.
 `open -b` also starts a new process every time.
 
-Since version 14, macOS may refuse such a request, but in 480 test switches it never did.
-So the tool now uses the public call, and nothing in it is deprecated.
+Since version 14, macOS may refuse that request, but in 480 test switches it never did.
+So the tool now uses that public call instead.
 
 ## How fast it is
 
@@ -137,7 +138,8 @@ The tool is one Swift file of under 300 lines, with no dependencies and no UI.
 
 ## How it fits in my config
 
-The config is one line per hotkey. These are my bindings:
+The config is one line per hotkey.
+These are my bindings:
 
 ```ini
 # Format: modifiers+key = bundle id (or an app path, which must contain a /). Saved changes apply at once.
@@ -187,9 +189,8 @@ If you keep it, turn off its app hotkeys first, because macOS lets two apps hold
 
 ## Conclusion
 
-My app hotkeys are now a text file in my dotfiles instead of macros in an app.
 I reverse engineered Keyboard Maestro to copy its trick, and the tool ended up not needing it.
-What makes app switching fast is not starting a new process for every key press.
+Staying running in the background and making one call is enough, and my app hotkeys now live in my dotfiles like everything else.
 
 [^rea]: The analysis ran on Keyboard Maestro Engine 11.1.1, on the arm64 slice of a copied binary (`lipo -thin arm64`), with the REA CLI (`search`, `xrefs`, `function`) and Ghidra 12.2. Nothing was launched or patched. The report traced the action from `AActivateApplication::DoAction` through Keyboard Maestro's own `activateWithOptions:` wrapper to `GetProcessForPID` and `SetFrontProcessWithOptions`, and found that "all windows" maps to flag `0` and "one window" to flag `1` (`kSetFrontProcessFrontWindowOnly`).
 [^license]: Checked on 2026-11-20. I bought Keyboard Maestro 11 directly from Stairways Software (through FastSpring), not from the Mac App Store. The 11.1.1 download, the store page and the wiki state only that a license is per user, for up to five Macs, and for one major version. The app bundle's license folder holds only the licenses of open-source libraries it uses.
