@@ -309,9 +309,17 @@ And I built the tool I'm praising, so of course it fits me.
 I loved the Codex app and I adored T3 Code before it.
 I also wrote last month that ["most new AI tooling is not very good, and MindRoom may well be included"]({{< ref "/post/roll-your-own-fork-the-rest" >}}).
 
-[TODO Bas: what you read before a merge now, and who presses merge.]
-[TODO Bas: what fifteen sessions cost per month.]
-[TODO Bas: one run that went wrong.]
+Before I merge a pull request, I look at the size of the source code diff.
+In the pull request viewer I built, clicking the diff size opens a breakdown of source code, documentation and tests.
+Nowadays I mostly ignore the test size and use the source code diff to judge whether the complexity is worth it.
+Then I either press merge myself in the sidebar, or I tell the agent to do it.
+
+Fifteen parallel sessions can cost a lot.
+I've been spending anywhere from $50,000 to $100,000 a month in model usage, though luckily I don't pay the bill.
+
+I couldn't think of a recent run that went badly wrong.
+The models have gotten so much better that the [hooks I wrote about two months ago]({{< ref "/post/removing-guardrails" >}}) feel like they barely matter any more.
+When I tell an agent not to merge a pull request, it just doesn't, and it waits until I ask.
 
 ## Conclusion
 
