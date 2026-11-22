@@ -57,7 +57,7 @@ So I started doing more things in parallel.
 Keeping track of what's running and what's done becomes exceedingly hard in the terminal.
 Thirty windows all look the same, and the only way to find out what one of them is doing is to open it and read.
 
-I experimented with [cmux](https://cmux.com) for a month or two to improve oversight and clarity.
+In June 2026 I experimented with [cmux](https://cmux.com) for a couple of months to improve oversight and clarity.
 It's a terminal built for this, with vertical tabs and notifications for coding agents.
 
 ## The apps in between
@@ -67,9 +67,9 @@ I started using it around GPT-5.2, when the OpenAI models were, at least in my o
 I absolutely loved it.
 It was a massive bump in my productivity, because it gave a much clearer view of what was running and what was done.
 
-Then {{< tooltip text="Claude Fable, a model family from Anthropic." >}}Fable{{< /tooltip >}} came out, and it felt better than the OpenAI models, so I went back to the {{< tooltip text="Anthropic's coding agent, which runs in a terminal." >}}Claude Code{{< /tooltip >}} CLI.
+Then {{< tooltip text="Claude Fable 5, a model from Anthropic." >}}Fable 5{{< /tooltip >}} came out in June, and it felt better than the OpenAI models, so I went back to the {{< tooltip text="Anthropic's coding agent, which runs in a terminal." >}}Claude Code{{< /tooltip >}} CLI.
 Switching back and forth between the Codex desktop app and the Claude CLI wasn't optimal, so I looked for something that unified the two.
-I found [T3 Code](https://github.com/pingdotgg/t3code), which I really adored as well.
+That same month I found [T3 Code](https://github.com/pingdotgg/t3code), which I really adored as well.
 It calls itself "the open-source control plane for coding agents".[^t3]
 I think of it as a {{< tooltip text="The program around a model that turns it into an agent. It sends the prompts, gives the model tools such as a shell and a file editor, and runs what the model asks for." >}}harness{{< /tooltip >}} for harnesses: it runs the original Claude Code and Codex, and shows them in one web interface.
 
@@ -108,11 +108,11 @@ Most of my coding now happens in MindRoom threads.
 Two things changed how long an agent can work without me.
 
 The first is the models.
-With Opus 5.5 and Fable 5.2 I had another massive boost in productivity, simply because they can handle such an insanely large scope right now.
+With Claude Opus 5.5 and Claude Fable 5.2 I had another massive boost in productivity, simply because they can handle such an insanely large scope right now.
 
 The second is my skills, which are public as [baspowers](https://github.com/basnijholt/baspowers).
 They dictate a workflow where the agent follows established good engineering practices: it writes a spec and a plan, and it works {{< tooltip text="Test-driven development: first write a test that fails because of the bug or the missing feature, then write the code that makes it pass." >}}test-first{{< /tooltip >}}.
-But instead of involving me whenever something is ambiguous, it cross-checks with another {{< tooltip text="One of the most capable models available at that moment." >}}frontier model{{< /tooltip >}}, like {{< tooltip text="GPT-6 Astra, a model from OpenAI." >}}Astra{{< /tooltip >}}.
+But instead of involving me whenever something is ambiguous, it cross-checks with another {{< tooltip text="One of the most capable models available at that moment." >}}frontier model{{< /tooltip >}}, like {{< tooltip text="A frontier model from OpenAI." >}}GPT-6.2 Astra{{< /tooltip >}}.
 Only if that doesn't resolve it does it involve me.[^crossmodel]
 
 This is what reaches me, replayed from a real thread.
@@ -133,11 +133,11 @@ That works simply because things take a while to execute, and because I can see 
 
 One session is often more than one agent.
 My development agent runs on Opus 5.5 and delegates work to sub-agents using rules in its system prompt.
-By default it writes code with {{< tooltip text="Gemini 4 Neon, a model from Google." >}}Neon{{< /tooltip >}} to keep costs down.
-Then {{< tooltip text="GPT-6 Sol, a model from OpenAI." >}}Sol{{< /tooltip >}}, Astra and Opus review the full diff in parallel, and no model reviews its own code.
+By default it writes code with {{< tooltip text="A fast coding model from Google." >}}Gemini 4 Neon{{< /tooltip >}} to keep costs down.
+Then {{< tooltip text="A coding model from OpenAI." >}}GPT-6.2 Sol{{< /tooltip >}}, GPT-6.2 Astra and Opus 5.5 review the full diff in parallel, and no model reviews its own code.
 After a fix round, a fresh reviewer checks the full diff so it doesn't fixate on earlier findings.
-Fable only writes code when a task is very complicated, or when two review rounds still find major issues.
-Simple lookups go to Haiku.
+Fable 5.2 only writes code when a task is very complicated, or when two review rounds still find major issues.
+Simple lookups go to Claude Haiku 5.5.
 
 In this clip, Fable wrote the fix on a harder task while two other models review it in the background.
 The bar under the thread lists every run with its tool calls, tokens, cost and time.
