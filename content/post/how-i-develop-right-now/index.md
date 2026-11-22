@@ -156,7 +156,7 @@ In January I gave a presentation to a group of people who weren't very AI native
 I told them that I had written about a million lines of code in the last year, and I felt slightly embarrassed to say that.
 In the first twenty days of this month, the count is {{< tooltip text="3,966,635 lines added plus deleted from November 1 through November 20, 2026." >}}almost four million{{< /tooltip >}}.
 
-{{< figure src="lines-per-month.svg" caption="Lines added and deleted per month in my merged pull requests and direct commits, counted by trueloc on November 20, 2026. November 2026 is a partial month." alt="Bar chart of lines touched per month from November 2024 to November 2026. Most months before July 2025 are under 100,000. September and October 2026 are about 2.5 and 2.8 million, and the first twenty days of November 2026 are almost 4 million." >}}
+{{< figure src="lines-per-month.svg" caption="Lines added and deleted per month in my merged pull requests and direct commits, counted by trueloc on November 20, 2026. November 2026 covers only the first twenty days of the month, less than three weeks." alt="Bar chart of lines touched per month from November 2024 to November 2026. Most months before July 2025 are under 100,000. September and October 2026 are about 2.5 and 2.8 million, and the first twenty days of November 2026 are almost 4 million." >}}
 
 I strongly feel that lines of code is not a measure of quality at all.
 It's like measuring how good you are at building airplanes by how much weight you added to them, a comparison that's usually attributed to Bill Gates.[^gates]
@@ -288,9 +288,11 @@ What it shows is what GitHub returned for the real pull request.
 
 {{< video autoplay="true" loop="true" controls="yes" src="pull-request-panel.mp4" >}}
 
-That pull request panel isn't part of the chat app itself.
-It's a [plugin](https://github.com/mindroom-ai/pull-request-client-plugin), because MindRoom Chat knows nothing about git.
-The chat app only knows about rooms, threads and agents, and the coding parts sit on top of that.
+I ported the code directly from T3 Code, with its MIT license linked in the repositories.
+Neither the pull request panel nor the git worktree support is built into MindRoom Chat itself.
+Both live in plugins, such as the [pull request plugin](https://github.com/mindroom-ai/pull-request-client-plugin), because the chat app only knows about rooms, threads and agents.
+Not every one of these features strictly has to be a plugin.
+I've been pushing hard on MindRoom's plugin ecosystem to keep it extensible, and building real features as plugins is how I know the plugin interface is strong enough.
 
 I could change the room view this often because [I own the client]({{< ref "/post/roll-your-own-fork-the-rest" >}}).
 [MindRoom Chat](https://github.com/mindroom-ai/mindroom-chat) is open source as well, under {{< tooltip text="A permissive open-source license: you can use, change and redistribute the code, also commercially." >}}Apache-2.0{{< /tooltip >}}.
