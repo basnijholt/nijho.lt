@@ -97,6 +97,10 @@ What did matter was how much the agent sends with every request: a minimal agent
 
 That got me over the mental block.
 If the native harness doesn't buy much, my agents can just as well work in the place where I already keep everything else.
+Even better, leaving the native harnesses makes it easy to support every model in the same room.
+Claude Code is Anthropic only, the Codex app is OpenAI only, and T3 Code only wraps those two.
+In MindRoom I can mix models from Anthropic, OpenAI and Google inside one thread.
+Each {{< tooltip text="A second agent that the main agent starts for one part of the task. It works in its own context and reports back." >}}sub-agent{{< /tooltip >}} runs in that same minimal mode, which keeps the token count down.
 Most of my coding now happens in MindRoom threads.
 
 ## Tasks that run for a day
@@ -128,7 +132,14 @@ After a good night's sleep, with a lot of focus, I'm able to orchestrate forty.
 That works simply because things take a while to execute, and because I can see what's going on.
 
 One session is often more than one agent.
-In this clip the agent has two reviews running in the background, each by a different model.
+My development agent runs on Opus 5.5 and delegates work to sub-agents using rules in its system prompt.
+By default it writes code with {{< tooltip text="Gemini 4 Neon, a model from Google." >}}Neon{{< /tooltip >}} to keep costs down.
+Then {{< tooltip text="GPT-6 Sol, a model from OpenAI." >}}Sol{{< /tooltip >}}, Astra and Opus review the full diff in parallel, and no model reviews its own code.
+After a fix round, a fresh reviewer checks the full diff so it doesn't fixate on earlier findings.
+Fable only writes code when a task is very complicated, or when two review rounds still find major issues.
+Simple lookups go to Haiku.
+
+In this clip, Fable wrote the fix on a harder task while two other models review it in the background.
 The bar under the thread lists every run with its tool calls, tokens, cost and time.
 A click on a run opens what that sub-agent is doing.
 The thread is a real one, and the two runs and their numbers are made up for the demo.
@@ -205,7 +216,7 @@ Then, inspired by the sections in T3 Code, I added that type of grouping too.[^s
 The cards now sit under four headers:
 
 - **Needs you:** the agent finished or asked me something, and nothing is running in the thread.
-- **Working:** the agent is replying, or a {{< tooltip text="A second agent that the main agent starts for one part of the task. It works in its own context and reports back." >}}sub-agent{{< /tooltip >}} or background job in the thread is still running.
+- **Working:** the agent is replying, or a sub-agent or background job in the thread is still running.
 - **Later:** the thread is snoozed or has something scheduled, so it comes back on its own.
 - **Done:** I resolved it.
 
