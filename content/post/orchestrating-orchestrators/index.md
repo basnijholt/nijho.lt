@@ -84,6 +84,8 @@ The machine wasn't overloaded.
 As far as I could tell, too many database writes went through a single thread.
 Opening a long thread took several seconds.
 And threads with background tasks still running showed up as idle, as if they needed me, which added to the confusion.
+Another thing I didn't like was that T3 Code's iOS app and web app were separate apps with different interfaces.
+In MindRoom Chat I fixed that for myself too: the web app and the iOS app are built from the same codebase, so they work the same way.
 
 The awesome bit is that T3 Code is completely open source.
 So I ported my favorite functionality and its best ideas to MindRoom, and fixed the things that annoyed me.
@@ -290,9 +292,7 @@ So while an agent works, MindRoom Chat shows its reasoning and its tool calls as
 When it's fully done, all of that folds away behind one row, and what stays is its conclusion.
 One click opens it again.
 
-<div class="mr-fold-demo"></div>
-
-And this is the real client, with a question I really asked and the agent's real answer.
+Here it is in the real client, with a question I really asked and the agent's real answer.
 The answer streams in while the agent works, and its work folds behind one row when it's done.
 One click opens that row again.
 The tool calls behind the row are made up for the demo.
@@ -362,7 +362,7 @@ So the chart shows the problem I had, which is far more work in flight than I co
 
 Forty sessions is a peak, and fifteen is a normal day.
 And I built the tool I'm praising, so of course it fits me.
-I loved the Codex app and I adored T3 Code before it.
+I loved both the Codex app and T3 Code before it.
 I also wrote last month that ["most new AI tooling is not very good, and MindRoom may well be included"]({{< ref "/post/roll-your-own-fork-the-rest" >}}).
 
 Before I merge a pull request, I no longer read the code line by line.
