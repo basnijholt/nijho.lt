@@ -156,7 +156,7 @@ In January I gave a presentation to a group of people who weren't very AI native
 I told them that I had written about a million lines of code in the last year, and I felt slightly embarrassed to say that.
 In the first twenty days of this month, the count is {{< tooltip text="3,966,635 lines added plus deleted from November 1 through November 20, 2026." >}}almost four million{{< /tooltip >}}.
 
-{{< figure src="lines-per-month.svg" caption="Lines added and deleted per month in my merged pull requests and direct commits, counted by trueloc on November 20, 2026. November 2026 covers only the first twenty days of the month, less than three weeks." alt="Bar chart of lines touched per month from November 2024 to November 2026. Most months before July 2025 are under 100,000. September and October 2026 are about 2.5 and 2.8 million, and the first twenty days of November 2026 are almost 4 million." >}}
+{{< plot name="linesPerMonth" caption="Lines added and deleted per month in my merged pull requests and direct commits, counted by trueloc on November 20, 2026. November 2026 covers only the first twenty days of the month, less than three weeks." >}}
 
 I strongly feel that lines of code is not a measure of quality at all.
 It's like measuring how good you are at building airplanes by how much weight you added to them, a comparison that's usually attributed to Bill Gates.[^gates]
