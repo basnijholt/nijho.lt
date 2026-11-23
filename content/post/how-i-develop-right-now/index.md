@@ -41,7 +41,7 @@ With that many, the hard part is knowing which session needs me.
 MindRoom Chat shows every thread as a card under Needs you, Working, Later or Done, and that view is what lets me keep up.
 {{% /callout %}}
 
-{{< figure src="room-sections.png" caption="My MindRoom-Dev room in the Compact view, rebuilt as a demo. The client is the real MindRoom Chat, and the threads are real threads from my room, replayed with their own titles and text. Six sit under Working and four under Needs you, and the bar at the bottom counts the background jobs and sub-agents. Each card shows an AI-generated title, what the agent last did, its git worktree or pull request, and when it last replied. The tool counts, the background jobs and the section each thread sits in are staged." alt="MindRoom Chat in the Compact view with a Working section of six thread cards, a Needs you section of four and the start of a Later section. Each card has a title, a line about the agent's last action, a worktree or pull request badge and tags." >}}
+{{< figure src="room-sections.png" caption="My MindRoom-Dev room in the Compact view, rebuilt as a demo. The client is the real MindRoom Chat, and the threads are real threads from my room, replayed with their own titles and text. Four sit under Needs you and six under Working, and the bar at the bottom counts the background jobs and sub-agents. Each card shows an AI-generated title, what the agent last did, its git worktree or pull request, and when it last replied. The tool counts, the background jobs and the section each thread sits in are staged." alt="MindRoom Chat in the Compact view with a Needs you section of four thread cards, a Working section of six and the start of a Later section. Each card has a title, a line about the agent's last action, a worktree or pull request badge and tags." >}}
 
 ## Thirty terminal windows
 
@@ -243,11 +243,11 @@ Once the agent is done, the card moves to Needs you.
 This small change in organization also resulted in a massive productivity boost, and it's the interface I'm using right now.
 
 The older view is still there.
-These two screenshots are the real MindRoom Chat with a small scripted room: the Threads view, which shows the first message of every thread with its title and reply count, and the same room in the Compact view with sections.
+These two screenshots show the same demo copy of my room in both modes: the Threads view with each thread's first message, AI title and reply count, and the Compact view with sections.
 
-{{< figure src="threads-view.png" caption="The Threads view of a demo room in MindRoom Chat: every thread shows its first message, with the AI-generated title and the number of replies under it. The room and its people are scripted demo content." alt="MindRoom Chat showing a room timeline with four first messages, each followed by an AI-generated thread summary and a replies badge." >}}
+{{< figure src="threads-view.png" caption="The Threads view of the demo room in MindRoom Chat: every thread shows its first message, with the AI-generated title and the number of replies under it." alt="MindRoom Chat showing the MindRoom-Dev room timeline with first messages, each followed by an AI-generated thread title and a replies badge." >}}
 
-{{< figure src="compact-sections.png" caption="The same demo room in the Compact view with sections: two threads under Working, six under Needs you." alt="MindRoom Chat showing thread cards grouped under a Working section with two cards and a Needs you section with six cards." >}}
+{{< figure src="compact-sections.png" caption="The same room in the Compact view with sections: four threads under Needs you and six under Working." alt="MindRoom Chat showing the same MindRoom-Dev room as cards grouped under Needs you with four cards and Working with six cards." >}}
 
 ## Hiding what you don't need to see
 
