@@ -140,7 +140,7 @@ Fable 5.2 only writes code when a task is very complicated, or when two review r
 Simple lookups go to Claude Haiku 5.5.
 
 In this clip, Fable wrote the fix on a harder task while two other models review it in the background.
-The bar under the thread lists every run with its tool calls, tokens, cost and time.
+The bar under the thread lists every running sub-agent with its task, model and run time.
 A click on a run opens what that sub-agent is doing.
 The thread is a real one, and the two runs and their numbers are made up for the demo.
 
