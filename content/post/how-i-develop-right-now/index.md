@@ -322,9 +322,12 @@ And I built the tool I'm praising, so of course it fits me.
 I loved the Codex app and I adored T3 Code before it.
 I also wrote last month that ["most new AI tooling is not very good, and MindRoom may well be included"]({{< ref "/post/roll-your-own-fork-the-rest" >}}).
 
-Before I merge a pull request, I look at the size of the source code diff.
+Before I merge a pull request, I no longer read the code line by line.
 In the pull request viewer I built, clicking the diff size opens a breakdown of source code, documentation and tests.
 Nowadays I mostly ignore the test size and use the source code diff to judge whether the complexity is worth it.
+Before a pull request even reaches me, three other models have already reviewed it, always at least two models different from the one that wrote the code.
+The exact mix changes almost by the day, currently from Sol, Astra, Neon, Opus and sometimes Fable.
+My own review is mostly asking the agent targeted questions about how it solved something, what the trade-offs were, and why it did it that way.
 Then I either press merge myself in the sidebar, or I tell the agent to do it.
 
 Fifteen parallel sessions can cost a lot.
