@@ -2,7 +2,7 @@
 title: "I used to orchestrate agents. Now I orchestrate orchestrators. 🧵"
 subtitle: "How I run up to 40 parallel coding sessions in one chat room"
 summary: "My coding agents now work for an hour to more than a day on their own, so I run fifteen parallel sessions comfortably, and up to forty on a good day. Each thread is its own orchestrator that delegates to minimal sub-agents, and MindRoom Chat sorts every thread into Needs you, Working, Later and Done."
-date: 2026-11-20
+date: 2026-11-23
 draft: false
 featured: false
 authors:
@@ -357,7 +357,7 @@ By the time I check in, there's a pull request waiting for me with an agent I ca
 The chart is not a measure of good code, as I said above.
 It can't credit MindRoom either.
 The big jump is in September 2026, which is when [GPT-6 Astra and Claude Opus 5.5 came out]({{< ref "/post/self-hosting-ai-is-not-cheaper" >}}).
-The sections landed on November 17, three days before I wrote this.
+The sections landed on November 17, a few days before I wrote this.
 So the chart shows the problem I had, which is far more work in flight than I could follow in terminal tabs.
 
 Forty sessions is a peak, and fifteen is a normal day.
@@ -366,7 +366,7 @@ I loved both the Codex app and T3 Code before it.
 I also wrote last month that ["most new AI tooling is not very good, and MindRoom may well be included"]({{< ref "/post/roll-your-own-fork-the-rest" >}}).
 
 Before I merge a pull request, I no longer read the code line by line.
-In the pull request viewer I built, clicking the diff size opens a breakdown of source code, documentation and tests.
+In the pull request viewer I built, hovering over the diff size opens a breakdown of source code, documentation and tests.
 Nowadays I mostly ignore the test size and use the source code diff to judge whether the complexity is worth it.
 Before a pull request even reaches me, three other models have already reviewed it, always at least two models different from the one that wrote the code.
 The exact mix changes almost by the day, currently from Sol, Astra, Neon, Opus and sometimes Fable.
