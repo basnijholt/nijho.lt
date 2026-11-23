@@ -1,4 +1,4 @@
-/* Mock-ups of MindRoom Chat for the post "How I develop right now".
+/* Mock-ups of MindRoom Chat for the post "I used to orchestrate agents. Now I orchestrate orchestrators.".
    Hand-written look-alikes with demo data, not the real app, plus a live carousel of three real agent canvases.
    Mounts on every <div class="mr-room-evolution">, <div class="mr-fold-demo">, and <div class="mr-canvas-carousel">. */
 (() => {

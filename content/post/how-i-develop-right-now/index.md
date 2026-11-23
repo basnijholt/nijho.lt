@@ -1,7 +1,7 @@
 ---
-title: "How I orchestrate 40 parallel coding sessions 🧵"
-subtitle: "I used to orchestrate agents in terminal windows. Now I orchestrate orchestrators."
-summary: "My coding agents now work for an hour to more than a day on their own, so I run fifteen parallel sessions comfortably, and up to forty on a good day. This is how I went from thirty terminal windows at peak, through cmux, the Codex desktop app and T3 Code, to a MindRoom room that sorts every thread into Needs you, Working, Later and Done."
+title: "I used to orchestrate agents. Now I orchestrate orchestrators. 🧵"
+subtitle: "How I run up to 40 parallel coding sessions in one chat room"
+summary: "My coding agents now work for an hour to more than a day on their own, so I run fifteen parallel sessions comfortably, and up to forty on a good day. Each thread is its own orchestrator that delegates to minimal sub-agents, and MindRoom Chat sorts every thread into Needs you, Working, Later and Done."
 date: 2026-11-20
 draft: false
 featured: false
@@ -139,13 +139,27 @@ The real hard part is context management in my own head, remembering what every 
 When I'm tired, I can't hold that many in my head at once.
 When I'm rested and focused, I can still context switch between them almost instantly, as long as the room makes it clear what's going on.
 
-One session is often more than one agent, so forty sessions can easily mean a hundred agents in flight.
-My development agent runs on Opus 5.5 and delegates work to sub-agents using rules in its system prompt.
+## Orchestrating orchestrators
+
+One session is rarely just one agent, so forty sessions can easily mean a hundred agents in flight.
+In every thread I only talk to one parent agent, my development agent running on Opus 5.5.
+That parent agent carries my skills, my memories, and how I like to work.
+It knows my review standards, my git workflow, and when to cross-check a design decision instead of interrupting me.
+
+Instead of doing every edit and review itself, that parent delegates the heavy lifting to minimal sub-agents.
+Each sub-agent starts with a much shorter system prompt in minimal mode, which keeps token overhead low and keeps it focused on one bounded job.
+In principle a sub-agent can look up how the parent agent works, though it rarely needs to because the parent already holds the context, memories, and workflow rules.
+
+The parent picks the model per job using rules in its system prompt.
 By default it writes code with {{< tooltip text="A fast coding model from Google." >}}Gemini 4 Neon{{< /tooltip >}} to keep costs down.
 Then {{< tooltip text="A coding model from OpenAI." >}}GPT-6.2 Sol{{< /tooltip >}}, GPT-6.2 Astra and Opus 5.5 review the full diff in parallel, and no model reviews its own code.
 After a fix round, a fresh reviewer checks the full diff so it doesn't fixate on earlier findings.
 Fable 5.2 only writes code when a task is very complicated, or when two review rounds still find major issues.
 Simple lookups go to Claude Haiku 5.5.
+
+That split is why the jump from thirty terminal panes to forty sessions works.
+I'm no longer shuttling prompts and review comments between Codex and Claude Code tabs by hand.
+Each thread is its own orchestrator, and everything in the rest of this post is the interface I built to orchestrate those orchestrators.
 
 In this clip, Fable wrote the fix on a harder task while two other models review it in the background.
 The bar under the thread lists every running sub-agent with its task, model and run time.
