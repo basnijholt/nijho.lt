@@ -30,9 +30,9 @@ Whenever I set up a new VM, a computer at home, or a new MacBook, I want the ent
 That ties in with my love for [NixOS]({{< ref "/post/proxmox-to-nixos" >}}), and it's why my [dotfiles]({{< ref "/post/dotfiles" >}}) are public.
 Keyboard Maestro didn't fit that, so I replaced it.
 
-This post is about [`macos-hotkey-app-switcher`](https://github.com/basnijholt/macos-hotkey-app-switcher), which I believe to be the fastest and simplest hotkey app switcher in existence for macOS.
+This post is about [`macos-hotkey-app-switcher`](https://github.com/basnijholt/macos-hotkey-app-switcher), which I believe to be one of the fastest and simplest hotkey app switchers for macOS.
 I built it end to end in [MindRoom]({{< ref "/post/mindroom" >}}), my [open-source](https://github.com/mindroom-ai/mindroom) agent platform, from just a couple of prompts.
-It reads its hotkeys from a plain text file, and it brings an app to the front in under 30 ms.
+It reads its hotkeys from a plain text file, and on my M2 MacBook it brings an app to the front in a median of 29 ms.
 
 {{% callout note %}}
 **TL;DR:**
@@ -67,14 +67,14 @@ So what I have is one key.
 If I hold my `Home` key, which is under my pinky, plus another key like `B`, I go to the Brave browser.
 `Home` + `T` is my terminal.
 `Home` + `M` is the MindRoom app.
-On macOS, holding `Home` sends `Ctrl` + `Alt` + `Shift`, and I have 14 of these bindings.
+My Glove80 firmware turns holding `Home` into `Ctrl` + `Alt` + `Shift`, and I have 14 of these bindings.
 The same ones live in my Hyprland config on Linux.
 
 ## Why not AppleScript
 
 Typically people suggest using an {{< tooltip text="Apple's scripting language for controlling Mac apps. Running a script starts a new process, compiles it, and sends a message to the app." >}}AppleScript{{< /tooltip >}} like `tell application "Brave Browser" to activate`, or `open -b <bundle id>`.
 I did not find those reliable, and they were quite slow compared to Keyboard Maestro.
-Karabiner-Elements, which I could configure from a file, runs `open -b` for every key press too.
+Karabiner-Elements can bind app hotkeys from a file too, often via `open -b` or its `open_application` action, but I didn't want a verbose JSON config just for 14 bindings.
 
 So what did I do?
 I used a reverse engineering tool to figure out what mechanism Keyboard Maestro actually uses.
@@ -85,10 +85,11 @@ I asked my agent in MindRoom to use [REA](https://github.com/morluto/rea), a too
 The Claude Opus 5.5 subagent it handed this to declined straight away, because it was asked to disassemble a commercial binary.
 So I switched to a more willing model.
 I gave it a prompt that asked for static analysis only, for interoperability, without launching or patching anything and skipping all licensing and registration code.
-It ran REA with {{< tooltip text="A free reverse engineering suite from the NSA that turns machine code back into readable assembly and C-like code." >}}Ghidra{{< /tooltip >}} on a copy of the Keyboard Maestro Engine binary and wrote a report[^rea].
+A quick look at the binary's symbols and strings with `nm` and `strings` already pointed to the candidate APIs, so it ran REA with {{< tooltip text="A free reverse engineering suite from the NSA that turns machine code back into readable assembly and C-like code." >}}Ghidra{{< /tooltip >}} on a copy of the Keyboard Maestro Engine binary to trace which path actually runs and wrote a report[^rea].
 
-Keyboard Maestro catches the hotkey and then calls `SetFrontProcessWithOptions`, an old {{< tooltip text="Apple's older C interfaces for Mac apps, from the classic Mac OS era. Many are deprecated but still work." >}}Carbon{{< /tooltip >}} function that brings the app to the front with all its windows.
-Apple deprecated it in 2013, but it still works.
+Keyboard Maestro registers its global hotkeys with Carbon's `RegisterEventHotKey`, which needs no Accessibility permission.
+When a hotkey fires, it calls `SetFrontProcessWithOptions`, an old {{< tooltip text="Apple's older C interfaces for Mac apps, from the classic Mac OS era. Many are deprecated but still work." >}}Carbon{{< /tooltip >}} function that brings the app to the front with all its windows.
+Apple deprecated `SetFrontProcessWithOptions` in 2013, but it still works.
 There's no AppleScript involved, and the app doesn't have to answer anything.
 
 Before writing this post, I checked whether Keyboard Maestro's license forbids this kind of analysis[^license].
@@ -111,30 +112,31 @@ It took one afternoon to go from my first message to a public repo with CI, a Ho
 I had assumed the deprecated Carbon call was what made Keyboard Maestro fast.
 Apple can remove a deprecated function in any macOS release, so I had an agent benchmark nine ways to bring an app to the front from a background process[^alt].
 
-AppKit's {{< tooltip text="The public Swift and Objective-C interface for a running app. Its activate method asks macOS to bring that app to the front." >}}`NSRunningApplication.activate`{{< /tooltip >}}, with the option to bring all windows, was just as fast.
+AppKit's supported {{< tooltip text="The Swift and Objective-C interface for a running app. Its activate method asks macOS to bring that app to the front." >}}`NSRunningApplication.activate`{{< /tooltip >}}, with the option to bring all windows, turned out to be just as fast.
 In every run it came within about 3 ms of `SetFrontProcessWithOptions`, sometimes faster and sometimes slower.
-The first benchmarks had already hinted at it: 20.8 ms for Keyboard Maestro's call and 23.1 ms for the AppKit one.
+The raw activation calls, timed without a hotkey press, had already hinted at it: 20.8 ms for `SetFrontProcessWithOptions` versus 23.1 ms for AppKit's `activate`.
+Since macOS 14, the OS can refuse an activation request from a background app, for example right after you type into the frontmost window.
+In 480 test switches across the benchmarked methods, with typing right before each switch, macOS never refused.
+So the tool now uses AppKit's `activate` call instead.
 
-So Keyboard Maestro is fast because it's already running and makes one call itself, whichever API that call uses.
+That points to the real reason Keyboard Maestro feels instant: it stays resident and makes one in-process call, whichever activation API it uses.
 `osascript` starts a new process for every key press, compiles the script, and sends an {{< tooltip text="The message system Mac apps use to talk to each other. The sender waits until the receiving app answers." >}}Apple Event{{< /tooltip >}} that the app has to answer.
 `open -b` also starts a new process every time.
 
-Since version 14, macOS may refuse that request, but in 480 test switches it never did.
-So the tool now uses that public call instead.
-
 ## How fast it is
 
-These are the medians from key press to app in front, on my M2 MacBook[^bench]:
+These are the medians from synthetic key press to app in front, on my M2 MacBook[^bench]:
 
-| Method | Median |
-|---|---:|
-| `macos-hotkey-app-switcher` | 27 ms |
-| `open -b <bundle id>` (what Karabiner runs) | 58 ms |
-| `osascript -e 'tell application id "…" to activate'` | 112 ms |
+| Method | Median | Benchmark run |
+|---|---:|---|
+| `macos-hotkey-app-switcher` (AppKit, current) | 29.3 ms | Nov 20 head-to-head |
+| `macos-hotkey-app-switcher` (Carbon, earlier) | 26.6 ms | Nov 20 head-to-head |
+| `open -b <bundle id>` | 58 ms | Nov 19 baseline |
+| `osascript -e 'tell application id "…" to activate'` | 112 ms | Nov 19 baseline |
 
-That's about twice as fast as `open -b`, and four times as fast as AppleScript.
-Keyboard Maestro ties it, for the same reason, but it's a large paid app.
-The tool is one Swift file of under 300 lines, with no dependencies and no UI.
+That's about twice as fast as `open -b`, and nearly four times as fast as AppleScript.
+I didn't time Keyboard Maestro's full hotkey path, or other resident launchers like Hammerspoon or Raycast, which should be in the same ballpark since they also avoid spawning a process per key press.
+The difference here is scope: this tool is one Swift file of under 300 lines, with no dependencies, no Accessibility permission, and no UI.
 
 ## How it fits in my config
 
@@ -194,5 +196,5 @@ Staying running in the background and making one call is enough, and my app hotk
 
 [^rea]: The analysis ran on Keyboard Maestro Engine 11.1.1, on the arm64 slice of a copied binary (`lipo -thin arm64`), with the REA CLI (`search`, `xrefs`, `function`) and Ghidra 12.2. Nothing was launched or patched. The report traced the action from `AActivateApplication::DoAction` through Keyboard Maestro's own `activateWithOptions:` wrapper to `GetProcessForPID` and `SetFrontProcessWithOptions`, and found that "all windows" maps to flag `0` and "one window" to flag `1` (`kSetFrontProcessFrontWindowOnly`).
 [^license]: Checked on 2026-11-20. I bought Keyboard Maestro 11 directly from Stairways Software (through FastSpring), not from the Mac App Store. The 11.1.1 download, the store page and the wiki state only that a license is per user, for up to five Macs, and for one major version. The app bundle's license folder holds only the licenses of open-source libraries it uses.
-[^bench]: Measured on 2026-11-19 on an M2 MacBook: two small test apps, switched back and forth 30 times per method with synthetic key presses, timed until the app was in front with its window on top. The table shows the tool with `SetFrontProcessWithOptions`. On 2026-11-20, the version with the public call took 29.3 ms against 26.6 ms for the old one in the same run, which is within the spread between runs. I didn't time Keyboard Maestro's whole hotkey path, or other launchers.
+[^bench]: Measured on an M2 MacBook using two small test apps switched back and forth 30 times per method with synthetic key presses, timed until the app was in front with its window on top. On 2026-11-19 (the baseline run), the earlier Carbon build measured 26 to 28.3 ms across revisions against 57.5 ms for `open -b` and 112 ms for `osascript`. On 2026-11-20, the current AppKit build measured 29.3 ms against 26.6 ms for the Carbon build in the same head-to-head run, which is within the spread between runs.
 [^alt]: Measured on 2026-11-20 on the M2, macOS 26.5.2, 30 rounds per method and condition, from a background launchd job, between two test apps and between TextEdit and Calculator. `NSWorkspace.openApplication` and `LSOpenCFURLRef` were 1 to 24 ms slower and raised only one window. Setting the app's "frontmost" attribute through the Accessibility API needs a permission grant. On macOS 13 the tool also sets the older `activateIgnoringOtherApps` option, which macOS 14 and later ignore. Private SkyLight functions were not considered.
