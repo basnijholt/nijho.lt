@@ -31,7 +31,7 @@ That ties in with my love for [NixOS]({{< ref "/post/proxmox-to-nixos" >}}), and
 Keyboard Maestro didn't fit that, so I replaced it.
 
 This post is about [`macos-hotkey-app-switcher`](https://github.com/basnijholt/macos-hotkey-app-switcher), which I believe to be the fastest and simplest hotkey app switcher in existence for macOS.
-I made it end to end with AI agents from just a couple of prompts.
+I built it end to end in [MindRoom]({{< ref "/post/mindroom" >}}), my [open-source](https://github.com/mindroom-ai/mindroom) agent platform, from just a couple of prompts.
 It reads its hotkeys from a plain text file, and it brings an app to the front in under 30 ms.
 
 {{% callout note %}}
@@ -81,7 +81,7 @@ I used a reverse engineering tool to figure out what mechanism Keyboard Maestro 
 
 ## What Keyboard Maestro actually does
 
-I asked my agent in [MindRoom]({{< ref "/post/mindroom" >}}) to use [REA](https://github.com/morluto/rea), a tool that lets AI agents reverse engineer apps and binaries, on Keyboard Maestro.
+I asked my agent in MindRoom to use [REA](https://github.com/morluto/rea), a tool that lets AI agents reverse engineer apps and binaries, on Keyboard Maestro.
 The Claude Opus 5.5 subagent it handed this to declined straight away, because it was asked to disassemble a commercial binary.
 So I switched to a more willing model.
 I gave it a prompt that asked for static analysis only, for interoperability, without launching or patching anything and skipping all licensing and registration code.
