@@ -32,7 +32,7 @@ At peak I had probably thirty terminal windows and panes open at once.
 So it was hard for me to accept that my next step was a desktop app.
 The step after that was a chat room.
 
-I still use my beloved [iTerm2]({{< ref "/post/dotfiles" >}}).
+I still use my {{< tooltip text="Yes, I know it's old and not trendy. I've tried the newer ones (Ghostty, WezTerm, Kitty, Alacritty), and I just care more about iTerm2's features than the speed they promise." >}}beloved{{< /tooltip >}} [iTerm2]({{< ref "/post/dotfiles" >}}).
 I used to orchestrate agents in terminal windows.
 Now I orchestrate orchestrators.
 My coding agents live in [MindRoom]({{< ref "/post/mindroom" >}}), in a room where every task is a thread, and that room shows me which thread needs me.
@@ -71,7 +71,7 @@ It's a terminal built for this, with vertical tabs and notifications for coding 
 
 ## The apps in between
 
-My next step was the {{< tooltip text="OpenAI's desktop app for Codex, its coding agent. It shows several agent sessions next to each other in one window." >}}Codex desktop app{{< /tooltip >}}.
+My next step was the {{< tooltip text="OpenAI's desktop app for Codex, its coding agent. It shows several agent sessions next to each other in one window." >}}Codex desktop app{{< /tooltip >}}, now rebranded as the ChatGPT app.
 I started using it around GPT-5.2, when the OpenAI models were, at least in my opinion, undoubtedly better.
 I absolutely loved it.
 It was a massive bump in my productivity, because it gave a much clearer view of what was running and what was done.
@@ -80,7 +80,7 @@ Then {{< tooltip text="Claude Fable 5, a model from Anthropic." >}}Fable 5{{< /t
 Switching back and forth between the Codex desktop app and the Claude CLI wasn't optimal, so I looked for something that unified the two.
 That same month I found [T3 Code](https://github.com/pingdotgg/t3code), which I really adored as well.
 It calls itself "the open-source control plane for coding agents".[^t3]
-I think of it as a {{< tooltip text="The program around a model that turns it into an agent. It sends the prompts, gives the model tools such as a shell and a file editor, and runs what the model asks for." >}}harness{{< /tooltip >}} for harnesses: it runs the original Claude Code and Codex, and shows them in one web interface.
+I think of it as a {{< tooltip text="The program around a model that turns it into an agent. It sends the prompts, gives the model tools such as a shell and a file editor, and runs what the model asks for." >}}harness{{< /tooltip >}} for harnesses: it wraps Claude Code, Codex and OpenCode, and shows them in one web interface.
 
 T3 Code wasn't perfect for massively parallel work either.
 With more than twenty concurrent sessions, my relatively beefy AI machine started to struggle.
@@ -109,7 +109,7 @@ What did matter was how much the agent sends with every request: a minimal agent
 That got me over the mental block.
 If the native harness doesn't buy much, my agents can just as well work in the place where I already keep everything else.
 Even better, leaving the native harnesses makes it easy to support every model in the same room.
-Claude Code is Anthropic only, the Codex app is OpenAI only, and T3 Code only wraps those two.
+Claude Code is Anthropic only, the Codex app is OpenAI only, and T3 Code wraps separate harnesses like Claude Code, Codex and OpenCode.
 In MindRoom I can mix models from Anthropic, OpenAI and Google inside one thread.
 Each {{< tooltip text="A second agent that the main agent starts for one part of the task. It works in its own context and reports back." >}}sub-agent{{< /tooltip >}} runs in that same minimal mode, which keeps the token count down.
 Most of my coding now happens in MindRoom threads.
@@ -157,7 +157,8 @@ Each sub-agent starts with a much shorter system prompt in minimal mode, which k
 In principle a sub-agent can look up how the parent agent works, though it rarely needs to because the parent already holds the context, memories, and workflow rules.
 
 The parent picks the model per job using rules in its system prompt.
-By default it writes code with {{< tooltip text="A fast coding model from Google." >}}Gemini 4 Neon{{< /tooltip >}} to keep costs down.
+By default it writes code with {{< tooltip text="A coding model from Google." >}}Gemini 4 Neon{{< /tooltip >}}, which only came out a couple of days ago.
+It's still pretty expensive, and in the few days I've used it, the performance has been incredible, especially on UI work.
 Then {{< tooltip text="A coding model from OpenAI." >}}GPT-6.2 Sol{{< /tooltip >}}, GPT-6.2 Astra and Opus 5.5 review the full diff in parallel, and no model reviews its own code.
 After a fix round, a fresh reviewer checks the full diff so it doesn't fixate on earlier findings.
 Fable 5.2 only writes code when a task is very complicated, or when two review rounds still find major issues.
@@ -186,14 +187,14 @@ In the first twenty days of this month, the count is {{< tooltip text="3,966,635
 
 {{< plot name="linesPerMonth" caption="Lines added and deleted per month in my merged pull requests and direct commits, counted by trueloc on November 20, 2026. November 2026 covers only the first twenty days of the month, less than three weeks." >}}
 
-I strongly feel that lines of code is not a measure of quality at all.[^gates]
+I strongly feel that lines of code is not a measure of quality at all.
+It's like measuring how good you are at building airplanes by how much weight you added to them.[^gates]
 
 The numbers come from [trueloc](https://github.com/basnijholt/trueloc), a tool of mine that counts every line added and deleted in every commit of my merged {{< tooltip text="A proposed change to a repository on GitHub. It gets reviewed and tested, and merging it puts the change into the main code." >}}pull requests{{< /tooltip >}}, plus my direct commits.[^trueloc]
 Even when a pull request is squash-merged into one commit on `main`, trueloc still counts the separate commits that went into it.
 That includes churn, generated files, and code that an agent wrote and then rewrote.
 From November 2024 through October 2025 that was {{< tooltip text="1,380,174 lines added plus deleted." >}}about 1.4 million lines{{< /tooltip >}} in 848 merged pull requests.
 In the twelve months after that it was {{< tooltip text="9,957,695 lines added plus deleted." >}}about 10 million lines{{< /tooltip >}} in 5,148 pull requests, and {{< tooltip text="6,707,616 of 9,957,695 lines, which is 67%." >}}about two thirds{{< /tooltip >}} of those lines are in code files.[^codefiles]
-November looks even bigger than it is: {{< tooltip text="1,133,900 of 3,966,635 lines (28.6%) came from six stacked pull requests on November 11 whose branches repeated commits from below." >}}almost 30%{{< /tooltip >}} of it is the same commits counted again in a stack of six pull requests.[^november]
 
 So read the chart as the amount of work in flight, because that's what I had to keep track of.
 
@@ -352,7 +353,7 @@ That feels very anti-{{< tooltip text="Rich Sutton's 2019 essay arguing that gen
 The models already orchestrate work well enough on their own that you don't need rigid pipeline structure around them.
 
 Even without a strict harness, I end up with the software factory people want anyway.
-A plugin reports errors automatically into a room.
+A [plugin](https://github.com/mindroom-ai/error-notifier-plugin) reports errors automatically into a room.
 An agent triages the error on its own and starts working on a fix.
 By the time I check in, there's a pull request waiting for me with an agent I can question directly about the trade-offs, or even jump on a voice call with.
 
@@ -366,7 +367,7 @@ So the chart shows the problem I had, which is far more work in flight than I co
 
 Forty sessions is a peak, and fifteen is a normal day.
 And I built the tool I'm praising, so of course it fits me.
-I loved both the Codex app and T3 Code before it.
+Before MindRoom, I loved the Codex app and then T3 Code.
 I also wrote last month that ["most new AI tooling is not very good, and MindRoom may well be included"]({{< ref "/post/roll-your-own-fork-the-rest" >}}).
 
 Before I merge a pull request, I no longer read the code line by line.
@@ -391,7 +392,7 @@ A year ago I cycled through five or six tabs every 10 to 15 minutes to see which
 Now I open one room and look at Needs you.
 
 Going all in on MindRoom also kick-started the best productivity optimization loop I've ever had.
-Before this, building my own development environment felt impractical, because I would have had to force myself to work inside an inferior tool, feel slow, and fall back to other apps.
+Before this, building my own development environment felt impractical, because I would have had to force myself to work inside an inferior tool (I hadn't optimized MindRoom for coding yet), feel slow, and fall back to other apps.
 Now it's genuinely the best place I can imagine developing in, so everything I find wrong with it, I fix right from inside it.
 
 You can try the same view on [mindroom.chat](https://mindroom.chat), and the [showcase](https://docs.mindroom.chat/showcase/) has recordings of what else it does.
@@ -405,13 +406,11 @@ So this is how I develop right now, and I expect it to look different in a few m
 
 [^crossmodel]: The skill is [`consulting-cross-model`](https://github.com/basnijholt/baspowers/tree/main/skills/consulting-cross-model). Claude asks GPT-6 Astra, and Codex asks Claude Opus 5.5.
 
-[^gates]: Like measuring how good you are at building airplanes by how much weight you added to them. The line that's usually quoted is "Measuring programming progress by lines of code is like measuring aircraft building progress by weight", usually attributed to Bill Gates, though I couldn't find a primary source for it.
+[^gates]: The line that's usually quoted is "Measuring programming progress by lines of code is like measuring aircraft building progress by weight", usually attributed to Bill Gates, though I couldn't find a primary source for it.
 
 [^trueloc]: Counted on November 20, 2026 with `uvx trueloc count basnijholt --since 2024-11-01 --until 2026-11-20 --json`, run with my own GitHub login, so it covers every repository that account can see. Over the whole window that's 7,630 merged pull requests and 12,233 direct commits with 15,304,504 lines: 10,886,530 added and 4,417,974 deleted. September 2026 has 2,459,033 lines, October has 2,829,709, and November up to the 20th has 3,966,635.
 
 [^codefiles]: Code files are the ones with one of 26 source extensions, such as `.py`, `.ts`, `.tsx`, `.rs`, `.nix`, `.sh` and `.css`. In the last twelve months that's 6,707,616 of 9,957,695 lines (67%), and the rest is mostly JSON (11.7%), Markdown (9.2%) and SVG (4.4%). In the twelve months before, it was 832,382 of 1,380,174 lines (60%).
-
-[^november]: Six pull requests that merged on November 11 count for 1,133,900 lines here, while their own diffs on GitHub add up to 3,143 lines. Each branch in that stack carried the commits of the branches below it.
 
 [^sections]: The counted Needs you, Working, Later and Done filters are [mindroom-chat #436](https://github.com/mindroom-ai/mindroom-chat/pull/436), and the sections in the Compact view are [#448](https://github.com/mindroom-ai/mindroom-chat/pull/448). Both merged on November 17, 2026 (UTC).
 

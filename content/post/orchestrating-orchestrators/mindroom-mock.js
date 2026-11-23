@@ -112,7 +112,7 @@
   const STEPS = [
     ['First messages', 'A room like in any chat app. You see the first message of each thread, and you have to open it to know what it became.'],
     ['Titles', 'Every thread gets an AI-generated title, shown in the room.'],
-    ['Resolve', 'A thread I am done with can be resolved, which marks it green. Click any thread badge below to toggle resolved.'],
+    ['Resolve', 'A thread I am done with can be resolved, which marks it green.'],
     ['Sort and filter', 'Sort on latest reply or reply count, and filter out resolved or idle threads. Click Unresolved, Working, Scheduled, or the sort button below to try them.'],
     ['Cards', 'The Compact view: one card per thread, with its title, what the agent is doing, and when it last replied.'],
     ['Sections', 'The cards grouped under Needs you, Working, Later and Done. Click Group, the filters, the sort button, or any section header below.'],
@@ -127,10 +127,9 @@
   const rowHtml = (t, step) => {
     const done = step >= 2 && t.state === 'done';
     const title = step >= 1 ? `<b>${t.title}</b> · ` : '';
-    const canToggle = step === 2;
     return `<div class="mrm-row"><div class="mrm-av">B</div><div><div class="mrm-meta"><b>Bas</b>${t.ago} ago</div>
       <div>${t.first}</div>
-      <div class="mrm-badge${done ? ' done' : ''}${canToggle ? ' clickable' : ''}"${canToggle ? ` data-toggle="${t.id}" title="Click to toggle resolved"` : ''}>💬 ${title}${t.replies} replies${done ? ' · ✓ resolved' : (canToggle ? ' · click to resolve' : '')}</div></div></div>`;
+      <div class="mrm-badge${done ? ' done' : ''}">💬 ${title}${t.replies} replies${done ? ' · ✓ resolved' : ''}</div></div></div>`;
   };
   const cardHtml = (t) => {
     const tags = t.tags.map((x) => `<span class="mrm-pill tag">${x}</span>`).join('');
@@ -224,13 +223,6 @@
       const add = (t) => {
         const n = nodes.get(t.id);
         n.innerHTML = step >= 4 ? cardHtml(t) : rowHtml(t, step);
-        if (step === 2) {
-          const b = n.querySelector('[data-toggle]');
-          if (b) b.onclick = () => {
-            t.state = t.state === 'done' ? (t.origState === 'done' ? 'needs' : t.origState) : 'done';
-            render();
-          };
-        }
         list.append(n);
       };
       const vis = visible();
