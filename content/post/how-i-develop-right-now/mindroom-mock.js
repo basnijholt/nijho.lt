@@ -81,8 +81,8 @@
 .mrc-tabs{display:flex;flex-wrap:wrap;gap:6px}
 .mrc-actions{display:flex;align-items:center;gap:6px;margin-left:auto}
 .mrc-count{font-size:12px;color:#8f8f99;min-width:2.5em;text-align:center}
-.mrc-frame-wrap{background:#121418;border:1px solid #2c2c32;border-radius:10px;overflow:hidden;position:relative}
-.mrc-frame{display:block;width:100%;height:680px;border:0;background:#121418}
+.mrc-frame-wrap{background:#131316;border:1px solid #2c2c32;border-radius:10px;overflow:hidden;position:relative;color-scheme:dark}
+.mrc-frame{display:block;width:100%;height:680px;border:0;background:#131316;color-scheme:dark}
 .mrc-frame[hidden]{display:none}
 .mrc-loading{padding:48px 16px;text-align:center;color:#8f8f99;font-size:13px}
 @media (max-width:640px){.mrc-frame{height:560px}.mrm-chip.sort{margin-left:0}}
@@ -101,7 +101,7 @@
   // ---- 1. The room, in six versions -------------------------------------------------------------
   const BASE_THREADS = [
     { id: 'typo', first: 'typo in the readme, second paragraph', title: '✏️ README typo', state: 'done', ago: '5h', mins: 300, replies: 2, line: 'Fixed and merged.', tags: [], badge: '#804' },
-    { id: 'docs', first: 'the plugin docs are out of date I think', title: '📚 Plugin SDK docs', state: 'done', ago: '3h', mins: 180, replies: 9, line: 'Merged. The docs match the SDK again.', tags: ['docs'], badge: '#811' },
+    { id: 'docs', first: 'the plugin docs are out of date I think', title: '📚 Plugin SDK docs', state: 'done', ago: '4m', mins: 4, replies: 9, line: 'Merged. The docs match the SDK again.', tags: ['docs'], badge: '#811' },
     { id: 'rebase', first: 'remind me monday to rebase our homeserver fork', title: '🔁 Rebase the homeserver fork', state: 'later', ago: '1d', mins: 1440, replies: 4, line: 'Snoozed until Monday 9:00', tags: ['infra'], badge: '💤 Mon 9:00' },
     { id: 'rename', first: 'ok next thing, the toolkit names are confusing, see what we discussed', title: '🧰 File and coding toolkit names', state: 'needs', ago: '31m', mins: 31, replies: 57, line: 'Question: keep the old name as an alias, or rename everywhere?', tags: ['design'], badge: '#815' },
     { id: 'ios', first: 'when I go back to a room on my phone it loses my scroll position, look into that', title: '📱 Scroll position lost on Back', state: 'needs', ago: '6m', mins: 6, replies: 23, line: 'Fixed, with a test. The pull request is ready for your review.', tags: ['bug', 'ios'], badge: '#822' },
@@ -113,11 +113,11 @@
     ['First messages', 'A room like in any chat app. You see the first message of each thread, and you have to open it to know what it became.'],
     ['Titles', 'Every thread gets an AI-generated title, shown in the room.'],
     ['Resolve', 'A thread I am done with can be resolved, which marks it green. Click any thread badge below to toggle resolved.'],
-    ['Sort and filter', 'Sort on latest reply or reply count, and filter out resolved or idle threads. Try the filter and sort buttons below.'],
+    ['Sort and filter', 'Sort on latest reply or reply count, and filter out resolved or idle threads. Click Unresolved, Working, Scheduled, or the sort button below to try them.'],
     ['Cards', 'The Compact view: one card per thread, with its title, what the agent is doing, and when it last replied.'],
-    ['Sections', 'The cards grouped under Working, Needs you, Later and Done. Try Group, the filters, the sort button, or click any section header.'],
+    ['Sections', 'The cards grouped under Needs you, Working, Later and Done. Click Group, the filters, the sort button, or any section header below.'],
   ];
-  const SECTIONS = [['working', 'Working'], ['needs', 'Needs you'], ['later', 'Later'], ['done', 'Done']];
+  const SECTIONS = [['needs', 'Needs you'], ['working', 'Working'], ['later', 'Later'], ['done', 'Done']];
   const SORTS = [
     ['latest', 'Last reply ↓', (a, b) => a.mins - b.mins],
     ['oldest', 'Oldest first ↑', (a, b) => b.mins - a.mins],
@@ -156,7 +156,7 @@
     const steps = el('div', 'mrm-steps');
     const cap = el('div', 'mrm-cap');
     const room = el('div', 'mrm-room');
-    const head = el('div', 'mrm-head', '# dev <small>demo data</small>');
+    const head = el('div', 'mrm-head', '# dev <small>interactive demo · click buttons to try</small>');
     const bar = el('div', 'mrm-bar');
     const list = el('div', 'mrm-list');
     room.append(head, bar, list);
