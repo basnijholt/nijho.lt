@@ -298,6 +298,17 @@ I could change the room view this often because [I own the client]({{< ref "/pos
 [MindRoom Chat](https://github.com/mindroom-ai/mindroom-chat) is open source as well, under {{< tooltip text="A permissive open-source license: you can use, change and redistribute the code, also commercially." >}}Apache-2.0{{< /tooltip >}}.
 If my four sections don't fit how you work, you can change them, the same way I took what I liked from T3 Code.
 
+## Interactive canvases
+
+Not every decision fits a text reply or three buttons.
+When an agent proposes a UI change, it can send an interactive HTML canvas right inside the thread.
+I can click through the variants, toggle states and send my choice back to the agent directly from the page.
+
+These are three real canvases my development agent built for me, embedded live below.
+Click through them to try the tabs, toggles and controls yourself.
+
+<div class="mr-canvas-carousel"></div>
+
 ## What the numbers do and don't show
 
 The chart is not a measure of good code, as I said above.
