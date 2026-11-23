@@ -1,7 +1,7 @@
 ---
-title: "How I develop right now 🧵"
-subtitle: "From thirty terminal windows to forty agents in one chat room"
-summary: "My coding agents now work for an hour to more than a day on their own, so I run fifteen of them at once, and forty on a good day. This is how I went from thirty terminal windows, through cmux, the Codex desktop app and T3 Code, to a MindRoom room that sorts every thread into Needs you, Working, Later and Done."
+title: "How I orchestrate 40 parallel coding sessions 🧵"
+subtitle: "I used to orchestrate agents in terminal windows. Now I orchestrate orchestrators."
+summary: "My coding agents now work for an hour to more than a day on their own, so I run fifteen parallel sessions comfortably, and up to forty on a good day. This is how I went from thirty terminal windows at peak, through cmux, the Codex desktop app and T3 Code, to a MindRoom room that sorts every thread into Needs you, Working, Later and Done."
 date: 2026-11-20
 draft: false
 featured: false
@@ -23,22 +23,25 @@ categories:
 I'm a huge terminal nerd.
 I maintain at least twenty different {{< tooltip text="Command-line interface: a program you run by typing a command in a terminal." >}}CLI{{< /tooltip >}} tools, and I use many of them every day.
 For a long time, all my coding with AI happened [strictly in the terminal]({{< ref "/post/terminal-ninja" >}}).
-At points I had probably thirty terminal windows open at once, with tabs and panes.
+At peak I had probably thirty terminal windows and panes open at once.
 
 So it was hard for me to accept that my next step was a desktop app.
 The step after that was a chat room.
 
 I still use my beloved [iTerm2]({{< ref "/post/dotfiles" >}}).
-But my coding agents now live in [MindRoom]({{< ref "/post/mindroom" >}}), in a room where every task is a thread, and that room tells me which thread needs me.
+I used to orchestrate agents in terminal windows.
+Now I orchestrate orchestrators.
+My coding agents live in [MindRoom]({{< ref "/post/mindroom" >}}), in a room where every task is a thread, and that room shows me which thread needs me.
 This post walks through how I got there: the tools I used, why each one stopped working for me, and how the room in MindRoom changed along the way.
 
 {{< toc >}}
 
 {{% callout note %}}
 **TL;DR:** A task I hand to an agent now runs from an hour to more than a day on its own.
-So I run many at once: fifteen sessions comfortably, and forty on a good day.
-With that many, the hard part is knowing which session needs me.
-MindRoom Chat shows every thread as a card under Needs you, Working, Later or Done, and that view is what lets me keep up.
+So I run many parallel sessions at once: fifteen comfortably, and up to forty on a good day (each with multiple sub-agents of its own).
+Knowing which session needs me is just a prerequisite.
+The real hard part is context management in my own head, remembering what every thread is doing so I can switch cleanly.
+MindRoom Chat shows every thread as a card under Needs you, Working, Later or Done, which takes status tracking off my plate so I can keep up.
 {{% /callout %}}
 
 {{< figure src="room-sections.png" caption="My MindRoom-Dev room in the Compact view, rebuilt as a demo. The client is the real MindRoom Chat, and the threads are real threads from my room, replayed with their own titles and text. Four sit under Needs you and six under Working, and the bar at the bottom counts the background jobs and sub-agents. Each card shows an AI-generated title, what the agent last did, its git worktree or pull request, and when it last replied. The tool counts, the background jobs and the section each thread sits in are staged." alt="MindRoom Chat in the Compact view with a Needs you section of four thread cards, a Working section of six and the start of a Later section. Each card has a title, a line about the agent's last action, a worktree or pull request badge and tags." >}}
@@ -54,8 +57,10 @@ I'd start one, move to the next tab, and by the time I came back around there wa
 Then the models got better and I handed over more scope per task.
 The more I hand off, the longer an agent takes to finish.
 So I started doing more things in parallel.
+Thirty terminal windows was the ridiculous max, when I worked on five to eight things at once and each one had a couple of sub-panes, one with Codex and one with Claude Code.
+I was the orchestrator myself, jumping between panes to keep every agent moving.
 Keeping track of what's running and what's done becomes exceedingly hard in the terminal.
-Thirty windows all look the same, and the only way to find out what one of them is doing is to open it and read.
+Thirty panes all look the same, and the only way to find out what one of them is doing is to open it and read.
 
 In June 2026 I experimented with [cmux](https://cmux.com) for a couple of months to improve oversight and clarity.
 It's a terminal built for this, with vertical tabs and notifications for coding agents.
@@ -128,10 +133,13 @@ As I wrote there: "That matters when agents run on their own for hours."
 
 The result is that any task I start might run from just an hour to more than a day autonomously.
 That means I can run fifteen parallel sessions extremely comfortably.
-After a good night's sleep, with a lot of focus, I'm able to orchestrate forty.
-That works simply because things take a while to execute, and because I can see what's going on.
+After a good night's sleep, with a lot of focus, I'm able to orchestrate up to forty.
+Knowing which session needs me is just the baseline requirement.
+The real hard part is context management in my own head, remembering what every thread is doing.
+When I'm tired, I can't hold that many in my head at once.
+When I'm rested and focused, I can still context switch between them almost instantly, as long as the room makes it clear what's going on.
 
-One session is often more than one agent.
+One session is often more than one agent, so forty sessions can easily mean a hundred agents in flight.
 My development agent runs on Opus 5.5 and delegates work to sub-agents using rules in its system prompt.
 By default it writes code with {{< tooltip text="A fast coding model from Google." >}}Gemini 4 Neon{{< /tooltip >}} to keep costs down.
 Then {{< tooltip text="A coding model from OpenAI." >}}GPT-6.2 Sol{{< /tooltip >}}, GPT-6.2 Astra and Opus 5.5 review the full diff in parallel, and no model reviews its own code.
@@ -158,14 +166,14 @@ In the first twenty days of this month, the count is {{< tooltip text="3,966,635
 
 {{< plot name="linesPerMonth" caption="Lines added and deleted per month in my merged pull requests and direct commits, counted by trueloc on November 20, 2026. November 2026 covers only the first twenty days of the month, less than three weeks." >}}
 
-I strongly feel that lines of code is not a measure of quality at all.
-It's like measuring how good you are at building airplanes by how much weight you added to them, a comparison that's usually attributed to Bill Gates.[^gates]
+I strongly feel that lines of code is not a measure of quality at all.[^gates]
 
 The numbers come from [trueloc](https://github.com/basnijholt/trueloc), a tool of mine that counts every line added and deleted in every commit of my merged {{< tooltip text="A proposed change to a repository on GitHub. It gets reviewed and tested, and merging it puts the change into the main code." >}}pull requests{{< /tooltip >}}, plus my direct commits.[^trueloc]
+Even when a pull request is squash-merged into one commit on `main`, trueloc still counts the separate commits that went into it.
 That includes churn, generated files, and code that an agent wrote and then rewrote.
 From November 2024 through October 2025 that was {{< tooltip text="1,380,174 lines added plus deleted." >}}about 1.4 million lines{{< /tooltip >}} in 848 merged pull requests.
 In the twelve months after that it was {{< tooltip text="9,957,695 lines added plus deleted." >}}about 10 million lines{{< /tooltip >}} in 5,148 pull requests, and {{< tooltip text="6,707,616 of 9,957,695 lines, which is 67%." >}}about two thirds{{< /tooltip >}} of those lines are in code files.[^codefiles]
-November looks even bigger than it is: {{< tooltip text="About 1.69 million of 3.97 million lines, which is 43%. This is an estimate from the per-commit data." >}}more than 40%{{< /tooltip >}} of it is the same commits counted again in a stack of six pull requests, plus files I moved from one repository to another.[^november]
+November looks even bigger than it is: {{< tooltip text="1,133,900 of 3,966,635 lines (28.6%) came from six stacked pull requests on November 11 whose branches repeated commits from below." >}}almost 30%{{< /tooltip >}} of it is the same commits counted again in a stack of six pull requests.[^november]
 
 So read the chart as the amount of work in flight, because that's what I had to keep track of.
 
@@ -179,10 +187,17 @@ But its context is just that one thread, which is {{< tooltip text="The older pa
 So one task is one thread, and a room is a list of tasks.
 For coding, each thread also gets its own {{< tooltip text="A second working copy of the same repository, on its own branch and in its own folder, so several agents can change code without touching each other's files." >}}git worktree{{< /tooltip >}}, and the pull requests the agent opens are linked to the thread.
 
+I don't even have to start a session by picking a repository in a UI.
+I keep one meta-repo checkout holding all my repositories, and the agent already knows that folder.
+When I describe an issue, it figures out which repo I mean from context alone, and I only name the project when it's brand new or genuinely ambiguous.
+Lately I also record short screen recordings on my phone, attach one to a thread, and dictate the rest by voice.
+Sometimes I land an entire large pull request without typing a single word.
+We even have an Apple Watch app now for orchestration in a pinch: one big record button starts a new task from my wrist, and I can read the replies there too.
+
 ## From first messages to four sections
 
 The room view went through six versions.
-You can click through them here, in a small mock-up of the same room.
+You can click through the steps and try the filter, sort, group and section buttons below in a small mock-up of the same room.
 
 <div class="mr-room-evolution"></div>
 
@@ -289,6 +304,9 @@ What it shows is what GitHub returned for the real pull request.
 {{< video autoplay="true" loop="true" controls="yes" src="pull-request-panel.mp4" >}}
 
 I ported the code directly from T3 Code, with its MIT license linked in the repositories.
+Because I control the full source, I tailored the app to how I actually work.
+For example, the pull request viewer hides test files by default because I no longer read them, whereas T3 Code still showed all of them.
+I also made the whole interface keyboard-first, so I can navigate rooms, threads and actions without ever touching the mouse.
 Neither the pull request panel nor the git worktree support is built into MindRoom Chat itself.
 Both live in plugins, such as the [pull request plugin](https://github.com/mindroom-ai/pull-request-client-plugin), because the chat app only knows about rooms, threads and agents.
 Not every one of these features strictly has to be a plugin.
@@ -305,9 +323,20 @@ When an agent proposes a UI change, it can send an interactive HTML canvas right
 I can click through the variants, toggle states and send my choice back to the agent directly from the page.
 
 These are three real canvases my development agent built for me, embedded live below.
-Click through them to try the tabs, toggles and controls yourself.
+Click through them to try the tabs, toggles and controls yourself, especially the Account Hold Menu where the press-and-hold and swipe gestures actually work.
 
 <div class="mr-canvas-carousel"></div>
+
+## A software factory without the rigid harness
+
+A lot of people are talking about building heavily structured "software factories" with strict agent harnesses.
+That feels very anti-{{< tooltip text="Rich Sutton's 2019 essay arguing that general methods that scale with compute beat hand-crafted structure in the long run." >}}Bitter Lesson{{< /tooltip >}} to me.
+The models already orchestrate work well enough on their own that you don't need rigid pipeline structure around them.
+
+Even without a strict harness, I end up with the software factory people want anyway.
+A plugin reports errors automatically into a room.
+An agent triages the error on its own and starts working on a fix.
+By the time I check in, there's a pull request waiting for me with an agent I can question directly about the trade-offs, or even jump on a voice call with.
 
 ## What the numbers do and don't show
 
@@ -343,6 +372,10 @@ I still have iTerm2 open all day.
 A year ago I cycled through five or six tabs every 10 to 15 minutes to see which agent was done.
 Now I open one room and look at Needs you.
 
+Going all in on MindRoom also kick-started the best productivity optimization loop I've ever had.
+Before this, building my own development environment felt impractical, because I would have had to force myself to work inside an inferior tool, feel slow, and fall back to other apps.
+Now it's genuinely the best place I can imagine developing in, so everything I find wrong with it, I fix right from inside it.
+
 You can try the same view on [mindroom.chat](https://mindroom.chat), and the [showcase](https://docs.mindroom.chat/showcase/) has recordings of what else it does.
 
 I also wrote that [with every new model, my workflow changes]({{< ref "/post/how-to-start-with-ai" >}}).
@@ -354,13 +387,13 @@ So this is how I develop right now, and I expect it to look different in a few m
 
 [^crossmodel]: The skill is [`consulting-cross-model`](https://github.com/basnijholt/baspowers/tree/main/skills/consulting-cross-model). Claude asks GPT-6 Astra, and Codex asks Claude Opus 5.5.
 
-[^gates]: The line that's usually quoted is "Measuring programming progress by lines of code is like measuring aircraft building progress by weight." I couldn't find a primary source for it.
+[^gates]: Like measuring how good you are at building airplanes by how much weight you added to them. The line that's usually quoted is "Measuring programming progress by lines of code is like measuring aircraft building progress by weight", usually attributed to Bill Gates, though I couldn't find a primary source for it.
 
 [^trueloc]: Counted on November 20, 2026 with `uvx trueloc count basnijholt --since 2024-11-01 --until 2026-11-20 --json`, run with my own GitHub login, so it covers every repository that account can see. Over the whole window that's 7,630 merged pull requests and 12,233 direct commits with 15,304,504 lines: 10,886,530 added and 4,417,974 deleted. September 2026 has 2,459,033 lines, October has 2,829,709, and November up to the 20th has 3,966,635.
 
 [^codefiles]: Code files are the ones with one of 26 source extensions, such as `.py`, `.ts`, `.tsx`, `.rs`, `.nix`, `.sh` and `.css`. In the last twelve months that's 6,707,616 of 9,957,695 lines (67%), and the rest is mostly JSON (11.7%), Markdown (9.2%) and SVG (4.4%). In the twelve months before, it was 832,382 of 1,380,174 lines (60%).
 
-[^november]: Six pull requests that merged on November 11 count for 1,133,900 lines here, while their own diffs on GitHub add up to 3,143 lines. Each branch in that stack carried the commits of the branches below it. Files moved between repositories add another 556,672 lines. Together that's 1,690,572 of 3,966,635 lines.
+[^november]: Six pull requests that merged on November 11 count for 1,133,900 lines here, while their own diffs on GitHub add up to 3,143 lines. Each branch in that stack carried the commits of the branches below it.
 
 [^sections]: The counted Needs you, Working, Later and Done filters are [mindroom-chat #436](https://github.com/mindroom-ai/mindroom-chat/pull/436), and the sections in the Compact view are [#448](https://github.com/mindroom-ai/mindroom-chat/pull/448). Both merged on November 17, 2026 (UTC).
 
