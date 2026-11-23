@@ -5,6 +5,10 @@ summary: "My coding agents now work for an hour to more than a day on their own,
 date: 2026-11-23
 draft: false
 featured: false
+image:
+  caption: "I used to orchestrate agents. Now I orchestrate orchestrators: up to 40 parallel coding sessions in MindRoom Chat's Compact view."
+  focal_point: ""
+  preview_only: true
 authors:
   - admin
 tags:
