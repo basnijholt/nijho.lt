@@ -1,7 +1,7 @@
 ---
 title: "Switching apps on macOS in under 30 ms ⚡"
 subtitle: "How I found out what Keyboard Maestro does, and what actually makes it fast"
-summary: "Keyboard Maestro was one of the last things on my Mac I couldn't set up from a text file in my dotfiles, and I only used it to switch apps with a hotkey. AppleScript was too slow, so I had an agent reverse engineer which macOS call Keyboard Maestro makes, and built a tool around it from a couple of prompts. Then it turned out an ordinary public call was just as fast: the speed comes from not starting a new process for every key press."
+summary: "Keyboard Maestro was one of the last things on my Mac I couldn't configure from a text file in my dotfiles, and I only used it to switch apps with a hotkey. AppleScript was too slow, so I had an agent inspect which macOS call Keyboard Maestro makes and build a small Swift replacement. Then benchmarking alternatives turned up a surprise about what actually makes it fast."
 date: 2026-11-20
 draft: false
 featured: false
@@ -31,15 +31,14 @@ That ties in with my love for [NixOS]({{< ref "/post/proxmox-to-nixos" >}}), and
 Keyboard Maestro didn't fit that, so I replaced it.
 
 This post is about [`macos-hotkey-app-switcher`](https://github.com/basnijholt/macos-hotkey-app-switcher), which I believe to be one of the fastest and simplest hotkey app switchers for macOS.
-I built it end to end in [MindRoom]({{< ref "/post/mindroom" >}}), my [open-source](https://github.com/mindroom-ai/mindroom) agent platform, from just a couple of prompts.
+I built it end to end in [MindRoom]({{< ref "/post/mindroom" >}}), my [open-source](https://github.com/mindroom-ai/mindroom) agent platform.
 It reads its hotkeys from a plain text file, and on my M2 MacBook it brings an app to the front in a median of 29 ms.
 
 {{% callout note %}}
 **TL;DR:**
 - I used Keyboard Maestro almost only for app hotkeys, and it was one of the last things on my Mac I couldn't configure from a text file.
-- AppleScript was much slower, so I had an agent reverse engineer which macOS call Keyboard Maestro makes: an old, deprecated Apple function.
-- Agents built a small Swift tool around it in one afternoon, configured from a text file and installed by nix-darwin.
-- Then a plain public AppKit call turned out to be just as fast. The speed comes from not starting a new process for every key press.
+- AppleScript was much slower, so I had an agent find which macOS call Keyboard Maestro makes and build a small Swift replacement installed by nix-darwin.
+- AppKit's supported `activate` call turned out to be just as fast as Keyboard Maestro's deprecated Carbon call: the speed comes from not starting a new process on every key press.
 {{% /callout %}}
 
 {{< toc >}}
@@ -84,21 +83,19 @@ I used a reverse engineering tool to figure out what mechanism Keyboard Maestro 
 I asked my agent in MindRoom to use [REA](https://github.com/morluto/rea), a tool that lets AI agents reverse engineer apps and binaries, on Keyboard Maestro.
 The Claude Opus 5.5 subagent it handed this to declined straight away, because it was asked to disassemble a commercial binary.
 So I switched to a more willing model.
-I gave it a prompt that asked for static analysis only, for interoperability, without launching or patching anything and skipping all licensing and registration code.
-A quick look at the binary's symbols and strings with `nm` and `strings` already pointed to the candidate APIs, so it ran REA with {{< tooltip text="A free reverse engineering suite from the NSA that turns machine code back into readable assembly and C-like code." >}}Ghidra{{< /tooltip >}} on a copy of the Keyboard Maestro Engine binary to trace which path actually runs and wrote a report[^rea].
+I gave it a prompt that asked for static analysis only, for interoperability, without launching or patching anything and skipping all licensing and registration code[^license].
+A quick check with `nm` and `strings` already turned up the candidate APIs.
+To see which path actually runs, it ran REA with {{< tooltip text="A free reverse engineering suite from the NSA that turns machine code back into readable assembly and C-like code." >}}Ghidra{{< /tooltip >}} on a copy of the Keyboard Maestro Engine binary and wrote a report[^rea].
 
 Keyboard Maestro registers its global hotkeys with Carbon's `RegisterEventHotKey`, which needs no Accessibility permission.
 When a hotkey fires, it calls `SetFrontProcessWithOptions`, an old {{< tooltip text="Apple's older C interfaces for Mac apps, from the classic Mac OS era. Many are deprecated but still work." >}}Carbon{{< /tooltip >}} function that brings the app to the front with all its windows.
 Apple deprecated `SetFrontProcessWithOptions` in 2013, but it still works.
 There's no AppleScript involved, and the app doesn't have to answer anything.
 
-Before writing this post, I checked whether Keyboard Maestro's license forbids this kind of analysis[^license].
-I couldn't find a license agreement for the app at all, and my tool contains no Keyboard Maestro code.
-
-## Building it from a couple of prompts
+## Building the replacement
 
 From that report, my agent had Claude Opus 5.5 write a small Swift program that stays running in the background and does the same thing.
-My instruction was one line:
+The first working version took just a couple of prompts, and my main instruction was one line:
 
 > i want to have something that i can just configure with a text file. declaratively
 
@@ -107,7 +104,7 @@ The worst one would have broken my MindRoom key: the tool read any value ending 
 
 It took one afternoon to go from my first message to a public repo with CI, a Homebrew formula, and a nix-darwin module.
 
-## A public call was just as fast
+## Testing the alternatives
 
 I had assumed the deprecated Carbon call was what made Keyboard Maestro fast.
 Apple can remove a deprecated function in any macOS release, so I had an agent benchmark nine ways to bring an app to the front from a background process[^alt].
@@ -135,7 +132,8 @@ These are the medians from synthetic key press to app in front, on my M2 MacBook
 | `osascript -e 'tell application id "…" to activate'` | 112 ms | Nov 19 baseline |
 
 That's about twice as fast as `open -b`, and nearly four times as fast as AppleScript.
-I didn't time Keyboard Maestro's full hotkey path, or other resident launchers like Hammerspoon or Raycast, which should be in the same ballpark since they also avoid spawning a process per key press.
+I didn't time Keyboard Maestro's full hotkey path, or other resident launchers like Hammerspoon or Raycast.
+They also avoid spawning a process per key press, so they should be in the same ballpark.
 The difference here is scope: this tool is one Swift file of under 300 lines, with no dependencies, no Accessibility permission, and no UI.
 
 ## How it fits in my config
@@ -195,6 +193,6 @@ I reverse engineered Keyboard Maestro to copy its trick, and the tool ended up n
 Staying running in the background and making one call is enough, and my app hotkeys now live in my dotfiles like everything else.
 
 [^rea]: The analysis ran on Keyboard Maestro Engine 11.1.1, on the arm64 slice of a copied binary (`lipo -thin arm64`), with the REA CLI (`search`, `xrefs`, `function`) and Ghidra 12.2. Nothing was launched or patched. The report traced the action from `AActivateApplication::DoAction` through Keyboard Maestro's own `activateWithOptions:` wrapper to `GetProcessForPID` and `SetFrontProcessWithOptions`, and found that "all windows" maps to flag `0` and "one window" to flag `1` (`kSetFrontProcessFrontWindowOnly`).
-[^license]: Checked on 2026-11-20. I bought Keyboard Maestro 11 directly from Stairways Software (through FastSpring), not from the Mac App Store. The 11.1.1 download, the store page and the wiki state only that a license is per user, for up to five Macs, and for one major version. The app bundle's license folder holds only the licenses of open-source libraries it uses.
+[^license]: Before writing this post (checked on 2026-11-20), I looked for whether Keyboard Maestro's license forbids this kind of analysis and couldn't find an app license agreement at all. I bought Keyboard Maestro 11 directly from Stairways Software (through FastSpring), not from the Mac App Store. The 11.1.1 download, the store page, and the wiki state only that a license is per user, for up to five Macs, and for one major version. The app bundle's license folder holds only the licenses of open-source libraries it uses, and my tool contains no Keyboard Maestro code.
 [^bench]: Measured on an M2 MacBook using two small test apps switched back and forth 30 times per method with synthetic key presses, timed until the app was in front with its window on top. On 2026-11-19 (the baseline run), the earlier Carbon build measured 26 to 28.3 ms across revisions against 57.5 ms for `open -b` and 112 ms for `osascript`. On 2026-11-20, the current AppKit build measured 29.3 ms against 26.6 ms for the Carbon build in the same head-to-head run, which is within the spread between runs.
 [^alt]: Measured on 2026-11-20 on the M2, macOS 26.5.2, 30 rounds per method and condition, from a background launchd job, between two test apps and between TextEdit and Calculator. `NSWorkspace.openApplication` and `LSOpenCFURLRef` were 1 to 24 ms slower and raised only one window. Setting the app's "frontmost" attribute through the Accessibility API needs a permission grant. On macOS 13 the tool also sets the older `activateIgnoringOtherApps` option, which macOS 14 and later ignore. Private SkyLight functions were not considered.
