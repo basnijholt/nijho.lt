@@ -35,7 +35,7 @@ The step after that was a chat room.
 I still use my {{< tooltip text="Yes, I know it's old and not trendy. I've tried the newer ones (Ghostty, WezTerm, Kitty, Alacritty), and I just care more about iTerm2's features than the speed they promise." >}}beloved{{< /tooltip >}} [iTerm2]({{< ref "/post/dotfiles" >}}).
 I used to orchestrate agents in terminal windows.
 Now I orchestrate orchestrators.
-My coding agents live in [MindRoom]({{< ref "/post/mindroom" >}}), in a room where every task is a thread, and that room shows me which thread needs me.
+My coding agents live in [MindRoom]({{< ref "/post/mindroom" >}}) ([GitHub <i class="fab fa-github"></i>](https://github.com/mindroom-ai/mindroom)), in a room where every task is a thread, and that room shows me which thread needs me.
 This post walks through how I got there: the tools I used, why each one stopped working for me, and how the room in MindRoom changed along the way.
 
 {{< toc >}}
