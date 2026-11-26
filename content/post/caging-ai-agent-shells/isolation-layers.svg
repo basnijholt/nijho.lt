@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 490" width="920" height="490" role="img" aria-label="Before and after diagram of isolating AI agent shell jobs on a 62 GB Linux desktop">
+  <defs>
+    <style>
+      .bg { fill: #ffffff; }
+      .title { font: 700 18px system-ui, -apple-system, sans-serif; fill: #0f172a; }
+      .col-title { font: 700 15px system-ui, -apple-system, sans-serif; fill: #0f172a; }
+      .col-sub { font: 500 12px system-ui, -apple-system, sans-serif; fill: #475569; }
+      .box-title { font: 700 13px system-ui, -apple-system, sans-serif; fill: #0f172a; }
+      .box-text { font: 400 12px system-ui, -apple-system, sans-serif; fill: #334155; }
+      .sub-note { font: 600 11.5px system-ui, -apple-system, sans-serif; fill: #475569; }
+      .badge-red { font: 700 11.5px system-ui, -apple-system, sans-serif; fill: #b91c1c; }
+      .badge-green { font: 700 11.5px system-ui, -apple-system, sans-serif; fill: #15803d; }
+      .legend { font: 400 11.5px system-ui, -apple-system, sans-serif; fill: #475569; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="920" height="490" rx="12" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <text class="title" x="28" y="36">Where agent shell jobs run: before vs. after</text>
+
+  <!-- LEFT COLUMN: BEFORE -->
+  <rect x="24" y="54" width="420" height="384" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text class="col-title" x="42" y="80">Before: one shared pool</text>
+  <text class="col-sub" x="42" y="98">Shell jobs fight the chat server and desktop for RAM</text>
+
+  <rect x="40" y="114" width="388" height="214" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+  <text class="box-title" x="54" y="136">MindRoom Linux container</text>
+  <text class="sub-note" x="54" y="154">No RAM cap, no swap cap</text>
+
+  <rect x="54" y="168" width="360" height="146" rx="7" fill="#fef2f2" stroke="#ef4444" stroke-width="1.5"/>
+  <text class="box-title" x="68" y="190">MindRoom server</text>
+  <text class="box-text" x="68" y="208">Chat backend + event loop (same memory pool)</text>
+
+  <rect x="68" y="220" width="332" height="80" rx="6" fill="#fee2e2" stroke="#dc2626" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text class="box-title" x="80" y="241">~40 agents + subagents running shells</text>
+  <text class="box-text" x="80" y="260">Lower CPU priority only</text>
+  <text class="badge-red" x="80" y="280">Unbounded RAM &amp; swap stalls everything</text>
+
+  <rect x="40" y="342" width="388" height="82" rx="8" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5"/>
+  <text class="box-title" x="54" y="364">Host desktop (24 threads, 62 GiB RAM, 111 GiB swap)</text>
+  <text class="box-text" x="54" y="384">Memory killer waits for &gt;100 GiB of swap</text>
+  <text class="badge-red" x="54" y="404">Freezes at ~41 GiB swap → 5-min watchdog reboot</text>
+
+  <!-- RIGHT COLUMN: AFTER -->
+  <rect x="468" y="54" width="428" height="384" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text class="col-title" x="486" y="80">After: four layered limits</text>
+  <text class="col-sub" x="486" y="98">Runaway jobs hit their own wall before touching anything else</text>
+
+  <rect x="484" y="114" width="396" height="214" rx="8" fill="#ffffff" stroke="#0284c7" stroke-width="1.5"/>
+  <text class="box-title" x="498" y="136">MindRoom Linux container</text>
+  <text class="sub-note" x="498" y="154">Capped at 44 GiB RAM and 8 GiB swap</text>
+
+  <rect x="498" y="168" width="166" height="146" rx="7" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text class="box-title" x="510" y="190">MindRoom server</text>
+  <text class="box-text" x="510" y="214">4 GiB guaranteed RAM</text>
+  <text class="box-text" x="510" y="234">6 GiB soft floor</text>
+  <text class="box-text" x="510" y="254">All 24 CPU threads</text>
+  <text class="box-text" x="510" y="274">High CPU/disk weight</text>
+  <text class="badge-green" x="510" y="298">Protected floor</text>
+
+  <line x1="674" y1="166" x2="674" y2="316" stroke="#dc2626" stroke-width="2" stroke-dasharray="6 4"/>
+
+  <rect x="684" y="168" width="184" height="146" rx="7" fill="#fff7ed" stroke="#dc2626" stroke-width="1.8" stroke-dasharray="6 4"/>
+  <text class="box-title" x="696" y="190">Shared shell cage</text>
+  <text class="box-text" x="696" y="214">Throttle at 28 GiB RAM</text>
+  <text class="box-text" x="696" y="234">Hard cap at 34 GiB RAM</text>
+  <text class="box-text" x="696" y="254">4 GiB swap cap</text>
+  <text class="box-text" x="696" y="274">20 threads (4 left clear)</text>
+  <text class="badge-red" x="696" y="298">OOM stops inside cage</text>
+
+  <rect x="484" y="342" width="396" height="82" rx="8" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.5"/>
+  <text class="box-title" x="498" y="364">Host desktop (18 GiB RAM always left free)</text>
+  <text class="box-text" x="498" y="384">Memory killer wakes up at ~33 GiB swap</text>
+  <text class="badge-green" x="498" y="404">Prefers killing test runners over desktop &amp; MindRoom</text>
+
+  <!-- Legend row -->
+  <line x1="28" y1="464" x2="62" y2="464" stroke="#dc2626" stroke-width="2" stroke-dasharray="6 4"/>
+  <text class="legend" x="70" y="468">Hard isolation boundary (OOM stays inside the cage)</text>
+  <rect x="480" y="457" width="14" height="14" rx="3" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text class="legend" x="502" y="468">Protected memory floor</text>
+  <rect x="678" y="457" width="14" height="14" rx="3" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.5"/>
+  <text class="legend" x="700" y="468">Container + host limits</text>
+</svg>
