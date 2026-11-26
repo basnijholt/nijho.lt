@@ -33,6 +33,24 @@
     {{- end }}
   {{- end }}
 {{- end }}
+{{- /* Cloudflare Pages applies a rule even where a page exists, and it counts every rule after the first one with a splat
+       or a placeholder as dynamic, of which it reads at most 100. So a rule whose source is a page is left out, and the
+       rules with a splat or a placeholder go last. */}}
+{{- $live := newScratch }}
+{{- range site.Pages }}
+  {{- range .OutputFormats }}
+    {{- $live.Set .RelPermalink true }}
+  {{- end }}
+{{- end }}
+{{- $dynamic := slice }}
 {{- range $rules }}
+  {{- $source := index (split . " ") 0 }}
+  {{- if findRE `\*|/:` $source }}
+    {{- $dynamic = $dynamic | append . }}
+  {{- else if not ($live.Get $source) }}
+    {{- . }}
+{{ end }}
+{{- end }}
+{{- range $dynamic }}
   {{- . }}
 {{ end -}}
