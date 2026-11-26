@@ -1,5 +1,5 @@
-# Builds the site with the Hugo version Netlify uses, checks every link in it, and runs tools/browser_check.py on it, for
-# every pull request and every push to main. Netlify builds the deploy previews and production on its own.
+# Builds the site, checks every link in it, and runs tools/browser_check.py on it, for every pull request and every push
+# to main. A push to main that passes is then deployed to the Cloudflare Pages project behind www.nijho.lt.
 name: Check
 
 on:
@@ -10,11 +10,17 @@ on:
 permissions:
   contents: read
 
+# A newer run for the same pull request or for main replaces the older one, so two deploys cannot finish out of order.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   check:
     runs-on: ubuntu-24.04
     env:
       HUGO_VERSION: "0.167.0"
+      WRANGLER_VERSION: "4.168.0"
     steps:
       - uses: actions/checkout@v7
 
@@ -68,3 +74,12 @@ jobs:
         env:
           # Empty: use Playwright's Chromium instead of the NixOS default path.
           CHROMIUM: ""
+
+      # The project takes uploads only, so this step is what publishes the site. The token needs one permission:
+      # Account - Cloudflare Pages - Edit.
+      - name: Deploy to Cloudflare Pages
+        if: github.event_name == 'push'
+        run: npx --yes "wrangler@$WRANGLER_VERSION" pages deploy public --project-name nijholt --branch main
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
