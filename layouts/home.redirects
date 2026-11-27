@@ -9,6 +9,11 @@
 {{- range hugo.Data.redirects }}
   {{- $rules = $rules | append (printf "%s %s %d" .from .to (.status | default 301)) }}
 {{- end }}
+{{- range where site.Pages "Kind" "term" }}
+  {{- if in (slice "tags" "categories") .Data.Plural }}
+    {{- $rules = $rules | append (printf "/%s/%s %s 301" .Data.Plural (path.Base .RelPermalink) .RelPermalink) }}
+  {{- end }}
+{{- end }}
 {{- $images := newScratch }}
 {{- range site.Pages }}
   {{- range .Resources.ByType "image" }}
