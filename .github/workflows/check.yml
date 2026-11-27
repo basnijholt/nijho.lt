@@ -1,5 +1,6 @@
 # Builds the site, checks every link in it, and runs tools/browser_check.py on it, for every pull request and every push
-# to main. A push to main that passes is then deployed to the Cloudflare Pages project behind www.nijho.lt.
+# to main. A push to main that passes is then deployed to the Cloudflare Pages project behind www.nijho.lt, and pull
+# requests from this repository also get a Cloudflare Pages preview deployment.
 name: Check
 
 on:
@@ -86,3 +87,96 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+  # Builds and publishes a Cloudflare Pages preview for pull requests from this repository (fork PRs have no secrets and
+  # are skipped). Runs in parallel with `check` so a failing link or browser check does not block inspecting a preview,
+  # and scopes pull-requests: write strictly to this job.
+  preview:
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      pull-requests: write
+    defaults:
+      run:
+        shell: bash
+    env:
+      HUGO_VERSION: "0.167.0"
+      WRANGLER_VERSION: "4.168.0"
+    steps:
+      # Full history is required so Hugo's enableGitInfo computes real .Lastmod dates.
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      # The images are in Git LFS (about 200 MB); download them only when they change.
+      - name: List LFS files
+        run: git lfs ls-files --long | cut -d ' ' -f1 | sort > .lfs-files
+      - uses: actions/cache/restore@v6
+        with:
+          path: .git/lfs
+          key: lfs-${{ hashFiles('.lfs-files') }}
+          restore-keys: lfs-
+      - name: Fetch LFS files
+        run: git lfs pull
+
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: ${{ env.HUGO_VERSION }}
+          extended: true
+
+      # Reuse the production image cache read-only so draft-only images do not pollute the shared cache key.
+      - uses: actions/cache/restore@v6
+        with:
+          path: resources/_gen
+          key: hugo-resources-${{ env.HUGO_VERSION }}-${{ hashFiles('.lfs-files', 'layouts/**', 'config/**') }}
+          restore-keys: hugo-resources-${{ env.HUGO_VERSION }}-
+
+      - name: Build preview
+        run: >-
+          hugo --gc --minify --buildFuture --buildDrafts
+          --baseURL "https://pr-${PR_NUMBER}.nijholt.pages.dev/"
+          -d public-preview
+        env:
+          HUGO_ENVIRONMENT: preview
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+
+      - name: Deploy preview to Cloudflare Pages
+        id: deploy
+        run: |
+          deploy_log=$(mktemp)
+          trap 'rm -f "$deploy_log"' EXIT
+          npx --yes "wrangler@$WRANGLER_VERSION" pages deploy public-preview \
+            --project-name nijholt \
+            --branch "pr-${PR_NUMBER}" \
+            --commit-dirty=true | tee "$deploy_log"
+          alias_url="https://pr-${PR_NUMBER}.nijholt.pages.dev"
+          deployment_url=$(grep -Eo 'https://[a-z0-9-]+\.nijholt\.pages\.dev' "$deploy_log" | grep -Fv "$alias_url" | tail -n 1 || true)
+          echo "alias_url=$alias_url" >> "$GITHUB_OUTPUT"
+          echo "deployment_url=$deployment_url" >> "$GITHUB_OUTPUT"
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+
+      - name: Comment preview URL on pull request
+        run: |
+          marker='<!-- cloudflare-pages-preview -->'
+          short_sha="${HEAD_SHA:0:7}"
+          body=$(printf '%s\n**Cloudflare Pages preview:** %s' "$marker" "$ALIAS_URL")
+          if [ -n "$DEPLOYMENT_URL" ]; then
+            body=$(printf '%s\n\nCommit `%s`: %s' "$body" "$short_sha" "$DEPLOYMENT_URL")
+          fi
+          comment_id=$(gh api --paginate --slurp "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" \
+            | jq -r 'add | map(select(.user.login == "github-actions[bot]" and (.body | contains("<!-- cloudflare-pages-preview -->")))) | .[0].id // ""')
+          if [ -n "$comment_id" ]; then
+            gh api --method PATCH "repos/${GITHUB_REPOSITORY}/issues/comments/${comment_id}" -f body="$body" >/dev/null
+          else
+            gh api --method POST "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" -f body="$body" >/dev/null
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          ALIAS_URL: ${{ steps.deploy.outputs.alias_url }}
+          DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment_url }}
