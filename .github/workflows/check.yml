@@ -60,8 +60,6 @@ jobs:
 
       - name: Build
         run: hugo --gc --minify -d public
-        env:
-          HUGO_ENV: production
 
       # Every link and #fragment within the site must resolve, absolute https://www.nijho.lt/ links included; links to
       # other sites are not fetched.

@@ -81,7 +81,7 @@ def check(function: Callable[..., None] | None = None, *, cases: Iterable[tuple]
 def build(out: Path) -> Path:
     """Build the working tree for production into out; a fresh resource cache keeps image names as CI has them."""
     with tempfile.TemporaryDirectory(prefix="hugo-resources-") as resources:
-        env = os.environ | {"HUGO_ENV": "production", "HUGO_RESOURCEDIR": resources}
+        env = os.environ | {"HUGO_ENVIRONMENT": "production", "HUGO_RESOURCEDIR": resources}
         hugo = os.environ.get("HUGO_BIN", "hugo")
         subprocess.run([hugo, "--gc", "--minify", "-s", str(ROOT), "-d", str(out)], env=env, check=True)
     return out
