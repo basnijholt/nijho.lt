@@ -94,6 +94,9 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
+    defaults:
+      run:
+        shell: bash
     env:
       HUGO_VERSION: "0.167.0"
       WRANGLER_VERSION: "4.168.0"
@@ -162,7 +165,7 @@ jobs:
             body=$(printf '%s\n\nCommit `%s`: %s' "$body" "$short_sha" "$DEPLOYMENT_URL")
           fi
           comment_id=$(gh api --paginate --slurp "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" \
-            --jq 'add | map(select(.user.login == "github-actions[bot]" and (.body | contains("<!-- cloudflare-pages-preview -->")))) | .[0].id // ""')
+            | jq -r 'add | map(select(.user.login == "github-actions[bot]" and (.body | contains("<!-- cloudflare-pages-preview -->")))) | .[0].id // ""')
           if [ -n "$comment_id" ]; then
             gh api --method PATCH "repos/${GITHUB_REPOSITORY}/issues/comments/${comment_id}" -f body="$body" >/dev/null
           else
