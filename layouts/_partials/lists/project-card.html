@@ -14,8 +14,8 @@
   {{- else with $image }}
     {{- $shown := . }}
     {{- if partial "functions/resizable.html" . }}{{ $shown = .Fit "600x400 webp" }}{{ end }}
-    {{- if reflect.IsImageResourceProcessable . }}
-  <div class="plate {{ cond (ge (div (float .Height) .Width) 0.9) "logo" "fill" }}"><img src="{{ $shown.RelPermalink }}" width="{{ $shown.Width }}" height="{{ $shown.Height }}" alt="" loading="lazy"></div>
+    {{- if reflect.IsImageResourceProcessable $shown }}
+  <div class="plate {{ cond (and (gt $shown.Width 0) (ge (div (float $shown.Height) $shown.Width) 0.9)) "logo" "fill" }}"><img src="{{ $shown.RelPermalink }}" width="{{ $shown.Width }}" height="{{ $shown.Height }}" alt="" loading="lazy"></div>
     {{- else }}
   <div class="plate fill"><img src="{{ $shown.RelPermalink }}" alt="" loading="lazy"></div>
     {{- end }}
