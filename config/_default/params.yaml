@@ -11,8 +11,8 @@ marketing:
     plausible: 'https://plausible.nijho.lt/js/pa-ylHri3AS4w8PLULPjHH4G.js'
 
 features:
-  # The footer's link to the Netlify builds.
-  deploys: 'https://app.netlify.com/sites/nijholt/deploys'
+  # The footer's link to the build and deploy workflow runs.
+  deploys: 'https://github.com/basnijholt/nijho.lt/actions/workflows/check.yml'
   # "Edit this page" links on posts, and the footer's link to the source.
   repository:
     url: 'https://github.com/basnijholt/nijho.lt'

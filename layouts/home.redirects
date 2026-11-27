@@ -7,7 +7,7 @@
   {{- end }}
 {{- end }}
 {{- range hugo.Data.redirects }}
-  {{- $rules = $rules | append (printf "%s %s %d%s" .from .to (.status | default 301) (cond (.force | default false) "!" "")) }}
+  {{- $rules = $rules | append (printf "%s %s %d" .from .to (.status | default 301)) }}
 {{- end }}
 {{- $images := newScratch }}
 {{- range site.Pages }}

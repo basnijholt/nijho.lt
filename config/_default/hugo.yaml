@@ -33,15 +33,15 @@ outputFormats:
   headers:
     baseName: _headers
     isPlainText: true
-    mediaType: text/netlify
+    mediaType: text/cloudflare-pages
     notAlternative: true
   redirects:
     baseName: _redirects
     isPlainText: true
-    mediaType: text/netlify
+    mediaType: text/cloudflare-pages
     notAlternative: true
 mediaTypes:
-  text/netlify:
+  text/cloudflare-pages:
     delimiter: ''
     suffixes: ['']
 imaging:
@@ -53,8 +53,7 @@ imaging:
     quality: 90
 timeout: 600000
 caches:
-  # Remote resources (the GitHub star counts on the project cards) otherwise stay cached forever in Netlify's
-  # persistent HUGO_CACHEDIR; refetch them after an hour.
+  # Refetch remote resources (the GitHub star counts on the project cards) after an hour when the Hugo cache is reused.
   getresource:
     maxAge: 1h
 taxonomies:
