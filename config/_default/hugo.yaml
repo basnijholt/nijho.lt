@@ -16,6 +16,7 @@ summaryLength: 30
 pagination:
   pagerSize: 100
 enableEmoji: true
+enableGitInfo: true
 enableRobotsTXT: true
 # Content .html files are SVG fragments that bleed-svg reads with readFile; as content, allowContent would refuse them
 ignoreFiles: [\.html$]

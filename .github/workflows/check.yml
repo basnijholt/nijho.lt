@@ -22,7 +22,10 @@ jobs:
       HUGO_VERSION: "0.167.0"
       WRANGLER_VERSION: "4.168.0"
     steps:
+      # Full history is required so Hugo's enableGitInfo computes real .Lastmod dates.
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
 
       # The images are in Git LFS (about 200 MB); download them only when they change.
       - name: List LFS files
