@@ -1,9 +1,9 @@
 # [nijho.lt](https://www.nijho.lt/)
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/1b9d8edc-3626-48f1-a6bd-52de691b2fda/deploy-status)](https://app.netlify.com/sites/nijholt/deploys)
+[![Check](https://github.com/basnijholt/nijho.lt/actions/workflows/check.yml/badge.svg)](https://github.com/basnijholt/nijho.lt/actions/workflows/check.yml)
 
 My personal website: a blog, my open-source projects, publications and photos.
-It is built with [Hugo](https://gohugo.io/) and a theme that lives in this repository, and [Netlify](https://www.netlify.com/) deploys every push to `main`.
+It is built with [Hugo](https://gohugo.io/) and a theme that lives in this repository; GitHub Actions checks every pull request and deploys every push to `main` to [Cloudflare Pages](https://pages.cloudflare.com/).
 
 ## Running it
 
@@ -13,7 +13,7 @@ devbox run build    # production build into public/
 ```
 
 [Devbox](https://www.jetify.com/devbox) provides Hugo 0.165.0, the newest it packages; with Hugo installed some other way, `hugo server -D` does the same.
-Netlify builds with Hugo 0.167.0, set in `netlify.toml`, and builds a preview for every pull request.
+CI builds with Hugo 0.167.0, set in `.github/workflows/check.yml`.
 
 ## Writing
 

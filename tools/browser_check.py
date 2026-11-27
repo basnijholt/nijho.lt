@@ -79,7 +79,7 @@ def check(function: Callable[..., None] | None = None, *, cases: Iterable[tuple]
 
 
 def build(out: Path) -> Path:
-    """Build the working tree for production into out; a fresh resource cache keeps image names as Netlify has them."""
+    """Build the working tree for production into out; a fresh resource cache keeps image names as CI has them."""
     with tempfile.TemporaryDirectory(prefix="hugo-resources-") as resources:
         env = os.environ | {"HUGO_ENV": "production", "HUGO_RESOURCEDIR": resources}
         hugo = os.environ.get("HUGO_BIN", "hugo")
@@ -228,7 +228,7 @@ def chart_tips_are_readable_in_both_schemes(browser, base):
 @check
 def plain_post_stays_light(browser, base):
     """A plain post loads under 300 KB in under 20 requests, not counting the comments (analytics are blocked).
-    The local server sends files uncompressed, so each response counts at its gzip size, as Netlify serves text."""
+    The local server sends files uncompressed, so each response counts at its gzip size, as Cloudflare Pages serves text."""
     responses = []
     with page(browser, base, PLAIN_POST, on={"response": lambda response: responses.append(response)}):
         sizes = {}

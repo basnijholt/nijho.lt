@@ -1,5 +1,3 @@
-# Netlify's subdomain serves a full copy of the site
-- {from: https://nijholt.netlify.app/*, to: https://www.nijho.lt/:splat, force: true}
 # Renamed posts
 - {from: /post/llamaswap/, to: /post/llama-nixos/}
 # Advent of Open Source days, published as day_NN before they got their slugs

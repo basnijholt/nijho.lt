@@ -49,7 +49,7 @@ jobs:
         run: uv run --with playwright==1.63.0 python -m playwright install --with-deps chromium
 
       # Hugo's processed images. Their names and bytes depend only on the source image and the processing options, so
-      # a cached copy builds the same site as Netlify's fresh one; --gc drops the images no page uses any more.
+      # a cached copy builds the same site as a fresh build; --gc drops the images no page uses any more.
       - uses: actions/cache@v6
         with:
           path: resources/_gen
@@ -82,7 +82,7 @@ jobs:
       # Account - Cloudflare Pages - Edit.
       - name: Deploy to Cloudflare Pages
         if: github.event_name == 'push'
-        run: npx --yes "wrangler@$WRANGLER_VERSION" pages deploy public --project-name nijholt --branch main
+        run: npx --yes "wrangler@$WRANGLER_VERSION" pages deploy public --project-name nijholt --branch main --commit-dirty=true
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
