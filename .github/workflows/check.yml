@@ -16,12 +16,13 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  HUGO_VERSION: "0.167.0"
+  WRANGLER_VERSION: "4.168.0"
+
 jobs:
   check:
     runs-on: ubuntu-24.04
-    env:
-      HUGO_VERSION: "0.167.0"
-      WRANGLER_VERSION: "4.168.0"
     steps:
       # Full history is required so Hugo's enableGitInfo computes real .Lastmod dates.
       - uses: actions/checkout@v7
@@ -100,9 +101,6 @@ jobs:
     defaults:
       run:
         shell: bash
-    env:
-      HUGO_VERSION: "0.167.0"
-      WRANGLER_VERSION: "4.168.0"
     steps:
       # Full history is required so Hugo's enableGitInfo computes real .Lastmod dates.
       - uses: actions/checkout@v7
