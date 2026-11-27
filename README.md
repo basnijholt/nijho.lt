@@ -13,7 +13,7 @@ devbox run build    # production build into public/
 ```
 
 [Devbox](https://www.jetify.com/devbox) provides Hugo 0.165.0, the newest it packages; with Hugo installed some other way, `hugo server -D` does the same.
-CI builds with Hugo 0.167.0, set in `.github/workflows/check.yml`.
+CI builds with Hugo 0.167.0, set in `.github/workflows/check.yml`, and deploys a preview for every pull request from this repository.
 
 ## Writing
 

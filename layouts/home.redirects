@@ -9,6 +9,11 @@
 {{- range hugo.Data.redirects }}
   {{- $rules = $rules | append (printf "%s %s %d" .from .to (.status | default 301)) }}
 {{- end }}
+{{- range where site.Pages "Kind" "term" }}
+  {{- if in (slice "tags" "categories") .Data.Plural }}
+    {{- $rules = $rules | append (printf "/%s/%s %s 301" .Data.Plural (path.Base .RelPermalink) .RelPermalink) }}
+  {{- end }}
+{{- end }}
 {{- $images := newScratch }}
 {{- range site.Pages }}
   {{- range .Resources.ByType "image" }}
@@ -33,24 +38,38 @@
     {{- end }}
   {{- end }}
 {{- end }}
-{{- /* Cloudflare Pages applies a rule even where a page exists, and it counts every rule after the first one with a splat
-       or a placeholder as dynamic, of which it reads at most 100. So a rule whose source is a page is left out, and the
-       rules with a splat or a placeholder go last. */}}
+{{- /* Cloudflare Pages applies a rule even where a page exists, matches trailing slashes literally, and counts every rule
+       after the first one with a splat or a placeholder as dynamic (max 100). So a rule whose source is a page is left out,
+       each trailing-slash static rule also emits a slashless counterpart, and dynamic rules go last. */}}
 {{- $live := newScratch }}
 {{- range site.Pages }}
   {{- range .OutputFormats }}
     {{- $live.Set .RelPermalink true }}
   {{- end }}
 {{- end }}
+{{- $seen := newScratch }}
+{{- $static := slice }}
 {{- $dynamic := slice }}
 {{- range $rules }}
-  {{- $source := index (split . " ") 0 }}
+  {{- $parts := split . " " }}
+  {{- $source := index $parts 0 }}
   {{- if findRE `\*|/:` $source }}
     {{- $dynamic = $dynamic | append . }}
-  {{- else if not ($live.Get $source) }}
-    {{- . }}
-{{ end }}
+  {{- else if and (not ($live.Get $source)) (not ($seen.Get $source)) }}
+    {{- $seen.Set $source true }}
+    {{- $static = $static | append . }}
+    {{- if and (strings.HasSuffix $source "/") (ne $source "/") }}
+      {{- $bare := strings.TrimSuffix "/" $source }}
+      {{- if and (not ($live.Get $bare)) (not ($seen.Get $bare)) }}
+        {{- $seen.Set $bare true }}
+        {{- $static = $static | append (printf "%s %s %s" $bare (index $parts 1) (index $parts 2)) }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
 {{- end }}
+{{- range $static }}
+  {{- . }}
+{{ end -}}
 {{- range $dynamic }}
   {{- . }}
 {{ end -}}

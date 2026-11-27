@@ -31,10 +31,15 @@
 - {from: /tags/page/*, to: /tags/}
 - {from: /tag/:tag/page/*, to: /tag/:tag/}
 # Taxonomy URLs of 2018 to 2021. Each rule asks for a name after the prefix, because Cloudflare Pages applies a rule even
-# where a page exists, and /tags/, /categories/ and /publication_types/ are pages.
+# where a page exists, and /tags/, /categories/ and /publication_types/ are pages (along with their /index.xml feeds).
+# Slashless /tags/<slug> and /categories/<slug> rules are emitted statically in layouts/home.redirects so :name does not
+# shadow /tags/index.xml or /categories/index.xml.
 - {from: /tags/:name/*, to: /tag/:name/:splat}
 - {from: /categories/:name/*, to: /category/:name/:splat}
 - {from: /publication_types/:name/*, to: /publication/}
+- {from: /publication_types/2, to: /publication/}
+- {from: /publication_types/3, to: /publication/}
+- {from: /publication_types/7, to: /publication/}
 - {from: /publication-type/2/, to: /publication/}
 - {from: /publication-type/3/, to: /publication/}
 - {from: /publication-type/7/, to: /publication/}
