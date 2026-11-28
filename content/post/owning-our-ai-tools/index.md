@@ -54,23 +54,12 @@ Instead, you can describe the same capability as one `email(action, to, message_
 
 ## Why deleting Agno forced the redesign
 
-When I started building MindRoom {{< tooltip text="MindRoom's initial commit (a062d21fd) landed on July 29, 2025, sixteen months before this post." >}}nearly a year and a half ago{{< /tooltip >}}, one of the main reasons I picked [Agno](https://github.com/agno-agi/agno) was simply that it already supported so many tools and libraries.
-I got {{< tooltip text="At commit a0471bd2d (Nov 25, 2026), 87 built-in toolkit modules under src/mindroom/tools/ still imported Agno, out of 160 built-in toolkits total." >}}87 integrations{{< /tooltip >}} out of the box, covering services like GitHub, Gmail, Slack, and Docker.
+When I started building MindRoom {{< tooltip text="MindRoom's initial commit (a062d21fd) landed on July 29, 2025, sixteen months before this post." >}}nearly a year and a half ago{{< /tooltip >}}, I picked [Agno](https://github.com/agno-agi/agno) mostly for its built-in library of {{< tooltip text="At commit a0471bd2d (Nov 25, 2026), 87 built-in toolkit modules under src/mindroom/tools/ still imported Agno, out of 160 built-in toolkits total." >}}87 integrations{{< /tooltip >}} like GitHub, Gmail, Slack, and Docker.
+By late October I'd already replaced Agno's runtime after piling up 126 workarounds (which I wrote about in [Roll your own, fork the rest]({{< ref "/post/roll-your-own-fork-the-rest" >}})), and this week I deleted the rest of it in about {{< tooltip text="21 hours 12 minutes from Wave 1 (#4378) to Wave 9 (#4419), deleting 233 Agno imports across 106 source files and all remaining AGNO_COMPAT markers." >}}21 hours{{< /tooltip >}} using my [parallel orchestrator setup]({{< ref "/post/orchestrating-orchestrators" >}}).[^waves]
 
-In October I wrote [Roll your own, fork the rest]({{< ref "/post/roll-your-own-fork-the-rest" >}}) after piling up 126 workarounds for Agno.
-By the end of October I'd replaced Agno's runtime with code MindRoom owns, leaving Agno behind as MindRoom's tool library.
-
-This week I deleted the rest of it.
-By November 25, MindRoom still imported Agno in {{< tooltip text="233 import lines across 106 files under src/ (87 of them toolkit modules under src/mindroom/tools/), plus 47 remaining AGNO_COMPAT markers across 30 files." >}}106 source files{{< /tooltip >}}.[^agno-boundary]
-Using the [parallel orchestrator setup]({{< ref "/post/orchestrating-orchestrators" >}}) I wrote about earlier this week, I split those remaining toolkits and document readers into nine waves of agent sessions.
-From the first wave merging on November 25 to `import agno` raising `ModuleNotFoundError` on November 26 took about {{< tooltip text="21 hours 12 minutes from Wave 1 (#4378) to Wave 9 (#4419)." >}}21 hours{{< /tooltip >}}, and all 126 workarounds from October are now gone.[^waves]
-
-It turns out that with today's models, adding these integrations yourself is trivial.
-They're all popular services with well-known APIs that exist a thousand times over in the training data.
-The main reason I depended on a framework for them in 2025 doesn't hold anymore.
-
-Owning all {{< tooltip text="160 built-in toolkits before the pass; five overlapping ones (confluence, jira, dynamic_workflow, python, web_browser_tools) were merged or retired without losing features, leaving 155." >}}155 toolkits{{< /tooltip >}} also meant we were no longer stuck with Agno's one-function-per-endpoint layout.
-In [my tests on native harness tools]({{< ref "/post/native-harness-tools" >}}), I found that frontier models don't care much whether tools match the names they were trained on, while fixed per-request tokens matter a lot.
+With today's models, writing those integrations yourself is trivial, because popular APIs exist a thousand times over in the training data.
+More importantly, owning all {{< tooltip text="160 built-in toolkits before the pass; five overlapping ones (confluence, jira, dynamic_workflow, python, web_browser_tools) were merged or retired without losing features, leaving 155." >}}155 toolkits{{< /tooltip >}} meant we were no longer stuck with Agno's one-function-per-endpoint layout.
+In [my tests on native harness tools]({{< ref "/post/native-harness-tools" >}}), frontier models didn't care much whether tool names matched what they were trained on, while fixed per-request tokens mattered a lot.
 Once MindRoom owned the files, I could redesign the whole catalog around that lesson.
 
 ## Shrink tool counts, then split reads from writes
@@ -153,14 +142,38 @@ Before normalizing names, 47 function names collided across the catalog, includi
 Enabling two integrations silently shadowed one of them.
 Prefixing integration functions as `<toolkit>_<verb>` took collisions from 47 to zero.[^collisions]
 
-To check whether tighter descriptions with concrete call examples actually helped small models, we ran a targeted 10-case slice of `chat_ui` and `browser` tasks before and after compacting those two toolkits.[^ab-eval]
-Both local models solved more tasks, mis-calls dropped, and `gpt-5-mini` hit first-try passes on every case it solved while using a fifth fewer input tokens.
-Ten cases is a small sanity check, not a full benchmark, so treat it as directional rather than proof.
+To see where consolidation stops helping and starts hurting, I ran a controlled 400-trial benchmark on our GitHub toolkit: the same 20 GitHub tasks across five models (`inkling-2:mini`, `qwen3.5-9b`, `gemma-4-26b`, `gemma-4-31b`, and `gpt-5-mini`), tested against four schema shapes covering the exact same 39 operations.[^github-eval]
 
-{{< plot name="weakModelEval" caption="Targeted 10-case A/B on chat_ui and browser tasks before vs after compacting those two schemas (PR #4467). Bars show tasks passed out of 10; labels highlight mis-calls and token changes. Hover for exact counts." >}}
+{{< plot name="githubShapes" caption="Controlled 400-trial GitHub tool-calling benchmark across five models (20 tasks per arm, temperature 0). Thick green line is the five-model average; colored lines are individual models. Five read/write functions match 39 REST functions at a third of the prompt tokens, while pushing down to 2 or 1 function drops accuracy by 10 to 14 points. Hover any point for exact counts." >}}
+
+Look at the shape of that curve.
+Our five read/write functions tied the 39-function REST schema on exact first-try accuracy (93/100 each) while using a third of the prompt tokens, and even beat 39 functions on `inkling-2:mini` and `gemma-4-31b`.
+Pushing further down to two functions or one mega-tool barely saved another couple hundred tokens, yet tanked average accuracy to 83% and 79%.
+
+Two structural bugs show up in the failure logs whenever you over-merge a tool.
+First, the parameter list swells to the union of every action (42 parameters in the single-tool arm), so smaller models leak wrong-action arguments like passing `branch` instead of `ref` or `issue_number` instead of `number`.
+Second, JSON Schema's `required` list shrinks to the intersection of every action: the moment `create_repository` shares a tool with `edit_pull_request_comment`, you can't mark `repo_name` as required anymore, and models start dropping it.
+Notice `gpt-5-mini` sitting flat at 95 to 100% across all four shapes: if you only tested on strong models, the 14-point mega-tool cliff would be completely invisible.
+
+Across a separate 64-trial live A/B on eleven smaller search and web toolkits we consolidated into clean action dispatchers, four small models went from 58/64 to 64/64 passed while cutting prompt tokens by 23%.[^wave24-eval]
 
 All of those rules now live in automated CI tests and a short Tool Design Rules section in `AGENTS.md`.[^ci-invariants]
 A pull request can't merge if it adds a duplicate function name, an unprefixed integration function, or a mutating default action.
+
+## Prompt caching doesn't make input tokens free
+
+A common pushback against optimizing tool schemas is that prompt caching discounts input tokens by 90% or more, so fixed schema tokens barely affect your bill.
+I checked my own MindRoom usage over the past seven days across {{< tooltip text="345,924 OpenRouter-priced requests out of 370,145 total requests over 7 days, valued at published OpenRouter list prices." >}}345,924 requests{{< /tooltip >}} to see if that's actually true.[^spend-data]
+
+{{< plot name="spendBreakdown" caption="Share of estimated spend by billing bucket across 345,924 MindRoom requests over seven days (published OpenRouter list prices, Nov 20 to 27, 2026). Even with heavy prompt caching (91.8% of all tokens are cache reads), input and cache tokens account for 81% of total spend while output is 19%. Hover for request counts and cache-read share." >}}
+
+Across all models combined, 91.8% of all tokens were cache reads, and yet input and cache tokens still accounted for 81% of total spend while output was only 19%.
+On OpenAI (`GPT-6.2 Sol` and `Astra`) and Anthropic (`Claude Opus 5.5`), cached prefix reads and writes alone made up 74% to 87% of the bill.
+Because an agent loop resends the entire prefix dozens or hundreds of times per task, a "cheap" cache read paid 50 times in a row still becomes the biggest line item.
+
+You still need to keep perspective on what shrinking tool schemas saves.
+In long coding threads (my median request size over that week was nearly 100k tokens), conversation history and tool outputs make up most of that cached prefix, so trimming a few thousand schema tokens won't cut your total bill in half.
+It matters far more on short-to-medium loops, fresh subagents, cold cache writes, and local models where every extra thousand tokens slows down prefill directly.
 
 ## What owning 155 toolkits costs
 
@@ -173,24 +186,21 @@ If someone has an approval rule on an old write function like `slack_post`, upgr
 So MindRoom carries a fail-closed rename table that rejects retired tool names in approval configs at startup and prints the replacement name.[^collisions]
 That migration layer is extra code we wouldn't need if we'd never changed the names.
 
-Finally, be careful what you read into the token numbers.
-Providers discount cached input tokens, so cutting fixed prefixes in half trims dollar bills by less than half, even though it still lowers cache-write cost, latency, and context-window pressure (and helps much more on local models).
-We also measured tokens across the entire catalog, not accuracy across all 155 toolkits before and after.
+And we measured tokens across all 155 toolkits, not live accuracy across all 155.
+Our controlled accuracy evidence covers GitHub (400 trials), our Wave 2 and 4 search/web consolidation (64 trials), and our `anyOf` unwrapping check (80 trials), not every integration in the catalog.
 
 ## What changes when you design tools for models
 
 Wrapping a human API straight into an AI tool list feels fast, and then charges you tokens on every single turn.
 Treating tool schemas as an interface built for models instead of humans cut half our catalog overhead, made read and write boundaries clean, and made our tools much easier for small local models to use.
 
-[^agno-boundary]: Counted at commit `a0471bd2d` (2026-11-25 14:27 PST): `git grep -E '^\s*(from|import)\s+agno\b' a0471bd2d -- src/` returned 233 matches in 106 files (87 under `src/mindroom/tools/`), and `git grep 'AGNO_COMPAT:' a0471bd2d -- src/` returned 47 markers in 30 files (down from 126 reported on Oct 19 after replacing Agno's runtime). Both dropped to 0 in PR [#4419](https://github.com/mindroom-ai/mindroom/pull/4419) (`29d6c51c7`).
-
-[^waves]: Agno removal PRs in `mindroom-ai/mindroom`: Wave 1 [#4378](https://github.com/mindroom-ai/mindroom/pull/4378) (merged 2026-11-25 22:30 PST), Wave 2 [#4389](https://github.com/mindroom-ai/mindroom/pull/4389), Wave 3 [#4390](https://github.com/mindroom-ai/mindroom/pull/4390) and [#4408](https://github.com/mindroom-ai/mindroom/pull/4408), Wave 4 [#4388](https://github.com/mindroom-ai/mindroom/pull/4388), Wave 5 [#4394](https://github.com/mindroom-ai/mindroom/pull/4394), Wave 6 [#4401](https://github.com/mindroom-ai/mindroom/pull/4401), Wave 7 [#4392](https://github.com/mindroom-ai/mindroom/pull/4392), Wave 8 [#4403](https://github.com/mindroom-ai/mindroom/pull/4403), and Wave 9 [#4419](https://github.com/mindroom-ai/mindroom/pull/4419) (merged 2026-11-26 19:42 PST).
+[^waves]: At commit `a0471bd2d` (2026-11-25 14:27 PST), `src/` still had 233 Agno imports across 106 files (87 toolkit modules) and 47 `AGNO_COMPAT:` markers across 30 files (down from 126 reported on Oct 19). All dropped to 0 across nine waves in `mindroom-ai/mindroom`: Wave 1 [#4378](https://github.com/mindroom-ai/mindroom/pull/4378) (merged 2026-11-25 22:30 PST), Wave 2 [#4389](https://github.com/mindroom-ai/mindroom/pull/4389), Wave 3 [#4390](https://github.com/mindroom-ai/mindroom/pull/4390) and [#4408](https://github.com/mindroom-ai/mindroom/pull/4408), Wave 4 [#4388](https://github.com/mindroom-ai/mindroom/pull/4388), Wave 5 [#4394](https://github.com/mindroom-ai/mindroom/pull/4394), Wave 6 [#4401](https://github.com/mindroom-ai/mindroom/pull/4401), Wave 7 [#4392](https://github.com/mindroom-ai/mindroom/pull/4392), Wave 8 [#4403](https://github.com/mindroom-ai/mindroom/pull/4403), and Wave 9 [#4419](https://github.com/mindroom-ai/mindroom/pull/4419) (merged 2026-11-26 19:42 PST).
 
 [^catalog-numbers]: Measured from `tests/fixtures/agno_parity/tools/schemas.json` as compact JSON tokenized with `tiktoken` `o200k_base` at commits `df7f97a04` (2026-11-24 13:16 PST) vs `295a31a16` (2026-11-27 17:34 PST): `github` 6,670 to 1,658 tokens (-75.1%), `gmail` 4,180 to 1,266 (-69.7%), `docker` 3,129 to 819 (-73.8%), and the nine Microsoft 365 toolkits (`outlook_mail`, `outlook_calendar`, `microsoft_files`, `microsoft_teams`, `microsoft_sharepoint`, `microsoft_todo`, `microsoft_onenote`, `microsoft_meetings`, `microsoft_people`, PR [#4435](https://github.com/mindroom-ai/mindroom/pull/4435)) from 17,408 to 7,168 tokens (-58.8%). With optional default-off functions enabled (`schemas_all_enabled.json`), the 155 toolkits total 317 functions with 0 duplicate names.
 
 [^mega-split]: PR [#4458](https://github.com/mindroom-ai/mindroom/pull/4458) (`1943198dd`) and cleanup PR [#4471](https://github.com/mindroom-ai/mindroom/pull/4471), measured against `df7f97a04`: `triggers` 1 to 2 functions (-6.3% tokens), `desktop` 1 to 3 (`desktop_read`, `desktop_control`, `run_desktop_shell`, -6.7%), `browser` 1 to 2 (-13.2%), `matrix_api` 1 to 2 (-7.8%), and `workflow` 6 to 2 (-41.1%, consolidated to 1 in PR [#4436](https://github.com/mindroom-ai/mindroom/pull/4436) then split to read/write in #4458).
 
-[^github-split]: On `main`, the 39 GitHub actions span 43 unique parameters (20 across reads, 29 across writes). The five functions are `github_read_repo` (11 actions, 13 parameters), `github_read_issues_prs` (10 actions, 16 parameters), `github_write_issues` (7 actions, 8 parameters), `github_write_pr` (4 actions, 16 parameters), and `github_write_repo` (7 actions, 14 parameters, including `delete_repository` and `delete_file`). We picked that five-way split from parameter overlap and approval risk tiers rather than benchmarking 4 vs 5 vs 6 functions directly.
+[^github-split]: On `main`, the 39 GitHub actions span 43 unique parameters (20 across reads, 29 across writes). The five functions are `github_read_repo` (11 actions, 13 parameters), `github_read_issues_prs` (10 actions, 16 parameters), `github_write_issues` (7 actions, 8 parameters), `github_write_pr` (4 actions, 16 parameters), and `github_write_repo` (7 actions, 14 parameters, including `delete_repository` and `delete_file`). We chose five from parameter overlap and approval risk tiers rather than sweeping 4 vs 5 vs 6, then benchmarked 39 vs 5 vs 2 vs 1 functions below.
 
 [^anyof]: PR [#4432](https://github.com/mindroom-ai/mindroom/pull/4432) (`154614019`), measured directly against parent `154614019~1` on `schemas.json` (315 functions in both): `anyOf` dropped from 1,037 to 298 (-71.3%) and tokens from 77,143 to 70,439 (-8.7%). Plain JSON types are emitted only for derived two-member nullable unions defaulting to `None`, and OpenAI Responses serialization sets `strict: false` automatically when optional fields are present so omitted arguments aren't rejected. A live 5-model A/B eval on 8 optional-heavy tool cases (80 trials across `gemma-4-26b-a4b-it`, `gemma-4-31b-it`, `qwen3.5-9b`, `gpt-5-mini`, and local `inkling-2:mini`) scored 40/40 in both arms (100% accuracy parity) while cutting prompt tokens by 5% to 19%.
 
@@ -204,7 +214,11 @@ Treating tool schemas as an interface built for models instead of humans cut hal
 
 [^collisions]: PR [#4464](https://github.com/mindroom-ai/mindroom/pull/4464) (`0dbaeb16e`) normalized 74 functions across 42 integration toolkits and added fail-closed approval rename mappings in `src/mindroom/config/retired_tool_renames.py`.
 
-[^ab-eval]: PR [#4467](https://github.com/mindroom-ai/mindroom/pull/4467) (`3cdb24e3f`), 10 targeted `chat_ui` (canvas) and `browser` cases comparing `1943198dd` against compacted schemas: `inkling-2:mini-vllm` 6/10 to 7/10 passed, mis-calls 10 to 5, input tokens 475,560 to 448,363 (-5.7%); `google/gemma-4-31b-it` 4/10 to 6/10 passed, 15 mis-calls in both arms; `openai/gpt-5-mini` 8/10 passed in both arms, first-try 7/10 to 8/10, mis-calls 1 to 0, input tokens 284,256 to 223,645 (-21.3%).
+[^github-eval]: Controlled single-turn benchmark (20 unambiguous GitHub tasks spanning all five groups, 4 arms, 5 models, 400 trials total, temperature 0 where supported, harness meta-parameter stripped from all arms so pure API shape is compared). Schema sizes (`o200k_base`): 39 functions 4,480 tokens (max 10 params/fn), 5 functions 1,488 tokens (max 15), 2 functions 1,338 tokens (max 28), 1 function 1,258 tokens (max 42). Exact first-try pass rates (out of 20) for 39 / 5 / 2 / 1 functions: `inkling-2:mini` 16 / 17 / 13 / 13, `qwen/qwen3.5-9b` 20 / 18 / 16 / 14, `google/gemma-4-26b-a4b-it` 19 / 18 / 15 / 14, `google/gemma-4-31b-it` 18 / 20 / 20 / 18, `openai/gpt-5-mini` 20 / 20 / 19 / 20. Totals across 100 trials per arm: 93 / 93 / 83 / 79 passed; wrong/leaked-parameter errors 0 / 0 / 1 / 7; missing-argument errors 3 / 3 / 8 / 9.
+
+[^wave24-eval]: PR [#4439](https://github.com/mindroom-ai/mindroom/pull/4439) (`c4ea7f762`) consolidated 11 search, research, math, and web-scraping toolkits (including `calculator` 8 to 1, `serper` 4 to 2, `exa` 5 to 2, `brightdata` 4 to 1, `oxylabs` 4 to 1, `spider` 3 to 1). Live 4-model A/B eval across 16 cases (64 trials per arm): `gemma-4-26b-a4b-it` 14/16 to 16/16 (-19.1% prompt tokens), `gemma-4-31b-it` 14/16 to 16/16 (-30.6%), `qwen3.5-9b` 16/16 to 16/16 (-23.0%), `gpt-5-mini` 14/16 to 16/16 (-19.8%); total 58/64 to 64/64 (-23.4% prompt tokens).
+
+[^spend-data]: Measured across 345,924 OpenRouter-priced MindRoom requests over seven days (Nov 20 to 27, 2026) using published OpenRouter list prices for prompt, completion, `input_cache_read`, and `input_cache_write` tokens. Token totals: 91.8% cache read, 5.9% uncached input, 1.8% cache write, 0.6% output; median request input size was 97,313 tokens (p90: 268,837). Spend shares: All models 29.7% cache read / 21.6% cache write / 30.0% uncached input / 18.7% output; `GPT-6.2 Sol` 40.1% / 41.2% / 0.1% / 18.6%; `Claude Opus 5.5` 38.7% / 35.7% / 2.7% / 22.9%; `GPT-6.2 Astra` 33.4% / 54.0% / 0.2% / 12.5%; `Claude Fable 5.2` 28.3% / 24.6% / 7.4% / 39.6%; `Gemini 4 Neon` 24.8% / 0.0% / 58.1% / 17.1%.
 
 [^ci-invariants]: `tests/tool_system/test_toolkits.py` and `AGENTS.md` Tool Design Rules (PRs [#4464](https://github.com/mindroom-ai/mindroom/pull/4464), [#4473](https://github.com/mindroom-ai/mindroom/pull/4473), and [#4477](https://github.com/mindroom-ai/mindroom/pull/4477)).
 

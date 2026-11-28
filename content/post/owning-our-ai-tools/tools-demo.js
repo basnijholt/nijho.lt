@@ -440,7 +440,7 @@
   "parameters": { "properties": {
     "action": {"enum": ["list_issues", "get_issue", "list_issue_comments", "get_pull_requests", "get_pull_request", "..."]},
     "repo_name": {"type": "string"},
-    "issue_number": {"type": "integer"}, "pr_number": {"type": "integer"},
+    "number": {"type": "integer"},
     "state": {"type": "string"}, "page": {"type": "integer"}, "per_page": {"type": "integer"}
   }}
 }`,
