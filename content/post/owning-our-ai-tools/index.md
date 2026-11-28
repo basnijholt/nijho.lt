@@ -1,6 +1,6 @@
 ---
 title: "Designing functions for AI isn't the same as designing them for humans 🔧"
-subtitle: "Wrapping a REST API into an MCP server one endpoint at a time wastes tokens on every turn. Redesigning 155 toolkits in MindRoom cut 729 functions down to 298 and halved our schema size."
+subtitle: "Wrapping a REST API into an MCP server one endpoint at a time wastes tokens on every turn. Redesigning 155 toolkits in MindRoom cut 729 functions down to 298, halved our schema size, and improved tool-calling performance without dropping features."
 summary: "A lot of teams convert existing REST APIs straight into MCP servers, exposing one function per endpoint. Designing functions for an AI isn't the same as designing them for a human programmer. After deleting Agno and redesigning all 155 built-in toolkits in MindRoom, we cut 729 default functions down to 298 without losing features, shrank total tool schemas by 50%, and learned why you should split reads from writes and test schemas on small local models."
 date: 2026-11-27
 draft: true
@@ -48,9 +48,9 @@ Any AI harness is just that loop: hand the model a prompt and tool schemas, run 
 
 Because those schemas travel along with the conversation on every turn, the way you shape them matters.
 If you define tools the way you'd write normal Python functions or wrap a REST API into MCP, you end up very verbose.
-For email alone, you might expose separate functions to read an email, write an email, save a draft, star a message, and archive a thread.
-Every one of those functions repeats shared arguments like the email address, message ID, or subject line, burning {{< tooltip text="Chunks of text a model reads and writes, about three quarters of a word each. Providers count them on every turn." >}}tokens{{< /tooltip >}} on every single turn.
-Instead, you can describe the same capability as an `email` tool with an `action` argument set to `read`, `write`, `draft`, `star`, or `archive`, and pay for the shared arguments once.
+For email alone, you might expose separate functions like `read_email`, `write_email`, `save_draft`, `star_email`, and `archive_email`.
+Every one of those functions repeats shared arguments like `to`, `message_id`, or `subject`, burning {{< tooltip text="Chunks of text a model reads and writes, about three quarters of a word each. Providers count them on every turn." >}}tokens{{< /tooltip >}} on every single turn.
+Instead, you can describe the same capability as one `email(action, to, message_id, subject, ...)` tool where `action` is `read`, `write`, `draft`, `star`, or `archive`, and pay for the shared arguments once.
 
 ## Why deleting Agno forced the redesign
 
@@ -84,8 +84,8 @@ We didn't strip features to hit that number: the consolidated tools cover the sa
 
 {{< plot name="catalogReduction" caption="Schema token reduction across major MindRoom toolkits from Nov 24 to Nov 27 (o200k_base tokens, compact JSON). Labels show function counts before and after plus percentage drops. Hover for exact values." >}}
 
-At first I thought we should push that email-style consolidation all the way and collapse every service into one mega-tool.
-That turned out to be wrong.
+At first I considered collapsing every toolkit into a single mega-tool.
+I quickly realized that was wrong.
 
 Permissions and human approvals live at the function boundary.
 If you want a read-only agent, the cleanest guard isn't a prompt asking it not to write.
@@ -95,12 +95,12 @@ Your approval layer also has to parse arguments on every call just to tell a loo
 
 {{< figure src="tool-boundaries.svg" caption="One function per endpoint bloats schemas, while one mega-tool mixes reads and writes. Splitting into read and write action pairs keeps schemas small and permission boundaries crisp." alt="Three-column comparison showing one function per endpoint with schema bloat on the left, one mega-tool with mixed reads and writes in the middle, and read and write action pairs separated by a red dashed safety boundary on the right." >}}
 
-So I went the other direction on four built-in mega-tools (`triggers`, `desktop`, `browser`, and `matrix_api`) and split them into separate read and write functions, while collapsing `workflow` from six functions down to the same read/write pair.[^mega-split]
-Even the four true splits shrank their schemas by 6 to 13%, because the read function no longer documents write arguments and vice versa.
+So I went the other direction on four built-in mega-tools (`triggers`, `desktop`, `browser`, and `matrix_api`) and split them into separate read and write functions, while bringing `workflow` down to the same read/write pair.[^mega-split]
+Splitting them didn't even cost extra tokens: each schema actually got smaller, because the read function no longer documents write arguments and vice versa.
 
 Large APIs don't stop at a single read/write pair either.
-Our GitHub toolkit spans 39 actions and 43 unique parameters, so collapsing it into two functions would still leave a 29-parameter write tool mixing issue comments with repository deletes.
-We split it into five functions instead: two reads (repos and files vs issues and pull requests) and three write tiers (issues, pull requests, and repo mutations), keeping every function at 16 parameters or fewer.[^github-split]
+Our GitHub toolkit covers 39 actions across dozens of parameters, so collapsing it into two functions would still leave a huge write tool mixing issue comments with repository deletes.
+We split it into five functions instead: two reads (repos and files vs issues and pull requests) and three write tiers (issues, pull requests, and repo mutations), keeping each schema small and separating safe writes from destructive ones.[^github-split]
 
 ## The hidden tax inside tool schemas
 
@@ -190,7 +190,7 @@ Treating tool schemas as an interface built for models instead of humans cut hal
 
 [^mega-split]: PR [#4458](https://github.com/mindroom-ai/mindroom/pull/4458) (`1943198dd`) and cleanup PR [#4471](https://github.com/mindroom-ai/mindroom/pull/4471), measured against `df7f97a04`: `triggers` 1 to 2 functions (-6.3% tokens), `desktop` 1 to 3 (`desktop_read`, `desktop_control`, `run_desktop_shell`, -6.7%), `browser` 1 to 2 (-13.2%), `matrix_api` 1 to 2 (-7.8%), and `workflow` 6 to 2 (-41.1%, consolidated to 1 in PR [#4436](https://github.com/mindroom-ai/mindroom/pull/4436) then split to read/write in #4458).
 
-[^github-split]: On `main`, the five GitHub functions are `github_read_repo` (11 actions, 13 parameters), `github_read_issues_prs` (10 actions, 16 parameters), `github_write_issues` (7 actions, 8 parameters), `github_write_pr` (4 actions, 16 parameters), and `github_write_repo` (7 actions, 14 parameters, including `delete_repository` and `delete_file`). We picked that five-way split from parameter overlap and approval risk tiers rather than benchmarking 4 vs 5 vs 6 functions directly.
+[^github-split]: On `main`, the 39 GitHub actions span 43 unique parameters (20 across reads, 29 across writes). The five functions are `github_read_repo` (11 actions, 13 parameters), `github_read_issues_prs` (10 actions, 16 parameters), `github_write_issues` (7 actions, 8 parameters), `github_write_pr` (4 actions, 16 parameters), and `github_write_repo` (7 actions, 14 parameters, including `delete_repository` and `delete_file`). We picked that five-way split from parameter overlap and approval risk tiers rather than benchmarking 4 vs 5 vs 6 functions directly.
 
 [^anyof]: PR [#4432](https://github.com/mindroom-ai/mindroom/pull/4432) (`154614019`), measured directly against parent `154614019~1` on `schemas.json` (315 functions in both): `anyOf` dropped from 1,037 to 298 (-71.3%) and tokens from 77,143 to 70,439 (-8.7%). Plain JSON types are emitted only for derived two-member nullable unions defaulting to `None`, and OpenAI Responses serialization sets `strict: false` automatically when optional fields are present so omitted arguments aren't rejected.
 
