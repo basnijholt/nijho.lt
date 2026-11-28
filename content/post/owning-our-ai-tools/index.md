@@ -75,12 +75,9 @@ Once MindRoom owned the files, I could redesign the whole catalog around that le
 
 ## Shrink tool counts, then split reads from writes
 
-Before the rewrite, our toolkits looked just like auto-converted REST APIs.
-GitHub exposed 39 functions, Gmail exposed 26, Docker exposed 24, and our nine Microsoft 365 toolkits totaled 64.
-
-Grouping related verbs under an `action=` parameter cut GitHub from 39 functions to 5 (-75% tokens), Gmail from 26 to 5 (-70%), and Microsoft 365 from 64 to 18 (-59%).[^catalog-numbers]
-Across all 155 toolkits, default functions dropped from 729 to 298 (-59%), and total tool schemas fell from {{< tooltip text="138,470 to 69,233 o200k_base tokens (-50.0%) in compact JSON across all built-in toolkits in schemas.json." >}}138,470 tokens to 69,233{{< /tooltip >}} (-50%).
-We didn't strip features to hit that number: the consolidated tools cover the same operations, often with cleaner parameters and fewer bugs than the wrappers they replaced.
+Before the rewrite, our toolkits looked just like auto-converted REST APIs, with services like GitHub, Gmail, and Docker exposing twenty to forty separate functions each.
+Grouping related verbs under an `action=` parameter cut default functions across all 155 toolkits from 729 down to 298 and {{< tooltip text="138,470 to 69,233 o200k_base tokens (-50.0%) in compact JSON across all built-in toolkits in schemas.json." >}}halved total schema size{{< /tooltip >}} without stripping features.[^catalog-numbers]
+Often the consolidated tools ended up with cleaner parameters and fewer bugs than the wrappers they replaced.
 
 {{< plot name="catalogReduction" caption="Schema token reduction across major MindRoom toolkits from Nov 24 to Nov 27 (o200k_base tokens, compact JSON). Labels show function counts before and after plus percentage drops. Hover for exact values." >}}
 
@@ -109,21 +106,22 @@ Looking across all 155 toolkits at once exposed two schema leaks that hit almost
 
 **Python's optional-type tax.**
 When you annotate a parameter as `limit: int | None = None` in Python, standard JSON-schema generators emit `{"anyOf": [{"type": "integer"}, {"type": "null"}]}` instead of `"type": "integer"`.
-I changed our schema generator to emit plain JSON types for optional parameters whose default is `None`, while still accepting explicit `null` values at runtime.[^anyof]
-In that single commit, with function count held fixed at 315, `anyOf` blocks dropped from {{< tooltip text="1,037 to 298 anyOf blocks (-71.3%), saving 6,704 tokens (-8.7%) across schemas.json in PR #4432 alone." >}}1,037 to 298{{< /tooltip >}} (-71%) and shaved 6,704 tokens off the catalog.
-Real nullable parameters stay untouched, like a SQL `limit: int | None = 10` where `null` means "return all rows".
+That extra `null` branch is almost always redundant: the parameter is already absent from JSON Schema's `required` list, so omitting the key passes `None` in Python anyway.
+I changed our schema generator to emit plain JSON types for optional parameters defaulting to `None`, while still accepting an explicit `null` at runtime if a model sends one.[^anyof]
+In that single commit, `anyOf` blocks across the catalog dropped by {{< tooltip text="With function count held fixed at 315 across schemas.json in PR #4432: 1,037 to 298 anyOf blocks (-71.3%), saving 6,704 tokens (-8.7%)." >}}71%{{< /tooltip >}}, and a five-model A/B check on optional-heavy tool calls showed zero accuracy cost (40/40 before and 40/40 after).
+Parameters where `null` carries real meaning stay untouched, like a SQL `limit: int | None = 10` where passing `null` means "return all rows".
 
 **Repeated helper arguments.**
 MindRoom adds two optional arguments to tools: `background_after` to push slow work into a background job, and `mindroom_output_path` to write large outputs to disk.
-Repeating their full descriptions on every function burned 70 to 95 tokens per tool.
-Explaining both once in the system prompt and letting fast local tools opt out cut injected meta-parameter overhead by {{< tooltip text="background_after shrank from 47 to 28 tokens and mindroom_output_path from 49 to 24 tokens per function, plus opt-outs for fast built-ins (~72 to 73% total drop)." >}}about 72%{{< /tooltip >}}.[^meta-params]
+Repeating their full descriptions on every function burned nearly a hundred tokens per tool.
+Explaining both once in the system prompt and letting fast local tools opt out cut that overhead by {{< tooltip text="background_after shrank from 47 to 28 tokens and mindroom_output_path from 49 to 24 tokens per function, plus opt-outs for fast built-ins (~72 to 73% total drop)." >}}almost three quarters{{< /tooltip >}}.[^meta-params]
 
-Here's how all three changes shrink our real GitHub toolkit step by step (click any step to pause and inspect it).
+Here's how all three changes shrink all 39 functions of our GitHub toolkit step by step, drawn to token scale (click any step to pause and inspect it, or hover any block to see its function and token count).
 
 <div class="mr-schema-shrinker"></div>
 
 Earlier that same week, before Wave 1 started, I also tightened MindRoom's default system prompt to drop stale instructions and hide sections an agent doesn't use.[^prompt-trim]
-Combined with the tool rewrite, our representative Claude agent fixture (identical config and conversation history) dropped from {{< tooltip text="System messages fell from 2,968 to 1,215 tokens (-59.1%) and tool schemas from 3,909 to 1,740 tokens (-55.5%) in agent_anthropic.json." >}}6,877 fixed tokens per turn down to 2,955{{< /tooltip >}} (-57%), and from 23 tools down to 9.
+Combined with the tool rewrite, the fixed per-turn prefix of our representative Claude agent fixture (identical config and conversation history) {{< tooltip text="System messages fell from 2,968 to 1,215 tokens (-59.1%) and tool schemas from 3,909 to 1,740 tokens (-55.5%) in agent_anthropic.json (6,877 down to 2,955 tokens, -57.0%)." >}}dropped by more than half{{< /tooltip >}}, and its tool list shrank from 23 functions down to 9.
 Even the calculator in that fixture went from eight functions (`add`, `subtract`, `multiply`, `divide`, `exponentiate`, `factorial`, `is_prime`, `square_root`) to one (`calculate`).
 
 {{< plot name="agentRequest" caption="Fixed prefix sent on every step of MindRoom's representative Claude agent fixture (identical config and history, Nov 24 vs Nov 27). System prompt fell 59% and tool schemas fell 56%. Hover for exact counts." >}}
@@ -155,9 +153,11 @@ Before normalizing names, 47 function names collided across the catalog, includi
 Enabling two integrations silently shadowed one of them.
 Prefixing integration functions as `<toolkit>_<verb>` took collisions from 47 to zero.[^collisions]
 
-To check whether tighter descriptions with concrete call examples helped small models, we ran a targeted 10-case slice of `chat_ui` and `browser` tasks before and after compacting those two toolkits.[^ab-eval]
-`inkling-2:mini` went from 6/10 to 7/10 passed with mis-calls cut from 10 to 5, `gemma-4-31b-it` went from 4/10 to 6/10 passed (with 15 mis-calls in both arms), and `gpt-5-mini` stayed at 8/10 passed while first-try passes rose from 7/10 to 8/10, mis-calls fell from 1 to 0, and input tokens dropped 21%.
+To check whether tighter descriptions with concrete call examples actually helped small models, we ran a targeted 10-case slice of `chat_ui` and `browser` tasks before and after compacting those two toolkits.[^ab-eval]
+Both local models solved more tasks, mis-calls dropped, and `gpt-5-mini` hit first-try passes on every case it solved while using a fifth fewer input tokens.
 Ten cases is a small sanity check, not a full benchmark, so treat it as directional rather than proof.
+
+{{< plot name="weakModelEval" caption="Targeted 10-case A/B on chat_ui and browser tasks before vs after compacting those two schemas (PR #4467). Bars show tasks passed out of 10; labels highlight mis-calls and token changes. Hover for exact counts." >}}
 
 All of those rules now live in automated CI tests and a short Tool Design Rules section in `AGENTS.md`.[^ci-invariants]
 A pull request can't merge if it adds a duplicate function name, an unprefixed integration function, or a mutating default action.
@@ -174,7 +174,7 @@ So MindRoom carries a fail-closed rename table that rejects retired tool names i
 That migration layer is extra code we wouldn't need if we'd never changed the names.
 
 Finally, be careful what you read into the token numbers.
-Providers discount cached input tokens, so cutting fixed prefixes by 50 to 57% trims dollar bills by less than half, even though it still lowers cache-write cost, latency, and context-window pressure (and helps much more on local models).
+Providers discount cached input tokens, so cutting fixed prefixes in half trims dollar bills by less than half, even though it still lowers cache-write cost, latency, and context-window pressure (and helps much more on local models).
 We also measured tokens across the entire catalog, not accuracy across all 155 toolkits before and after.
 
 ## What changes when you design tools for models
@@ -192,7 +192,7 @@ Treating tool schemas as an interface built for models instead of humans cut hal
 
 [^github-split]: On `main`, the 39 GitHub actions span 43 unique parameters (20 across reads, 29 across writes). The five functions are `github_read_repo` (11 actions, 13 parameters), `github_read_issues_prs` (10 actions, 16 parameters), `github_write_issues` (7 actions, 8 parameters), `github_write_pr` (4 actions, 16 parameters), and `github_write_repo` (7 actions, 14 parameters, including `delete_repository` and `delete_file`). We picked that five-way split from parameter overlap and approval risk tiers rather than benchmarking 4 vs 5 vs 6 functions directly.
 
-[^anyof]: PR [#4432](https://github.com/mindroom-ai/mindroom/pull/4432) (`154614019`), measured directly against parent `154614019~1` on `schemas.json` (315 functions in both): `anyOf` dropped from 1,037 to 298 (-71.3%) and tokens from 77,143 to 70,439 (-8.7%). Plain JSON types are emitted only for derived two-member nullable unions defaulting to `None`, and OpenAI Responses serialization sets `strict: false` automatically when optional fields are present so omitted arguments aren't rejected.
+[^anyof]: PR [#4432](https://github.com/mindroom-ai/mindroom/pull/4432) (`154614019`), measured directly against parent `154614019~1` on `schemas.json` (315 functions in both): `anyOf` dropped from 1,037 to 298 (-71.3%) and tokens from 77,143 to 70,439 (-8.7%). Plain JSON types are emitted only for derived two-member nullable unions defaulting to `None`, and OpenAI Responses serialization sets `strict: false` automatically when optional fields are present so omitted arguments aren't rejected. A live 5-model A/B eval on 8 optional-heavy tool cases (80 trials across `gemma-4-26b-a4b-it`, `gemma-4-31b-it`, `qwen3.5-9b`, `gpt-5-mini`, and local `inkling-2:mini`) scored 40/40 in both arms (100% accuracy parity) while cutting prompt tokens by 5% to 19%.
 
 [^meta-params]: PR [#4424](https://github.com/mindroom-ai/mindroom/pull/4424) (`0ca55779b`). Hiding `mindroom_output_path` from a fast tool's schema still keeps automatic >50 KiB output-to-file protection active at runtime.
 

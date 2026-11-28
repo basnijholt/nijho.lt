@@ -154,4 +154,93 @@ export default {
       ],
     });
   },
+
+  weakModelEval({ Plot, width }) {
+    const narrow = width < 520;
+    const MODELS = [
+      {
+        model: "inkling-2:mini",
+        beforePass: 6,
+        afterPass: 7,
+        beforeMis: 10,
+        afterMis: 5,
+        note: "6 -> 7 passed · mis-calls 10 -> 5",
+        detail: "Input tokens: 475,560 -> 448,363 (-5.7%)",
+      },
+      {
+        model: "gemma-4-31b-it",
+        beforePass: 4,
+        afterPass: 6,
+        beforeMis: 15,
+        afterMis: 15,
+        note: "4 -> 6 passed · 15 mis-calls both",
+        detail: "Mis-calls unchanged at 15 in both arms",
+      },
+      {
+        model: "gpt-5-mini",
+        beforePass: 8,
+        afterPass: 8,
+        beforeMis: 1,
+        afterMis: 0,
+        note: "first-try 7 -> 8 · -21% tokens",
+        detail: "First-try passes: 7/10 -> 8/10 | Mis-calls: 1 -> 0 | Input tokens: 284,256 -> 223,645 (-21.3%)",
+      },
+    ];
+    const bars = MODELS.flatMap((m) => [
+      { ...m, arm: "Before", passed: m.beforePass, mis: m.beforeMis },
+      { ...m, arm: "After", passed: m.afterPass, mis: m.afterMis },
+    ]);
+    return Plot.plot({
+      width,
+      height: 210,
+      marginLeft: narrow ? 104 : 124,
+      marginRight: narrow ? 155 : 215,
+      marginBottom: 48,
+      style: STYLE,
+      x: {
+        domain: [0, 10],
+        ticks: [0, 2, 4, 6, 8, 10],
+        label: "Tasks passed (out of 10)",
+        grid: true,
+        ...X_LABEL,
+      },
+      y: { axis: null, domain: ["Before", "After"] },
+      fy: { domain: MODELS.map((m) => m.model), label: null, padding: 0.3 },
+      color: {
+        domain: ["Before", "After"],
+        range: ["#cbd5e1", "#16a34a"],
+        legend: true,
+      },
+      marks: [
+        Plot.barX(bars, {
+          fy: "model",
+          y: "arm",
+          x: "passed",
+          fill: "arm",
+          insetTop: 1,
+          insetBottom: 1,
+          rx: 2,
+        }),
+        Plot.text(MODELS, {
+          fy: "model",
+          y: () => "After",
+          x: (d) => Math.max(d.beforePass, d.afterPass),
+          text: "note",
+          textAnchor: "start",
+          dx: 8,
+          fontSize: narrow ? 10.5 : 11.5,
+        }),
+        Plot.tip(
+          bars,
+          Plot.pointer({
+            fy: "model",
+            y: "arm",
+            x: "passed",
+            title: (d) =>
+              `${d.model} (${d.arm})\nPassed: ${d.passed}/10\nMis-calls: ${d.beforeMis} -> ${d.afterMis}\n${d.detail}`,
+          })
+        ),
+      ],
+    });
+  },
 };
