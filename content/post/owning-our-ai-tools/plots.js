@@ -157,143 +157,176 @@ export default {
 
   githubShapes({ Plot, width }) {
     const narrow = width < 520;
+    const ml = 54;
+    const mr = narrow ? 16 : 24;
+    const ORDER = ["1 fn", "2 fns", "5 fns", "39 fns"];
     // Controlled 400-trial GitHub tool-calling eval (20 tasks x 4 arms x 5 models, temp=0)
-    // Avg prompt tokens and pass rate (%) per arm
     const ARMS = [
-      { arm: "1 fn", fns: 1, avgTok: 1649, schemaTok: 1258, maxParams: 42, pass: 79, leaked: 7, missing: 9, label: "1 fn (79%)", dx: 10, dy: 12 },
-      { arm: "2 fns", fns: 2, avgTok: 1751, schemaTok: 1338, maxParams: 28, pass: 83, leaked: 1, missing: 8, label: "2 fns (83%)", dx: 14, dy: 2 },
-      { arm: "5 fns", fns: 5, avgTok: 1971, schemaTok: 1488, maxParams: 15, pass: 93, leaked: 0, missing: 3, label: "5 fns (93%, sweet spot)", dx: 12, dy: 4 },
-      { arm: "39 fns", fns: 39, avgTok: 5710, schemaTok: 4480, maxParams: 10, pass: 93, leaked: 0, missing: 3, label: "39 fns (93%, 3x tokens)", dx: -10, dy: -14, anchor: "end" },
+      { arm: "1 fn", fns: 1, avgTok: 1649, schemaTok: 1258, maxParams: 42, pass: 79, leaked: 7, missing: 9, tokLabel: "1.6k", passLabel: "79%", dy: 18 },
+      { arm: "2 fns", fns: 2, avgTok: 1751, schemaTok: 1338, maxParams: 28, pass: 83, leaked: 1, missing: 8, tokLabel: "1.8k", passLabel: "83%", dy: 18 },
+      { arm: "5 fns", fns: 5, avgTok: 1971, schemaTok: 1488, maxParams: 15, pass: 93, leaked: 0, missing: 3, tokLabel: "2.0k", passLabel: narrow ? "93%" : "93% avg", dy: -14 },
+      { arm: "39 fns", fns: 39, avgTok: 5710, schemaTok: 4480, maxParams: 10, pass: 93, leaked: 0, missing: 3, tokLabel: "5.7k (3x)", passLabel: "93%", dy: -14 },
     ];
     const MODEL_POINTS = [
-      // inkling-2:mini (local)
-      { model: "inkling-2:mini", arm: "1 fn", avgTok: 2080, pass: 65, n: "13/20" },
-      { model: "inkling-2:mini", arm: "2 fns", avgTok: 2236, pass: 65, n: "13/20" },
-      { model: "inkling-2:mini", arm: "5 fns", avgTok: 2618, pass: 85, n: "17/20" },
-      { model: "inkling-2:mini", arm: "39 fns", avgTok: 7921, pass: 80, n: "16/20" },
-      // qwen/qwen3.5-9b
-      { model: "qwen3.5-9b", arm: "1 fn", avgTok: 1682, pass: 70, n: "14/20" },
-      { model: "qwen3.5-9b", arm: "2 fns", avgTok: 1798, pass: 80, n: "16/20" },
-      { model: "qwen3.5-9b", arm: "5 fns", avgTok: 2058, pass: 90, n: "18/20" },
-      { model: "qwen3.5-9b", arm: "39 fns", avgTok: 6188, pass: 100, n: "20/20" },
-      // google/gemma-4-26b-a4b-it
-      { model: "gemma-4-26b", arm: "1 fn", avgTok: 1626, pass: 70, n: "14/20" },
-      { model: "gemma-4-26b", arm: "2 fns", avgTok: 1719, pass: 75, n: "15/20" },
-      { model: "gemma-4-26b", arm: "5 fns", avgTok: 1922, pass: 90, n: "18/20" },
-      { model: "gemma-4-26b", arm: "39 fns", avgTok: 5578, pass: 95, n: "19/20" },
-      // google/gemma-4-31b-it
-      { model: "gemma-4-31b", arm: "1 fn", avgTok: 1624, pass: 90, n: "18/20" },
-      { model: "gemma-4-31b", arm: "2 fns", avgTok: 1718, pass: 100, n: "20/20" },
-      { model: "gemma-4-31b", arm: "5 fns", avgTok: 1921, pass: 100, n: "20/20" },
-      { model: "gemma-4-31b", arm: "39 fns", avgTok: 5572, pass: 90, n: "18/20" },
-      // openai/gpt-5-mini
       { model: "gpt-5-mini", arm: "1 fn", avgTok: 1235, pass: 100, n: "20/20" },
       { model: "gpt-5-mini", arm: "2 fns", avgTok: 1283, pass: 95, n: "19/20" },
       { model: "gpt-5-mini", arm: "5 fns", avgTok: 1337, pass: 100, n: "20/20" },
       { model: "gpt-5-mini", arm: "39 fns", avgTok: 3290, pass: 100, n: "20/20" },
+      { model: "gemma-4-31b", arm: "1 fn", avgTok: 1624, pass: 90, n: "18/20" },
+      { model: "gemma-4-31b", arm: "2 fns", avgTok: 1718, pass: 100, n: "20/20" },
+      { model: "gemma-4-31b", arm: "5 fns", avgTok: 1921, pass: 100, n: "20/20" },
+      { model: "gemma-4-31b", arm: "39 fns", avgTok: 5572, pass: 90, n: "18/20" },
+      { model: "gemma-4-26b", arm: "1 fn", avgTok: 1626, pass: 70, n: "14/20" },
+      { model: "gemma-4-26b", arm: "2 fns", avgTok: 1719, pass: 75, n: "15/20" },
+      { model: "gemma-4-26b", arm: "5 fns", avgTok: 1922, pass: 90, n: "18/20" },
+      { model: "gemma-4-26b", arm: "39 fns", avgTok: 5578, pass: 95, n: "19/20" },
+      { model: "qwen3.5-9b", arm: "1 fn", avgTok: 1682, pass: 70, n: "14/20" },
+      { model: "qwen3.5-9b", arm: "2 fns", avgTok: 1798, pass: 80, n: "16/20" },
+      { model: "qwen3.5-9b", arm: "5 fns", avgTok: 2058, pass: 90, n: "18/20" },
+      { model: "qwen3.5-9b", arm: "39 fns", avgTok: 6188, pass: 100, n: "20/20" },
+      { model: "inkling-2:mini", arm: "1 fn", avgTok: 2080, pass: 65, n: "13/20" },
+      { model: "inkling-2:mini", arm: "2 fns", avgTok: 2236, pass: 65, n: "13/20" },
+      { model: "inkling-2:mini", arm: "5 fns", avgTok: 2618, pass: 85, n: "17/20" },
+      { model: "inkling-2:mini", arm: "39 fns", avgTok: 7921, pass: 80, n: "16/20" },
     ];
-    // Plot on categorical arm x-axis? No, plot exact average prompt tokens (model-average x for clarity,
-    // plus per-model points at arm's average token x so every arm lines up cleanly vertically!).
-    const armX = Object.fromEntries(ARMS.map((a) => [a.arm, a.avgTok]));
-    const alignedModels = MODEL_POINTS.map((p) => ({ ...p, xTok: armX[p.arm] }));
 
-    return Plot.plot({
+    const wrap = document.createElement("div");
+    wrap.style.display = "flex";
+    wrap.style.flexDirection = "column";
+    wrap.style.gap = "4px";
+
+    // Top panel: accuracy across the 4 evenly spaced schema shapes
+    const accPlot = Plot.plot({
       width,
-      height: narrow ? 310 : 340,
-      marginLeft: 54,
-      marginRight: narrow ? 18 : 28,
-      marginTop: 28,
-      marginBottom: 52,
+      height: narrow ? 250 : 270,
+      marginLeft: ml,
+      marginRight: mr,
+      marginTop: 26,
+      marginBottom: 14,
       style: STYLE,
-      x: {
-        domain: [1200, 6200],
-        label: "Average prompt tokens per call (5-model mean)",
-        grid: true,
-        tickFormat: (d) => `${(d / 1000).toFixed(1)}k`,
-        ...X_LABEL,
-      },
+      x: { domain: ORDER, axis: null, padding: 0.35 },
       y: {
-        domain: [58, 105],
+        domain: [58, 108],
         ticks: [60, 70, 80, 90, 100],
-        label: "First-try exact pass rate (%)",
+        label: "First-try pass rate (%)",
         grid: true,
         tickFormat: (d) => `${d}%`,
       },
       color: {
-        domain: ["gpt-5-mini", "gemma-4-31b", "gemma-4-26b", "qwen3.5-9b", "inkling-2:mini"],
-        range: ["#64748b", "#0ea5e9", "#8b5cf6", "#f59e0b", "#ec4899"],
+        domain: ["5-model avg", "gpt-5-mini", "gemma-4-31b", "gemma-4-26b", "qwen3.5-9b", "inkling-2:mini"],
+        range: ["#16a34a", "#64748b", "#0ea5e9", "#8b5cf6", "#f59e0b", "#ec4899"],
         legend: true,
       },
       marks: [
-        Plot.line(alignedModels, {
-          x: "xTok",
+        Plot.barY([{ arm: "5 fns", y1: 58, y2: 108 }], {
+          x: "arm",
+          y1: "y1",
+          y2: "y2",
+          fill: "#16a34a",
+          fillOpacity: 0.08,
+          rx: 4,
+        }),
+        Plot.line(MODEL_POINTS, {
+          x: "arm",
           y: "pass",
           stroke: "model",
-          strokeOpacity: 0.42,
-          strokeWidth: 1.5,
+          strokeOpacity: 0.5,
+          strokeWidth: 1.6,
         }),
-        Plot.dot(alignedModels, {
-          x: "xTok",
+        Plot.dot(MODEL_POINTS, {
+          x: "arm",
           y: "pass",
           fill: "model",
-          fillOpacity: 0.72,
-          r: 4,
+          fillOpacity: 0.78,
+          r: 3.5,
         }),
         Plot.line(ARMS, {
-          x: "avgTok",
+          x: "arm",
           y: "pass",
           stroke: "#16a34a",
-          strokeWidth: 3.2,
+          strokeWidth: 3.4,
         }),
         Plot.dot(ARMS, {
-          x: "avgTok",
+          x: "arm",
           y: "pass",
-          fill: (d) => (d.arm === "5 fns" ? "#16a34a" : "currentColor"),
-          stroke: "#ffffff",
-          strokeWidth: 1.5,
-          r: (d) => (d.arm === "5 fns" ? 7 : 5.5),
+          fill: "#16a34a",
+          stroke: "var(--bg, var(--mr-bg, #ffffff))",
+          strokeWidth: 2,
+          r: 5.5,
         }),
-        Plot.text(ARMS.filter((d) => !d.anchor), {
-          x: "avgTok",
+        Plot.text(ARMS, {
+          x: "arm",
           y: "pass",
-          text: "label",
-          textAnchor: "start",
-          dx: (d) => d.dx,
-          dy: (d) => d.dy,
-          fontWeight: (d) => (d.arm === "5 fns" ? 700 : 600),
-          fontSize: narrow ? 10.5 : 12,
-          fill: (d) => (d.arm === "5 fns" ? "#16a34a" : "currentColor"),
-        }),
-        Plot.text(ARMS.filter((d) => d.anchor === "end"), {
-          x: "avgTok",
-          y: "pass",
-          text: "label",
-          textAnchor: "end",
-          dx: -10,
-          dy: -14,
-          fontWeight: 600,
-          fontSize: narrow ? 10.5 : 12,
+          text: "passLabel",
+          dy: -12,
+          textAnchor: "middle",
+          fontWeight: 700,
+          fontSize: 12,
+          fill: "#16a34a",
+          stroke: "var(--bg, var(--mr-bg, #ffffff))",
+          strokeWidth: 4,
+          paintOrder: "stroke",
         }),
         Plot.tip(
           ARMS,
-          Plot.pointer({
-            x: "avgTok",
+          Plot.pointerX({
+            x: "arm",
             y: "pass",
             title: (d) =>
-              `${d.arm} (5-model average: ${d.pass}/100)\nSchema: ${d.schemaTok.toLocaleString()} tok (max ${d.maxParams} params/fn)\nAvg prompt: ${d.avgTok.toLocaleString()} tok/call\nLeaked args: ${d.leaked} | Missing args: ${d.missing}`,
+              `${d.arm} (5-model avg: ${d.pass}/100)\nSchema: ${d.schemaTok.toLocaleString()} tok (max ${d.maxParams} params/fn)\nAvg prompt: ${d.avgTok.toLocaleString()} tok/call\nLeaked args: ${d.leaked} | Missing args: ${d.missing}`,
           })
         ),
         Plot.tip(
-          alignedModels,
+          MODEL_POINTS,
           Plot.pointer({
-            x: "xTok",
+            x: "arm",
             y: "pass",
-            title: (d) =>
-              `${d.model} · ${d.arm}\nPassed: ${d.n} (${d.pass}%)\nModel avg prompt: ${d.avgTok.toLocaleString()} tok`,
+            title: (d) => `${d.model} · ${d.arm}\nPassed: ${d.n} (${d.pass}%)\nAvg prompt: ${d.avgTok.toLocaleString()} tok`,
           })
         ),
       ],
     });
+
+    // Bottom panel: average prompt tokens per call on the exact same 4 columns
+    const tokPlot = Plot.plot({
+      width,
+      height: 140,
+      marginLeft: ml,
+      marginRight: mr,
+      marginTop: 18,
+      marginBottom: 38,
+      style: STYLE,
+      x: { domain: ORDER, label: "GitHub schema shape (same 39 operations)", padding: 0.35 },
+      y: {
+        domain: [0, 6800],
+        ticks: [0, 2000, 4000, 6000],
+        label: "Avg prompt tok",
+        grid: true,
+        tickFormat: (d) => (d === 0 ? "0" : `${d / 1000}k`),
+      },
+      marks: [
+        Plot.barY(ARMS, {
+          x: "arm",
+          y: "avgTok",
+          fill: (d) => (d.arm === "5 fns" ? "#16a34a" : d.arm === "39 fns" ? "#ef4444" : "#94a3b8"),
+          fillOpacity: (d) => (d.arm === "5 fns" ? 0.9 : 0.72),
+          rx: 3,
+        }),
+        Plot.text(ARMS, {
+          x: "arm",
+          y: "avgTok",
+          text: "tokLabel",
+          dy: -7,
+          fontSize: 11.5,
+          fontWeight: (d) => (d.arm === "5 fns" || d.arm === "39 fns" ? 700 : 500),
+          fill: (d) => (d.arm === "5 fns" ? "#16a34a" : d.arm === "39 fns" ? "#ef4444" : "currentColor"),
+        }),
+        Plot.ruleY([0]),
+      ],
+    });
+
+    wrap.append(accPlot, tokPlot);
+    return wrap;
   },
 
   spendBreakdown({ Plot, width }) {
@@ -328,7 +361,7 @@ export default {
     return Plot.plot({
       width,
       height: 265,
-      marginLeft: narrow ? 108 : 124,
+      marginLeft: narrow ? 120 : 128,
       marginRight: narrow ? 14 : 24,
       marginBottom: 48,
       style: STYLE,

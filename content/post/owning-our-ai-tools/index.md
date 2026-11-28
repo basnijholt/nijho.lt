@@ -144,7 +144,7 @@ Prefixing integration functions as `<toolkit>_<verb>` took collisions from 47 to
 
 To see where consolidation stops helping and starts hurting, I ran a controlled 400-trial benchmark on our GitHub toolkit: the same 20 GitHub tasks across five models (`inkling-2:mini`, `qwen3.5-9b`, `gemma-4-26b`, `gemma-4-31b`, and `gpt-5-mini`), tested against four schema shapes covering the exact same 39 operations.[^github-eval]
 
-{{< plot name="githubShapes" caption="Controlled 400-trial GitHub tool-calling benchmark across five models (20 tasks per arm, temperature 0). Thick green line is the five-model average; colored lines are individual models. Five read/write functions match 39 REST functions at a third of the prompt tokens, while pushing down to 2 or 1 function drops accuracy by 10 to 14 points. Hover any point for exact counts." >}}
+{{< plot name="githubShapes" caption="Controlled 400-trial GitHub tool-calling benchmark across five models (20 tasks per arm, temperature 0). Top: exact first-try pass rate (thick green line is the five-model average; thin lines are individual models). Bottom: average prompt tokens per call on the same four shapes. Five functions match 39 at a third of the tokens, while 2 or 1 function drops accuracy by 10 to 14 points." >}}
 
 Look at the shape of that curve.
 Our five read/write functions tied the 39-function REST schema on exact first-try accuracy (93/100 each) while using a third of the prompt tokens, and even beat 39 functions on `inkling-2:mini` and `gemma-4-31b`.
